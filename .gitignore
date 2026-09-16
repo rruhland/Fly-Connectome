@@ -1,0 +1,13 @@
+.superpowers/
+
+# Downloaded connectome data and generated artifacts
+data/raw/
+data/cache/
+checkpoints/
+runs/
+
+# Local environments and caches
+.venv/
+__pycache__/
+.pytest_cache/
+
