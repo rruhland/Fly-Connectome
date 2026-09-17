@@ -67,11 +67,12 @@ def prepare(raw, source_manifest, output):
                     pathways=extracted.pathways, motor_up=extracted.motor_up, motor_down=extracted.motor_down,
                     retina=extracted.retina, positions=extracted.positions, regions=extracted.regions,
                     sign_evidence=extracted.sign_evidence,
+                    stages=extracted.stages,
                     sign_model={'acetylcholine': 1, 'gaba': -1, 'glutamate': -1, 'histamine': -1},
                     delay_model={'steps': 1, 'basis': 'uniform fixed one-tick non-Pong-specific default'},
                     anatomy_reports=extracted.reports)
     (output / 'manifest.json').write_text(json.dumps(metadata, indent=2) + '\n')
-    print(json.dumps({t: {k: v for k,v in report.items() if k not in ('recurrent_components', 'isolated_body_ids')}
+    print(json.dumps({t: {k: v for k,v in report.items() if k in ('neurons', 'edges', 'contacts', 'reachable_motor_ids')}
                       for t,report in extracted.reports.items()}, indent=2), flush=True)
 
 

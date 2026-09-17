@@ -47,3 +47,17 @@ def test_warm_start_preserves_only_matching_measured_edges():
     b = Network(g, [1]*4, ['feedforward']*4)
     warm_start(a.network, b)
     torch.testing.assert_close(b.magnitudes, torch.tensor([.2, .3, .4, .5]))
+
+
+def test_detailed_activity_is_evaluation_only(tmp_path):
+    a = trainer()
+    a.step()
+    assert 'events' not in a.snapshot() and 'spiking_neurons' not in a.snapshot()
+    path = tmp_path/'model.pt'
+    a.save(path)
+    frozen = load_checkpoint(path, evaluation=True, seeds=[100])
+    frozen.step()
+    snapshot = frozen.snapshot()
+    assert snapshot['events']['width'] == 64
+    assert 'spiking_neurons' in snapshot
+    assert 'population_rates_hz' in snapshot

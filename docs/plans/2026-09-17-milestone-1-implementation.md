@@ -25,7 +25,7 @@ approval is required except for major scientific ambiguities or design changes.
 - [x] 1. Package and immutable graph (`graph.py`, `tests/test_graph.py`).
   Aggregate ordered contacts; retain neuron roster under T1/T3/T5; hash canonical
   representation. Test counts [2,3] on 10->20 aggregate to 5 while 20->10 stays 1.
-- [ ] 2. Reproducible data and anatomy (`data.py`, `anatomy.py`, corresponding tests).
+- [x] 2. Reproducible data and anatomy (`data.py`, `anatomy.py`, `extraction.py`, corresponding tests).
   Pin official release URLs/checksums, preserve metadata, require explicit selection
   rules, induced edges, reachability and SCC report, anatomy-only threshold choice.
 - [x] 3. Events and retinotopy (`sensor.py`, `tests/test_sensor.py`).
@@ -119,3 +119,20 @@ AOTU/PVLP/PLP innervation. Signs use curated ground truth, then confident indivi
 prediction, then confident cell-type prediction. Glutamate/GABA/histamine are modeled
 as inhibitory and acetylcholine as excitatory (fixed model convention, not a receptor
 claim). Four official raw files are pinned by local SHA-256 and stay uncommitted.
+
+Real extraction completed with fixed rules: 60,366 neurons in every threshold roster.
+T1: 8,617,335 edges / 38,536,533 contacts. T3: 3,587,714 edges / 31,879,824 contacts.
+T5: 2,092,069 edges / 26,809,439 contacts; four isolated roster entries retained.
+Both DNa02 bodies (10360 R, 523769 L) are reachable and all required ROIs are present,
+so T5 is canonical. Visual-only M1A: 47,413 neurons / 1,377,103 T5 edges.
+Graph/canonical manifest: `data/cache/milestone-1/`; initial M1A checkpoint:
+`checkpoints/visual-initial.pt`. These generated files remain uncommitted.
+
+Browser QA of software-fixture training: start, actual Pong preview, changing metrics
+and safe stop exercised in the local browser. Found and fixed missing final stopped
+telemetry, covered by a worker integration test. Fixture UI process on port 8765 was
+used only for software QA; its scores do not support connectome learning claims.
+
+CLI supports pinned download, init, headless train/resume, held-out comparisons and
+offline diagnostics. M1A->M1B artifact-level warm expansion verified. Real CPU smoke
+and performance checks are in progress; no learning-success claim has been established.

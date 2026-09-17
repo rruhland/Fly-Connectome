@@ -3,6 +3,7 @@ from dataclasses import asdict, dataclass
 import hashlib
 import json
 from pathlib import Path
+from urllib.request import urlretrieve
 
 BASE_URL = 'https://storage.googleapis.com/flyem-male-cns/v1.0/connectome-data/flat-connectome/'
 RELEASE_FILES = (
@@ -10,6 +11,23 @@ RELEASE_FILES = (
     'body-neurotransmitters-male-cns-v1.0.feather',
     'connectome-weights-male-cns-v1.0-minconf-0.5.feather',
 )
+
+
+def download_sources(manifest, directory):
+    directory = Path(directory)
+    directory.mkdir(parents=True, exist_ok=True)
+    for row in json.loads(Path(manifest).read_text())['sources']:
+        source = Source(row['filename'], row['url'], row['sha256'])
+        if Path(source.filename).name != source.filename:
+            raise ValueError("source filename must be a basename")
+        destination = directory / source.filename
+        if destination.exists():
+            verify_source(destination, source)
+            continue
+        temporary = destination.with_suffix(destination.suffix + '.part')
+        urlretrieve(source.url, temporary)
+        verify_source(temporary, source)
+        temporary.replace(destination)
 
 
 @dataclass(frozen=True)

@@ -37,3 +37,11 @@ def test_curated_transmitter_evidence_is_used_with_provenance():
     result = extract_tables(rows, nt, rois, edges, Selection(max_hops=6, required_types=('L1',)))
     assert result.graph.signs[0] == -1
     assert result.sign_evidence[0]['source'] == 'ground_truth'
+
+
+def test_untyped_central_neurons_are_retained_on_measured_paths():
+    rows, nt, rois, edges = tables()
+    rows[4]['type'] = None
+    result = extract_tables(rows, nt, rois, edges, Selection(max_hops=6, required_types=('L1', 'T4')))
+    assert 50 in result.graph.body_ids
+    assert result.retina['cell_types'][4] == 'untyped'

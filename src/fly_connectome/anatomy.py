@@ -75,9 +75,13 @@ def anatomy_report(graph, sensory_ids, motor_ids, regions):
 def choose_threshold(graph, sensory_ids, motor_ids, regions, required_regions):
     if not sensory_ids or not motor_ids:
         raise ValueError("preregistered circuit needs sensory and motor populations")
+    failures = []
     for threshold in (5, 3):
         report = anatomy_report(graph.threshold(threshold), sensory_ids, motor_ids, regions)
         if (set(report['reachable_motor_ids']) == set(motor_ids)
                 and set(required_regions) <= set(report['active_regions'])):
             return threshold
-    raise ValueError("T5 and T3 both break the preregistered circuit")
+        failures.append(dict(threshold=threshold,
+            unreachable_motors=sorted(set(motor_ids) - set(report['reachable_motor_ids'])),
+            missing_regions=sorted(set(required_regions) - set(report['active_regions']))))
+    raise ValueError(f"T5 and T3 both break the preregistered circuit: {failures}")

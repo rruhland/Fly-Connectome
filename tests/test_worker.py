@@ -29,3 +29,17 @@ def test_evaluation_cannot_restart_or_save(tmp_path):
     for action in ('save', 'restart'):
         with pytest.raises(ValueError, match='evaluation'):
             apply_command(model, {}, {'action': action, 'confirmed': True}, tmp_path)
+
+
+def test_worker_publishes_stopped_state_and_saves_on_completion(tmp_path):
+    from fly_connectome.worker import run_worker
+    from fly_connectome.telemetry import Telemetry, latest_snapshot
+    path = tmp_path / 'source.pt'
+    trainer().save(path)
+    run = tmp_path / 'run'
+    telemetry = Telemetry(run)
+    telemetry.subscribe()
+    run_worker(path, run, steps=2)
+    assert latest_snapshot(run)['stopped'] is True
+    assert (run / 'checkpoint-latest.pt').exists()
+    telemetry.close()

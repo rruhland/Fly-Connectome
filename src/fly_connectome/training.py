@@ -38,7 +38,7 @@ class Trainer:
     def __init__(self, graph, delays, pathways, retina, motor_up, motor_down, seeds, *,
                  config=RunConfig(), physics=Physics(), neurons=None, learning=LearningConfig(),
                  curriculum=Curriculum(), manifest=None, device='cpu', evaluation=False):
-        if not motor_up or not motor_down or set(motor_up) & set(motor_down):
+        if (config.stage == 'M1B' and (not motor_up or not motor_down)) or set(motor_up) & set(motor_down):
             raise ValueError("disjoint nonempty opponent motor populations required")
         if not set(motor_up + motor_down) <= set(graph.body_ids.tolist()):
             raise ValueError("motor bodies must be in measured roster")
@@ -55,8 +55,8 @@ class Trainer:
         self.retina = retina
         self.camera = EventCamera(len(seeds), retina.spec['height'], retina.spec['width'], device)
         index = {int(body): i for i, body in enumerate(graph.body_ids)}
-        self.up_indices = torch.tensor([index[b] for b in motor_up], device=device)
-        self.down_indices = torch.tensor([index[b] for b in motor_down], device=device)
+        self.up_indices = torch.tensor([index[b] for b in motor_up], dtype=torch.long, device=device)
+        self.down_indices = torch.tensor([index[b] for b in motor_down], dtype=torch.long, device=device)
         self.motor_rates = torch.zeros(len(seeds), len(graph.body_ids), device=device)
         self.control_rng = (self.environment.rng + 123457).remainder(2147483647)
         self.step_index = 0
@@ -64,6 +64,9 @@ class Trainer:
         self.previous_observed = torch.zeros_like(self.network.voltage)
         self.previous_predicted = torch.zeros_like(self.network.voltage)
         self.previous_events = torch.zeros_like(self.network.voltage)
+        if evaluation:
+            self.visible_spikes = torch.zeros_like(self.network.voltage, dtype=torch.bool)
+            self.visible_events = None
 
     @property
     def metrics(self):
@@ -77,6 +80,9 @@ class Trainer:
         cfg, env, net = self.config, self.environment, self.network
         frame = env.render(self.retina.spec['height'], self.retina.spec['width'])
         events = self.camera.observe(frame)
+        if self.evaluation:
+            self.visible_events = events
+            self.visible_spikes.zero_()
         injection = self.retina.project(events) * cfg.sensory_gain
         sensed = injection[:, self.retina.injected] / cfg.sensory_gain
         self.statistics[8] += ((sensed - self.previous_predicted[:, self.retina.injected]) ** 2).sum()
@@ -86,6 +92,8 @@ class Trainer:
         # Observation boundary: only camera-derived currents enter the network.
         for tick in range(cfg.neural_steps):
             activity = net.step(injection if tick == 0 else torch.zeros_like(injection))
+            if self.evaluation:
+                self.visible_spikes |= activity.spikes
             observed = (activity.observed / net.config.threshold).clamp(0, 1)
             self.statistics[4] += ((observed - self.previous_predicted) ** 2).sum()
             self.statistics[5] += ((observed - self.previous_observed) ** 2).sum()
@@ -97,7 +105,8 @@ class Trainer:
                                    1 - math.exp(-net.config.dt / cfg.tau_motor_rate))
             if self.plasticity is not None:
                 self.plasticity.observe(activity, torch.zeros(env.batch, device=self.device))
-        drive = (self.motor_rates[:, self.up_indices].mean(1) - self.motor_rates[:, self.down_indices].mean(1)) / cfg.motor_reference_hz
+        drive = ((self.motor_rates[:, self.up_indices].mean(1) - self.motor_rates[:, self.down_indices].mean(1)) / cfg.motor_reference_hz
+                 if self.motor_up and self.motor_down else torch.zeros(env.batch, device=self.device))
         if (cfg.stage == 'M1A' and not self.evaluation) or control == 'scripted':
             drive = -(env.ball[:, 1] - env.body.position) * 10
         elif control == 'random':
@@ -136,13 +145,34 @@ class Trainer:
         env = self.environment
         alpha = 0. if self.evaluation else self.curriculum.alpha(self.step_index)
         phase = 'score-only' if alpha == 0 else ('bootstrap' if self.step_index < self.curriculum.bootstrap else 'fade')
-        return dict(step=self.step_index, sampled_environment=0, sampled=True,
+        snapshot = dict(step=self.step_index, sampled_environment=0, sampled=True,
                     ball=env.ball[0].cpu().tolist(), player_y=env.body.position[0].item(),
                     opponent_y=env.opponent[0].item(), activation=env.body.activation[0].item(),
                     velocity=env.body.velocity[0].item(), phase=phase, alpha=alpha,
                     device=str(self.device), environments=env.batch, neurons=self.network.n,
                     edges=self.network.e, graph_threshold=self.manifest.get('threshold'),
-                    physics=asdict(env.config), metrics=self.metrics, evaluation=self.evaluation)
+                    physics=asdict(env.config), metrics=self.metrics, evaluation=self.evaluation,
+                    rally_seconds=env.rally_steps[0].item() * env.config.dt,
+                    tensor_memory_bytes=sum(v.numel() * v.element_size() for obj in
+                        (self.network, self.plasticity, self) if obj is not None
+                        for v in vars(obj).values() if isinstance(v, torch.Tensor)))
+        if self.evaluation:
+            spikes = self.visible_spikes[0].nonzero().flatten()
+            snapshot['spiking_neurons'] = spikes[:2048].cpu().tolist()
+            snapshot['spikes_sampled'] = len(spikes) > 2048
+            events = self.visible_events
+            keep = events.environments == 0 if events is not None else None
+            snapshot['events'] = dict(width=self.retina.spec['width'], height=self.retina.spec['height'],
+                pixels=events.pixels[keep].cpu().tolist() if events is not None else [],
+                on=events.on[keep].cpu().tolist() if events is not None else [])
+            types = self.retina.spec['cell_types']
+            snapshot['population_rates_hz'] = {}
+            for label in ('L1', 'L2', 'L3', 'L4', 'T4', 'T5', 'LPi', 'LC10', 'DNa02'):
+                indices = [i for i,t in enumerate(types) if t == label or
+                           (label in ('T4', 'T5', 'LPi', 'LC10') and t.startswith(label))]
+                if indices:
+                    snapshot['population_rates_hz'][label] = self.motor_rates[0, indices].mean().item()
+        return snapshot
 
     def save(self, path):
         if self.evaluation:

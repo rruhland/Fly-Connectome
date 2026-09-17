@@ -124,6 +124,8 @@ def run_worker(checkpoint, directory, *, evaluation=False, device='cpu', steps=N
                 telemetry.publish(capture)
         if not evaluation:
             model.save(directory / 'checkpoint-latest.pt')
+        telemetry.publish(lambda: dict(model.snapshot(), stopped=True, paused=False,
+                                       logs=list(logs) + ['Worker stopped; final checkpoint saved.' if not evaluation else 'Evaluation stopped.']))
     finally:
         telemetry.close()
         lock.close()

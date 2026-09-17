@@ -32,6 +32,7 @@ class Extracted:
     positions: list
     sign_evidence: list
     reports: dict
+    stages: list
 
 
 def _sign(row, confidence):
@@ -48,6 +49,7 @@ def _sign(row, confidence):
 
 
 def _stage(cell_type, superclass):
+    cell_type = cell_type or 'untyped'
     if cell_type == 'DNa02':
         return 5
     if re.fullmatch(r'L[1-4]', cell_type):
@@ -89,7 +91,7 @@ def extract_tables(annotations, neurotransmitters, roi_by_id, edges, rules=Selec
     motors = [b for b in body_ids if candidates[b]['type'] == 'DNa02']
     selected = select_roster(candidate.threshold(rules.path_threshold), seeds, motors,
         max_hops=rules.max_hops, reciprocal_contacts=rules.reciprocal_contacts, scc_cap=rules.scc_cap)
-    cell_types = [candidates[b]['type'] for b in selected]
+    cell_types = [candidates[b]['type'] or 'untyped' for b in selected]
     for required in rules.required_types:
         if not any(t == required or (required in ('T4', 'T5', 'LPi', 'LC10') and t.startswith(required)) for t in cell_types):
             raise ValueError(f"missing required population: {required}")
@@ -128,4 +130,4 @@ def extract_tables(annotations, neurotransmitters, roi_by_id, edges, rules=Selec
     reports = {str(t): anatomy_report(graph.threshold(t), sensory, motors, regions) for t in (1, 3, 5)}
     return Extracted(graph, threshold, pathways, up, down, retina, regions,
                      [candidates[b].get('somaLocation') for b in selected],
-                     [dict(body_id=b, **evidence[b][1]) for b in selected], reports)
+                     [dict(body_id=b, **evidence[b][1]) for b in selected], reports, stages)
