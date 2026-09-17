@@ -35,10 +35,10 @@ approval is required except for major scientific ambiguities or design changes.
   Vector physics, deterministic independent reset RNG, acceleration-limited opponent,
   visible resets, signed rate drive, bounded curriculum. Verify collisions, resets,
   braking/reversal/rest and absence of privileged state in observation interface.
-- [ ] 5. Sparse adaptive LIF (`dynamics.py`, `tests/test_dynamics.py`).
+- [x] 5. Sparse adaptive LIF (`dynamics.py`, `tests/test_dynamics.py`).
   Fixed delays, current and membrane leaks, refractory/adaptation, sparse delivery.
   Verify hand-calculated spikes, quiet input, batch independence and CPU/CUDA parity.
-- [ ] 6. Local plasticity (`plasticity.py`, `tests/test_plasticity.py`).
+- [x] 6. Local plasticity (`plasticity.py`, `tests/test_plasticity.py`).
   Resolve prediction/observation definition before implementation. Active-edge
   eligibility, natural decay, separated regional rules, slow homeostasis, sign bounds.
   Verify confirmed/expired/unexpected predictions, reward isolation, and that
@@ -81,3 +81,12 @@ Sensor/body chunks: 19 tests pass across the suite. Persistent event reference,
 ON/OFF polarity, full-field projection and no L4 injection; continuous force,
 independent per-environment resets, collisions, visible resets and reward fade verified.
 Default sensor routing is supplied explicitly by the caller, never inferred from type.
+
+Neural/plasticity chunks: 27 passed, 1 CUDA skip on CPU-only installation. Sparse
+arrival expansion uses existing outgoing CSR ranges and fixed delay history; no
+individual-neuron/edge/spike Python loop. Visual prediction uses previous-tick
+recurrent current, threshold-normalized and clipped to [0,1], compared with current
+feedforward sensory current. Signed causal eligibility adjusts magnitude in the
+direction that reduces local current error. Behavioral pair eligibility and scalar
+reward are separate. Eligibility is stored only for active environment/edge keys;
+weight proposals are batch-normalized and applied at explicit boundaries.
