@@ -58,7 +58,7 @@ approval is required except for major scientific ambiguities or design changes.
   hyperparameters before training. Record M1A/M1B baseline results, final score-only
   behavior, bounded backend differences and headless/UI throughput measurements.
 
-## Current state
+## Implementation history (latest checkpoint at the end)
 
 Initial repository contained design documents only; no baseline tests existed.
 Origin was added and `git ls-remote origin` succeeded with no refs (empty remote).
@@ -136,3 +136,41 @@ used only for software QA; its scores do not support connectome learning claims.
 CLI supports pinned download, init, headless train/resume, held-out comparisons and
 offline diagnostics. M1A->M1B artifact-level warm expansion verified. Real CPU smoke
 and performance checks are in progress; no learning-success claim has been established.
+
+## Latest verified continuation point
+
+57 tests pass; two CUDA tests skip on CPU-only PyTorch. JavaScript syntax passes.
+Checkpoint ZIP serialization now uses a stream so identical headless/UI states
+produce byte-identical files regardless of temporary save filename. Shared-weight
+proposal reduction uses canonical sorted segment reduction rather than CUDA atomic
+index-add. Actual CUDA execution still needs hardware verification.
+
+Versioned extraction summary/body IDs are in `data/manifests/m1-v1.json`.
+Real M1A ran 3,000 environment steps with four CPU threads; checkpoint is
+`checkpoints/visual-trained.pt`. Held-out two-seed, 1,000-step scripted comparison
+is `runs/m1a-heldout.json`; compact committed evidence is
+`docs/experiments/2026-09-17-m1a-pilot.json`.
+Only L1 (812), L2 (810), L3 (802) spiked in either condition. Local-current MSE
+slightly worsened (5.80124e-6 initial vs 5.80133e-6 trained); sensory-event MSE
+barely improved (0.000453268 vs 0.000453250). Persistence was 0.000887747.
+Do not infer learning success from beating persistence with almost identical,
+mostly inactive networks. The ON moving-edge gain sweep .005 through 1.0 produced
+no downstream spikes. User requested investigation and a proposal for grounded
+resting-current/cell-class dynamics while keeping topology, signs and learning fixed.
+Do not silently change the canonical model before that proposal is reviewed.
+
+Real M1B warm initialization succeeded: `checkpoints/pong-warm-initial.pt`,
+60,366 neurons / 2,092,069 T5 edges. This is pipeline verification, not trained Pong.
+
+UI diagnostics preserve independently named bundles, compare response A/B from
+configured read-only checkpoints, replay stimuli and spikes by body ID, and report
+latency/rate/sparsity. Browser QA verified paused OFF-flash intact vs L2-silenced
+fixture traces and replay. Raw/accumulated event selector, sampled edge detail,
+rally/memory/error metrics implemented. Worker periodic checkpoints added.
+Remaining UI work includes tuning-sweep summaries and full-process overhead evidence.
+Producer-only fixture benchmark: three alternating 3,000-step pairs, median overhead
+-5.2% (timing noise), identical checkpoint bytes. This does not establish full UI <=1%.
+
+Next: finish and review the neuron-model proposal; validate approved changes using
+non-Pong visual probes, retain failed-pilot artifacts, then repeat M1A before spending
+on long M1B runs. CPU/CUDA acceptance and post-fade learning remain open.

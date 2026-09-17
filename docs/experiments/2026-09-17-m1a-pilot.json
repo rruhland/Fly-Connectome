@@ -1,0 +1,182 @@
+{
+  "training_steps": 3000,
+  "training_seed": 1,
+  "evaluation": {
+    "learned": {
+      "metrics": {
+        "points": 0.0,
+        "misses": 0.0,
+        "hits": 5.0,
+        "reward": 0.0,
+        "spikes": 2424.0,
+        "local_current_prediction_mse": 5.801330553241595e-06,
+        "local_current_persistence_mse": 7.365479438587534e-06,
+        "sensory_event_prediction_mse": 0.00045325020204575473,
+        "sensory_event_persistence_mse": 0.0008877474785207322,
+        "mean_rate_hz": 0.0030675131293105263
+      },
+      "seeds": [
+        1001,
+        1002
+      ],
+      "steps": 1000,
+      "control": "scripted",
+      "hit_shaping": 0.0,
+      "graph_sha256": "c941a5c912dd03e2ab0868260c637c2b1d21525196d4bce93c7d5e7f618e34a8",
+      "dataset": "male-cns:v1.0",
+      "population_spikes_nonzero": {
+        "L2": 810,
+        "L1": 812,
+        "L3": 802
+      }
+    },
+    "frozen": {
+      "metrics": {
+        "points": 0.0,
+        "misses": 0.0,
+        "hits": 5.0,
+        "reward": 0.0,
+        "spikes": 2424.0,
+        "local_current_prediction_mse": 5.801241986335429e-06,
+        "local_current_persistence_mse": 7.365479438587534e-06,
+        "sensory_event_prediction_mse": 0.0004532676942470013,
+        "sensory_event_persistence_mse": 0.0008877474785207322,
+        "mean_rate_hz": 0.0030675131293105263
+      },
+      "seeds": [
+        1001,
+        1002
+      ],
+      "steps": 1000,
+      "control": "scripted",
+      "hit_shaping": 0.0,
+      "graph_sha256": "c941a5c912dd03e2ab0868260c637c2b1d21525196d4bce93c7d5e7f618e34a8",
+      "dataset": "male-cns:v1.0",
+      "population_spikes_nonzero": {
+        "L2": 810,
+        "L1": 812,
+        "L3": 802
+      }
+    }
+  },
+  "current_scale_probe": [
+    {
+      "gain": 0.005,
+      "ticks": 300,
+      "total_spikes": 1180,
+      "peak_spikes_per_tick": 25,
+      "populations": {
+        "L1": 1180,
+        "L2": 0,
+        "L3": 0,
+        "L4": 0,
+        "T4": 0,
+        "T5": 0,
+        "LPi": 0,
+        "LC10": 0
+      }
+    },
+    {
+      "gain": 0.025,
+      "ticks": 300,
+      "total_spikes": 1180,
+      "peak_spikes_per_tick": 25,
+      "populations": {
+        "L1": 1180,
+        "L2": 0,
+        "L3": 0,
+        "L4": 0,
+        "T4": 0,
+        "T5": 0,
+        "LPi": 0,
+        "LC10": 0
+      }
+    },
+    {
+      "gain": 0.1,
+      "ticks": 300,
+      "total_spikes": 1180,
+      "peak_spikes_per_tick": 25,
+      "populations": {
+        "L1": 1180,
+        "L2": 0,
+        "L3": 0,
+        "L4": 0,
+        "T4": 0,
+        "T5": 0,
+        "LPi": 0,
+        "LC10": 0
+      }
+    },
+    {
+      "gain": 0.25,
+      "ticks": 300,
+      "total_spikes": 1180,
+      "peak_spikes_per_tick": 25,
+      "populations": {
+        "L1": 1180,
+        "L2": 0,
+        "L3": 0,
+        "L4": 0,
+        "T4": 0,
+        "T5": 0,
+        "LPi": 0,
+        "LC10": 0
+      }
+    },
+    {
+      "gain": 0.5,
+      "ticks": 300,
+      "total_spikes": 1180,
+      "peak_spikes_per_tick": 25,
+      "populations": {
+        "L1": 1180,
+        "L2": 0,
+        "L3": 0,
+        "L4": 0,
+        "T4": 0,
+        "T5": 0,
+        "LPi": 0,
+        "LC10": 0
+      }
+    },
+    {
+      "gain": 1.0,
+      "ticks": 300,
+      "total_spikes": 1178,
+      "peak_spikes_per_tick": 25,
+      "populations": {
+        "L1": 1178,
+        "L2": 0,
+        "L3": 0,
+        "L4": 0,
+        "T4": 0,
+        "T5": 0,
+        "LPi": 0,
+        "LC10": 0
+      }
+    }
+  ],
+  "producer_benchmark": {
+    "steps": 3000,
+    "repeats": 3,
+    "threads": 1,
+    "torch_version": "2.5.0+cpu",
+    "durations_seconds": {
+      "headless": [
+        10.330858299988904,
+        12.88055540001369,
+        13.522643300006166
+      ],
+      "preview": [
+        11.46691020000435,
+        12.209729199996218,
+        13.320046400011051
+      ]
+    },
+    "median_producer_overhead": -0.05208053373356558,
+    "meets_one_percent_producer_target": true,
+    "checkpoints_byte_identical": true,
+    "scope": "producer timing; browser rendering and server CPU contention are not included"
+  }
+}

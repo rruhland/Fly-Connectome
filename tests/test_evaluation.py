@@ -4,6 +4,7 @@ import pytest
 from test_training import trainer
 from fly_connectome.evaluation import evaluate, compare
 from fly_connectome.diagnostics import Probe, run_probe
+from dataclasses import replace
 
 
 def test_evaluation_uses_held_out_seeds_and_never_trains(tmp_path):
@@ -40,3 +41,42 @@ def test_off_target_and_moving_edges_are_binary():
     frames = [probe.frame(i, 8, 16) for i in range(4)]
     assert frames[0].dtype == torch.bool
     assert not torch.equal(frames[0], frames[3])
+
+
+def test_visual_comparison_uses_identical_scripted_sequences(tmp_path):
+    model = trainer()
+    model.config = replace(model.config, stage='M1A')
+    path = tmp_path / 'visual.pt'
+    model.save(path)
+    result = compare(path, path, [100], 10)
+    assert set(result) == {'learned', 'frozen'}
+    assert result['learned'] == result['frozen']
+    assert result['learned']['control'] == 'scripted'
+    assert 'population_spikes' in result['learned']
+
+
+def test_comparison_rejects_different_neuron_dynamics(tmp_path):
+    model = trainer()
+    first, second = tmp_path / 'a.pt', tmp_path / 'b.pt'
+    model.save(first)
+    model.network.config = replace(model.network.config, threshold=2.)
+    model.save(second)
+    with pytest.raises(ValueError, match='dynamics'):
+        compare(first, second, [100], 5)
+
+
+def test_saved_diagnostic_bundles_preserve_both_runs_and_replay(tmp_path):
+    from fly_connectome.diagnostics import save_bundle
+    import json
+    path = tmp_path / 'source.pt'
+    trainer().save(path)
+    probe = Probe(steps=4, start=1, duration=2)
+    result = run_probe(path, probe, seed=100)
+    first = save_bundle(result, tmp_path / 'probes')
+    second = save_bundle(result, tmp_path / 'probes')
+    assert first != second and first.exists() and second.exists()
+    summary = json.loads(first.with_suffix('.json').read_text())
+    assert len(summary['replay']) == 4
+    assert summary['checkpoint_sha256'] == result['checkpoint_sha256']
+    assert summary['stimulus'] == result['stimulus']
+    assert 'latency_seconds' in summary['populations']['L2']

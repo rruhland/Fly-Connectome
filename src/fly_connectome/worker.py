@@ -70,7 +70,9 @@ def _worker_lock(directory):
     return stream
 
 
-def run_worker(checkpoint, directory, *, evaluation=False, device='cpu', steps=None):
+def run_worker(checkpoint, directory, *, evaluation=False, device='cpu', steps=None, comparison_checkpoints=(), checkpoint_every=10000):
+    if checkpoint_every < 1:
+        raise ValueError('checkpoint interval must be positive')
     directory = Path(directory)
     directory.mkdir(parents=True, exist_ok=True)
     lock = _worker_lock(directory)
@@ -90,13 +92,15 @@ def run_worker(checkpoint, directory, *, evaluation=False, device='cpu', steps=N
                     try:
                         command = json.loads(path.read_text())
                         if command['action'] == 'probe' and evaluation:
-                            from .diagnostics import Probe, run_probe
-                            result = run_probe(checkpoint, Probe(**command.get('probe', {})),
+                            from .diagnostics import Probe, run_probe, save_bundle
+                            sources = [checkpoint, *comparison_checkpoints]
+                            source = int(command.get('checkpoint_index', 0))
+                            if not 0 <= source < len(sources):
+                                raise ValueError('unknown comparison checkpoint')
+                            result = run_probe(sources[source], Probe(**command.get('probe', {})),
                                 silenced_types=command.get('silenced_types', []), device=device)
-                            torch.save(result, directory / 'diagnostic.pt')
-                            summary = {k: {x: v.tolist() if isinstance(v, torch.Tensor) else v for x, v in row.items()}
-                                       for k, row in result['populations'].items()}
-                            (directory / 'diagnostic.json').write_text(json.dumps(summary))
+                            bundle = save_bundle(result, directory / 'diagnostics')
+                            logs.append(f'Saved {bundle.name}')
                         else:
                             apply_command(model, state, command, directory)
                         logs.append(f"Applied {command['action']}")
@@ -109,6 +113,9 @@ def run_worker(checkpoint, directory, *, evaluation=False, device='cpu', steps=N
             if not state['paused'] or state['single_step']:
                 human = torch.full((model.environment.batch,), state['human'], device=device)
                 model.step(state['control'], human)
+                if (not evaluation and model.step_index % checkpoint_every == 0 and
+                        model.step_index % model.config.sync_steps == 0):
+                    model.save(directory / 'checkpoint-latest.pt')
                 state['single_step'] = False
                 if state['delay']:
                     time.sleep(state['delay'])
@@ -138,5 +145,8 @@ if __name__ == '__main__':
     parser.add_argument('--evaluation', action='store_true')
     parser.add_argument('--device', default='cpu')
     parser.add_argument('--steps', type=int)
+    parser.add_argument('--comparison-checkpoint', action='append', default=[])
+    parser.add_argument('--checkpoint-every', type=int, default=10000)
     args = parser.parse_args()
-    run_worker(args.checkpoint, args.directory, evaluation=args.evaluation, device=args.device, steps=args.steps)
+    run_worker(args.checkpoint, args.directory, evaluation=args.evaluation, device=args.device, steps=args.steps,
+               comparison_checkpoints=args.comparison_checkpoint, checkpoint_every=args.checkpoint_every)

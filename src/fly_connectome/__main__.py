@@ -26,6 +26,8 @@ def main():
     train.add_argument('--steps', type=int, required=True)
     train.add_argument('--output', required=True)
     train.add_argument('--device', default='cpu')
+    train.add_argument('--threads', type=int)
+    train.add_argument('--checkpoint-every', type=int, default=10000)
     evaluate = commands.add_parser('evaluate', help='frozen comparisons on held-out seeds')
     evaluate.add_argument('checkpoint')
     evaluate.add_argument('--initial', required=True)
@@ -33,6 +35,7 @@ def main():
     evaluate.add_argument('--steps', type=int, required=True)
     evaluate.add_argument('--output', required=True)
     evaluate.add_argument('--device', default='cpu')
+    evaluate.add_argument('--threads', type=int)
     diagnose = commands.add_parser('diagnose', help='offline visual probes against a frozen checkpoint')
     diagnose.add_argument('checkpoint')
     diagnose.add_argument('--probe-json')
@@ -54,9 +57,12 @@ def main():
         print(json.dumps(dict(checkpoint=args.output, neurons=model.network.n, edges=model.network.e,
                               stage=args.stage, graph_sha256=model.network.graph.identity())))
     elif args.command == 'train':
+        import torch
         from .training import load_checkpoint
-        if args.steps < 1:
-            parser.error('--steps must be positive')
+        if args.steps < 1 or args.checkpoint_every < 1 or (args.threads is not None and args.threads < 1):
+            parser.error('steps, threads and checkpoint interval must be positive')
+        if args.threads is not None:
+            torch.set_num_threads(args.threads)
         model = load_checkpoint(args.checkpoint, device=args.device)
         stopped = False
         def request_stop(*_):
@@ -69,6 +75,8 @@ def main():
             for _ in range(args.steps):
                 model.step()
                 completed += 1
+                if completed % args.checkpoint_every == 0 and model.step_index % model.config.sync_steps == 0:
+                    model.save(args.output)
                 if stopped and model.step_index % model.config.sync_steps == 0:
                     break
             model.save(args.output)
@@ -77,6 +85,11 @@ def main():
         print(json.dumps(dict(checkpoint=args.output, completed_steps=completed, metrics=model.metrics,
                               steps_per_second=completed / (time.perf_counter() - start))))
     elif args.command == 'evaluate':
+        import torch
+        if args.threads is not None:
+            if args.threads < 1:
+                parser.error('threads must be positive')
+            torch.set_num_threads(args.threads)
         from .evaluation import compare
         report = compare(args.checkpoint, args.initial, [int(x) for x in args.seeds.split(',')], args.steps, args.device)
         path = Path(args.output)

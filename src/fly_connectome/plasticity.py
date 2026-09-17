@@ -22,7 +22,10 @@ def _sum_sorted(keys, values, size):
     value_order = torch.argsort(values, stable=True)
     order = value_order[torch.argsort(keys[value_order], stable=True)]
     result = torch.zeros(size, device=values.device, dtype=values.dtype)
-    result.index_add_(0, keys[order], values[order])
+    if values.numel():
+        unique, counts = torch.unique_consecutive(keys[order], return_counts=True)
+        sums = torch.segment_reduce(values[order], 'sum', lengths=counts)
+        result[unique] = sums
     return result
 
 

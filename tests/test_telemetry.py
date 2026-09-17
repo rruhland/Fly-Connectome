@@ -34,3 +34,15 @@ def test_expired_subscription_disables_preview(tmp_path):
     telemetry = Telemetry(tmp_path)
     telemetry.subscribe(now=0)
     assert not telemetry.enabled(now=100)
+
+
+def test_headless_and_telemetry_checkpoints_are_byte_identical(tmp_path):
+    a, b = trainer(), trainer()
+    telemetry = Telemetry(tmp_path/'ui')
+    telemetry.subscribe()
+    for _ in range(3):
+        a.step(); b.step()
+        telemetry.publish(b.snapshot)
+    a.save(tmp_path/'headless.pt'); b.save(tmp_path/'ui.pt')
+    assert (tmp_path/'headless.pt').read_bytes() == (tmp_path/'ui.pt').read_bytes()
+    telemetry.close()

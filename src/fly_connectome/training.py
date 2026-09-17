@@ -66,6 +66,7 @@ class Trainer:
         self.previous_events = torch.zeros_like(self.network.voltage)
         if evaluation:
             self.visible_spikes = torch.zeros_like(self.network.voltage, dtype=torch.bool)
+            self.evaluation_spike_counts = torch.zeros_like(self.network.voltage, dtype=torch.int64)
             self.visible_events = None
 
     @property
@@ -94,6 +95,7 @@ class Trainer:
             activity = net.step(injection if tick == 0 else torch.zeros_like(injection))
             if self.evaluation:
                 self.visible_spikes |= activity.spikes
+                self.evaluation_spike_counts += activity.spikes
             observed = (activity.observed / net.config.threshold).clamp(0, 1)
             self.statistics[4] += ((observed - self.previous_predicted) ** 2).sum()
             self.statistics[5] += ((observed - self.previous_observed) ** 2).sum()
@@ -194,7 +196,8 @@ class Trainer:
         fd, temp = tempfile.mkstemp(dir=path.parent, prefix=path.name, suffix='.tmp')
         os.close(fd)
         try:
-            torch.save(dict(schema_version=1, metadata=metadata, state=state), temp)
+            with open(temp, 'wb') as stream:
+                torch.save(dict(schema_version=1, metadata=metadata, state=state), stream)
             os.replace(temp, path)
         finally:
             if os.path.exists(temp):

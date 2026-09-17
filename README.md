@@ -74,6 +74,8 @@ observation path. Scores reset body/actuator state but preserve neural dynamics,
 eligibility and event-camera reference. Checkpoints include pending weight proposals
 and all private state for exact resume. Ctrl+C requests a save at a synchronization
 boundary. The CLI prints coarse metrics; no full spike histories are logged in training.
+Use `--threads 4` to set the CPU thread count and `--checkpoint-every 1000` for
+periodic saves. The worker also saves periodically and on safe stop.
 
 Predictive edges use their local signed causal eligibility and the difference between
 next-tick feedforward observed current and the preceding recurrent predicted current,
@@ -96,6 +98,9 @@ controllers under fixed physics, with hit shaping zero. Reports distinguish loca
 current prediction from sensory-event prediction, each against persistence. Acceptance
 still requires measured post-fade learning, baseline improvements, stable activity and
 CPU/CUDA parity; the software does not manufacture a success verdict.
+For M1A checkpoints, `evaluate` compares trained and initial weights on the same
+scripted held-out sequences and reports per-cell-type spike counts. Comparison
+rejects different neuron dynamics, sensor mappings or delay/pathway assignments.
 
 Probe JSON can specify `kind` (`flash`, `moving_edge`, `target`, `neighbor_sequence`),
 `steps`, `start`, `duration`, `x`, `y`, `radius`, `direction`, `speed`, and `polarity`.
@@ -121,3 +126,26 @@ Evaluation offers slower playback, single-step, control comparisons, visual prob
 recorded anatomical positions and measured-connection inspection. Missing positions are
 not fabricated. UI completeness and the <=1% throughput target remain verification
 items in the continuation ledger.
+
+Pass `--comparison-checkpoint checkpoints/visual-initial.pt` (repeatable) to an
+evaluation server to make additional read-only checkpoints available to probes.
+Each UI probe saves a separate bundle under the run's `diagnostics/` directory.
+Choose Response A/B and a cell type to compare traces, latency, mean rate and
+sparsity; scrub Replay tick to show its stimulus and recorded anatomical activity.
+Anatomical overlays match body IDs across different graph sizes. Event viewing
+supports raw latest samples and accumulated frames. Diagnostic results remain
+exploratory and separate from training.
+
+## Current empirical result
+
+The first real T5 M1A pilot (3,000 training steps, seed 1) did not establish learned
+visual dynamics. On held-out seeds 1001/1002, only L1-L3 spiked; T4/T5 and projection
+populations were silent. Initial and trained predictions both beat persistence,
+but differed negligibly from each other. This is not milestone success. The
+zero-background LIF model and positive-only L1 ON injection require investigation
+before long M1B training. See `docs/experiments/2026-09-17-m1a-pilot.json` for results.
+
+The fixture producer benchmark produced byte-identical headless/preview checkpoints.
+Its noisy median timing showed no measurable overhead, but excludes browser/server
+CPU contention; the full <=1% UI acceptance check remains open. CUDA tests are skipped
+on the current CPU-only PyTorch installation.

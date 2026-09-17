@@ -1,6 +1,9 @@
 """Offline frozen visual probes. Imported by evaluation tools, never training."""
 from dataclasses import asdict, dataclass
 import math
+import json
+from pathlib import Path
+import uuid
 import torch
 
 from .data import checksum
@@ -60,7 +63,7 @@ def run_probe(checkpoint, probe, *, seed=1000, silenced_types=(), device='cpu'):
     # OFF probes begin against a bright reference, then expose controlled transitions.
     if probe.polarity == 'off':
         trainer.camera.previous.fill_(True)
-    spikes, inputs = [], []
+    spikes, inputs, replay = [], [], []
     for tick in range(probe.steps):
         frame = probe.frame(tick, height, width, device)
         events = trainer.camera.observe(frame)
@@ -68,6 +71,9 @@ def run_probe(checkpoint, probe, *, seed=1000, silenced_types=(), device='cpu'):
         activity = trainer.network.step(current)
         spikes.append(activity.spikes[0].cpu())
         inputs.append(current[0].cpu())
+        indices = activity.spikes[0].nonzero().flatten()[:2048].cpu().numpy()
+        replay.append(dict(pixels=frame[0].flatten().nonzero().flatten().cpu().tolist(),
+                           spike_bodies=trainer.network.graph.body_ids[indices].tolist()))
     spikes = torch.stack(spikes)
     populations = {}
     for population in sorted(set(types)):
@@ -76,8 +82,29 @@ def run_probe(checkpoint, probe, *, seed=1000, silenced_types=(), device='cpu'):
         active = torch.nonzero(response).flatten()
         populations[population] = dict(response=response, first_spike_tick=int(active[0]) if len(active) else None,
                                        last_spike_tick=int(active[-1]) if len(active) else None,
+                                       latency_seconds=(int(active[active >= probe.start][0]) - probe.start) * trainer.network.config.dt
+                                           if (active >= probe.start).any() else None,
+                                       post_offset_activity_seconds=max(0, int(active[-1]) - probe.start - probe.duration) * trainer.network.config.dt
+                                           if len(active) and probe.kind == 'flash' else None,
+                                       mean_rate_hz=float(response.mean()) / trainer.network.config.dt,
                                        sparsity=float(1 - response.mean()))
     return dict(schema_version=1, checkpoint_sha256=checksum(checkpoint), manifest=trainer.manifest,
                 stimulus=asdict(probe), seed=seed, backend=device, silenced_types=list(silenced_types),
                 dt=trainer.network.config.dt, spikes=spikes, sensory_current=torch.stack(inputs),
-                populations=populations)
+                populations=populations, replay=replay, width=width, height=height)
+
+
+def save_bundle(result, directory):
+    """Keep independent frozen results and a lightweight browser replay beside each."""
+    directory = Path(directory)
+    directory.mkdir(parents=True, exist_ok=True)
+    path = directory / f'probe-{uuid.uuid4().hex}.pt'
+    torch.save(result, path)
+    summary = {key: result[key] for key in ('checkpoint_sha256', 'stimulus', 'seed', 'backend',
+               'silenced_types', 'dt', 'replay', 'width', 'height')}
+    summary['populations'] = {k: {name: value.tolist() if isinstance(value, torch.Tensor) else value
+                                for name, value in row.items()} for k, row in result['populations'].items()}
+    temporary = path.with_suffix('.tmp')
+    temporary.write_text(json.dumps(summary))
+    temporary.replace(path.with_suffix('.json'))
+    return path

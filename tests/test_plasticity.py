@@ -1,4 +1,5 @@
 import torch
+import pytest
 
 from fly_connectome.graph import Graph
 from fly_connectome.dynamics import Network, Activity
@@ -120,3 +121,25 @@ def test_homeostasis_uses_simulated_time_not_sync_count():
         pb.observe(silent, torch.zeros(1))
     pb.synchronize()
     torch.testing.assert_close(a.magnitudes, b.magnitudes, atol=1e-7, rtol=1e-6)
+
+
+@pytest.mark.skipif(not torch.cuda.is_available(), reason='CUDA runtime unavailable')
+def test_cuda_plasticity_matches_cpu_and_batch_order():
+    g = Graph.from_contacts([10, 20], [10], [20], [1], [1, 1], .5)
+    cpu = Network(g, [1], ['behavioral'], batch=3)
+    cuda = Network(g, [1], ['behavioral'], batch=3, device='cuda')
+    a, b = Plasticity(cpu), Plasticity(cuda)
+    for step in range(20):
+        x = torch.tensor([[30., 0.], [0., 30.], [30., 30.]]) if step % 3 == 0 else torch.zeros(3, 2)
+        a.observe(cpu.step(x), torch.tensor([.1, -.2, .3]))
+        b.observe(cuda.step(x.cuda()), torch.tensor([.1, -.2, .3], device='cuda'))
+        a.synchronize(); b.synchronize()
+    torch.testing.assert_close(cpu.magnitudes, cuda.magnitudes.cpu(), atol=1e-6, rtol=1e-5)
+
+
+def test_canonical_reduction_handles_cancellation_and_permutation():
+    from fly_connectome.plasticity import _sum_sorted
+    keys = torch.tensor([0, 0, 0, 1, 1])
+    values = torch.tensor([1e5, -1e5, .03, .2, -.1])
+    perm = torch.tensor([3, 1, 4, 2, 0])
+    torch.testing.assert_close(_sum_sorted(keys, values, 2), _sum_sorted(keys[perm], values[perm], 2), atol=0, rtol=0)

@@ -17,7 +17,13 @@ def evaluate(checkpoint, seeds, steps, control='learned', device='cpu'):
     metrics['sensory_event_persistence_mse'] = metrics.pop('event_persistence_squared_error') / event_samples
     metrics['mean_rate_hz'] = metrics['spikes'] / (steps * trainer.environment.config.dt *
                                                 len(seeds) * trainer.network.n)
+    types = trainer.retina.spec['cell_types']
+    counts = trainer.evaluation_spike_counts.sum(0).cpu().tolist()
+    populations = {}
+    for label, count in zip(types, counts):
+        populations[label] = populations.get(label, 0) + count
     return dict(metrics=metrics, seeds=seeds, steps=steps, control=control, hit_shaping=0.,
+                population_spikes=populations,
                 graph_sha256=trainer.network.graph.identity(), dataset=trainer.manifest.get('dataset'))
 
 
@@ -28,6 +34,14 @@ def compare(learned_checkpoint, initial_checkpoint, seeds, steps, device='cpu'):
         raise ValueError("baseline comparisons require identical topology and initialization scale")
     if learned.environment.config != initial.environment.config:
         raise ValueError("baseline comparisons require identical physics")
-    return {name: evaluate(path, seeds, steps, mode, device) for name, path, mode in (
+    if (learned.config != initial.config or learned.network.config != initial.network.config or
+            learned.retina.spec != initial.retina.spec or
+            not learned.network.delays.equal(initial.network.delays) or
+            not learned.network.pathways.equal(initial.network.pathways)):
+        raise ValueError("baseline comparisons require identical dynamics and sensory mapping")
+    visual = learned.config.stage == 'M1A'
+    del learned, initial
+    comparisons = (('learned', learned_checkpoint, 'scripted'), ('frozen', initial_checkpoint, 'scripted')) if visual else (
         ('learned', learned_checkpoint, 'learned'), ('frozen', initial_checkpoint, 'learned'),
-        ('random', initial_checkpoint, 'random'), ('scripted', initial_checkpoint, 'scripted'))}
+        ('random', initial_checkpoint, 'random'), ('scripted', initial_checkpoint, 'scripted'))
+    return {name: evaluate(path, seeds, steps, mode, device) for name, path, mode in comparisons}
