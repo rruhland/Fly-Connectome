@@ -85,6 +85,14 @@ class Plasticity:
         self.rates.lerp_(activity.spikes.float() / dt, 1 - math.exp(-dt / cfg.tau_homeostasis))
 
     @torch.no_grad()
+    def reward(self, reward):
+        n = self.network
+        env, edges = self.keys.div(n.e, rounding_mode='floor'), self.keys.remainder(n.e)
+        mask = n.pathways[edges] == 2
+        proposals = self.config.eta_reward * reward.detach().clamp(-1, 1)[env[mask]] * self.values[mask]
+        self.proposals.add_(_sum_sorted(edges[mask], proposals, n.e) / n.batch)
+
+    @torch.no_grad()
     def synchronize(self):
         n, cfg = self.network, self.config
         n.magnitudes.add_(self.proposals).clamp_(0, cfg.maximum_weight)

@@ -31,6 +31,8 @@ class EventCamera:
 
 class Retina:
     def __init__(self, height, width, hex_columns, neuron_columns, cell_types, injection, device='cpu'):
+        self.spec = dict(height=height, width=width, hex_columns=hex_columns,
+                         neuron_columns=neuron_columns, cell_types=cell_types, injection=injection)
         if not set(injection) <= {'L1', 'L2', 'L3'}:
             raise ValueError("direct sensor injection is restricted to L1-L3")
         if not set(injection.values()) <= {'on', 'off'}:

@@ -43,7 +43,7 @@ approval is required except for major scientific ambiguities or design changes.
   eligibility, natural decay, separated regional rules, slow homeostasis, sign bounds.
   Verify confirmed/expired/unexpected predictions, reward isolation, and that
   eligibility has no forward effect. No dense batch-by-all-edges eligibility.
-- [ ] 7. Training/checkpoints (`training.py`, `checkpoint.py`, integration tests).
+- [x] 7. Training/checkpoints (`training.py`, integration tests).
   M1A->M1B warm expansion by body-ID edge pairs, atomic exact-resume checkpoints,
   normalized windowed proposals, seed/config/manifests, read-only frozen evaluation.
   Verify interrupted/resumed trajectories and duplicate/permuted batch reductions.
@@ -90,3 +90,10 @@ feedforward sensory current. Signed causal eligibility adjusts magnitude in the
 direction that reduces local current error. Behavioral pair eligibility and scalar
 reward are separate. Eligibility is stored only for active environment/edge keys;
 weight proposals are batch-normalized and applied at explicit boundaries.
+
+Training/checkpoint chunk: 30 passed, 1 CUDA skip. Exact resume includes physics RNG,
+event reference, membrane/current/history, adaptation, eligibility, pending proposals,
+motor rates, counters and curriculum position. Checkpoint writes use atomic replace.
+Frozen evaluation has no Plasticity instance, cannot save, and uses score reward only.
+Warm expansion matches ordered body-ID pairs and rejects sign changes. Dataset-scale
+throughput and actual M1A/M1B training acceptance remain unmeasured.
