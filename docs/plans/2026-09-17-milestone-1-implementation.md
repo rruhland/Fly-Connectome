@@ -28,10 +28,10 @@ approval is required except for major scientific ambiguities or design changes.
 - [ ] 2. Reproducible data and anatomy (`data.py`, `anatomy.py`, corresponding tests).
   Pin official release URLs/checksums, preserve metadata, require explicit selection
   rules, induced edges, reachability and SCC report, anatomy-only threshold choice.
-- [ ] 3. Events and retinotopy (`sensor.py`, `tests/test_sensor.py`).
+- [x] 3. Events and retinotopy (`sensor.py`, `tests/test_sensor.py`).
   Packed polarity events, persistent frame reference, fixed full-field hex mapping,
   registered L1-L3 projection only. Verify flashes, motion, empty and batched frames.
-- [ ] 4. Continuous body and Pong (`pong.py`, `tests/test_pong.py`).
+- [x] 4. Continuous body and Pong (`pong.py`, `tests/test_pong.py`).
   Vector physics, deterministic independent reset RNG, acceleration-limited opponent,
   visible resets, signed rate drive, bounded curriculum. Verify collisions, resets,
   braking/reversal/rest and absence of privileged state in observation interface.
@@ -71,3 +71,13 @@ Use only existing edges, record the partition in the manifest, and add no error 
 
 Chunk 1: `python -m pytest -q`: 5 passed. Contact direction/counts, immutable arrays,
 nested masks, isolated roster entries, invalid anatomy and deterministic hashes verified.
+
+Data/anatomy utilities: source checksum checks, explicit sign resolution, bounded path
+selection/reciprocal expansion/SCC inclusion, coverage/reachability and threshold choice
+verified on fixtures. Actual MaleCNS extraction remains open: the downloaded pair table
+has no neuropil metadata. Preserve that limitation; do not invent ROI coverage.
+
+Sensor/body chunks: 19 tests pass across the suite. Persistent event reference,
+ON/OFF polarity, full-field projection and no L4 injection; continuous force,
+independent per-environment resets, collisions, visible resets and reward fade verified.
+Default sensor routing is supplied explicitly by the caller, never inferred from type.
