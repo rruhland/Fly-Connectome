@@ -17,6 +17,7 @@ The resulting system must:
 - Learn behavior through reward-modulated STDP in central and motor pathways.
 - Control a paddle through continuous motor force rather than symbolic `UP`, `DOWN`, and `STAY` actions.
 - Run on a CPU reference backend and a sparse CUDA backend.
+- Provide optional training and evaluation interfaces that are operationally isolated from the model and learning loop.
 
 Milestone 1 deliberately targets one fixed version of Pong. Generalization to changed physics, other games, active vision, attention, experts, counterfactual imagination, and expanded connectome regions are later milestones.
 
@@ -60,7 +61,15 @@ continuous actuator force -> paddle motion
 
 The event-camera stream is the only observation received by the SNN. Simulator state may be used for environment logic, reward generation, and offline diagnostics, but never as network input.
 
-## 4. Connectome data and graph representation
+## 4. Implementation foundation
+
+Python is the milestone-one control plane for configuration, MaleCNS preprocessing, experiment orchestration, checkpointing, and process control. PyTorch supplies the first CPU and CUDA tensor backends with autograd disabled: all tensors have `requires_grad=False`, no backward pass or optimizer exists, and no learning rule may depend on PyTorch autograd.
+
+The simulation hot path may not iterate over individual neurons, edges, or spikes in Python. Membrane updates, spike delivery, eligibility, plasticity, and environment batching operate through whole-tensor or compiled operations behind a backend-neutral interface. Profiling, rather than assumption, determines whether a hotspot is replaced by a native C++/CUDA or Rust extension. The Python control plane remains unchanged if a native backend is added.
+
+Supporting data tools may include NumPy, Pandas, and PyArrow; verification uses Pytest. Brian2, Lava, PufferLib, Gymnasium, and a general-purpose SNN framework are not core dependencies.
+
+## 5. Connectome data and graph representation
 
 ### 4.1 Dataset
 
@@ -108,7 +117,7 @@ All variants use identical neuron, environment, plasticity, reward, and evaluati
 
 Threshold 5 is the reliability starting point. Before training, a lightweight anatomy report compares retained contact mass, reachability from sensory populations to DNa02, required region coverage, and recurrent connectivity. If T5 breaks the preregistered circuit, T3 becomes the canonical graph. T1 remains available to test whether weak measured edges form a useful plastic reservoir. Threshold choice is never tuned on Pong score.
 
-## 5. Milestone-one subnetwork
+## 6. Milestone-one subnetwork
 
 The seed populations are:
 
@@ -132,7 +141,7 @@ Recurrent partners are selected by preregistered graph rules rather than subject
 
 Body IDs and extraction rules are versioned so later milestones can expand the graph while preserving compatible learned weights.
 
-## 6. Visual sensor and retinotopic interface
+## 7. Visual sensor and retinotopic interface
 
 ### 6.1 Event stream
 
@@ -152,7 +161,7 @@ External ON/OFF events stimulate only preregistered plausible L1-L3 sensory-faci
 
 After a point, Pong resets immediately. The event-camera reference is not silently cleared or disabled. Repositioning the ball and paddles therefore produces ordinary ON/OFF events, allowing the network to observe that a new rally began.
 
-## 7. Neuron and synapse dynamics
+## 8. Neuron and synapse dynamics
 
 Milestone 1 uses current-based adaptive leaky integrate-and-fire point neurons with:
 
@@ -167,7 +176,7 @@ Conductance-based, graded-potential, multicompartment, and hybrid neuron models 
 
 Fixed delay values use anatomical/path-length information where practical and a small, documented non-Pong-specific default model otherwise. Delays are not plastic in milestone 1. Eligibility assigns delayed credit; it does not schedule spikes or act as a second connection.
 
-## 8. Plasticity
+## 9. Plasticity
 
 ### 8.1 Regional separation
 
@@ -224,7 +233,7 @@ Homeostasis does not teach the task. It prevents persistent runaway excitation o
 
 Homeostatic changes operate much more slowly than spike, prediction, and behavioral eligibility dynamics.
 
-## 9. Reward curriculum
+## 10. Reward curriculum
 
 The reward is separated into permanent score reward and temporary hit shaping:
 
@@ -251,7 +260,7 @@ There is no duplicated miss penalty. `beta` is moderately larger than the initia
 
 Reward is never neural input. Local visual prediction remains reward-independent. Final claims are based on performance after privileged hit shaping has ended.
 
-## 10. Pong environment and motor embodiment
+## 11. Pong environment and motor embodiment
 
 ### 10.1 Environment
 
@@ -276,7 +285,7 @@ Balanced or absent drive allows activation and velocity to decay, producing rest
 
 The paddle's movement is rendered normally, creating visual reafference. No paddle position, velocity, actuator state, artificial efference copy, or invented motor-to-visual synapse enters the network. Existing connectome recurrence may retain recent motor-generating state.
 
-## 11. Training stages
+## 12. Training stages
 
 ### 11.1 M1A: visual learning validation
 
@@ -295,7 +304,7 @@ Attach the central and DNa02 pathways and continuous actuator. Train with the bo
 
 Warm graph expansion preserves compatible learned weights. Same-size training from scratch remains a control; graph expansion never creates edges outside the newly selected measured subgraph.
 
-## 12. CPU, CUDA, and multiple environments
+## 13. CPU, CUDA, and multiple environments
 
 ### 12.1 Backends
 
@@ -318,7 +327,53 @@ Multiple environments are an optional engineering accelerator, not part of the c
 
 PufferLib is an engineering reference, not a milestone-one dependency. The custom vector environment uses contiguous state arrays, deterministic per-environment seeds, packed sparse event buffers with offsets, fixed-shape motor interfaces, and independent automatic resets. Pong simulation remains lightweight compared with the SNN.
 
-## 13. Lightweight telemetry
+## 14. User interfaces and process isolation
+
+The UI is a milestone-one usability and demonstration feature implemented after the headless learner works. It is never a model dependency. The canonical throughput and determinism benchmark is headless execution.
+
+### 14.1 Local browser architecture
+
+The UI is a local browser application rather than a native Windows application. A small local Python API/WebSocket process connects the browser to the training or evaluation process. Nothing is uploaded to a cloud service. Remote viewing from the laptop may later use the same local server over a private Tailscale connection.
+
+The browser frontend may use TypeScript, Canvas for Pong/events, WebGL for anatomical neuron rendering, and lightweight charts. UI dependencies remain optional and separate from the core training package.
+
+### 14.2 Training UI
+
+The training UI provides:
+
+- Start, pause, resume, safe stop, and explicit save-checkpoint commands.
+- Separate reset-environment and confirmed restart-from-initial-weights actions.
+- One sampled training environment, not every parallel environment.
+- Score, points, hits, misses, rally length, phase, hit-shaping coefficient, throughput, memory, graph threshold, device, environment count, and coarse firing statistics.
+- A bounded, rate-limited log and low-frequency metric charts.
+
+Training publishes telemetry only at safe synchronization boundaries through a bounded non-blocking latest-value queue or ring buffer. The producer never waits for the UI; stale snapshots are overwritten or dropped. Full spike tensors, weights, eligibility, and graph activity are never streamed during training.
+
+The Pong preview is based on the actual state of one sampled training environment, including the actual paddle position produced by the current DNa02 motor output and actuator dynamics. The worker sends a tiny state snapshot rather than encoded video. The browser renders that state. It may be delayed or displayed at a lower frame rate, but it must not simulate a divergent copy and present it as ground truth.
+
+When no UI subscriber exists, preview capture and telemetry serialization are disabled apart from an inexpensive enable check at the synchronization boundary. Closing the browser does not stop training. The training process continues if the UI server reloads or fails.
+
+The UI-enabled throughput target is within 1% of the same headless configuration. If it exceeds that budget, preview and telemetry rates are reduced; model execution is never changed to satisfy the UI.
+
+### 14.3 Evaluation UI
+
+Evaluation loads a checkpoint read-only in a separate process with all plasticity disabled. It may intentionally run slower to expose:
+
+- Live or replayed Pong, raw ON/OFF events, and accumulated event frames.
+- Anatomical positions of the milestone-one MaleCNS subnetwork.
+- Recent spikes, population rates, spike timelines, prediction error, opponent motor drive, and actuator state.
+- Filters for optic lobe, medulla, T4/T5, projection, central, and DNa02 populations.
+- Level-of-detail edge rendering and selected connection inspection.
+- Learned, scripted, random, and human control comparisons.
+- Pause, single-step, slow-motion, and reset controls.
+
+The evaluation UI initially describes and renders the selected milestone-one subnetwork, not the full MaleCNS. It cannot mutate the source checkpoint or a running training process.
+
+### 14.4 UI truthfulness
+
+Displayed rewards and metrics must match the approved model. Unapproved survival rewards, movement penalties, or full-CNS counts shown in rough mockups are not implemented merely for presentation. Approximate interpolation, delayed telemetry, or sampled data is clearly labeled.
+
+## 15. Lightweight telemetry
 
 Runtime instrumentation must not materially reduce training throughput. Record only:
 
@@ -331,7 +386,7 @@ Runtime instrumentation must not materially reduce training throughput. Record o
 
 Do not continuously record full spike rasters, per-edge histories, eligibility tensors, pathway usage, or lesion statistics. Saved checkpoints permit deeper offline analysis later.
 
-## 14. Verification strategy
+## 16. Verification strategy
 
 Before long training runs, verify:
 
@@ -364,6 +419,10 @@ Before long training runs, verify:
 - Identical duplicated trajectories yield the same normalized update as one trajectory.
 - Environment-order permutation does not change reduced updates.
 - Resetting one environment cannot affect another's state.
+- Headless and UI-enabled runs with identical seeds produce identical updates and checkpoints.
+- A disconnected or slow UI cannot block the training process.
+- Training preview snapshots match the sampled environment state and motor-driven paddle position.
+- Evaluation opens checkpoints read-only and cannot enable plasticity.
 
 ### Behavioral baselines
 
@@ -372,7 +431,7 @@ Before long training runs, verify:
 - Persistence visual predictor.
 - Trained learner after hit shaping reaches zero.
 
-## 15. Deferred work
+## 17. Deferred work
 
 Later milestones may add:
 
@@ -388,7 +447,7 @@ Later milestones may add:
 - Internally generated replay and counterfactual imagined environments.
 - Removal of score reward in favor of visual/intrinsic persistence objectives.
 
-## 16. Sources
+## 18. Sources
 
 - MaleCNS project and downloads: <https://male-cns.janelia.org/> and <https://male-cns.janelia.org/download/>
 - MaleCNS publication: <https://doi.org/10.1016/j.cell.2026.08.015>
@@ -401,4 +460,3 @@ Later milestones may add:
 - DNa02 steering: <https://pmc.ncbi.nlm.nih.gov/articles/PMC12279373/>
 - NeuroMechFly v2: <https://gizemozd.github.io/assets/pdf/2024_neuromechflyv2.pdf>
 - PufferLib documentation: <https://puffer.ai/docs.html>
-
