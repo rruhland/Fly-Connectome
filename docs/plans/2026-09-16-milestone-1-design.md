@@ -369,7 +369,31 @@ Evaluation loads a checkpoint read-only in a separate process with all plasticit
 
 The evaluation UI initially describes and renders the selected milestone-one subnetwork, not the full MaleCNS. It cannot mutate the source checkpoint or a running training process.
 
-### 14.4 UI truthfulness
+### 14.4 Exploratory visual-circuit diagnostics
+
+The evaluation process includes a deterministic, headless diagnostic runner whose results can be controlled and inspected through the evaluation UI. These diagnostics run only against read-only checkpoints with plasticity disabled. They are never executed in the training process, do not publish additional training telemetry, and cannot affect training throughput or learned state.
+
+The runner supports controlled visual probes such as:
+
+- Local ON and OFF flashes and contrast transitions at selected retinotopic columns.
+- Moving ON and OFF edges over configurable directions and speeds.
+- Small moving targets and neighboring-column activation sequences.
+- Temporary evaluation-only silencing of selected populations such as L1, L2, L3, L4, T4/T5, LPi, or downstream visual projection neurons.
+
+For each probe, the runner may record spike rasters, event-triggered population responses, response latency, decay time, sparsity, directional tuning, polarity preference, neighboring-column influence, and propagation through selected connectome paths. Diagnostic results are stored as separate, reproducible bundles containing the checkpoint identity, graph manifest, stimulus definition, seed, backend, and recorded traces. They are not written back into the checkpoint.
+
+The evaluation UI provides views for:
+
+- Stimulus construction and replay.
+- L1-L4 cell-type response profiles.
+- T4/T5 direction, speed, and event-polarity tuning.
+- Side-by-side intact and population-silenced responses.
+- Anatomical propagation overlays on the selected MaleCNS subgraph.
+- Comparisons among initial, visually trained, and Pong-trained checkpoints.
+
+These diagnostics are exploratory scientific instruments rather than milestone acceptance gates. They help determine whether expected lamina, medulla, motion, and downstream response patterns emerge; reveal how the selected populations work together; and provide evidence for later choices about neuron models, omitted partners, expanded subnetworks, and biological fidelity. A diagnostic result that differs from fly physiology is recorded and investigated but does not by itself fail milestone one, whose formal success criteria remain the behavioral, predictive, stability, and backend criteria in section 2.
+
+### 14.5 UI truthfulness
 
 Displayed rewards and metrics must match the approved model. Unapproved survival rewards, movement penalties, or full-CNS counts shown in rough mockups are not implemented merely for presentation. Approximate interpolation, delayed telemetry, or sampled data is clearly labeled.
 
@@ -412,6 +436,8 @@ Before long training runs, verify:
 - Reward affects only eligible central/motor connections.
 - Homeostasis bounds sustained activity without forcing spikes during quiet input.
 - Continuous DNa02 drive produces acceleration, braking, reversal, and rest.
+- Evaluation-only visual probes and population silencing are deterministic, leave checkpoint state unchanged, and remain outside the training process.
+- Exploratory L1-L4 response profiles, neighboring-column effects, T4/T5 tuning, and downstream propagation are reportable diagnostics rather than pass/fail criteria.
 
 ### Backend and batching
 
