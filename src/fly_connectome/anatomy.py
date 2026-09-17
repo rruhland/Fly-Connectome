@@ -57,13 +57,18 @@ def anatomy_report(graph, sensory_ids, motor_ids, regions):
     active[graph.post] = True
     labels = _components(graph)
     components = []
-    for label in np.unique(labels):
+    sizes = np.bincount(labels)
+    recurrent = np.union1d(np.flatnonzero(sizes > 1), labels[graph.pre[graph.pre == graph.post]])
+    for label in recurrent:
         members = np.flatnonzero(labels == label)
-        if len(members) > 1 or np.any((graph.pre == members[0]) & (graph.post == members[0])):
-            components.append(graph.body_ids[members].tolist())
+        components.append(graph.body_ids[members].tolist())
+    active_regions = set()
+    for i in np.flatnonzero(active):
+        labels_for_neuron = regions[i]
+        active_regions.update([labels_for_neuron] if isinstance(labels_for_neuron, str) else labels_for_neuron)
     return dict(neurons=len(graph.body_ids), edges=len(graph.pre), contacts=int(graph.contacts.sum()),
                 reachable_motor_ids=graph.body_ids[_indices(graph, motor_ids)[reach[_indices(graph, motor_ids)]]].tolist(),
-                active_regions=sorted(set(np.asarray(regions)[active].tolist())),
+                active_regions=sorted(active_regions),
                 recurrent_components=sorted(components), isolated_body_ids=graph.body_ids[~active].tolist())
 
 

@@ -97,3 +97,25 @@ motor rates, counters and curriculum position. Checkpoint writes use atomic repl
 Frozen evaluation has no Plasticity instance, cannot save, and uses score reward only.
 Warm expansion matches ordered body-ID pairs and rejects sign changes. Dataset-scale
 throughput and actual M1A/M1B training acceptance remain unmeasured.
+
+Review fixes verified (45 passed, 1 CUDA skip): sparse behavioral arrival traces
+survive until a later postsynaptic spike; trace time is measured from synaptic arrival,
+not presynaptic emission. Homeostatic decay integrates simulated time. Feedforward
+observation edges are fixed under prediction-error learning (homeostasis still applies);
+only recurrent predictive edges receive local prediction-error updates. This keeps the
+anatomically separated observation current from learning to inflate its own target.
+
+Evaluation/probe and optional UI infrastructure implemented and unit/integration tested.
+Remaining acceptance work includes browser inspection, richer evaluation views,
+throughput measurement, real-data extraction, initial artifact creation, and learning runs.
+The independent reviewer supplied concrete timing/homeostasis findings before its
+session hit a usage limit; it did not finish a complete review of every module.
+
+Preregistered extraction defaults are in `extraction.Selection` and executed by
+`scripts/prepare_malecns.py`: right optic lobe, 8-hop measured paths at T3,
+one reciprocal expansion at 20 contacts each way, SCC cap 128, confidence >= .5,
+gain .005. Central candidates are official `cb_intrinsic` neurons with recorded
+AOTU/PVLP/PLP innervation. Signs use curated ground truth, then confident individual
+prediction, then confident cell-type prediction. Glutamate/GABA/histamine are modeled
+as inhibitory and acetylcholine as excitatory (fixed model convention, not a receptor
+claim). Four official raw files are pinned by local SHA-256 and stay uncommitted.

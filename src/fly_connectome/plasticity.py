@@ -36,11 +36,12 @@ class Plasticity:
             raise ValueError("learning rates and pruning threshold must be nonnegative")
         self.keys = torch.empty(0, dtype=torch.long, device=network.device)
         self.values = torch.empty(0, device=network.device)
-        self.pre_trace = torch.zeros_like(network.voltage)
+        self.arrival_trace = torch.empty(0, device=network.device)
         self.post_trace = torch.zeros_like(network.voltage)
         self.expected = torch.zeros_like(network.voltage)
         self.rates = torch.zeros_like(network.voltage)
         self.proposals = torch.zeros(network.e, device=network.device)
+        self.homeostatic_exponent = torch.zeros(network.e, device=network.device)
 
     @torch.no_grad()
     def observe(self, activity, reward):
@@ -50,25 +51,30 @@ class Plasticity:
         dt = n.config.dt
         self.values.mul_(math.exp(-dt / cfg.tau_eligibility))
         pair_decay = math.exp(-dt / cfg.tau_pair)
-        self.pre_trace.mul_(pair_decay)
+        self.arrival_trace.mul_(pair_decay)
         self.post_trace.mul_(pair_decay)
         env, edges = activity.arrival_environments, activity.arrival_edges
+        plastic = n.pathways[edges] != 0
+        env, edges = env[plastic], edges[plastic]
         arrival_keys = env * n.e + edges
         keys = torch.unique(torch.cat((self.keys, arrival_keys)), sorted=True)
         values = torch.zeros(len(keys), device=n.device)
         values[torch.searchsorted(keys, self.keys)] = self.values
+        traces = torch.zeros(len(keys), device=n.device)
+        traces[torch.searchsorted(keys, self.keys)] = self.arrival_trace
         arrivals = torch.zeros(len(keys), device=n.device)
         arrivals.index_add_(0, torch.searchsorted(keys, arrival_keys), torch.ones(len(edges), device=n.device))
+        traces.add_(arrivals)
         environments, edge_ids = keys.div(n.e, rounding_mode='floor'), keys.remainder(n.e)
         post = n.post[edge_ids]
-        pre = n.pre[edge_ids]
         behavioral = n.pathways[edge_ids] == 2
         # Causal arrival followed by a spike potentiates; post-before-pre depresses.
-        pairing = (activity.spikes[environments, post] * (self.pre_trace[environments, pre] + arrivals)
+        pairing = (activity.spikes[environments, post] * traces
                    - arrivals * self.post_trace[environments, post])
         values.add_(torch.where(behavioral, pairing, arrivals * n.signs[edge_ids]))
-        alive = values.abs() > cfg.prune_epsilon
+        alive = (values.abs() > cfg.prune_epsilon) | (traces > cfg.prune_epsilon)
         self.keys, self.values = keys[alive], values[alive]
+        self.arrival_trace = traces[alive]
         environments, edge_ids, post, behavioral = (x[alive] for x in (environments, edge_ids, post, behavioral))
         # Prediction issued on the preceding tick is tested against this tick's local
         # feedforward current. Recurrent current cannot confirm its own prediction.
@@ -80,9 +86,10 @@ class Plasticity:
             cfg.eta_prediction * delta * self.values)
         self.proposals.add_(_sum_sorted(edge_ids, proposal, n.e) / n.batch)
         self.expected.copy_((activity.predicted / n.config.threshold).clamp(0, 1))
-        self.pre_trace.add_(activity.spikes)
         self.post_trace.add_(activity.spikes)
         self.rates.lerp_(activity.spikes.float() / dt, 1 - math.exp(-dt / cfg.tau_homeostasis))
+        overload = (self.rates.mean(0)[n.post] - cfg.maximum_rate).clamp(min=0)
+        self.homeostatic_exponent.add_(overload, alpha=cfg.homeostasis_rate * dt)
 
     @torch.no_grad()
     def reward(self, reward):
@@ -96,6 +103,6 @@ class Plasticity:
     def synchronize(self):
         n, cfg = self.network, self.config
         n.magnitudes.add_(self.proposals).clamp_(0, cfg.maximum_weight)
-        overload = (self.rates.mean(0)[n.post] - cfg.maximum_rate).clamp(min=0)
-        n.magnitudes.mul_(torch.exp(-cfg.homeostasis_rate * overload))
+        n.magnitudes.mul_(torch.exp(-self.homeostatic_exponent))
         self.proposals.zero_()
+        self.homeostatic_exponent.zero_()

@@ -16,6 +16,9 @@ test = ["pytest>=8"]
 [tool.setuptools.packages.find]
 where = ["src"]
 
+[tool.setuptools.package-data]
+"fly_connectome.ui" = ["*.html", "*.css", "*.js"]
+
 [tool.pytest.ini_options]
 pythonpath = ["src"]
 testpaths = ["tests"]

@@ -58,15 +58,18 @@ class Trainer:
         self.up_indices = torch.tensor([index[b] for b in motor_up], device=device)
         self.down_indices = torch.tensor([index[b] for b in motor_down], device=device)
         self.motor_rates = torch.zeros(len(seeds), len(graph.body_ids), device=device)
+        self.control_rng = (self.environment.rng + 123457).remainder(2147483647)
         self.step_index = 0
-        self.statistics = torch.zeros(8, dtype=torch.float64, device=device)
+        self.statistics = torch.zeros(11, dtype=torch.float64, device=device)
         self.previous_observed = torch.zeros_like(self.network.voltage)
         self.previous_predicted = torch.zeros_like(self.network.voltage)
+        self.previous_events = torch.zeros_like(self.network.voltage)
 
     @property
     def metrics(self):
         names = ('points', 'misses', 'hits', 'reward', 'prediction_squared_error',
-                 'persistence_squared_error', 'prediction_samples', 'spikes')
+                 'persistence_squared_error', 'prediction_samples', 'spikes',
+                 'event_prediction_squared_error', 'event_persistence_squared_error', 'event_samples')
         return dict(zip(names, self.statistics.cpu().tolist()))
 
     @torch.no_grad()
@@ -75,6 +78,11 @@ class Trainer:
         frame = env.render(self.retina.spec['height'], self.retina.spec['width'])
         events = self.camera.observe(frame)
         injection = self.retina.project(events) * cfg.sensory_gain
+        sensed = injection[:, self.retina.injected] / cfg.sensory_gain
+        self.statistics[8] += ((sensed - self.previous_predicted[:, self.retina.injected]) ** 2).sum()
+        self.statistics[9] += ((sensed - self.previous_events[:, self.retina.injected]) ** 2).sum()
+        self.statistics[10] += sensed.numel()
+        self.previous_events.copy_(injection / cfg.sensory_gain)
         # Observation boundary: only camera-derived currents enter the network.
         for tick in range(cfg.neural_steps):
             activity = net.step(injection if tick == 0 else torch.zeros_like(injection))
@@ -90,12 +98,12 @@ class Trainer:
             if self.plasticity is not None:
                 self.plasticity.observe(activity, torch.zeros(env.batch, device=self.device))
         drive = (self.motor_rates[:, self.up_indices].mean(1) - self.motor_rates[:, self.down_indices].mean(1)) / cfg.motor_reference_hz
-        if cfg.stage == 'M1A' or control == 'scripted':
+        if (cfg.stage == 'M1A' and not self.evaluation) or control == 'scripted':
             drive = -(env.ball[:, 1] - env.body.position) * 10
         elif control == 'random':
             # Independent deterministic benchmark drive from the environment PRNG.
-            env.rng = (env.rng * 48271 + 1).remainder(2147483647)
-            drive = env.rng.float() / 2147483647 * 2 - 1
+            self.control_rng = (self.control_rng * 48271 + 1).remainder(2147483647)
+            drive = self.control_rng.float() / 2147483647 * 2 - 1
         elif control == 'human':
             if human_drive is None:
                 raise ValueError("human control requires explicit continuous drive")
@@ -124,6 +132,18 @@ class Trainer:
     def reset_environment(self):
         self.environment.reset(torch.ones(self.environment.batch, device=self.device, dtype=torch.bool))
 
+    def snapshot(self):
+        env = self.environment
+        alpha = 0. if self.evaluation else self.curriculum.alpha(self.step_index)
+        phase = 'score-only' if alpha == 0 else ('bootstrap' if self.step_index < self.curriculum.bootstrap else 'fade')
+        return dict(step=self.step_index, sampled_environment=0, sampled=True,
+                    ball=env.ball[0].cpu().tolist(), player_y=env.body.position[0].item(),
+                    opponent_y=env.opponent[0].item(), activation=env.body.activation[0].item(),
+                    velocity=env.body.velocity[0].item(), phase=phase, alpha=alpha,
+                    device=str(self.device), environments=env.batch, neurons=self.network.n,
+                    edges=self.network.e, graph_threshold=self.manifest.get('threshold'),
+                    physics=asdict(env.config), metrics=self.metrics, evaluation=self.evaluation)
+
     def save(self, path):
         if self.evaluation:
             raise ValueError("evaluation checkpoints are read-only")
@@ -151,7 +171,9 @@ class Trainer:
                 os.unlink(temp)
 
 
-def load_checkpoint(path, *, device='cpu', evaluation=False):
+def load_checkpoint(path, *, device='cpu', evaluation=False, seeds=None):
+    if seeds is not None and not evaluation:
+        raise ValueError("new seeds are only allowed for fresh frozen evaluation")
     payload = torch.load(path, map_location=device, weights_only=True)
     if payload['schema_version'] != 1:
         raise ValueError("unsupported checkpoint schema")
@@ -160,10 +182,14 @@ def load_checkpoint(path, *, device='cpu', evaluation=False):
     if m['manifest'].get('graph_sha256', graph.identity()) != graph.identity():
         raise ValueError("checkpoint graph/manifest mismatch")
     trainer = Trainer(graph, m['delays'], m['pathways'], Retina(**m['retina'], device=device),
-                      m['motor_up'], m['motor_down'], m['seeds'], config=RunConfig(**m['config']),
+                      m['motor_up'], m['motor_down'], seeds if seeds is not None else m['seeds'], config=RunConfig(**m['config']),
                       physics=Physics(**m['physics']), neurons=NeuronConfig(**m['neurons']),
                       learning=LearningConfig(**m['learning']), curriculum=Curriculum(**m['curriculum']),
                       manifest=m['manifest'], device=device, evaluation=evaluation)
+    trainer.training_seeds = m['seeds']
+    if seeds is not None:
+        trainer.network.magnitudes.copy_(s['network']['magnitudes'])
+        return trainer
     for obj, name in ((trainer.network, 'network'), (trainer.plasticity, 'plasticity'),
                       (trainer.environment, 'environment'), (trainer.environment.body, 'body'),
                       (trainer.camera, 'camera'), (trainer, 'trainer')):
