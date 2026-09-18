@@ -1,4 +1,4 @@
-"""Frozen input-current audit of measured T4/T5 pathways, outside training."""
+"""Frozen input-current audit of measured visual pathways, outside training."""
 import argparse
 from collections import Counter
 from dataclasses import asdict
@@ -18,6 +18,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('checkpoint')
     parser.add_argument('--output', required=True)
+    parser.add_argument('--populations', default='T4,T5')
     args = parser.parse_args()
     torch.set_num_threads(1)
     source = load_checkpoint(args.checkpoint, evaluation=True, seeds=[1003], warmup=False)
@@ -29,7 +30,10 @@ def main():
     camera = EventCamera(3, 32, 64)
     background = torch.tensor([False, True, False])[:, None, None].expand(-1, 32, 64).clone()
     camera.previous.copy_(background)
-    masks = {label: torch.tensor(np.char.startswith(types, label)) for label in ('T4', 'T5')}
+    masks = {label: torch.tensor(np.char.startswith(types, label) if label in ('T4','T5') else types == label)
+             for label in args.populations.split(',')}
+    if any(not mask.any() for mask in masks.values()):
+        raise ValueError('every audited population must exist in the measured roster')
     # Separate E/I state is evaluation instrumentation, using the very same arrivals.
     excitation, inhibition = torch.zeros_like(net.voltage), torch.zeros_like(net.voltage)
     counts = torch.zeros_like(net.voltage, dtype=torch.int64)
