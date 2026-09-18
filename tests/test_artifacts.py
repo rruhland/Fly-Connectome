@@ -37,3 +37,11 @@ def test_visual_stage_and_warm_motor_expansion(tmp_path):
     assert updated.retina.spec['injection'] == {'L1': 'contrast'}
     with pytest.raises(ValueError, match='dynamics'):
         initialize(tmp_path, stage='M1B', dynamics_profile=profile, warm_checkpoint=path)
+    updated.save(tmp_path / 'resting.pt')
+    signed = dict(profile, id='test-signed', learning={'prediction_encoding': 'signed-current-v1'})
+    with pytest.raises(ValueError, match='prediction encoding'):
+        initialize(tmp_path, stage='M1B', dynamics_profile=signed, warm_checkpoint=tmp_path / 'resting.pt')
+    visual = initialize(tmp_path, stage='M1A', dynamics_profile=signed)
+    visual.save(tmp_path / 'signed.pt')
+    expanded = initialize(tmp_path, stage='M1B', dynamics_profile=signed, warm_checkpoint=tmp_path / 'signed.pt')
+    assert expanded.learning_config.prediction_encoding == 'signed-current-v1'

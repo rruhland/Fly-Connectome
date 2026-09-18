@@ -6,6 +6,7 @@ import numpy as np
 from .graph import Graph
 from .dynamics import NeuronConfig
 from .pong import Physics
+from .plasticity import LearningConfig
 from .sensor import Retina
 from .training import Trainer, RunConfig, load_checkpoint, warm_start
 
@@ -50,9 +51,12 @@ def initialize(directory, *, stage='M1A', seeds=(1,), threshold=None, device='cp
     model = Trainer(graph, [1] * len(graph.pre), pathways, Retina(**retina_spec, device=device),
                     up, down, list(seeds), config=RunConfig(stage=stage,
                         warmup_steps=dynamics_profile.get('warmup_steps', 0) if dynamics_profile else 0),
-                    manifest=manifest, device=device, neurons=neurons)
+                    manifest=manifest, device=device, neurons=neurons,
+                    learning=LearningConfig(**(dynamics_profile.get('learning', {}) if dynamics_profile else {})))
     if warm_checkpoint is not None:
         source = load_checkpoint(warm_checkpoint, device=device, evaluation=True)
+        if source.learning_config.prediction_encoding != model.learning_config.prediction_encoding:
+            raise ValueError('warm expansion requires matching prediction encoding')
         if (source.network.config != model.network.config or
                 source.retina.spec['injection'] != model.retina.spec['injection']):
             raise ValueError('warm expansion requires matching dynamics and sensory transduction')

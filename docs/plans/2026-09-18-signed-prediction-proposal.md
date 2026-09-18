@@ -1,7 +1,9 @@
 # Signed local prediction representation: proposed follow-up
 
-Status: proposed, not implemented. The resting-current correction is implemented;
-this document identifies a separate representation issue exposed by that correction.
+Status: approved by the user on 2026-09-18 and implemented. The resting-current
+correction exposed this separate representation issue. New experiments explicitly
+use `LearningConfig.prediction_encoding = 'signed-current-v1'`; missing settings
+retain `rectified-current-v1`. The update equation and eligibility are unchanged.
 
 ## Concrete issue
 
@@ -45,8 +47,8 @@ For an inhibitory eligible edge (eligibility negative):
 
 The analogous excitatory cases retain their existing behavior. This changes the
 representation used by learning, even though the local update equation is the
-same, and therefore needs explicit approval under the instruction to keep local
-learning fixed.
+same. The user explicitly approved this representation change after reviewing
+this proposal; no further approval is needed for its implementation or experiment.
 
 ## Verification and experiment
 

@@ -1,0 +1,67 @@
+{
+  "id": "resting-v1-signed-prediction-v1",
+  "status": "probe-selected approximation; M1A learning unverified",
+  "neurons": {
+    "dt": 0.0010416666666666667,
+    "tau_membrane": 0.02,
+    "tau_current": 0.005,
+    "threshold": 1.0,
+    "refractory_steps": 2,
+    "tau_adaptation": 1.0,
+    "adaptation_jump": 0.05,
+    "class_parameters": {
+      "L1": {
+        "tau_membrane": 0.02,
+        "tau_current": 0.005,
+        "rest_current": 1.5
+      },
+      "L2": {
+        "tau_membrane": 0.02,
+        "tau_current": 0.005,
+        "rest_current": 1.5
+      },
+      "L3": {
+        "tau_membrane": 0.04,
+        "tau_current": 0.005,
+        "rest_current": 1.5
+      },
+      "Mi1": {
+        "tau_membrane": 0.03,
+        "tau_current": 0.01,
+        "rest_current": 1.2
+      },
+      "Tm3": {
+        "tau_membrane": 0.02,
+        "tau_current": 0.01,
+        "rest_current": 1.2
+      },
+      "Tm1": {
+        "tau_membrane": 0.03,
+        "tau_current": 0.01,
+        "rest_current": 1.2
+      },
+      "Tm2": {
+        "tau_membrane": 0.02,
+        "tau_current": 0.01,
+        "rest_current": 1.2
+      },
+      "Mi9": {
+        "tau_membrane": 0.04,
+        "tau_current": 0.01,
+        "rest_current": 1.2
+      }
+    },
+    "tau_sensory": 0.02
+  },
+  "injection": {
+    "L1": "contrast",
+    "L2": "contrast",
+    "L3": "contrast"
+  },
+  "warmup_steps": 500,
+  "calibration_config_sha256": "63e94b828ac450f73fb27e3544ee82334b7f25f3078ca1009509a6f92066159e",
+  "calibration_checkpoint_sha256": "bb7f6575fb077f1c357dc6da6b866ad92fa605a74f26a4013be8958f4783375d",
+  "learning": {
+    "prediction_encoding": "signed-current-v1"
+  }
+}

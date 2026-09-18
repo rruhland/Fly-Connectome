@@ -143,3 +143,34 @@ def test_canonical_reduction_handles_cancellation_and_permutation():
     values = torch.tensor([1e5, -1e5, .03, .2, -.1])
     perm = torch.tensor([3, 1, 4, 2, 0])
     torch.testing.assert_close(_sum_sorted(keys, values, 2), _sum_sorted(keys[perm], values[perm], 2), atol=0, rtol=0)
+
+
+@pytest.mark.parametrize('sign', [-1, 1])
+@pytest.mark.parametrize('case', ['unexpected', 'confirmed', 'expired'])
+def test_signed_prediction_preserves_inhibitory_and_excitatory_information(sign, case):
+    results = []
+    for batch in (1, 2):
+        graph = Graph.from_contacts([10, 20], [10], [20], [1], [sign, 1], .5)
+        net = Network(graph, [1], ['predictive'], batch=batch)
+        rule = Plasticity(net, LearningConfig(prediction_encoding='signed-current-v1',
+                          eta_prediction=.1, homeostasis_rate=0.))
+        rule.expected[:, 1] = 0 if case == 'unexpected' else sign * .4
+        observed = torch.zeros(batch, 2)
+        observed[:, 1] = 0 if case == 'expired' else sign * .4
+        rule.observe(Activity(torch.zeros(batch, 2, dtype=torch.bool), observed, observed,
+                     torch.arange(batch), torch.zeros(batch, dtype=torch.long)), torch.ones(batch))
+        rule.synchronize()
+        expected = .5 + {'unexpected': .04, 'confirmed': 0, 'expired': -.04}[case]
+        torch.testing.assert_close(net.magnitudes, torch.tensor([expected]))
+        assert net.signs.item() == sign and net.e == 1
+        results.append(net.magnitudes)
+    torch.testing.assert_close(*results, rtol=0, atol=0)
+
+
+def test_prediction_encoding_is_explicit_and_bounded():
+    values = torch.tensor([-2., -.4, 0., .4, 2.])
+    torch.testing.assert_close(LearningConfig().encode(values, 1.), values.clamp(0, 1))
+    cfg = LearningConfig(prediction_encoding='signed-current-v1')
+    torch.testing.assert_close(cfg.encode(values, 1.), values.clamp(-1, 1))
+    with pytest.raises(ValueError, match='prediction encoding'):
+        LearningConfig(prediction_encoding='unknown')

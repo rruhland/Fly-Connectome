@@ -103,13 +103,13 @@ class Trainer:
             if self.evaluation:
                 self.visible_spikes |= activity.spikes
                 self.evaluation_spike_counts += activity.spikes
-            observed = (activity.observed / net.config.threshold).clamp(0, 1)
+            observed = self.learning_config.encode(activity.observed, net.config.threshold)
             self.statistics[4] += ((observed - self.previous_predicted) ** 2).sum()
             self.statistics[5] += ((observed - self.previous_observed) ** 2).sum()
             self.statistics[6] += observed.numel()
             self.statistics[7] += activity.spikes.sum()
             self.previous_observed.copy_(observed)
-            self.previous_predicted.copy_((activity.predicted / net.config.threshold).clamp(0, 1))
+            self.previous_predicted.copy_(self.learning_config.encode(activity.predicted, net.config.threshold))
             self.motor_rates.lerp_(activity.spikes.float() / net.config.dt,
                                    1 - math.exp(-net.config.dt / cfg.tau_motor_rate))
             if self.plasticity is not None:

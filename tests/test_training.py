@@ -103,6 +103,7 @@ def test_legacy_checkpoint_keeps_zero_background_and_impulse_semantics(tmp_path)
     for key in ('class_parameters', 'tau_sensory'):
         payload['metadata']['neurons'].pop(key)
     payload['metadata']['config'].pop('warmup_steps')
+    payload['metadata']['learning'].pop('prediction_encoding')
     for key in ('rest_current', 'membrane_decay', 'current_decay', 'sensory_state'):
         payload['state']['network'].pop(key)
     torch.save(payload, path)
@@ -111,3 +112,26 @@ def test_legacy_checkpoint_keeps_zero_background_and_impulse_semantics(tmp_path)
     a.run(5); b.run(5)
     for key in ('voltage', 'magnitudes', 'history'):
         torch.testing.assert_close(getattr(a.network, key), getattr(b.network, key), rtol=0, atol=0)
+
+
+def test_signed_prediction_metrics_and_pending_state_resume(tmp_path):
+    from fly_connectome.dynamics import NeuronConfig
+    from fly_connectome.plasticity import LearningConfig
+    base = trainer()
+    a = Trainer(base.network.graph, [1]*3, ['predictive', 'behavioral', 'behavioral'],
+        Retina(**dict(base.retina.spec, injection={'L2': 'contrast'})), [30], [40], [1],
+        config=base.config, neurons=NeuronConfig(dt=base.network.config.dt, tau_sensory=.02),
+        learning=LearningConfig(prediction_encoding='signed-current-v1'))
+    a.step()
+    assert a.previous_observed[0, 0] < 0
+    torch.testing.assert_close(a.previous_predicted, a.plasticity.expected)
+    path = tmp_path / 'signed.pt'
+    a.save(path)
+    b = load_checkpoint(path)
+    assert b.learning_config.prediction_encoding == 'signed-current-v1'
+    a.run(5); b.run(5)
+    for obj_a, obj_b, keys in ((a, b, ('statistics', 'previous_observed', 'previous_predicted')),
+                             (a.plasticity, b.plasticity, ('expected', 'values', 'proposals')),
+                             (a.network, b.network, ('voltage', 'magnitudes'))):
+        for key in keys:
+            torch.testing.assert_close(getattr(obj_a, key), getattr(obj_b, key), rtol=0, atol=0)

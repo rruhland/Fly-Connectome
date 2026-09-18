@@ -226,5 +226,24 @@ Next decision: `2026-09-18-signed-prediction-proposal.md`. Signed ON transductio
 exposed that the unchanged rule clips all negative observations/predictions to zero.
 User was asked to approve preserving these signs via bounded [-1,1] encoding for
 new experiments, leaving the local equation and all other invariants unchanged.
-This representation change is NOT implemented pending that decision. Scientific
-acceptance, CUDA evidence, full-process UI overhead and M1B learning remain open.
+The user approved this representation change on 2026-09-18 and requested diagnosis
+and repair of T4/T5 silence. Scientific acceptance, CUDA evidence, full-process UI
+overhead and M1B learning remain open.
+
+## Signed-current prediction and motion-pathway investigation
+
+Implemented explicit `signed-current-v1` encoding in local updates and metrics.
+Absent configuration retains `rectified-current-v1` for old checkpoints. Warm
+expansion and baseline comparisons reject differing encodings. No eligibility,
+topology, sign, reward, or homeostasis changes. `configs/resting-v1-signed-prediction-v1.json`
+is the separate experiment profile. Tests: 76 passed, 3 CUDA skips, including both
+signs of unexpected/confirmed/expired predictions, duplicated batches, signed metric
+state, exact resume and legacy loading. Separate initial/trained artifacts use the
+`checkpoints/signed-v1-visual-` prefix; the 500-step experiment is in progress.
+
+Frozen current tracing found measured Mi1/Tm3 and Tm1/Tm2 input reaches T4/T5.
+Peak voltage was only 0.114 / 0.123 versus threshold 1; even peak excitation <0.48.
+T5 inhibition was zero, ruling out inhibitory cancellation as its immediate cause.
+T4/T5 have zero intrinsic current in the first resting profile. A preregistered
+subthreshold class-current experiment is now testing this operating-point mismatch.
+No biological direction-selectivity or M1 acceptance claim follows from waking cells.

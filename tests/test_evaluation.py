@@ -74,6 +74,16 @@ def test_comparison_rejects_different_neuron_dynamics(tmp_path):
         compare(first, second, [100], 5)
 
 
+def test_comparison_rejects_different_prediction_encodings(tmp_path):
+    model = trainer()
+    first, second = tmp_path / 'a.pt', tmp_path / 'b.pt'
+    model.save(first)
+    model.learning_config = replace(model.learning_config, prediction_encoding='signed-current-v1')
+    model.save(second)
+    with pytest.raises(ValueError, match='prediction encoding'):
+        compare(first, second, [100], 5)
+
+
 def test_saved_diagnostic_bundles_preserve_both_runs_and_replay(tmp_path):
     from fly_connectome.diagnostics import save_bundle
     import json

@@ -6,6 +6,7 @@ import torch
 
 @dataclass(frozen=True)
 class LearningConfig:
+    prediction_encoding: str = 'rectified-current-v1'
     eta_prediction: float = .0001
     eta_reward: float = .0001
     tau_eligibility: float = 1.
@@ -15,6 +16,13 @@ class LearningConfig:
     maximum_rate: float = 50.
     maximum_weight: float = 10.
     prune_epsilon: float = 1e-8
+
+    def __post_init__(self):
+        if self.prediction_encoding not in ('rectified-current-v1', 'signed-current-v1'):
+            raise ValueError('unknown prediction encoding')
+
+    def encode(self, current, threshold):
+        return (current / threshold).clamp(-1 if self.prediction_encoding == 'signed-current-v1' else 0, 1)
 
 
 def _sum_sorted(keys, values, size):
@@ -82,13 +90,13 @@ class Plasticity:
         # Prediction issued on the preceding tick is tested against this tick's local
         # feedforward current. Recurrent current cannot confirm its own prediction.
         # Current is normalized by the cell's baseline firing threshold, not a learned head.
-        observed = (activity.observed / n.config.threshold).clamp(0, 1)
+        observed = cfg.encode(activity.observed, n.config.threshold)
         delta = observed[environments, post] - self.expected[environments, post]
         proposal = torch.where(behavioral,
             cfg.eta_reward * reward.detach().clamp(-1, 1)[environments] * self.values,
             cfg.eta_prediction * delta * self.values)
         self._accumulate(edge_ids, proposal)
-        self.expected.copy_((activity.predicted / n.config.threshold).clamp(0, 1))
+        self.expected.copy_(cfg.encode(activity.predicted, n.config.threshold))
         self.post_trace.add_(activity.spikes)
         self.rates.lerp_(activity.spikes.float() / dt, 1 - math.exp(-dt / cfg.tau_homeostasis))
         overload = (self.rates.mean(0)[n.post] - cfg.maximum_rate).clamp(min=0)

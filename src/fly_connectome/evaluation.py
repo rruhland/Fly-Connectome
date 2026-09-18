@@ -25,6 +25,7 @@ def evaluate(checkpoint, seeds, steps, control='learned', device='cpu'):
         populations[label] = populations.get(label, 0) + count
     return dict(metrics=metrics, seeds=seeds, steps=steps, control=control, hit_shaping=0.,
                 checkpoint_training_steps=trainer.training_step,
+                prediction_encoding=trainer.learning_config.prediction_encoding,
                 population_spikes=populations,
                 event_target_encoding=('signed-lamina-contrast' if 'contrast' in trainer.retina.spec['injection'].values()
                                        else 'binary-polarity-routed-events'),
@@ -38,6 +39,8 @@ def compare(learned_checkpoint, initial_checkpoint, seeds, steps, device='cpu'):
         raise ValueError("baseline comparisons require identical topology and initialization scale")
     if learned.environment.config != initial.environment.config:
         raise ValueError("baseline comparisons require identical physics")
+    if learned.learning_config.prediction_encoding != initial.learning_config.prediction_encoding:
+        raise ValueError('baseline comparisons require identical prediction encoding')
     if (learned.config != initial.config or learned.network.config != initial.network.config or
             learned.retina.spec != initial.retina.spec or
             not learned.network.delays.equal(initial.network.delays) or
