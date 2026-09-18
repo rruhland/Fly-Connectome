@@ -81,3 +81,15 @@ The zero-response failure is corrected within the existing point-neuron model.
 Useful learned prediction, direction tuning and end-to-end behavioral performance
 remain separate empirical questions. No additional neuron classes are adjusted
 merely to inflate activity counts.
+
+## Training follow-up
+
+After 500 M1A training steps, the paired frozen evaluation on seeds 1001/1002
+(500 steps each) retains T4/T5 activity: 3,471 T4 spikes and 1,421 T5 spikes.
+Sensory-event MSE falls from 0.00115611 to 0.00103601 (10.4%); persistence is
+0.00193687, but the stronger zero-event control is still better at 0.000928278.
+Local-current MSE falls from 0.00538999 to 0.00289317, also still worse than its
+persistence baseline (0.000445576). Mean population rate is 1.131 Hz after training.
+The complete report and artifact hashes are in `2026-09-18-motion-v2-heldout.json`.
+These short pilots support the correction and quantify its limits; they do not
+establish the milestone's predictive or closed-loop behavioral success.

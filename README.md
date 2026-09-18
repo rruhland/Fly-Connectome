@@ -204,3 +204,9 @@ See `docs/experiments/2026-09-18-motion-operating-point.md` for evidence and lim
 .venv/Scripts/python scripts/validate_visual_profile.py checkpoints/motion-v2-visual-initial.pt --output runs/motion-v2-probe-suite.json
 .venv/Scripts/python scripts/validate_visual_profile.py checkpoints/motion-v2-visual-initial.pt --silence-motion-afferents --output runs/motion-v2-afferents-silenced.json
 ```
+
+The corrected profile's 500-step M1A pilot retains T4/T5 activity after training.
+Held-out sensory-event MSE improves by 10.4% and beats persistence, but still loses
+to the zero-event control. Full results and checkpoint hashes are in
+`docs/experiments/2026-09-18-motion-v2-heldout.json`. M1A scientific acceptance and
+score-only Pong learning remain unestablished.

@@ -89,5 +89,27 @@
     "event_target_encoding": "signed-lamina-contrast",
     "graph_sha256": "c941a5c912dd03e2ab0868260c637c2b1d21525196d4bce93c7d5e7f618e34a8",
     "dataset": "male-cns:v1.0"
+  },
+  "provenance": {
+    "profile": "configs/resting-v1-signed-prediction-v1.json",
+    "profile_sha256": "ba509c303197124c4c90f64d288efa8f500f3669e916fdce0b27e2287e34eb38",
+    "checkpoints": {
+      "initial": {
+        "path": "checkpoints/signed-v1-visual-initial.pt",
+        "sha256": "a82ceb829f6eb88276a5cb4da7743870e416989f1ba739dfc3e880f83b213433"
+      },
+      "trained": {
+        "path": "checkpoints/signed-v1-visual-trained.pt",
+        "sha256": "a3054294625601ef41c49ba45cb58e072ff258ee0ca262709c02d169effb8f8f"
+      }
+    },
+    "training_seed": 1,
+    "training_environment_steps": 500,
+    "heldout_seeds": [
+      1001,
+      1002
+    ],
+    "heldout_steps_per_seed": 500,
+    "notes": "Frozen scripted M1A evaluation; population_spikes omits zero-count classes. No behavioral learning claim."
   }
 }

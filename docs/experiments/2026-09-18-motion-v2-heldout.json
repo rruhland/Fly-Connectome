@@ -1,0 +1,134 @@
+{
+  "initial": {
+    "metrics": {
+      "points": 0.0,
+      "misses": 0.0,
+      "hits": 2.0,
+      "reward": 0.0,
+      "spikes": 448133.0,
+      "local_current_prediction_mse": 0.005389988017485001,
+      "local_current_persistence_mse": 0.0004500526246630606,
+      "sensory_event_prediction_mse": 0.0011561060380041014,
+      "sensory_event_persistence_mse": 0.0019368696301830407,
+      "sensory_event_zero_mse": 0.0009282779230481883,
+      "mean_rate_hz": 1.1342028557568598
+    },
+    "seeds": [
+      1001,
+      1002
+    ],
+    "steps": 500,
+    "control": "scripted",
+    "hit_shaping": 0.0,
+    "checkpoint_training_steps": 0,
+    "prediction_encoding": "signed-current-v1",
+    "population_spikes": {
+      "LPi21": 5,
+      "LPi12": 1,
+      "MeVPOL1": 25,
+      "Pm11": 390,
+      "Dm17": 352,
+      "Dm19": 1317,
+      "Li28": 204,
+      "Dm6": 1767,
+      "Pm7": 284,
+      "Li29": 48,
+      "Li17": 66,
+      "Pm2a": 134,
+      "Pm2b": 404,
+      "Pm1": 6,
+      "Pm10": 23,
+      "L2": 79148,
+      "Mi1": 33371,
+      "L1": 79808,
+      "Pm4": 7,
+      "Mi9": 37808,
+      "L3": 68295,
+      "Tm1": 46164,
+      "Tm2": 51328,
+      "Tm3": 39651,
+      "T5c": 514,
+      "T4b": 1529,
+      "T4a": 1799,
+      "T5a": 511,
+      "T4c": 1393,
+      "T4d": 1096,
+      "T5b": 351,
+      "T5d": 334
+    },
+    "event_target_encoding": "signed-lamina-contrast",
+    "graph_sha256": "c941a5c912dd03e2ab0868260c637c2b1d21525196d4bce93c7d5e7f618e34a8",
+    "dataset": "male-cns:v1.0"
+  },
+  "trained": {
+    "metrics": {
+      "points": 0.0,
+      "misses": 0.0,
+      "hits": 2.0,
+      "reward": 0.0,
+      "spikes": 446934.0,
+      "local_current_prediction_mse": 0.002893174480331386,
+      "local_current_persistence_mse": 0.00044557608159515223,
+      "sensory_event_prediction_mse": 0.0010360107155322617,
+      "sensory_event_persistence_mse": 0.0019368696301830407,
+      "sensory_event_zero_mse": 0.0009282779230481883,
+      "mean_rate_hz": 1.131168244996098
+    },
+    "seeds": [
+      1001,
+      1002
+    ],
+    "steps": 500,
+    "control": "scripted",
+    "hit_shaping": 0.0,
+    "checkpoint_training_steps": 500,
+    "prediction_encoding": "signed-current-v1",
+    "population_spikes": {
+      "LPi21": 2,
+      "Dm17": 432,
+      "Dm19": 1282,
+      "Dm6": 2043,
+      "L2": 78938,
+      "Mi1": 32588,
+      "L1": 79618,
+      "Mi9": 38322,
+      "L3": 68295,
+      "Tm1": 47696,
+      "Tm2": 55476,
+      "Tm3": 37350,
+      "T5c": 447,
+      "T4b": 784,
+      "T4a": 1186,
+      "T5a": 433,
+      "T4c": 861,
+      "T4d": 640,
+      "T5b": 286,
+      "T5d": 255
+    },
+    "event_target_encoding": "signed-lamina-contrast",
+    "graph_sha256": "c941a5c912dd03e2ab0868260c637c2b1d21525196d4bce93c7d5e7f618e34a8",
+    "dataset": "male-cns:v1.0"
+  },
+  "provenance": {
+    "profile": "configs/resting-v2-motion-provisional.json",
+    "profile_sha256": "ce61c17dcfcd8795e36f2be72f200b4be3127189dac914b05dc0c27851990a50",
+    "checkpoints": {
+      "initial": {
+        "path": "checkpoints/motion-v2-visual-initial.pt",
+        "sha256": "2c46809a4af81003f408a84c5bde93831127009e04164c1644954dc53e942a63"
+      },
+      "trained": {
+        "path": "checkpoints/motion-v2-visual-trained.pt",
+        "sha256": "ca5aec5745f75b358ec6703b738486b50fc053176e32472fd48321992dbb0d95"
+      }
+    },
+    "training_seed": 1,
+    "training_environment_steps": 500,
+    "heldout_seeds": [
+      1001,
+      1002
+    ],
+    "heldout_steps_per_seed": 500,
+    "notes": "Frozen scripted M1A evaluation; population_spikes omits zero-count classes. No behavioral learning claim."
+  }
+}

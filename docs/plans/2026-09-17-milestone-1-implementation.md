@@ -263,7 +263,19 @@ T4 polarity tuning remains imperfect. This resolves the silence, not full physio
 77 tests pass, 3 CUDA skips. The disconnected-afferent unit test verifies the
 subthreshold profile cannot generate spikes without input. Independent read-only
 review found no actionable defects and confirmed the bounds on empirical claims.
-`checkpoints/motion-v2-visual-initial.pt` is initialized; a 500-step training run
-with checkpoints every 100 steps is in progress at `checkpoints/motion-v2-visual-trained.pt`.
-Its paired held-out evaluation will be recorded separately; scientific acceptance,
-CUDA evidence, UI overhead and M1B learning remain open.
+`checkpoints/motion-v2-visual-initial.pt` and `checkpoints/motion-v2-visual-trained.pt`
+are complete (500 training steps, periodic saves every 100 steps). The paired frozen
+evaluation is `docs/experiments/2026-09-18-motion-v2-heldout.json`, including checkpoint
+hashes and profile provenance. Held-out seeds 1001/1002, 500 steps each: event MSE
+0.00115611 -> 0.00103601 (persistence 0.00193687, zero 0.000928278); local MSE
+0.00538999 -> 0.00289317 (trained persistence 0.000445576). Population mean rate
+1.134 -> 1.131 Hz. T4 counts 5,817 -> 3,471; T5 counts 1,710 -> 1,421. Motion
+populations remain active after learning. The original current audit was rerun with
+an E/I reconstruction assertion and produced byte-identical results. Wheel build passed.
+
+Both approved corrections are implemented and verified. No approval question or
+experiment process remains pending. The stronger zero-event control still wins;
+do not claim complete M1A learning, correct T4 polarity/direction tuning, or Pong
+learning. Scientific acceptance, CUDA evidence, full UI overhead and M1B remain open.
+Continue from the versioned motion profile and preserve the prior experiments;
+any further change to the learning objective requires a concrete design explanation.
