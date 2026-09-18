@@ -105,3 +105,17 @@ def test_cpu_cuda_class_dynamics_and_signed_currents():
         assert torch.equal(a.spikes, b.spikes.cpu())
         for name in ('voltage', 'sensory_state', 'adaptation'):
             torch.testing.assert_close(getattr(cpu, name), getattr(cuda, name).cpu(), atol=1e-5, rtol=1e-5)
+
+
+def test_subthreshold_motion_operating_point_requires_existing_afferent_spikes():
+    graph = Graph.from_contacts([10, 20, 30, 40], [10, 10], [20, 30], [1, 1], [1]*4, .4)
+    cfg = NeuronConfig(class_parameters={t: {'rest_current': .95} for t in ('T4a', 'T5a')})
+    net = Network(graph, [1, 1], ['feedforward']*2, config=cfg, cell_types=['Mi1','T4a','T5a','T4a'])
+    for _ in range(500):
+        assert not net.step(torch.zeros(1, 4)).spikes.any()
+    spikes = torch.zeros(1, 4, dtype=torch.int64)
+    for _ in range(100):
+        spikes += net.step(torch.tensor([[30., 0., 0., 0.]])).spikes
+    assert (spikes[0, 1:3] > 0).all()
+    assert spikes[0, 3] == 0  # identical intrinsic current, but no measured input edge
+    torch.testing.assert_close(net.magnitudes, torch.tensor([.4, .4]))

@@ -1,0 +1,13 @@
+{
+  "id": "motion-resting-calibration-v1",
+  "source_checkpoint": "checkpoints/resting-v1-visual-initial.pt",
+  "seed": 1003,
+  "rest_currents": [0.0, 0.85, 0.9, 0.95],
+  "classes": ["T4a", "T4b", "T4c", "T4d", "T5a", "T5b", "T5c", "T5d"],
+  "warmup_ticks": 500,
+  "stimulus_ticks": 400,
+  "recovery_ticks": 200,
+  "edge_pixels_per_tick": 0.16,
+  "peak_spike_fraction_bound": 0.2,
+  "selection": "Smallest subthreshold current with nonzero stimulus-period T4 and T5 spikes and a changed per-neuron response under both ON and OFF edges versus matched no-event activity, finite voltage, and peak activity below the bound. Then independently verify multiple speeds/directions and afferent silencing. No claim of biological direction or polarity tuning."
+}

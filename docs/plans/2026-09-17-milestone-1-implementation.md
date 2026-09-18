@@ -239,7 +239,11 @@ topology, sign, reward, or homeostasis changes. `configs/resting-v1-signed-predi
 is the separate experiment profile. Tests: 76 passed, 3 CUDA skips, including both
 signs of unexpected/confirmed/expired predictions, duplicated batches, signed metric
 state, exact resume and legacy loading. Separate initial/trained artifacts use the
-`checkpoints/signed-v1-visual-` prefix; the 500-step experiment is in progress.
+`checkpoints/signed-v1-visual-` prefix. The 500-step training run completed. Held-out
+seeds 1001/1002, 500 steps each: event MSE 0.00115624 -> 0.00103756 (persistence
+0.00193687, zero 0.000928278); local MSE 0.00536651 -> 0.00288364 (trained persistence
+0.000444486). Thus signs are preserved and error improves, but the stronger zero
+event control still wins. Report: `docs/experiments/2026-09-18-signed-v1-heldout.json`.
 
 Frozen current tracing found measured Mi1/Tm3 and Tm1/Tm2 input reaches T4/T5.
 Peak voltage was only 0.114 / 0.123 versus threshold 1; even peak excitation <0.48.
@@ -247,3 +251,19 @@ T5 inhibition was zero, ruling out inhibitory cancellation as its immediate caus
 T4/T5 have zero intrinsic current in the first resting profile. A preregistered
 subthreshold class-current experiment is now testing this operating-point mismatch.
 No biological direction-selectivity or M1 acceptance claim follows from waking cells.
+
+Motion calibration completed: the smallest qualifying tested current is 0.95 for
+all T4a-d/T5a-d, recorded in `configs/resting-v2-motion-provisional.json`. All other
+parameters remain fixed. Eleven-condition independent probes restore T4/T5 activity;
+silencing measured non-motion afferents eliminates all T4/T5 spikes without silencing
+motion neurons themselves. LPi shows a small response; L4/LC10 remain quiet. See
+`docs/experiments/2026-09-18-motion-operating-point.md` and its companion JSON reports.
+T4 polarity tuning remains imperfect. This resolves the silence, not full physiology.
+
+77 tests pass, 3 CUDA skips. The disconnected-afferent unit test verifies the
+subthreshold profile cannot generate spikes without input. Independent read-only
+review found no actionable defects and confirmed the bounds on empirical claims.
+`checkpoints/motion-v2-visual-initial.pt` is initialized; a 500-step training run
+with checkpoints every 100 steps is in progress at `checkpoints/motion-v2-visual-trained.pt`.
+Its paired held-out evaluation will be recorded separately; scientific acceptance,
+CUDA evidence, UI overhead and M1B learning remain open.

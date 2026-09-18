@@ -1,0 +1,1504 @@
+{
+  "checkpoint_sha256": "a327dea0bc4d06b90e54e2e2863d6b43d0ca45edefeb7dc3aefbd68b3870158f",
+  "graph_sha256": "c941a5c912dd03e2ab0868260c637c2b1d21525196d4bce93c7d5e7f618e34a8",
+  "neurons": {
+    "dt": 0.0010416666666666667,
+    "tau_membrane": 0.02,
+    "tau_current": 0.005,
+    "threshold": 1.0,
+    "refractory_steps": 2,
+    "tau_adaptation": 1.0,
+    "adaptation_jump": 0.05,
+    "class_parameters": {
+      "L1": {
+        "tau_membrane": 0.02,
+        "tau_current": 0.005,
+        "rest_current": 1.5
+      },
+      "L2": {
+        "tau_membrane": 0.02,
+        "tau_current": 0.005,
+        "rest_current": 1.5
+      },
+      "L3": {
+        "tau_membrane": 0.04,
+        "tau_current": 0.005,
+        "rest_current": 1.5
+      },
+      "Mi1": {
+        "tau_membrane": 0.03,
+        "tau_current": 0.01,
+        "rest_current": 1.2
+      },
+      "Tm3": {
+        "tau_membrane": 0.02,
+        "tau_current": 0.01,
+        "rest_current": 1.2
+      },
+      "Tm1": {
+        "tau_membrane": 0.03,
+        "tau_current": 0.01,
+        "rest_current": 1.2
+      },
+      "Tm2": {
+        "tau_membrane": 0.02,
+        "tau_current": 0.01,
+        "rest_current": 1.2
+      },
+      "Mi9": {
+        "tau_membrane": 0.04,
+        "tau_current": 0.01,
+        "rest_current": 1.2
+      }
+    },
+    "tau_sensory": 0.02
+  },
+  "conditions": [
+    "on_edge",
+    "off_edge",
+    "no_event"
+  ],
+  "warmup_ticks": 500,
+  "stimulus_ticks": 400,
+  "recovery_ticks": 200,
+  "populations": {
+    "T4": {
+      "neurons": 3438,
+      "spikes": [
+        0,
+        0,
+        0
+      ],
+      "max_voltage": [
+        0.10882233083248138,
+        0.11366556584835052,
+        0.10937881469726562
+      ],
+      "max_excitation": [
+        0.46376311779022217,
+        0.4304421544075012,
+        0.47517162561416626
+      ],
+      "min_inhibition": [
+        -0.29342496395111084,
+        -0.2524050772190094,
+        -0.30000001192092896
+      ],
+      "max_net_current": [
+        0.463757187128067,
+        0.4304409623146057,
+        0.44269418716430664
+      ],
+      "summed_excitation": [
+        27401.796875,
+        27355.2109375,
+        26735.775390625
+      ],
+      "summed_inhibition": [
+        -7402.47998046875,
+        -7311.22509765625,
+        -7364.6630859375
+      ],
+      "incoming_partners": [
+        {
+          "cell_type": "Mi1",
+          "edges": 13142,
+          "contacts": 204628,
+          "signs": [
+            1.0
+          ],
+          "presynaptic_spikes": [
+            3173,
+            3136,
+            3125
+          ],
+          "presynaptic_neurons": 887
+        },
+        {
+          "cell_type": "Tm3",
+          "edges": 9372,
+          "contacts": 80256,
+          "signs": [
+            1.0
+          ],
+          "presynaptic_spikes": [
+            3449,
+            3632,
+            3270
+          ],
+          "presynaptic_neurons": 1037
+        },
+        {
+          "cell_type": "Mi9",
+          "edges": 8013,
+          "contacts": 79201,
+          "signs": [
+            -1.0
+          ],
+          "presynaptic_spikes": [
+            3074,
+            3048,
+            3065
+          ],
+          "presynaptic_neurons": 889
+        },
+        {
+          "cell_type": "Mi4",
+          "edges": 4228,
+          "contacts": 33097,
+          "signs": [
+            -1.0
+          ],
+          "presynaptic_spikes": [
+            0,
+            0,
+            0
+          ],
+          "presynaptic_neurons": 866
+        },
+        {
+          "cell_type": "TmY15",
+          "edges": 4069,
+          "contacts": 31273,
+          "signs": [
+            -1.0
+          ],
+          "presynaptic_spikes": [
+            0,
+            0,
+            0
+          ],
+          "presynaptic_neurons": 110
+        },
+        {
+          "cell_type": "T4b",
+          "edges": 1608,
+          "contacts": 10897,
+          "signs": [
+            1.0
+          ],
+          "presynaptic_spikes": [
+            0,
+            0,
+            0
+          ],
+          "presynaptic_neurons": 760
+        },
+        {
+          "cell_type": "T4a",
+          "edges": 1243,
+          "contacts": 8162,
+          "signs": [
+            1.0
+          ],
+          "presynaptic_spikes": [
+            0,
+            0,
+            0
+          ],
+          "presynaptic_neurons": 699
+        },
+        {
+          "cell_type": "Y12",
+          "edges": 1035,
+          "contacts": 6923,
+          "signs": [
+            -1.0
+          ],
+          "presynaptic_spikes": [
+            0,
+            0,
+            0
+          ],
+          "presynaptic_neurons": 89
+        },
+        {
+          "cell_type": "Y13",
+          "edges": 1000,
+          "contacts": 7142,
+          "signs": [
+            -1.0
+          ],
+          "presynaptic_spikes": [
+            0,
+            0,
+            0
+          ],
+          "presynaptic_neurons": 99
+        },
+        {
+          "cell_type": "T4c",
+          "edges": 963,
+          "contacts": 6043,
+          "signs": [
+            1.0
+          ],
+          "presynaptic_spikes": [
+            0,
+            0,
+            0
+          ],
+          "presynaptic_neurons": 607
+        },
+        {
+          "cell_type": "TmY19a",
+          "edges": 948,
+          "contacts": 6420,
+          "signs": [
+            -1.0
+          ],
+          "presynaptic_spikes": [
+            0,
+            0,
+            0
+          ],
+          "presynaptic_neurons": 43
+        },
+        {
+          "cell_type": "T4d",
+          "edges": 921,
+          "contacts": 5739,
+          "signs": [
+            1.0
+          ],
+          "presynaptic_spikes": [
+            0,
+            0,
+            0
+          ],
+          "presynaptic_neurons": 583
+        },
+        {
+          "cell_type": "Y11",
+          "edges": 889,
+          "contacts": 5431,
+          "signs": [
+            -1.0
+          ],
+          "presynaptic_spikes": [
+            0,
+            0,
+            0
+          ],
+          "presynaptic_neurons": 76
+        },
+        {
+          "cell_type": "C3",
+          "edges": 884,
+          "contacts": 4982,
+          "signs": [
+            -1.0
+          ],
+          "presynaptic_spikes": [
+            0,
+            0,
+            0
+          ],
+          "presynaptic_neurons": 435
+        },
+        {
+          "cell_type": "LPi2b",
+          "edges": 824,
+          "contacts": 10297,
+          "signs": [
+            -1.0
+          ],
+          "presynaptic_spikes": [
+            0,
+            0,
+            0
+          ],
+          "presynaptic_neurons": 1
+        },
+        {
+          "cell_type": "Pm10",
+          "edges": 795,
+          "contacts": 5083,
+          "signs": [
+            -1.0
+          ],
+          "presynaptic_spikes": [
+            4,
+            5,
+            0
+          ],
+          "presynaptic_neurons": 37
+        },
+        {
+          "cell_type": "LPi4b",
+          "edges": 637,
+          "contacts": 5574,
+          "signs": [
+            -1.0
+          ],
+          "presynaptic_spikes": [
+            0,
+            0,
+            0
+          ],
+          "presynaptic_neurons": 1
+        },
+        {
+          "cell_type": "Tlp12",
+          "edges": 507,
+          "contacts": 3141,
+          "signs": [
+            -1.0
+          ],
+          "presynaptic_spikes": [
+            0,
+            0,
+            0
+          ],
+          "presynaptic_neurons": 66
+        },
+        {
+          "cell_type": "Tlp13",
+          "edges": 468,
+          "contacts": 2852,
+          "signs": [
+            -1.0
+          ],
+          "presynaptic_spikes": [
+            0,
+            0,
+            0
+          ],
+          "presynaptic_neurons": 57
+        },
+        {
+          "cell_type": "Tlp14",
+          "edges": 417,
+          "contacts": 2733,
+          "signs": [
+            -1.0
+          ],
+          "presynaptic_spikes": [
+            0,
+            0,
+            0
+          ],
+          "presynaptic_neurons": 29
+        },
+        {
+          "cell_type": "LPi3412",
+          "edges": 289,
+          "contacts": 1752,
+          "signs": [
+            -1.0
+          ],
+          "presynaptic_spikes": [
+            0,
+            0,
+            0
+          ],
+          "presynaptic_neurons": 51
+        },
+        {
+          "cell_type": "LPi2c",
+          "edges": 226,
+          "contacts": 1278,
+          "signs": [
+            -1.0
+          ],
+          "presynaptic_spikes": [
+            0,
+            0,
+            0
+          ],
+          "presynaptic_neurons": 25
+        },
+        {
+          "cell_type": "LPi21",
+          "edges": 163,
+          "contacts": 962,
+          "signs": [
+            -1.0
+          ],
+          "presynaptic_spikes": [
+            0,
+            0,
+            0
+          ],
+          "presynaptic_neurons": 1
+        },
+        {
+          "cell_type": "Am1",
+          "edges": 140,
+          "contacts": 800,
+          "signs": [
+            -1.0
+          ],
+          "presynaptic_spikes": [
+            0,
+            0,
+            0
+          ],
+          "presynaptic_neurons": 1
+        },
+        {
+          "cell_type": "Mi10",
+          "edges": 73,
+          "contacts": 443,
+          "signs": [
+            1.0
+          ],
+          "presynaptic_spikes": [
+            0,
+            0,
+            0
+          ],
+          "presynaptic_neurons": 45
+        },
+        {
+          "cell_type": "T5b",
+          "edges": 71,
+          "contacts": 390,
+          "signs": [
+            1.0
+          ],
+          "presynaptic_spikes": [
+            0,
+            0,
+            0
+          ],
+          "presynaptic_neurons": 69
+        },
+        {
+          "cell_type": "LPi12",
+          "edges": 39,
+          "contacts": 216,
+          "signs": [
+            -1.0
+          ],
+          "presynaptic_spikes": [
+            0,
+            0,
+            0
+          ],
+          "presynaptic_neurons": 2
+        },
+        {
+          "cell_type": "T5c",
+          "edges": 37,
+          "contacts": 200,
+          "signs": [
+            1.0
+          ],
+          "presynaptic_spikes": [
+            0,
+            0,
+            0
+          ],
+          "presynaptic_neurons": 36
+        },
+        {
+          "cell_type": "T5d",
+          "edges": 36,
+          "contacts": 194,
+          "signs": [
+            1.0
+          ],
+          "presynaptic_spikes": [
+            0,
+            0,
+            0
+          ],
+          "presynaptic_neurons": 35
+        },
+        {
+          "cell_type": "T5a",
+          "edges": 25,
+          "contacts": 135,
+          "signs": [
+            1.0
+          ],
+          "presynaptic_spikes": [
+            0,
+            0,
+            0
+          ],
+          "presynaptic_neurons": 23
+        },
+        {
+          "cell_type": "Tm2",
+          "edges": 15,
+          "contacts": 100,
+          "signs": [
+            1.0
+          ],
+          "presynaptic_spikes": [
+            79,
+            66,
+            65
+          ],
+          "presynaptic_neurons": 15
+        },
+        {
+          "cell_type": "C2",
+          "edges": 15,
+          "contacts": 136,
+          "signs": [
+            -1.0
+          ],
+          "presynaptic_spikes": [
+            0,
+            0,
+            0
+          ],
+          "presynaptic_neurons": 3
+        },
+        {
+          "cell_type": "TmY18",
+          "edges": 10,
+          "contacts": 61,
+          "signs": [
+            1.0
+          ],
+          "presynaptic_spikes": [
+            0,
+            0,
+            0
+          ],
+          "presynaptic_neurons": 5
+        },
+        {
+          "cell_type": "Pm8",
+          "edges": 7,
+          "contacts": 37,
+          "signs": [
+            -1.0
+          ],
+          "presynaptic_spikes": [
+            0,
+            0,
+            0
+          ],
+          "presynaptic_neurons": 3
+        },
+        {
+          "cell_type": "TmY16",
+          "edges": 4,
+          "contacts": 24,
+          "signs": [
+            -1.0
+          ],
+          "presynaptic_spikes": [
+            0,
+            0,
+            0
+          ],
+          "presynaptic_neurons": 4
+        },
+        {
+          "cell_type": "LOP_LO_unclear",
+          "edges": 4,
+          "contacts": 24,
+          "signs": [
+            -1.0
+          ],
+          "presynaptic_spikes": [
+            0,
+            0,
+            0
+          ],
+          "presynaptic_neurons": 1
+        },
+        {
+          "cell_type": "MeLo9",
+          "edges": 2,
+          "contacts": 11,
+          "signs": [
+            -1.0
+          ],
+          "presynaptic_spikes": [
+            0,
+            0,
+            0
+          ],
+          "presynaptic_neurons": 2
+        },
+        {
+          "cell_type": "Pm2a",
+          "edges": 2,
+          "contacts": 10,
+          "signs": [
+            -1.0
+          ],
+          "presynaptic_spikes": [
+            3,
+            0,
+            0
+          ],
+          "presynaptic_neurons": 2
+        },
+        {
+          "cell_type": "Tm1",
+          "edges": 2,
+          "contacts": 11,
+          "signs": [
+            1.0
+          ],
+          "presynaptic_spikes": [
+            11,
+            8,
+            10
+          ],
+          "presynaptic_neurons": 2
+        },
+        {
+          "cell_type": "TmY5a",
+          "edges": 2,
+          "contacts": 11,
+          "signs": [
+            -1.0
+          ],
+          "presynaptic_spikes": [
+            0,
+            0,
+            0
+          ],
+          "presynaptic_neurons": 2
+        },
+        {
+          "cell_type": "T2",
+          "edges": 2,
+          "contacts": 11,
+          "signs": [
+            1.0
+          ],
+          "presynaptic_spikes": [
+            0,
+            0,
+            0
+          ],
+          "presynaptic_neurons": 1
+        },
+        {
+          "cell_type": "TmY19b",
+          "edges": 1,
+          "contacts": 5,
+          "signs": [
+            -1.0
+          ],
+          "presynaptic_spikes": [
+            0,
+            0,
+            0
+          ],
+          "presynaptic_neurons": 1
+        },
+        {
+          "cell_type": "Pm3",
+          "edges": 1,
+          "contacts": 5,
+          "signs": [
+            -1.0
+          ],
+          "presynaptic_spikes": [
+            0,
+            0,
+            0
+          ],
+          "presynaptic_neurons": 1
+        },
+        {
+          "cell_type": "LPi43",
+          "edges": 1,
+          "contacts": 9,
+          "signs": [
+            -1.0
+          ],
+          "presynaptic_spikes": [
+            0,
+            0,
+            0
+          ],
+          "presynaptic_neurons": 1
+        },
+        {
+          "cell_type": "Pm9",
+          "edges": 1,
+          "contacts": 5,
+          "signs": [
+            -1.0
+          ],
+          "presynaptic_spikes": [
+            0,
+            0,
+            0
+          ],
+          "presynaptic_neurons": 1
+        },
+        {
+          "cell_type": "LPi34",
+          "edges": 1,
+          "contacts": 7,
+          "signs": [
+            -1.0
+          ],
+          "presynaptic_spikes": [
+            0,
+            0,
+            0
+          ],
+          "presynaptic_neurons": 1
+        },
+        {
+          "cell_type": "TmY4",
+          "edges": 1,
+          "contacts": 7,
+          "signs": [
+            1.0
+          ],
+          "presynaptic_spikes": [
+            0,
+            0,
+            0
+          ],
+          "presynaptic_neurons": 1
+        },
+        {
+          "cell_type": "LPi2d",
+          "edges": 1,
+          "contacts": 5,
+          "signs": [
+            -1.0
+          ],
+          "presynaptic_spikes": [
+            0,
+            0,
+            0
+          ],
+          "presynaptic_neurons": 1
+        },
+        {
+          "cell_type": "Y14",
+          "edges": 1,
+          "contacts": 5,
+          "signs": [
+            -1.0
+          ],
+          "presynaptic_spikes": [
+            0,
+            0,
+            0
+          ],
+          "presynaptic_neurons": 1
+        },
+        {
+          "cell_type": "TmY13",
+          "edges": 1,
+          "contacts": 5,
+          "signs": [
+            1.0
+          ],
+          "presynaptic_spikes": [
+            0,
+            0,
+            0
+          ],
+          "presynaptic_neurons": 1
+        },
+        {
+          "cell_type": "TmY10",
+          "edges": 1,
+          "contacts": 5,
+          "signs": [
+            1.0
+          ],
+          "presynaptic_spikes": [
+            0,
+            0,
+            0
+          ],
+          "presynaptic_neurons": 1
+        },
+        {
+          "cell_type": "Tm4",
+          "edges": 1,
+          "contacts": 5,
+          "signs": [
+            1.0
+          ],
+          "presynaptic_spikes": [
+            0,
+            0,
+            0
+          ],
+          "presynaptic_neurons": 1
+        }
+      ]
+    },
+    "T5": {
+      "neurons": 3356,
+      "spikes": [
+        0,
+        0,
+        0
+      ],
+      "max_voltage": [
+        0.11905103921890259,
+        0.1232009008526802,
+        0.07836252450942993
+      ],
+      "max_excitation": [
+        0.4480734169483185,
+        0.34387314319610596,
+        0.3207568824291229
+      ],
+      "min_inhibition": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "max_net_current": [
+        0.4480734169483185,
+        0.34387314319610596,
+        0.3207568824291229
+      ],
+      "summed_excitation": [
+        23697.1953125,
+        19556.970703125,
+        21136.7109375
+      ],
+      "summed_inhibition": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "incoming_partners": [
+        {
+          "cell_type": "Tm9",
+          "edges": 11572,
+          "contacts": 129019,
+          "signs": [
+            1.0
+          ],
+          "presynaptic_spikes": [
+            0,
+            0,
+            0
+          ],
+          "presynaptic_neurons": 887
+        },
+        {
+          "cell_type": "Tm2",
+          "edges": 8773,
+          "contacts": 110696,
+          "signs": [
+            1.0
+          ],
+          "presynaptic_spikes": [
+            4496,
+            3786,
+            3887
+          ],
+          "presynaptic_neurons": 883
+        },
+        {
+          "cell_type": "Tm1",
+          "edges": 7253,
+          "contacts": 68700,
+          "signs": [
+            1.0
+          ],
+          "presynaptic_spikes": [
+            4014,
+            3373,
+            3798
+          ],
+          "presynaptic_neurons": 889
+        },
+        {
+          "cell_type": "Tm4",
+          "edges": 6572,
+          "contacts": 52647,
+          "signs": [
+            1.0
+          ],
+          "presynaptic_spikes": [
+            0,
+            0,
+            0
+          ],
+          "presynaptic_neurons": 829
+        },
+        {
+          "cell_type": "TmY15",
+          "edges": 2094,
+          "contacts": 14182,
+          "signs": [
+            -1.0
+          ],
+          "presynaptic_spikes": [
+            0,
+            0,
+            0
+          ],
+          "presynaptic_neurons": 110
+        },
+        {
+          "cell_type": "Tm23",
+          "edges": 1271,
+          "contacts": 7949,
+          "signs": [
+            -1.0
+          ],
+          "presynaptic_spikes": [
+            0,
+            0,
+            0
+          ],
+          "presynaptic_neurons": 16
+        },
+        {
+          "cell_type": "T5b",
+          "edges": 1201,
+          "contacts": 7610,
+          "signs": [
+            1.0
+          ],
+          "presynaptic_spikes": [
+            0,
+            0,
+            0
+          ],
+          "presynaptic_neurons": 673
+        },
+        {
+          "cell_type": "Y13",
+          "edges": 983,
+          "contacts": 6688,
+          "signs": [
+            -1.0
+          ],
+          "presynaptic_spikes": [
+            0,
+            0,
+            0
+          ],
+          "presynaptic_neurons": 99
+        },
+        {
+          "cell_type": "T5a",
+          "edges": 944,
+          "contacts": 5854,
+          "signs": [
+            1.0
+          ],
+          "presynaptic_spikes": [
+            0,
+            0,
+            0
+          ],
+          "presynaptic_neurons": 600
+        },
+        {
+          "cell_type": "LPi2b",
+          "edges": 825,
+          "contacts": 8374,
+          "signs": [
+            -1.0
+          ],
+          "presynaptic_spikes": [
+            0,
+            0,
+            0
+          ],
+          "presynaptic_neurons": 1
+        },
+        {
+          "cell_type": "T5d",
+          "edges": 804,
+          "contacts": 4971,
+          "signs": [
+            1.0
+          ],
+          "presynaptic_spikes": [
+            0,
+            0,
+            0
+          ],
+          "presynaptic_neurons": 530
+        },
+        {
+          "cell_type": "T5c",
+          "edges": 779,
+          "contacts": 4728,
+          "signs": [
+            1.0
+          ],
+          "presynaptic_spikes": [
+            0,
+            0,
+            0
+          ],
+          "presynaptic_neurons": 527
+        },
+        {
+          "cell_type": "Y11",
+          "edges": 730,
+          "contacts": 4288,
+          "signs": [
+            -1.0
+          ],
+          "presynaptic_spikes": [
+            0,
+            0,
+            0
+          ],
+          "presynaptic_neurons": 76
+        },
+        {
+          "cell_type": "TmY19a",
+          "edges": 720,
+          "contacts": 4578,
+          "signs": [
+            -1.0
+          ],
+          "presynaptic_spikes": [
+            0,
+            0,
+            0
+          ],
+          "presynaptic_neurons": 43
+        },
+        {
+          "cell_type": "Y12",
+          "edges": 712,
+          "contacts": 4393,
+          "signs": [
+            -1.0
+          ],
+          "presynaptic_spikes": [
+            0,
+            0,
+            0
+          ],
+          "presynaptic_neurons": 89
+        },
+        {
+          "cell_type": "Tlp12",
+          "edges": 405,
+          "contacts": 2388,
+          "signs": [
+            -1.0
+          ],
+          "presynaptic_spikes": [
+            0,
+            0,
+            0
+          ],
+          "presynaptic_neurons": 68
+        },
+        {
+          "cell_type": "Tlp13",
+          "edges": 381,
+          "contacts": 2236,
+          "signs": [
+            -1.0
+          ],
+          "presynaptic_spikes": [
+            0,
+            0,
+            0
+          ],
+          "presynaptic_neurons": 55
+        },
+        {
+          "cell_type": "LPi3412",
+          "edges": 368,
+          "contacts": 2270,
+          "signs": [
+            -1.0
+          ],
+          "presynaptic_spikes": [
+            0,
+            0,
+            0
+          ],
+          "presynaptic_neurons": 57
+        },
+        {
+          "cell_type": "Tlp14",
+          "edges": 325,
+          "contacts": 2031,
+          "signs": [
+            -1.0
+          ],
+          "presynaptic_spikes": [
+            0,
+            0,
+            0
+          ],
+          "presynaptic_neurons": 29
+        },
+        {
+          "cell_type": "LPi2c",
+          "edges": 313,
+          "contacts": 1777,
+          "signs": [
+            -1.0
+          ],
+          "presynaptic_spikes": [
+            0,
+            0,
+            0
+          ],
+          "presynaptic_neurons": 26
+        },
+        {
+          "cell_type": "LPi4b",
+          "edges": 263,
+          "contacts": 1647,
+          "signs": [
+            -1.0
+          ],
+          "presynaptic_spikes": [
+            0,
+            0,
+            0
+          ],
+          "presynaptic_neurons": 1
+        },
+        {
+          "cell_type": "LPi12",
+          "edges": 189,
+          "contacts": 1153,
+          "signs": [
+            -1.0
+          ],
+          "presynaptic_spikes": [
+            0,
+            0,
+            0
+          ],
+          "presynaptic_neurons": 2
+        },
+        {
+          "cell_type": "LPi21",
+          "edges": 127,
+          "contacts": 726,
+          "signs": [
+            -1.0
+          ],
+          "presynaptic_spikes": [
+            0,
+            0,
+            0
+          ],
+          "presynaptic_neurons": 1
+        },
+        {
+          "cell_type": "T4b",
+          "edges": 82,
+          "contacts": 465,
+          "signs": [
+            1.0
+          ],
+          "presynaptic_spikes": [
+            0,
+            0,
+            0
+          ],
+          "presynaptic_neurons": 78
+        },
+        {
+          "cell_type": "T4d",
+          "edges": 51,
+          "contacts": 288,
+          "signs": [
+            1.0
+          ],
+          "presynaptic_spikes": [
+            0,
+            0,
+            0
+          ],
+          "presynaptic_neurons": 51
+        },
+        {
+          "cell_type": "T4c",
+          "edges": 43,
+          "contacts": 233,
+          "signs": [
+            1.0
+          ],
+          "presynaptic_spikes": [
+            0,
+            0,
+            0
+          ],
+          "presynaptic_neurons": 43
+        },
+        {
+          "cell_type": "T4a",
+          "edges": 32,
+          "contacts": 175,
+          "signs": [
+            1.0
+          ],
+          "presynaptic_spikes": [
+            0,
+            0,
+            0
+          ],
+          "presynaptic_neurons": 32
+        },
+        {
+          "cell_type": "Am1",
+          "edges": 26,
+          "contacts": 137,
+          "signs": [
+            -1.0
+          ],
+          "presynaptic_spikes": [
+            0,
+            0,
+            0
+          ],
+          "presynaptic_neurons": 1
+        },
+        {
+          "cell_type": "LOP_LO_unclear",
+          "edges": 15,
+          "contacts": 88,
+          "signs": [
+            -1.0
+          ],
+          "presynaptic_spikes": [
+            0,
+            0,
+            0
+          ],
+          "presynaptic_neurons": 1
+        },
+        {
+          "cell_type": "Tm3",
+          "edges": 15,
+          "contacts": 114,
+          "signs": [
+            1.0
+          ],
+          "presynaptic_spikes": [
+            49,
+            50,
+            46
+          ],
+          "presynaptic_neurons": 15
+        },
+        {
+          "cell_type": "Li25",
+          "edges": 14,
+          "contacts": 76,
+          "signs": [
+            -1.0
+          ],
+          "presynaptic_spikes": [
+            0,
+            0,
+            0
+          ],
+          "presynaptic_neurons": 7
+        },
+        {
+          "cell_type": "TmY3",
+          "edges": 10,
+          "contacts": 57,
+          "signs": [
+            1.0
+          ],
+          "presynaptic_spikes": [
+            0,
+            0,
+            0
+          ],
+          "presynaptic_neurons": 10
+        },
+        {
+          "cell_type": "LPi3a",
+          "edges": 8,
+          "contacts": 46,
+          "signs": [
+            -1.0
+          ],
+          "presynaptic_spikes": [
+            0,
+            0,
+            0
+          ],
+          "presynaptic_neurons": 8
+        },
+        {
+          "cell_type": "TmY16",
+          "edges": 6,
+          "contacts": 41,
+          "signs": [
+            -1.0
+          ],
+          "presynaptic_spikes": [
+            0,
+            0,
+            0
+          ],
+          "presynaptic_neurons": 4
+        },
+        {
+          "cell_type": "Tm5c",
+          "edges": 5,
+          "contacts": 31,
+          "signs": [
+            -1.0
+          ],
+          "presynaptic_spikes": [
+            0,
+            0,
+            0
+          ],
+          "presynaptic_neurons": 1
+        },
+        {
+          "cell_type": "T4_unclear",
+          "edges": 4,
+          "contacts": 37,
+          "signs": [
+            1.0
+          ],
+          "presynaptic_spikes": [
+            0,
+            0,
+            0
+          ],
+          "presynaptic_neurons": 1
+        },
+        {
+          "cell_type": "LPC1",
+          "edges": 2,
+          "contacts": 10,
+          "signs": [
+            1.0
+          ],
+          "presynaptic_spikes": [
+            0,
+            0,
+            0
+          ],
+          "presynaptic_neurons": 2
+        },
+        {
+          "cell_type": "Y14",
+          "edges": 2,
+          "contacts": 15,
+          "signs": [
+            -1.0
+          ],
+          "presynaptic_spikes": [
+            0,
+            0,
+            0
+          ],
+          "presynaptic_neurons": 1
+        },
+        {
+          "cell_type": "Tm37",
+          "edges": 2,
+          "contacts": 10,
+          "signs": [
+            -1.0
+          ],
+          "presynaptic_spikes": [
+            0,
+            0,
+            0
+          ],
+          "presynaptic_neurons": 2
+        },
+        {
+          "cell_type": "dCal1",
+          "edges": 1,
+          "contacts": 5,
+          "signs": [
+            -1.0
+          ],
+          "presynaptic_spikes": [
+            0,
+            0,
+            0
+          ],
+          "presynaptic_neurons": 1
+        },
+        {
+          "cell_type": "LPT22",
+          "edges": 1,
+          "contacts": 5,
+          "signs": [
+            -1.0
+          ],
+          "presynaptic_spikes": [
+            0,
+            0,
+            0
+          ],
+          "presynaptic_neurons": 1
+        },
+        {
+          "cell_type": "Nod5",
+          "edges": 1,
+          "contacts": 5,
+          "signs": [
+            1.0
+          ],
+          "presynaptic_spikes": [
+            0,
+            0,
+            0
+          ],
+          "presynaptic_neurons": 1
+        },
+        {
+          "cell_type": "TmY14",
+          "edges": 1,
+          "contacts": 6,
+          "signs": [
+            -1.0
+          ],
+          "presynaptic_spikes": [
+            0,
+            0,
+            0
+          ],
+          "presynaptic_neurons": 1
+        },
+        {
+          "cell_type": "LPi2e",
+          "edges": 1,
+          "contacts": 5,
+          "signs": [
+            -1.0
+          ],
+          "presynaptic_spikes": [
+            0,
+            0,
+            0
+          ],
+          "presynaptic_neurons": 1
+        },
+        {
+          "cell_type": "LLPC2",
+          "edges": 1,
+          "contacts": 5,
+          "signs": [
+            1.0
+          ],
+          "presynaptic_spikes": [
+            0,
+            0,
+            0
+          ],
+          "presynaptic_neurons": 1
+        }
+      ]
+    }
+  }
+}

@@ -17,6 +17,8 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('checkpoint')
     parser.add_argument('--output', required=True)
+    parser.add_argument('--silence-motion-afferents', action='store_true',
+                        help='silence non-T4/T5 neurons with measured inputs to T4/T5, evaluation only')
     args = parser.parse_args()
     torch.set_num_threads(2)
     source = load_checkpoint(args.checkpoint, evaluation=True, seeds=[1003], warmup=False)
@@ -29,6 +31,10 @@ def main():
         [('feedforward', 'predictive', 'behavioral')[p] for p in source.network.pathways.tolist()],
         config=source.network.config, batch=len(conditions), cell_types=types)
     net.magnitudes.copy_(source.network.magnitudes)
+    if args.silence_motion_afferents:
+        motion = torch.tensor([t.startswith(('T4', 'T5')) for t in types])
+        afferents = net.pre[motion[net.post] & ~motion[net.pre]].unique()
+        net.silenced[afferents] = True
     warmup, stimulus, recovery = 500, 400, 200
     labels = ('L1','L2','L3','L4','Mi1','Tm3','Tm1','Tm2','Mi9','T4','T5','LPi','LC10')
     masks = {label: torch.tensor([t == label or (label in ('T4','T5','LPi','LC10') and t.startswith(label)) for t in types]) for label in labels}
@@ -69,6 +75,7 @@ def main():
         for label, mask in masks.items() if mask.any()}
     report = dict(checkpoint_sha256=checksum(args.checkpoint), graph_sha256=net.graph.identity(),
         neurons=asdict(net.config), conditions=conditions, seed=1003, backend='cpu',
+        silenced_body_ids=net.graph.body_ids[net.silenced.numpy()].tolist(),
         warmup_ticks=warmup, stimulus_ticks=stimulus, recovery_ticks=recovery,
         trace_bin_ticks=10, peak_spikes_per_tick=peak, populations=populations, rate_traces_hz=traces)
     output = Path(args.output)

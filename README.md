@@ -180,5 +180,27 @@ The 500-step pilot reduced held-out local-current MSE from 0.00440 to 0.00235,
 but persistence remained better (0.000350). Sensory-event MSE worsened slightly
 and did not beat the zero-event baseline. Results and the expanded edge/flash
 probe suite are versioned under `docs/experiments/2026-09-18-resting-v1-*.json`.
-The unchanged prediction rule still clips negative currents to zero; a proposed
-signed representation is documented separately and awaits approval.
+The user subsequently approved signed-current prediction: new experiments use
+`configs/resting-v1-signed-prediction-v1.json`. The local update equation stays the
+same; bounded observations and predictions now retain their sign. Old checkpoints
+retain rectified encoding, and incompatible warm expansions/comparisons are rejected.
+
+## Motion-population correction
+
+Frozen input tracing found existing excitation reaching T4/T5, but voltages stayed
+below 0.124 against threshold 1. `configs/resting-v2-motion-provisional.json` adds
+a fixed subthreshold current of 0.95 to annotated T4/T5 classes using the existing
+class-dynamics mechanism. It is the smallest qualifying tested value from a frozen,
+non-Pong calibration. It changes no synapses, signs or local learning rules.
+
+Multi-direction/speed and flash probes now produce T4/T5 activity. Silencing their
+measured non-motion inputs eliminates all of it, confirming dependence on the circuit.
+T5 has a strong OFF-edge response; T4's polarity tuning remains imperfect. These are
+spiking-model calibration results, not measured physiological parameter estimates.
+See `docs/experiments/2026-09-18-motion-operating-point.md` for evidence and limits.
+
+```powershell
+.venv/Scripts/python -m fly_connectome init --stage M1A --profile configs/resting-v2-motion-provisional.json --output checkpoints/motion-v2-visual-initial.pt
+.venv/Scripts/python scripts/validate_visual_profile.py checkpoints/motion-v2-visual-initial.pt --output runs/motion-v2-probe-suite.json
+.venv/Scripts/python scripts/validate_visual_profile.py checkpoints/motion-v2-visual-initial.pt --silence-motion-afferents --output runs/motion-v2-afferents-silenced.json
+```

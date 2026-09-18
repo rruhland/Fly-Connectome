@@ -1,0 +1,93 @@
+{
+  "initial": {
+    "metrics": {
+      "points": 0.0,
+      "misses": 0.0,
+      "hits": 2.0,
+      "reward": 0.0,
+      "spikes": 440525.0,
+      "local_current_prediction_mse": 0.005366510534790359,
+      "local_current_persistence_mse": 0.000448528264149795,
+      "sensory_event_prediction_mse": 0.0011562373235189942,
+      "sensory_event_persistence_mse": 0.0019368696301830407,
+      "sensory_event_zero_mse": 0.0009282779230481883,
+      "mean_rate_hz": 1.1149473773015839
+    },
+    "seeds": [
+      1001,
+      1002
+    ],
+    "steps": 500,
+    "control": "scripted",
+    "hit_shaping": 0.0,
+    "checkpoint_training_steps": 0,
+    "prediction_encoding": "signed-current-v1",
+    "population_spikes": {
+      "MeVPOL1": 24,
+      "Pm11": 391,
+      "Dm17": 352,
+      "Dm19": 1317,
+      "Li28": 206,
+      "Dm6": 1767,
+      "Pm7": 283,
+      "Li29": 46,
+      "Li17": 58,
+      "Pm2a": 137,
+      "Pm2b": 388,
+      "Pm1": 6,
+      "Pm10": 20,
+      "L2": 79145,
+      "Mi1": 33387,
+      "L1": 79796,
+      "Pm4": 12,
+      "Mi9": 37825,
+      "L3": 68295,
+      "Tm1": 46136,
+      "Tm2": 51310,
+      "Tm3": 39624
+    },
+    "event_target_encoding": "signed-lamina-contrast",
+    "graph_sha256": "c941a5c912dd03e2ab0868260c637c2b1d21525196d4bce93c7d5e7f618e34a8",
+    "dataset": "male-cns:v1.0"
+  },
+  "trained": {
+    "metrics": {
+      "points": 0.0,
+      "misses": 0.0,
+      "hits": 2.0,
+      "reward": 0.0,
+      "spikes": 442118.0,
+      "local_current_prediction_mse": 0.0028836407865295353,
+      "local_current_persistence_mse": 0.00044448599715514247,
+      "sensory_event_prediction_mse": 0.001037563360475705,
+      "sensory_event_persistence_mse": 0.0019368696301830407,
+      "sensory_event_zero_mse": 0.0009282779230481883,
+      "mean_rate_hz": 1.1189791829245144
+    },
+    "seeds": [
+      1001,
+      1002
+    ],
+    "steps": 500,
+    "control": "scripted",
+    "hit_shaping": 0.0,
+    "checkpoint_training_steps": 500,
+    "prediction_encoding": "signed-current-v1",
+    "population_spikes": {
+      "Dm17": 430,
+      "Dm19": 1294,
+      "Dm6": 2054,
+      "L2": 78970,
+      "Mi1": 32566,
+      "L1": 79609,
+      "Mi9": 38335,
+      "L3": 68295,
+      "Tm1": 47728,
+      "Tm2": 55495,
+      "Tm3": 37342
+    },
+    "event_target_encoding": "signed-lamina-contrast",
+    "graph_sha256": "c941a5c912dd03e2ab0868260c637c2b1d21525196d4bce93c7d5e7f618e34a8",
+    "dataset": "male-cns:v1.0"
+  }
+}
