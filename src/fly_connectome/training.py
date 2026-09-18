@@ -232,6 +232,7 @@ def load_checkpoint(path, *, device='cpu', evaluation=False, seeds=None, warmup=
                       learning=LearningConfig(**m['learning']), curriculum=Curriculum(**m['curriculum']),
                       manifest=m['manifest'], device=device, evaluation=evaluation)
     trainer.training_seeds = m['seeds']
+    trainer.training_step = s['step']
     if seeds is not None:
         trainer.network.magnitudes.copy_(s['network']['magnitudes'])
         if warmup:

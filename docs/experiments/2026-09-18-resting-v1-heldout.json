@@ -1,0 +1,91 @@
+{
+  "initial": {
+    "metrics": {
+      "points": 0.0,
+      "misses": 0.0,
+      "hits": 2.0,
+      "reward": 0.0,
+      "spikes": 440525.0,
+      "local_current_prediction_mse": 0.004395485227545435,
+      "local_current_persistence_mse": 0.0003578203243407039,
+      "sensory_event_prediction_mse": 0.000995707806810176,
+      "sensory_event_persistence_mse": 0.0019368696301830407,
+      "sensory_event_zero_mse": 0.0009282779230481883,
+      "mean_rate_hz": 1.1149473773015839
+    },
+    "seeds": [
+      1001,
+      1002
+    ],
+    "steps": 500,
+    "control": "scripted",
+    "hit_shaping": 0.0,
+    "event_target_encoding": "signed-lamina-contrast",
+    "graph_sha256": "c941a5c912dd03e2ab0868260c637c2b1d21525196d4bce93c7d5e7f618e34a8",
+    "dataset": "male-cns:v1.0",
+    "checkpoint_training_steps": 0,
+    "population_spikes_nonzero": {
+      "MeVPOL1": 24,
+      "Pm11": 391,
+      "Dm17": 352,
+      "Dm19": 1317,
+      "Li28": 206,
+      "Dm6": 1767,
+      "Pm7": 283,
+      "Li29": 46,
+      "Li17": 58,
+      "Pm2a": 137,
+      "Pm2b": 388,
+      "Pm1": 6,
+      "Pm10": 20,
+      "L2": 79145,
+      "Mi1": 33387,
+      "L1": 79796,
+      "Pm4": 12,
+      "Mi9": 37825,
+      "L3": 68295,
+      "Tm1": 46136,
+      "Tm2": 51310,
+      "Tm3": 39624
+    }
+  },
+  "trained": {
+    "metrics": {
+      "points": 0.0,
+      "misses": 0.0,
+      "hits": 2.0,
+      "reward": 0.0,
+      "spikes": 442000.0,
+      "local_current_prediction_mse": 0.0023494062397859316,
+      "local_current_persistence_mse": 0.0003503113019629011,
+      "sensory_event_prediction_mse": 0.0010234880186245124,
+      "sensory_event_persistence_mse": 0.0019368696301830407,
+      "sensory_event_zero_mse": 0.0009282779230481883,
+      "mean_rate_hz": 1.1186805306561491
+    },
+    "seeds": [
+      1001,
+      1002
+    ],
+    "steps": 500,
+    "control": "scripted",
+    "hit_shaping": 0.0,
+    "checkpoint_training_steps": 500,
+    "event_target_encoding": "signed-lamina-contrast",
+    "graph_sha256": "c941a5c912dd03e2ab0868260c637c2b1d21525196d4bce93c7d5e7f618e34a8",
+    "dataset": "male-cns:v1.0",
+    "population_spikes_nonzero": {
+      "Dm17": 471,
+      "Dm19": 833,
+      "Dm6": 1588,
+      "L2": 78105,
+      "Mi1": 33405,
+      "L1": 79665,
+      "Mi9": 38177,
+      "L3": 68292,
+      "Tm1": 47519,
+      "Tm2": 55232,
+      "Tm3": 38713
+    }
+  }
+}

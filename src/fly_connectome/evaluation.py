@@ -24,6 +24,7 @@ def evaluate(checkpoint, seeds, steps, control='learned', device='cpu'):
     for label, count in zip(types, counts):
         populations[label] = populations.get(label, 0) + count
     return dict(metrics=metrics, seeds=seeds, steps=steps, control=control, hit_shaping=0.,
+                checkpoint_training_steps=trainer.training_step,
                 population_spikes=populations,
                 event_target_encoding=('signed-lamina-contrast' if 'contrast' in trainer.retina.spec['injection'].values()
                                        else 'binary-polarity-routed-events'),

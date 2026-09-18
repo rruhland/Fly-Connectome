@@ -33,6 +33,8 @@ class Probe:
             raise ValueError("probe requires explicit ON/OFF polarity")
 
     def frame(self, step, height, width, device='cpu'):
+        if step < self.start:
+            return torch.full((1, height, width), self.polarity == 'off', dtype=torch.bool, device=device)
         y, x = torch.meshgrid(torch.arange(height, device=device), torch.arange(width, device=device), indexing='ij')
         theta = math.radians(self.direction)
         elapsed = step - self.start

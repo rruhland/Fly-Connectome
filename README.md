@@ -175,3 +175,10 @@ evaluation labels its target encoding and includes a zero-event predictor.
 The correction restored first-order medulla modulation in controlled probes, but
 T4/T5 and projection populations remained silent. The profile is provisional;
 useful learned prediction and score-only Pong behavior are not established.
+
+The 500-step pilot reduced held-out local-current MSE from 0.00440 to 0.00235,
+but persistence remained better (0.000350). Sensory-event MSE worsened slightly
+and did not beat the zero-event baseline. Results and the expanded edge/flash
+probe suite are versioned under `docs/experiments/2026-09-18-resting-v1-*.json`.
+The unchanged prediction rule still clips negative currents to zero; a proposed
+signed representation is documented separately and awaits approval.

@@ -87,7 +87,7 @@ class Plasticity:
         proposal = torch.where(behavioral,
             cfg.eta_reward * reward.detach().clamp(-1, 1)[environments] * self.values,
             cfg.eta_prediction * delta * self.values)
-        self.proposals.add_(_sum_sorted(edge_ids, proposal, n.e) / n.batch)
+        self._accumulate(edge_ids, proposal)
         self.expected.copy_((activity.predicted / n.config.threshold).clamp(0, 1))
         self.post_trace.add_(activity.spikes)
         self.rates.lerp_(activity.spikes.float() / dt, 1 - math.exp(-dt / cfg.tau_homeostasis))
@@ -100,7 +100,15 @@ class Plasticity:
         env, edges = self.keys.div(n.e, rounding_mode='floor'), self.keys.remainder(n.e)
         mask = n.pathways[edges] == 2
         proposals = self.config.eta_reward * reward.detach().clamp(-1, 1)[env[mask]] * self.values[mask]
-        self.proposals.add_(_sum_sorted(edges[mask], proposals, n.e) / n.batch)
+        self._accumulate(edges[mask], proposals)
+
+    def _accumulate(self, edges, proposals):
+        if self.network.batch == 1:
+            # Sparse keys are unique (environment, edge) pairs. With B=1 there
+            # are no duplicate edge proposals to sort or reduce.
+            self.proposals[edges] += proposals
+        else:
+            self.proposals.add_(_sum_sorted(edges, proposals, self.network.e) / self.network.batch)
 
     @torch.no_grad()
     def synchronize(self):

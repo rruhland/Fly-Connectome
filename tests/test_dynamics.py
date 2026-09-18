@@ -90,3 +90,18 @@ def test_signed_sensory_current_decays_without_becoming_prediction():
     assert first.observed[0, 0] == -2
     torch.testing.assert_close(second.observed[0, 0], torch.tensor(-2 * __import__('math').exp(-.5)))
     assert not second.predicted.any()
+
+
+@pytest.mark.skipif(not torch.cuda.is_available(), reason='CUDA runtime unavailable')
+def test_cpu_cuda_class_dynamics_and_signed_currents():
+    graph = Graph.from_contacts([10, 20], [10], [20], [1], [-1, 1], 4.)
+    config = NeuronConfig(tau_sensory=.02, class_parameters={
+        'L1': {'rest_current': 1.5, 'tau_membrane': .03}, 'Mi1': {'rest_current': 1.2}})
+    cpu = Network(graph, [1], ['feedforward'], config=config, cell_types=['L1', 'Mi1'])
+    cuda = Network(graph, [1], ['feedforward'], config=config, cell_types=['L1', 'Mi1'], device='cuda')
+    for tick in range(200):
+        current = torch.tensor([[-3. if tick in (50, 100) else 0., 0.]])
+        a, b = cpu.step(current), cuda.step(current.cuda())
+        assert torch.equal(a.spikes, b.spikes.cpu())
+        for name in ('voltage', 'sensory_state', 'adaptation'):
+            torch.testing.assert_close(getattr(cpu, name), getattr(cuda, name).cpu(), atol=1e-5, rtol=1e-5)

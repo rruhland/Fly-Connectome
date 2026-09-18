@@ -38,10 +38,18 @@ def test_probes_are_deterministic_silenced_and_separate_from_checkpoint(tmp_path
 
 
 def test_off_target_and_moving_edges_are_binary():
-    probe = Probe(kind='moving_edge', steps=4, polarity='off', speed=2.)
+    probe = Probe(kind='moving_edge', steps=4, start=0, x=0, polarity='off', speed=2.)
     frames = [probe.frame(i, 8, 16) for i in range(4)]
     assert frames[0].dtype == torch.bool
     assert not torch.equal(frames[0], frames[3])
+
+
+@pytest.mark.parametrize('kind', ['moving_edge', 'target', 'neighbor_sequence'])
+def test_probe_onset_preserves_uniform_prestimulus_background(kind):
+    on = Probe(kind=kind, start=10, polarity='on')
+    off = Probe(kind=kind, start=10, polarity='off')
+    assert not on.frame(0, 32, 64).any()
+    assert off.frame(0, 32, 64).all()
 
 
 def test_visual_comparison_uses_identical_scripted_sequences(tmp_path):

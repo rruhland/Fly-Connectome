@@ -196,8 +196,35 @@ event predictor and labels signed versus legacy binary event target encoding.
 Mi1/Tm3 ON and Tm1/Tm2 OFF responses exceeded matched no-event activity. Motion and
 projection populations remained silent. No parameter was selected using Pong.
 
-New initial checkpoint: `checkpoints/resting-v1-visual-initial.pt`. A 500-step pilot
-with periodic saves is running to `checkpoints/resting-v1-visual-trained.pt`.
-Inspect that artifact before resuming; do not overwrite old pilot checkpoints.
-Active-trace runtime profiling is underway because basal activity increases work.
-The selected profile remains provisional, not a claim of milestone completion.
+New initial checkpoint: `checkpoints/resting-v1-visual-initial.pt`. The 500-step
+pilot completed in `checkpoints/resting-v1-visual-trained.pt`; the final saved step
+was verified after the process session ended. Do not overwrite old pilot artifacts.
+Profiling found sorting consumed 33% of the first ten training steps. B=1 proposals
+are unique by edge, so their redundant reduction sorts were removed; multi-environment
+deterministic reduction is unchanged. Batching/resume/equivalence tests pass.
+
+Expanded frozen validation completed: ON/OFF edges in two directions at .04/.16
+pixels per neural tick, local flashes, matched no-event control, and recovery traces.
+Reproduce using `scripts/validate_visual_profile.py`; report is
+`docs/experiments/2026-09-18-resting-v1-probe-suite.json`. No T4/T5, LPi, LC10 or L4
+spikes occurred in these conditions. Mi1/Tm3/Tm1/Tm2 responses depend on stimulus.
+An independent read-only reviewer found no concrete implementation defects; its
+provisional-calibration coverage concern motivated this expanded validation.
+
+Held-out seeds 1001/1002, 500 scripted steps each:
+`docs/experiments/2026-09-18-resting-v1-heldout.json`. Local prediction MSE improved
+0.00439549 -> 0.00234941, still worse than persistence 0.000350311. Sensory-event MSE
+worsened 0.000995708 -> 0.001023488; zero-event baseline 0.000928278, persistence
+0.001936870. Mean population rate 1.115 -> 1.119 Hz. No motion-population spikes.
+Do not claim predictive acceptance, useful motion processing, or Pong learning.
+
+67 tests pass; three CUDA cases skip on unavailable hardware. JavaScript syntax,
+Python script compilation and package wheel build verified. The probe onset bug
+(moving stimuli appearing before their configured start) is fixed and tested.
+
+Next decision: `2026-09-18-signed-prediction-proposal.md`. Signed ON transduction
+exposed that the unchanged rule clips all negative observations/predictions to zero.
+User was asked to approve preserving these signs via bounded [-1,1] encoding for
+new experiments, leaving the local equation and all other invariants unchanged.
+This representation change is NOT implemented pending that decision. Scientific
+acceptance, CUDA evidence, full-process UI overhead and M1B learning remain open.
