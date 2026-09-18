@@ -1,0 +1,1763 @@
+{
+  "config": {
+    "version": "resting-calibration-v1",
+    "status": "preregistered candidates, not measured biological parameters",
+    "source_checkpoint": "checkpoints/visual-initial.pt",
+    "seed": 1001,
+    "gain": 0.005,
+    "warmup_ticks": 500,
+    "probe_ticks": 300,
+    "tau_sensory": 0.02,
+    "lamina_rest_currents": [
+      1.2,
+      1.5
+    ],
+    "medulla_rest_currents": [
+      1.0,
+      1.2,
+      1.5
+    ],
+    "class_timescales": {
+      "L1": {
+        "tau_membrane": 0.02,
+        "tau_current": 0.005
+      },
+      "L2": {
+        "tau_membrane": 0.02,
+        "tau_current": 0.005
+      },
+      "L3": {
+        "tau_membrane": 0.04,
+        "tau_current": 0.005
+      },
+      "Mi1": {
+        "tau_membrane": 0.03,
+        "tau_current": 0.01
+      },
+      "Tm3": {
+        "tau_membrane": 0.02,
+        "tau_current": 0.01
+      },
+      "Tm1": {
+        "tau_membrane": 0.03,
+        "tau_current": 0.01
+      },
+      "Tm2": {
+        "tau_membrane": 0.02,
+        "tau_current": 0.01
+      },
+      "Mi9": {
+        "tau_membrane": 0.04,
+        "tau_current": 0.01
+      }
+    },
+    "selection": "Keep candidates with finite state and no tick above 20% of the visual roster spiking. Require stimulus-dependent downstream activity, not just basal discharge. Prefer the lowest total resting-current setting among those with ON/OFF modulation in downstream classes; resolve ties using recovery and activity cost, never Pong reward. If none qualify, report failure without broadening the grid."
+  },
+  "config_sha256": "63e94b828ac450f73fb27e3544ee82334b7f25f3078ca1009509a6f92066159e",
+  "checkpoint_sha256": "bb7f6575fb077f1c357dc6da6b866ad92fa605a74f26a4013be8958f4783375d",
+  "conditions": [
+    "on",
+    "off",
+    "no_event"
+  ],
+  "results": [
+    {
+      "lamina_current": 1.2,
+      "medulla_current": 1.0,
+      "stable": true,
+      "peak_spikes_per_tick": 1785,
+      "ticks": 800,
+      "neurons": 47413,
+      "neurons_config": {
+        "dt": 0.0010416666666666667,
+        "tau_membrane": 0.02,
+        "tau_current": 0.005,
+        "threshold": 1.0,
+        "refractory_steps": 2,
+        "tau_adaptation": 1.0,
+        "adaptation_jump": 0.05,
+        "class_parameters": {
+          "L1": {
+            "tau_membrane": 0.02,
+            "tau_current": 0.005,
+            "rest_current": 1.2
+          },
+          "L2": {
+            "tau_membrane": 0.02,
+            "tau_current": 0.005,
+            "rest_current": 1.2
+          },
+          "L3": {
+            "tau_membrane": 0.04,
+            "tau_current": 0.005,
+            "rest_current": 1.2
+          },
+          "Mi1": {
+            "tau_membrane": 0.03,
+            "tau_current": 0.01,
+            "rest_current": 1.0
+          },
+          "Tm3": {
+            "tau_membrane": 0.02,
+            "tau_current": 0.01,
+            "rest_current": 1.0
+          },
+          "Tm1": {
+            "tau_membrane": 0.03,
+            "tau_current": 0.01,
+            "rest_current": 1.0
+          },
+          "Tm2": {
+            "tau_membrane": 0.02,
+            "tau_current": 0.01,
+            "rest_current": 1.0
+          },
+          "Mi9": {
+            "tau_membrane": 0.04,
+            "tau_current": 0.01,
+            "rest_current": 1.0
+          }
+        },
+        "tau_sensory": 0.02
+      },
+      "populations": {
+        "L1": {
+          "baseline_counts": [
+            1793,
+            1793,
+            1793
+          ],
+          "stimulus_counts": [
+            696,
+            8876,
+            880
+          ],
+          "recovery_counts": [
+            7020,
+            279,
+            891
+          ]
+        },
+        "L2": {
+          "baseline_counts": [
+            1786,
+            1786,
+            1786
+          ],
+          "stimulus_counts": [
+            639,
+            8624,
+            893
+          ],
+          "recovery_counts": [
+            6825,
+            220,
+            791
+          ]
+        },
+        "L3": {
+          "baseline_counts": [
+            1784,
+            1784,
+            1784
+          ],
+          "stimulus_counts": [
+            389,
+            6305,
+            892
+          ],
+          "recovery_counts": [
+            4557,
+            237,
+            888
+          ]
+        },
+        "L4": {
+          "baseline_counts": [
+            0,
+            0,
+            0
+          ],
+          "stimulus_counts": [
+            0,
+            0,
+            0
+          ],
+          "recovery_counts": [
+            0,
+            0,
+            0
+          ]
+        },
+        "Mi1": {
+          "baseline_counts": [
+            843,
+            843,
+            843
+          ],
+          "stimulus_counts": [
+            0,
+            1,
+            0
+          ],
+          "recovery_counts": [
+            1,
+            0,
+            0
+          ]
+        },
+        "Tm3": {
+          "baseline_counts": [
+            1019,
+            1019,
+            1019
+          ],
+          "stimulus_counts": [
+            0,
+            0,
+            0
+          ],
+          "recovery_counts": [
+            0,
+            0,
+            0
+          ]
+        },
+        "Tm1": {
+          "baseline_counts": [
+            970,
+            970,
+            970
+          ],
+          "stimulus_counts": [
+            530,
+            2008,
+            743
+          ],
+          "recovery_counts": [
+            1507,
+            82,
+            316
+          ]
+        },
+        "Tm2": {
+          "baseline_counts": [
+            974,
+            974,
+            974
+          ],
+          "stimulus_counts": [
+            524,
+            2314,
+            687
+          ],
+          "recovery_counts": [
+            1895,
+            103,
+            485
+          ]
+        },
+        "Mi9": {
+          "baseline_counts": [
+            754,
+            754,
+            754
+          ],
+          "stimulus_counts": [
+            65,
+            854,
+            229
+          ],
+          "recovery_counts": [
+            726,
+            14,
+            0
+          ]
+        },
+        "T4": {
+          "baseline_counts": [
+            0,
+            0,
+            0
+          ],
+          "stimulus_counts": [
+            0,
+            0,
+            0
+          ],
+          "recovery_counts": [
+            0,
+            0,
+            0
+          ]
+        },
+        "T5": {
+          "baseline_counts": [
+            0,
+            0,
+            0
+          ],
+          "stimulus_counts": [
+            0,
+            0,
+            0
+          ],
+          "recovery_counts": [
+            0,
+            0,
+            0
+          ]
+        },
+        "LPi": {
+          "baseline_counts": [
+            0,
+            0,
+            0
+          ],
+          "stimulus_counts": [
+            0,
+            0,
+            0
+          ],
+          "recovery_counts": [
+            0,
+            0,
+            0
+          ]
+        },
+        "LC10": {
+          "baseline_counts": [
+            0,
+            0,
+            0
+          ],
+          "stimulus_counts": [
+            0,
+            0,
+            0
+          ],
+          "recovery_counts": [
+            0,
+            0,
+            0
+          ]
+        }
+      }
+    },
+    {
+      "lamina_current": 1.2,
+      "medulla_current": 1.2,
+      "stable": true,
+      "peak_spikes_per_tick": 3705,
+      "ticks": 800,
+      "neurons": 47413,
+      "neurons_config": {
+        "dt": 0.0010416666666666667,
+        "tau_membrane": 0.02,
+        "tau_current": 0.005,
+        "threshold": 1.0,
+        "refractory_steps": 2,
+        "tau_adaptation": 1.0,
+        "adaptation_jump": 0.05,
+        "class_parameters": {
+          "L1": {
+            "tau_membrane": 0.02,
+            "tau_current": 0.005,
+            "rest_current": 1.2
+          },
+          "L2": {
+            "tau_membrane": 0.02,
+            "tau_current": 0.005,
+            "rest_current": 1.2
+          },
+          "L3": {
+            "tau_membrane": 0.04,
+            "tau_current": 0.005,
+            "rest_current": 1.2
+          },
+          "Mi1": {
+            "tau_membrane": 0.03,
+            "tau_current": 0.01,
+            "rest_current": 1.2
+          },
+          "Tm3": {
+            "tau_membrane": 0.02,
+            "tau_current": 0.01,
+            "rest_current": 1.2
+          },
+          "Tm1": {
+            "tau_membrane": 0.03,
+            "tau_current": 0.01,
+            "rest_current": 1.2
+          },
+          "Tm2": {
+            "tau_membrane": 0.02,
+            "tau_current": 0.01,
+            "rest_current": 1.2
+          },
+          "Mi9": {
+            "tau_membrane": 0.04,
+            "tau_current": 0.01,
+            "rest_current": 1.2
+          }
+        },
+        "tau_sensory": 0.02
+      },
+      "populations": {
+        "L1": {
+          "baseline_counts": [
+            1223,
+            1223,
+            1223
+          ],
+          "stimulus_counts": [
+            670,
+            8851,
+            808
+          ],
+          "recovery_counts": [
+            7023,
+            274,
+            843
+          ]
+        },
+        "L2": {
+          "baseline_counts": [
+            1786,
+            1786,
+            1786
+          ],
+          "stimulus_counts": [
+            657,
+            8619,
+            893
+          ],
+          "recovery_counts": [
+            6822,
+            220,
+            804
+          ]
+        },
+        "L3": {
+          "baseline_counts": [
+            1784,
+            1784,
+            1784
+          ],
+          "stimulus_counts": [
+            389,
+            6305,
+            892
+          ],
+          "recovery_counts": [
+            4557,
+            237,
+            880
+          ]
+        },
+        "L4": {
+          "baseline_counts": [
+            0,
+            0,
+            0
+          ],
+          "stimulus_counts": [
+            0,
+            0,
+            0
+          ],
+          "recovery_counts": [
+            0,
+            0,
+            0
+          ]
+        },
+        "Mi1": {
+          "baseline_counts": [
+            1953,
+            1953,
+            1953
+          ],
+          "stimulus_counts": [
+            936,
+            679,
+            959
+          ],
+          "recovery_counts": [
+            95,
+            634,
+            708
+          ]
+        },
+        "Tm3": {
+          "baseline_counts": [
+            2234,
+            2234,
+            2234
+          ],
+          "stimulus_counts": [
+            1089,
+            704,
+            1071
+          ],
+          "recovery_counts": [
+            51,
+            843,
+            417
+          ]
+        },
+        "Tm1": {
+          "baseline_counts": [
+            1841,
+            1841,
+            1841
+          ],
+          "stimulus_counts": [
+            1131,
+            2552,
+            1129
+          ],
+          "recovery_counts": [
+            1785,
+            147,
+            801
+          ]
+        },
+        "Tm2": {
+          "baseline_counts": [
+            1679,
+            1679,
+            1679
+          ],
+          "stimulus_counts": [
+            828,
+            2717,
+            895
+          ],
+          "recovery_counts": [
+            2197,
+            159,
+            797
+          ]
+        },
+        "Mi9": {
+          "baseline_counts": [
+            1821,
+            1821,
+            1821
+          ],
+          "stimulus_counts": [
+            1019,
+            1598,
+            1095
+          ],
+          "recovery_counts": [
+            977,
+            227,
+            772
+          ]
+        },
+        "T4": {
+          "baseline_counts": [
+            0,
+            0,
+            0
+          ],
+          "stimulus_counts": [
+            0,
+            0,
+            0
+          ],
+          "recovery_counts": [
+            0,
+            0,
+            0
+          ]
+        },
+        "T5": {
+          "baseline_counts": [
+            0,
+            0,
+            0
+          ],
+          "stimulus_counts": [
+            0,
+            0,
+            0
+          ],
+          "recovery_counts": [
+            0,
+            0,
+            0
+          ]
+        },
+        "LPi": {
+          "baseline_counts": [
+            0,
+            0,
+            0
+          ],
+          "stimulus_counts": [
+            0,
+            0,
+            0
+          ],
+          "recovery_counts": [
+            0,
+            0,
+            0
+          ]
+        },
+        "LC10": {
+          "baseline_counts": [
+            0,
+            0,
+            0
+          ],
+          "stimulus_counts": [
+            0,
+            0,
+            0
+          ],
+          "recovery_counts": [
+            0,
+            0,
+            0
+          ]
+        }
+      }
+    },
+    {
+      "lamina_current": 1.2,
+      "medulla_current": 1.5,
+      "stable": true,
+      "peak_spikes_per_tick": 1920,
+      "ticks": 800,
+      "neurons": 47413,
+      "neurons_config": {
+        "dt": 0.0010416666666666667,
+        "tau_membrane": 0.02,
+        "tau_current": 0.005,
+        "threshold": 1.0,
+        "refractory_steps": 2,
+        "tau_adaptation": 1.0,
+        "adaptation_jump": 0.05,
+        "class_parameters": {
+          "L1": {
+            "tau_membrane": 0.02,
+            "tau_current": 0.005,
+            "rest_current": 1.2
+          },
+          "L2": {
+            "tau_membrane": 0.02,
+            "tau_current": 0.005,
+            "rest_current": 1.2
+          },
+          "L3": {
+            "tau_membrane": 0.04,
+            "tau_current": 0.005,
+            "rest_current": 1.2
+          },
+          "Mi1": {
+            "tau_membrane": 0.03,
+            "tau_current": 0.01,
+            "rest_current": 1.5
+          },
+          "Tm3": {
+            "tau_membrane": 0.02,
+            "tau_current": 0.01,
+            "rest_current": 1.5
+          },
+          "Tm1": {
+            "tau_membrane": 0.03,
+            "tau_current": 0.01,
+            "rest_current": 1.5
+          },
+          "Tm2": {
+            "tau_membrane": 0.02,
+            "tau_current": 0.01,
+            "rest_current": 1.5
+          },
+          "Mi9": {
+            "tau_membrane": 0.04,
+            "tau_current": 0.01,
+            "rest_current": 1.5
+          }
+        },
+        "tau_sensory": 0.02
+      },
+      "populations": {
+        "L1": {
+          "baseline_counts": [
+            1573,
+            1573,
+            1573
+          ],
+          "stimulus_counts": [
+            355,
+            8537,
+            792
+          ],
+          "recovery_counts": [
+            6988,
+            239,
+            458
+          ]
+        },
+        "L2": {
+          "baseline_counts": [
+            1786,
+            1786,
+            1786
+          ],
+          "stimulus_counts": [
+            645,
+            8609,
+            893
+          ],
+          "recovery_counts": [
+            6832,
+            220,
+            773
+          ]
+        },
+        "L3": {
+          "baseline_counts": [
+            1784,
+            1784,
+            1784
+          ],
+          "stimulus_counts": [
+            389,
+            6306,
+            892
+          ],
+          "recovery_counts": [
+            4554,
+            237,
+            881
+          ]
+        },
+        "L4": {
+          "baseline_counts": [
+            0,
+            0,
+            0
+          ],
+          "stimulus_counts": [
+            0,
+            0,
+            0
+          ],
+          "recovery_counts": [
+            0,
+            0,
+            0
+          ]
+        },
+        "Mi1": {
+          "baseline_counts": [
+            3620,
+            3620,
+            3620
+          ],
+          "stimulus_counts": [
+            2419,
+            1759,
+            2383
+          ],
+          "recovery_counts": [
+            287,
+            1161,
+            1143
+          ]
+        },
+        "Tm3": {
+          "baseline_counts": [
+            5244,
+            5244,
+            5244
+          ],
+          "stimulus_counts": [
+            3203,
+            2306,
+            3061
+          ],
+          "recovery_counts": [
+            228,
+            1514,
+            1550
+          ]
+        },
+        "Tm1": {
+          "baseline_counts": [
+            3648,
+            3648,
+            3648
+          ],
+          "stimulus_counts": [
+            2245,
+            3313,
+            2268
+          ],
+          "recovery_counts": [
+            2060,
+            901,
+            1324
+          ]
+        },
+        "Tm2": {
+          "baseline_counts": [
+            3955,
+            3955,
+            3955
+          ],
+          "stimulus_counts": [
+            2354,
+            3340,
+            2367
+          ],
+          "recovery_counts": [
+            2219,
+            651,
+            1425
+          ]
+        },
+        "Mi9": {
+          "baseline_counts": [
+            3099,
+            3099,
+            3099
+          ],
+          "stimulus_counts": [
+            2247,
+            2429,
+            2249
+          ],
+          "recovery_counts": [
+            1180,
+            966,
+            924
+          ]
+        },
+        "T4": {
+          "baseline_counts": [
+            0,
+            0,
+            0
+          ],
+          "stimulus_counts": [
+            0,
+            0,
+            0
+          ],
+          "recovery_counts": [
+            0,
+            0,
+            0
+          ]
+        },
+        "T5": {
+          "baseline_counts": [
+            0,
+            0,
+            0
+          ],
+          "stimulus_counts": [
+            0,
+            0,
+            0
+          ],
+          "recovery_counts": [
+            0,
+            0,
+            0
+          ]
+        },
+        "LPi": {
+          "baseline_counts": [
+            0,
+            0,
+            0
+          ],
+          "stimulus_counts": [
+            0,
+            0,
+            0
+          ],
+          "recovery_counts": [
+            0,
+            0,
+            0
+          ]
+        },
+        "LC10": {
+          "baseline_counts": [
+            0,
+            0,
+            0
+          ],
+          "stimulus_counts": [
+            0,
+            0,
+            0
+          ],
+          "recovery_counts": [
+            0,
+            0,
+            0
+          ]
+        }
+      }
+    },
+    {
+      "lamina_current": 1.5,
+      "medulla_current": 1.0,
+      "stable": true,
+      "peak_spikes_per_tick": 1785,
+      "ticks": 800,
+      "neurons": 47413,
+      "neurons_config": {
+        "dt": 0.0010416666666666667,
+        "tau_membrane": 0.02,
+        "tau_current": 0.005,
+        "threshold": 1.0,
+        "refractory_steps": 2,
+        "tau_adaptation": 1.0,
+        "adaptation_jump": 0.05,
+        "class_parameters": {
+          "L1": {
+            "tau_membrane": 0.02,
+            "tau_current": 0.005,
+            "rest_current": 1.5
+          },
+          "L2": {
+            "tau_membrane": 0.02,
+            "tau_current": 0.005,
+            "rest_current": 1.5
+          },
+          "L3": {
+            "tau_membrane": 0.04,
+            "tau_current": 0.005,
+            "rest_current": 1.5
+          },
+          "Mi1": {
+            "tau_membrane": 0.03,
+            "tau_current": 0.01,
+            "rest_current": 1.0
+          },
+          "Tm3": {
+            "tau_membrane": 0.02,
+            "tau_current": 0.01,
+            "rest_current": 1.0
+          },
+          "Tm1": {
+            "tau_membrane": 0.03,
+            "tau_current": 0.01,
+            "rest_current": 1.0
+          },
+          "Tm2": {
+            "tau_membrane": 0.02,
+            "tau_current": 0.01,
+            "rest_current": 1.0
+          },
+          "Mi9": {
+            "tau_membrane": 0.04,
+            "tau_current": 0.01,
+            "rest_current": 1.0
+          }
+        },
+        "tau_sensory": 0.02
+      },
+      "populations": {
+        "L1": {
+          "baseline_counts": [
+            4428,
+            4428,
+            4428
+          ],
+          "stimulus_counts": [
+            1719,
+            9186,
+            2676
+          ],
+          "recovery_counts": [
+            6727,
+            272,
+            892
+          ]
+        },
+        "L2": {
+          "baseline_counts": [
+            4465,
+            4465,
+            4465
+          ],
+          "stimulus_counts": [
+            1602,
+            8844,
+            2628
+          ],
+          "recovery_counts": [
+            6530,
+            325,
+            944
+          ]
+        },
+        "L3": {
+          "baseline_counts": [
+            3568,
+            3568,
+            3568
+          ],
+          "stimulus_counts": [
+            1114,
+            6982,
+            1784
+          ],
+          "recovery_counts": [
+            4552,
+            232,
+            893
+          ]
+        },
+        "L4": {
+          "baseline_counts": [
+            0,
+            0,
+            0
+          ],
+          "stimulus_counts": [
+            0,
+            0,
+            0
+          ],
+          "recovery_counts": [
+            0,
+            0,
+            0
+          ]
+        },
+        "Mi1": {
+          "baseline_counts": [
+            1,
+            1,
+            1
+          ],
+          "stimulus_counts": [
+            240,
+            35,
+            255
+          ],
+          "recovery_counts": [
+            24,
+            174,
+            398
+          ]
+        },
+        "Tm3": {
+          "baseline_counts": [
+            0,
+            0,
+            0
+          ],
+          "stimulus_counts": [
+            859,
+            68,
+            546
+          ],
+          "recovery_counts": [
+            16,
+            661,
+            404
+          ]
+        },
+        "Tm1": {
+          "baseline_counts": [
+            1412,
+            1412,
+            1412
+          ],
+          "stimulus_counts": [
+            287,
+            1753,
+            458
+          ],
+          "recovery_counts": [
+            1425,
+            107,
+            180
+          ]
+        },
+        "Tm2": {
+          "baseline_counts": [
+            1198,
+            1198,
+            1198
+          ],
+          "stimulus_counts": [
+            468,
+            2123,
+            485
+          ],
+          "recovery_counts": [
+            1739,
+            147,
+            282
+          ]
+        },
+        "Mi9": {
+          "baseline_counts": [
+            729,
+            729,
+            729
+          ],
+          "stimulus_counts": [
+            154,
+            905,
+            234
+          ],
+          "recovery_counts": [
+            732,
+            38,
+            133
+          ]
+        },
+        "T4": {
+          "baseline_counts": [
+            0,
+            0,
+            0
+          ],
+          "stimulus_counts": [
+            0,
+            0,
+            0
+          ],
+          "recovery_counts": [
+            0,
+            0,
+            0
+          ]
+        },
+        "T5": {
+          "baseline_counts": [
+            0,
+            0,
+            0
+          ],
+          "stimulus_counts": [
+            0,
+            0,
+            0
+          ],
+          "recovery_counts": [
+            0,
+            0,
+            0
+          ]
+        },
+        "LPi": {
+          "baseline_counts": [
+            0,
+            0,
+            0
+          ],
+          "stimulus_counts": [
+            0,
+            0,
+            0
+          ],
+          "recovery_counts": [
+            0,
+            0,
+            0
+          ]
+        },
+        "LC10": {
+          "baseline_counts": [
+            0,
+            0,
+            0
+          ],
+          "stimulus_counts": [
+            0,
+            0,
+            0
+          ],
+          "recovery_counts": [
+            0,
+            0,
+            0
+          ]
+        }
+      }
+    },
+    {
+      "lamina_current": 1.5,
+      "medulla_current": 1.2,
+      "stable": true,
+      "peak_spikes_per_tick": 1785,
+      "ticks": 800,
+      "neurons": 47413,
+      "neurons_config": {
+        "dt": 0.0010416666666666667,
+        "tau_membrane": 0.02,
+        "tau_current": 0.005,
+        "threshold": 1.0,
+        "refractory_steps": 2,
+        "tau_adaptation": 1.0,
+        "adaptation_jump": 0.05,
+        "class_parameters": {
+          "L1": {
+            "tau_membrane": 0.02,
+            "tau_current": 0.005,
+            "rest_current": 1.5
+          },
+          "L2": {
+            "tau_membrane": 0.02,
+            "tau_current": 0.005,
+            "rest_current": 1.5
+          },
+          "L3": {
+            "tau_membrane": 0.04,
+            "tau_current": 0.005,
+            "rest_current": 1.5
+          },
+          "Mi1": {
+            "tau_membrane": 0.03,
+            "tau_current": 0.01,
+            "rest_current": 1.2
+          },
+          "Tm3": {
+            "tau_membrane": 0.02,
+            "tau_current": 0.01,
+            "rest_current": 1.2
+          },
+          "Tm1": {
+            "tau_membrane": 0.03,
+            "tau_current": 0.01,
+            "rest_current": 1.2
+          },
+          "Tm2": {
+            "tau_membrane": 0.02,
+            "tau_current": 0.01,
+            "rest_current": 1.2
+          },
+          "Mi9": {
+            "tau_membrane": 0.04,
+            "tau_current": 0.01,
+            "rest_current": 1.2
+          }
+        },
+        "tau_sensory": 0.02
+      },
+      "populations": {
+        "L1": {
+          "baseline_counts": [
+            3731,
+            3731,
+            3731
+          ],
+          "stimulus_counts": [
+            1871,
+            9331,
+            2676
+          ],
+          "recovery_counts": [
+            6602,
+            273,
+            932
+          ]
+        },
+        "L2": {
+          "baseline_counts": [
+            4465,
+            4465,
+            4465
+          ],
+          "stimulus_counts": [
+            1601,
+            8837,
+            2633
+          ],
+          "recovery_counts": [
+            6530,
+            325,
+            939
+          ]
+        },
+        "L3": {
+          "baseline_counts": [
+            3568,
+            3568,
+            3568
+          ],
+          "stimulus_counts": [
+            1114,
+            6982,
+            1784
+          ],
+          "recovery_counts": [
+            4552,
+            232,
+            893
+          ]
+        },
+        "L4": {
+          "baseline_counts": [
+            0,
+            0,
+            0
+          ],
+          "stimulus_counts": [
+            0,
+            0,
+            0
+          ],
+          "recovery_counts": [
+            0,
+            0,
+            0
+          ]
+        },
+        "Mi1": {
+          "baseline_counts": [
+            1888,
+            1888,
+            1888
+          ],
+          "stimulus_counts": [
+            1360,
+            849,
+            1053
+          ],
+          "recovery_counts": [
+            78,
+            697,
+            606
+          ]
+        },
+        "Tm3": {
+          "baseline_counts": [
+            2160,
+            2160,
+            2160
+          ],
+          "stimulus_counts": [
+            1632,
+            989,
+            1149
+          ],
+          "recovery_counts": [
+            26,
+            896,
+            717
+          ]
+        },
+        "Tm1": {
+          "baseline_counts": [
+            2600,
+            2600,
+            2600
+          ],
+          "stimulus_counts": [
+            1029,
+            2366,
+            1560
+          ],
+          "recovery_counts": [
+            1647,
+            150,
+            620
+          ]
+        },
+        "Tm2": {
+          "baseline_counts": [
+            2807,
+            2807,
+            2807
+          ],
+          "stimulus_counts": [
+            1046,
+            2582,
+            1565
+          ],
+          "recovery_counts": [
+            1902,
+            202,
+            623
+          ]
+        },
+        "Mi9": {
+          "baseline_counts": [
+            2206,
+            2206,
+            2206
+          ],
+          "stimulus_counts": [
+            1170,
+            1511,
+            1249
+          ],
+          "recovery_counts": [
+            765,
+            138,
+            407
+          ]
+        },
+        "T4": {
+          "baseline_counts": [
+            0,
+            0,
+            0
+          ],
+          "stimulus_counts": [
+            0,
+            0,
+            0
+          ],
+          "recovery_counts": [
+            0,
+            0,
+            0
+          ]
+        },
+        "T5": {
+          "baseline_counts": [
+            0,
+            0,
+            0
+          ],
+          "stimulus_counts": [
+            0,
+            0,
+            0
+          ],
+          "recovery_counts": [
+            0,
+            0,
+            0
+          ]
+        },
+        "LPi": {
+          "baseline_counts": [
+            0,
+            0,
+            0
+          ],
+          "stimulus_counts": [
+            0,
+            0,
+            0
+          ],
+          "recovery_counts": [
+            0,
+            0,
+            0
+          ]
+        },
+        "LC10": {
+          "baseline_counts": [
+            0,
+            0,
+            0
+          ],
+          "stimulus_counts": [
+            0,
+            0,
+            0
+          ],
+          "recovery_counts": [
+            0,
+            0,
+            0
+          ]
+        }
+      }
+    },
+    {
+      "lamina_current": 1.5,
+      "medulla_current": 1.5,
+      "stable": true,
+      "peak_spikes_per_tick": 3705,
+      "ticks": 800,
+      "neurons": 47413,
+      "neurons_config": {
+        "dt": 0.0010416666666666667,
+        "tau_membrane": 0.02,
+        "tau_current": 0.005,
+        "threshold": 1.0,
+        "refractory_steps": 2,
+        "tau_adaptation": 1.0,
+        "adaptation_jump": 0.05,
+        "class_parameters": {
+          "L1": {
+            "tau_membrane": 0.02,
+            "tau_current": 0.005,
+            "rest_current": 1.5
+          },
+          "L2": {
+            "tau_membrane": 0.02,
+            "tau_current": 0.005,
+            "rest_current": 1.5
+          },
+          "L3": {
+            "tau_membrane": 0.04,
+            "tau_current": 0.005,
+            "rest_current": 1.5
+          },
+          "Mi1": {
+            "tau_membrane": 0.03,
+            "tau_current": 0.01,
+            "rest_current": 1.5
+          },
+          "Tm3": {
+            "tau_membrane": 0.02,
+            "tau_current": 0.01,
+            "rest_current": 1.5
+          },
+          "Tm1": {
+            "tau_membrane": 0.03,
+            "tau_current": 0.01,
+            "rest_current": 1.5
+          },
+          "Tm2": {
+            "tau_membrane": 0.02,
+            "tau_current": 0.01,
+            "rest_current": 1.5
+          },
+          "Mi9": {
+            "tau_membrane": 0.04,
+            "tau_current": 0.01,
+            "rest_current": 1.5
+          }
+        },
+        "tau_sensory": 0.02
+      },
+      "populations": {
+        "L1": {
+          "baseline_counts": [
+            3858,
+            3858,
+            3858
+          ],
+          "stimulus_counts": [
+            1760,
+            9211,
+            2544
+          ],
+          "recovery_counts": [
+            6574,
+            296,
+            1193
+          ]
+        },
+        "L2": {
+          "baseline_counts": [
+            4465,
+            4465,
+            4465
+          ],
+          "stimulus_counts": [
+            1598,
+            8835,
+            2617
+          ],
+          "recovery_counts": [
+            6531,
+            326,
+            955
+          ]
+        },
+        "L3": {
+          "baseline_counts": [
+            3568,
+            3568,
+            3568
+          ],
+          "stimulus_counts": [
+            1114,
+            6982,
+            1784
+          ],
+          "recovery_counts": [
+            4553,
+            232,
+            893
+          ]
+        },
+        "L4": {
+          "baseline_counts": [
+            0,
+            0,
+            0
+          ],
+          "stimulus_counts": [
+            0,
+            0,
+            0
+          ],
+          "recovery_counts": [
+            0,
+            0,
+            0
+          ]
+        },
+        "Mi1": {
+          "baseline_counts": [
+            3515,
+            3515,
+            3515
+          ],
+          "stimulus_counts": [
+            2420,
+            1770,
+            2271
+          ],
+          "recovery_counts": [
+            486,
+            1193,
+            1233
+          ]
+        },
+        "Tm3": {
+          "baseline_counts": [
+            5179,
+            5179,
+            5179
+          ],
+          "stimulus_counts": [
+            3040,
+            1988,
+            2996
+          ],
+          "recovery_counts": [
+            248,
+            1545,
+            1158
+          ]
+        },
+        "Tm1": {
+          "baseline_counts": [
+            3992,
+            3992,
+            3992
+          ],
+          "stimulus_counts": [
+            2308,
+            3222,
+            2584
+          ],
+          "recovery_counts": [
+            1908,
+            762,
+            968
+          ]
+        },
+        "Tm2": {
+          "baseline_counts": [
+            4441,
+            4441,
+            4441
+          ],
+          "stimulus_counts": [
+            2235,
+            3363,
+            2588
+          ],
+          "recovery_counts": [
+            2128,
+            425,
+            949
+          ]
+        },
+        "Mi9": {
+          "baseline_counts": [
+            3356,
+            3356,
+            3356
+          ],
+          "stimulus_counts": [
+            1994,
+            2471,
+            2002
+          ],
+          "recovery_counts": [
+            1401,
+            934,
+            963
+          ]
+        },
+        "T4": {
+          "baseline_counts": [
+            0,
+            0,
+            0
+          ],
+          "stimulus_counts": [
+            0,
+            0,
+            0
+          ],
+          "recovery_counts": [
+            0,
+            0,
+            0
+          ]
+        },
+        "T5": {
+          "baseline_counts": [
+            0,
+            0,
+            0
+          ],
+          "stimulus_counts": [
+            0,
+            0,
+            0
+          ],
+          "recovery_counts": [
+            0,
+            0,
+            0
+          ]
+        },
+        "LPi": {
+          "baseline_counts": [
+            0,
+            0,
+            0
+          ],
+          "stimulus_counts": [
+            0,
+            0,
+            0
+          ],
+          "recovery_counts": [
+            0,
+            0,
+            0
+          ]
+        },
+        "LC10": {
+          "baseline_counts": [
+            0,
+            0,
+            0
+          ],
+          "stimulus_counts": [
+            0,
+            0,
+            0
+          ],
+          "recovery_counts": [
+            0,
+            0,
+            0
+          ]
+        }
+      }
+    }
+  ]
+}

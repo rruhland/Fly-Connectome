@@ -22,11 +22,12 @@ class Probe:
     direction: float = 0.
     speed: float = 1.
     polarity: str = 'on'
+    warmup_steps: int = 0
 
     def __post_init__(self):
         if self.kind not in ('flash', 'moving_edge', 'target', 'neighbor_sequence'):
             raise ValueError("unknown probe kind")
-        if self.steps <= 0 or self.duration <= 0 or self.radius <= 0 or self.start < 0:
+        if self.steps <= 0 or self.duration <= 0 or self.radius <= 0 or self.start < 0 or self.warmup_steps < 0:
             raise ValueError("invalid probe timing or size")
         if self.polarity not in ('on', 'off'):
             raise ValueError("probe requires explicit ON/OFF polarity")
@@ -53,7 +54,7 @@ class Probe:
 
 @torch.no_grad()
 def run_probe(checkpoint, probe, *, seed=1000, silenced_types=(), device='cpu'):
-    trainer = load_checkpoint(checkpoint, evaluation=True, seeds=[seed], device=device)
+    trainer = load_checkpoint(checkpoint, evaluation=True, seeds=[seed], device=device, warmup=False)
     types = trainer.retina.spec['cell_types']
     unknown = set(silenced_types) - set(types)
     if unknown:
@@ -63,6 +64,13 @@ def run_probe(checkpoint, probe, *, seed=1000, silenced_types=(), device='cpu'):
     # OFF probes begin against a bright reference, then expose controlled transitions.
     if probe.polarity == 'off':
         trainer.camera.previous.fill_(True)
+    baseline_counts = torch.zeros(trainer.network.n, device=device)
+    warmup_steps = max(probe.warmup_steps, trainer.config.warmup_steps)
+    baseline_ticks = warmup_steps - warmup_steps // 2
+    for tick in range(warmup_steps):
+        activity = trainer.network.step(torch.zeros_like(trainer.network.voltage))
+        if tick >= warmup_steps // 2:
+            baseline_counts += activity.spikes[0]
     spikes, inputs, replay = [], [], []
     for tick in range(probe.steps):
         frame = probe.frame(tick, height, width, device)
@@ -79,8 +87,11 @@ def run_probe(checkpoint, probe, *, seed=1000, silenced_types=(), device='cpu'):
     for population in sorted(set(types)):
         ids = [i for i, t in enumerate(types) if t == population]
         response = spikes[:, ids].float().mean(1)
+        baseline_rate = float(baseline_counts[ids].mean()) / (max(1, baseline_ticks) * trainer.network.config.dt)
         active = torch.nonzero(response).flatten()
         populations[population] = dict(response=response, first_spike_tick=int(active[0]) if len(active) else None,
+                                       baseline_rate_hz=baseline_rate,
+                                       response_above_baseline_hz=response / trainer.network.config.dt - baseline_rate,
                                        last_spike_tick=int(active[-1]) if len(active) else None,
                                        latency_seconds=(int(active[active >= probe.start][0]) - probe.start) * trainer.network.config.dt
                                            if (active >= probe.start).any() else None,
@@ -89,7 +100,7 @@ def run_probe(checkpoint, probe, *, seed=1000, silenced_types=(), device='cpu'):
                                        mean_rate_hz=float(response.mean()) / trainer.network.config.dt,
                                        sparsity=float(1 - response.mean()))
     return dict(schema_version=1, checkpoint_sha256=checksum(checkpoint), manifest=trainer.manifest,
-                stimulus=asdict(probe), seed=seed, backend=device, silenced_types=list(silenced_types),
+                stimulus=dict(asdict(probe), warmup_steps=warmup_steps), seed=seed, backend=device, silenced_types=list(silenced_types),
                 dt=trainer.network.config.dt, spikes=spikes, sensory_current=torch.stack(inputs),
                 populations=populations, replay=replay, width=width, height=height)
 

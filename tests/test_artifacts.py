@@ -1,5 +1,6 @@
 import json
 import numpy as np
+import pytest
 
 from test_extraction import tables
 from fly_connectome.extraction import Selection, extract_tables
@@ -27,3 +28,12 @@ def test_visual_stage_and_warm_motor_expansion(tmp_path):
     assert b.network.graph.body_ids.tolist() == [10,20,30,40,50,60,70]
     assert b.network.magnitudes[:3].tolist() == a.network.magnitudes.tolist()
     np.testing.assert_allclose(b.network.magnitudes[3:].numpy(), [.025]*3, atol=1e-8)
+    profile = dict(id='test-resting', neurons={'tau_sensory': .02,
+                   'class_parameters': {'L1': {'rest_current': 1.2}}},
+                   injection={'L1': 'contrast'})
+    updated = initialize(tmp_path, stage='M1A', dynamics_profile=profile)
+    assert updated.manifest['dynamics_profile'] == profile
+    assert updated.network.rest_current[0] == pytest.approx(1.2)
+    assert updated.retina.spec['injection'] == {'L1': 'contrast'}
+    with pytest.raises(ValueError, match='dynamics'):
+        initialize(tmp_path, stage='M1B', dynamics_profile=profile, warm_checkpoint=path)

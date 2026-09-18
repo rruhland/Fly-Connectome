@@ -174,3 +174,30 @@ Producer-only fixture benchmark: three alternating 3,000-step pairs, median over
 Next: finish and review the neuron-model proposal; validate approved changes using
 non-Pong visual probes, retain failed-pilot artifacts, then repeat M1A before spending
 on long M1B runs. CPU/CUDA acceptance and post-fade learning remain open.
+
+## Approved operating-point correction
+
+User approved the resting-dynamics proposal. Implemented fixed class-specific
+rest currents/membrane/synaptic time constants, signed ON-negative/OFF-positive
+L1-L3 transduction, and decaying sensory-current state. Local learning is unchanged.
+Schema 2 records these settings/state; schema 1 retains legacy semantics, tested
+against exact continued trajectories. Warm expansion rejects mismatched profiles.
+`init --profile` is explicit, so old artifacts are not silently converted.
+
+64 tests passed, 2 CUDA skips after this chunk. Fixed no-event neural warm-up does
+not step Pong or plasticity. Diagnostic baselines use its second half; UI offers
+absolute and baseline-subtracted response plots. Held-out evaluation adds a zero
+event predictor and labels signed versus legacy binary event target encoding.
+
+`configs/resting-calibration-v1.json` preregisters six profiles. Full frozen results:
+`docs/experiments/2026-09-17-resting-calibration-v1.json`. Selection code is in
+`scripts/calibrate_resting.py`. Lowest total-current qualifying profile: lamina
+1.5, selected medulla 1.2, saved as `configs/resting-v1-provisional.json`.
+Mi1/Tm3 ON and Tm1/Tm2 OFF responses exceeded matched no-event activity. Motion and
+projection populations remained silent. No parameter was selected using Pong.
+
+New initial checkpoint: `checkpoints/resting-v1-visual-initial.pt`. A 500-step pilot
+with periodic saves is running to `checkpoints/resting-v1-visual-trained.pt`.
+Inspect that artifact before resuming; do not overwrite old pilot checkpoints.
+Active-trace runtime profiling is underway because basal activity increases work.
+The selected profile remains provisional, not a claim of milestone completion.

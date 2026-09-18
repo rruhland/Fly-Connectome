@@ -15,6 +15,7 @@ def test_evaluation_uses_held_out_seeds_and_never_trains(tmp_path):
     b = evaluate(path, [100], 10)
     assert a == b
     assert a['seeds'] == [100] and a['hit_shaping'] == 0
+    assert a['metrics']['sensory_event_zero_mse'] >= 0
     with pytest.raises(ValueError, match='overlap'):
         evaluate(path, [1], 2)
     assert path.read_bytes() == before
@@ -80,3 +81,17 @@ def test_saved_diagnostic_bundles_preserve_both_runs_and_replay(tmp_path):
     assert summary['checkpoint_sha256'] == result['checkpoint_sha256']
     assert summary['stimulus'] == result['stimulus']
     assert 'latency_seconds' in summary['populations']['L2']
+
+
+def test_probe_reports_baseline_separately_from_stimulus(tmp_path):
+    from dataclasses import replace
+    from fly_connectome.dynamics import Network
+    model = trainer()
+    model.network = Network(model.network.graph, [1]*3, ['feedforward', 'behavioral', 'behavioral'],
+        config=replace(model.network.config, class_parameters={'L2': {'rest_current': 2.}}),
+        cell_types=model.retina.spec['cell_types'])
+    path = tmp_path / 'tonic.pt'
+    model.save(path)
+    result = run_probe(path, Probe(steps=10, start=2, warmup_steps=500))
+    assert result['populations']['L2']['baseline_rate_hz'] > 0
+    assert len(result['populations']['L2']['response_above_baseline_hz']) == 10

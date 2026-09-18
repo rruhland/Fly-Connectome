@@ -15,6 +15,7 @@ def evaluate(checkpoint, seeds, steps, control='learned', device='cpu'):
     event_samples = max(1, metrics.pop('event_samples'))
     metrics['sensory_event_prediction_mse'] = metrics.pop('event_prediction_squared_error') / event_samples
     metrics['sensory_event_persistence_mse'] = metrics.pop('event_persistence_squared_error') / event_samples
+    metrics['sensory_event_zero_mse'] = trainer.event_zero_error.item() / event_samples
     metrics['mean_rate_hz'] = metrics['spikes'] / (steps * trainer.environment.config.dt *
                                                 len(seeds) * trainer.network.n)
     types = trainer.retina.spec['cell_types']
@@ -24,6 +25,8 @@ def evaluate(checkpoint, seeds, steps, control='learned', device='cpu'):
         populations[label] = populations.get(label, 0) + count
     return dict(metrics=metrics, seeds=seeds, steps=steps, control=control, hit_shaping=0.,
                 population_spikes=populations,
+                event_target_encoding=('signed-lamina-contrast' if 'contrast' in trainer.retina.spec['injection'].values()
+                                       else 'binary-polarity-routed-events'),
                 graph_sha256=trainer.network.graph.identity(), dataset=trainer.manifest.get('dataset'))
 
 

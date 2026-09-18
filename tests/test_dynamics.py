@@ -57,3 +57,36 @@ def test_cpu_cuda_trace_parity():
         a, b = cpu.step(x), cuda.step(x.cuda())
         assert torch.equal(a.spikes, b.spikes.cpu())
         torch.testing.assert_close(cpu.voltage, cuda.voltage.cpu(), atol=1e-5, rtol=1e-5)
+
+
+def test_resting_current_disinhibition_uses_only_existing_edge():
+    graph = Graph.from_contacts([10, 20, 30], [10], [20], [1], [-1, 1, 1], 4.)
+    cfg = NeuronConfig(dt=.001, adaptation_jump=0., class_parameters={
+        'L1': {'rest_current': 1.5}, 'Mi1': {'rest_current': 1.2}})
+    net = Network(graph, [1], ['feedforward'], config=cfg, cell_types=['L1', 'Mi1', 'quiet'])
+    zeros = torch.zeros(1, 3)
+    baseline = torch.zeros(3, dtype=torch.int64)
+    for tick in range(1000):
+        a = net.step(zeros)
+        if tick >= 500:
+            baseline += a.spikes[0]
+    released = torch.zeros(3, dtype=torch.int64)
+    for tick in range(500):
+        a = net.step(torch.tensor([[-3., 0., 0.]]))
+        released += a.spikes[0]
+        assert a.observed[0, 1] <= 0  # intrinsic bias is not an observation
+    assert baseline[0] > 0 and released[0] == 0
+    assert released[1] > baseline[1]
+    assert baseline[2] == released[2] == 0
+    assert net.e == 1 and net.signs.tolist() == [-1.]
+
+
+def test_signed_sensory_current_decays_without_becoming_prediction():
+    from dataclasses import replace
+    net = chain()
+    net.config = replace(net.config, tau_sensory=2.)
+    first = net.step(torch.tensor([[-2., 0.]]))
+    second = net.step(torch.zeros(1, 2))
+    assert first.observed[0, 0] == -2
+    torch.testing.assert_close(second.observed[0, 0], torch.tensor(-2 * __import__('math').exp(-.5)))
+    assert not second.predicted.any()

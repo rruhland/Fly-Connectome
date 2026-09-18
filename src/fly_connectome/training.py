@@ -22,12 +22,15 @@ class RunConfig:
     tau_motor_rate: float = .05
     motor_reference_hz: float = 100.
     stage: str = 'M1B'
+    warmup_steps: int = 0
 
     def __post_init__(self):
         if self.neural_steps < 1 or self.sync_steps < 1 or min(self.sensory_gain, self.tau_motor_rate, self.motor_reference_hz) <= 0:
             raise ValueError("positive run timing and gains required")
         if self.stage not in ('M1A', 'M1B'):
             raise ValueError("stage must be M1A or M1B")
+        if self.warmup_steps < 0:
+            raise ValueError('warmup steps must be nonnegative')
 
 
 def _tensors(obj):
@@ -48,7 +51,8 @@ class Trainer:
         self.device, self.evaluation = device, evaluation
         self.seeds, self.motor_up, self.motor_down = list(seeds), motor_up, motor_down
         neurons = neurons or NeuronConfig(dt=physics.dt / config.neural_steps)
-        self.network = Network(graph, delays, pathways, batch=len(seeds), config=neurons, device=device)
+        self.network = Network(graph, delays, pathways, batch=len(seeds), config=neurons, device=device,
+                               cell_types=retina.spec['cell_types'])
         self.learning_config = learning
         self.plasticity = None if evaluation else Plasticity(self.network, learning)
         self.environment = Pong(seeds, physics, device)
@@ -65,6 +69,7 @@ class Trainer:
         self.previous_predicted = torch.zeros_like(self.network.voltage)
         self.previous_events = torch.zeros_like(self.network.voltage)
         if evaluation:
+            self.event_zero_error = torch.zeros((), dtype=torch.float64, device=device)
             self.visible_spikes = torch.zeros_like(self.network.voltage, dtype=torch.bool)
             self.evaluation_spike_counts = torch.zeros_like(self.network.voltage, dtype=torch.int64)
             self.visible_events = None
@@ -86,6 +91,8 @@ class Trainer:
             self.visible_spikes.zero_()
         injection = self.retina.project(events) * cfg.sensory_gain
         sensed = injection[:, self.retina.injected] / cfg.sensory_gain
+        if self.evaluation:
+            self.event_zero_error += sensed.square().sum()
         self.statistics[8] += ((sensed - self.previous_predicted[:, self.retina.injected]) ** 2).sum()
         self.statistics[9] += ((sensed - self.previous_events[:, self.retina.injected]) ** 2).sum()
         self.statistics[10] += sensed.numel()
@@ -139,6 +146,11 @@ class Trainer:
         for _ in range(steps):
             self.step(control)
         return dict(self.metrics)
+
+    def warmup(self):
+        """Fixed no-event neural settling, independent of Pong and plasticity."""
+        for _ in range(self.config.warmup_steps):
+            self.network.step(torch.zeros_like(self.network.voltage))
 
     def reset_environment(self):
         self.environment.reset(torch.ones(self.environment.batch, device=self.device, dtype=torch.bool))
@@ -197,18 +209,18 @@ class Trainer:
         os.close(fd)
         try:
             with open(temp, 'wb') as stream:
-                torch.save(dict(schema_version=1, metadata=metadata, state=state), stream)
+                torch.save(dict(schema_version=2, metadata=metadata, state=state), stream)
             os.replace(temp, path)
         finally:
             if os.path.exists(temp):
                 os.unlink(temp)
 
 
-def load_checkpoint(path, *, device='cpu', evaluation=False, seeds=None):
+def load_checkpoint(path, *, device='cpu', evaluation=False, seeds=None, warmup=True):
     if seeds is not None and not evaluation:
         raise ValueError("new seeds are only allowed for fresh frozen evaluation")
     payload = torch.load(path, map_location=device, weights_only=True)
-    if payload['schema_version'] != 1:
+    if payload['schema_version'] not in (1, 2):
         raise ValueError("unsupported checkpoint schema")
     m, s = payload['metadata'], payload['state']
     graph = Graph(**m['graph'], gain=m['gain'])
@@ -222,6 +234,8 @@ def load_checkpoint(path, *, device='cpu', evaluation=False, seeds=None):
     trainer.training_seeds = m['seeds']
     if seeds is not None:
         trainer.network.magnitudes.copy_(s['network']['magnitudes'])
+        if warmup:
+            trainer.warmup()
         return trainer
     for obj, name in ((trainer.network, 'network'), (trainer.plasticity, 'plasticity'),
                       (trainer.environment, 'environment'), (trainer.environment.body, 'body'),

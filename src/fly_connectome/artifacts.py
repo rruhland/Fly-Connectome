@@ -4,11 +4,14 @@ from pathlib import Path
 import numpy as np
 
 from .graph import Graph
+from .dynamics import NeuronConfig
+from .pong import Physics
 from .sensor import Retina
 from .training import Trainer, RunConfig, load_checkpoint, warm_start
 
 
-def initialize(directory, *, stage='M1A', seeds=(1,), threshold=None, device='cpu', warm_checkpoint=None):
+def initialize(directory, *, stage='M1A', seeds=(1,), threshold=None, device='cpu', warm_checkpoint=None,
+               dynamics_profile=None):
     directory = Path(directory)
     manifest = json.loads((directory / 'manifest.json').read_text())
     with np.load(directory / 'graph-t1.npz', allow_pickle=False) as arrays:
@@ -26,6 +29,14 @@ def initialize(directory, *, stage='M1A', seeds=(1,), threshold=None, device='cp
     retina_spec = dict(manifest['retina'])
     for field in ('cell_types', 'neuron_columns'):
         retina_spec[field] = [v for v, keep in zip(retina_spec[field], node_mask) if keep]
+    neurons = None
+    if dynamics_profile is not None:
+        if not dynamics_profile.get('id'):
+            raise ValueError('dynamics profile requires a versioned identity')
+        retina_spec['injection'] = dynamics_profile['injection']
+        settings = dict(dt=Physics().dt / RunConfig().neural_steps)
+        settings.update(dynamics_profile['neurons'])
+        neurons = NeuronConfig(**settings)
     pathways = [p for p, keep in zip(manifest['pathways'], edge_mask) if keep]
     manifest = dict(manifest, source_graph_sha256=full.identity(), graph_sha256=graph.identity(),
                     threshold=threshold, stage=stage, body_ids=ids.tolist(), pathways=pathways, retina=retina_spec)
@@ -34,10 +45,18 @@ def initialize(directory, *, stage='M1A', seeds=(1,), threshold=None, device='cp
             manifest[field] = [v for v, keep in zip(manifest[field], node_mask) if keep]
     up = manifest['motor_up'] if stage == 'M1B' else []
     down = manifest['motor_down'] if stage == 'M1B' else []
+    if dynamics_profile is not None:
+        manifest['dynamics_profile'] = dynamics_profile
     model = Trainer(graph, [1] * len(graph.pre), pathways, Retina(**retina_spec, device=device),
-                    up, down, list(seeds), config=RunConfig(stage=stage), manifest=manifest, device=device)
+                    up, down, list(seeds), config=RunConfig(stage=stage,
+                        warmup_steps=dynamics_profile.get('warmup_steps', 0) if dynamics_profile else 0),
+                    manifest=manifest, device=device, neurons=neurons)
     if warm_checkpoint is not None:
         source = load_checkpoint(warm_checkpoint, device=device, evaluation=True)
+        if (source.network.config != model.network.config or
+                source.retina.spec['injection'] != model.retina.spec['injection']):
+            raise ValueError('warm expansion requires matching dynamics and sensory transduction')
         warm_start(source.network, model.network)
         manifest['warm_source_graph_sha256'] = source.network.graph.identity()
+    model.warmup()
     return model

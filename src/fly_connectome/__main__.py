@@ -21,6 +21,7 @@ def main():
     init.add_argument('--warm')
     init.add_argument('--output', required=True)
     init.add_argument('--device', default='cpu')
+    init.add_argument('--profile', help='versioned JSON neuron/sensory profile; omission preserves legacy dynamics')
     train = commands.add_parser('train', help='resume training and save exact state')
     train.add_argument('checkpoint')
     train.add_argument('--steps', type=int, required=True)
@@ -52,7 +53,8 @@ def main():
     if args.command == 'init':
         from .artifacts import initialize
         model = initialize(args.artifacts, stage=args.stage, seeds=[int(x) for x in args.seeds.split(',')],
-                           threshold=args.threshold, device=args.device, warm_checkpoint=args.warm)
+                           threshold=args.threshold, device=args.device, warm_checkpoint=args.warm,
+                           dynamics_profile=json.loads(Path(args.profile).read_text()) if args.profile else None)
         model.save(args.output)
         print(json.dumps(dict(checkpoint=args.output, neurons=model.network.n, edges=model.network.e,
                               stage=args.stage, graph_sha256=model.network.graph.identity())))

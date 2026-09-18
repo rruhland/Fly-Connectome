@@ -40,6 +40,7 @@ def apply_command(model, state, command, directory):
             config=model.config, physics=model.environment.config, neurons=n.config,
             learning=model.learning_config, curriculum=model.curriculum, manifest=model.manifest, device=model.device)
         model.__dict__.update(fresh.__dict__)
+        model.warmup()
     elif action == 'step' and model.evaluation:
         state['single_step'] = True
         state['paused'] = True

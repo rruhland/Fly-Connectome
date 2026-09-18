@@ -1,5 +1,5 @@
 """Sparse tensor adaptive LIF reference, shared by CPU and CUDA. No autograd."""
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 import math
 import torch
 
@@ -13,12 +13,21 @@ class NeuronConfig:
     refractory_steps: int = 2
     tau_adaptation: float = 1.
     adaptation_jump: float = .05
+    class_parameters: dict = field(default_factory=dict)
+    tau_sensory: float = 0.  # zero preserves legacy one-tick injection
 
     def __post_init__(self):
         if min(self.dt, self.tau_membrane, self.tau_current, self.tau_adaptation, self.threshold) <= 0:
             raise ValueError("positive neuron timescales and threshold required")
         if self.refractory_steps < 0 or self.adaptation_jump < 0:
             raise ValueError("refractory/adaptation must be nonnegative")
+        if not math.isfinite(self.tau_sensory) or self.tau_sensory < 0:
+            raise ValueError('sensory timescale must be finite and nonnegative')
+        for parameters in self.class_parameters.values():
+            if not set(parameters) <= {'rest_current', 'tau_membrane', 'tau_current'}:
+                raise ValueError('unsupported cell-class parameter')
+            if any(not math.isfinite(v) or (k != 'rest_current' and v <= 0) for k, v in parameters.items()):
+                raise ValueError('finite class currents and positive timescales required')
 
 
 @dataclass(frozen=True)
@@ -32,9 +41,15 @@ class Activity:
 
 class Network:
     @torch.no_grad()
-    def __init__(self, graph, delays, pathways, *, batch=1, config=NeuronConfig(), device='cpu'):
+    def __init__(self, graph, delays, pathways, *, batch=1, config=NeuronConfig(), device='cpu', cell_types=None):
         self.graph, self.config, self.batch, self.device = graph, config, batch, device
         self.n, self.e = len(graph.body_ids), len(graph.pre)
+        if config.class_parameters and (cell_types is None or len(cell_types) != self.n):
+            raise ValueError('cell-class dynamics require an annotated roster')
+        classes = cell_types if cell_types is not None else [''] * self.n
+        self.rest_current = torch.tensor([config.class_parameters.get(t, {}).get('rest_current', 0.) for t in classes], device=device)
+        self.membrane_decay = torch.tensor([math.exp(-config.dt / config.class_parameters.get(t, {}).get('tau_membrane', config.tau_membrane)) for t in classes], device=device)
+        self.current_decay = torch.tensor([math.exp(-config.dt / config.class_parameters.get(t, {}).get('tau_current', config.tau_current)) for t in classes], device=device)
         if batch < 1 or len(delays) != self.e or len(pathways) != self.e:
             raise ValueError("one fixed delay/pathway per edge and positive batch required")
         if any(type(d) is not int or d < 1 for d in delays):
@@ -52,6 +67,7 @@ class Network:
         self.history_length = max(delays, default=1) + 1
         self.history = torch.zeros(self.history_length, batch, self.n, dtype=torch.bool, device=device)
         self.voltage = torch.zeros(batch, self.n, device=device)
+        self.sensory_state = torch.zeros_like(self.voltage)
         self.feedforward_current = torch.zeros_like(self.voltage)
         self.predictive_current = torch.zeros_like(self.voltage)
         self.behavioral_current = torch.zeros_like(self.voltage)
@@ -79,7 +95,7 @@ class Network:
         env, edges = self._arrivals()
         targets = env * self.n + self.post[edges]
         weights = self.magnitudes[edges] * self.signs[edges]
-        leak = math.exp(-cfg.dt / cfg.tau_current)
+        leak = self.current_decay if cfg.class_parameters else math.exp(-cfg.dt / cfg.tau_current)
         # Only three fixed pathway classes; no loop over neurons, edges or spikes.
         self.feedforward_current.mul_(leak)
         self.predictive_current.mul_(leak)
@@ -88,14 +104,22 @@ class Network:
         self.feedforward_current.view(-1).index_add_(0, targets[ff], weights[ff])
         self.predictive_current.view(-1).index_add_(0, targets[pred], weights[pred])
         self.behavioral_current.view(-1).index_add_(0, targets[behavior], weights[behavior])
-        observed = self.feedforward_current + sensory_current.detach()
+        if cfg.tau_sensory:
+            self.sensory_state.mul_(math.exp(-cfg.dt / cfg.tau_sensory)).add_(sensory_current.detach())
+        else:
+            self.sensory_state.copy_(sensory_current.detach())
+        observed = self.feedforward_current + self.sensory_state
         predicted = self.predictive_current.clone()
-        current = observed + predicted + self.behavioral_current
+        current = observed + predicted + self.behavioral_current + self.rest_current
         self.adaptation.mul_(math.exp(-cfg.dt / cfg.tau_adaptation))
         eligible = self.refractory == 0
         self.refractory.sub_(1).clamp_(min=0)
-        decay = math.exp(-cfg.dt / cfg.tau_membrane)
-        self.voltage.mul_(decay).add_(current, alpha=1 - decay)
+        if cfg.class_parameters:
+            decay = self.membrane_decay
+            self.voltage.mul_(decay).add_(current * (1 - decay))
+        else:
+            decay = math.exp(-cfg.dt / cfg.tau_membrane)
+            self.voltage.mul_(decay).add_(current, alpha=1 - decay)
         self.voltage.masked_fill_(~eligible | self.silenced[None, :], 0.)
         spikes = eligible & ~self.silenced[None, :] & (self.voltage >= cfg.threshold + self.adaptation)
         self.voltage.masked_fill_(spikes, 0.)

@@ -39,3 +39,15 @@ def test_events_are_detached_and_input_is_binary_only():
     camera = EventCamera(1, 2, 2)
     with pytest.raises(ValueError, match='binary'):
         camera.observe(torch.ones(1, 2, 2, requires_grad=True))
+
+
+def test_signed_contrast_drives_only_lamina_and_one_event_polarity():
+    retina = Retina(1, 1, [[0, 0]], [0, 0, 0, 0],
+                    ['L1', 'L2', 'L3', 'L4'], dict.fromkeys(['L1', 'L2', 'L3'], 'contrast'))
+    camera = EventCamera(1, 1, 1)
+    on = camera.observe(torch.ones(1, 1, 1, dtype=torch.bool))
+    assert on.on.tolist() == [True]
+    assert retina.project(on).tolist() == [[-1., -1., -1., 0.]]
+    off = camera.observe(torch.zeros(1, 1, 1, dtype=torch.bool))
+    assert off.on.tolist() == [False]
+    assert retina.project(off).tolist() == [[1., 1., 1., 0.]]

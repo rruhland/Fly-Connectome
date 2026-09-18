@@ -1,6 +1,8 @@
 # Proposed M1 visual operating-point correction
 
-Status: proposal for review, not implemented or a replacement for the approved design.
+Status: approved by the user on 2026-09-17; implemented as an explicit versioned
+profile. This supplements the approved design. Calibration is provisional and
+does not establish M1A learning or physiological fidelity.
 Requested after the real-data M1A pilot exposed downstream silence. Preserve the
 failed-pilot checkpoints and results as the zero-background control.
 
@@ -105,9 +107,28 @@ a zero-event predictor alongside persistence to expose the sparse-event trivial
 baseline. Resume M1B learning only with honest M1A results. No existing trained
 artifact is overwritten or silently reinterpreted under the new dynamics.
 
-## Approval boundary
+## Approval and implementation
 
-The user authorized investigation and a proposal. Implementation of this correction
-still needs their decision because it changes the canonical sensory-current polarity
-and intrinsic operating point. The approved topology, transmitter signs, local
-plasticity, discrete-spike and no-backprop requirements remain unchanged.
+The user explicitly approved implementation and calibration. The approved topology,
+transmitter signs, local plasticity, discrete-spike and no-backprop requirements
+remain unchanged. Existing checkpoints retain their original dynamics. New schema-2
+checkpoints include class parameters, intrinsic currents, sensory-current state and
+fixed warm-up configuration. Loading schema 1 supplies the original zero-background
+defaults. Warm expansion rejects mismatched dynamics or sensory transduction.
+
+The six-candidate grid is `configs/resting-calibration-v1.json`; selection produced
+`configs/resting-v1-provisional.json`. All candidates stayed below the predefined
+numerical activity ceiling. A conservative interpretation of downstream modulation
+required both Mi1 and Tm3 ON counts to exceed the simultaneous no-event control,
+and both Tm1 and Tm2 OFF counts to exceed that control. Among qualifying candidates,
+the minimum summed intrinsic current over the actual roster selected lamina 1.5 /
+medulla 1.2. These are normalized modeling choices, not physiological measurements.
+T4/T5, LPi and LC10 remained silent during these short probes. This is partial
+propagation recovery, not completion of the milestone.
+
+The warm-up is 500 neural ticks with zero sensory events and frozen weights;
+baseline responses use its second half. Calibration stimulus conditions share
+weights and have independent neural state. The no-event condition runs for the
+same duration to control for adaptation drift. The stimulus is a moving edge for
+200 ticks followed by return to its background for 100 ticks; recovery includes
+ordinary offset events. No Pong reward or rollout enters calibration.

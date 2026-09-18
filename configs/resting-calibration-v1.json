@@ -1,0 +1,23 @@
+{
+  "version": "resting-calibration-v1",
+  "status": "preregistered candidates, not measured biological parameters",
+  "source_checkpoint": "checkpoints/visual-initial.pt",
+  "seed": 1001,
+  "gain": 0.005,
+  "warmup_ticks": 500,
+  "probe_ticks": 300,
+  "tau_sensory": 0.02,
+  "lamina_rest_currents": [1.2, 1.5],
+  "medulla_rest_currents": [1.0, 1.2, 1.5],
+  "class_timescales": {
+    "L1": {"tau_membrane": 0.02, "tau_current": 0.005},
+    "L2": {"tau_membrane": 0.02, "tau_current": 0.005},
+    "L3": {"tau_membrane": 0.04, "tau_current": 0.005},
+    "Mi1": {"tau_membrane": 0.03, "tau_current": 0.01},
+    "Tm3": {"tau_membrane": 0.02, "tau_current": 0.01},
+    "Tm1": {"tau_membrane": 0.03, "tau_current": 0.01},
+    "Tm2": {"tau_membrane": 0.02, "tau_current": 0.01},
+    "Mi9": {"tau_membrane": 0.04, "tau_current": 0.01}
+  },
+  "selection": "Keep candidates with finite state and no tick above 20% of the visual roster spiking. Require stimulus-dependent downstream activity, not just basal discharge. Prefer the lowest total resting-current setting among those with ON/OFF modulation in downstream classes; resolve ties using recovery and activity cost, never Pong reward. If none qualify, report failure without broadening the grid."
+}

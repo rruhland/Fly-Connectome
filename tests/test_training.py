@@ -61,3 +61,53 @@ def test_detailed_activity_is_evaluation_only(tmp_path):
     assert snapshot['events']['width'] == 64
     assert 'spiking_neurons' in snapshot
     assert 'population_rates_hz' in snapshot
+
+
+def test_class_dynamics_and_sensory_state_resume_exactly(tmp_path):
+    from fly_connectome.dynamics import NeuronConfig
+    base = trainer()
+    a = Trainer(base.network.graph, [1]*3, ['feedforward', 'behavioral', 'behavioral'],
+        Retina(**dict(base.retina.spec, injection={'L2': 'contrast'})), [30], [40], [1],
+        config=base.config, neurons=NeuronConfig(dt=base.network.config.dt, tau_sensory=.02,
+            class_parameters={'L2': {'rest_current': 1.4, 'tau_membrane': .01}}))
+    a.run(3)
+    path = tmp_path / 'new.pt'
+    a.save(path)
+    assert torch.load(path, weights_only=True)['schema_version'] == 2
+    b = load_checkpoint(path)
+    a.run(7); b.run(7)
+    for key in ('voltage', 'sensory_state', 'magnitudes', 'history'):
+        torch.testing.assert_close(getattr(a.network, key), getattr(b.network, key), rtol=0, atol=0)
+
+
+def test_frozen_warmup_does_not_run_game_or_learning(tmp_path):
+    from dataclasses import replace
+    a = trainer()
+    a.config = replace(a.config, warmup_steps=10)
+    path = tmp_path / 'warm.pt'
+    a.save(path)
+    b = load_checkpoint(path, evaluation=True, seeds=[100])
+    assert b.network.step_index == 10 and b.step_index == 0
+    assert b.metrics['spikes'] == 0 and b.plasticity is None
+    c = load_checkpoint(path)
+    assert c.network.step_index == 0
+
+
+def test_legacy_checkpoint_keeps_zero_background_and_impulse_semantics(tmp_path):
+    a = trainer()
+    a.run(3)
+    path = tmp_path / 'legacy.pt'
+    a.save(path)
+    payload = torch.load(path, weights_only=True)
+    payload['schema_version'] = 1
+    for key in ('class_parameters', 'tau_sensory'):
+        payload['metadata']['neurons'].pop(key)
+    payload['metadata']['config'].pop('warmup_steps')
+    for key in ('rest_current', 'membrane_decay', 'current_decay', 'sensory_state'):
+        payload['state']['network'].pop(key)
+    torch.save(payload, path)
+    b = load_checkpoint(path)
+    assert not b.network.rest_current.any() and b.network.config.tau_sensory == 0
+    a.run(5); b.run(5)
+    for key in ('voltage', 'magnitudes', 'history'):
+        torch.testing.assert_close(getattr(a.network, key), getattr(b.network, key), rtol=0, atol=0)

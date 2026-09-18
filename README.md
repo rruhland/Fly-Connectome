@@ -142,10 +142,36 @@ The first real T5 M1A pilot (3,000 training steps, seed 1) did not establish lea
 visual dynamics. On held-out seeds 1001/1002, only L1-L3 spiked; T4/T5 and projection
 populations were silent. Initial and trained predictions both beat persistence,
 but differed negligibly from each other. This is not milestone success. The
-zero-background LIF model and positive-only L1 ON injection require investigation
-before long M1B training. See `docs/experiments/2026-09-17-m1a-pilot.json` for results.
+zero-background LIF model and positive-only L1 ON injection motivated the approved
+operating-point correction below. See `docs/experiments/2026-09-17-m1a-pilot.json`.
 
 The fixture producer benchmark produced byte-identical headless/preview checkpoints.
 Its noisy median timing showed no measurable overhead, but excludes browser/server
 CPU contention; the full <=1% UI acceptance check remains open. CUDA tests are skipped
 on the current CPU-only PyTorch installation.
+
+## Approved resting-current experiment
+
+`configs/resting-v1-provisional.json` supplies fixed cell-class currents/timescales
+and signed lamina contrast transduction (ON hyperpolarizes, OFF depolarizes).
+It was selected on frozen non-Pong edge probes from a six-candidate preregistered
+grid. Parameters are explicit spiking-model approximations, not measured firing
+rates. Topology, signs and plasticity rules are unchanged. There is no firing floor.
+
+```powershell
+.venv/Scripts/python scripts/calibrate_resting.py
+.venv/Scripts/python -m fly_connectome init --stage M1A --profile configs/resting-v1-provisional.json --output checkpoints/resting-v1-visual-initial.pt
+.venv/Scripts/python -m fly_connectome train checkpoints/resting-v1-visual-initial.pt --steps 500 --threads 4 --checkpoint-every 100 --output checkpoints/resting-v1-visual-trained.pt
+.venv/Scripts/python -m fly_connectome evaluate checkpoints/resting-v1-visual-trained.pt --initial checkpoints/resting-v1-visual-initial.pt --seeds 1001,1002 --steps 500 --threads 4 --output runs/resting-v1-heldout.json
+```
+
+Omitting `--profile` preserves legacy dynamics. Existing checkpoints are not
+converted; schema 2 records the profile and sensory-current state for exact resume.
+Use the same profile for later warm expansion. Fresh evaluation uses a fixed
+no-event neural warm-up, while exact training resume restores the saved state.
+Diagnostics report baseline firing and responses above baseline; signed contrast
+evaluation labels its target encoding and includes a zero-event predictor.
+
+The correction restored first-order medulla modulation in controlled probes, but
+T4/T5 and projection populations remained silent. The profile is provisional;
+useful learned prediction and score-only Pong behavior are not established.

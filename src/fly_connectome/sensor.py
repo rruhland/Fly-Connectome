@@ -35,8 +35,8 @@ class Retina:
                          neuron_columns=neuron_columns, cell_types=cell_types, injection=injection)
         if not set(injection) <= {'L1', 'L2', 'L3'}:
             raise ValueError("direct sensor injection is restricted to L1-L3")
-        if not set(injection.values()) <= {'on', 'off'}:
-            raise ValueError("each injected cell type requires one explicit polarity")
+        if not set(injection.values()) <= {'on', 'off', 'contrast'}:
+            raise ValueError("each injected cell type requires an explicit polarity or signed contrast")
         self.device = device
         columns = torch.tensor(hex_columns, dtype=torch.float64, device=device)
         if columns.ndim != 2 or columns.shape[1] != 2 or not len(columns) or not torch.isfinite(columns).all():
@@ -60,6 +60,7 @@ class Retina:
         if torch.any(selected < 0) or torch.any(selected >= self.n_columns):
             raise ValueError("injected neurons require a measured retinotopic column")
         self.polarity = torch.tensor([injection.get(t) == 'on' for t in cell_types], dtype=torch.long, device=device)
+        self.contrast = torch.tensor([injection.get(t) == 'contrast' for t in cell_types], dtype=torch.bool, device=device)
 
     @torch.no_grad()
     def project(self, events):
@@ -70,4 +71,6 @@ class Retina:
         bins = bins.view(batch, 2, self.n_columns)
         result = torch.zeros(batch, len(self.neuron_columns), device=self.device)
         result[:, self.injected] = bins[:, self.polarity[self.injected], self.neuron_columns[self.injected]]
+        result[:, self.contrast] = (bins[:, 0, self.neuron_columns[self.contrast]]
+                                   - bins[:, 1, self.neuron_columns[self.contrast]])
         return result
