@@ -24,6 +24,15 @@ def test_prediction_audit_separates_true_events_from_false_alarms():
         2*result['target_prediction_cross_mean']-result['prediction_power'])
 
 
+def test_lagged_audit_labels_delayed_response_without_calling_it_prediction():
+    targets = torch.tensor([0.,1.,0.,-1.,0.,0.])
+    predictions = torch.tensor([0.,0.,1.,0.,-1.,0.])
+    result = module.lagged_scores(targets,predictions,(-1,0,1))
+    assert result['1']['model_mse'] == 0
+    assert result['0']['model_mse'] > result['0']['zero_mse']
+    assert result['-1']['model_mse'] > 0
+
+
 def test_frozen_audit_agrees_with_evaluation_and_preserves_checkpoint(tmp_path):
     from fly_connectome.evaluation import evaluate
     path = tmp_path/'fixture.pt'

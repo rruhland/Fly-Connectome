@@ -1,0 +1,12 @@
+{
+  "id": "event-learning-continuation-v1",
+  "source_checkpoint": "checkpoints/event-v1-combined-rate-trained.pt",
+  "source_training_steps": 500,
+  "final_training_steps": 2000,
+  "output_checkpoint": "checkpoints/event-v1-combined-rate-2000.pt",
+  "checkpoint_every": 100,
+  "training_seed": 1,
+  "development_seeds": [1101, 1102],
+  "development_steps": 500,
+  "reason": "Test whether the fully revised rule is merely undertrained, using the explicit higher-rate condition. Its 500-step development run still fails the zero-event baseline. No change to dynamics, learning parameters, topology, signs or acceptance criteria. Keep the 500-step artifact intact. This is a development continuation, not a final held-out acceptance run."
+}

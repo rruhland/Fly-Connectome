@@ -310,3 +310,19 @@ every 100 steps to `checkpoints/event-v1-CONDITION-trained.pt`; audit reports go
 remaining comparisons and independent feedback-silencing probes are in progress.
 Reserved final seeds 1201-1204 remain untouched. Do not claim M1A acceptance or
 advance M1B on the basis of reduced false positives alone.
+
+Follow-up verification: 96 tests pass, four CUDA skips. The authentic legacy
+fixture now removes new state tensors as well as config fields. Independent
+eleven-condition feedback probes completed: C2/C3/L4/Lawf1 activity disappears
+when their measured external afferents are silenced; targets remain unsilenced.
+See `docs/experiments/2026-09-18-event-aligned-learning.md` for evidence and limits.
+The approved implementation and preregistered grid are pushed as `1fb7003`.
+
+The fixed-parameter combined-rate continuation is recorded separately in
+`configs/event-learning-continuation-v1.json`. Command from the intact 500-step
+source: `.venv/Scripts/python -m fly_connectome train checkpoints/event-v1-combined-rate-trained.pt --steps 1500 --output checkpoints/event-v1-combined-rate-2000.pt --threads 1 --checkpoint-every 100`.
+If interrupted, resume from the output checkpoint for only the steps remaining
+to 2,000 (the CLI `--steps` is additional steps). No final seeds have been used.
+Audit the final checkpoint on development seeds 1101/1102 for 500 steps with
+`scripts/audit_prediction.py`, which now includes shuffled and shifted-time
+diagnostics. Positive lag is a later response and must never count as prediction.

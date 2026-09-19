@@ -27,6 +27,22 @@ def summary(values):
         prediction_power=power/count, target_mean=targets/count, prediction_mean=predictions/count)
 
 
+def lagged_scores(targets, predictions, lags=(-8,-4,-2,-1,0,1,2,4,8)):
+    """Offline timing diagnostic; positive lag uses predictions AFTER the target.
+
+    Future offsets are never used in training or acceptance scores.
+    """
+    result = {}
+    for lag in lags:
+        if abs(lag) >= len(targets):
+            continue
+        start, end = max(0,-lag), min(len(targets),len(targets)-lag)
+        target, prediction = targets[start:end], predictions[start+lag:end+lag]
+        result[str(lag)] = summary(sums(target,prediction,torch.zeros_like(target)))
+        del result[str(lag)]['persistence_mse']  # no persistence comparison at shifted offsets
+    return result
+
+
 def audit(checkpoint, steps, seeds):
     model = load_checkpoint(checkpoint, evaluation=True, seeds=seeds)
     assert model.plasticity is None
@@ -75,6 +91,7 @@ def audit(checkpoint, steps, seeds):
         shuffled_mse=float((targets-shuffled).square().mean()),
         model_event_conditioned_mse=float((targets-predictions).square()[active].mean()) if active.any() else None,
         shuffled_event_conditioned_mse=float((targets-shuffled).square()[active].mean()) if active.any() else None)
+    lagged = lagged_scores(targets,predictions)
     signs = {}
     for label, mask in masks.items():
         targets = mask.nonzero().flatten()
@@ -93,6 +110,7 @@ def audit(checkpoint, steps, seeds):
         visual_target=model.learning_config.visual_target, visual_eligibility=model.learning_config.visual_eligibility,
         aggregate_metrics=model.metrics,
         temporal_control=temporal_control,
+        lagged_event_scores=lagged,
         learning={t:summary(v) for t,v in learning.items()},
         current={t:dict(**summary(v), saturated_fraction=saturated[t].item()/v[0].item(),
                        raw_target_power=raw_power[t].item()/v[0].item()) for t,v in current.items()},
