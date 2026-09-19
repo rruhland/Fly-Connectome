@@ -333,3 +333,14 @@ Full paired reports and the combined-rate 500-step timing audit are recorded in
 uses a longer development sequence, not final seeds. Its aligned/shuffled errors
 are nearly identical; no useful anticipation claim is supported. The 2,000-step
 continuation is still running. Core tests and feedback probes remain passing.
+
+Windows checkpoint-sharing fix: a progress read overlapped an atomic replacement
+and raised WinError 5 during the continuation. The last complete checkpoint was
+step 1,600, intact and loadable. Checkpoint writes now retry Windows errors 5/32/33
+for at most 30 seconds; unrelated errors fail immediately, and exhausted retries
+preserve the previous checkpoint. A fault-injection test failed before the fix;
+transient and persistent sharing tests pass. Full suite: 99 passed, four CUDA skips.
+The continuation resumed from step 1,600 for 400 additional steps. Do not inspect
+the live checkpoint while it is being replaced; wait for the training process exit.
+Wheel packaging passed via `pip wheel . --no-deps --no-build-isolation --wheel-dir dist`.
+The optional `python -m build` command is unavailable in this environment.

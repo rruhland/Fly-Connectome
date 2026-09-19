@@ -73,9 +73,10 @@ A separate 500-step development audit of the combined higher-rate model gives
 pooled event MSE 0.001028283, with time-shuffled predictions 0.001028285.
 Event-conditioned MSE is 1.000559 (shuffled 1.000556). The source checkpoint remains
 the 500-training-step artifact. More evaluation samples remove even the weak
-event-conditioned advantage seen in the 200-step screen. L1 now has active negative
-predictive input at 757/892 neurons, compared with 2/892 before feedback calibration;
-restored sign support has not produced useful timing. Shifted-time diagnostic
+event-conditioned advantage seen in the 200-step screen. L1 now has an active negative
+predictive source at 757/892 neurons, compared with 2/892 before feedback calibration.
+This counts connected sources that spiked, not surviving weight or delivered current;
+restored source activity has not demonstrated useful timing. Shifted-time diagnostic
 event-conditioned scores remain approximately 1 across offsets -8 through +8
 frames; these results do not establish a consistent late response either.
 
@@ -89,3 +90,9 @@ compares a target with a prediction recorded later. Future offsets never enter
 training or acceptance scores. A temporal permutation control tests whether
 alignment carries information beyond the prediction distribution. These diagnostic
 additions do not change any model checkpoint.
+
+An independent read-only review recomputed the pooled metrics and intervention
+totals and confirmed the lag indexing. One shuffled sequence is a descriptive
+control, not a statistical equivalence test. Neither these short runs nor the
+2,000-step continuation can establish a general representation limit; undertraining
+and inadequate dynamics remain distinct hypotheses.

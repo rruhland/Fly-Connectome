@@ -4,6 +4,7 @@ import math
 import os
 from pathlib import Path
 import tempfile
+import time
 
 import torch
 
@@ -224,7 +225,16 @@ class Trainer:
         try:
             with open(temp, 'wb') as stream:
                 torch.save(dict(schema_version=2, metadata=metadata, state=state), stream)
-            os.replace(temp, path)
+            # Windows readers/indexers can temporarily deny atomic replacement.
+            # Keep the old checkpoint intact and bound the wait to 30 seconds.
+            for attempt in range(31):
+                try:
+                    os.replace(temp, path)
+                    break
+                except PermissionError as error:
+                    if getattr(error, 'winerror', None) not in (5, 32, 33) or attempt == 30:
+                        raise
+                    time.sleep(1)
         finally:
             if os.path.exists(temp):
                 os.unlink(temp)

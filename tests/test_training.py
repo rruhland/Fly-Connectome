@@ -1,4 +1,5 @@
 import torch
+import pytest
 
 from fly_connectome.graph import Graph
 from fly_connectome.sensor import Retina
@@ -30,6 +31,65 @@ def test_exact_checkpoint_resume_and_frozen_evaluation(tmp_path):
     frozen.run(5)
     torch.testing.assert_close(weights, frozen.network.magnitudes, rtol=0, atol=0)
     assert path.read_bytes() == before
+
+
+def test_checkpoint_replace_retries_windows_sharing_conflicts(tmp_path, monkeypatch):
+    import fly_connectome.training as training
+    model = trainer()
+    path = tmp_path/'shared.pt'
+    model.save(path)
+    original_replace = training.os.replace
+    attempts = []
+    def temporarily_locked(source, destination):
+        attempts.append(1)
+        if len(attempts) < 3:
+            error = PermissionError('file is open by another reader')
+            error.winerror = 5
+            raise error
+        original_replace(source,destination)
+    monkeypatch.setattr(training.os,'replace',temporarily_locked)
+    monkeypatch.setattr('time.sleep',lambda _: None)
+    model.run(2)
+    model.save(path)
+    assert len(attempts) == 3
+    assert load_checkpoint(path).step_index == 2
+    assert not list(tmp_path.glob('*.tmp'))
+
+
+def test_checkpoint_replace_does_not_retry_unrelated_permission_error(tmp_path, monkeypatch):
+    import fly_connectome.training as training
+    attempts = []
+    def denied(*_):
+        attempts.append(1)
+        raise PermissionError('directory is not writable')
+    monkeypatch.setattr(training.os,'replace',denied)
+    with pytest.raises(PermissionError):
+        trainer().save(tmp_path/'denied.pt')
+    assert len(attempts) == 1
+    assert not list(tmp_path.glob('*.tmp'))
+
+
+def test_persistent_windows_lock_preserves_previous_checkpoint(tmp_path, monkeypatch):
+    import fly_connectome.training as training
+    model = trainer()
+    path = tmp_path/'locked.pt'
+    model.save(path)
+    previous = path.read_bytes()
+    attempts = []
+    def locked(*_):
+        attempts.append(1)
+        error = PermissionError('persistent sharing conflict')
+        error.winerror = 32
+        raise error
+    monkeypatch.setattr(training.os,'replace',locked)
+    monkeypatch.setattr('time.sleep',lambda _: None)
+    model.run(2)
+    with pytest.raises(PermissionError):
+        model.save(path)
+    assert 1 < len(attempts) < 100
+    assert path.read_bytes() == previous
+    assert load_checkpoint(path).step_index == 0
+    assert not list(tmp_path.glob('*.tmp'))
 
 
 def test_environment_reset_does_not_reset_neural_state():
