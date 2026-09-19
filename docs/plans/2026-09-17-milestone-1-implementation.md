@@ -326,3 +326,10 @@ to 2,000 (the CLI `--steps` is additional steps). No final seeds have been used.
 Audit the final checkpoint on development seeds 1101/1102 for 500 steps with
 `scripts/audit_prediction.py`, which now includes shuffled and shifted-time
 diagnostics. Positive lag is a later response and must never count as prediction.
+
+All six 500-step ablations have now completed and all fail the zero-event baseline.
+Full paired reports and the combined-rate 500-step timing audit are recorded in
+`docs/experiments/2026-09-18-event-aligned-learning.md`. The extra timing audit
+uses a longer development sequence, not final seeds. Its aligned/shuffled errors
+are nearly identical; no useful anticipation claim is supported. The 2,000-step
+continuation is still running. Core tests and feedback probes remain passing.

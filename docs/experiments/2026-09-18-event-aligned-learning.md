@@ -50,10 +50,34 @@ the target, trace timing and learning-rate effects. Final seeds 1201-1204 are
 reserved and remain untouched until a candidate passes development checks.
 
 The common initial event MSE is 0.001282239; zero prediction is 0.001045013 and
-persistence is 0.002199290. The combined higher-rate condition reaches 0.001139934
-after 500 steps, with event-conditioned MSE 0.999859 versus 1 for zero prediction.
-Thus reduced error is not sufficient: zero prediction still wins overall. The
-remaining comparisons must complete before selecting or rejecting a candidate.
+persistence is 0.002199290. All six comparisons completed:
+
+| Condition | Visual learning rate | Event MSE | Event-conditioned MSE |
+| --- | ---: | ---: | ---: |
+| Legacy target and trace | 0.0001 | 0.001256556 | 1.006285 |
+| Input-increment target only | 0.0001 | 0.001220246 | 1.000555 |
+| Causal trace only | 0.0001 | 0.001281045 | 1.000542 |
+| Combined target and trace | 0.0001 | 0.001282381 | 1.000512 |
+| Causal trace, higher rate | 0.01 | 0.001198415 | 1.003415 |
+| Combined, higher rate | 0.01 | 0.001139934 | 0.999859 |
+
+Values pool L1-L3 by sample count. No condition qualifies: zero prediction wins
+overall, and the tiny event-conditioned improvement in the combined higher-rate
+condition does not establish useful anticipation. Each complete initial/trained
+report is saved as `2026-09-18-event-v1-CONDITION-audit.json`. The first three
+processes (target-only, trace-rate, combined-rate) started before the shuffled
+diagnostic was added, so their original grid reports do not include that control.
+No missing control is treated as a pass.
+
+A separate 500-step development audit of the combined higher-rate model gives
+pooled event MSE 0.001028283, with time-shuffled predictions 0.001028285.
+Event-conditioned MSE is 1.000559 (shuffled 1.000556). The source checkpoint remains
+the 500-training-step artifact. More evaluation samples remove even the weak
+event-conditioned advantage seen in the 200-step screen. L1 now has active negative
+predictive input at 757/892 neurons, compared with 2/892 before feedback calibration;
+restored sign support has not produced useful timing. Shifted-time diagnostic
+event-conditioned scores remain approximately 1 across offsets -8 through +8
+frames; these results do not establish a consistent late response either.
 
 A separately recorded continuation (`configs/event-learning-continuation-v1.json`)
 tests undertraining by continuing the combined higher-rate checkpoint to 2,000
