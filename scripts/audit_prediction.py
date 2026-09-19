@@ -36,28 +36,45 @@ def audit(checkpoint, steps, seeds):
     masks = {t:torch.tensor([v == t or (t in ('T4','T5') and v.startswith(t)) for v in types]) for t in labels}
     masks = {t:m for t,m in masks.items() if m.any()}
     current = {t:torch.zeros(11,dtype=torch.float64) for t in masks}
+    learning = {t:torch.zeros(11,dtype=torch.float64) for t in masks}
     events = {t:torch.zeros(11,dtype=torch.float64) for t in ('L1','L2','L3') if t in masks}
     saturated = {t:torch.zeros((),dtype=torch.float64) for t in masks}
     raw_power = {t:torch.zeros((),dtype=torch.float64) for t in masks}
     original_step = net.step
-    def record_step(injection):
-        activity = original_step(injection)
+    def record_step(injection, **kwargs):
+        activity = original_step(injection, **kwargs)
         observed = model.learning_config.encode(activity.observed, net.config.threshold)
+        target = model.learning_config.observation(activity, net.config.threshold, model.retina.injected, model.config.sensory_gain)
         for label, mask in masks.items():
             current[label] += sums(observed[:,mask], model.previous_predicted[:,mask], model.previous_observed[:,mask])
+            previous = (model.previous_learning_observed if model.learning_config.visual_target == 'input-arrivals-v1'
+                        else model.previous_observed)
+            learning[label] += sums(target[:,mask], model.previous_predicted[:,mask], previous[:,mask])
             saturated[label] += (activity.observed[:,mask].abs() >= net.config.threshold).sum()
             raw_power[label] += activity.observed[:,mask].square().sum()
         return activity
     # Only the disposable frozen model is instrumented, with identical step outputs.
     net.step = record_step
     camera = EventCamera(len(seeds), model.retina.spec['height'], model.retina.spec['width'])
+    event_targets, event_predictions = [], []
     for _ in range(steps):
         frame = model.environment.render(model.retina.spec['height'], model.retina.spec['width'])
         target = model.retina.project(camera.observe(frame))
+        event_targets.append(target[:,model.retina.injected].clone())
+        event_predictions.append(model.previous_predicted[:,model.retina.injected].clone())
         for label in events:
             mask = masks[label]
             events[label] += sums(target[:,mask], model.previous_predicted[:,mask], model.previous_events[:,mask])
         model.step('scripted')
+    targets, predictions = torch.stack(event_targets), torch.stack(event_predictions)
+    permutation = torch.randperm(steps,generator=torch.Generator().manual_seed(421))
+    active = targets != 0
+    shuffled = predictions[permutation]
+    temporal_control = dict(permutation_seed=421,
+        model_mse=float((targets-predictions).square().mean()),
+        shuffled_mse=float((targets-shuffled).square().mean()),
+        model_event_conditioned_mse=float((targets-predictions).square()[active].mean()) if active.any() else None,
+        shuffled_event_conditioned_mse=float((targets-shuffled).square()[active].mean()) if active.any() else None)
     signs = {}
     for label, mask in masks.items():
         targets = mask.nonzero().flatten()
@@ -73,6 +90,10 @@ def audit(checkpoint, steps, seeds):
             with_active_negative_source=int((active_negative>0).sum()))
     return dict(checkpoint=checkpoint, checkpoint_sha256=checksum(checkpoint), graph_sha256=net.graph.identity(),
         training_steps=model.training_step, steps=steps, seeds=seeds, prediction_encoding=model.learning_config.prediction_encoding,
+        visual_target=model.learning_config.visual_target, visual_eligibility=model.learning_config.visual_eligibility,
+        aggregate_metrics=model.metrics,
+        temporal_control=temporal_control,
+        learning={t:summary(v) for t,v in learning.items()},
         current={t:dict(**summary(v), saturated_fraction=saturated[t].item()/v[0].item(),
                        raw_target_power=raw_power[t].item()/v[0].item()) for t,v in current.items()},
         events={t:summary(v) for t,v in events.items()}, sign_support=signs,

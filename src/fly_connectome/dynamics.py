@@ -37,6 +37,8 @@ class Activity:
     predicted: torch.Tensor
     arrival_environments: torch.Tensor
     arrival_edges: torch.Tensor
+    feedforward_arrivals: torch.Tensor | None = None
+    sensory_input: torch.Tensor | None = None
 
 
 class Network:
@@ -88,7 +90,7 @@ class Network:
         return environments[owner[keep]], edges[keep]
 
     @torch.no_grad()
-    def step(self, sensory_current):
+    def step(self, sensory_current, *, capture_increments=False):
         if sensory_current.shape != (self.batch, self.n):
             raise ValueError("sensory current shape does not match network")
         cfg = self.config
@@ -101,6 +103,10 @@ class Network:
         self.predictive_current.mul_(leak)
         self.behavioral_current.mul_(leak)
         ff, pred, behavior = self.pathways[edges] == 0, self.pathways[edges] == 1, self.pathways[edges] == 2
+        increments = None
+        if capture_increments:
+            increments = torch.zeros_like(self.voltage)
+            increments.view(-1).index_add_(0, targets[ff], weights[ff])
         self.feedforward_current.view(-1).index_add_(0, targets[ff], weights[ff])
         self.predictive_current.view(-1).index_add_(0, targets[pred], weights[pred])
         self.behavioral_current.view(-1).index_add_(0, targets[behavior], weights[behavior])
@@ -127,4 +133,5 @@ class Network:
         self.adaptation.add_(spikes * cfg.adaptation_jump)
         self.history[self.step_index % self.history_length].copy_(spikes)
         self.step_index += 1
-        return Activity(spikes, observed, predicted, env, edges)
+        return Activity(spikes, observed, predicted, env, edges, increments,
+                        sensory_current.detach() if capture_increments else None)

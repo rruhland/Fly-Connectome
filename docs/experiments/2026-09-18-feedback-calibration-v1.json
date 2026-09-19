@@ -1,0 +1,1176 @@
+{
+  "spec": {
+    "id": "feedback-calibration-v1",
+    "source_checkpoint": "checkpoints/motion-v2-visual-initial.pt",
+    "seed": 1103,
+    "centrifugal_rest_currents": [
+      0.95,
+      1.0,
+      1.05,
+      1.2
+    ],
+    "centrifugal_classes": [
+      "C2",
+      "C3"
+    ],
+    "other_classes": {
+      "L4": {
+        "rest_current": 0.95
+      },
+      "Lawf1": {
+        "rest_current": 0.95
+      }
+    },
+    "warmup_ticks": 500,
+    "stimulus_ticks": 400,
+    "recovery_ticks": 200,
+    "edge_pixels_per_tick": 0.16,
+    "peak_spike_fraction_bound": 0.2,
+    "selection": "Smallest tested centrifugal rest current with spikes in C2, C3, L4 and Lawf1 and per-neuron stimulus-period differences versus matched no-event control for at least one polarity in every class; L1-L3 remain responsive, finite voltage and peak activity below the bound. No Pong score or prediction-error selection. No additional class is adjusted."
+  },
+  "config_sha256": "36c40cd5d7a977a444d9bba842078c90ff643375ed7e8c78e5e0e810069926f4",
+  "checkpoint_sha256": "2c46809a4af81003f408a84c5bde93831127009e04164c1644954dc53e942a63",
+  "graph_sha256": "c941a5c912dd03e2ab0868260c637c2b1d21525196d4bce93c7d5e7f618e34a8",
+  "rows": [
+    {
+      "rest_current": 0.95,
+      "stable": true,
+      "qualifies": false,
+      "peak_spikes_per_tick": 1785,
+      "populations": {
+        "L1": {
+          "baseline_counts": [
+            3731,
+            3731,
+            3731
+          ],
+          "stimulus_counts": [
+            4000,
+            11120,
+            4847
+          ],
+          "recovery_counts": [
+            7012,
+            427,
+            2240
+          ],
+          "stimulus_changed_neurons": [
+            626,
+            768
+          ]
+        },
+        "L2": {
+          "baseline_counts": [
+            4465,
+            4465,
+            4465
+          ],
+          "stimulus_counts": [
+            3716,
+            10516,
+            4465
+          ],
+          "recovery_counts": [
+            6950,
+            363,
+            1787
+          ],
+          "stimulus_changed_neurons": [
+            687,
+            778
+          ]
+        },
+        "L3": {
+          "baseline_counts": [
+            3568,
+            3568,
+            3568
+          ],
+          "stimulus_counts": [
+            2808,
+            8553,
+            3584
+          ],
+          "recovery_counts": [
+            5341,
+            327,
+            1802
+          ],
+          "stimulus_changed_neurons": [
+            663,
+            762
+          ]
+        },
+        "C2": {
+          "baseline_counts": [
+            0,
+            0,
+            0
+          ],
+          "stimulus_counts": [
+            0,
+            0,
+            0
+          ],
+          "recovery_counts": [
+            0,
+            0,
+            0
+          ],
+          "stimulus_changed_neurons": [
+            0,
+            0
+          ]
+        },
+        "C3": {
+          "baseline_counts": [
+            0,
+            0,
+            0
+          ],
+          "stimulus_counts": [
+            0,
+            0,
+            0
+          ],
+          "recovery_counts": [
+            0,
+            0,
+            0
+          ],
+          "stimulus_changed_neurons": [
+            0,
+            0
+          ]
+        },
+        "L4": {
+          "baseline_counts": [
+            0,
+            0,
+            0
+          ],
+          "stimulus_counts": [
+            0,
+            409,
+            0
+          ],
+          "recovery_counts": [
+            326,
+            1,
+            0
+          ],
+          "stimulus_changed_neurons": [
+            0,
+            408
+          ]
+        },
+        "Lawf1": {
+          "baseline_counts": [
+            0,
+            0,
+            0
+          ],
+          "stimulus_counts": [
+            0,
+            5,
+            0
+          ],
+          "recovery_counts": [
+            4,
+            0,
+            0
+          ],
+          "stimulus_changed_neurons": [
+            0,
+            5
+          ]
+        },
+        "T4": {
+          "baseline_counts": [
+            420,
+            420,
+            420
+          ],
+          "stimulus_counts": [
+            356,
+            538,
+            335
+          ],
+          "recovery_counts": [
+            490,
+            244,
+            226
+          ],
+          "stimulus_changed_neurons": [
+            201,
+            451
+          ]
+        },
+        "T5": {
+          "baseline_counts": [
+            29,
+            29,
+            29
+          ],
+          "stimulus_counts": [
+            21,
+            1853,
+            21
+          ],
+          "recovery_counts": [
+            1313,
+            16,
+            11
+          ],
+          "stimulus_changed_neurons": [
+            20,
+            1838
+          ]
+        }
+      },
+      "neurons": {
+        "dt": 0.0010416666666666667,
+        "tau_membrane": 0.02,
+        "tau_current": 0.005,
+        "threshold": 1.0,
+        "refractory_steps": 2,
+        "tau_adaptation": 1.0,
+        "adaptation_jump": 0.05,
+        "class_parameters": {
+          "L1": {
+            "tau_membrane": 0.02,
+            "tau_current": 0.005,
+            "rest_current": 1.5
+          },
+          "L2": {
+            "tau_membrane": 0.02,
+            "tau_current": 0.005,
+            "rest_current": 1.5
+          },
+          "L3": {
+            "tau_membrane": 0.04,
+            "tau_current": 0.005,
+            "rest_current": 1.5
+          },
+          "Mi1": {
+            "tau_membrane": 0.03,
+            "tau_current": 0.01,
+            "rest_current": 1.2
+          },
+          "Tm3": {
+            "tau_membrane": 0.02,
+            "tau_current": 0.01,
+            "rest_current": 1.2
+          },
+          "Tm1": {
+            "tau_membrane": 0.03,
+            "tau_current": 0.01,
+            "rest_current": 1.2
+          },
+          "Tm2": {
+            "tau_membrane": 0.02,
+            "tau_current": 0.01,
+            "rest_current": 1.2
+          },
+          "Mi9": {
+            "tau_membrane": 0.04,
+            "tau_current": 0.01,
+            "rest_current": 1.2
+          },
+          "T4a": {
+            "rest_current": 0.95
+          },
+          "T4b": {
+            "rest_current": 0.95
+          },
+          "T4c": {
+            "rest_current": 0.95
+          },
+          "T4d": {
+            "rest_current": 0.95
+          },
+          "T5a": {
+            "rest_current": 0.95
+          },
+          "T5b": {
+            "rest_current": 0.95
+          },
+          "T5c": {
+            "rest_current": 0.95
+          },
+          "T5d": {
+            "rest_current": 0.95
+          },
+          "L4": {
+            "rest_current": 0.95
+          },
+          "Lawf1": {
+            "rest_current": 0.95
+          },
+          "C2": {
+            "rest_current": 0.95
+          },
+          "C3": {
+            "rest_current": 0.95
+          }
+        },
+        "tau_sensory": 0.02
+      }
+    },
+    {
+      "rest_current": 1.0,
+      "stable": true,
+      "qualifies": true,
+      "peak_spikes_per_tick": 1785,
+      "populations": {
+        "L1": {
+          "baseline_counts": [
+            3817,
+            3817,
+            3817
+          ],
+          "stimulus_counts": [
+            3973,
+            11095,
+            4787
+          ],
+          "recovery_counts": [
+            7005,
+            423,
+            2283
+          ],
+          "stimulus_changed_neurons": [
+            621,
+            769
+          ]
+        },
+        "L2": {
+          "baseline_counts": [
+            4460,
+            4460,
+            4460
+          ],
+          "stimulus_counts": [
+            3657,
+            10442,
+            4470
+          ],
+          "recovery_counts": [
+            6947,
+            368,
+            1786
+          ],
+          "stimulus_changed_neurons": [
+            724,
+            784
+          ]
+        },
+        "L3": {
+          "baseline_counts": [
+            3568,
+            3568,
+            3568
+          ],
+          "stimulus_counts": [
+            2807,
+            8550,
+            3588
+          ],
+          "recovery_counts": [
+            5340,
+            326,
+            1798
+          ],
+          "stimulus_changed_neurons": [
+            664,
+            762
+          ]
+        },
+        "C2": {
+          "baseline_counts": [
+            315,
+            315,
+            315
+          ],
+          "stimulus_counts": [
+            100,
+            105,
+            85
+          ],
+          "recovery_counts": [
+            83,
+            46,
+            21
+          ],
+          "stimulus_changed_neurons": [
+            21,
+            32
+          ]
+        },
+        "C3": {
+          "baseline_counts": [
+            447,
+            447,
+            447
+          ],
+          "stimulus_counts": [
+            171,
+            171,
+            168
+          ],
+          "recovery_counts": [
+            9,
+            1,
+            9
+          ],
+          "stimulus_changed_neurons": [
+            9,
+            7
+          ]
+        },
+        "L4": {
+          "baseline_counts": [
+            0,
+            0,
+            0
+          ],
+          "stimulus_counts": [
+            0,
+            404,
+            0
+          ],
+          "recovery_counts": [
+            321,
+            1,
+            0
+          ],
+          "stimulus_changed_neurons": [
+            0,
+            403
+          ]
+        },
+        "Lawf1": {
+          "baseline_counts": [
+            0,
+            0,
+            0
+          ],
+          "stimulus_counts": [
+            0,
+            6,
+            1
+          ],
+          "recovery_counts": [
+            4,
+            0,
+            0
+          ],
+          "stimulus_changed_neurons": [
+            1,
+            7
+          ]
+        },
+        "T4": {
+          "baseline_counts": [
+            431,
+            431,
+            431
+          ],
+          "stimulus_counts": [
+            323,
+            566,
+            323
+          ],
+          "recovery_counts": [
+            509,
+            228,
+            168
+          ],
+          "stimulus_changed_neurons": [
+            186,
+            469
+          ]
+        },
+        "T5": {
+          "baseline_counts": [
+            26,
+            26,
+            26
+          ],
+          "stimulus_counts": [
+            15,
+            1852,
+            14
+          ],
+          "recovery_counts": [
+            1353,
+            13,
+            6
+          ],
+          "stimulus_changed_neurons": [
+            17,
+            1840
+          ]
+        }
+      },
+      "neurons": {
+        "dt": 0.0010416666666666667,
+        "tau_membrane": 0.02,
+        "tau_current": 0.005,
+        "threshold": 1.0,
+        "refractory_steps": 2,
+        "tau_adaptation": 1.0,
+        "adaptation_jump": 0.05,
+        "class_parameters": {
+          "L1": {
+            "tau_membrane": 0.02,
+            "tau_current": 0.005,
+            "rest_current": 1.5
+          },
+          "L2": {
+            "tau_membrane": 0.02,
+            "tau_current": 0.005,
+            "rest_current": 1.5
+          },
+          "L3": {
+            "tau_membrane": 0.04,
+            "tau_current": 0.005,
+            "rest_current": 1.5
+          },
+          "Mi1": {
+            "tau_membrane": 0.03,
+            "tau_current": 0.01,
+            "rest_current": 1.2
+          },
+          "Tm3": {
+            "tau_membrane": 0.02,
+            "tau_current": 0.01,
+            "rest_current": 1.2
+          },
+          "Tm1": {
+            "tau_membrane": 0.03,
+            "tau_current": 0.01,
+            "rest_current": 1.2
+          },
+          "Tm2": {
+            "tau_membrane": 0.02,
+            "tau_current": 0.01,
+            "rest_current": 1.2
+          },
+          "Mi9": {
+            "tau_membrane": 0.04,
+            "tau_current": 0.01,
+            "rest_current": 1.2
+          },
+          "T4a": {
+            "rest_current": 0.95
+          },
+          "T4b": {
+            "rest_current": 0.95
+          },
+          "T4c": {
+            "rest_current": 0.95
+          },
+          "T4d": {
+            "rest_current": 0.95
+          },
+          "T5a": {
+            "rest_current": 0.95
+          },
+          "T5b": {
+            "rest_current": 0.95
+          },
+          "T5c": {
+            "rest_current": 0.95
+          },
+          "T5d": {
+            "rest_current": 0.95
+          },
+          "L4": {
+            "rest_current": 0.95
+          },
+          "Lawf1": {
+            "rest_current": 0.95
+          },
+          "C2": {
+            "rest_current": 1.0
+          },
+          "C3": {
+            "rest_current": 1.0
+          }
+        },
+        "tau_sensory": 0.02
+      }
+    },
+    {
+      "rest_current": 1.05,
+      "stable": true,
+      "qualifies": true,
+      "peak_spikes_per_tick": 1785,
+      "populations": {
+        "L1": {
+          "baseline_counts": [
+            4128,
+            4128,
+            4128
+          ],
+          "stimulus_counts": [
+            3902,
+            11038,
+            4535
+          ],
+          "recovery_counts": [
+            7021,
+            429,
+            2467
+          ],
+          "stimulus_changed_neurons": [
+            576,
+            770
+          ]
+        },
+        "L2": {
+          "baseline_counts": [
+            4432,
+            4432,
+            4432
+          ],
+          "stimulus_counts": [
+            3635,
+            10436,
+            4479
+          ],
+          "recovery_counts": [
+            6944,
+            373,
+            1805
+          ],
+          "stimulus_changed_neurons": [
+            731,
+            789
+          ]
+        },
+        "L3": {
+          "baseline_counts": [
+            3568,
+            3568,
+            3568
+          ],
+          "stimulus_counts": [
+            2804,
+            8544,
+            3577
+          ],
+          "recovery_counts": [
+            5341,
+            327,
+            1808
+          ],
+          "stimulus_changed_neurons": [
+            665,
+            762
+          ]
+        },
+        "C2": {
+          "baseline_counts": [
+            114,
+            114,
+            114
+          ],
+          "stimulus_counts": [
+            822,
+            807,
+            850
+          ],
+          "recovery_counts": [
+            152,
+            128,
+            29
+          ],
+          "stimulus_changed_neurons": [
+            36,
+            61
+          ]
+        },
+        "C3": {
+          "baseline_counts": [
+            269,
+            269,
+            269
+          ],
+          "stimulus_counts": [
+            865,
+            816,
+            861
+          ],
+          "recovery_counts": [
+            28,
+            70,
+            32
+          ],
+          "stimulus_changed_neurons": [
+            34,
+            59
+          ]
+        },
+        "L4": {
+          "baseline_counts": [
+            0,
+            0,
+            0
+          ],
+          "stimulus_counts": [
+            0,
+            407,
+            0
+          ],
+          "recovery_counts": [
+            321,
+            0,
+            0
+          ],
+          "stimulus_changed_neurons": [
+            0,
+            406
+          ]
+        },
+        "Lawf1": {
+          "baseline_counts": [
+            0,
+            0,
+            0
+          ],
+          "stimulus_counts": [
+            0,
+            5,
+            0
+          ],
+          "recovery_counts": [
+            4,
+            0,
+            0
+          ],
+          "stimulus_changed_neurons": [
+            0,
+            5
+          ]
+        },
+        "T4": {
+          "baseline_counts": [
+            598,
+            598,
+            598
+          ],
+          "stimulus_counts": [
+            298,
+            478,
+            268
+          ],
+          "recovery_counts": [
+            456,
+            216,
+            115
+          ],
+          "stimulus_changed_neurons": [
+            190,
+            422
+          ]
+        },
+        "T5": {
+          "baseline_counts": [
+            20,
+            20,
+            20
+          ],
+          "stimulus_counts": [
+            21,
+            1827,
+            20
+          ],
+          "recovery_counts": [
+            1301,
+            12,
+            3
+          ],
+          "stimulus_changed_neurons": [
+            11,
+            1809
+          ]
+        }
+      },
+      "neurons": {
+        "dt": 0.0010416666666666667,
+        "tau_membrane": 0.02,
+        "tau_current": 0.005,
+        "threshold": 1.0,
+        "refractory_steps": 2,
+        "tau_adaptation": 1.0,
+        "adaptation_jump": 0.05,
+        "class_parameters": {
+          "L1": {
+            "tau_membrane": 0.02,
+            "tau_current": 0.005,
+            "rest_current": 1.5
+          },
+          "L2": {
+            "tau_membrane": 0.02,
+            "tau_current": 0.005,
+            "rest_current": 1.5
+          },
+          "L3": {
+            "tau_membrane": 0.04,
+            "tau_current": 0.005,
+            "rest_current": 1.5
+          },
+          "Mi1": {
+            "tau_membrane": 0.03,
+            "tau_current": 0.01,
+            "rest_current": 1.2
+          },
+          "Tm3": {
+            "tau_membrane": 0.02,
+            "tau_current": 0.01,
+            "rest_current": 1.2
+          },
+          "Tm1": {
+            "tau_membrane": 0.03,
+            "tau_current": 0.01,
+            "rest_current": 1.2
+          },
+          "Tm2": {
+            "tau_membrane": 0.02,
+            "tau_current": 0.01,
+            "rest_current": 1.2
+          },
+          "Mi9": {
+            "tau_membrane": 0.04,
+            "tau_current": 0.01,
+            "rest_current": 1.2
+          },
+          "T4a": {
+            "rest_current": 0.95
+          },
+          "T4b": {
+            "rest_current": 0.95
+          },
+          "T4c": {
+            "rest_current": 0.95
+          },
+          "T4d": {
+            "rest_current": 0.95
+          },
+          "T5a": {
+            "rest_current": 0.95
+          },
+          "T5b": {
+            "rest_current": 0.95
+          },
+          "T5c": {
+            "rest_current": 0.95
+          },
+          "T5d": {
+            "rest_current": 0.95
+          },
+          "L4": {
+            "rest_current": 0.95
+          },
+          "Lawf1": {
+            "rest_current": 0.95
+          },
+          "C2": {
+            "rest_current": 1.05
+          },
+          "C3": {
+            "rest_current": 1.05
+          }
+        },
+        "tau_sensory": 0.02
+      }
+    },
+    {
+      "rest_current": 1.2,
+      "stable": true,
+      "qualifies": true,
+      "peak_spikes_per_tick": 1785,
+      "populations": {
+        "L1": {
+          "baseline_counts": [
+            4432,
+            4432,
+            4432
+          ],
+          "stimulus_counts": [
+            3820,
+            10967,
+            4463
+          ],
+          "recovery_counts": [
+            6977,
+            387,
+            2058
+          ],
+          "stimulus_changed_neurons": [
+            627,
+            762
+          ]
+        },
+        "L2": {
+          "baseline_counts": [
+            4345,
+            4345,
+            4345
+          ],
+          "stimulus_counts": [
+            3630,
+            10381,
+            4515
+          ],
+          "recovery_counts": [
+            6942,
+            373,
+            1820
+          ],
+          "stimulus_changed_neurons": [
+            732,
+            799
+          ]
+        },
+        "L3": {
+          "baseline_counts": [
+            3568,
+            3568,
+            3568
+          ],
+          "stimulus_counts": [
+            2790,
+            8530,
+            3573
+          ],
+          "recovery_counts": [
+            5339,
+            324,
+            1795
+          ],
+          "stimulus_changed_neurons": [
+            670,
+            762
+          ]
+        },
+        "C2": {
+          "baseline_counts": [
+            1748,
+            1748,
+            1748
+          ],
+          "stimulus_counts": [
+            1755,
+            1739,
+            1752
+          ],
+          "recovery_counts": [
+            874,
+            896,
+            871
+          ],
+          "stimulus_changed_neurons": [
+            7,
+            21
+          ]
+        },
+        "C3": {
+          "baseline_counts": [
+            1784,
+            1784,
+            1784
+          ],
+          "stimulus_counts": [
+            1784,
+            1740,
+            1786
+          ],
+          "recovery_counts": [
+            892,
+            936,
+            891
+          ],
+          "stimulus_changed_neurons": [
+            2,
+            46
+          ]
+        },
+        "L4": {
+          "baseline_counts": [
+            0,
+            0,
+            0
+          ],
+          "stimulus_counts": [
+            0,
+            408,
+            0
+          ],
+          "recovery_counts": [
+            330,
+            0,
+            0
+          ],
+          "stimulus_changed_neurons": [
+            0,
+            407
+          ]
+        },
+        "Lawf1": {
+          "baseline_counts": [
+            0,
+            0,
+            0
+          ],
+          "stimulus_counts": [
+            0,
+            6,
+            0
+          ],
+          "recovery_counts": [
+            4,
+            0,
+            0
+          ],
+          "stimulus_changed_neurons": [
+            0,
+            6
+          ]
+        },
+        "T4": {
+          "baseline_counts": [
+            729,
+            729,
+            729
+          ],
+          "stimulus_counts": [
+            281,
+            440,
+            301
+          ],
+          "recovery_counts": [
+            432,
+            223,
+            50
+          ],
+          "stimulus_changed_neurons": [
+            234,
+            441
+          ]
+        },
+        "T5": {
+          "baseline_counts": [
+            20,
+            20,
+            20
+          ],
+          "stimulus_counts": [
+            16,
+            1798,
+            11
+          ],
+          "recovery_counts": [
+            1258,
+            15,
+            4
+          ],
+          "stimulus_changed_neurons": [
+            17,
+            1789
+          ]
+        }
+      },
+      "neurons": {
+        "dt": 0.0010416666666666667,
+        "tau_membrane": 0.02,
+        "tau_current": 0.005,
+        "threshold": 1.0,
+        "refractory_steps": 2,
+        "tau_adaptation": 1.0,
+        "adaptation_jump": 0.05,
+        "class_parameters": {
+          "L1": {
+            "tau_membrane": 0.02,
+            "tau_current": 0.005,
+            "rest_current": 1.5
+          },
+          "L2": {
+            "tau_membrane": 0.02,
+            "tau_current": 0.005,
+            "rest_current": 1.5
+          },
+          "L3": {
+            "tau_membrane": 0.04,
+            "tau_current": 0.005,
+            "rest_current": 1.5
+          },
+          "Mi1": {
+            "tau_membrane": 0.03,
+            "tau_current": 0.01,
+            "rest_current": 1.2
+          },
+          "Tm3": {
+            "tau_membrane": 0.02,
+            "tau_current": 0.01,
+            "rest_current": 1.2
+          },
+          "Tm1": {
+            "tau_membrane": 0.03,
+            "tau_current": 0.01,
+            "rest_current": 1.2
+          },
+          "Tm2": {
+            "tau_membrane": 0.02,
+            "tau_current": 0.01,
+            "rest_current": 1.2
+          },
+          "Mi9": {
+            "tau_membrane": 0.04,
+            "tau_current": 0.01,
+            "rest_current": 1.2
+          },
+          "T4a": {
+            "rest_current": 0.95
+          },
+          "T4b": {
+            "rest_current": 0.95
+          },
+          "T4c": {
+            "rest_current": 0.95
+          },
+          "T4d": {
+            "rest_current": 0.95
+          },
+          "T5a": {
+            "rest_current": 0.95
+          },
+          "T5b": {
+            "rest_current": 0.95
+          },
+          "T5c": {
+            "rest_current": 0.95
+          },
+          "T5d": {
+            "rest_current": 0.95
+          },
+          "L4": {
+            "rest_current": 0.95
+          },
+          "Lawf1": {
+            "rest_current": 0.95
+          },
+          "C2": {
+            "rest_current": 1.2
+          },
+          "C3": {
+            "rest_current": 1.2
+          }
+        },
+        "tau_sensory": 0.02
+      }
+    }
+  ]
+}

@@ -1,0 +1,110 @@
+{
+  "id": "event-learning-v1-legacy",
+  "status": "probe-selected approximation; M1A learning unverified",
+  "neurons": {
+    "dt": 0.0010416666666666667,
+    "tau_membrane": 0.02,
+    "tau_current": 0.005,
+    "threshold": 1.0,
+    "refractory_steps": 2,
+    "tau_adaptation": 1.0,
+    "adaptation_jump": 0.05,
+    "class_parameters": {
+      "L1": {
+        "tau_membrane": 0.02,
+        "tau_current": 0.005,
+        "rest_current": 1.5
+      },
+      "L2": {
+        "tau_membrane": 0.02,
+        "tau_current": 0.005,
+        "rest_current": 1.5
+      },
+      "L3": {
+        "tau_membrane": 0.04,
+        "tau_current": 0.005,
+        "rest_current": 1.5
+      },
+      "Mi1": {
+        "tau_membrane": 0.03,
+        "tau_current": 0.01,
+        "rest_current": 1.2
+      },
+      "Tm3": {
+        "tau_membrane": 0.02,
+        "tau_current": 0.01,
+        "rest_current": 1.2
+      },
+      "Tm1": {
+        "tau_membrane": 0.03,
+        "tau_current": 0.01,
+        "rest_current": 1.2
+      },
+      "Tm2": {
+        "tau_membrane": 0.02,
+        "tau_current": 0.01,
+        "rest_current": 1.2
+      },
+      "Mi9": {
+        "tau_membrane": 0.04,
+        "tau_current": 0.01,
+        "rest_current": 1.2
+      },
+      "T4a": {
+        "rest_current": 0.95
+      },
+      "T4b": {
+        "rest_current": 0.95
+      },
+      "T4c": {
+        "rest_current": 0.95
+      },
+      "T4d": {
+        "rest_current": 0.95
+      },
+      "T5a": {
+        "rest_current": 0.95
+      },
+      "T5b": {
+        "rest_current": 0.95
+      },
+      "T5c": {
+        "rest_current": 0.95
+      },
+      "T5d": {
+        "rest_current": 0.95
+      },
+      "L4": {
+        "rest_current": 0.95
+      },
+      "Lawf1": {
+        "rest_current": 0.95
+      },
+      "C2": {
+        "rest_current": 1.0
+      },
+      "C3": {
+        "rest_current": 1.0
+      }
+    },
+    "tau_sensory": 0.02
+  },
+  "injection": {
+    "L1": "contrast",
+    "L2": "contrast",
+    "L3": "contrast"
+  },
+  "warmup_steps": 500,
+  "calibration_config_sha256": "63e94b828ac450f73fb27e3544ee82334b7f25f3078ca1009509a6f92066159e",
+  "calibration_checkpoint_sha256": "bb7f6575fb077f1c357dc6da6b866ad92fa605a74f26a4013be8958f4783375d",
+  "learning": {
+    "prediction_encoding": "signed-current-v1",
+    "visual_target": "filtered-current-v1",
+    "visual_eligibility": "legacy-v1",
+    "eta_prediction": 0.0001
+  },
+  "motion_calibration_config_sha256": "4fee21f56d945cb3e8b9b7c4f04a9d534972562fb01e74119c385c8167da7842",
+  "motion_calibration_report_sha256": "dcc8875713d1cc78cce170d46b4ee6bfa7c73fa6d3029d22f04fba62f2c97823",
+  "feedback_calibration_config_sha256": "36c40cd5d7a977a444d9bba842078c90ff643375ed7e8c78e5e0e810069926f4",
+  "feedback_calibration_report_sha256": "e0a8431b3281e9f3db7a99380e7f3510da4b54baffe77c4d2d056b3a7590ab8a"
+}

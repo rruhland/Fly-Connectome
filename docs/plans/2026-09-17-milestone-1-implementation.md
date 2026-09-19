@@ -279,3 +279,34 @@ do not claim complete M1A learning, correct T4 polarity/direction tuning, or Pon
 learning. Scientific acceptance, CUDA evidence, full UI overhead and M1B remain open.
 Continue from the versioned motion profile and preserve the prior experiments;
 any further change to the learning objective requires a concrete design explanation.
+
+## Approved event-aligned learning revision (2026-09-18)
+
+The user approved `2026-09-18-event-aligned-learning-proposal.md`. Separate versioned
+options now expose raw local input increments and causal visual eligibility matched
+to postsynaptic current decay. Forward dynamics, measured edges, transmitter signs,
+behavioral R-STDP and no-backprop remain fixed. Old checkpoints retain old defaults;
+new objective metrics are separate from the historical current-proxy metrics.
+Delayed-association fixtures demonstrate learning for both signs, but are software
+tests, not evidence of effective prediction on the measured connectome. Independent
+code review found no actionable defects.
+
+The old-rule 2,000-step control completed and still fails zero-event prediction.
+See `docs/experiments/2026-09-18-learning-effectiveness-audit.md`. Frozen feedback
+calibration selected C2/C3 rest current 1.0, L4/Lawf1 0.95, with other parameters
+fixed. This is the smallest qualifying preregistered candidate; it was selected
+using stimulus responsiveness and stability, not Pong scores. Profile:
+`configs/resting-v3-feedback-provisional.json`. These are model operating points,
+not physiological measurements.
+
+`configs/event-learning-ablation-v1.json` preregisters six conditions with identical
+initial graph/dynamics, training seed 1, 500 training steps, and development seeds
+1101/1102 for 200 steps. Run/resume each with
+`.venv/Scripts/python scripts/run_visual_ablation.py CONDITION` where CONDITION is
+legacy, target-only, trace-only, combined, trace-rate, or combined-rate. Each saves
+every 100 steps to `checkpoints/event-v1-CONDITION-trained.pt`; audit reports go to
+`runs/event-v1-CONDITION-audit.json`. The first three completed conditions
+(target-only, trace-rate, combined-rate) still fail zero-event prediction. The
+remaining comparisons and independent feedback-silencing probes are in progress.
+Reserved final seeds 1201-1204 remain untouched. Do not claim M1A acceptance or
+advance M1B on the basis of reduced false positives alone.

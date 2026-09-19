@@ -1,6 +1,6 @@
 # Event-aligned local prediction: proposed M1A correction
 
-Status: approved by the user on 2026-09-18; implementation in progress. An audit
+Status: approved by the user on 2026-09-18; implementation tested, experiments in progress. An audit
 of the approved signed-current rule found a target mismatch and limited active
 feedback. Existing experiments/checkpoints remain authoritative records of that rule.
 
@@ -25,7 +25,7 @@ The present eligibility also mixes arrivals from the current tick into an error
 for the previous forecast, and retains 90.5% of an arrival after 100 ms although
 its 5-ms synaptic current retains only 2.06e-9. These are properties of the approved
 rule, not newly discovered coding regressions. A longer unchanged continuation to
-2,000 training steps is being tested as a control.
+2,000 training steps completed and still fails the zero-event baseline.
 
 ## Recommended bounded experimental revision
 

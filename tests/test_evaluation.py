@@ -74,11 +74,14 @@ def test_comparison_rejects_different_neuron_dynamics(tmp_path):
         compare(first, second, [100], 5)
 
 
-def test_comparison_rejects_different_prediction_encodings(tmp_path):
+@pytest.mark.parametrize('changed', [{'prediction_encoding':'signed-current-v1'},
+                                   {'visual_target':'input-arrivals-v1'},
+                                   {'visual_eligibility':'forecast-causal-v1'}])
+def test_comparison_rejects_different_prediction_encodings(tmp_path, changed):
     model = trainer()
     first, second = tmp_path / 'a.pt', tmp_path / 'b.pt'
     model.save(first)
-    model.learning_config = replace(model.learning_config, prediction_encoding='signed-current-v1')
+    model.learning_config = replace(model.learning_config, **changed)
     model.save(second)
     with pytest.raises(ValueError, match='prediction encoding'):
         compare(first, second, [100], 5)

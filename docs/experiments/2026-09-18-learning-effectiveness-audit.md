@@ -67,5 +67,8 @@ The proposed bounded correction is
 `../plans/2026-09-18-event-aligned-learning-proposal.md`: a local event-increment
 target, causal visual eligibility, and frozen calibration of existing feedback
 classes. The user approved its implementation and experiments on 2026-09-18. Separately, the
-unchanged rule is being continued from 500 to 2,000 steps, saving every 100 steps,
-to test whether more training resolves the observed failure.
+unchanged rule was continued from 500 to 2,000 steps, saving every 100 steps.
+The completed control (`2026-09-18-learning-audit-2000.json`) still loses to zero
+prediction: L1/L2/L3 event MSE is 0.001228714 / 0.000991761 / 0.000937277,
+respectively. Event-conditioned MSE is 1.011111 / 1.001142 / approximately 1.
+Longer training alone did not resolve the failure.

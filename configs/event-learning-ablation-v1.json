@@ -1,0 +1,43 @@
+{
+  "id": "event-learning-ablation-v1",
+  "conditions": [
+    {
+      "name": "legacy",
+      "profile": "configs/event-learning-v1/legacy.json"
+    },
+    {
+      "name": "target-only",
+      "profile": "configs/event-learning-v1/target-only.json"
+    },
+    {
+      "name": "trace-only",
+      "profile": "configs/event-learning-v1/trace-only.json"
+    },
+    {
+      "name": "combined",
+      "profile": "configs/event-learning-v1/combined.json"
+    },
+    {
+      "name": "trace-rate",
+      "profile": "configs/event-learning-v1/trace-rate.json"
+    },
+    {
+      "name": "combined-rate",
+      "profile": "configs/event-learning-v1/combined-rate.json"
+    }
+  ],
+  "training_seed": 1,
+  "training_steps": 500,
+  "development_seeds": [
+    1101,
+    1102
+  ],
+  "development_steps": 200,
+  "reserved_final_seeds": [
+    1201,
+    1202,
+    1203,
+    1204
+  ],
+  "selection": "Compare identical initial graph/dynamics across target-only, trace-only and combined rules. Include explicit higher-rate causal conditions because shorter traces reduce integrated update size. Select by pooled development event MSE only if better than initial, persistence and zero, with improved event-conditioned prediction; require untouched final evaluation and temporal-shuffle controls before acceptance. Failure is a result, not permission to move the gate."
+}

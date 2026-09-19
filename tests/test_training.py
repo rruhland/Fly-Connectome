@@ -104,11 +104,18 @@ def test_legacy_checkpoint_keeps_zero_background_and_impulse_semantics(tmp_path)
         payload['metadata']['neurons'].pop(key)
     payload['metadata']['config'].pop('warmup_steps')
     payload['metadata']['learning'].pop('prediction_encoding')
+    payload['metadata']['learning'].pop('visual_target')
+    payload['metadata']['learning'].pop('visual_eligibility')
     for key in ('rest_current', 'membrane_decay', 'current_decay', 'sensory_state'):
         payload['state']['network'].pop(key)
+    payload['state']['plasticity'].pop('sensory_mask')
+    for key in ('learning_statistics', 'previous_learning_observed'):
+        payload['state']['trainer'].pop(key)
     torch.save(payload, path)
     b = load_checkpoint(path)
     assert not b.network.rest_current.any() and b.network.config.tau_sensory == 0
+    torch.testing.assert_close(b.plasticity.sensory_mask, b.retina.injected)
+    assert not b.learning_statistics.any() and not b.previous_learning_observed.any()
     a.run(5); b.run(5)
     for key in ('voltage', 'magnitudes', 'history'):
         torch.testing.assert_close(getattr(a.network, key), getattr(b.network, key), rtol=0, atol=0)

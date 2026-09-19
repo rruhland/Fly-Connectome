@@ -7,6 +7,8 @@ import torch
 @dataclass(frozen=True)
 class LearningConfig:
     prediction_encoding: str = 'rectified-current-v1'
+    visual_target: str = 'filtered-current-v1'
+    visual_eligibility: str = 'legacy-v1'
     eta_prediction: float = .0001
     eta_reward: float = .0001
     tau_eligibility: float = 1.
@@ -20,9 +22,25 @@ class LearningConfig:
     def __post_init__(self):
         if self.prediction_encoding not in ('rectified-current-v1', 'signed-current-v1'):
             raise ValueError('unknown prediction encoding')
+        if self.visual_target not in ('filtered-current-v1', 'input-arrivals-v1'):
+            raise ValueError('unknown visual target')
+        if self.visual_eligibility not in ('legacy-v1', 'forecast-causal-v1'):
+            raise ValueError('unknown visual eligibility')
+
+    @property
+    def prediction_signature(self):
+        return self.prediction_encoding, self.visual_target, self.visual_eligibility
 
     def encode(self, current, threshold):
         return (current / threshold).clamp(-1 if self.prediction_encoding == 'signed-current-v1' else 0, 1)
+
+    def observation(self, activity, threshold, sensory_mask, sensory_gain):
+        if self.visual_target == 'filtered-current-v1':
+            return self.encode(activity.observed, threshold)
+        if activity.feedforward_arrivals is None or activity.sensory_input is None:
+            raise ValueError('input-arrivals target requires captured local increments')
+        return torch.where(sensory_mask, self.encode(activity.sensory_input, sensory_gain),
+                           self.encode(activity.feedforward_arrivals, threshold))
 
 
 def _sum_sorted(keys, values, size):
@@ -39,8 +57,11 @@ def _sum_sorted(keys, values, size):
 
 class Plasticity:
     @torch.no_grad()
-    def __init__(self, network, config=LearningConfig()):
+    def __init__(self, network, config=LearningConfig(), *, sensory_mask=None, sensory_gain=1.):
         self.network, self.config = network, config
+        self.sensory_mask = (torch.zeros(network.n, dtype=torch.bool, device=network.device)
+                             if sensory_mask is None else sensory_mask.to(network.device))
+        self.sensory_gain = sensory_gain
         if min(config.tau_eligibility, config.tau_pair, config.tau_homeostasis, config.maximum_weight) <= 0:
             raise ValueError("positive plasticity timescales and bounds required")
         if min(config.eta_prediction, config.eta_reward, config.homeostasis_rate, config.prune_epsilon) < 0:
@@ -60,7 +81,17 @@ class Plasticity:
         if reward.shape != (n.batch,) or not torch.isfinite(reward).all():
             raise ValueError("one finite scalar reward per environment required")
         dt = n.config.dt
-        self.values.mul_(math.exp(-dt / cfg.tau_eligibility))
+        observed = cfg.observation(activity, n.config.threshold, self.sensory_mask, self.sensory_gain)
+        causal = cfg.visual_eligibility == 'forecast-causal-v1'
+        if causal:
+            old_env, old_edges = self.keys.div(n.e, rounding_mode='floor'), self.keys.remainder(n.e)
+            old_post = n.post[old_edges]
+            visual = n.pathways[old_edges] == 1
+            error = observed[old_env, old_post] - self.expected[old_env, old_post]
+            self._accumulate(old_edges[visual], cfg.eta_prediction*error[visual]*self.values[visual])
+            self.values.mul_(torch.where(visual, n.current_decay[old_post], math.exp(-dt/cfg.tau_eligibility)))
+        else:
+            self.values.mul_(math.exp(-dt / cfg.tau_eligibility))
         pair_decay = math.exp(-dt / cfg.tau_pair)
         self.arrival_trace.mul_(pair_decay)
         self.post_trace.mul_(pair_decay)
@@ -90,11 +121,10 @@ class Plasticity:
         # Prediction issued on the preceding tick is tested against this tick's local
         # feedforward current. Recurrent current cannot confirm its own prediction.
         # Current is normalized by the cell's baseline firing threshold, not a learned head.
-        observed = cfg.encode(activity.observed, n.config.threshold)
         delta = observed[environments, post] - self.expected[environments, post]
         proposal = torch.where(behavioral,
             cfg.eta_reward * reward.detach().clamp(-1, 1)[environments] * self.values,
-            cfg.eta_prediction * delta * self.values)
+            torch.zeros_like(self.values) if causal else cfg.eta_prediction * delta * self.values)
         self._accumulate(edge_ids, proposal)
         self.expected.copy_(cfg.encode(activity.predicted, n.config.threshold))
         self.post_trace.add_(activity.spikes)

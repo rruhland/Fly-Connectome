@@ -54,7 +54,8 @@ class Trainer:
         self.network = Network(graph, delays, pathways, batch=len(seeds), config=neurons, device=device,
                                cell_types=retina.spec['cell_types'])
         self.learning_config = learning
-        self.plasticity = None if evaluation else Plasticity(self.network, learning)
+        self.plasticity = None if evaluation else Plasticity(self.network, learning,
+            sensory_mask=retina.injected, sensory_gain=config.sensory_gain)
         self.environment = Pong(seeds, physics, device)
         self.retina = retina
         self.camera = EventCamera(len(seeds), retina.spec['height'], retina.spec['width'], device)
@@ -68,6 +69,8 @@ class Trainer:
         self.previous_observed = torch.zeros_like(self.network.voltage)
         self.previous_predicted = torch.zeros_like(self.network.voltage)
         self.previous_events = torch.zeros_like(self.network.voltage)
+        self.learning_statistics = torch.zeros(3, dtype=torch.float64, device=device)
+        self.previous_learning_observed = torch.zeros_like(self.network.voltage)
         if evaluation:
             self.event_zero_error = torch.zeros((), dtype=torch.float64, device=device)
             self.visible_spikes = torch.zeros_like(self.network.voltage, dtype=torch.bool)
@@ -79,7 +82,11 @@ class Trainer:
         names = ('points', 'misses', 'hits', 'reward', 'prediction_squared_error',
                  'persistence_squared_error', 'prediction_samples', 'spikes',
                  'event_prediction_squared_error', 'event_persistence_squared_error', 'event_samples')
-        return dict(zip(names, self.statistics.cpu().tolist()))
+        result = dict(zip(names, self.statistics.cpu().tolist()))
+        values = (self.learning_statistics.cpu().tolist() if self.learning_config.visual_target == 'input-arrivals-v1'
+                  else [result[name] for name in ('prediction_squared_error','persistence_squared_error','prediction_samples')])
+        result.update(zip(('learning_squared_error','learning_persistence_squared_error','learning_samples'), values))
+        return result
 
     @torch.no_grad()
     def step(self, control='learned', human_drive=None):
@@ -99,7 +106,8 @@ class Trainer:
         self.previous_events.copy_(injection / cfg.sensory_gain)
         # Observation boundary: only camera-derived currents enter the network.
         for tick in range(cfg.neural_steps):
-            activity = net.step(injection if tick == 0 else torch.zeros_like(injection))
+            activity = net.step(injection if tick == 0 else torch.zeros_like(injection),
+                                capture_increments=self.learning_config.visual_target == 'input-arrivals-v1')
             if self.evaluation:
                 self.visible_spikes |= activity.spikes
                 self.evaluation_spike_counts += activity.spikes
@@ -108,6 +116,12 @@ class Trainer:
             self.statistics[5] += ((observed - self.previous_observed) ** 2).sum()
             self.statistics[6] += observed.numel()
             self.statistics[7] += activity.spikes.sum()
+            if self.learning_config.visual_target == 'input-arrivals-v1':
+                target = self.learning_config.observation(activity, net.config.threshold, self.retina.injected, cfg.sensory_gain)
+                self.learning_statistics[0] += (target-self.previous_predicted).square().sum()
+                self.learning_statistics[1] += (target-self.previous_learning_observed).square().sum()
+                self.learning_statistics[2] += target.numel()
+                self.previous_learning_observed.copy_(target)
             self.previous_observed.copy_(observed)
             self.previous_predicted.copy_(self.learning_config.encode(activity.predicted, net.config.threshold))
             self.motor_rates.lerp_(activity.spikes.float() / net.config.dt,

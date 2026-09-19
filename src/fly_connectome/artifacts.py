@@ -55,8 +55,8 @@ def initialize(directory, *, stage='M1A', seeds=(1,), threshold=None, device='cp
                     learning=LearningConfig(**(dynamics_profile.get('learning', {}) if dynamics_profile else {})))
     if warm_checkpoint is not None:
         source = load_checkpoint(warm_checkpoint, device=device, evaluation=True)
-        if source.learning_config.prediction_encoding != model.learning_config.prediction_encoding:
-            raise ValueError('warm expansion requires matching prediction encoding')
+        if source.learning_config.prediction_signature != model.learning_config.prediction_signature:
+            raise ValueError('warm expansion requires matching prediction encoding, target and eligibility')
         if (source.network.config != model.network.config or
                 source.retina.spec['injection'] != model.retina.spec['injection']):
             raise ValueError('warm expansion requires matching dynamics and sensory transduction')

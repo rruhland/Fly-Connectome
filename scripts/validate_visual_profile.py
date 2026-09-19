@@ -19,6 +19,7 @@ def main():
     parser.add_argument('--output', required=True)
     parser.add_argument('--silence-motion-afferents', action='store_true',
                         help='silence non-T4/T5 neurons with measured inputs to T4/T5, evaluation only')
+    parser.add_argument('--silence-types',default='',help='comma-separated exact cell types, evaluation only')
     args = parser.parse_args()
     torch.set_num_threads(2)
     source = load_checkpoint(args.checkpoint, evaluation=True, seeds=[1003], warmup=False)
@@ -35,8 +36,12 @@ def main():
         motion = torch.tensor([t.startswith(('T4', 'T5')) for t in types])
         afferents = net.pre[motion[net.post] & ~motion[net.pre]].unique()
         net.silenced[afferents] = True
+    silenced_types = set(filter(None,args.silence_types.split(',')))
+    if not silenced_types <= set(types):
+        raise ValueError('silenced cell types must exist in the measured roster')
+    net.silenced |= torch.tensor([t in silenced_types for t in types])
     warmup, stimulus, recovery = 500, 400, 200
-    labels = ('L1','L2','L3','L4','Mi1','Tm3','Tm1','Tm2','Mi9','T4','T5','LPi','LC10')
+    labels = ('L1','L2','L3','L4','C2','C3','Lawf1','Dm12','Mi1','Tm3','Tm1','Tm2','Mi9','T4','T5','LPi','LC10')
     masks = {label: torch.tensor([t == label or (label in ('T4','T5','LPi','LC10') and t.startswith(label)) for t in types]) for label in labels}
     camera = EventCamera(len(conditions), 32, 64)
     background = torch.tensor([c['polarity'] == 'off' for c in conditions])[:,None,None].expand(-1,32,64).clone()

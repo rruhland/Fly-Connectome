@@ -16,6 +16,9 @@ def evaluate(checkpoint, seeds, steps, control='learned', device='cpu'):
     metrics['sensory_event_prediction_mse'] = metrics.pop('event_prediction_squared_error') / event_samples
     metrics['sensory_event_persistence_mse'] = metrics.pop('event_persistence_squared_error') / event_samples
     metrics['sensory_event_zero_mse'] = trainer.event_zero_error.item() / event_samples
+    learning_samples = max(1, metrics.pop('learning_samples'))
+    metrics['local_learning_prediction_mse'] = metrics.pop('learning_squared_error') / learning_samples
+    metrics['local_learning_persistence_mse'] = metrics.pop('learning_persistence_squared_error') / learning_samples
     metrics['mean_rate_hz'] = metrics['spikes'] / (steps * trainer.environment.config.dt *
                                                 len(seeds) * trainer.network.n)
     types = trainer.retina.spec['cell_types']
@@ -26,6 +29,8 @@ def evaluate(checkpoint, seeds, steps, control='learned', device='cpu'):
     return dict(metrics=metrics, seeds=seeds, steps=steps, control=control, hit_shaping=0.,
                 checkpoint_training_steps=trainer.training_step,
                 prediction_encoding=trainer.learning_config.prediction_encoding,
+                visual_target=trainer.learning_config.visual_target,
+                visual_eligibility=trainer.learning_config.visual_eligibility,
                 population_spikes=populations,
                 event_target_encoding=('signed-lamina-contrast' if 'contrast' in trainer.retina.spec['injection'].values()
                                        else 'binary-polarity-routed-events'),
@@ -39,8 +44,8 @@ def compare(learned_checkpoint, initial_checkpoint, seeds, steps, device='cpu'):
         raise ValueError("baseline comparisons require identical topology and initialization scale")
     if learned.environment.config != initial.environment.config:
         raise ValueError("baseline comparisons require identical physics")
-    if learned.learning_config.prediction_encoding != initial.learning_config.prediction_encoding:
-        raise ValueError('baseline comparisons require identical prediction encoding')
+    if learned.learning_config.prediction_signature != initial.learning_config.prediction_signature:
+        raise ValueError('baseline comparisons require identical prediction encoding, target and eligibility')
     if (learned.config != initial.config or learned.network.config != initial.network.config or
             learned.retina.spec != initial.retina.spec or
             not learned.network.delays.equal(initial.network.delays) or

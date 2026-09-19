@@ -1,0 +1,14 @@
+{
+  "id": "feedback-calibration-v1",
+  "source_checkpoint": "checkpoints/motion-v2-visual-initial.pt",
+  "seed": 1103,
+  "centrifugal_rest_currents": [0.95, 1.0, 1.05, 1.2],
+  "centrifugal_classes": ["C2", "C3"],
+  "other_classes": {"L4": {"rest_current": 0.95}, "Lawf1": {"rest_current": 0.95}},
+  "warmup_ticks": 500,
+  "stimulus_ticks": 400,
+  "recovery_ticks": 200,
+  "edge_pixels_per_tick": 0.16,
+  "peak_spike_fraction_bound": 0.2,
+  "selection": "Smallest tested centrifugal rest current with spikes in C2, C3, L4 and Lawf1 and per-neuron stimulus-period differences versus matched no-event control for at least one polarity in every class; L1-L3 remain responsive, finite voltage and peak activity below the bound. No Pong score or prediction-error selection. No additional class is adjusted."
+}
