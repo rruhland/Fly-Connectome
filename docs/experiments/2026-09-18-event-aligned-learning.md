@@ -81,8 +81,8 @@ event-conditioned scores remain approximately 1 across offsets -8 through +8
 frames; these results do not establish a consistent late response either.
 
 A separately recorded continuation (`configs/event-learning-continuation-v1.json`)
-tests undertraining by continuing the combined higher-rate checkpoint to 2,000
-steps with parameters fixed. It preserves the 500-step checkpoint and saves every
+tested undertraining by continuing the combined higher-rate checkpoint to 2,000
+steps with parameters fixed. It preserved the 500-step checkpoint and saved every
 100 steps. This is a development experiment, not a final acceptance run.
 
 Offline lag diagnostics distinguish late responses from forecasts: positive lag
@@ -96,3 +96,48 @@ totals and confirmed the lag indexing. One shuffled sequence is a descriptive
 control, not a statistical equivalence test. Neither these short runs nor the
 2,000-step continuation can establish a general representation limit; undertraining
 and inadequate dynamics remain distinct hypotheses.
+
+## Completed continuation (2026-09-19)
+
+The 2,000-step run and frozen 500-step evaluation on development seeds 1101/1102
+completed. All rows below use the same evaluation length and trajectories:
+
+| Training steps | Event MSE | Event-conditioned MSE | Mean firing rate, Hz | T4 / T5 spikes |
+| --- | ---: | ---: | ---: | ---: |
+| 0 | 0.001161700 | 1.000606 | 1.1465 | 5,520 / 1,004 |
+| 500 | 0.001028283 | 1.000559 | 1.1438 | 5,367 / 1,469 |
+| 2,000 | 0.000983738 | 1.000102 | 1.1446 | 6,502 / 1,720 |
+
+Zero-event MSE is 0.000938364 (event-conditioned MSE 1); persistence is
+0.001952932. The final model remains 4.84% worse than zero despite improving
+over its initial state. Its shuffled MSE is 0.000984056 and shuffled
+event-conditioned MSE is 1.000457: a small descriptive alignment advantage,
+insufficient for the declared acceptance gate and not a significance claim.
+Fewer false predictions are not evidence of effective event anticipation.
+
+Frozen source identity, exact graph/sign/pathway/delay equality, finite state,
+magnitude bounds [0,10], and 269,048 changed predictive edges are recorded in
+`2026-09-19-event-v1-combined-rate-2000-integrity.json`. The full audit is
+`2026-09-19-event-v1-combined-rate-2000-audit.json`; the trained checkpoint is
+`checkpoints/event-v1-combined-rate-2000.pt`, SHA-256
+`77299d26385d2e9f6750681ecddb314505fffa9364d7d34eba0f7f48418e7117`.
+The model remains active, including T4/T5; no claim of full physiological tuning
+or M1B behavior follows.
+
+A Windows reader briefly prevented atomic checkpoint replacement. The intact
+1,600-step checkpoint was resumed for 400 steps. A tested bounded sharing-error
+retry now handles this condition; exact-resume semantics and learning parameters
+are unchanged. A native Windows open-reader smoke check also recovered successfully.
+Final verification: 99 tests passed, four CUDA skips, wheel build passed. This
+machine reports Intel Iris Xe graphics and no NVIDIA device; CUDA evidence remains
+unavailable.
+
+No candidate passed development selection, so reserved seeds 1201-1204 remain
+unused and no M1B training was advanced from these weights. The bounded revision
+is implemented, but the requested effective learning and full milestone are not
+achieved. This is not proof of impossibility: 2,000 environment steps represent
+only 16.67 seconds of simulated experience. The unresolved question is whether
+the available local predictive signals are too weak/mistimed or need substantially
+more varied experience. Resolve that question with measured local signal/exposure
+diagnostics before another model revision; do not lower the acceptance gate or
+introduce a learned artificial predictor.

@@ -1,6 +1,9 @@
 # Event-aligned local prediction: proposed M1A correction
 
-Status: approved by the user on 2026-09-18; implementation tested, experiments in progress. An audit
+Status: approved by the user on 2026-09-18; implementation and bounded experiments
+completed on 2026-09-19. No tested condition passed the zero-event acceptance
+baseline, including a 2,000-step continuation. See
+`../experiments/2026-09-18-event-aligned-learning.md`. An audit
 of the approved signed-current rule found a target mismatch and limited active
 feedback. Existing experiments/checkpoints remain authoritative records of that rule.
 

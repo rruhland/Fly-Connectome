@@ -344,3 +344,27 @@ The continuation resumed from step 1,600 for 400 additional steps. Do not inspec
 the live checkpoint while it is being replaced; wait for the training process exit.
 Wheel packaging passed via `pip wheel . --no-deps --no-build-isolation --wheel-dir dist`.
 The optional `python -m build` command is unavailable in this environment.
+
+## Current continuation point (2026-09-19)
+
+All experiment processes have finished. The 2,000-step combined-rate continuation
+and its frozen development evaluation are complete. Source checkpoint:
+`checkpoints/event-v1-combined-rate-2000.pt`; SHA-256
+`77299d26385d2e9f6750681ecddb314505fffa9364d7d34eba0f7f48418e7117`.
+See the completed section of `docs/experiments/2026-09-18-event-aligned-learning.md`
+and `2026-09-19-event-v1-combined-rate-2000-{audit,integrity}.json`.
+
+On matched 500-step development evaluations, pooled event MSE improves
+0.001161700 -> 0.001028283 -> 0.000983738 at 0/500/2,000 training steps. Zero
+prediction is still better (0.000938364); event-conditioned error is 1.000102
+versus zero's 1. Stable activity and active T4/T5 are preserved, and graph/sign/
+delay/pathway invariants pass. All six original ablations also failed zero.
+
+The approved bounded revision and verification are complete; M1A effectiveness,
+M1B score-only learning, threshold comparisons, CUDA acceptance, and remaining UI
+acceptance are not complete. No model change or approval question is pending.
+Reserved final seeds remain untouched. The next scientific task is to distinguish
+insufficient experience from weak/mistimed local predictive signals with explicit
+diagnostics, preserving the current objectives and invariant constraints. Do not
+claim acceptance from error reduction alone. Final software suite: 99 passed,
+four CUDA skips; wheel build and native Windows sharing-conflict smoke check pass.

@@ -1,0 +1,13 @@
+{
+  "initial_sha256": "8c4af80ff3904881bac9313b618dd9989bb51174b47606f28eca88865296005c",
+  "trained_sha256": "77299d26385d2e9f6750681ecddb314505fffa9364d7d34eba0f7f48418e7117",
+  "training_steps": 2000,
+  "same_graph": true,
+  "same_signs": true,
+  "same_pathways": true,
+  "same_delays": true,
+  "finite_state": true,
+  "minimum_magnitude": 0.0,
+  "maximum_magnitude": 10.0,
+  "changed_predictive_edges": 269048
+}
