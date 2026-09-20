@@ -14,17 +14,27 @@ if __name__ == '__main__':
     parser.add_argument('--steps', type=int, default=20)
     parser.add_argument('--profile-steps', type=int, default=3)
     parser.add_argument('--output', required=True)
+    parser.add_argument('--native-library')
     args = parser.parse_args()
     torch.set_num_threads(1)
     identity = checksum(args.checkpoint)
     model = load_checkpoint(args.checkpoint)
+    if args.native_library:
+        from functools import partial
+        from fly_connectome.native_cpu import NativeCPU
+        kernel = NativeCPU(args.native_library)
+        kernel.enable(model)
     model.run(5)
     timings = defaultdict(float)
     originals = []
-    for obj, method, label in ((model.network, 'step', 'network'),
+    phases = [(model.network, 'step', 'network'),
                                (model.network, '_arrivals', 'arrivals_nested'),
                                (model.plasticity, 'observe', 'learning'),
-                               (model.plasticity, 'synchronize', 'synchronize')):
+                               (model.plasticity, 'synchronize', 'synchronize')]
+    if args.native_library:
+        phases.append((kernel, 'sparse', 'native_sparse_nested'))
+        phases.append((kernel, 'neural', 'native_neural_nested'))
+    for obj, method, label in phases:
         original = getattr(obj, method)
         originals.append((obj, method, original))
         def timed(*a, _fn=original, _label=label, **kw):
@@ -38,7 +48,7 @@ if __name__ == '__main__':
     wall, cpu = time.perf_counter()-start, time.process_time()-cpu
     for obj, method, original in originals:
         setattr(obj, method, original)
-    report = dict(checkpoint_sha256=identity, steps=args.steps, threads=1,
+    report = dict(checkpoint_sha256=identity, steps=args.steps, threads=1, native_library=args.native_library,
                   seconds=wall, process_cpu_seconds=cpu, frames_per_second=args.steps/wall,
                   phase_seconds=dict(timings), active_eligibilities=model.plasticity.keys.numel())
     print(json.dumps(report), flush=True)

@@ -10,6 +10,9 @@ import time
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     commands = parser.add_subparsers(dest='command', required=True)
+    native = commands.add_parser('build-native', help='build optional strict-float B=1 CPU kernels with g++')
+    native.add_argument('--output', required=True)
+    native.add_argument('--compiler', default='g++')
     download = commands.add_parser('download', help='download and verify pinned MaleCNS sources')
     download.add_argument('--manifest', default='data/malecns-v1.0-sources.json')
     download.add_argument('--directory', default='data/raw')
@@ -29,6 +32,7 @@ def main():
     train.add_argument('--device', default='cpu')
     train.add_argument('--threads', type=int)
     train.add_argument('--checkpoint-every', type=int, default=10000)
+    train.add_argument('--native-library', help='explicit compiled B=1 CPU kernel library')
     evaluate = commands.add_parser('evaluate', help='frozen comparisons on held-out seeds')
     evaluate.add_argument('checkpoint')
     evaluate.add_argument('--initial', required=True)
@@ -45,6 +49,11 @@ def main():
     diagnose.add_argument('--output', required=True)
     diagnose.add_argument('--device', default='cpu')
     args = parser.parse_args()
+    if args.command == 'build-native':
+        from .native_cpu import build_library
+        build_library(args.output, args.compiler)
+        print(json.dumps(dict(library=args.output)))
+        return
     if args.command == 'download':
         from .data import download_sources
         download_sources(args.manifest, args.directory)
@@ -66,6 +75,9 @@ def main():
         if args.threads is not None:
             torch.set_num_threads(args.threads)
         model = load_checkpoint(args.checkpoint, device=args.device)
+        if args.native_library:
+            from .native_cpu import NativeCPU
+            NativeCPU(args.native_library).enable(model)
         stopped = False
         def request_stop(*_):
             nonlocal stopped
@@ -87,6 +99,7 @@ def main():
         finally:
             signal.signal(signal.SIGINT, previous_handler)
         print(json.dumps(dict(checkpoint=args.output, completed_steps=completed, metrics=model.metrics,
+                              backend='native-cpu' if args.native_library else 'torch',
                               steps_per_second=completed / (time.perf_counter() - start))))
     elif args.command == 'evaluate':
         import torch

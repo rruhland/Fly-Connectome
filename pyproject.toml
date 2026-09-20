@@ -17,6 +17,7 @@ test = ["pytest>=8"]
 where = ["src"]
 
 [tool.setuptools.package-data]
+"fly_connectome" = ["native_cpu.cpp"]
 "fly_connectome.ui" = ["*.html", "*.css", "*.js"]
 
 [tool.pytest.ini_options]

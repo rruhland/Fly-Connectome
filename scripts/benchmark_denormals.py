@@ -16,17 +16,24 @@ if __name__=='__main__':
     parser.add_argument('checkpoint')
     parser.add_argument('--steps',type=int,default=20)
     parser.add_argument('--output',required=True)
+    parser.add_argument('--native-library')
     args=parser.parse_args()
     torch.set_num_threads(1)
     torch.set_flush_denormal(False)
     before=checksum(args.checkpoint)
     base=load_checkpoint(args.checkpoint)
+    kernel=None
+    if args.native_library:
+        from fly_connectome.native_cpu import NativeCPU
+        kernel=NativeCPU(args.native_library)
     subnormals={name:int(((value.abs()>0)&(value.abs()<torch.finfo(value.dtype).tiny)).sum())
                 for name,value in vars(base.network).items() if isinstance(value,torch.Tensor) and value.is_floating_point()}
     runs=[]
     reference=None
     for flush in (False,True,True,False):
         model=copy.deepcopy(base)
+        if kernel is not None:
+            kernel.enable(model)
         spikes=[]
         original=model.network.step
         def record(*args,**kwargs):
@@ -51,5 +58,5 @@ if __name__=='__main__':
         del model,spikes,state
     assert checksum(args.checkpoint)==before
     Path(args.output).write_text(json.dumps(dict(checkpoint_sha256=before,steps=args.steps,
-        threads=1,initial_subnormal_counts=subnormals,runs=runs,
+        threads=1,native_library=args.native_library,initial_subnormal_counts=subnormals,runs=runs,
         scope='Short training-trajectory experiment with spike recording overhead, not a long-run equivalence claim or canonical backend change.'),indent=2)+'\n')
