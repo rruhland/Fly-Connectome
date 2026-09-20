@@ -178,6 +178,8 @@ class Trainer:
         self.environment.reset(torch.ones(self.environment.batch, device=self.device, dtype=torch.bool))
 
     def snapshot(self):
+        if hasattr(self,'_materialize'):
+            self._materialize()
         env = self.environment
         alpha = 0. if self.evaluation else self.curriculum.alpha(self.step_index)
         phase = 'score-only' if alpha == 0 else ('bootstrap' if self.step_index < self.curriculum.bootstrap else 'fade')
@@ -214,6 +216,8 @@ class Trainer:
     def save(self, path):
         if self.evaluation:
             raise ValueError("evaluation checkpoints are read-only")
+        if hasattr(self,'_materialize'):
+            self._materialize()
         graph = self.network.graph
         metadata = dict(graph={k: getattr(graph, k).tolist() for k in ('body_ids', 'pre', 'post', 'contacts', 'signs')},
                         gain=graph.gain, delays=self.network.delays.tolist(),

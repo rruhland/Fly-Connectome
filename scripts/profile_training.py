@@ -16,6 +16,7 @@ if __name__ == '__main__':
     parser.add_argument('--profile-steps', type=int, default=3)
     parser.add_argument('--output', required=True)
     parser.add_argument('--native-library')
+    parser.add_argument('--deferred',action='store_true')
     parser.add_argument('--native-threads',type=int,default=1)
     parser.add_argument('--metrics',choices=['full','events'],default='full')
     args = parser.parse_args()
@@ -25,7 +26,8 @@ if __name__ == '__main__':
     model.config=replace(model.config,metrics_mode=args.metrics)
     if args.native_library:
         from fly_connectome.native_cpu import NativeCPU
-        kernel = NativeCPU(args.native_library,threads=args.native_threads)
+        from fly_connectome.deferred_cpu import DeferredCPU
+        kernel = (DeferredCPU if args.deferred else NativeCPU)(args.native_library,threads=args.native_threads)
         kernel.enable(model)
     model.run(5)
     timings = defaultdict(float)
@@ -37,6 +39,8 @@ if __name__ == '__main__':
     if args.native_library:
         phases.append((kernel, 'sparse', 'native_sparse_nested'))
         phases.append((kernel, 'neural', 'native_neural_nested'))
+        if args.deferred:
+            phases.append((kernel,'deferred','deferred_kernel_nested'))
     for obj, method, label in phases:
         original = getattr(obj, method)
         originals.append((obj, method, original))
@@ -48,11 +52,14 @@ if __name__ == '__main__':
         setattr(obj, method, timed)
     start, cpu = time.perf_counter(), time.process_time()
     model.run(args.steps)
+    if args.deferred:
+        kernel.materialize(model.plasticity)
     wall, cpu = time.perf_counter()-start, time.process_time()-cpu
     for obj, method, original in originals:
         setattr(obj, method, original)
     report = dict(checkpoint_sha256=identity, steps=args.steps, threads=1, native_library=args.native_library,
                   native_threads=args.native_threads,metrics_mode=args.metrics,
+                  deferred=args.deferred,
                   seconds=wall, process_cpu_seconds=cpu, frames_per_second=args.steps/wall,
                   phase_seconds=dict(timings), active_eligibilities=model.plasticity.keys.numel())
     print(json.dumps(report), flush=True)

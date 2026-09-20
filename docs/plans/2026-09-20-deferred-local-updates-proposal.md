@@ -1,12 +1,12 @@
-# Proposed next throughput experiment — approval required
+# Proposed next throughput experiment â€” approval required
 
-Status: proposal only. The implementation continues to perform every local update
-on every neural tick. Do not implement this experiment without user approval.
+Status: user approved the bounded experiment on2026-09-20. Exact execution
+remains the default; experimental results and implementation rulings follow.
 
 ## Evidence and target
 
 The exact CPU backend has improved the measured M1A graph from about 3 to
-49�50 Pong frames/s in a balanced 100-frame comparison. The final1000-frame
+49–50 Pong frames/s in a balanced 100-frame comparison. The final1000-frame
 profile took20.545 seconds (48.67fps). The graph has47,413 neurons and1,377,103
 measured edges. Each frame still contains eight neural ticks. The goal of120
 frames/s remains unmet;10,000 frames project to3.4 minutes, excluding load/save,
@@ -83,3 +83,45 @@ Relative weight normalization is not part of this proposal: it changes current
 amplitudes but does not reduce the number of edge operations. It could change
 activity and runtime indirectly; neither a speed nor learning improvement has
 been established for it here.
+
+## Execution ledger
+
+Base1ac14ac. User also requested investigation of lazy neuron execution.
+
+Ruling: first implement the per-tick fallback as an edge-major bounded loop,
+buffering at most8 ticks of local errors and arrivals. This tests reduced memory
+passes without geometric rounding changes. Behavioral R-STDP, rates and neuron
+execution remain per-tick. Cost if ineffective: discard an execution experiment;
+no model changes. The closed-form path is evaluated after this baseline.
+
+Chunk1: added DeferredCPU plus native deferred_visual. Private visual eligibility
+materializes on synchronization, snapshot and save. Random mixed-pathway/clipped/
+pruning trajectories and snapshot/save/resume compare exactly.36 targeted native
+and deferred tests pass. First100-frame balanced measured-graph run was exactly
+equal but slower:39fps deferred versus48-50fps native. Profiling overhead next;
+not adopted. Native local-error preparation replaces a dense Torch arithmetic
+pass;3 targeted tests pass after this execution-only change.
+
+Parallel neuron investigation completed:16.2892% of neuron-ticks are complete
+bitwise no-input fixed points;94.97% of spikes have no same-tick input. See
+docs/experiments/2026-09-20-lazy-neuron-feasibility.md. This rules out input-only
+wakeup semantics. No neuron engine changes made.
+
+Chunk2: retain separated private visual/behavioral arrays across synchronizations,
+merging only for snapshot/save/explicit materialization. This removes the repeated
+split/merge bottleneck.100-frame comparisons remain exact; sustained run pending.
+
+Ruling: geometric experiment precomputes each neuron's finite weighted sum of
+its actual recorded local errors, rather than assuming prediction currents remain
+a single exponential. For an edge without presynaptic arrivals, delta=e0*sum(g_t*d^t).
+All sensory and recurrent changes/clipping are therefore represented in g_t.
+Pruning remains per-tick: exact end trace/value are computed, and only intervals
+that provably survive every tick use the aggregate; crossing/arrival cases replay
+the reference loop. Cost if rounding matters: explicit differences/spike divergence
+reported, no automatic adoption. Behavioral updates remain per-tick.
+
+Two separately identified experiments:deferred-ticks-v1 (exact arithmetic order)
+anddeferred-geometric-v1 (regrouped local sum). Saved manifests record the choice.
+Five deferred tests cover mixed pathways, reward, pruning, parallel boundaries,
+save/resume and bounded geometric differences. Full suite and1000-frame balanced
+comparisons are the next gates. No CLI default has changed.

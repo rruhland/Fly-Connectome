@@ -19,6 +19,7 @@ extern "C" EXPORT std::int64_t sparse_observe(
     const std::int8_t* signs, const float* current_decay, const float* observed,
     const float* expected, const float* post_trace, const bool* spikes, float* proposals,
     std::int64_t* keys, float* values, float* traces) {
+    if (!old_count && !new_count) return 0;
     if (new_count > 1) std::sort(incoming, incoming+new_count);
     // The local error is identical for every existing synapse onto this neuron.
     std::vector<float> errors(n);
@@ -191,4 +192,97 @@ extern "C" EXPORT std::int64_t spike_arrivals(std::int64_t n, std::int64_t slots
         }
     }
     return count;
+}
+
+// Experimental fallback for deferred intervals: fuse memory passes while retaining
+// every float32 tick, clipping-derived local error, and pruning decision.
+extern "C" EXPORT int deferred_abi_version() { return 2; }
+extern "C" EXPORT void deferred_error(std::int64_t n, std::int64_t threads, float eta,
+    const float* observed, const float* expected, float* errors) {
+    #pragma omp parallel for num_threads(threads) if(n>=16384 && threads>1)
+    for (std::int64_t i=0;i<n;++i) errors[i]=eta*(observed[i]-expected[i]);
+}
+
+extern "C" EXPORT std::int64_t deferred_visual(
+    std::int64_t old_count, std::int64_t new_count, std::int64_t steps,
+    std::int64_t n, std::int64_t threads, std::int64_t aggregate, float pair_decay, float epsilon,
+    const std::int64_t* old_keys, const float* old_values, const float* old_traces,
+    std::int64_t* incoming, const std::int32_t* post, const std::int8_t* signs,
+    const float* decay, const float* errors, float* proposals,
+    std::int64_t* keys, float* values, float* traces) {
+    if (new_count>1) std::sort(incoming,incoming+new_count);
+    std::vector<double> coefficients(aggregate ? n : 0);
+    if (aggregate) {
+        #pragma omp parallel for num_threads(threads) if(n>=16384 && threads>1)
+        for (std::int64_t neuron=0;neuron<n;++neuron) {
+            double power=1.,sum=0.;
+            for (std::int64_t tick=0;tick<steps;++tick) {
+                sum+=power*errors[neuron*steps+tick];
+                power*=decay[neuron];
+            }
+            coefficients[neuron]=sum;
+        }
+    }
+    const auto chunks=std::min(threads,old_count/4096+1);
+    std::vector<std::int64_t> offsets(chunks),counts(chunks);
+    #pragma omp parallel for num_threads(chunks) if(chunks>1)
+    for (std::int64_t chunk=0;chunk<chunks;++chunk) {
+        const auto begin=old_count*chunk/chunks,end=old_count*(chunk+1)/chunks;
+        const auto first_new=chunk==0 || !new_count ? 0 : std::lower_bound(incoming,incoming+new_count,old_keys[begin]*steps)-incoming;
+        const auto end_new=chunk==chunks-1 || !new_count ? new_count : std::lower_bound(incoming,incoming+new_count,old_keys[end]*steps)-incoming;
+        const auto offset=begin+first_new;
+        auto i=begin,j=first_new,out=offset;
+        while (i<end || j<end_new) {
+            const auto edge=j==end_new ? old_keys[i] : i==end ? incoming[j]/steps
+                : std::min(old_keys[i],incoming[j]/steps);
+            const auto target=post[edge];
+            bool alive=i<end && old_keys[i]==edge;
+            float value=alive ? old_values[i] : 0.f;
+            float trace=alive ? old_traces[i] : 0.f;
+            if (alive) ++i;
+            float proposal=proposals[edge];
+            if (aggregate && alive && (j==end_new || incoming[j]/steps!=edge)) {
+                float end_value=value,end_trace=trace;
+                for (std::int64_t tick=0;tick<steps;++tick) {
+                    end_value*=decay[target];end_value+=0.f*signs[edge];
+                    end_trace*=pair_decay;end_trace+=0.f;
+                }
+                // Without arrivals both magnitudes are monotone. Surviving the
+                // end proves no pruning crossing; otherwise replay below.
+                if (std::abs(end_value)>epsilon || end_trace>epsilon) {
+                    proposals[edge]+=float(double(value)*coefficients[target]);
+                    keys[out]=edge;values[out]=end_value;traces[out]=end_trace;++out;
+                    continue;
+                }
+            }
+            for (std::int64_t tick=0;tick<steps;++tick) {
+                if (alive) {
+                    proposal+=errors[target*steps+tick]*value;
+                    value*=decay[target];
+                    trace*=pair_decay;
+                }
+                float count=0.f;
+                while (j<end_new && incoming[j]==edge*steps+tick) {count+=1.f;++j;}
+                trace+=count;
+                value+=count*signs[edge];
+                alive=std::abs(value)>epsilon || trace>epsilon;
+                if (alive) proposal+=0.f;
+                else {value=0.f;trace=0.f;}
+            }
+            proposals[edge]=proposal;
+            if (alive) {keys[out]=edge;values[out]=value;traces[out]=trace;++out;}
+        }
+        offsets[chunk]=offset;counts[chunk]=out-offset;
+    }
+    std::int64_t total=0;
+    for (std::int64_t chunk=0;chunk<chunks;++chunk) {
+        const auto offset=offsets[chunk],count=counts[chunk];
+        if (count && total!=offset) {
+            std::memmove(keys+total,keys+offset,count*sizeof(*keys));
+            std::memmove(values+total,values+offset,count*sizeof(*values));
+            std::memmove(traces+total,traces+offset,count*sizeof(*traces));
+        }
+        total+=count;
+    }
+    return total;
 }
