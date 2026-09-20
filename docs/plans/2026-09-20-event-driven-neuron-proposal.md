@@ -1,6 +1,7 @@
 # Bounded event-driven neuron and local-state prototype
 
-Status: approved by the user; isolated experimental implementation in progress.
+Status: approved experiment completed; candidate rejected for changed spike times.
+See `docs/experiments/2026-09-20-event-neuron-results.md` for measurements.
 Approval covers measuring regrouped neuron propagation, not adopting changed
 spike schedules. Biological parameters and local learning remain fixed.
 

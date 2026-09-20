@@ -273,4 +273,6 @@ def test_native_prediction_updates_preserve_subnormal_float_bits(native_library,
     activity=Activity(torch.zeros(1,size+1,dtype=torch.bool),torch.zeros(1,size+1),torch.zeros(1,size+1),
                       torch.empty(0,dtype=torch.long),torch.empty(0,dtype=torch.long))
     rule.observe(activity,torch.zeros(1));NativeCPU(native_library).observe(other,activity,torch.zeros(1))
+    if eta>0:
+        assert ((rule.proposals.abs()>0)&(rule.proposals.abs()<torch.finfo(torch.float32).tiny)).any()
     assert torch.equal(rule.proposals.view(torch.int32),other.proposals.view(torch.int32))

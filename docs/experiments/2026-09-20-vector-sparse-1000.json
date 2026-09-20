@@ -1,0 +1,95 @@
+{
+  "checkpoint_sha256": "6358107d489ee859f1644105eb274c29b226e6cdc71ae7e58d65a8bf6c925e58",
+  "steps": 1000,
+  "threads": 1,
+  "native_threads": 4,
+  "metrics_mode": "events",
+  "reference_library": "runs/native_cpu_deferred.dll",
+  "native_library": "runs/vector_sparse_diagnostic.dll",
+  "warmup_frames": 5,
+  "exact": true,
+  "runs": [
+    {
+      "backend": "reference",
+      "seconds": 21.030574000033084,
+      "cpu_seconds": 37.921875,
+      "fps": 47.549819610174545,
+      "spikes_sha256": "83eef6d437302cd60b44926cd718ab5f3a2293d2d5d5b33ff804e88a7cd958d0",
+      "state_sha256": "353aed22b87155c4b891e93bd74c3e4d01fddc3cd652a4b1d6ea2ccb4a91b431",
+      "model_sha256": "e58dd23b3b024d6d2b03e844a94a7ea228329bbe65a5483a4bf18b92b06ae039",
+      "event_statistics": [
+        0.0,
+        0.0,
+        26.0,
+        6.481325000524521,
+        4720570.0,
+        26758.642289413678,
+        54175.0,
+        29460385.0
+      ]
+    },
+    {
+      "backend": "native",
+      "seconds": 30.61370409996016,
+      "cpu_seconds": 71.140625,
+      "fps": 32.66510961021869,
+      "spikes_sha256": "83eef6d437302cd60b44926cd718ab5f3a2293d2d5d5b33ff804e88a7cd958d0",
+      "state_sha256": "353aed22b87155c4b891e93bd74c3e4d01fddc3cd652a4b1d6ea2ccb4a91b431",
+      "model_sha256": "e58dd23b3b024d6d2b03e844a94a7ea228329bbe65a5483a4bf18b92b06ae039",
+      "event_statistics": [
+        0.0,
+        0.0,
+        26.0,
+        6.481325000524521,
+        4720570.0,
+        26758.642289413678,
+        54175.0,
+        29460385.0
+      ]
+    },
+    {
+      "backend": "native",
+      "seconds": 31.22497260000091,
+      "cpu_seconds": 68.578125,
+      "fps": 32.02564859896693,
+      "spikes_sha256": "83eef6d437302cd60b44926cd718ab5f3a2293d2d5d5b33ff804e88a7cd958d0",
+      "state_sha256": "353aed22b87155c4b891e93bd74c3e4d01fddc3cd652a4b1d6ea2ccb4a91b431",
+      "model_sha256": "e58dd23b3b024d6d2b03e844a94a7ea228329bbe65a5483a4bf18b92b06ae039",
+      "event_statistics": [
+        0.0,
+        0.0,
+        26.0,
+        6.481325000524521,
+        4720570.0,
+        26758.642289413678,
+        54175.0,
+        29460385.0
+      ]
+    },
+    {
+      "backend": "reference",
+      "seconds": 19.614568800025154,
+      "cpu_seconds": 35.375,
+      "fps": 50.982512549484014,
+      "spikes_sha256": "83eef6d437302cd60b44926cd718ab5f3a2293d2d5d5b33ff804e88a7cd958d0",
+      "state_sha256": "353aed22b87155c4b891e93bd74c3e4d01fddc3cd652a4b1d6ea2ccb4a91b431",
+      "model_sha256": "e58dd23b3b024d6d2b03e844a94a7ea228329bbe65a5483a4bf18b92b06ae039",
+      "event_statistics": [
+        0.0,
+        0.0,
+        26.0,
+        6.481325000524521,
+        4720570.0,
+        26758.642289413678,
+        54175.0,
+        29460385.0
+      ]
+    }
+  ],
+  "postrun_sha256": {
+    "scripts/native_vector_sparse.cpp": "fd390393fab172b0d8ca0f9781095101f2f5f31bc604432cab6c69a2edde8aa6",
+    "src/fly_connectome/native_cpu.cpp": "7d6b2056e654cb9b84177a65edf89337312f6dba7a90bed112ba941fe2586822",
+    "runs/vector_sparse_diagnostic.dll": "7e52156c3bccc4e944fb4afc52edf0d38d74d15ccffc80176e82ecc4432b9465",
+    "runs/native_cpu_deferred.dll": "5bb4818d38f52d40f303c837d72992f56099c8ebb419062fc6e75bba2c1c8dcc"
+  }
+}

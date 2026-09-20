@@ -491,3 +491,16 @@ Four balanced 1000-frame native runs preserve every spike and full state hash;
 pooled throughput 48.22fps vs46.30fps (~4.1% observed gain). 165 tests pass,
 four CUDA skips. Re-enabling a previously used event backend now discards stale
 scheduler caches after materialization. See retinal-cache experiment report.
+
+Staged SIMD sparse eligibility experiment is exact but rejected:32.0-32.7fps
+versus47.5-51.0fps native over balanced1000-frame runs. Compiler confirms SIMD,
+but extra staging/compaction traffic outweighs arithmetic gains. Current native
+backend retained.171 tests pass,4 CUDA skips; wheel built and contents verified.
+120fps remains unmet. No biological shortcut or changed spike schedule adopted.
+The broader persistent compiled-frame runtime proposal is in
+2026-09-20-compiled-frame-proposal.md; user direction requested because it changes
+runtime/state ownership beyond the completed bounded experiments. Until that
+answer, do not implement the proposed runner or resume scientific training.
+Final review strengthened the subnormal regression to require actual nonzero
+subnormal proposals; final suite173 passed,4CUDA skipped. No benchmark or
+training process remains running. Repository is ready to resume from this ledger.
