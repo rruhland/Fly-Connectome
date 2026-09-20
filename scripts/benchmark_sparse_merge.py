@@ -38,12 +38,19 @@ if __name__ == '__main__':
     parser.add_argument('checkpoint')
     parser.add_argument('--steps', type=int, default=20)
     parser.add_argument('--output', required=True)
+    parser.add_argument('--native-library', help='optional separately compiled experimental CPU merge')
     args = parser.parse_args()
     torch.set_num_threads(1)
     identity = checksum(args.checkpoint)
     base = load_checkpoint(args.checkpoint)
     base.run(5)
-    optimized = plasticity._merge_arrivals
+    tensor_merge = plasticity._merge_arrivals
+    if args.native_library:
+        from native_sparse_merge import load_merge
+        optimized = load_merge(args.native_library)
+        reference_merge = tensor_merge
+    else:
+        optimized = tensor_merge
     runs = []
     for label, merge in (('reference', reference_merge), ('optimized', optimized),
                          ('optimized', optimized), ('reference', reference_merge)):
@@ -64,9 +71,10 @@ if __name__ == '__main__':
                          state_sha256=tensor_hash(model)))
         print(json.dumps(runs[-1]), flush=True)
         del model
-    plasticity._merge_arrivals = optimized
+    plasticity._merge_arrivals = tensor_merge
     assert len({run['spikes_sha256'] for run in runs}) == 1
     assert len({run['state_sha256'] for run in runs}) == 1
     assert checksum(args.checkpoint) == identity
     Path(args.output).write_text(json.dumps(dict(checkpoint_sha256=identity, steps=args.steps,
-        warmup_frames=5, threads=1, runs=runs, exact_trajectory_and_state=True), indent=2)+'\n')
+        warmup_frames=5, threads=1, runs=runs, exact_trajectory_and_state=True,
+        native_library=args.native_library), indent=2)+'\n')

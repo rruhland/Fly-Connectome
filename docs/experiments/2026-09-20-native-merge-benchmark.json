@@ -1,0 +1,42 @@
+{
+  "checkpoint_sha256": "6358107d489ee859f1644105eb274c29b226e6cdc71ae7e58d65a8bf6c925e58",
+  "steps": 20,
+  "warmup_frames": 5,
+  "threads": 1,
+  "runs": [
+    {
+      "implementation": "reference",
+      "seconds": 6.597546700038947,
+      "process_cpu_seconds": 6.5625,
+      "frames_per_second": 3.0314298495048067,
+      "spikes_sha256": "f769a96867d42b5b2d725a0268481a798d24f3a8288adb59cfa2fa5b6174cceb",
+      "state_sha256": "fc214448fa7692bd1ff1ec8d4444ddb5739a09c123493e6954c8521d0025da52"
+    },
+    {
+      "implementation": "optimized",
+      "seconds": 5.355164400010835,
+      "process_cpu_seconds": 5.328125,
+      "frames_per_second": 3.7347126075082837,
+      "spikes_sha256": "f769a96867d42b5b2d725a0268481a798d24f3a8288adb59cfa2fa5b6174cceb",
+      "state_sha256": "fc214448fa7692bd1ff1ec8d4444ddb5739a09c123493e6954c8521d0025da52"
+    },
+    {
+      "implementation": "optimized",
+      "seconds": 5.404599800007418,
+      "process_cpu_seconds": 5.375,
+      "frames_per_second": 3.7005515190916727,
+      "spikes_sha256": "f769a96867d42b5b2d725a0268481a798d24f3a8288adb59cfa2fa5b6174cceb",
+      "state_sha256": "fc214448fa7692bd1ff1ec8d4444ddb5739a09c123493e6954c8521d0025da52"
+    },
+    {
+      "implementation": "reference",
+      "seconds": 6.630373699998017,
+      "process_cpu_seconds": 6.5,
+      "frames_per_second": 3.0164212312808223,
+      "spikes_sha256": "f769a96867d42b5b2d725a0268481a798d24f3a8288adb59cfa2fa5b6174cceb",
+      "state_sha256": "fc214448fa7692bd1ff1ec8d4444ddb5739a09c123493e6954c8521d0025da52"
+    }
+  ],
+  "exact_trajectory_and_state": true,
+  "native_library": "runs/native_sparse_merge.dll"
+}

@@ -422,3 +422,13 @@ potentially a compiled implementation, without altering local-rule semantics.
 Next scientific chunk must diagnose ineffective event anticipation rather than
 assume another long unchanged continuation will fix it. No architecture approval
 is currently pending, and no training process is running.
+
+Bounded native merge experiment also completed: installed g++13.2 compiled an
+explicit opt-in library in ignored runs/. Hand-derived/randomized equality,
+input guards, and complete twenty-frame spike/state comparisons pass. Native
+merge improves canonical ~3.02 to~3.72frames/s, still not real-time. The production
+backend remains PyTorch; no checkpoint or package dependency changed. See
+scripts/native_sparse_merge.{cpp,py}, scripts/verify_native_merge.py and the
+--native-library experiment flag on scripts/benchmark_sparse_merge.py. Native
+trace/error/update fusion is the next measured engineering direction. Do not
+repeat the merge experiment as if it had not been done. No training is running.

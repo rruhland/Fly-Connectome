@@ -82,3 +82,36 @@ and a CPU comparison test; independently investigate why informative local signa
 remain too weak or mistimed. Any new scientific model/target revision requires a
 concrete evidence-backed proposal. Faster computation is an engineering change,
 not permission to alter learning, topology, signs, or sensory inputs.
+
+## Compiled merge experiment
+
+A separate C ABI implementation in `scripts/native_sparse_merge.cpp` linearly
+merges sorted active keys after sorting only incoming arrivals. It does not
+replace the production backend. The wrapper accepts only contiguous CPU int64
+keys and float32 values without autograd. Old keys must be sorted and unique,
+which Plasticity guarantees. New arrivals may be duplicated. Only a private copy
+of arrival keys is sorted; outputs are separate buffers bounded by the total
+input count. No PyTorch ABI linkage or additional Python dependencies are needed.
+
+Build with installed MSYS2 UCRT64 g++ 13.2.0 (Rev3):
+
+```
+g++ -O3 -fno-fast-math -ffp-contract=off -shared -static-libgcc -static-libstdc++ scripts/native_sparse_merge.cpp -o runs/native_sparse_merge.dll
+.venv/Scripts/python scripts/verify_native_merge.py runs/native_sparse_merge.dll
+.venv/Scripts/python scripts/benchmark_sparse_merge.py checkpoints/event-v1-combined-rate-10000.pt --native-library runs/native_sparse_merge.dll --output runs/native-merge-benchmark.json
+```
+
+Hand-derived, empty and twenty randomized reference comparisons match exactly;
+invalid dtype, shape, layout and autograd inputs are rejected. The balanced
+20-frame resumed runs took 6.598/6.630 s for canonical tensor merge versus
+5.355/5.405 s for native merge, about 23% additional throughput (3.02 -> 3.72
+frames/s), with identical spike and final tensor hashes. Source unchanged.
+Read-only review found no actionable issues. The DLL stays in ignored `runs/`;
+normal package installation and training do not compile or load it.
+
+This establishes a useful native merge optimization but leaves most training
+cost intact: even the experimental rate implies about 45 minutes for 10,000
+frames. Merging alone cannot close the real-time gap. A next native experiment
+should target the larger local trace/error/update operation as a unit, using
+this tensor implementation and saved checkpoint as the equality reference.
+Do not silently enable this experiment or claim it is a production CUDA backend.
