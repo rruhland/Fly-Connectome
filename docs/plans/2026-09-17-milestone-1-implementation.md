@@ -472,3 +472,16 @@ acceptance. Read docs/experiments/2026-09-20-deferred-execution-results.md and
 docs/plans/2026-09-20-event-driven-neuron-proposal.md to continue. The latter
 requires approval before approximate/regrouped neuron propagation is implemented.
 153tests pass,4CUDA skips; no background training process remains.
+
+## Approved long-gap neuron experiment (2026-09-20)
+
+User approved the event-driven proposal and prioritized preserving the biological
+model. The wake diagnostic supports long gaps (median neuron mean 30.23 ticks).
+The 128-tick prototype deferred 95.99% of neuron updates but changed 930 spike
+entries across 8000 ticks, first at tick 250, identically in two repetitions.
+It is not adopted. Timings 46-51fps remain below 120 and paired reference timings
+were variable. See docs/experiments/2026-09-20-event-neuron-results.md.
+Backend switching now materializes old private state before replacing callbacks.
+164 tests pass, four CUDA skips. Next model-preserving work: reduce measured
+learning/wrapper and fixed retinal projection overhead. Scientific training
+remains paused; this result does not establish that biological shortcuts are needed.

@@ -151,6 +151,10 @@ class NativeCPU:
         if trainer.network.batch!=1 or trainer.network.voltage.device.type!='cpu':
             raise ValueError('native CPU backend requires B=1 on CPU')
         self.topology(trainer.network)
+        # Flush private lazy state before replacing its execution callbacks.
+        if hasattr(trainer,'_materialize'):
+            trainer._materialize()
+            del trainer._materialize
         trainer.network._arrivals=partial(self.arrivals,trainer.network)
         trainer.network.step=partial(self.step,trainer.network)
         if trainer.plasticity is not None:

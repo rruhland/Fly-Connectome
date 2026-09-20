@@ -1,0 +1,200 @@
+{
+  "checkpoint_sha256": "6358107d489ee859f1644105eb274c29b226e6cdc71ae7e58d65a8bf6c925e58",
+  "sources": {
+    "C:\\Users\\rruhl\\OneDrive\\Documents\\Fly-Connectome\\scripts\\benchmark_event_neurons.py": "c9cca53670a03f7a22c9d6ab637af977bab6dffc470e39e3a3e7940349dec8b8",
+    "C:\\Users\\rruhl\\OneDrive\\Documents\\Fly-Connectome\\scripts\\native_event_neurons.cpp": "e7e9a6887defe22487ac46e6edfe3e4abce4fe3e1d2fce0898014d4785d30f3d",
+    "runs\\native_cpu_deferred.dll": "5bb4818d38f52d40f303c837d72992f56099c8ebb419062fc6e75bba2c1c8dcc",
+    "runs\\native_event_neurons.dll": "db1ff6934244c4675e56fbba891b11279af57cbf641b591f325fd309407277c2"
+  },
+  "frames": 1000,
+  "horizon": 128,
+  "warmup_frames": 5,
+  "native_threads": 4,
+  "torch_threads": 1,
+  "runs": [
+    {
+      "backend": "reference",
+      "seconds": 27.340912199986633,
+      "fps": 36.575224436018964,
+      "different_spike_ticks": 0,
+      "different_spikes": 0,
+      "first_divergent_tick": null,
+      "state_differences": {},
+      "counters": null
+    },
+    {
+      "backend": "event",
+      "seconds": 21.729499199951533,
+      "fps": 46.02038872585846,
+      "different_spike_ticks": 853,
+      "different_spikes": 930,
+      "first_divergent_tick": 250,
+      "state_differences": {
+        "network.magnitudes": {
+          "changed": 50331,
+          "maximum": 0.005018360912799835,
+          "mean": 1.1766575066403075e-07,
+          "p99": 4.656612873077393e-10
+        },
+        "network.voltage": {
+          "changed": 32202,
+          "maximum": 0.02279078960418701,
+          "mean": 1.7185210072896506e-06,
+          "p99": 7.152557373046875e-07
+        },
+        "network.sensory_state": {
+          "changed": 2029,
+          "maximum": 3.814697265625e-06,
+          "mean": 5.546898232788844e-10,
+          "p99": 1.2611686178923354e-44
+        },
+        "network.feedforward_current": {
+          "changed": 16543,
+          "maximum": 0.0013383124023675919,
+          "mean": 5.76266225775896e-08,
+          "p99": 7.450580596923828e-09
+        },
+        "network.predictive_current": {
+          "changed": 30586,
+          "maximum": 7.803738117218018e-05,
+          "mean": 1.9278842510284996e-08,
+          "p99": 5.437718186840135e-10
+        },
+        "network.adaptation": {
+          "changed": 13104,
+          "maximum": 0.026735367602668703,
+          "mean": 1.4207727618834427e-06,
+          "p99": 3.5762786865234375e-07
+        },
+        "plasticity.values": {
+          "changed": 521,
+          "maximum": 0.0049084629863500595,
+          "mean": 9.253714286302517e-08,
+          "p99": 0.0
+        },
+        "plasticity.arrival_trace": {
+          "changed": 814,
+          "maximum": 0.01602424681186676,
+          "mean": 5.26806568545651e-06,
+          "p99": 0.0
+        },
+        "plasticity.post_trace": {
+          "changed": 29,
+          "maximum": 0.015211015939712524,
+          "mean": 8.088828100656713e-07,
+          "p99": 0.0
+        },
+        "plasticity.expected": {
+          "changed": 30586,
+          "maximum": 7.803738117218018e-05,
+          "mean": 1.9278842510284996e-08,
+          "p99": 5.437718186840135e-10
+        },
+        "plasticity.rates": {
+          "changed": 134,
+          "maximum": 0.03264433145523071,
+          "mean": 1.4438744891867284e-06,
+          "p99": 0.0
+        }
+      },
+      "counters": [
+        15226674,
+        362441038,
+        1692000,
+        13094501
+      ]
+    },
+    {
+      "backend": "event",
+      "seconds": 19.53538130002562,
+      "fps": 51.18917233515624,
+      "different_spike_ticks": 853,
+      "different_spikes": 930,
+      "first_divergent_tick": 250,
+      "state_differences": {
+        "network.magnitudes": {
+          "changed": 50331,
+          "maximum": 0.005018360912799835,
+          "mean": 1.1766575066403075e-07,
+          "p99": 4.656612873077393e-10
+        },
+        "network.voltage": {
+          "changed": 32202,
+          "maximum": 0.02279078960418701,
+          "mean": 1.7185210072896506e-06,
+          "p99": 7.152557373046875e-07
+        },
+        "network.sensory_state": {
+          "changed": 2029,
+          "maximum": 3.814697265625e-06,
+          "mean": 5.546898232788844e-10,
+          "p99": 1.2611686178923354e-44
+        },
+        "network.feedforward_current": {
+          "changed": 16543,
+          "maximum": 0.0013383124023675919,
+          "mean": 5.76266225775896e-08,
+          "p99": 7.450580596923828e-09
+        },
+        "network.predictive_current": {
+          "changed": 30586,
+          "maximum": 7.803738117218018e-05,
+          "mean": 1.9278842510284996e-08,
+          "p99": 5.437718186840135e-10
+        },
+        "network.adaptation": {
+          "changed": 13104,
+          "maximum": 0.026735367602668703,
+          "mean": 1.4207727618834427e-06,
+          "p99": 3.5762786865234375e-07
+        },
+        "plasticity.values": {
+          "changed": 521,
+          "maximum": 0.0049084629863500595,
+          "mean": 9.253714286302517e-08,
+          "p99": 0.0
+        },
+        "plasticity.arrival_trace": {
+          "changed": 814,
+          "maximum": 0.01602424681186676,
+          "mean": 5.26806568545651e-06,
+          "p99": 0.0
+        },
+        "plasticity.post_trace": {
+          "changed": 29,
+          "maximum": 0.015211015939712524,
+          "mean": 8.088828100656713e-07,
+          "p99": 0.0
+        },
+        "plasticity.expected": {
+          "changed": 30586,
+          "maximum": 7.803738117218018e-05,
+          "mean": 1.9278842510284996e-08,
+          "p99": 5.437718186840135e-10
+        },
+        "plasticity.rates": {
+          "changed": 134,
+          "maximum": 0.03264433145523071,
+          "mean": 1.4438744891867284e-06,
+          "p99": 0.0
+        }
+      },
+      "counters": [
+        15226674,
+        362441038,
+        1692000,
+        13094501
+      ]
+    },
+    {
+      "backend": "reference",
+      "seconds": 36.065160500002094,
+      "fps": 27.727590453949094,
+      "different_spike_ticks": 0,
+      "different_spikes": 0,
+      "first_divergent_tick": null,
+      "state_differences": {},
+      "counters": null
+    }
+  ]
+}

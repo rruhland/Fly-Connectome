@@ -1,7 +1,8 @@
 # Bounded event-driven neuron and local-state prototype
 
-Status: proposed, not implemented. Requires approval because the earlier
-deferred-learning approval did not cover regrouped neuron-state propagation.
+Status: approved by the user; isolated experimental implementation in progress.
+Approval covers measuring regrouped neuron propagation, not adopting changed
+spike schedules. Biological parameters and local learning remain fixed.
 
 ## Evidence and purpose
 
@@ -34,7 +35,7 @@ than continually expanding event activity back into dense tick-sized tensors.
    for arrivals, injection, refractory expiry, autonomous threshold candidates,
    and parameter/silencing changes.
 2. Advance no-input stretches with the closed form of the *existing discrete*
-   recurrences, bounded to the current synchronization interval. Group ready
+   recurrences, bounded by a measured scheduling horizon. Group ready
    cells by fixed class parameters and use contiguous vector operations where
    that reduces work. Preserve canonical body/edge identity via index mappings.
 3. Find the first qualifying **integer neural tick** for autonomous spikes.
@@ -81,3 +82,15 @@ timings or claim effective learning from faster execution.
 If missed/spurious/shifted spikes occur, report them and retain the reference;
 any acceptance of divergent neuron behavior must return to the user. Final
 scientific evaluation seeds and milestone learning gates remain untouched.
+
+## Execution ledger
+
+The user's approval explicitly prioritizes exploiting 10-100 tick sleep gaps.
+The 1000-frame wake diagnostic finds a median per-neuron mean gap of 30.23 ticks.
+Forcing materialization every eight ticks multiplies wakes by 4.20. Therefore
+the prototype permits neuron caches across weight synchronization boundaries:
+synchronization changes weights used by future arrivals, not currents already
+delivered. Arrival delivery still wakes its target before using current weights.
+This changes no weight visibility or biological update timing. Checkpoints and
+public snapshots still materialize all state. The initial prototype retains
+dense activity queries and existing learning to isolate neuron scheduling costs.
