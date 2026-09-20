@@ -45,6 +45,29 @@ remain unvisited, so this alone does not prove undertraining causes the failure.
 It does show that the pilot provides little direct experience to most local
 synapses and cannot establish an architectural learning limit.
 
+The refined mapped-field report (`2026-09-19-pong-exposure-seed1-mapped.json`)
+separates columns receiving no render pixels from unvisited mapped columns.
+Of 761 mapped L1 neurons, 432 had no events after 2,000 steps and 734 had fewer
+than ten; at 10,000 steps these counts fall to 97 and 594. Thus the sparse-exposure
+finding remains after excluding 131 unmapped L1 neurons.
+
+Frozen errors grouped by the first 2,000 steps of training exposure show:
+
+| L1-L3 exposure group | Neurons | Initial event MSE | Trained event MSE | Zero MSE |
+| --- | ---: | ---: | ---: | ---: |
+| No mapped render pixels | 393 | 0.000156564 | 0.000034235 | 0 |
+| Mapped, no training events | 1,296 | 0.000639495 | 0.000436299 | 0.000388889 |
+| 1-9 training events | 907 | 0.001050409 | 0.000874170 | 0.000824697 |
+| At least 10 training events | 81 | 0.015639946 | 0.015576485 | 0.015555556 |
+
+The more exposed group has slightly improved event-conditioned error (1.000625
+to 0.999969), but still loses to zero overall. No group supplies an acceptance
+claim. Absolute errors differ because event frequencies differ between groups;
+these are descriptive comparisons, not causal effects of exposure. Grouped
+sample-weighted errors reproduce the full sensory score. Reproduce using
+`scripts/audit_exposure_generalization.py` with `--exposure-steps 2000` and the
+initial or 2,000-step checkpoint; saved reports record exact checkpoint identity.
+
 The next fixed-parameter experiment is recorded in
 `configs/event-learning-exposure-continuation-v1.json`: resume the exact 2,000-step
 checkpoint for 8,000 additional steps, save every 100, then evaluate 500 frames on

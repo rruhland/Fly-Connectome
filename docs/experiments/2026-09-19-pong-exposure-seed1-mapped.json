@@ -1,0 +1,90 @@
+{
+  "checkpoint_sha256": "8c4af80ff3904881bac9313b618dd9989bb51174b47606f28eca88865296005c",
+  "seed": 1,
+  "measurements": [
+    {
+      "steps": 2000,
+      "seconds": 16.666666666666668,
+      "populations": {
+        "L1": {
+          "neurons": 892,
+          "never_stimulated": 563,
+          "fewer_than_ten_events": 865,
+          "median_events": 0.0,
+          "maximum_events": 115.0,
+          "total_events": 1880,
+          "neurons_with_render_pixels": 761,
+          "mapped_neurons_never_stimulated": 432,
+          "mapped_neurons_fewer_than_ten_events": 734,
+          "mapped_median_events": 0.0
+        },
+        "L2": {
+          "neurons": 893,
+          "never_stimulated": 563,
+          "fewer_than_ten_events": 866,
+          "median_events": 0.0,
+          "maximum_events": 115.0,
+          "total_events": 1888,
+          "neurons_with_render_pixels": 762,
+          "mapped_neurons_never_stimulated": 432,
+          "mapped_neurons_fewer_than_ten_events": 735,
+          "mapped_median_events": 0.0
+        },
+        "L3": {
+          "neurons": 892,
+          "never_stimulated": 563,
+          "fewer_than_ten_events": 865,
+          "median_events": 0.0,
+          "maximum_events": 115.0,
+          "total_events": 1880,
+          "neurons_with_render_pixels": 761,
+          "mapped_neurons_never_stimulated": 432,
+          "mapped_neurons_fewer_than_ten_events": 734,
+          "mapped_median_events": 0.0
+        }
+      }
+    },
+    {
+      "steps": 10000,
+      "seconds": 83.33333333333333,
+      "populations": {
+        "L1": {
+          "neurons": 892,
+          "never_stimulated": 228,
+          "fewer_than_ten_events": 725,
+          "median_events": 4.0,
+          "maximum_events": 365.0,
+          "total_events": 8039,
+          "neurons_with_render_pixels": 761,
+          "mapped_neurons_never_stimulated": 97,
+          "mapped_neurons_fewer_than_ten_events": 594,
+          "mapped_median_events": 4.0
+        },
+        "L2": {
+          "neurons": 893,
+          "never_stimulated": 228,
+          "fewer_than_ten_events": 725,
+          "median_events": 4.0,
+          "maximum_events": 365.0,
+          "total_events": 8073,
+          "neurons_with_render_pixels": 762,
+          "mapped_neurons_never_stimulated": 97,
+          "mapped_neurons_fewer_than_ten_events": 594,
+          "mapped_median_events": 4.0
+        },
+        "L3": {
+          "neurons": 892,
+          "never_stimulated": 228,
+          "fewer_than_ten_events": 725,
+          "median_events": 4.0,
+          "maximum_events": 365.0,
+          "total_events": 8039,
+          "neurons_with_render_pixels": 761,
+          "mapped_neurons_never_stimulated": 97,
+          "mapped_neurons_fewer_than_ten_events": 594,
+          "mapped_median_events": 4.0
+        }
+      }
+    }
+  ]
+}

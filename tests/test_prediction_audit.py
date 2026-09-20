@@ -38,11 +38,12 @@ def test_frozen_audit_agrees_with_evaluation_and_preserves_checkpoint(tmp_path):
     path = tmp_path/'fixture.pt'
     trainer().save(path)
     original = path.read_bytes()
-    report = module.audit(str(path), 10, [100])
+    report = module.audit(str(path), 10, [100],{'all_sensory':trainer().retina.injected})
     ordinary = evaluate(path, [100], 10, 'scripted')
     assert report['events']['L2']['model_mse'] == pytest.approx(ordinary['metrics']['sensory_event_prediction_mse'])
     assert report['events']['L2']['zero_mse'] == pytest.approx(ordinary['metrics']['sensory_event_zero_mse'])
     assert report['population_spikes']['L2'] == ordinary['population_spikes']['L2']
+    assert report['event_groups']['all_sensory']==report['events']['L2']
     assert path.read_bytes() == original
 
 

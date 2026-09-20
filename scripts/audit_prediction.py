@@ -43,7 +43,7 @@ def lagged_scores(targets, predictions, lags=(-8,-4,-2,-1,0,1,2,4,8)):
     return result
 
 
-def audit(checkpoint, steps, seeds):
+def audit(checkpoint, steps, seeds, event_groups=None):
     model = load_checkpoint(checkpoint, evaluation=True, seeds=seeds)
     assert model.plasticity is None
     net = model.network
@@ -54,6 +54,10 @@ def audit(checkpoint, steps, seeds):
     current = {t:torch.zeros(11,dtype=torch.float64) for t in masks}
     learning = {t:torch.zeros(11,dtype=torch.float64) for t in masks}
     events = {t:torch.zeros(11,dtype=torch.float64) for t in ('L1','L2','L3') if t in masks}
+    grouped_events = {name:torch.zeros(11,dtype=torch.float64) for name in (event_groups or {})}
+    for mask in (event_groups or {}).values():
+        if mask.shape != model.retina.injected.shape or mask.dtype != torch.bool or (mask&~model.retina.injected).any() or not mask.any():
+            raise ValueError('event groups require nonempty sensory-only masks on the checkpoint roster')
     saturated = {t:torch.zeros((),dtype=torch.float64) for t in masks}
     raw_power = {t:torch.zeros((),dtype=torch.float64) for t in masks}
     original_step = net.step
@@ -81,6 +85,8 @@ def audit(checkpoint, steps, seeds):
         for label in events:
             mask = masks[label]
             events[label] += sums(target[:,mask], model.previous_predicted[:,mask], model.previous_events[:,mask])
+        for label,mask in (event_groups or {}).items():
+            grouped_events[label] += sums(target[:,mask],model.previous_predicted[:,mask],model.previous_events[:,mask])
         model.step('scripted')
     targets, predictions = torch.stack(event_targets), torch.stack(event_predictions)
     permutation = torch.randperm(steps,generator=torch.Generator().manual_seed(421))
@@ -115,6 +121,7 @@ def audit(checkpoint, steps, seeds):
         current={t:dict(**summary(v), saturated_fraction=saturated[t].item()/v[0].item(),
                        raw_target_power=raw_power[t].item()/v[0].item()) for t,v in current.items()},
         events={t:summary(v) for t,v in events.items()}, sign_support=signs,
+        event_groups={t:summary(v) for t,v in grouped_events.items()},
         population_spikes={t:int(model.evaluation_spike_counts[:,mask].sum()) for t,mask in masks.items()})
 
 

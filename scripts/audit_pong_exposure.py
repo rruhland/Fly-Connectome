@@ -29,6 +29,7 @@ if __name__=='__main__':
     args=parser.parse_args()
     torch.set_num_threads(1)
     model=load_checkpoint(args.checkpoint,evaluation=True,seeds=[args.seed],warmup=False)
+    visible=torch.isin(model.retina.neuron_columns,model.retina.pixel_bins.unique())&model.retina.injected
     counts=torch.zeros_like(model.network.voltage,dtype=torch.int64)
     previous=0
     report=dict(checkpoint_sha256=checksum(args.checkpoint),seed=args.seed,measurements=[])
@@ -39,9 +40,14 @@ if __name__=='__main__':
             mask=torch.tensor([t==label for t in model.retina.spec['cell_types']])
             values=counts[:,mask].flatten().float()
             if len(values):
+                visible_values=counts[:,mask&visible].flatten().float()
                 populations[label]=dict(neurons=len(values),never_stimulated=int((values==0).sum()),
                     fewer_than_ten_events=int((values<10).sum()),median_events=float(values.median()),
-                    maximum_events=float(values.max()),total_events=int(values.sum()))
+                    maximum_events=float(values.max()),total_events=int(values.sum()),
+                    neurons_with_render_pixels=len(visible_values),
+                    mapped_neurons_never_stimulated=int((visible_values==0).sum()),
+                    mapped_neurons_fewer_than_ten_events=int((visible_values<10).sum()),
+                    mapped_median_events=float(visible_values.median()) if len(visible_values) else None)
         report['measurements'].append(dict(steps=steps,seconds=steps*model.environment.config.dt,populations=populations))
         previous=steps
     Path(args.output).write_text(json.dumps(report,indent=2)+'\n')
