@@ -94,6 +94,7 @@ class EventCPU(NativeCPU):
 
     def enable(self, trainer):
         super().enable(trainer)
+        self.cache.pop(trainer.network,None)
         def materialize():
             self.materialize(trainer.network)
         trainer._materialize = materialize

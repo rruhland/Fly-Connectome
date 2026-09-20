@@ -51,3 +51,21 @@ def test_signed_contrast_drives_only_lamina_and_one_event_polarity():
     off = camera.observe(torch.zeros(1, 1, 1, dtype=torch.bool))
     assert off.on.tolist() == [False]
     assert retina.project(off).tolist() == [[1., 1., 1., 0.]]
+
+
+def test_projection_matches_mask_reference_with_batches_collisions_and_empty_events():
+    retina = Retina(3,4,[[0,0],[1,0]],[0,1,0,-1],['L1','L2','L3','L4'],
+                    {'L1':'on','L2':'off','L3':'contrast'})
+    camera = EventCamera(3,3,4)
+    rng = torch.Generator().manual_seed(711)
+    for tick in range(20):
+        frame = torch.rand(3,3,4,generator=rng)>.5 if tick%3 else camera.previous.clone()
+        events = camera.observe(frame)
+        bins = torch.zeros(3*2*retina.n_columns)
+        indices = (events.environments*2+events.on.long())*retina.n_columns+retina.pixel_bins[events.pixels]
+        bins.index_fill_(0,indices,1.)
+        bins = bins.view(3,2,retina.n_columns)
+        expected = torch.zeros(3,4)
+        expected[:,retina.injected] = bins[:,retina.polarity[retina.injected],retina.neuron_columns[retina.injected]]
+        expected[:,retina.contrast] = bins[:,0,retina.neuron_columns[retina.contrast]]-bins[:,1,retina.neuron_columns[retina.contrast]]
+        assert torch.equal(retina.project(events),expected)

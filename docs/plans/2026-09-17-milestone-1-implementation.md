@@ -485,3 +485,9 @@ Backend switching now materializes old private state before replacing callbacks.
 164 tests pass, four CUDA skips. Next model-preserving work: reduce measured
 learning/wrapper and fixed retinal projection overhead. Scientific training
 remains paused; this result does not establish that biological shortcuts are needed.
+
+Exact projection optimization: immutable retinal mask selections are now cached.
+Four balanced 1000-frame native runs preserve every spike and full state hash;
+pooled throughput 48.22fps vs46.30fps (~4.1% observed gain). 165 tests pass,
+four CUDA skips. Re-enabling a previously used event backend now discards stale
+scheduler caches after materialization. See retinal-cache experiment report.

@@ -61,6 +61,12 @@ class Retina:
             raise ValueError("injected neurons require a measured retinotopic column")
         self.polarity = torch.tensor([injection.get(t) == 'on' for t in cell_types], dtype=torch.long, device=device)
         self.contrast = torch.tensor([injection.get(t) == 'contrast' for t in cell_types], dtype=torch.bool, device=device)
+        # Fixed retinotopy: resolve roster masks once, not on every camera frame.
+        self._injected_indices = self.injected.nonzero().flatten()
+        self._injected_columns = self.neuron_columns[self._injected_indices]
+        self._injected_polarity = self.polarity[self._injected_indices]
+        self._contrast_indices = self.contrast.nonzero().flatten()
+        self._contrast_columns = self.neuron_columns[self._contrast_indices]
 
     @torch.no_grad()
     def project(self, events):
@@ -70,7 +76,7 @@ class Retina:
         bins.index_fill_(0, indices, 1.)
         bins = bins.view(batch, 2, self.n_columns)
         result = torch.zeros(batch, len(self.neuron_columns), device=self.device)
-        result[:, self.injected] = bins[:, self.polarity[self.injected], self.neuron_columns[self.injected]]
-        result[:, self.contrast] = (bins[:, 0, self.neuron_columns[self.contrast]]
-                                   - bins[:, 1, self.neuron_columns[self.contrast]])
+        result[:, self._injected_indices] = bins[:, self._injected_polarity, self._injected_columns]
+        result[:, self._contrast_indices] = (bins[:, 0, self._contrast_columns]
+                                            - bins[:, 1, self._contrast_columns])
         return result

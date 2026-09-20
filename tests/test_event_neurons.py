@@ -140,6 +140,10 @@ def test_backend_switch_flushes_and_removes_old_materializer(experiment):
     before = model.network.voltage.clone()
     model.snapshot()
     assert torch.equal(before,model.network.voltage)
+    kernel.enable(model)
+    assert model.network not in kernel.cache
+    model.run(1)
+    assert (kernel.cache[model.network]['last']>=model.network.step_index-9).all()
 
 
 def test_overflow_cannot_be_certified_as_a_quiet_interval(experiment):
