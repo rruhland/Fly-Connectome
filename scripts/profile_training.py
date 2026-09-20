@@ -1,5 +1,6 @@
 """Bounded headless CPU profile; source checkpoint is never modified."""
 import argparse
+from dataclasses import replace
 import json
 from pathlib import Path
 import time
@@ -15,14 +16,16 @@ if __name__ == '__main__':
     parser.add_argument('--profile-steps', type=int, default=3)
     parser.add_argument('--output', required=True)
     parser.add_argument('--native-library')
+    parser.add_argument('--native-threads',type=int,default=1)
+    parser.add_argument('--metrics',choices=['full','events'],default='full')
     args = parser.parse_args()
     torch.set_num_threads(1)
     identity = checksum(args.checkpoint)
     model = load_checkpoint(args.checkpoint)
+    model.config=replace(model.config,metrics_mode=args.metrics)
     if args.native_library:
-        from functools import partial
         from fly_connectome.native_cpu import NativeCPU
-        kernel = NativeCPU(args.native_library)
+        kernel = NativeCPU(args.native_library,threads=args.native_threads)
         kernel.enable(model)
     model.run(5)
     timings = defaultdict(float)
@@ -49,6 +52,7 @@ if __name__ == '__main__':
     for obj, method, original in originals:
         setattr(obj, method, original)
     report = dict(checkpoint_sha256=identity, steps=args.steps, threads=1, native_library=args.native_library,
+                  native_threads=args.native_threads,metrics_mode=args.metrics,
                   seconds=wall, process_cpu_seconds=cpu, frames_per_second=args.steps/wall,
                   phase_seconds=dict(timings), active_eligibilities=model.plasticity.keys.numel())
     print(json.dumps(report), flush=True)

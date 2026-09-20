@@ -23,10 +23,12 @@ def reference_merge(old_keys, old_values, old_traces, arrival_keys):
     return keys, values, traces, arrivals
 
 
-def tensor_hash(model):
+def tensor_hash(model, *, exclude_error_metrics=False):
     digest = hashlib.sha256()
     for obj in (model, model.network, model.plasticity, model.environment, model.environment.body, model.camera):
         for name, value in sorted(vars(obj).items()):
+            if exclude_error_metrics and obj is model and name in ('statistics','learning_statistics'):
+                continue
             if isinstance(value, torch.Tensor):
                 digest.update(name.encode())
                 digest.update(value.cpu().contiguous().numpy().tobytes())

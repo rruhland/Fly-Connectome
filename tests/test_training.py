@@ -202,3 +202,28 @@ def test_signed_prediction_metrics_and_pending_state_resume(tmp_path):
                              (a.network, b.network, ('voltage', 'magnitudes'))):
         for key in keys:
             torch.testing.assert_close(getattr(obj_a, key), getattr(obj_b, key), rtol=0, atol=0)
+
+
+def test_lightweight_metrics_preserve_every_model_update_and_event_score():
+    import copy
+    from dataclasses import replace
+    full=trainer()
+    light=copy.deepcopy(full)
+    light.config=replace(light.config,metrics_mode='events')
+    for _ in range(20):
+        a,_,_=full.step();b,_,_=light.step()
+        torch.testing.assert_close(a.spikes,b.spikes,rtol=0,atol=0)
+    for obj in ('network','plasticity'):
+        for name,value in vars(getattr(full,obj)).items():
+            if isinstance(value,torch.Tensor):
+                torch.testing.assert_close(value,getattr(getattr(light,obj),name),rtol=0,atol=0)
+    for name in ('previous_observed','previous_predicted','previous_learning_observed','motor_rates'):
+        torch.testing.assert_close(getattr(full,name),getattr(light,name),rtol=0,atol=0)
+    torch.testing.assert_close(full.statistics[:4],light.statistics[:4],rtol=0,atol=0)
+    torch.testing.assert_close(full.statistics[7:],light.statistics[7:],rtol=0,atol=0)
+    assert light.statistics[6]==0 and full.statistics[6]>0
+    assert light.learning_statistics[2]==0
+    assert light.snapshot()['metrics_mode']=='events'
+    light.config=replace(light.config,metrics_mode='full')
+    full.step();light.step()
+    torch.testing.assert_close(full.network.magnitudes,light.network.magnitudes,rtol=0,atol=0)

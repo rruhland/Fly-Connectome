@@ -1,0 +1,65 @@
+{
+  "checkpoint_sha256": "6358107d489ee859f1644105eb274c29b226e6cdc71ae7e58d65a8bf6c925e58",
+  "steps": 100,
+  "warmup_frames": 40,
+  "cpu_mask": 1365,
+  "metrics_mode": "events",
+  "runs": [
+    {
+      "threads": 1,
+      "seconds": 6.62586079997709,
+      "cpu_seconds": 6.53125,
+      "fps": 15.092378638613381,
+      "state_sha256": "8185007ce5fd31edcba4145e286c0aac08c1759e4e7209da1e5cca539e56aad2"
+    },
+    {
+      "threads": 2,
+      "seconds": 5.25161360000493,
+      "cpu_seconds": 6.734375,
+      "fps": 19.041766515325143,
+      "state_sha256": "8185007ce5fd31edcba4145e286c0aac08c1759e4e7209da1e5cca539e56aad2"
+    },
+    {
+      "threads": 4,
+      "seconds": 4.089814500010107,
+      "cpu_seconds": 6.0,
+      "fps": 24.45098671339565,
+      "state_sha256": "8185007ce5fd31edcba4145e286c0aac08c1759e4e7209da1e5cca539e56aad2"
+    },
+    {
+      "threads": 6,
+      "seconds": 4.131792599975597,
+      "cpu_seconds": 6.328125,
+      "fps": 24.202570090422885,
+      "state_sha256": "8185007ce5fd31edcba4145e286c0aac08c1759e4e7209da1e5cca539e56aad2"
+    },
+    {
+      "threads": 6,
+      "seconds": 4.28772060002666,
+      "cpu_seconds": 6.65625,
+      "fps": 23.322415177746944,
+      "state_sha256": "8185007ce5fd31edcba4145e286c0aac08c1759e4e7209da1e5cca539e56aad2"
+    },
+    {
+      "threads": 4,
+      "seconds": 4.16080349998083,
+      "cpu_seconds": 6.09375,
+      "fps": 24.033819429458934,
+      "state_sha256": "8185007ce5fd31edcba4145e286c0aac08c1759e4e7209da1e5cca539e56aad2"
+    },
+    {
+      "threads": 2,
+      "seconds": 5.064791499986313,
+      "cpu_seconds": 6.5625,
+      "fps": 19.744149389026227,
+      "state_sha256": "8185007ce5fd31edcba4145e286c0aac08c1759e4e7209da1e5cca539e56aad2"
+    },
+    {
+      "threads": 1,
+      "seconds": 6.339689299988095,
+      "cpu_seconds": 6.203125,
+      "fps": 15.773643670548301,
+      "state_sha256": "8185007ce5fd31edcba4145e286c0aac08c1759e4e7209da1e5cca539e56aad2"
+    }
+  ]
+}

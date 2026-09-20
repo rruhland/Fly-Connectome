@@ -2,31 +2,43 @@
 #include <algorithm>
 #include <cmath>
 #include <cstdint>
+#include <cstring>
+#include <vector>
 #ifdef _WIN32
 #define EXPORT __declspec(dllexport)
 #else
 #define EXPORT
 #endif
+extern "C" EXPORT int native_abi_version() { return 5; }
+
 extern "C" EXPORT std::int64_t sparse_observe(
-    std::int64_t old_count, std::int64_t new_count, std::int64_t causal,
+    std::int64_t old_count, std::int64_t new_count, std::int64_t causal, std::int64_t threads,
     float eta, float eta_reward, float decay, float pair_decay, float epsilon, float reward,
     const std::int64_t* old_keys, const float* old_values, const float* old_traces,
-    std::int64_t* incoming, const std::int64_t* post, const std::int64_t* pathway,
-    const float* signs, const float* current_decay, const float* observed,
+    std::int64_t* incoming, const std::int32_t* post, const std::uint8_t* pathway,
+    const std::int8_t* signs, const float* current_decay, const float* observed,
     const float* expected, const float* post_trace, const bool* spikes, float* proposals,
     std::int64_t* keys, float* values, float* traces) {
     if (new_count > 1) std::sort(incoming, incoming+new_count);
-    std::int64_t i=0,j=0,out=0;
-    while (i<old_count || j<new_count) {
-        const auto edge = j==new_count ? old_keys[i] : i==old_count ? incoming[j]
+    const auto chunks=std::min(threads,old_count/4096+1);
+    std::vector<std::int64_t> offsets(chunks),counts(chunks);
+    #pragma omp parallel for num_threads(chunks) if(chunks>1)
+    for (std::int64_t chunk=0;chunk<chunks;++chunk) {
+    const auto begin=old_count*chunk/chunks,end=old_count*(chunk+1)/chunks;
+    const auto first_new=chunk==0 || new_count==0 ? 0 : std::lower_bound(incoming,incoming+new_count,old_keys[begin])-incoming;
+    const auto end_new=chunk==chunks-1 || new_count==0 ? new_count : std::lower_bound(incoming,incoming+new_count,old_keys[end])-incoming;
+    const auto offset=begin+first_new;
+    std::int64_t i=begin,j=first_new,out=offset;
+    while (i<end || j<end_new) {
+        const auto edge = j==end_new ? old_keys[i] : i==end ? incoming[j]
                          : std::min(old_keys[i],incoming[j]);
         const auto target=post[edge];
         const bool behavior=pathway[edge]==2;
         float value=0.f,trace=0.f,count=0.f;
-        if (i<old_count && old_keys[i]==edge) {
+        if (i<end && old_keys[i]==edge) {
             value=old_values[i];
             if (causal && !behavior) {
-                const float error=observed[target]-expected[target];
+                const float error=(observed[target]-expected[target]);
                 const float scaled=eta*error;
                 proposals[edge] += scaled*value;
             }
@@ -34,7 +46,7 @@ extern "C" EXPORT std::int64_t sparse_observe(
             trace=old_traces[i]*pair_decay;
             ++i;
         }
-        while (j<new_count && incoming[j]==edge) {count+=1.f;++j;}
+        while (j<end_new && incoming[j]==edge) {count+=1.f;++j;}
         trace += count;
         if (behavior) {
             const float positive=float(spikes[target])*trace;
@@ -49,31 +61,46 @@ extern "C" EXPORT std::int64_t sparse_observe(
             keys[out]=edge;values[out]=value;traces[out]=trace;++out;
         }
     }
-    return out;
+    offsets[chunk]=offset;counts[chunk]=out-offset;
+    }
+    std::int64_t total=0;
+    for (std::int64_t chunk=0;chunk<chunks;++chunk) {
+        const auto offset=offsets[chunk],count=counts[chunk];
+        if (count && total!=offset) {
+            std::memmove(keys+total,keys+offset,count*sizeof(*keys));
+            std::memmove(values+total,values+offset,count*sizeof(*values));
+            std::memmove(traces+total,traces+offset,count*sizeof(*traces));
+        }
+        total+=count;
+    }
+    return total;
 }
 
 extern "C" EXPORT void neural_step(std::int64_t n, std::int64_t arrivals,
-    std::int64_t classes, std::int64_t refractory_steps, std::int64_t sensory_filter,
+    std::int64_t classes, std::int64_t refractory_steps, std::int64_t sensory_filter, std::int64_t threads,
     float current_leak, float membrane_leak, float membrane_gain, float sensory_leak,
     float adaptation_leak, float threshold, float jump,
-    const std::int64_t* edges, const std::int64_t* post, const std::int64_t* pathway,
-    const float* weights, const float* signs, const float* current_decay, const float* membrane_decay,
+    const std::int64_t* edges, const std::int32_t* post, const std::uint8_t* pathway,
+    const float* weights, const std::int8_t* signs, const float* current_decay, const float* membrane_decay,
     const float* rest, const float* injection, const bool* silenced,
     float* ff, float* pred, float* behavior, float* sensory, float* adaptation,
     float* voltage, std::int64_t* refractory, float* observed, float* predicted,
     float* increments, bool* spikes) {
+    #pragma omp parallel for num_threads(threads) if(n>=16384 && threads>1)
     for (std::int64_t i=0;i<n;++i) {
         const float leak=classes ? current_decay[i] : current_leak;
         ff[i]*=leak;pred[i]*=leak;behavior[i]*=leak;
         if (increments) increments[i]=0.f;
     }
     for (std::int64_t k=0;k<arrivals;++k) {
-        const auto edge=edges[k], target=post[edge];
+        const auto edge=edges[k];
+        const auto target=post[edge];
         const float weight=weights[edge]*signs[edge];
         if (pathway[edge]==0) {ff[target]+=weight;if (increments) increments[target]+=weight;}
         else if (pathway[edge]==1) pred[target]+=weight;
         else behavior[target]+=weight;
     }
+    #pragma omp parallel for num_threads(threads) if(n>=16384 && threads>1)
     for (std::int64_t i=0;i<n;++i) {
         sensory[i]=sensory_filter ? sensory[i]*sensory_leak+injection[i] : injection[i];
         observed[i]=ff[i]+sensory[i];
@@ -90,4 +117,53 @@ extern "C" EXPORT void neural_step(std::int64_t n, std::int64_t arrivals,
         if (spikes[i]) {voltage[i]=0.f;refractory[i]=refractory_steps;}
         adaptation[i]+=float(spikes[i])*jump;
     }
+}
+
+extern "C" EXPORT void prepare_observation(std::int64_t n, std::int64_t increments,
+    std::int64_t threads, float threshold, float sensory_gain, float pair_decay, float low,
+    const float* observed, const float* arrivals, const float* sensory, const bool* mask,
+    float* post_trace, float* target) {
+    #pragma omp parallel for num_threads(threads) if(n>=16384 && threads>1)
+    for (std::int64_t i=0;i<n;++i) {
+        const bool input=increments && mask[i];
+        const float raw=increments ? (input ? sensory[i] : arrivals[i]) : observed[i];
+        const float divisor=input ? sensory_gain : threshold;
+        float value=divisor==1.f ? raw : raw/divisor;
+        if (value<low) value=low;
+        if (value>1.f) value=1.f;
+        target[i]=value;
+        post_trace[i]*=pair_decay;
+    }
+}
+
+extern "C" EXPORT void synchronize_weights(std::int64_t edges, std::int64_t threads,
+    float maximum, float* weights, float* proposals, float* exponents) {
+    #pragma omp parallel for num_threads(threads) if(edges>=16384 && threads>1)
+    for (std::int64_t i=0;i<edges;++i) {
+        float value=weights[i]+proposals[i];
+        if (value<0.f) value=0.f;
+        if (value>maximum) value=maximum;
+        weights[i]=value;
+        proposals[i]=0.f;
+        exponents[i]=0.f;
+    }
+}
+
+extern "C" EXPORT std::int64_t spike_arrivals(std::int64_t n, std::int64_t slots,
+    std::int64_t step, const bool* history, const std::int64_t* starts,
+    const std::int64_t* delays, std::int64_t* output) {
+    std::int64_t count=0;
+    for (std::int64_t slot=0;slot<slots;++slot) {
+        const auto age=((step-slot)%slots+slots)%slots;
+        if (!age) continue;
+        for (std::int64_t neuron=0;neuron<n;++neuron) {
+            if (!history[slot*n+neuron]) continue;
+            for (auto edge=starts[neuron];edge<starts[neuron+1];++edge) {
+                if (delays[edge]!=age) continue;
+                if (output) output[count]=edge;
+                ++count;
+            }
+        }
+    }
+    return count;
 }

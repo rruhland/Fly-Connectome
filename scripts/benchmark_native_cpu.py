@@ -1,7 +1,7 @@
 """Balanced exact-state comparison of online CPU learning against the tensor reference."""
 import argparse
 import copy
-from functools import partial
+from dataclasses import replace
 import hashlib
 import json
 from pathlib import Path
@@ -16,19 +16,27 @@ if __name__=='__main__':
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('checkpoint')
     parser.add_argument('--library',required=True)
+    parser.add_argument('--reference-library')
     parser.add_argument('--steps',type=int,default=20)
+    parser.add_argument('--native-threads',type=int,default=1)
+    parser.add_argument('--metrics',choices=['full','events'],default='full')
     parser.add_argument('--output',required=True)
     args=parser.parse_args()
     torch.set_num_threads(1)
     identity=checksum(args.checkpoint)
     base=load_checkpoint(args.checkpoint)
     base.run(5)
-    kernel=NativeCPU(args.library)
+    kernel=NativeCPU(args.library,threads=args.native_threads)
+    reference_kernel=NativeCPU(args.reference_library,threads=args.native_threads) if args.reference_library else None
     runs=[]
     for label in ('reference','native','native','reference'):
         model=copy.deepcopy(base)
         if label=='native':
             kernel.enable(model)
+            model.config=replace(model.config,metrics_mode=args.metrics)
+        elif reference_kernel is not None:
+            reference_kernel.enable(model)
+            model.config=replace(model.config,metrics_mode=args.metrics)
         digest=hashlib.sha256()
         original=model.network.step
         def record(*a,**kw):
@@ -40,11 +48,18 @@ if __name__=='__main__':
         model.run(args.steps)
         wall,cpu=time.perf_counter()-start,time.process_time()-cpu
         runs.append(dict(backend=label,seconds=wall,cpu_seconds=cpu,fps=args.steps/wall,
-                         spikes_sha256=digest.hexdigest(),state_sha256=tensor_hash(model)))
+                         spikes_sha256=digest.hexdigest(),state_sha256=tensor_hash(model),
+                         model_sha256=tensor_hash(model,exclude_error_metrics=True),
+                         event_statistics=torch.cat((model.statistics[:4],model.statistics[7:])).tolist()))
         print(json.dumps(runs[-1]),flush=True)
         del model
-    exact=len({r['state_sha256'] for r in runs})==1 and len({r['spikes_sha256'] for r in runs})==1
+    exact=(len({r['model_sha256'] for r in runs})==1 and len({r['spikes_sha256'] for r in runs})==1
+           and all(r['event_statistics']==runs[0]['event_statistics'] for r in runs))
+    if args.metrics=='full':
+        exact=exact and len({r['state_sha256'] for r in runs})==1
     assert checksum(args.checkpoint)==identity
     Path(args.output).write_text(json.dumps(dict(checkpoint_sha256=identity,steps=args.steps,
-        threads=1,warmup_frames=5,exact=exact,runs=runs),indent=2)+'\n')
+        threads=1,native_threads=args.native_threads,metrics_mode=args.metrics,
+        reference_library=args.reference_library,native_library=args.library,
+        warmup_frames=5,exact=exact,runs=runs),indent=2)+'\n')
     assert exact,'Native trajectory differs; investigate before adoption'

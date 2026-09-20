@@ -8,7 +8,7 @@ import torch
 from fly_connectome.dynamics import Network, Activity
 from fly_connectome.graph import Graph
 from fly_connectome.plasticity import Plasticity, LearningConfig
-from fly_connectome.native_cpu import NativeCPU
+from fly_connectome.native_cpu import NativeCPU, build_library
 
 
 @pytest.fixture(scope='session')
@@ -16,8 +16,7 @@ def native_library(tmp_path_factory):
     if not shutil.which('g++'):
         pytest.skip('optional native CPU checks require g++')
     output = tmp_path_factory.mktemp('native')/'kernels.dll'
-    subprocess.run(['g++','-O3','-fno-fast-math','-ffp-contract=off','-shared',
-        '-static-libgcc','-static-libstdc++','src/fly_connectome/native_cpu.cpp','-o',str(output)],check=True)
+    build_library(output)
     return output
 
 
@@ -134,3 +133,115 @@ def test_cli_explicit_native_backend_keeps_checkpoint_portable(native_library,tm
     torch.testing.assert_close(model.network.magnitudes,loaded.network.magnitudes,rtol=0,atol=0)
     torch.testing.assert_close(model.network.voltage,loaded.network.voltage,rtol=0,atol=0)
     assert json.loads(process.stdout.splitlines()[-1])['backend']=='native-cpu'
+
+
+def test_parallel_native_sparse_partitions_preserve_exact_order(native_library):
+    import numpy as np
+    size=20000
+    graph=Graph.from_contacts(list(range(1,size+2)),list(range(1,size+1)),list(range(2,size+2)),
+        [1]*size,[1]*(size+1),.5)
+    net=Network(graph,[1]*size,['behavioral' if i%3==0 else 'predictive' for i in range(size)])
+    rule=Plasticity(net,LearningConfig(visual_eligibility='forecast-causal-v1',prune_epsilon=.1))
+    rule.keys=torch.arange(0,size,2)
+    rule.values=torch.linspace(-.2,.2,len(rule.keys))
+    rule.arrival_trace=torch.zeros(len(rule.keys))
+    other=copy.deepcopy(rule)
+    edges=torch.tensor([0,4998,5000,5000,9999,10000,14998,15000,19999])
+    activity=Activity(torch.ones(1,size+1,dtype=torch.bool),torch.ones(1,size+1),
+        torch.zeros(1,size+1),torch.zeros(len(edges),dtype=torch.long),edges)
+    rule.observe(activity,torch.tensor([.7]))
+    NativeCPU(native_library,threads=4).observe(other,activity,torch.tensor([.7]))
+    for name,value in vars(rule).items():
+        if isinstance(value,torch.Tensor):
+            torch.testing.assert_close(value,getattr(other,name),rtol=0,atol=0)
+
+
+@pytest.mark.parametrize('target',['filtered-current-v1','input-arrivals-v1'])
+@pytest.mark.parametrize('threshold',[1.,.7])
+def test_native_observation_preparation_preserves_normalization(native_library,target,threshold):
+    from fly_connectome.dynamics import NeuronConfig
+    graph=Graph.from_contacts([10,20,30],[10,20],[20,30],[1,1],[-1,1,1],.5)
+    net=Network(graph,[1,1],['predictive','predictive'],config=NeuronConfig(threshold=threshold))
+    rule=Plasticity(net,LearningConfig(visual_target=target,prediction_encoding='signed-current-v1'),
+        sensory_mask=torch.tensor([False,True,False]),sensory_gain=2.7)
+    rule.post_trace[:]=torch.tensor([[.1,.7,1.3]])
+    act=Activity(torch.zeros(1,3,dtype=torch.bool),torch.tensor([[.13,-.2,.7]]),torch.zeros(1,3),
+        torch.empty(0,dtype=torch.long),torch.empty(0,dtype=torch.long),
+        torch.tensor([[.31,-.21,.713]]),torch.tensor([[0.,-.737,0.]]))
+    expected=rule.config.observation(act,threshold,rule.sensory_mask,rule.sensory_gain)
+    observed=NativeCPU(native_library).prepare(rule,act)
+    torch.testing.assert_close(observed,expected,rtol=0,atol=0)
+
+
+@pytest.mark.parametrize('field,kind',[
+    ('observed','strided'),('observed','half'),('observed','short'),
+    ('feedforward_arrivals','short'),('sensory_input','half'),
+    ('sensory_mask','half'),('post_trace','short'),
+])
+def test_native_preparation_rejects_invalid_pointers_before_mutation(native_library,field,kind):
+    from test_training import trainer
+    model=trainer()
+    rule=model.plasticity
+    rule.config=replace(rule.config,visual_target='input-arrivals-v1')
+    n=model.network.n
+    activity=Activity(torch.zeros(1,n,dtype=torch.bool),torch.zeros(1,n),torch.zeros(1,n),
+        torch.empty(0,dtype=torch.long),torch.empty(0,dtype=torch.long),torch.zeros(1,n),torch.zeros(1,n))
+    original=getattr(rule if field in ('sensory_mask','post_trace') else activity,field)
+    invalid=(torch.zeros(1,n*2)[:,::2] if kind=='strided' else
+             original.half() if kind=='half' else original[...,:-1])
+    if field in ('sensory_mask','post_trace'):
+        setattr(rule,field,invalid)
+    else:
+        activity=replace(activity,**{field:invalid})
+    rule.post_trace.fill_(1.)
+    before=rule.post_trace.clone()
+    with pytest.raises(ValueError,match='canonical'):
+        NativeCPU(native_library).prepare(rule,activity)
+    assert torch.equal(before,rule.post_trace)
+
+
+def test_native_synchronization_preserves_bounds_and_homeostasis(native_library):
+    graph=Graph.from_contacts([10,20,30],[10,20],[20,30],[1,1],[1,1,1],.5)
+    for exponent in (0.,.03):
+        rule=Plasticity(Network(graph,[1,1],['predictive','behavioral']),LearningConfig(maximum_weight=1.))
+        rule.proposals[:]=torch.tensor([-10.,10.])
+        rule.homeostatic_exponent.fill_(exponent)
+        other=copy.deepcopy(rule)
+        rule.synchronize()
+        NativeCPU(native_library).synchronize(other)
+        for name in ('proposals','homeostatic_exponent'):
+            torch.testing.assert_close(getattr(rule,name),getattr(other,name),rtol=0,atol=0)
+        torch.testing.assert_close(rule.network.magnitudes,other.network.magnitudes,rtol=0,atol=0)
+
+
+def test_native_arrivals_match_mixed_delays_across_history_wrap(native_library):
+    graph=Graph.from_contacts([10,20,30,40],[10,10,20,30],[20,30,40,10],[1]*4,[1]*4,.5)
+    net=Network(graph,[1,2,3,1],['predictive']*4)
+    native=NativeCPU(native_library)
+    rng=torch.Generator().manual_seed(12)
+    for tick in range(12):
+        net.step_index=tick
+        net.history.copy_(torch.rand(net.history.shape,generator=rng)>.5)
+        a=net._arrivals();b=native.arrivals(net)
+        for expected,actual in zip(a,b):
+            torch.testing.assert_close(expected,actual,rtol=0,atol=0)
+
+@pytest.mark.parametrize('eta',[0.,.01,.5,1.,1.2])
+def test_native_prediction_updates_preserve_subnormal_float_bits(native_library,eta):
+    torch.set_flush_denormal(False)
+    size=1024
+    graph=Graph.from_contacts(list(range(1,size+2)),list(range(1,size+1)),list(range(2,size+2)),
+        [1]*size,[1]*(size+1),.5)
+    net=Network(graph,[1]*size,['predictive']*size)
+    rule=Plasticity(net,LearningConfig(visual_eligibility='forecast-causal-v1',eta_prediction=eta,
+                                     prediction_encoding='signed-current-v1'))
+    rng=torch.Generator().manual_seed(89)
+    bits=torch.randint(1,2**23,(size+1,),generator=rng,dtype=torch.int32)
+    rule.expected[:]=bits.view(torch.float32)
+    rule.expected[:,::2].neg_()
+    rule.keys=torch.arange(size);rule.values=torch.ones(size);rule.arrival_trace=torch.ones(size)
+    other=copy.deepcopy(rule)
+    activity=Activity(torch.zeros(1,size+1,dtype=torch.bool),torch.zeros(1,size+1),torch.zeros(1,size+1),
+                      torch.empty(0,dtype=torch.long),torch.empty(0,dtype=torch.long))
+    rule.observe(activity,torch.zeros(1));NativeCPU(native_library).observe(other,activity,torch.zeros(1))
+    assert torch.equal(rule.proposals.view(torch.int32),other.proposals.view(torch.int32))

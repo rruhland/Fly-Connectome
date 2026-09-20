@@ -1,6 +1,6 @@
 """Reproducible headless entrypoints; UI is a separate optional process."""
 import argparse
-from dataclasses import asdict
+from dataclasses import asdict, replace
 import json
 from pathlib import Path
 import signal
@@ -33,6 +33,8 @@ def main():
     train.add_argument('--threads', type=int)
     train.add_argument('--checkpoint-every', type=int, default=10000)
     train.add_argument('--native-library', help='explicit compiled B=1 CPU kernel library')
+    train.add_argument('--native-threads',type=int,default=1)
+    train.add_argument('--metrics',choices=['full','events'],help='events omits dense all-neuron error logging only')
     evaluate = commands.add_parser('evaluate', help='frozen comparisons on held-out seeds')
     evaluate.add_argument('checkpoint')
     evaluate.add_argument('--initial', required=True)
@@ -75,9 +77,11 @@ def main():
         if args.threads is not None:
             torch.set_num_threads(args.threads)
         model = load_checkpoint(args.checkpoint, device=args.device)
+        if args.metrics:
+            model.config=replace(model.config,metrics_mode=args.metrics)
         if args.native_library:
             from .native_cpu import NativeCPU
-            NativeCPU(args.native_library).enable(model)
+            NativeCPU(args.native_library,threads=args.native_threads).enable(model)
         stopped = False
         def request_stop(*_):
             nonlocal stopped
@@ -100,6 +104,7 @@ def main():
             signal.signal(signal.SIGINT, previous_handler)
         print(json.dumps(dict(checkpoint=args.output, completed_steps=completed, metrics=model.metrics,
                               backend='native-cpu' if args.native_library else 'torch',
+                              metrics_mode=model.config.metrics_mode,
                               steps_per_second=completed / (time.perf_counter() - start))))
     elif args.command == 'evaluate':
         import torch

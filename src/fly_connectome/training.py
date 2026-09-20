@@ -24,6 +24,7 @@ class RunConfig:
     motor_reference_hz: float = 100.
     stage: str = 'M1B'
     warmup_steps: int = 0
+    metrics_mode: str = 'full'
 
     def __post_init__(self):
         if self.neural_steps < 1 or self.sync_steps < 1 or min(self.sensory_gain, self.tau_motor_rate, self.motor_reference_hz) <= 0:
@@ -32,6 +33,8 @@ class RunConfig:
             raise ValueError("stage must be M1A or M1B")
         if self.warmup_steps < 0:
             raise ValueError('warmup steps must be nonnegative')
+        if self.metrics_mode not in ('full','events'):
+            raise ValueError('unknown metrics mode')
 
 
 def _tensors(obj):
@@ -112,19 +115,23 @@ class Trainer:
             if self.evaluation:
                 self.visible_spikes |= activity.spikes
                 self.evaluation_spike_counts += activity.spikes
-            observed = self.learning_config.encode(activity.observed, net.config.threshold)
-            self.statistics[4] += ((observed - self.previous_predicted) ** 2).sum()
-            self.statistics[5] += ((observed - self.previous_observed) ** 2).sum()
-            self.statistics[6] += observed.numel()
             self.statistics[7] += activity.spikes.sum()
-            if self.learning_config.visual_target == 'input-arrivals-v1':
-                target = self.learning_config.observation(activity, net.config.threshold, self.retina.injected, cfg.sensory_gain)
-                self.learning_statistics[0] += (target-self.previous_predicted).square().sum()
-                self.learning_statistics[1] += (target-self.previous_learning_observed).square().sum()
-                self.learning_statistics[2] += target.numel()
-                self.previous_learning_observed.copy_(target)
-            self.previous_observed.copy_(observed)
-            self.previous_predicted.copy_(self.learning_config.encode(activity.predicted, net.config.threshold))
+            full_metrics = cfg.metrics_mode == 'full' or self.evaluation
+            if full_metrics or tick == cfg.neural_steps-1:
+                observed = self.learning_config.encode(activity.observed, net.config.threshold)
+                if full_metrics:
+                    self.statistics[4] += ((observed - self.previous_predicted) ** 2).sum()
+                    self.statistics[5] += ((observed - self.previous_observed) ** 2).sum()
+                    self.statistics[6] += observed.numel()
+                if self.learning_config.visual_target == 'input-arrivals-v1':
+                    target = self.learning_config.observation(activity, net.config.threshold, self.retina.injected, cfg.sensory_gain)
+                    if full_metrics:
+                        self.learning_statistics[0] += (target-self.previous_predicted).square().sum()
+                        self.learning_statistics[1] += (target-self.previous_learning_observed).square().sum()
+                        self.learning_statistics[2] += target.numel()
+                    self.previous_learning_observed.copy_(target)
+                self.previous_observed.copy_(observed)
+                self.previous_predicted.copy_(self.learning_config.encode(activity.predicted, net.config.threshold))
             self.motor_rates.lerp_(activity.spikes.float() / net.config.dt,
                                    1 - math.exp(-net.config.dt / cfg.tau_motor_rate))
             if self.plasticity is not None:
@@ -175,6 +182,7 @@ class Trainer:
         alpha = 0. if self.evaluation else self.curriculum.alpha(self.step_index)
         phase = 'score-only' if alpha == 0 else ('bootstrap' if self.step_index < self.curriculum.bootstrap else 'fade')
         snapshot = dict(step=self.step_index, sampled_environment=0, sampled=True,
+                    metrics_mode='full' if self.evaluation else self.config.metrics_mode,
                     ball=env.ball[0].cpu().tolist(), player_y=env.body.position[0].item(),
                     opponent_y=env.opponent[0].item(), activation=env.body.activation[0].item(),
                     velocity=env.body.velocity[0].item(), phase=phase, alpha=alpha,

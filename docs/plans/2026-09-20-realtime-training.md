@@ -28,3 +28,20 @@ match exactly on the 10,000-frame checkpoint. First sparse-only comparison
 vs~1.8fps reference under a slower host interval. Do not compare separate wall
 samples as controlled speedups. Raw balanced evidence retained. Model unchanged.
 Next: diagnose subnormal cost, then remaining phases; no backend default change.
+
+Chunk 2: bounded parallel sparse updates, compact private anatomy caches, native
+arrival extraction, observation preparation and synchronization implemented. An
+explicit events-only logging mode preserves all neural/weight updates, spike
+counts and event scores; dense MSE logging pauses and evaluation retains full
+metrics. UI labels that pause. ABI5 rejects stale libraries. Review found unsafe
+observation pointers; regression tests now reject noncanonical dtype/shape/stride
+before native writes. Native/reference trajectory hashes match over100 frames.
+
+Latest200-frame profile:38.9997fps (5.128s), learning2.660s including sparse1.274s,
+network1.026s including native neurons0.809s, sync0.487s. Target120fps NOT reached.
+Four native workers beat1/2/6 in the measured sweep. No stable benefit from
+-march=native or denormal flushing; neither adopted. An exact software subnormal
+helper also showed no gain and was removed. Current dynamics/signs/topology and
+all update schedules remain unchanged. Next: fuse remaining learning bookkeeping,
+verify exactness before benchmarking, then sustained throughput. Scientific
+training remains paused; M1A learning acceptance remains unmet.
