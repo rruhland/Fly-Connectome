@@ -1,0 +1,97 @@
+{
+  "checkpoint_sha256": "77299d26385d2e9f6750681ecddb314505fffa9364d7d34eba0f7f48418e7117",
+  "steps": 20,
+  "threads": 1,
+  "initial_subnormal_counts": {
+    "rest_current": 0,
+    "membrane_decay": 0,
+    "current_decay": 0,
+    "signs": 0,
+    "magnitudes": 0,
+    "voltage": 798,
+    "sensory_state": 877,
+    "feedforward_current": 717,
+    "predictive_current": 10889,
+    "behavioral_current": 0,
+    "adaptation": 0
+  },
+  "runs": [
+    {
+      "flush": false,
+      "supported": true,
+      "seconds": 21.154372899996815,
+      "identical_spikes": true,
+      "maximum_state_differences": {
+        "rest_current": 0.0,
+        "membrane_decay": 0.0,
+        "current_decay": 0.0,
+        "signs": 0.0,
+        "magnitudes": 0.0,
+        "voltage": 0.0,
+        "sensory_state": 0.0,
+        "feedforward_current": 0.0,
+        "predictive_current": 0.0,
+        "behavioral_current": 0.0,
+        "adaptation": 0.0
+      }
+    },
+    {
+      "flush": true,
+      "supported": true,
+      "seconds": 15.961580700008199,
+      "identical_spikes": true,
+      "maximum_state_differences": {
+        "rest_current": 0.0,
+        "membrane_decay": 0.0,
+        "current_decay": 0.0,
+        "signs": 0.0,
+        "magnitudes": 0.0,
+        "voltage": 3.0716308195168914e-39,
+        "sensory_state": 1.2018404435097513e-39,
+        "feedforward_current": 5.472373183656705e-39,
+        "predictive_current": 1.0178677516343997e-38,
+        "behavioral_current": 0.0,
+        "adaptation": 0.0
+      }
+    },
+    {
+      "flush": true,
+      "supported": true,
+      "seconds": 15.075734099984402,
+      "identical_spikes": true,
+      "maximum_state_differences": {
+        "rest_current": 0.0,
+        "membrane_decay": 0.0,
+        "current_decay": 0.0,
+        "signs": 0.0,
+        "magnitudes": 0.0,
+        "voltage": 3.0716308195168914e-39,
+        "sensory_state": 1.2018404435097513e-39,
+        "feedforward_current": 5.472373183656705e-39,
+        "predictive_current": 1.0178677516343997e-38,
+        "behavioral_current": 0.0,
+        "adaptation": 0.0
+      }
+    },
+    {
+      "flush": false,
+      "supported": true,
+      "seconds": 15.36297650000779,
+      "identical_spikes": true,
+      "maximum_state_differences": {
+        "rest_current": 0.0,
+        "membrane_decay": 0.0,
+        "current_decay": 0.0,
+        "signs": 0.0,
+        "magnitudes": 0.0,
+        "voltage": 0.0,
+        "sensory_state": 0.0,
+        "feedforward_current": 0.0,
+        "predictive_current": 0.0,
+        "behavioral_current": 0.0,
+        "adaptation": 0.0
+      }
+    }
+  ],
+  "scope": "Short training-trajectory experiment with spike recording overhead, not a long-run equivalence claim or canonical backend change."
+}

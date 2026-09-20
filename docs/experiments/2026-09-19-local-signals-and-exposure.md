@@ -74,3 +74,19 @@ checkpoint for 8,000 additional steps, save every 100, then evaluate 500 frames 
 development seeds 1101/1102. Topology, signs, local rule, physics and acceptance
 criteria remain unchanged. Final seeds remain unused. The longer exposure replay
 does not imply that 10,000 steps will suffice or that learning will succeed.
+
+## Separate CPU numerical experiment
+
+Checkpoint intervals lengthened during the continuation. A separate 20-step
+training benchmark tested CPU subnormal flushing in order false/true/true/false,
+always starting from the fixed 2,000-step checkpoint. Times were 21.15 / 15.96 /
+15.08 / 15.36 seconds. The last unflushed trial is similar to flushed trials,
+so cold-start effects and concurrent machine load prevent attributing the slowdown
+to subnormals. No performance fix was adopted.
+
+All four short trajectories had identical spikes and magnitudes. Flushed runs
+differed in very small current/voltage state (maximum 1.02e-38); thus state was
+not bit-identical. This does not establish long-run or resume equivalence. The
+canonical continuation retains its original numerical behavior. Reproduce with
+`scripts/benchmark_denormals.py`; full results are in
+`2026-09-19-denormal-benchmark.json`. Source checkpoint bytes were unchanged.
