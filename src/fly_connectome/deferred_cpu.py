@@ -83,6 +83,8 @@ class DeferredCPU(NativeCPU):
         steps=len(state['errors'])
         if steps:
             n=rule.network
+            _canonical(rule.proposals,torch.float32,(n.e,))
+            _canonical(n.current_decay,torch.float32,(n.n,))
             post,_,signs=self.topology(n)
             incoming=torch.cat([edges*steps+tick for tick,edges in enumerate(state['arrivals'])])
             errors=torch.stack(state['errors'],dim=-1).contiguous()

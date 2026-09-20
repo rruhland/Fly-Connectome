@@ -9,14 +9,15 @@ from test_native_cpu import native_library
 
 
 @pytest.mark.parametrize('epsilon',[1e-8,.2])
-def test_deferred_visual_updates_match_each_materialization(native_library,epsilon):
+@pytest.mark.parametrize('aggregate',[False,True])
+def test_deferred_visual_updates_match_each_materialization(native_library,epsilon,aggregate):
     from fly_connectome.deferred_cpu import DeferredCPU
     graph=Graph.from_contacts([10,20,30,40],[10,10,20,30],[20,30,40,10],[1]*4,[-1,1,1,1],.5)
     net=Network(graph,[1]*4,['predictive','behavioral','feedforward','predictive'])
     rule=Plasticity(net,LearningConfig(prediction_encoding='signed-current-v1',
         visual_target='input-arrivals-v1',visual_eligibility='forecast-causal-v1',prune_epsilon=epsilon))
     other=copy.deepcopy(rule)
-    kernel=DeferredCPU(native_library)
+    kernel=DeferredCPU(native_library,aggregate=aggregate)
     rng=torch.Generator().manual_seed(244)
     for tick in range(120):
         edges=torch.randint(0,4,(7 if tick<50 else 0,),generator=rng)
@@ -30,9 +31,14 @@ def test_deferred_visual_updates_match_each_materialization(native_library,epsil
             kernel.materialize(other)
             for name,value in vars(rule).items():
                 if isinstance(value,torch.Tensor):
-                    torch.testing.assert_close(value,getattr(other,name),rtol=0,atol=0,msg=lambda m:f'{name}: {m}')
+                    approximate=aggregate and name=='proposals'
+                    torch.testing.assert_close(value,getattr(other,name),rtol=1e-6 if approximate else 0,
+                        atol=1e-9 if approximate else 0,msg=lambda m:f'{name}: {m}')
+            behavior=rule.network.pathways==2
+            torch.testing.assert_close(rule.proposals[behavior],other.proposals[behavior],rtol=0,atol=0)
             rule.synchronize();kernel.synchronize(other)
-            torch.testing.assert_close(rule.network.magnitudes,other.network.magnitudes,rtol=0,atol=0)
+            torch.testing.assert_close(rule.network.magnitudes,other.network.magnitudes,
+                rtol=1e-6 if aggregate else 0,atol=1e-9 if aggregate else 0)
 
 
 def test_deferred_checkpoint_and_snapshot_materialize_pending_ticks(native_library,tmp_path):
@@ -106,3 +112,24 @@ def test_aggregated_quiet_interval_preserves_trace_and_bounded_local_sum(native_
     torch.testing.assert_close(rule.values,other.values,rtol=0,atol=0)
     torch.testing.assert_close(rule.arrival_trace,other.arrival_trace,rtol=0,atol=0)
     torch.testing.assert_close(rule.proposals,other.proposals,rtol=1e-6,atol=1e-10)
+
+
+@pytest.mark.parametrize('field,kind',[
+    ('proposals','strided'),('proposals','half'),('proposals','short'),('current_decay','half')])
+def test_deferred_materialization_validates_mutable_pointers(native_library,field,kind):
+    from fly_connectome.deferred_cpu import DeferredCPU
+    graph=Graph.from_contacts([10,20,30],[10,20],[20,30],[1,1],[1]*3,.5)
+    rule=Plasticity(Network(graph,[1,1],['predictive']*2),LearningConfig(
+        visual_target='input-arrivals-v1',visual_eligibility='forecast-causal-v1'))
+    kernel=DeferredCPU(native_library)
+    activity=Activity(torch.zeros(1,3,dtype=torch.bool),torch.zeros(1,3),torch.zeros(1,3),
+        torch.tensor([0]),torch.tensor([0]),torch.ones(1,3),torch.zeros(1,3))
+    kernel.observe(rule,activity,torch.zeros(1))
+    owner=rule if field=='proposals' else rule.network
+    original=getattr(owner,field)
+    invalid=(torch.zeros(4)[::2] if kind=='strided' else
+             original.half() if kind=='half' else original[:-1])
+    setattr(owner,field,invalid)
+    with pytest.raises(ValueError,match='canonical'):
+        kernel.synchronize(rule)
+    assert len(kernel.pending[rule]['errors'])==1

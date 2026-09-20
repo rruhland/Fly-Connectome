@@ -52,8 +52,33 @@ Closed-form multi-tick propagation is algebraically available between events, bu
 
 ## Recommendation
 
-Keep the dense native neuron update for the current approved model pending a measured improvement. Investigate conservative bitwise-fixed-point sleeping with an explicit wakeup mechanism if a microbenchmark demonstrates a benefit after accounting for detection, masks, dense outputs, and learning consumers. The present sample offers 16.3% candidate neuron work removal (13.7% zero-only), not the 96.5% suggested by external-input sparsity.
+Keep the dense native neuron update for the current approved model. The separate exact-sleeping experiment below did not improve performance, so reject production adoption of that implementation. The activity sample offers 16.3% candidate neuron work removal (13.7% zero-only), not the 96.5% suggested by external-input sparsity.
 
 The existing `2026-09-20-native-final-profile-1000.json` reports 3.623 seconds of neural-kernel work out of 20.545 seconds total. As a rough proportional-work estimate, removing 16.2892% of that kernel would save about 0.590 seconds, or 2.87% total runtime (about 1.030x speedup), before overhead. The zero-only estimate is 0.497 seconds or 2.42%. This combines a different-length profile with this activity sample and is not a measured speedup or strict upper bound.
 
 A full event-driven adaptive LIF implementation is a separate algorithm project: define numerical-equivalence requirements, handle refractory and autonomous spike scheduling, preserve local observations/traces/homeostasis at their required times, and validate spike/state/weight/resume trajectories. Any epsilon-to-zero state pruning, changed discretization, approximate threshold scheduler, or altered biological parameters requires explicit model-change approval. No such change is implemented here.
+
+## Exact fixed-point sleeping microexperiment: no gain
+
+`scripts/native_sleeping.cpp` and `scripts/benchmark_sleeping.py` implement an isolated alternative kernel with persistent per-neuron sleep flags. It wakes before decay on every arriving edge and bit-nonzero injection (including negative zero), detects a complete bitwise fixed state with no spike, and continues producing dense observations/predictions/increments/spike outputs. It preserves the native scalar operation order, float32 rounding, parameters, and delayed-event behavior. It changes no production defaults or neuron implementation.
+
+The wrapper is explicitly scoped to exclusive ownership of dynamic state and immutable config/topology/silencing between calls; external state or parameter edits require `invalidate(network)`. Normal synaptic weight updates are supported because every arriving edge wakes its target. Sleep flags are not checkpointed. This limited experiment is not a general replacement for a mutable public neuron API.
+
+Validation: `.venv/Scripts/python.exe -m pytest tests/test_sleeping.py -q` passed **4 tests in 3.20 seconds**. Tests compare exact tensor bits across full small-network trajectories with autonomous spikes, nonzero equilibria, delayed arrivals, inhibition, refractory periods, filtered/unfiltered sensory input, signed zero, smallest-subnormal persistence, and explicit invalidation after external state/silencing changes.
+
+The complete checkpoint benchmark used Torch 1/native 4 threads, 5 warmup frames and 1,000 measured frames per run, in balanced dense/sleeping/sleeping/dense order. Both backends use the same `runs/native_cpu_deferred.dll` for all other native operations, with the sleeping neuron kernel in a separate `runs/native_sleeping.dll`. The benchmark does not select an experimental deferred-learning rule; it changes only the neuron kernel. Hash instrumentation is the same in both modes.
+
+```powershell
+.venv/Scripts/python.exe scripts/benchmark_sleeping.py checkpoints/event-v1-combined-rate-10000.pt --native-library runs/native_cpu_deferred.dll --sleeping-library runs/native_sleeping.dll --build --frames 1000 --repeats 2 --output docs/experiments/2026-09-20-exact-sleeping-1000.json
+```
+
+| Run | Mode | Total seconds | Frames/s | Neural-kernel seconds |
+| --- | --- | ---: | ---: | ---: |
+| 1 | Dense | 20.9555 | 47.72 | 3.4249 |
+| 2 | Sleeping | 22.4778 | 44.49 | 4.6741 |
+| 3 | Sleeping | 21.7645 | 45.95 | 3.8521 |
+| 4 | Dense | 21.0834 | 47.43 | 3.3335 |
+
+Sleeping was slower in both comparisons: aggregate elapsed time increased **5.24%**. Its bitwise checks, status accesses, branches, arrival wake pass, and retained output writes outweigh the work skipped for this checkpoint. There were 7,779 sleeping neurons at the end of both sleeping runs. These runs reject this implementation's performance benefit; they do not prove every possible exact lazy algorithm is slower.
+
+All four runs produced identical cumulative per-tick spike SHA256 `223eb6df09bfdf69d4b129b4a056f9148431c03b543bce8c8902ef3ad3597289` (including warmup), and identical final whole-model tensor SHA256 `f2ba5c654e3264d5faff941baa8f8adaf6413ff7dc4ebefc710d7b9ad2ec3555`. Checkpoint SHA256 before/after matched the identity above. Source/DLL hashes and their before/after stability checks are recorded in `2026-09-20-exact-sleeping-1000.json`. No approximate dynamics were used, and the experiment remains separate from production.

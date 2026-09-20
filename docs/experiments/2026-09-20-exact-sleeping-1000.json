@@ -1,0 +1,65 @@
+{
+  "checkpoint_sha256_before": "6358107d489ee859f1644105eb274c29b226e6cdc71ae7e58d65a8bf6c925e58",
+  "checkpoint_sha256_after": "6358107d489ee859f1644105eb274c29b226e6cdc71ae7e58d65a8bf6c925e58",
+  "source_sha256": {
+    "C:\\Users\\rruhl\\OneDrive\\Documents\\Fly-Connectome\\scripts\\benchmark_sleeping.py": "06d452624633ac63afcf5c70655b73cc80649377917612015519ed8135538961",
+    "C:\\Users\\rruhl\\OneDrive\\Documents\\Fly-Connectome\\scripts\\native_sleeping.cpp": "21963b2909f646aaf6ba43d755dc6159e6586e8d2672aa100c6b25c8dd216ce7",
+    "C:\\Users\\rruhl\\OneDrive\\Documents\\Fly-Connectome\\src\\fly_connectome\\native_cpu.cpp": "7d6b2056e654cb9b84177a65edf89337312f6dba7a90bed112ba941fe2586822",
+    "C:\\Users\\rruhl\\OneDrive\\Documents\\Fly-Connectome\\src\\fly_connectome\\native_cpu.py": "fb51c04377b5dbfd02824afa9cec1cd321c939a896a5ab8328242d2c4b31f38c"
+  },
+  "library_sha256": {
+    "runs/native_cpu_deferred.dll": "5bb4818d38f52d40f303c837d72992f56099c8ebb419062fc6e75bba2c1c8dcc",
+    "runs/native_sleeping.dll": "9f6fc79b93368e73ca55ae3e9036a10d1c0f2aaa15bbd1c926dd06372543a6b3"
+  },
+  "exact_trajectory_and_state": true,
+  "spike_hash_includes_warmup": true,
+  "torch_threads": 1,
+  "native_threads": 4,
+  "warmup_frames": 5,
+  "runs": [
+    {
+      "mode": "dense",
+      "repeat": 0,
+      "frames": 1000,
+      "seconds": 20.955482400022447,
+      "neural_seconds": 3.424883900093846,
+      "frames_per_second": 47.72020900835615,
+      "spikes_sha256": "223eb6df09bfdf69d4b129b4a056f9148431c03b543bce8c8902ef3ad3597289",
+      "state_sha256": "f2ba5c654e3264d5faff941baa8f8adaf6413ff7dc4ebefc710d7b9ad2ec3555",
+      "sleeping_at_end": null
+    },
+    {
+      "mode": "sleeping",
+      "repeat": 0,
+      "frames": 1000,
+      "seconds": 22.47781169996597,
+      "neural_seconds": 4.674050002766307,
+      "frames_per_second": 44.488316449484,
+      "spikes_sha256": "223eb6df09bfdf69d4b129b4a056f9148431c03b543bce8c8902ef3ad3597289",
+      "state_sha256": "f2ba5c654e3264d5faff941baa8f8adaf6413ff7dc4ebefc710d7b9ad2ec3555",
+      "sleeping_at_end": 7779
+    },
+    {
+      "mode": "sleeping",
+      "repeat": 1,
+      "frames": 1000,
+      "seconds": 21.764540200005285,
+      "neural_seconds": 3.8521410991088487,
+      "frames_per_second": 45.94629570900639,
+      "spikes_sha256": "223eb6df09bfdf69d4b129b4a056f9148431c03b543bce8c8902ef3ad3597289",
+      "state_sha256": "f2ba5c654e3264d5faff941baa8f8adaf6413ff7dc4ebefc710d7b9ad2ec3555",
+      "sleeping_at_end": 7779
+    },
+    {
+      "mode": "dense",
+      "repeat": 1,
+      "frames": 1000,
+      "seconds": 21.083379800023977,
+      "neural_seconds": 3.3334900006302632,
+      "frames_per_second": 47.43072550440242,
+      "spikes_sha256": "223eb6df09bfdf69d4b129b4a056f9148431c03b543bce8c8902ef3ad3597289",
+      "state_sha256": "f2ba5c654e3264d5faff941baa8f8adaf6413ff7dc4ebefc710d7b9ad2ec3555",
+      "sleeping_at_end": null
+    }
+  ]
+}

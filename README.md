@@ -234,3 +234,10 @@ dense logging; counts include only samples actually recorded.
 Throughput evidence and remaining realtime work are in
 `docs/plans/2026-09-20-realtime-training.md`. Faster execution does not establish
 effective anticipation; M1A scientific acceptance remains open.
+
+The approved deferred-learning experiments and exact sleeping-neuron probe are
+reported in `docs/experiments/2026-09-20-deferred-execution-results.md`, including
+reproduction commands and numerical differences. The geometric experiment is
+separate from the default backend; exact neuron sleeping was slower and was not
+adopted. A broader event-driven neuron prototype remains a proposal requiring
+approval in `docs/plans/2026-09-20-event-driven-neuron-proposal.md`.

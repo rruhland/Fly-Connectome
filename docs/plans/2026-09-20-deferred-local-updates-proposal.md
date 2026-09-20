@@ -125,3 +125,20 @@ anddeferred-geometric-v1 (regrouped local sum). Saved manifests record the choic
 Five deferred tests cover mixed pathways, reward, pruning, parallel boundaries,
 save/resume and bounded geometric differences. Full suite and1000-frame balanced
 comparisons are the next gates. No CLI default has changed.
+
+Final experimental results: both exact1000-frame trials matched every model
+tensor and spike, but gave no reliable speedup. Geometric trials reached51.48
+and52.18fps versus46.88/47.78 reference (~9.5% throughput improvement), with
+zero spike-time differences and max weight difference4.47e-8. It remains a
+separate experiment, not a changed default. Detailed records and commands are in
+docs/experiments/2026-09-20-deferred-execution-results.md.
+
+Exact fixed-point neuron sleeping also implemented as a separate microexperiment.
+Four1000-frame runs matched every model tensor and spike; sleeping was5.24%
+slower, so it was rejected for production. No approximate neuron propagation
+implemented. Further event-driven execution requires the separately written
+event-driven-neuron proposal; user approval is pending.
+
+Final review: fixed mutable proposal/decay pointer validation at materialization.
+Strided-buffer regression failed before fix; all153 tests now pass,4 CUDA skips.
+All checkpoint hashes unchanged. No experiment process remains running.

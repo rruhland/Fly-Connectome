@@ -455,3 +455,20 @@ adopt it. Relative normalization has not been introduced.
 Final1000-frame profile of ABI8:20.545s,48.673fps (about3.4 minutes per10,000
 frames projected, excluding startup/checkpoint writes). This supersedes the
 earlier41.7fps sample for the final implementation. Realtime120fps remains open.
+
+## Approved deferred execution experiments completed
+
+User approved bounded deferred visual updates and requested lazy neuron analysis.
+Implementation and exact fallback are in deferred_cpu.py/native_cpu.cpp; online
+behavioral learning and all neural ticks remain unchanged. Geometric regrouping
+reaches~52fps (~9.5% above paired native runs), with zero spike-time differences
+over1000frames and maxweight delta4.47e-8. Separate manifest identifiers prevent
+silent adoption. Exact deferred replay showed no reliablegain.
+
+Lazy-neuron probe found16.3% complete fixed points and95% of spikes without a
+same-tick input. Exact sleeping was tested and was5.24% slower; not adopted.
+120fps remains unmet. Scientific learning remains paused and M1A still fails
+acceptance. Read docs/experiments/2026-09-20-deferred-execution-results.md and
+docs/plans/2026-09-20-event-driven-neuron-proposal.md to continue. The latter
+requires approval before approximate/regrouped neuron propagation is implemented.
+153tests pass,4CUDA skips; no background training process remains.
