@@ -1,0 +1,143 @@
+{
+  "checkpoint_sha256": "6358107d489ee859f1644105eb274c29b226e6cdc71ae7e58d65a8bf6c925e58",
+  "steps": 20,
+  "threads": 1,
+  "seconds": 13.565539800038096,
+  "process_cpu_seconds": 13.25,
+  "frames_per_second": 1.4743239336442648,
+  "phase_seconds": {
+    "arrivals_nested": 0.14079010003479198,
+    "network": 0.5508269999409094,
+    "learning": 12.468707300024107,
+    "synchronize": 0.08653690002392977
+  },
+  "active_eligibilities": 207923,
+  "operator_profile_steps": 3,
+  "operators": [
+    {
+      "name": "aten::index",
+      "self_cpu_ms": 746.324799999994,
+      "calls": 1311
+    },
+    {
+      "name": "aten::searchsorted",
+      "self_cpu_ms": 490.3099000000004,
+      "calls": 72
+    },
+    {
+      "name": "aten::sort",
+      "self_cpu_ms": 252.5367000000004,
+      "calls": 24
+    },
+    {
+      "name": "aten::nonzero",
+      "self_cpu_ms": 183.893599999998,
+      "calls": 639
+    },
+    {
+      "name": "aten::_index_put_impl_",
+      "self_cpu_ms": 85.66520000000094,
+      "calls": 153
+    },
+    {
+      "name": "aten::sub",
+      "self_cpu_ms": 75.40409999999969,
+      "calls": 354
+    },
+    {
+      "name": "aten::div",
+      "self_cpu_ms": 63.52190000000146,
+      "calls": 282
+    },
+    {
+      "name": "aten::mul",
+      "self_cpu_ms": 49.71690000000148,
+      "calls": 387
+    },
+    {
+      "name": "aten::remainder",
+      "self_cpu_ms": 43.976600000000616,
+      "calls": 78
+    },
+    {
+      "name": "aten::add_",
+      "self_cpu_ms": 36.28110000000081,
+      "calls": 426
+    },
+    {
+      "name": "aten::copy_",
+      "self_cpu_ms": 25.35319999999411,
+      "calls": 1512
+    },
+    {
+      "name": "aten::_unique2",
+      "self_cpu_ms": 24.846599999999075,
+      "calls": 24
+    },
+    {
+      "name": "aten::mul_",
+      "self_cpu_ms": 23.837499999998712,
+      "calls": 219
+    },
+    {
+      "name": "aten::where",
+      "self_cpu_ms": 23.831400000004006,
+      "calls": 162
+    },
+    {
+      "name": "aten::clamp",
+      "self_cpu_ms": 16.375899999996577,
+      "calls": 228
+    },
+    {
+      "name": "aten::eq",
+      "self_cpu_ms": 16.10889999999903,
+      "calls": 198
+    },
+    {
+      "name": "aten::add",
+      "self_cpu_ms": 12.002100000000809,
+      "calls": 213
+    },
+    {
+      "name": "aten::bitwise_or",
+      "self_cpu_ms": 11.438200000001274,
+      "calls": 63
+    },
+    {
+      "name": "aten::gt",
+      "self_cpu_ms": 11.0399000000004,
+      "calls": 60
+    },
+    {
+      "name": "aten::fill_",
+      "self_cpu_ms": 10.284800000000464,
+      "calls": 363
+    },
+    {
+      "name": "aten::arange",
+      "self_cpu_ms": 6.032799999999881,
+      "calls": 156
+    },
+    {
+      "name": "aten::pow",
+      "self_cpu_ms": 5.09899999999869,
+      "calls": 102
+    },
+    {
+      "name": "aten::sum",
+      "self_cpu_ms": 4.938099999998232,
+      "calls": 165
+    },
+    {
+      "name": "aten::lerp_",
+      "self_cpu_ms": 4.61710000000006,
+      "calls": 51
+    },
+    {
+      "name": "aten::cat",
+      "self_cpu_ms": 4.515300000000847,
+      "calls": 27
+    }
+  ]
+}

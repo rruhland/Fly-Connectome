@@ -55,6 +55,20 @@ def _sum_sorted(keys, values, size):
     return result
 
 
+def _merge_arrivals(old_keys, old_values, old_traces, arrival_keys):
+    """Merge sparse eligibility using the inverse map already produced by unique."""
+    keys, inverse = torch.unique(torch.cat((old_keys, arrival_keys)), sorted=True, return_inverse=True)
+    old_positions, arrival_positions = inverse[:len(old_keys)], inverse[len(old_keys):]
+    values = old_values.new_zeros(len(keys))
+    values[old_positions] = old_values
+    traces = old_traces.new_zeros(len(keys))
+    traces[old_positions] = old_traces
+    arrivals = old_traces.new_zeros(len(keys))
+    arrivals.index_add_(0, arrival_positions, old_traces.new_ones(len(arrival_keys)))
+    traces.add_(arrivals)
+    return keys, values, traces, arrivals
+
+
 class Plasticity:
     @torch.no_grad()
     def __init__(self, network, config=LearningConfig(), *, sensory_mask=None, sensory_gain=1.):
@@ -99,14 +113,7 @@ class Plasticity:
         plastic = n.pathways[edges] != 0
         env, edges = env[plastic], edges[plastic]
         arrival_keys = env * n.e + edges
-        keys = torch.unique(torch.cat((self.keys, arrival_keys)), sorted=True)
-        values = torch.zeros(len(keys), device=n.device)
-        values[torch.searchsorted(keys, self.keys)] = self.values
-        traces = torch.zeros(len(keys), device=n.device)
-        traces[torch.searchsorted(keys, self.keys)] = self.arrival_trace
-        arrivals = torch.zeros(len(keys), device=n.device)
-        arrivals.index_add_(0, torch.searchsorted(keys, arrival_keys), torch.ones(len(edges), device=n.device))
-        traces.add_(arrivals)
+        keys, values, traces, arrivals = _merge_arrivals(self.keys, self.values, self.arrival_trace, arrival_keys)
         environments, edge_ids = keys.div(n.e, rounding_mode='floor'), keys.remainder(n.e)
         post = n.post[edge_ids]
         behavioral = n.pathways[edge_ids] == 2

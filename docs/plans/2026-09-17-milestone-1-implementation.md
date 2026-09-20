@@ -393,3 +393,32 @@ If interrupted, resume the output for the remaining steps to 10,000, not another
 Then audit the completed output for 500 steps on development seeds 1101/1102.
 Final seeds remain untouched unless development criteria pass. No architecture,
 learning-rule, sign, topology or physics changes are part of this continuation.
+
+## Current continuation point (2026-09-20)
+
+The 10,000-frame run is COMPLETE. Do not restart or extend it by default.
+Checkpoint `checkpoints/event-v1-combined-rate-10000.pt`, SHA-256
+`6358107d489ee859f1644105eb274c29b226e6cdc71ae7e58d65a8bf6c925e58`.
+Frozen development evaluation on 1101/1102, 500 frames, is in
+`docs/experiments/2026-09-20-exposure-generalization-10000.json`.
+MSE 0.00095385753 still loses to zero 0.00093836384; event-conditioned MSE
+1.0000173. T4/T5 remain active (7,178/1,930 spikes). M1A is NOT passed, M1B has
+not advanced, and final seeds remain untouched. Exposure groups are fixed from
+first 2,000 training frames for comparison, not recomputed at 10,000.
+
+User prioritized online training efficiency. Profiling found ~92% active time in
+plasticity, ~4% in neural dynamics; simulation never waits for live camera events.
+10,000 frames are 83.33 simulated seconds, not 10,000 individual events. Removed
+three redundant sparse-key binary searches by using unique's inverse map. Balanced
+reference/optimized timing improved 2.38 -> 3.02 frames/s (~27% throughput), with
+all recorded spikes and final tensor states bit-identical over twenty-frame trials.
+Still ~40x slower than real time. All104 tests pass; four CUDA tests skipped.
+Read-only review found no actionable issues. Checkpoint format unchanged.
+
+Reproducible tools: `scripts/profile_training.py`, `scripts/benchmark_sparse_merge.py`.
+Evidence and next work: `docs/experiments/2026-09-20-training-throughput.md`.
+Next engineering chunk should attack measured sparse-learning bookkeeping,
+potentially a compiled implementation, without altering local-rule semantics.
+Next scientific chunk must diagnose ineffective event anticipation rather than
+assume another long unchanged continuation will fix it. No architecture approval
+is currently pending, and no training process is running.

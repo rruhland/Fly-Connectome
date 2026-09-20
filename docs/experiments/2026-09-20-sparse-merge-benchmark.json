@@ -1,0 +1,41 @@
+{
+  "checkpoint_sha256": "6358107d489ee859f1644105eb274c29b226e6cdc71ae7e58d65a8bf6c925e58",
+  "steps": 20,
+  "warmup_frames": 5,
+  "threads": 1,
+  "runs": [
+    {
+      "implementation": "reference",
+      "seconds": 8.399128700024448,
+      "process_cpu_seconds": 8.21875,
+      "frames_per_second": 2.3811993736852473,
+      "spikes_sha256": "f769a96867d42b5b2d725a0268481a798d24f3a8288adb59cfa2fa5b6174cceb",
+      "state_sha256": "fc214448fa7692bd1ff1ec8d4444ddb5739a09c123493e6954c8521d0025da52"
+    },
+    {
+      "implementation": "optimized",
+      "seconds": 6.647800799983088,
+      "process_cpu_seconds": 6.453125,
+      "frames_per_second": 3.0085137328499494,
+      "spikes_sha256": "f769a96867d42b5b2d725a0268481a798d24f3a8288adb59cfa2fa5b6174cceb",
+      "state_sha256": "fc214448fa7692bd1ff1ec8d4444ddb5739a09c123493e6954c8521d0025da52"
+    },
+    {
+      "implementation": "optimized",
+      "seconds": 6.6114225999917835,
+      "process_cpu_seconds": 6.53125,
+      "frames_per_second": 3.025067555056132,
+      "spikes_sha256": "f769a96867d42b5b2d725a0268481a798d24f3a8288adb59cfa2fa5b6174cceb",
+      "state_sha256": "fc214448fa7692bd1ff1ec8d4444ddb5739a09c123493e6954c8521d0025da52"
+    },
+    {
+      "implementation": "reference",
+      "seconds": 8.411844999995083,
+      "process_cpu_seconds": 8.21875,
+      "frames_per_second": 2.3775996823540724,
+      "spikes_sha256": "f769a96867d42b5b2d725a0268481a798d24f3a8288adb59cfa2fa5b6174cceb",
+      "state_sha256": "fc214448fa7692bd1ff1ec8d4444ddb5739a09c123493e6954c8521d0025da52"
+    }
+  ],
+  "exact_trajectory_and_state": true
+}
