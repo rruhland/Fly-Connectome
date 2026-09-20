@@ -1,0 +1,89 @@
+{
+  "checkpoint_sha256": "6358107d489ee859f1644105eb274c29b226e6cdc71ae7e58d65a8bf6c925e58",
+  "steps": 100,
+  "threads": 1,
+  "native_threads": 4,
+  "metrics_mode": "events",
+  "reference_library": null,
+  "native_library": "runs/native_cpu.dll",
+  "warmup_frames": 5,
+  "exact": true,
+  "runs": [
+    {
+      "backend": "reference",
+      "seconds": 33.73670219996711,
+      "cpu_seconds": 33.25,
+      "fps": 2.9641308568712885,
+      "spikes_sha256": "5d3088725c96c2947d2fb809ec91a198316cf6f1dc7c526e6cb21855449b6c9b",
+      "state_sha256": "3f115cdb1a883bd2b2f0a2c65787f7a04f98af13dfa46de4c182115d0aee3de3",
+      "model_sha256": "ea328cb5a860a194d7077bd85efe136ccad2ec87e33c8f8c60d7908bd9627e24",
+      "event_statistics": [
+        0.0,
+        0.0,
+        23.0,
+        5.75,
+        4336675.0,
+        25045.08267051124,
+        50545.0,
+        27051085.0
+      ]
+    },
+    {
+      "backend": "native",
+      "seconds": 1.9848904999671504,
+      "cpu_seconds": 3.515625,
+      "fps": 50.38061293640882,
+      "spikes_sha256": "5d3088725c96c2947d2fb809ec91a198316cf6f1dc7c526e6cb21855449b6c9b",
+      "state_sha256": "3263d574921b1a0d7bbac56c058bfc11cc3b7ffbf52b4b351e01898885f54b08",
+      "model_sha256": "ea328cb5a860a194d7077bd85efe136ccad2ec87e33c8f8c60d7908bd9627e24",
+      "event_statistics": [
+        0.0,
+        0.0,
+        23.0,
+        5.75,
+        4336675.0,
+        25045.08267051124,
+        50545.0,
+        27051085.0
+      ]
+    },
+    {
+      "backend": "native",
+      "seconds": 2.034835700003896,
+      "cpu_seconds": 3.5,
+      "fps": 49.14401688539696,
+      "spikes_sha256": "5d3088725c96c2947d2fb809ec91a198316cf6f1dc7c526e6cb21855449b6c9b",
+      "state_sha256": "3263d574921b1a0d7bbac56c058bfc11cc3b7ffbf52b4b351e01898885f54b08",
+      "model_sha256": "ea328cb5a860a194d7077bd85efe136ccad2ec87e33c8f8c60d7908bd9627e24",
+      "event_statistics": [
+        0.0,
+        0.0,
+        23.0,
+        5.75,
+        4336675.0,
+        25045.08267051124,
+        50545.0,
+        27051085.0
+      ]
+    },
+    {
+      "backend": "reference",
+      "seconds": 33.6845719999983,
+      "cpu_seconds": 32.9375,
+      "fps": 2.9687181419435893,
+      "spikes_sha256": "5d3088725c96c2947d2fb809ec91a198316cf6f1dc7c526e6cb21855449b6c9b",
+      "state_sha256": "3f115cdb1a883bd2b2f0a2c65787f7a04f98af13dfa46de4c182115d0aee3de3",
+      "model_sha256": "ea328cb5a860a194d7077bd85efe136ccad2ec87e33c8f8c60d7908bd9627e24",
+      "event_statistics": [
+        0.0,
+        0.0,
+        23.0,
+        5.75,
+        4336675.0,
+        25045.08267051124,
+        50545.0,
+        27051085.0
+      ]
+    }
+  ]
+}

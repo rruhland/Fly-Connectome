@@ -210,3 +210,27 @@ Held-out sensory-event MSE improves by 10.4% and beats persistence, but still lo
 to the zero-event control. Full results and checkpoint hashes are in
 `docs/experiments/2026-09-18-motion-v2-heldout.json`. M1A scientific acceptance and
 score-only Pong learning remain unestablished.
+
+## Optional compiled CPU training
+
+For B=1 on CPU, build the explicit native backend with a C++/OpenMP compiler
+(GCC13 was tested on Windows). No compiler is downloaded automatically.
+
+```powershell
+.venv/Scripts/python -m fly_connectome build-native --output runs/native_cpu.dll
+.venv/Scripts/python -m fly_connectome train checkpoints/event-v1-combined-rate-10000.pt --steps 1000 --threads 1 --native-library runs/native_cpu.dll --native-threads 4 --metrics events --output checkpoints/native-continuation.pt
+```
+
+The native backend retains measured edges/signs, every neural tick, local updates
+and synchronization. It is opt-in; omit `--native-library` for the tensor reference.
+Checkpoints resume with either backend. Rebuild the library after native ABI
+updates. CUDA and multiple environments currently use the tensor reference.
+
+`--metrics events` pauses dense all-neuron MSE logging while retaining all model
+updates, spike counts and sensory-event scores. The UI labels dense logging as
+paused. Evaluation always collects full metrics. Use `--metrics full` to resume
+dense logging; counts include only samples actually recorded.
+
+Throughput evidence and remaining realtime work are in
+`docs/plans/2026-09-20-realtime-training.md`. Faster execution does not establish
+effective anticipation; M1A scientific acceptance remains open.

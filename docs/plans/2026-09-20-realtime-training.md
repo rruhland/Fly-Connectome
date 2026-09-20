@@ -45,3 +45,24 @@ helper also showed no gain and was removed. Current dynamics/signs/topology and
 all update schedules remain unchanged. Next: fuse remaining learning bookkeeping,
 verify exactness before benchmarking, then sustained throughput. Scientific
 training remains paused; M1A learning acceptance remains unmet.
+
+Chunk 3 in progress: native finish preserves expected predictions, pairing trace
+and overload; PyTorch lerp remains because its vector and scalar tails round
+differently. Identical local error scaling is computed once per neuron. Native
+output allocations explicitly target CPU independent of the global default device.
+A1000-frame profile completed in23.960s (41.736fps), with source checkpoint
+unchanged. ABI8 adds a parallel homeostasis-presence check while retaining the
+reference exponential update whenever homeostasis is active. Testing SIMD loop
+execution next; do not claim realtime or resume scientific training yet.
+
+Chunk3 verification: final ABI8 balanced100-frame reference/native comparison
+is exact for all model tensors, spikes, and event statistics (dense metrics
+intentionally paused). Reference2.97fps; native49–50fps. Final1000-frame profile
+20.545s,48.673fps: learning10.487s, network4.640s, sync0.654s. A SIMD pragma
+experiment showed no gain and was removed. Review found no remaining actionable
+issues after CPU allocation regression was fixed. Next architecture/numerical
+experiment is written in2026-09-20-deferred-local-updates-proposal.md and requires
+user approval before implementation. Realtime target remains unmet.
+
+Final checks:138 tests pass,4 CUDA skips; wheel builds and includes native C++
+source/UI assets. No scientific training process remains running.

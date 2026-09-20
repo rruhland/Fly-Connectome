@@ -1,8 +1,6 @@
 import copy
 from dataclasses import replace
-from pathlib import Path
 import shutil
-import subprocess
 import pytest
 import torch
 from fly_connectome.dynamics import Network, Activity
@@ -116,7 +114,6 @@ def test_native_checkpoint_can_resume_on_reference_backend(native_library,tmp_pa
 
 def test_cli_explicit_native_backend_keeps_checkpoint_portable(native_library,tmp_path):
     import json
-    import os
     import subprocess
     import sys
     from test_training import trainer
@@ -136,7 +133,6 @@ def test_cli_explicit_native_backend_keeps_checkpoint_portable(native_library,tm
 
 
 def test_parallel_native_sparse_partitions_preserve_exact_order(native_library):
-    import numpy as np
     size=20000
     graph=Graph.from_contacts(list(range(1,size+2)),list(range(1,size+1)),list(range(2,size+2)),
         [1]*size,[1]*(size+1),.5)
@@ -214,6 +210,28 @@ def test_native_synchronization_preserves_bounds_and_homeostasis(native_library)
         torch.testing.assert_close(rule.network.magnitudes,other.network.magnitudes,rtol=0,atol=0)
 
 
+@pytest.mark.parametrize('dt,tau',[(1/960,30.),(.001,.002)])
+def test_native_finish_preserves_prediction_pairing_and_rates(native_library,dt,tau):
+    from fly_connectome.dynamics import NeuronConfig
+    import math
+    size=17000
+    graph=Graph.from_contacts(list(range(1,size+1)),[],[],[],[1]*size,.5)
+    rule=Plasticity(Network(graph,[],[],config=NeuronConfig(dt=dt,threshold=.7)),
+        LearningConfig(tau_homeostasis=tau,prediction_encoding='signed-current-v1'))
+    rng=torch.Generator().manual_seed(541)
+    rule.rates.copy_(torch.rand(1,size,generator=rng)*100)
+    rule.post_trace.copy_(torch.rand(1,size,generator=rng))
+    a=Activity(torch.rand(1,size,generator=rng)>.5,torch.zeros(1,size),
+        torch.rand(1,size,generator=rng)*4-2,torch.empty(0,dtype=torch.long),torch.empty(0,dtype=torch.long))
+    rates=rule.rates.clone().lerp_(a.spikes.float()/dt,1-math.exp(-dt/tau))
+    trace=rule.post_trace+a.spikes
+    expected=rule.config.encode(a.predicted,.7)
+    overload=(rates[0]-rule.config.maximum_rate).clamp(min=0)
+    actual=NativeCPU(native_library,threads=4).finish(rule,a)
+    for x,y in ((rates,rule.rates),(trace,rule.post_trace),(expected,rule.expected),(overload,actual)):
+        torch.testing.assert_close(x,y,rtol=0,atol=0)
+
+
 def test_native_arrivals_match_mixed_delays_across_history_wrap(native_library):
     graph=Graph.from_contacts([10,20,30,40],[10,10,20,30],[20,30,40,10],[1]*4,[1]*4,.5)
     net=Network(graph,[1,2,3,1],['predictive']*4)
@@ -225,6 +243,17 @@ def test_native_arrivals_match_mixed_delays_across_history_wrap(native_library):
         a=net._arrivals();b=native.arrivals(net)
         for expected,actual in zip(a,b):
             torch.testing.assert_close(expected,actual,rtol=0,atol=0)
+
+
+def test_native_outputs_ignore_global_default_device(native_library):
+    from test_training import trainer
+    model=trainer()
+    activity=model.network.step(torch.zeros_like(model.network.voltage))
+    kernel=NativeCPU(native_library)
+    with torch.device('meta'):
+        overload=kernel.finish(model.plasticity,activity)
+        _,edges=kernel.arrivals(model.network)
+    assert overload.device.type=='cpu' and edges.device.type=='cpu'
 
 @pytest.mark.parametrize('eta',[0.,.01,.5,1.,1.2])
 def test_native_prediction_updates_preserve_subnormal_float_bits(native_library,eta):

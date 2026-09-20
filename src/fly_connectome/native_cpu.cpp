@@ -9,10 +9,10 @@
 #else
 #define EXPORT
 #endif
-extern "C" EXPORT int native_abi_version() { return 5; }
+extern "C" EXPORT int native_abi_version() { return 8; }
 
 extern "C" EXPORT std::int64_t sparse_observe(
-    std::int64_t old_count, std::int64_t new_count, std::int64_t causal, std::int64_t threads,
+    std::int64_t old_count, std::int64_t new_count, std::int64_t causal, std::int64_t threads, std::int64_t n,
     float eta, float eta_reward, float decay, float pair_decay, float epsilon, float reward,
     const std::int64_t* old_keys, const float* old_values, const float* old_traces,
     std::int64_t* incoming, const std::int32_t* post, const std::uint8_t* pathway,
@@ -20,6 +20,11 @@ extern "C" EXPORT std::int64_t sparse_observe(
     const float* expected, const float* post_trace, const bool* spikes, float* proposals,
     std::int64_t* keys, float* values, float* traces) {
     if (new_count > 1) std::sort(incoming, incoming+new_count);
+    // The local error is identical for every existing synapse onto this neuron.
+    std::vector<float> errors(n);
+    #pragma omp parallel for num_threads(threads) if(n>=16384 && threads>1)
+    for (std::int64_t neuron=0;neuron<n;++neuron)
+        errors[neuron]=eta*(observed[neuron]-expected[neuron]);
     const auto chunks=std::min(threads,old_count/4096+1);
     std::vector<std::int64_t> offsets(chunks),counts(chunks);
     #pragma omp parallel for num_threads(chunks) if(chunks>1)
@@ -38,9 +43,7 @@ extern "C" EXPORT std::int64_t sparse_observe(
         if (i<end && old_keys[i]==edge) {
             value=old_values[i];
             if (causal && !behavior) {
-                const float error=(observed[target]-expected[target]);
-                const float scaled=eta*error;
-                proposals[edge] += scaled*value;
+                proposals[edge] += errors[target]*value;
             }
             value *= causal && !behavior ? current_decay[target] : decay;
             trace=old_traces[i]*pair_decay;
@@ -56,7 +59,7 @@ extern "C" EXPORT std::int64_t sparse_observe(
         if (std::abs(value)>epsilon || trace>epsilon) {
             float proposal=0.f;
             if (behavior) proposal=(eta_reward*reward)*value;
-            else if (!causal) proposal=(eta*(observed[target]-expected[target]))*value;
+            else if (!causal) proposal=errors[target]*value;
             proposals[edge] += proposal;
             keys[out]=edge;values[out]=value;traces[out]=trace;++out;
         }
@@ -136,8 +139,13 @@ extern "C" EXPORT void prepare_observation(std::int64_t n, std::int64_t incremen
     }
 }
 
-extern "C" EXPORT void synchronize_weights(std::int64_t edges, std::int64_t threads,
+extern "C" EXPORT int synchronize_weights(std::int64_t edges, std::int64_t threads,
     float maximum, float* weights, float* proposals, float* exponents) {
+    int active=0;
+    #pragma omp parallel for num_threads(threads) reduction(|:active) if(edges>=16384 && threads>1)
+    for (std::int64_t i=0;i<edges;++i) active|=exponents[i]!=0.f;
+    // Leave all state untouched for the reference exponential implementation.
+    if (active) return 0;
     #pragma omp parallel for num_threads(threads) if(edges>=16384 && threads>1)
     for (std::int64_t i=0;i<edges;++i) {
         float value=weights[i]+proposals[i];
@@ -146,6 +154,23 @@ extern "C" EXPORT void synchronize_weights(std::int64_t edges, std::int64_t thre
         weights[i]=value;
         proposals[i]=0.f;
         exponents[i]=0.f;
+    }
+    return 1;
+}
+
+extern "C" EXPORT void finish_observation(std::int64_t n, std::int64_t threads,
+    float threshold, float low, float maximum_rate,
+    const float* predicted, const bool* spikes, float* expected, float* post_trace,
+    float* rates, float* overload) {
+    #pragma omp parallel for num_threads(threads) if(n>=16384 && threads>1)
+    for (std::int64_t i=0;i<n;++i) {
+        float prediction=threshold==1.f ? predicted[i] : predicted[i]/threshold;
+        if (prediction<low) prediction=low;
+        if (prediction>1.f) prediction=1.f;
+        expected[i]=prediction;
+        const float spike=float(spikes[i]);
+        post_trace[i]+=spike;
+        overload[i]=std::max(0.f,rates[i]-maximum_rate);
     }
 }
 

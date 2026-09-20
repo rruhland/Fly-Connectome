@@ -432,3 +432,26 @@ scripts/native_sparse_merge.{cpp,py}, scripts/verify_native_merge.py and the
 --native-library experiment flag on scripts/benchmark_sparse_merge.py. Native
 trace/error/update fusion is the next measured engineering direction. Do not
 repeat the merge experiment as if it had not been done. No training is running.
+
+## Training speed priority — 2026-09-20
+
+User explicitly prioritized near-real-time online learning before more milestone
+experiments. Exact opt-in B=1 CPU kernels now cover sparse learning, neuron updates,
+arrival extraction, observation preparation and synchronization, with bounded
+parallel execution. No topology/sign/dynamics/local-equation changes were made.
+An events-only logging mode omits dense error logs but preserves model updates.
+
+Latest100-frame balanced tensor/native test:2.97 versus49–50frames/s, identical
+spike/model-state hashes and event scores. Earlier1000-frame run:41.7fps. Realtime
+120fps is still unmet. Scientific continuation remains paused and M1A learning
+acceptance is still unmet. Existing checkpoints were only read by benchmarks.
+
+Active execution ledger:docs/plans/2026-09-20-realtime-training.md. Next proposal
+(needs user approval, not implemented):docs/plans/2026-09-20-deferred-local-updates-proposal.md.
+It evaluates repeated quiet local updates with geometric sums within unchanged
+synchronization boundaries. It changes floating-point order, so do not silently
+adopt it. Relative normalization has not been introduced.
+
+Final1000-frame profile of ABI8:20.545s,48.673fps (about3.4 minutes per10,000
+frames projected, excluding startup/checkpoint writes). This supersedes the
+earlier41.7fps sample for the final implementation. Realtime120fps remains open.
