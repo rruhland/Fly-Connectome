@@ -79,6 +79,8 @@ def main():
                 completed += 1
                 if completed % args.checkpoint_every == 0 and model.step_index % model.config.sync_steps == 0:
                     model.save(args.output)
+                    print(json.dumps(dict(event='checkpoint',checkpoint=args.output,step=model.step_index,
+                                          elapsed_seconds=time.perf_counter()-start)),flush=True)
                 if stopped and model.step_index % model.config.sync_steps == 0:
                     break
             model.save(args.output)

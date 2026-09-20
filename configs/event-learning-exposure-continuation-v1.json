@@ -1,0 +1,12 @@
+{
+  "id": "event-learning-exposure-continuation-v1",
+  "source_checkpoint": "checkpoints/event-v1-combined-rate-2000.pt",
+  "source_training_steps": 2000,
+  "final_training_steps": 10000,
+  "output_checkpoint": "checkpoints/event-v1-combined-rate-10000.pt",
+  "checkpoint_every": 100,
+  "training_seed": 1,
+  "development_seeds": [1101, 1102],
+  "development_steps": 500,
+  "reason": "Replay shows that 563/892 L1 neurons received no events in the first 2000 steps, with median zero events per neuron. Extend the exact existing configuration to test increased experience. No model, topology, sign, learning, physics or acceptance changes. The 10000-step replay still has limited exposure, so this is not a claim that 10000 steps suffices. Preserve the source artifact and keep final seeds untouched unless development acceptance passes."
+}

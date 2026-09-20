@@ -368,3 +368,28 @@ insufficient experience from weak/mistimed local predictive signals with explici
 diagnostics, preserving the current objectives and invariant constraints. Do not
 claim acceptance from error reduction alone. Final software suite: 99 passed,
 four CUDA skips; wheel build and native Windows sharing-conflict smoke check pass.
+
+## Local-signal and exposure diagnosis (2026-09-19)
+
+Added frozen edge-local moment/current-reconstruction audit and a fast replay of
+the exact scripted camera/Pong stream. Tests verify anticipation versus tonic
+moments, current reconstruction, checkpoint immutability and exposure replay
+against actual Trainer observations. Full suite: 102 passed, four CUDA skips.
+CLI training now prints progress only after saved synchronization-boundary
+checkpoints, so monitoring does not require opening a live checkpoint file.
+
+Reports: `docs/experiments/2026-09-19-local-signals-and-exposure.md` and accompanying
+JSONs. At 2,000 steps, 563/892 L1 neurons received no nonzero projected event and
+865/892 received fewer than ten. Median exposure is zero. Local current-trace
+moments mostly favor depression; positive correlations are descriptive and not
+acceptance evidence. Read-only review confirmed calculations and noted the
+decaying warm-up difference from initial plasticity traces; the report states it.
+
+The unchanged 2,000-step checkpoint is being extended to 10,000 under
+`configs/event-learning-exposure-continuation-v1.json`. Command:
+`.venv/Scripts/python -m fly_connectome train checkpoints/event-v1-combined-rate-2000.pt --steps 8000 --output checkpoints/event-v1-combined-rate-10000.pt --threads 1 --checkpoint-every 100`.
+If interrupted, resume the output for the remaining steps to 10,000, not another
+8,000. Read progress from stdout; do not open the file while the run is saving.
+Then audit the completed output for 500 steps on development seeds 1101/1102.
+Final seeds remain untouched unless development criteria pass. No architecture,
+learning-rule, sign, topology or physics changes are part of this continuation.
