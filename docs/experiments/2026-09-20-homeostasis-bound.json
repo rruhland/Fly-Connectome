@@ -1,0 +1,32 @@
+{
+  "seconds": 83.33333333333333,
+  "dt": 0.0010416666666666667,
+  "homeostasis_rate": 1e-05,
+  "maximum_rate": 50.0,
+  "conservative_homeostasis_only_factor": 0.468446520952634,
+  "populations": {
+    "L1": {
+      "edges": 3310,
+      "zero_weights": 1046,
+      "below_one_percent": 2219,
+      "median_ratio": 2.1488389393198304e-05
+    },
+    "L2": {
+      "edges": 9764,
+      "zero_weights": 1735,
+      "below_one_percent": 2281,
+      "median_ratio": 0.9428529739379883
+    },
+    "L3": {
+      "edges": 4483,
+      "zero_weights": 2,
+      "below_one_percent": 51,
+      "median_ratio": 1.0
+    }
+  },
+  "method": "One boolean spike per tick bounds the exponentially filtered rate by 1/dt from its zero initialization. Thus exp(-homeostasis_rate * elapsed_seconds * max(1/dt - maximum_rate, 0)) is a conservative homeostasis-only retained-weight factor, ignoring finite precision. Counts below 1% are far beyond this bound. This excludes homeostasis alone, not indirect interactions or different learning terms. Only initially positive weights within the maximum bound are counted.",
+  "checkpoint_sha256": {
+    "checkpoints\\event-v1-combined-rate-initial.pt": "8c4af80ff3904881bac9313b618dd9989bb51174b47606f28eca88865296005c",
+    "checkpoints\\event-v1-combined-rate-10000.pt": "6358107d489ee859f1644105eb274c29b226e6cdc71ae7e58d65a8bf6c925e58"
+  }
+}

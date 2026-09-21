@@ -533,3 +533,34 @@ contents verified. Fresh review found one important reporting issue (MSE
 denominators), fixed with a failing-then-passing regression; no remaining
 important findings. Scientific checkpoint bytes remain unchanged. No background
 benchmark/training process remains. Stop optimization; next work is M1A science.
+
+## M1A supported-forecast and timing diagnosis (2026-09-20)
+
+Preregistered frozen comparison: event-v1-combined-rate-initial.pt and the
+unchanged10000-frame checkpoint,500 frames on development seeds1101/1102.
+Separate supported/unsupported ON/OFF events and quiet false alarms. Store neural
+prediction timelines; lag0 is the preceding-tick forecast, positive lags use
+post-event activity and cannot count as anticipation. Use identical target frames
+across the -16..+16-tick lag sweep and a fixed frame-shuffle control(seed421).
+No fitting, parameter search, learning, new seeds or weight changes. Test the
+strict score against ordinary evaluation and hand-check support/lag conventions
+before the measured runs. Optimization remains stopped.
+
+Supported-forecast audit completed on both checkpoints with matching graph and
+configuration hashes. 99.734% of total error improvement is quiet-period
+suppression. Supported OFF forecasts still lose to zero at every tested temporal
+offset; positive offsets remain post-event diagnostics, never acceptance scores.
+Frozen local signals at10000 frames reconstruct current within2.98e-8; active
+L3 predictive traces fall755->74. No acceptance claim or training extension.
+Fresh audit review found no actionable issues; comparisons distinguish strict
+all-frame shuffle scores from the common-interior lag scores. Strengthened the
+integration fixture to exercise nonzero predictive current. Final code tests:
+185 passed,4CUDA skipped. No production dynamics/plasticity changes.
+Homeostasis-only bound retains>=0.4684465 of starting strength over83.3333s;
+2219/3310 L1 predictive edges retain<1%, excluding homeostasis alone as cause.
+L3 median incoming predictive weight ratio is1 despite active traces755->74,
+so next diagnosis should attribute lost traces to presynaptic classes and their
+incoming FF/predictive activity in frozen initial/trained runs. Separate missing
+arrivals, subthreshold activity and lost feedback weights. No model revision,
+new training run or optimization is implied. Results and reproduction details:
+docs/experiments/2026-09-20-supported-forecasts.md. Source hashes unchanged.
