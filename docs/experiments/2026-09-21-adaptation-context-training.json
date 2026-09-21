@@ -1,0 +1,50 @@
+{
+  "A": {
+    "seconds": 322.18395089998376,
+    "frames": 11158,
+    "trials": 200,
+    "stability": {
+      "finite": true,
+      "within_weight_bounds": true,
+      "max_abs": {
+        "voltage": 10.083517074584961,
+        "sensory_state": 30.0,
+        "feedforward_current": 2.0391416549682617,
+        "predictive_current": 0.3449999988079071,
+        "behavioral_current": 0.0,
+        "adaptation": 1.962249517440796,
+        "magnitudes": 0.4950000047683716
+      }
+    },
+    "local_update_sums": [
+      0.13433126208582283,
+      0.5907236382775111,
+      -0.8818735384085582
+    ],
+    "artifact_sha256": "e662cb13aff3196c670135b2979ce223c23dfc5fc4db6c3e781330899c6ac8dd"
+  },
+  "B": {
+    "seconds": 323.0403152999934,
+    "frames": 11158,
+    "trials": 200,
+    "stability": {
+      "finite": true,
+      "within_weight_bounds": true,
+      "max_abs": {
+        "voltage": 10.083517074584961,
+        "sensory_state": 30.0,
+        "feedforward_current": 2.0391416549682617,
+        "predictive_current": 0.488308846950531,
+        "behavioral_current": 0.0,
+        "adaptation": 1.962249517440796,
+        "magnitudes": 0.4950000047683716
+      }
+    },
+    "local_update_sums": [
+      0.3283157240884012,
+      0.460596732545748,
+      -1.0097260580051421
+    ],
+    "artifact_sha256": "ea31e4c19de73846f8c166bd55dfa370a3aa03f20a2a08a89d2d37dd5b4af2ea"
+  }
+}

@@ -1,0 +1,88 @@
+{
+  "preflight": {
+    "metrics": {
+      "baseline": {
+        "persistent_tensor_bytes": 84318,
+        "seconds": [
+          0.5869194999686442,
+          0.5282744999858551,
+          0.5858286999864504
+        ],
+        "median_seconds": 0.5858286999864504,
+        "frames": 37
+      },
+      "A": {
+        "persistent_tensor_bytes": 84318,
+        "seconds": [
+          0.5946204999927431,
+          0.5654686999623664,
+          0.6444298000424169
+        ],
+        "median_seconds": 0.5946204999927431,
+        "frames": 37
+      },
+      "B": {
+        "persistent_tensor_bytes": 84318,
+        "seconds": [
+          0.5700778000173159,
+          0.5894804000272416,
+          0.5988362999632955
+        ],
+        "median_seconds": 0.5894804000272416,
+        "frames": 37
+      }
+    },
+    "neutral_learning_bit_exact": true,
+    "frozen_spikes_and_targets_bit_exact": true,
+    "benchmark": "3 rotated-order frozen runs, warmup excluded, full diagnostic recording"
+  },
+  "learning_benchmark": {
+    "metrics": {
+      "baseline": {
+        "seconds": [
+          1.1362334999721497,
+          1.0801307000219822,
+          1.0927584000164643
+        ],
+        "median_seconds": 1.0927584000164643,
+        "frames": 37
+      },
+      "A": {
+        "seconds": [
+          1.2262407000525855,
+          1.2080438999691978,
+          1.1504241999937221
+        ],
+        "median_seconds": 1.2080438999691978,
+        "frames": 37
+      },
+      "B": {
+        "seconds": [
+          1.0637565000215545,
+          1.1291098999790847,
+          1.1786882000160404
+        ],
+        "median_seconds": 1.1291098999790847,
+        "frames": 37
+      }
+    },
+    "scope": "3 rotated-order learning runs, warmup excluded; zero learning rates preserve matched activity. Memory profiling runs separately."
+  },
+  "memory": {
+    "baseline": {
+      "profile_frames": 4,
+      "tracked_cpu_tensor_peak_bytes": 14917494
+    },
+    "A": {
+      "profile_frames": 4,
+      "tracked_cpu_tensor_peak_bytes": 14917494
+    },
+    "B": {
+      "profile_frames": 4,
+      "tracked_cpu_tensor_peak_bytes": 14917494
+    }
+  },
+  "memory_scope": "Short blank-sequence CPU tensor timeline; includes temporary tensors but excludes Python/NumPy/process memory. Not a full-training peak.",
+  "profile_issue": "Third repeated export crashed in Torch C extension; isolated B export completed.",
+  "benchmark_scope": "Final timing run completed without concurrent experiment jobs; training A/B ran concurrently."
+}

@@ -1,6 +1,8 @@
 # Adaptation-dependent local prediction: bounded architecture experiment
 
-Status: user approved this concrete rule and bounded experiment; implementation underway.
+Status: approved experiment completed; both fixed candidates rejected. See
+[findings](../experiments/2026-09-21-adaptation-context-findings.md). No tuning or
+confirmation runs were added after neither candidate qualified.
 
 ## Purpose and evidence
 

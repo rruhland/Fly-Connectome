@@ -14,16 +14,16 @@ forecast changes. FramePrediction captures sparse eligibility times issue-time g
 - [x] Register only opt-in variants in scripts/controlled_visual.py and reject
   incompatible tick supervision. Add integration regression; run full suite.
   Commit the working experiment implementation before long runs.
-- [ ] Add staged scripts/adaptation_experiment.py. Train A and B on the saved
+- [x] Add staged scripts/adaptation_experiment.py. Train A and B on the saved
   mixed schedule seed9060 from identical initial weights for200 trials each.
   Save weights, physical stability, update sums, runtime and allocation estimates.
-- [ ] Frozen paired evaluation at2/3/4/6,15 trials seed9073: each candidate's
+- [x] Frozen paired evaluation at2/3/4/6,15 trials seed9073: each candidate's
   initial/trained predictions, uncoupled initial/trained, zero and persistence.
   Assert matching targets and immutable evaluation weights; save each result.
-- [ ] Apply unchanged criteria per tempo and baseline comparison. Confirm only
+- [x] Apply unchanged criteria per tempo and baseline comparison. Confirm only
   qualifying candidates on30 trials/tempo seed9074. If none qualify, stop both
   orientations without tuning or extending training.
-- [ ] Record findings, all metrics, hashes and limits; update implementation
+- [x] Record findings, all metrics, hashes and limits; update implementation
   ledger and push. No fallback architecture is implemented without its proposal.
 
 Ruling: evaluate the approved expression as baseline P plus (g_E-1)E+(g_I-1)I.
@@ -37,3 +37,15 @@ Real-crop preflight matches frozen spikes/targets and neutral-gain learning
 bit-for-bit. Independent implementation review found no correctness blockers;
 its request for learning-path runtime and temporary-tensor profiling is addressed
 by the separate benchmark stage (zero rates hold activity fixed for comparison).
+
+Both 200-trial training stages completed with finite states and bounded weights.
+Times 322.18/323.04 s were measured under concurrent execution, not an exclusive
+overhead benchmark. Artifacts are in runs/adaptation-context-v1. PyTorch's third
+memory-timeline export crashed inside its C extension; exporting the remaining
+variant in an isolated process succeeded. Memory stages are now isolated from
+timing/training, and the learning timing benchmark is repeated exclusively.
+
+Outcome: both candidates fail at all four tempos. No confirmation runs or
+training extensions. Findings/results/hashes are under
+docs/experiments/2026-09-21-adaptation-context-*. The separate short-term synaptic
+context proposal is ready for review but is not implemented. M1A remains unmet.

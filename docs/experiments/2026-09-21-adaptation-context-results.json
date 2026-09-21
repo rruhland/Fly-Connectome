@@ -1,0 +1,1046 @@
+{
+  "baseline-initial-2": {
+    "metrics": {
+      "samples": 514,
+      "events": 90,
+      "mse": 0.17325431108474731,
+      "event_mse": 0.988796055316925,
+      "quiet_mse": 0.00014401467342395335,
+      "mean_signed_event_prediction": 0.0057111880742013454,
+      "false_alarm_fraction": 0.0,
+      "on_mse": 0.9774278402328491,
+      "on_anticipation": 0.011503385379910469,
+      "off_mse": 1.000164270401001,
+      "off_anticipation": -8.100895502138883e-05,
+      "correct_sign": {
+        "on": {
+          "count": 45,
+          "correct": 15
+        },
+        "off": {
+          "count": 45,
+          "correct": 26
+        }
+      }
+    },
+    "stability": {
+      "finite": true,
+      "within_weight_bounds": true,
+      "max_abs": {
+        "voltage": 9.758195877075195,
+        "sensory_state": 30.0,
+        "feedforward_current": 2.029789686203003,
+        "predictive_current": 0.3449999988079071,
+        "behavioral_current": 0.0,
+        "adaptation": 1.4986021518707275,
+        "magnitudes": 0.4950000047683716
+      }
+    }
+  },
+  "zero-2": {
+    "metrics": {
+      "samples": 514,
+      "events": 90,
+      "mse": 0.1750972718000412,
+      "event_mse": 1.0,
+      "quiet_mse": 0.0,
+      "mean_signed_event_prediction": 0.0,
+      "false_alarm_fraction": 0.0,
+      "on_mse": 1.0,
+      "on_anticipation": 0.0,
+      "off_mse": 1.0,
+      "off_anticipation": 0.0
+    }
+  },
+  "persistence-2": {
+    "metrics": {
+      "samples": 514,
+      "events": 90,
+      "mse": 0.3501945436000824,
+      "event_mse": 1.0,
+      "quiet_mse": 0.21226415038108826,
+      "mean_signed_event_prediction": 0.0,
+      "false_alarm_fraction": 0.21226415094339623,
+      "on_mse": 1.0,
+      "on_anticipation": 0.0,
+      "off_mse": 1.0,
+      "off_anticipation": 0.0
+    }
+  },
+  "baseline-trained-2": {
+    "metrics": {
+      "samples": 514,
+      "events": 90,
+      "mse": 0.17247936129570007,
+      "event_mse": 0.9780279397964478,
+      "quiet_mse": 0.0014902630355209112,
+      "mean_signed_event_prediction": 0.011974798515439034,
+      "false_alarm_fraction": 0.06839622641509434,
+      "on_mse": 0.9328849911689758,
+      "on_anticipation": 0.035456810146570206,
+      "off_mse": 1.0231709480285645,
+      "off_anticipation": -0.011507216840982437,
+      "correct_sign": {
+        "on": {
+          "count": 45,
+          "correct": 15
+        },
+        "off": {
+          "count": 45,
+          "correct": 0
+        }
+      }
+    },
+    "stability": {
+      "finite": true,
+      "within_weight_bounds": true,
+      "max_abs": {
+        "voltage": 9.81264591217041,
+        "sensory_state": 30.0,
+        "feedforward_current": 2.029789686203003,
+        "predictive_current": 0.3260647654533386,
+        "behavioral_current": 0.0,
+        "adaptation": 1.4985384941101074,
+        "magnitudes": 0.4950000047683716
+      }
+    },
+    "pass": false
+  },
+  "A-initial-2": {
+    "metrics": {
+      "samples": 514,
+      "events": 90,
+      "mse": 0.17344915866851807,
+      "event_mse": 0.9902406334877014,
+      "quiet_mse": 7.36256770323962e-05,
+      "mean_signed_event_prediction": 0.0049354312941432,
+      "false_alarm_fraction": 0.0,
+      "on_mse": 0.9850575923919678,
+      "on_anticipation": 0.007578305900096893,
+      "off_mse": 0.9954237341880798,
+      "off_anticipation": 0.002292557619512081,
+      "correct_sign": {
+        "on": {
+          "count": 45,
+          "correct": 15
+        },
+        "off": {
+          "count": 45,
+          "correct": 42
+        }
+      }
+    },
+    "stability": {
+      "finite": true,
+      "within_weight_bounds": true,
+      "max_abs": {
+        "voltage": 9.758195877075195,
+        "sensory_state": 30.0,
+        "feedforward_current": 2.029789686203003,
+        "predictive_current": 0.3449999988079071,
+        "behavioral_current": 0.0,
+        "adaptation": 1.4986021518707275,
+        "magnitudes": 0.4950000047683716
+      }
+    }
+  },
+  "A-trained-2": {
+    "metrics": {
+      "samples": 514,
+      "events": 90,
+      "mse": 0.17270594835281372,
+      "event_mse": 0.9815655946731567,
+      "quiet_mse": 0.0010140519589185715,
+      "mean_signed_event_prediction": 0.009838283061981201,
+      "false_alarm_fraction": 0.009433962264150943,
+      "on_mse": 0.9466342329978943,
+      "on_anticipation": 0.027883756905794144,
+      "off_mse": 1.0164968967437744,
+      "off_anticipation": -0.008207187056541443,
+      "correct_sign": {
+        "on": {
+          "count": 45,
+          "correct": 15
+        },
+        "off": {
+          "count": 45,
+          "correct": 0
+        }
+      }
+    },
+    "stability": {
+      "finite": true,
+      "within_weight_bounds": true,
+      "max_abs": {
+        "voltage": 9.789531707763672,
+        "sensory_state": 30.0,
+        "feedforward_current": 2.029789686203003,
+        "predictive_current": 0.22999998927116394,
+        "behavioral_current": 0.0,
+        "adaptation": 1.4985243082046509,
+        "magnitudes": 0.4950000047683716
+      }
+    },
+    "pass": false
+  },
+  "B-initial-2": {
+    "metrics": {
+      "samples": 514,
+      "events": 90,
+      "mse": 0.173101544380188,
+      "event_mse": 0.9874088764190674,
+      "quiet_mse": 0.0002532884827814996,
+      "mean_signed_event_prediction": 0.006486944388598204,
+      "false_alarm_fraction": 0.0,
+      "on_mse": 0.9698978066444397,
+      "on_anticipation": 0.01542846392840147,
+      "off_mse": 1.004920244216919,
+      "off_anticipation": -0.00245457561686635,
+      "correct_sign": {
+        "on": {
+          "count": 45,
+          "correct": 15
+        },
+        "off": {
+          "count": 45,
+          "correct": 10
+        }
+      }
+    },
+    "stability": {
+      "finite": true,
+      "within_weight_bounds": true,
+      "max_abs": {
+        "voltage": 9.758195877075195,
+        "sensory_state": 30.0,
+        "feedforward_current": 2.029789686203003,
+        "predictive_current": 0.3449999988079071,
+        "behavioral_current": 0.0,
+        "adaptation": 1.4986021518707275,
+        "magnitudes": 0.4950000047683716
+      }
+    }
+  },
+  "B-trained-2": {
+    "metrics": {
+      "samples": 514,
+      "events": 90,
+      "mse": 0.17246656119823456,
+      "event_mse": 0.9751893877983093,
+      "quiet_mse": 0.002077291486784816,
+      "mean_signed_event_prediction": 0.013822581619024277,
+      "false_alarm_fraction": 0.09905660377358491,
+      "on_mse": 0.9207109808921814,
+      "on_anticipation": 0.04235082119703293,
+      "off_mse": 1.029667854309082,
+      "off_anticipation": -0.014705657958984375,
+      "correct_sign": {
+        "on": {
+          "count": 45,
+          "correct": 19
+        },
+        "off": {
+          "count": 45,
+          "correct": 0
+        }
+      }
+    },
+    "stability": {
+      "finite": true,
+      "within_weight_bounds": true,
+      "max_abs": {
+        "voltage": 9.871248245239258,
+        "sensory_state": 30.0,
+        "feedforward_current": 2.0337090492248535,
+        "predictive_current": 0.3188643753528595,
+        "behavioral_current": 0.0,
+        "adaptation": 1.4985452890396118,
+        "magnitudes": 0.4950000047683716
+      }
+    },
+    "pass": false
+  },
+  "baseline-initial-3": {
+    "metrics": {
+      "samples": 604,
+      "events": 90,
+      "mse": 0.14468416571617126,
+      "event_mse": 0.9701346755027771,
+      "quiet_mse": 0.0001500626967754215,
+      "mean_signed_event_prediction": 0.015136279165744781,
+      "false_alarm_fraction": 0.0,
+      "on_mse": 0.9486595988273621,
+      "on_anticipation": 0.02606823481619358,
+      "off_mse": 0.9916096329689026,
+      "off_anticipation": 0.004204327240586281,
+      "correct_sign": {
+        "on": {
+          "count": 45,
+          "correct": 45
+        },
+        "off": {
+          "count": 45,
+          "correct": 45
+        }
+      }
+    },
+    "stability": {
+      "finite": true,
+      "within_weight_bounds": true,
+      "max_abs": {
+        "voltage": 10.282537460327148,
+        "sensory_state": 30.0,
+        "feedforward_current": 2.025024890899658,
+        "predictive_current": 0.3449999988079071,
+        "behavioral_current": 0.0,
+        "adaptation": 1.7549163103103638,
+        "magnitudes": 0.4950000047683716
+      }
+    }
+  },
+  "zero-3": {
+    "metrics": {
+      "samples": 604,
+      "events": 90,
+      "mse": 0.14900662004947662,
+      "event_mse": 1.0,
+      "quiet_mse": 0.0,
+      "mean_signed_event_prediction": 0.0,
+      "false_alarm_fraction": 0.0,
+      "on_mse": 1.0,
+      "on_anticipation": 0.0,
+      "off_mse": 1.0,
+      "off_anticipation": 0.0
+    }
+  },
+  "persistence-3": {
+    "metrics": {
+      "samples": 604,
+      "events": 90,
+      "mse": 0.29801324009895325,
+      "event_mse": 1.0,
+      "quiet_mse": 0.1750972718000412,
+      "mean_signed_event_prediction": 0.0,
+      "false_alarm_fraction": 0.17509727626459143,
+      "on_mse": 1.0,
+      "on_anticipation": 0.0,
+      "off_mse": 1.0,
+      "off_anticipation": 0.0
+    }
+  },
+  "baseline-trained-3": {
+    "metrics": {
+      "samples": 604,
+      "events": 90,
+      "mse": 0.13843651115894318,
+      "event_mse": 0.9201726317405701,
+      "quiet_mse": 0.0015566531801596284,
+      "mean_signed_event_prediction": 0.04195211082696915,
+      "false_alarm_fraction": 0.10311284046692606,
+      "on_mse": 0.8397809267044067,
+      "on_anticipation": 0.08418610692024231,
+      "off_mse": 1.000564455986023,
+      "off_anticipation": -0.00028187455609440804,
+      "correct_sign": {
+        "on": {
+          "count": 45,
+          "correct": 45
+        },
+        "off": {
+          "count": 45,
+          "correct": 20
+        }
+      }
+    },
+    "stability": {
+      "finite": true,
+      "within_weight_bounds": true,
+      "max_abs": {
+        "voltage": 10.393153190612793,
+        "sensory_state": 30.0,
+        "feedforward_current": 2.025024890899658,
+        "predictive_current": 0.3260647654533386,
+        "behavioral_current": 0.0,
+        "adaptation": 1.7546993494033813,
+        "magnitudes": 0.4950000047683716
+      }
+    },
+    "pass": false
+  },
+  "A-initial-3": {
+    "metrics": {
+      "samples": 604,
+      "events": 90,
+      "mse": 0.14521189033985138,
+      "event_mse": 0.973861038684845,
+      "quiet_mse": 0.00011768838885473087,
+      "mean_signed_event_prediction": 0.01322542130947113,
+      "false_alarm_fraction": 0.0,
+      "on_mse": 0.9572864770889282,
+      "on_anticipation": 0.021656515076756477,
+      "off_mse": 0.9904355406761169,
+      "off_anticipation": 0.004794327542185783,
+      "correct_sign": {
+        "on": {
+          "count": 45,
+          "correct": 45
+        },
+        "off": {
+          "count": 45,
+          "correct": 45
+        }
+      }
+    },
+    "stability": {
+      "finite": true,
+      "within_weight_bounds": true,
+      "max_abs": {
+        "voltage": 10.282537460327148,
+        "sensory_state": 30.0,
+        "feedforward_current": 2.025024890899658,
+        "predictive_current": 0.3449999988079071,
+        "behavioral_current": 0.0,
+        "adaptation": 1.7549163103103638,
+        "magnitudes": 0.4950000047683716
+      }
+    }
+  },
+  "A-trained-3": {
+    "metrics": {
+      "samples": 604,
+      "events": 90,
+      "mse": 0.13926219940185547,
+      "event_mse": 0.9268547296524048,
+      "quiet_mse": 0.0013568918220698833,
+      "mean_signed_event_prediction": 0.03830782696604729,
+      "false_alarm_fraction": 0.07003891050583658,
+      "on_mse": 0.8540882468223572,
+      "on_anticipation": 0.07642588019371033,
+      "off_mse": 0.9996211528778076,
+      "off_anticipation": 0.00018976963474415243,
+      "correct_sign": {
+        "on": {
+          "count": 45,
+          "correct": 45
+        },
+        "off": {
+          "count": 45,
+          "correct": 21
+        }
+      }
+    },
+    "stability": {
+      "finite": true,
+      "within_weight_bounds": true,
+      "max_abs": {
+        "voltage": 10.393159866333008,
+        "sensory_state": 30.0,
+        "feedforward_current": 2.025024890899658,
+        "predictive_current": 0.22999998927116394,
+        "behavioral_current": 0.0,
+        "adaptation": 1.7546945810317993,
+        "magnitudes": 0.4950000047683716
+      }
+    },
+    "pass": false
+  },
+  "B-initial-3": {
+    "metrics": {
+      "samples": 604,
+      "events": 90,
+      "mse": 0.14417819678783417,
+      "event_mse": 0.9664531946182251,
+      "quiet_mse": 0.00020005414262413979,
+      "mean_signed_event_prediction": 0.017047137022018433,
+      "false_alarm_fraction": 0.0,
+      "on_mse": 0.9401216506958008,
+      "on_anticipation": 0.030479947105050087,
+      "off_mse": 0.9927851557731628,
+      "off_anticipation": 0.0036143267061561346,
+      "correct_sign": {
+        "on": {
+          "count": 45,
+          "correct": 45
+        },
+        "off": {
+          "count": 45,
+          "correct": 45
+        }
+      }
+    },
+    "stability": {
+      "finite": true,
+      "within_weight_bounds": true,
+      "max_abs": {
+        "voltage": 10.282537460327148,
+        "sensory_state": 30.0,
+        "feedforward_current": 2.025024890899658,
+        "predictive_current": 0.3449999988079071,
+        "behavioral_current": 0.0,
+        "adaptation": 1.7549163103103638,
+        "magnitudes": 0.4950000047683716
+      }
+    }
+  },
+  "B-trained-3": {
+    "metrics": {
+      "samples": 604,
+      "events": 90,
+      "mse": 0.13784284889698029,
+      "event_mse": 0.9148268699645996,
+      "quiet_mse": 0.0017950729234144092,
+      "mean_signed_event_prediction": 0.04493650421500206,
+      "false_alarm_fraction": 0.10894941634241245,
+      "on_mse": 0.8280779719352722,
+      "on_anticipation": 0.09066016227006912,
+      "off_mse": 1.0015757083892822,
+      "off_anticipation": -0.0007871572161093354,
+      "correct_sign": {
+        "on": {
+          "count": 45,
+          "correct": 45
+        },
+        "off": {
+          "count": 45,
+          "correct": 9
+        }
+      }
+    },
+    "stability": {
+      "finite": true,
+      "within_weight_bounds": true,
+      "max_abs": {
+        "voltage": 10.393135070800781,
+        "sensory_state": 30.0,
+        "feedforward_current": 2.025024890899658,
+        "predictive_current": 0.3188643753528595,
+        "behavioral_current": 0.0,
+        "adaptation": 1.7547025680541992,
+        "magnitudes": 0.4950000047683716
+      }
+    },
+    "pass": false
+  },
+  "baseline-initial-4": {
+    "metrics": {
+      "samples": 694,
+      "events": 90,
+      "mse": 0.12666168808937073,
+      "event_mse": 0.9754509925842285,
+      "quiet_mse": 0.000186466277227737,
+      "mean_signed_event_prediction": 0.01240829098969698,
+      "false_alarm_fraction": 0.0,
+      "on_mse": 0.9575096964836121,
+      "on_anticipation": 0.021506942808628082,
+      "off_mse": 0.9933923482894897,
+      "off_anticipation": 0.0033096414990723133,
+      "correct_sign": {
+        "on": {
+          "count": 45,
+          "correct": 45
+        },
+        "off": {
+          "count": 45,
+          "correct": 45
+        }
+      }
+    },
+    "stability": {
+      "finite": true,
+      "within_weight_bounds": true,
+      "max_abs": {
+        "voltage": 10.121438980102539,
+        "sensory_state": 30.0,
+        "feedforward_current": 2.0281481742858887,
+        "predictive_current": 0.3449999988079071,
+        "behavioral_current": 0.0,
+        "adaptation": 1.804699182510376,
+        "magnitudes": 0.4950000047683716
+      }
+    }
+  },
+  "zero-4": {
+    "metrics": {
+      "samples": 694,
+      "events": 90,
+      "mse": 0.1296830028295517,
+      "event_mse": 1.0,
+      "quiet_mse": 0.0,
+      "mean_signed_event_prediction": 0.0,
+      "false_alarm_fraction": 0.0,
+      "on_mse": 1.0,
+      "on_anticipation": 0.0,
+      "off_mse": 1.0,
+      "off_anticipation": 0.0
+    }
+  },
+  "persistence-4": {
+    "metrics": {
+      "samples": 694,
+      "events": 90,
+      "mse": 0.2593660056591034,
+      "event_mse": 1.0,
+      "quiet_mse": 0.14900662004947662,
+      "mean_signed_event_prediction": 0.0,
+      "false_alarm_fraction": 0.1490066225165563,
+      "on_mse": 1.0,
+      "on_anticipation": 0.0,
+      "off_mse": 1.0,
+      "off_anticipation": 0.0
+    }
+  },
+  "baseline-trained-4": {
+    "metrics": {
+      "samples": 694,
+      "events": 90,
+      "mse": 0.1211979016661644,
+      "event_mse": 0.922176718711853,
+      "quiet_mse": 0.0018467576010152698,
+      "mean_signed_event_prediction": 0.04061667621135712,
+      "false_alarm_fraction": 0.06456953642384106,
+      "on_mse": 0.8468999862670898,
+      "on_anticipation": 0.07995925843715668,
+      "off_mse": 0.9974535703659058,
+      "off_anticipation": 0.0012740881647914648,
+      "correct_sign": {
+        "on": {
+          "count": 45,
+          "correct": 45
+        },
+        "off": {
+          "count": 45,
+          "correct": 45
+        }
+      }
+    },
+    "stability": {
+      "finite": true,
+      "within_weight_bounds": true,
+      "max_abs": {
+        "voltage": 10.19578742980957,
+        "sensory_state": 30.0,
+        "feedforward_current": 2.0281481742858887,
+        "predictive_current": 0.3260647654533386,
+        "behavioral_current": 0.0,
+        "adaptation": 1.801537036895752,
+        "magnitudes": 0.4950000047683716
+      }
+    },
+    "pass": false
+  },
+  "A-initial-4": {
+    "metrics": {
+      "samples": 694,
+      "events": 90,
+      "mse": 0.12690863013267517,
+      "event_mse": 0.9774933457374573,
+      "quiet_mse": 0.0001658554538153112,
+      "mean_signed_event_prediction": 0.011364864185452461,
+      "false_alarm_fraction": 0.0,
+      "on_mse": 0.9620562791824341,
+      "on_anticipation": 0.019188078120350838,
+      "off_mse": 0.9929303526878357,
+      "off_anticipation": 0.0035416490864008665,
+      "correct_sign": {
+        "on": {
+          "count": 45,
+          "correct": 44
+        },
+        "off": {
+          "count": 45,
+          "correct": 45
+        }
+      }
+    },
+    "stability": {
+      "finite": true,
+      "within_weight_bounds": true,
+      "max_abs": {
+        "voltage": 10.121438980102539,
+        "sensory_state": 30.0,
+        "feedforward_current": 2.0281481742858887,
+        "predictive_current": 0.3449999988079071,
+        "behavioral_current": 0.0,
+        "adaptation": 1.804699182510376,
+        "magnitudes": 0.4950000047683716
+      }
+    }
+  },
+  "A-trained-4": {
+    "metrics": {
+      "samples": 694,
+      "events": 90,
+      "mse": 0.12145450711250305,
+      "event_mse": 0.9246984124183655,
+      "quiet_mse": 0.0017658602446317673,
+      "mean_signed_event_prediction": 0.039232250303030014,
+      "false_alarm_fraction": 0.06291390728476821,
+      "on_mse": 0.852225661277771,
+      "on_anticipation": 0.07704884558916092,
+      "off_mse": 0.9971708655357361,
+      "off_anticipation": 0.0014156531542539597,
+      "correct_sign": {
+        "on": {
+          "count": 45,
+          "correct": 45
+        },
+        "off": {
+          "count": 45,
+          "correct": 45
+        }
+      }
+    },
+    "stability": {
+      "finite": true,
+      "within_weight_bounds": true,
+      "max_abs": {
+        "voltage": 10.195798873901367,
+        "sensory_state": 30.0,
+        "feedforward_current": 2.0281481742858887,
+        "predictive_current": 0.22999998927116394,
+        "behavioral_current": 0.0,
+        "adaptation": 1.801537036895752,
+        "magnitudes": 0.4950000047683716
+      }
+    },
+    "pass": false
+  },
+  "B-initial-4": {
+    "metrics": {
+      "samples": 694,
+      "events": 90,
+      "mse": 0.12642918527126312,
+      "event_mse": 0.9734430313110352,
+      "quiet_mse": 0.00021851726341992617,
+      "mean_signed_event_prediction": 0.013451717793941498,
+      "false_alarm_fraction": 0.0,
+      "on_mse": 0.953031599521637,
+      "on_anticipation": 0.02382580190896988,
+      "off_mse": 0.9938545823097229,
+      "off_anticipation": 0.003077633213251829,
+      "correct_sign": {
+        "on": {
+          "count": 45,
+          "correct": 45
+        },
+        "off": {
+          "count": 45,
+          "correct": 45
+        }
+      }
+    },
+    "stability": {
+      "finite": true,
+      "within_weight_bounds": true,
+      "max_abs": {
+        "voltage": 10.121438980102539,
+        "sensory_state": 30.0,
+        "feedforward_current": 2.0281481742858887,
+        "predictive_current": 0.3449999988079071,
+        "behavioral_current": 0.0,
+        "adaptation": 1.804699182510376,
+        "magnitudes": 0.4950000047683716
+      }
+    }
+  },
+  "B-trained-4": {
+    "metrics": {
+      "samples": 694,
+      "events": 90,
+      "mse": 0.1210729256272316,
+      "event_mse": 0.920575737953186,
+      "quiet_mse": 0.0019417197909206152,
+      "mean_signed_event_prediction": 0.04155842587351799,
+      "false_alarm_fraction": 0.07450331125827815,
+      "on_mse": 0.8433442115783691,
+      "on_anticipation": 0.08201990276575089,
+      "off_mse": 0.9978075623512268,
+      "off_anticipation": 0.0010969432769343257,
+      "correct_sign": {
+        "on": {
+          "count": 45,
+          "correct": 45
+        },
+        "off": {
+          "count": 45,
+          "correct": 45
+        }
+      }
+    },
+    "stability": {
+      "finite": true,
+      "within_weight_bounds": true,
+      "max_abs": {
+        "voltage": 10.195772171020508,
+        "sensory_state": 30.0,
+        "feedforward_current": 2.0281481742858887,
+        "predictive_current": 0.3188643753528595,
+        "behavioral_current": 0.0,
+        "adaptation": 1.801537036895752,
+        "magnitudes": 0.4950000047683716
+      }
+    },
+    "pass": false
+  },
+  "baseline-initial-6": {
+    "metrics": {
+      "samples": 874,
+      "events": 90,
+      "mse": 0.10227030515670776,
+      "event_mse": 0.9912519454956055,
+      "quiet_mse": 0.00021884801390115172,
+      "mean_signed_event_prediction": 0.004403365775942802,
+      "false_alarm_fraction": 0.0,
+      "on_mse": 0.9847684502601624,
+      "on_anticipation": 0.007673721760511398,
+      "off_mse": 0.9977352619171143,
+      "off_anticipation": 0.001133009442128241,
+      "correct_sign": {
+        "on": {
+          "count": 45,
+          "correct": 40
+        },
+        "off": {
+          "count": 45,
+          "correct": 45
+        }
+      }
+    },
+    "stability": {
+      "finite": true,
+      "within_weight_bounds": true,
+      "max_abs": {
+        "voltage": 10.097232818603516,
+        "sensory_state": 30.0,
+        "feedforward_current": 2.030289649963379,
+        "predictive_current": 0.3449999988079071,
+        "behavioral_current": 0.0,
+        "adaptation": 2.0046980381011963,
+        "magnitudes": 0.4950000047683716
+      }
+    }
+  },
+  "zero-6": {
+    "metrics": {
+      "samples": 874,
+      "events": 90,
+      "mse": 0.10297483205795288,
+      "event_mse": 1.0,
+      "quiet_mse": 0.0,
+      "mean_signed_event_prediction": 0.0,
+      "false_alarm_fraction": 0.0,
+      "on_mse": 1.0,
+      "on_anticipation": 0.0,
+      "off_mse": 1.0,
+      "off_anticipation": 0.0
+    }
+  },
+  "persistence-6": {
+    "metrics": {
+      "samples": 874,
+      "events": 90,
+      "mse": 0.20594966411590576,
+      "event_mse": 1.0,
+      "quiet_mse": 0.11479591578245163,
+      "mean_signed_event_prediction": 0.0,
+      "false_alarm_fraction": 0.11479591836734694,
+      "on_mse": 1.0,
+      "on_anticipation": 0.0,
+      "off_mse": 1.0,
+      "off_anticipation": 0.0
+    }
+  },
+  "baseline-trained-6": {
+    "metrics": {
+      "samples": 874,
+      "events": 90,
+      "mse": 0.10049671679735184,
+      "event_mse": 0.956736147403717,
+      "quiet_mse": 0.0022039362229406834,
+      "mean_signed_event_prediction": 0.022234387695789337,
+      "false_alarm_fraction": 0.09821428571428571,
+      "on_mse": 0.9145660996437073,
+      "on_anticipation": 0.043921586126089096,
+      "off_mse": 0.9989060163497925,
+      "off_anticipation": 0.0005471873446367681,
+      "correct_sign": {
+        "on": {
+          "count": 45,
+          "correct": 45
+        },
+        "off": {
+          "count": 45,
+          "correct": 45
+        }
+      }
+    },
+    "stability": {
+      "finite": true,
+      "within_weight_bounds": true,
+      "max_abs": {
+        "voltage": 10.393248558044434,
+        "sensory_state": 30.0,
+        "feedforward_current": 2.030289649963379,
+        "predictive_current": 0.3260647654533386,
+        "behavioral_current": 0.0,
+        "adaptation": 2.002865791320801,
+        "magnitudes": 0.4950000047683716
+      }
+    },
+    "pass": false
+  },
+  "A-initial-6": {
+    "metrics": {
+      "samples": 874,
+      "events": 90,
+      "mse": 0.10226466506719589,
+      "event_mse": 0.9911106824874878,
+      "quiet_mse": 0.00022877399169374257,
+      "mean_signed_event_prediction": 0.004469790495932102,
+      "false_alarm_fraction": 0.0,
+      "on_mse": 0.9845170974731445,
+      "on_anticipation": 0.007790978066623211,
+      "off_mse": 0.9977041482925415,
+      "off_anticipation": 0.0011486026924103498,
+      "correct_sign": {
+        "on": {
+          "count": 45,
+          "correct": 38
+        },
+        "off": {
+          "count": 45,
+          "correct": 45
+        }
+      }
+    },
+    "stability": {
+      "finite": true,
+      "within_weight_bounds": true,
+      "max_abs": {
+        "voltage": 10.097232818603516,
+        "sensory_state": 30.0,
+        "feedforward_current": 2.030289649963379,
+        "predictive_current": 0.3449999988079071,
+        "behavioral_current": 0.0,
+        "adaptation": 2.0046980381011963,
+        "magnitudes": 0.4950000047683716
+      }
+    }
+  },
+  "A-trained-6": {
+    "metrics": {
+      "samples": 874,
+      "events": 90,
+      "mse": 0.10053971409797668,
+      "event_mse": 0.9558641314506531,
+      "quiet_mse": 0.0023519645910710096,
+      "mean_signed_event_prediction": 0.02265380509197712,
+      "false_alarm_fraction": 0.09438775510204081,
+      "on_mse": 0.9128443598747253,
+      "on_anticipation": 0.04474933445453644,
+      "off_mse": 0.998883843421936,
+      "off_anticipation": 0.0005582685116678476,
+      "correct_sign": {
+        "on": {
+          "count": 45,
+          "correct": 45
+        },
+        "off": {
+          "count": 45,
+          "correct": 45
+        }
+      }
+    },
+    "stability": {
+      "finite": true,
+      "within_weight_bounds": true,
+      "max_abs": {
+        "voltage": 10.308290481567383,
+        "sensory_state": 30.0,
+        "feedforward_current": 2.028111696243286,
+        "predictive_current": 0.22999998927116394,
+        "behavioral_current": 0.0,
+        "adaptation": 2.0027928352355957,
+        "magnitudes": 0.4950000047683716
+      }
+    },
+    "pass": false
+  },
+  "B-initial-6": {
+    "metrics": {
+      "samples": 874,
+      "events": 90,
+      "mse": 0.10228414833545685,
+      "event_mse": 0.9914100766181946,
+      "quiet_mse": 0.00021610560361295938,
+      "mean_signed_event_prediction": 0.004336941055953503,
+      "false_alarm_fraction": 0.0,
+      "on_mse": 0.985054075717926,
+      "on_anticipation": 0.007556465454399586,
+      "off_mse": 0.997766375541687,
+      "off_anticipation": 0.0011174161918461323,
+      "correct_sign": {
+        "on": {
+          "count": 45,
+          "correct": 38
+        },
+        "off": {
+          "count": 45,
+          "correct": 45
+        }
+      }
+    },
+    "stability": {
+      "finite": true,
+      "within_weight_bounds": true,
+      "max_abs": {
+        "voltage": 10.097232818603516,
+        "sensory_state": 30.0,
+        "feedforward_current": 2.030289649963379,
+        "predictive_current": 0.3449999988079071,
+        "behavioral_current": 0.0,
+        "adaptation": 2.0046980381011963,
+        "magnitudes": 0.4950000047683716
+      }
+    }
+  },
+  "B-trained-6": {
+    "metrics": {
+      "samples": 874,
+      "events": 90,
+      "mse": 0.10049799829721451,
+      "event_mse": 0.957951545715332,
+      "quiet_mse": 0.002065825741738081,
+      "mean_signed_event_prediction": 0.021658677607774734,
+      "false_alarm_fraction": 0.09948979591836735,
+      "on_mse": 0.9169227480888367,
+      "on_anticipation": 0.042807526886463165,
+      "off_mse": 0.9989806413650513,
+      "off_anticipation": 0.0005098226829431951,
+      "correct_sign": {
+        "on": {
+          "count": 45,
+          "correct": 45
+        },
+        "off": {
+          "count": 45,
+          "correct": 45
+        }
+      }
+    },
+    "stability": {
+      "finite": true,
+      "within_weight_bounds": true,
+      "max_abs": {
+        "voltage": 10.015010833740234,
+        "sensory_state": 30.0,
+        "feedforward_current": 2.030289649963379,
+        "predictive_current": 0.3188643753528595,
+        "behavioral_current": 0.0,
+        "adaptation": 2.00286602973938,
+        "magnitudes": 0.4950000047683716
+      }
+    },
+    "pass": false
+  }
+}
