@@ -1,0 +1,59 @@
+{
+  "checkpoint_sha256": "6358107d489ee859f1644105eb274c29b226e6cdc71ae7e58d65a8bf6c925e58",
+  "sources": {
+    "C:\\Users\\rruhl\\OneDrive\\Documents\\Fly-Connectome\\scripts\\benchmark_overhead_cpu.py": "b8a30900de3948eec6c8dc40b9e1327bbba4a421fa01137671b649b9939333a6",
+    "C:\\Users\\rruhl\\OneDrive\\Documents\\Fly-Connectome\\src\\fly_connectome\\native_cpu.py": "401b5161c48b091e0f7f5585b9b6bf06bfc4fa04ab596cf2c5a4fcbb5d5197af",
+    "C:\\Users\\rruhl\\OneDrive\\Documents\\Fly-Connectome\\src\\fly_connectome\\native_cpu.cpp": "7d6b2056e654cb9b84177a65edf89337312f6dba7a90bed112ba941fe2586822",
+    "runs\\native_cpu_deferred.dll": "5bb4818d38f52d40f303c837d72992f56099c8ebb419062fc6e75bba2c1c8dcc",
+    "runs\\native_overhead.dll": "2b18ce3317c1c8ced40edac505e1b28743363a9c87ee6c16393c28a8d5574e30"
+  },
+  "frames": 1000,
+  "warmup_frames": 5,
+  "torch_threads": 1,
+  "native_threads": 4,
+  "exact": true,
+  "runs": [
+    {
+      "mode": "reference",
+      "seconds": 30.03704760002438,
+      "fps": 33.292220104854394,
+      "spikes_sha256": "83eef6d437302cd60b44926cd718ab5f3a2293d2d5d5b33ff804e88a7cd958d0",
+      "state_sha256": "f2ba5c654e3264d5faff941baa8f8adaf6413ff7dc4ebefc710d7b9ad2ec3555"
+    },
+    {
+      "mode": "scratch",
+      "seconds": 31.110577300016303,
+      "fps": 32.14340866633407,
+      "spikes_sha256": "83eef6d437302cd60b44926cd718ab5f3a2293d2d5d5b33ff804e88a7cd958d0",
+      "state_sha256": "f2ba5c654e3264d5faff941baa8f8adaf6413ff7dc4ebefc710d7b9ad2ec3555"
+    },
+    {
+      "mode": "filtered",
+      "seconds": 87.29472000000533,
+      "fps": 11.455446560799313,
+      "spikes_sha256": "83eef6d437302cd60b44926cd718ab5f3a2293d2d5d5b33ff804e88a7cd958d0",
+      "state_sha256": "f2ba5c654e3264d5faff941baa8f8adaf6413ff7dc4ebefc710d7b9ad2ec3555"
+    },
+    {
+      "mode": "filtered",
+      "seconds": 32.82619699998759,
+      "fps": 30.463474035703197,
+      "spikes_sha256": "83eef6d437302cd60b44926cd718ab5f3a2293d2d5d5b33ff804e88a7cd958d0",
+      "state_sha256": "f2ba5c654e3264d5faff941baa8f8adaf6413ff7dc4ebefc710d7b9ad2ec3555"
+    },
+    {
+      "mode": "scratch",
+      "seconds": 41.92537359998096,
+      "fps": 23.85190432746565,
+      "spikes_sha256": "83eef6d437302cd60b44926cd718ab5f3a2293d2d5d5b33ff804e88a7cd958d0",
+      "state_sha256": "f2ba5c654e3264d5faff941baa8f8adaf6413ff7dc4ebefc710d7b9ad2ec3555"
+    },
+    {
+      "mode": "reference",
+      "seconds": 66.94524919998366,
+      "fps": 14.937579767799924,
+      "spikes_sha256": "83eef6d437302cd60b44926cd718ab5f3a2293d2d5d5b33ff804e88a7cd958d0",
+      "state_sha256": "f2ba5c654e3264d5faff941baa8f8adaf6413ff7dc4ebefc710d7b9ad2ec3555"
+    }
+  ]
+}

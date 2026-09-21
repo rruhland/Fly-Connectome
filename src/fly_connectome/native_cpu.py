@@ -188,6 +188,9 @@ class NativeCPU:
         return Activity(spikes,observed,predicted,env,edges,increments,
                         sensory_current.detach() if capture_increments else None)
 
+    def learning_arrivals(self, edges, pathways):
+        return edges[pathways[edges]!=0].clone()
+
     @torch.no_grad()
     def observe(self, rule, activity, reward):
         n,cfg=rule.network,rule.config
@@ -216,7 +219,7 @@ class NativeCPU:
         observed=self.prepare(rule,activity)
         pair_decay=math.exp(-n.config.dt/cfg.tau_pair)
         edges=activity.arrival_edges
-        incoming=edges[pathways[edges]!=0].clone()
+        incoming=self.learning_arrivals(edges,pathways)
         size=len(rule.keys)+len(incoming)
         keys=rule.keys.new_empty(size)
         values=rule.values.new_empty(size)

@@ -1,6 +1,9 @@
 # Optional next execution redesign: persistent compiled neural frame
 
-Status: proposed, not authorized or implemented. This is a larger software
+Status: bounded approved pass completed. Both overhead/memory experiments were
+exact but timing was inconclusive; neither is adopted. Optimization is stopped
+per the user's scope limit and M1A investigation has resumed. The full runner
+below remains deferred. This is a larger software
 architecture change beyond the completed bounded neuron and eligibility
 experiments. It changes no biological model assumptions. The alternative is to
 pause throughput work at the tested native implementation and resume M1A learning
@@ -62,3 +65,14 @@ may alter model behavior. These are explicitly outside current implementation.
 The user has left future reconsideration open; none is adopted or recommended
 as scientifically validated here. No-backprop, anatomical topology and local
 learning remain current nonnegotiable requirements.
+
+## Bounded execution ruling
+
+Ruling: implement only two small prerequisites now (persistent native scratch,
+then native learning-arrival filtering), rather than a full eight-tick runner.
+The user explicitly prioritized stopping after a couple of experiments and
+returning to M1A soon. Cost if wrong: potential larger runtime gains remain
+unmeasured; no biological or numerical compromise is introduced. These changes
+leave public tensor ownership, per-tick PyTorch rate lerp and checkpoints intact.
+Compare reference/scratch/filter/filter/scratch/reference over 1000 frames;
+retain only useful exact wins, record the stop, and resume M1A investigation.

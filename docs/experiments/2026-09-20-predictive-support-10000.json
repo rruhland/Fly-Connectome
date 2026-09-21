@@ -1,0 +1,48 @@
+{
+  "checkpoint_sha256": "6358107d489ee859f1644105eb274c29b226e6cdc71ae7e58d65a8bf6c925e58",
+  "graph_sha256": "c941a5c912dd03e2ab0868260c637c2b1d21525196d4bce93c7d5e7f618e34a8",
+  "frames": 500,
+  "seeds": [
+    1101,
+    1102
+  ],
+  "populations": {
+    "L1": {
+      "neurons": 892,
+      "positive_only": 5,
+      "negative_only": 13,
+      "both_signs": 871,
+      "neither_sign": 3,
+      "on_events": 423,
+      "off_events": 411,
+      "sign_unreachable_events": 129,
+      "event_conditioned_mse_lower_bound": 0.15467625899280577,
+      "all_sample_mse_lower_bound": 0.0001446188340807175
+    },
+    "L2": {
+      "neurons": 893,
+      "positive_only": 0,
+      "negative_only": 281,
+      "both_signs": 612,
+      "neither_sign": 0,
+      "on_events": 428,
+      "off_events": 416,
+      "sign_unreachable_events": 231,
+      "event_conditioned_mse_lower_bound": 0.273696682464455,
+      "all_sample_mse_lower_bound": 0.0002586786114221725
+    },
+    "L3": {
+      "neurons": 892,
+      "positive_only": 0,
+      "negative_only": 574,
+      "both_signs": 304,
+      "neither_sign": 14,
+      "on_events": 423,
+      "off_events": 411,
+      "sign_unreachable_events": 402,
+      "event_conditioned_mse_lower_bound": 0.48201438848920863,
+      "all_sample_mse_lower_bound": 0.0004506726457399103
+    }
+  },
+  "interpretation": "Structural sign support uses all existing predictive edges, including zero-weight edges. A missing sign cannot be produced by this current sum from zero initial current and nonnegative magnitudes. The bound counts unit signed events that lack structural support; it is an optimistic expressivity bound, not an achievable learner, timing audit, or M1A acceptance result. First-frame events are included."
+}

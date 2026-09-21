@@ -504,3 +504,32 @@ answer, do not implement the proposed runner or resume scientific training.
 Final review strengthened the subnormal regression to require actual nonzero
 subnormal proposals; final suite173 passed,4CUDA skipped. No benchmark or
 training process remains running. Repository is ready to resume from this ledger.
+
+## Bounded optimization pass closed; return to M1A
+
+User approved the compiled-frame proposal but narrowed scope to two exact
+software/memory experiments, then stop. Ruling: test scratch reuse and native
+arrival filtering as small prerequisites; defer the full runner to honor that
+limit. Cost: larger possible runtime gains remain unmeasured.
+Seven overhead regressions pass; all six1000-frame trials have identical spike
+and complete state hashes. Timing is inconclusive: host variability exceeds2x,
+and the first filtered sample overlapped a short test process. Neither candidate
+is adopted. No additional throughput experiment is authorized by this pass.
+See docs/experiments/2026-09-20-overhead-results.md. Current native backend remains
+available;120fps remains unmet. Scientific work is now resumed, not paused.
+
+M1A continuation: frozen predictive-sign support audit on1101/1102,500 frames.
+Anatomical sign support is an optimistic limit, not a fitted predictor. Initial
+counts find762/2512 signed events structurally unsupported. This is a partial
+constraint, not an explanation for failure on the supported remainder. Final
+review required explicit event-conditioned versus all-sample MSE denominators;
+regression failed then passed after the label/denominator correction.
+Next science work: compare initial/trained forecasts separately on sign-supported
+ON/OFF events, then examine temporal alignment of their local eligibility signals.
+Do not blindly extend the10,000-frame run or change feedback signs/topology.
+Final evaluation seeds and M1A/M1B acceptance gates remain untouched.
+Final checks:182 tests passed,4CUDA skips. Wheel built and native Python/C++
+contents verified. Fresh review found one important reporting issue (MSE
+denominators), fixed with a failing-then-passing regression; no remaining
+important findings. Scientific checkpoint bytes remain unchanged. No background
+benchmark/training process remains. Stop optimization; next work is M1A science.
