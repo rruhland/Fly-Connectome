@@ -1,0 +1,120 @@
+{
+  "runs\\temporal-area-matched-excitation-v1": {
+    "frozen.npz": {
+      "bytes": 61983,
+      "sha256": "f3abf0e44f6688f58c332dce5e8f0671cdc1da34d0a7061b1fbbd473cf50bb32"
+    },
+    "preflight-0-blank.npz": {
+      "bytes": 12247,
+      "sha256": "4d0836708d8a99bb1dfc21b4e215a1cb1393bd0db72351df52ebe86bb94f3039"
+    },
+    "preflight-0-full.npz": {
+      "bytes": 12692,
+      "sha256": "2940cbb0e570e3e98efd51af5c60bd69972ac0385e2c573870748181eaea800b"
+    },
+    "preflight-1-blank.npz": {
+      "bytes": 14855,
+      "sha256": "879e274265d008e4e87ff0481687e72608b2516a9c33164cb4d0959cc97f5054"
+    },
+    "preflight-1-full.npz": {
+      "bytes": 15380,
+      "sha256": "9aae9adac88ee4e7b9e18a28efbebd03b83bf5c5626a8add33fdea656d62232c"
+    },
+    "preflight-2-blank.npz": {
+      "bytes": 11093,
+      "sha256": "a851887ae62083044f69b15ea613a707d602fe58cf3a06f66c4f6a31b1abffc9"
+    },
+    "preflight-2-full.npz": {
+      "bytes": 11453,
+      "sha256": "745b3e7242e55364d8532da11062a25bd61256c09f980ec4004b6f55bdca82de"
+    },
+    "preflight-3-blank.npz": {
+      "bytes": 15070,
+      "sha256": "5d71c166553f5384c0747224cb53d4537397960deccee547e17f3d065d2625a8"
+    },
+    "preflight-3-full.npz": {
+      "bytes": 15629,
+      "sha256": "7b24e7ae8d95f210ca66ad9fac6c8b3d6a4b216f1364a629ab90e0bd9066542b"
+    },
+    "preflight-4-blank.npz": {
+      "bytes": 10699,
+      "sha256": "3b2f418fa6f044d855e0dfc232ad12ffab762866cc8a5cd2e04bd0fd00d96db2"
+    },
+    "preflight-4-full.npz": {
+      "bytes": 10979,
+      "sha256": "c4756762721aba9a00a9d6e51ef0bdc4185a0f3e5254a90cb066a8dd8e48b2f2"
+    },
+    "preflight-5-blank.npz": {
+      "bytes": 13779,
+      "sha256": "976e46a8f4fbeeee78228cee2587cd520cd5b0678fc4266c9c1375089321ac94"
+    },
+    "preflight-5-full.npz": {
+      "bytes": 14285,
+      "sha256": "0af6921521d70276d8f329cff4309fdb6e32c42ee89c7fbd45f2862f426f8462"
+    },
+    "preflight-6-blank.npz": {
+      "bytes": 11863,
+      "sha256": "002af3063f26986bc310e2f2cf2c3a00b80f2c1bb401f9de253cee401c2105e6"
+    },
+    "preflight-6-full.npz": {
+      "bytes": 12276,
+      "sha256": "c30e431731ea1d18d0645a1267f5e786630132fafa329730417b5aaab23ab9d9"
+    },
+    "preflight-7-blank.npz": {
+      "bytes": 10699,
+      "sha256": "3b2f418fa6f044d855e0dfc232ad12ffab762866cc8a5cd2e04bd0fd00d96db2"
+    },
+    "preflight-7-full.npz": {
+      "bytes": 10979,
+      "sha256": "c4756762721aba9a00a9d6e51ef0bdc4185a0f3e5254a90cb066a8dd8e48b2f2"
+    },
+    "preflight-8-blank.npz": {
+      "bytes": 13116,
+      "sha256": "91dfe2b24299e6f84a0d84616d8a79bf513c2ac15ee6a8ad282df8222558d7e4"
+    },
+    "preflight-8-full.npz": {
+      "bytes": 13661,
+      "sha256": "a86a4a52201f413218888612041da5fa60bcde299555715ece28ac9130a278eb"
+    },
+    "preflight-9-blank.npz": {
+      "bytes": 11093,
+      "sha256": "a851887ae62083044f69b15ea613a707d602fe58cf3a06f66c4f6a31b1abffc9"
+    },
+    "preflight-9-full.npz": {
+      "bytes": 11453,
+      "sha256": "745b3e7242e55364d8532da11062a25bd61256c09f980ec4004b6f55bdca82de"
+    },
+    "trained.npz": {
+      "bytes": 65379,
+      "sha256": "8dc902ca334cf00e066909d99879bc0b3a9b4273483506f4bdacd0c6fe4c5f4c"
+    },
+    "training.npz": {
+      "bytes": 951109,
+      "sha256": "9ed9509f16dab2603ee10cd805b76c79da4f0bab9ff6b1e81e83270a91c272af"
+    }
+  },
+  "runs\\area-matched-frozen-control": {
+    "area-matched-excitation-v1.npz": {
+      "bytes": 63765,
+      "sha256": "acb61d5ea2abe4c180037733087d0669b5c3e2cdf1e02e4f540759e66d7d7e21"
+    },
+    "original.npz": {
+      "bytes": 51503,
+      "sha256": "11e5844b5daec253cfddfd485f3d0ab404ed8b0417ba25fe3e9f35387ecbbfa4"
+    }
+  },
+  "runs\\area-matched-frozen-control-v2": {
+    "area-matched-excitation-v1.npz": {
+      "bytes": 63765,
+      "sha256": "acb61d5ea2abe4c180037733087d0669b5c3e2cdf1e02e4f540759e66d7d7e21"
+    },
+    "original.npz": {
+      "bytes": 51503,
+      "sha256": "11e5844b5daec253cfddfd485f3d0ab404ed8b0417ba25fe3e9f35387ecbbfa4"
+    },
+    "uniform-fast-control.npz": {
+      "bytes": 51513,
+      "sha256": "53a2a1970499bcb1c064188be2bd5d6646384d31d98d8733c4870e503ec6f189"
+    }
+  }
+}

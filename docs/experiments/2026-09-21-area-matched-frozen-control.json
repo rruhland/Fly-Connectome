@@ -1,0 +1,87 @@
+{
+  "seconds": 27.858488599944394,
+  "metrics": {
+    "slow-excitation-v1": {
+      "samples": 2153,
+      "events": 300,
+      "mse": 0.10765808820724487,
+      "event_mse": 0.6149435043334961,
+      "quiet_mse": 0.025528768077492714,
+      "mean_signed_event_prediction": 0.22527705132961273,
+      "false_alarm_fraction": 0.37075013491635184,
+      "on_mse": 0.5228546261787415,
+      "on_anticipation": 0.29058974981307983,
+      "off_mse": 0.7070323824882507,
+      "off_anticipation": 0.15996433794498444,
+      "all_frames": {
+        "samples": 2453,
+        "events": 400,
+        "mse": 0.13528862595558167,
+        "event_mse": 0.7113949060440063,
+        "quiet_mse": 0.023041918873786926,
+        "mean_signed_event_prediction": 0.16886450350284576,
+        "false_alarm_fraction": 0.33463224549439846,
+        "on_mse": 0.642696738243103,
+        "on_anticipation": 0.21766497194766998,
+        "off_mse": 0.7800929546356201,
+        "off_anticipation": 0.12006399780511856
+      },
+      "stability": {
+        "finite": true,
+        "within_weight_bounds": true,
+        "max_abs": {
+          "voltage": 9.957549095153809,
+          "sensory_state": 30.0,
+          "feedforward_current": 2.04105806350708,
+          "predictive_current": 0.8472577929496765,
+          "behavioral_current": 0.0,
+          "adaptation": 1.7645694017410278,
+          "magnitudes": 0.7900999784469604
+        }
+      }
+    },
+    "original": {
+      "samples": 2153,
+      "events": 300,
+      "mse": 0.13272051513195038,
+      "event_mse": 0.6813529133796692,
+      "quiet_mse": 0.043897148221731186,
+      "mean_signed_event_prediction": 0.218333438038826,
+      "false_alarm_fraction": 0.24446842957366433,
+      "on_mse": 0.33285948634147644,
+      "on_anticipation": 0.45145681500434875,
+      "off_mse": 1.02984619140625,
+      "off_anticipation": -0.014789954759180546
+    },
+    "uniform-fast-control": {
+      "samples": 2153,
+      "events": 300,
+      "mse": 0.13272051513195038,
+      "event_mse": 0.6813529133796692,
+      "quiet_mse": 0.043897148221731186,
+      "mean_signed_event_prediction": 0.218333438038826,
+      "false_alarm_fraction": 0.24446842957366433,
+      "on_mse": 0.33285945653915405,
+      "on_anticipation": 0.45145684480667114,
+      "off_mse": 1.02984619140625,
+      "off_anticipation": -0.014789956621825695
+    },
+    "area-matched-excitation-v1": {
+      "samples": 2153,
+      "events": 300,
+      "mse": 0.1321040391921997,
+      "event_mse": 0.6001405119895935,
+      "quiet_mse": 0.05632910132408142,
+      "mean_signed_event_prediction": 0.28628942370414734,
+      "false_alarm_fraction": 0.18564490016189963,
+      "on_mse": 0.25549209117889404,
+      "on_anticipation": 0.5445526838302612,
+      "off_mse": 0.9447889924049377,
+      "off_anticipation": 0.028026238083839417
+    }
+  },
+  "weights_source": "runs\\temporal-slow-excitation-v1-warmup\\training.npz",
+  "weights_source_sha256": "2a9f328829ac50bf937865282d5c5107d9a7f7ed00793dfd62c3cb63e1644bf1",
+  "note": "All conditions use identical magnitudes learned by unscaled20ms model. No retraining; fresh warmup and same evaluation trajectories. Slow-excitation reference reused from saved frozen evaluation. Uniform-fast-control sets both predictive decays to5ms before warmup, eliminating original class-dependent decay differences.",
+  "source_unchanged": true
+}

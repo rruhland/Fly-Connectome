@@ -67,3 +67,28 @@ def test_warmup_spikes_reconstruct_long_lived_predictive_current(tmp_path):
     reconstructed = np.zeros(net.n)
     np.add.at(reconstructed, net.post.numpy(), trace*net.magnitudes.numpy())
     np.testing.assert_allclose(reconstructed, a.predicted[0].numpy(), atol=1e-6, rtol=1e-6)
+
+
+def test_area_matched_impulse_integral_and_eligibility():
+    from signed_kinetics import AreaMatchedKineticsNetwork
+    graph = Graph.from_contacts([10, 20, 30], [10, 20], [30, 30], [1, 1], [1, -1, 1], .5)
+    dt = 1/960
+    net = AreaMatchedKineticsNetwork(graph, [1, 1], ['predictive']*2,
+                                    config=NeuronConfig(dt=dt, threshold=100.))
+    rule = FramePrediction(net, LearningConfig(visual_target='input-arrivals-v1',
+                           visual_eligibility='forecast-causal-v1', homeostasis_rate=0.))
+    gain = (1-math.exp(-dt/.020))/(1-math.exp(-dt/.005))
+    net.step(torch.zeros(1, 3))
+    net.history[0, 0, :2] = True
+    area = 0.
+    for tick in range(400):
+        a = net.step(torch.zeros(1, 3), capture_increments=True)
+        if tick < 12:
+            rule.observe(a, torch.zeros(1))
+            expected = torch.tensor([gain*math.exp(-tick*dt/.020), -math.exp(-tick*dt/.005)])
+            torch.testing.assert_close(rule.values, expected, atol=1e-7, rtol=1e-6)
+        area += net.excitatory_prediction[0, 2].item()*dt
+        expected_current = .5*(gain*math.exp(-tick*dt/.020)-math.exp(-tick*dt/.005))
+        torch.testing.assert_close(a.predicted[0, 2], torch.tensor(expected_current), atol=1e-7, rtol=1e-6)
+    original_area = .5*dt/(1-math.exp(-dt/.005))
+    assert abs(area/original_area-1) < 1e-6

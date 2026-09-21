@@ -62,6 +62,9 @@ def make_network(crop, metadata, weights=None, *, predictive_kinetics='original'
     if predictive_kinetics == 'slow-excitation-v1':
         from signed_kinetics import SignedKineticsNetwork
         network_class = SignedKineticsNetwork
+    elif predictive_kinetics == 'area-matched-excitation-v1':
+        from signed_kinetics import AreaMatchedKineticsNetwork
+        network_class = AreaMatchedKineticsNetwork
     elif predictive_kinetics != 'original':
         raise ValueError('unknown predictive kinetics')
     net = network_class(crop['graph'], crop['delays'], crop['pathways'],

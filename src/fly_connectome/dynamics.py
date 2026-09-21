@@ -92,6 +92,9 @@ class Network:
     def visual_decay(self, edges):
         return self.current_decay[self.post[edges]]
 
+    def visual_impulse(self, edges):
+        return self.signs[edges]
+
     def _decay_prediction(self, leak):
         self.predictive_current.mul_(leak)
 
@@ -114,7 +117,8 @@ class Network:
             increments = torch.zeros_like(self.voltage)
             increments.view(-1).index_add_(0, targets[ff], weights[ff])
         self.feedforward_current.view(-1).index_add_(0, targets[ff], weights[ff])
-        self.predictive_current.view(-1).index_add_(0, targets[pred], weights[pred])
+        self.predictive_current.view(-1).index_add_(0, targets[pred],
+                                                   self.magnitudes[edges[pred]]*self.visual_impulse(edges[pred]))
         self.behavioral_current.view(-1).index_add_(0, targets[behavior], weights[behavior])
         if cfg.tau_sensory:
             self.sensory_state.mul_(math.exp(-cfg.dt / cfg.tau_sensory)).add_(sensory_current.detach())

@@ -34,9 +34,25 @@ class SignedKineticsNetwork(Network):
         activity = super().step(sensory_current, capture_increments=capture_increments)
         env, edges = activity.arrival_environments, activity.arrival_edges
         targets = env*self.n+self.post[edges]
-        weights = self.magnitudes[edges]*self.signs[edges]
+        weights = self.magnitudes[edges]*self.visual_impulse(edges)
         visual = self.pathways[edges] == 1
         for current, mask in ((self.excitatory_prediction, visual & (weights > 0)),
                               (self.inhibitory_prediction, visual & (weights < 0))):
             current.view(-1).index_add_(0, targets[mask], weights[mask])
         return activity
+
+
+class AreaMatchedKineticsNetwork(SignedKineticsNetwork):
+    """20 ms excitation with the discrete impulse area of a unit 5 ms synapse.
+
+    Sum of an impulse A*r**k is A/(1-r). This factor matches that sum at
+    the actual dt. Magnitudes remain plastic; the fixed waveform gain is not.
+    """
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.excitatory_gain = (1-self.excitatory_decay)/(1-self.inhibitory_decay)
+
+    def visual_impulse(self, edges):
+        signs = self.signs[edges]
+        return signs*torch.where(signs > 0, self.excitatory_gain, 1.)

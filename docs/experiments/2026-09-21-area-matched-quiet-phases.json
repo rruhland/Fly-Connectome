@@ -1,0 +1,120 @@
+{
+  "unscaled": {
+    "groups": {
+      "blank": {
+        "count": 1253,
+        "false_alarms": 331,
+        "false_alarm_fraction": 0.2641660015961692,
+        "mean_prediction": 0.013081000186502934
+      },
+      "after_on_1": {
+        "count": 150,
+        "false_alarms": 83,
+        "false_alarm_fraction": 0.5533333333333333,
+        "mean_prediction": -0.16054783761501312
+      },
+      "after_on_2": {
+        "count": 150,
+        "false_alarms": 142,
+        "false_alarm_fraction": 0.9466666666666667,
+        "mean_prediction": 0.16504086554050446
+      },
+      "after_off_1": {
+        "count": 150,
+        "false_alarms": 92,
+        "false_alarm_fraction": 0.6133333333333333,
+        "mean_prediction": 0.1151183694601059
+      },
+      "after_off_2": {
+        "count": 150,
+        "false_alarms": 39,
+        "false_alarm_fraction": 0.26,
+        "mean_prediction": -0.021971166133880615
+      }
+    },
+    "on_correct": 150,
+    "off_correct": 150,
+    "events_per_polarity": 150,
+    "blank_gap_groups": {
+      "no_prior_stimulus": {
+        "count": 32,
+        "false_alarms": 12,
+        "mean_abs_prediction": 0.0793013870716095
+      },
+      "gap_1_to_3_frames": {
+        "count": 148,
+        "false_alarms": 140,
+        "mean_abs_prediction": 0.27697324752807617
+      },
+      "gap_4_to_6_frames": {
+        "count": 147,
+        "false_alarms": 126,
+        "mean_abs_prediction": 0.18141520023345947
+      },
+      "gap_7_plus_frames": {
+        "count": 926,
+        "false_alarms": 53,
+        "mean_abs_prediction": 0.019788188859820366
+      }
+    }
+  },
+  "area_matched": {
+    "groups": {
+      "blank": {
+        "count": 1253,
+        "false_alarms": 242,
+        "false_alarm_fraction": 0.1931364724660814,
+        "mean_prediction": -0.0005134675884619355
+      },
+      "after_on_1": {
+        "count": 150,
+        "false_alarms": 101,
+        "false_alarm_fraction": 0.6733333333333333,
+        "mean_prediction": -0.1841525286436081
+      },
+      "after_on_2": {
+        "count": 150,
+        "false_alarms": 94,
+        "false_alarm_fraction": 0.6266666666666667,
+        "mean_prediction": 0.1030353307723999
+      },
+      "after_off_1": {
+        "count": 150,
+        "false_alarms": 1,
+        "false_alarm_fraction": 0.006666666666666667,
+        "mean_prediction": 0.08073102682828903
+      },
+      "after_off_2": {
+        "count": 150,
+        "false_alarms": 38,
+        "false_alarm_fraction": 0.25333333333333335,
+        "mean_prediction": -0.03298017010092735
+      }
+    },
+    "on_correct": 150,
+    "off_correct": 150,
+    "events_per_polarity": 150,
+    "blank_gap_groups": {
+      "no_prior_stimulus": {
+        "count": 32,
+        "false_alarms": 9,
+        "mean_abs_prediction": 0.07445906847715378
+      },
+      "gap_1_to_3_frames": {
+        "count": 148,
+        "false_alarms": 117,
+        "mean_abs_prediction": 0.23601913452148438
+      },
+      "gap_4_to_6_frames": {
+        "count": 147,
+        "false_alarms": 110,
+        "mean_abs_prediction": 0.1296786665916443
+      },
+      "gap_7_plus_frames": {
+        "count": 926,
+        "false_alarms": 6,
+        "mean_abs_prediction": 0.013987204059958458
+      }
+    }
+  }
+}
