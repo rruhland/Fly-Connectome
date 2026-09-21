@@ -1,0 +1,107 @@
+{
+  "source_bodies": [
+    10531,
+    36533,
+    38366,
+    55976,
+    70997
+  ],
+  "source_types": [
+    "Pm12",
+    "Mi1",
+    "L1",
+    "Mi1",
+    "Tm4"
+  ],
+  "signed_weights": [
+    -0.025,
+    0.035,
+    -0.265,
+    0.035,
+    0.03
+  ],
+  "delay_ticks": 1,
+  "spike_driven_arrivals_excluding_warmup_history": [
+    [
+      0,
+      1,
+      5,
+      1,
+      0
+    ],
+    [
+      0,
+      1,
+      5,
+      1,
+      0
+    ],
+    [
+      0,
+      1,
+      5,
+      1,
+      0
+    ],
+    [
+      0,
+      1,
+      4,
+      1,
+      0
+    ],
+    [
+      0,
+      1,
+      5,
+      1,
+      0
+    ],
+    [
+      0,
+      1,
+      5,
+      1,
+      0
+    ],
+    [
+      0,
+      1,
+      6,
+      1,
+      0
+    ],
+    [
+      0,
+      1,
+      6,
+      1,
+      0
+    ],
+    [
+      0,
+      1,
+      5,
+      1,
+      0
+    ],
+    [
+      0,
+      1,
+      5,
+      1,
+      0
+    ]
+  ],
+  "total_weighted_arrival_impulses": [
+    -0.0,
+    0.35000000000000003,
+    -13.515,
+    0.35000000000000003,
+    0.0
+  ],
+  "c2_spikes": 0,
+  "c2_rest_current": 1.0,
+  "baseline_threshold": 1.0,
+  "note": "Totals are sums of arrival impulses across ten full probes, not mean current or voltage. Initial warmup-history arrivals excluded. No source spikes occur on the final tick in these probes."
+}

@@ -719,3 +719,34 @@ Stop bounded attempt. Next small test needs a measured motif with verified
 sign-compatible output and actual precursor response before target, checked
 with a short frozen preflight before any more training. No model changes,
 full-Pong runs or M1B advancement. M1A remains unmet. No experiments running.
+
+
+## Frozen compatible-motif preflight (2026-09-21)
+
+User asked to continue. No additional training or model changes. Read-only
+anatomical inventory:136/137 predictiveL2->L1 edges share mapped column; sole
+cross-column pair22312->24823; none spans tested rightward2-4pixel interior gaps.
+Fixed previousL1target38366 and trajectory. Retain all3predictive sources plus
+ALL their direct parents and trajectory sensory neurons:63neurons/274edges.
+Mixed measured output signs; exact retained parameters, no renormalization.
+
+Ten frozen paired probes(seed9011), full dot vs separately blanked pre-ON/pre-OFF
+images from matched warmed state. Read8ticks before actual target; physical
+trace reconstructed from recorded spikes/delays.6.76sec execution; gateFAIL
+ON0/10 OFF1/10,8/10 each required. Reconstructionerror8.38e-9<1e-6. C2supplies
+zero spikes in all10 full probes despite all5direct inputs retained; positive
+arrival impulse totals+.700 versus inhibitory-13.515. These sums do not prove
+voltage causality. Most other positive forecast residuals equal blank controls.
+OneOFFtrial has0.122628 full vs0.111344 blank, insufficient consistency.
+
+207tests pass,4CUDA skips. Focused review no code blockers; clarify correctly
+signed frozen current is not necessary for eventual learning because weights
+could unmask opposed signals. No global learning-impossibility claim. Source
+checkpoint unchanged; weights remain frozen; no final seeds/full-Pong/M1B work.
+See docs/experiments/2026-09-21-visual-preflight-findings.md and local probe data
+in runs/visual-preflight-v1. No processes running.
+
+Next recommendation: specify a repeating two-position dot around an actual
+same-column L2->L1 motif so a directly stimulated precursor can support temporal
+prediction. Retain positive feedback if both polarities are scored. Frozen
+preflight before training, no automatic architecture/timing/excitability sweep.
