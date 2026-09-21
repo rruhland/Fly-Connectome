@@ -1,0 +1,13 @@
+{
+  "directory": "runs\\temporal-visual-1000",
+  "files": {
+    "trained.npz": {
+      "bytes": 47245,
+      "sha256": "f9c3a5abffd23f3dc6e444630fb56512d7ced7110568753e978cbf9f11f9dd22"
+    },
+    "training.npz": {
+      "bytes": 3491108,
+      "sha256": "ed7f199c641cdd069aa5a1b79ce30a68d61327514b27f7f93416ad46c54a610f"
+    }
+  }
+}

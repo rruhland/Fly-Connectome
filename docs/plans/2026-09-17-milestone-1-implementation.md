@@ -750,3 +750,12 @@ Next recommendation: specify a repeating two-position dot around an actual
 same-column L2->L1 motif so a directly stimulated precursor can support temporal
 prediction. Retain positive feedback if both polarities are scored. Frozen
 preflight before training, no automatic architecture/timing/excitability sweep.
+
+
+### 2026-09-21: temporal visual motif and extended training
+
+Implemented scripts/temporal_visual.py with 200/1000-trial options and three focused tests. Anatomy inventory selected measured L3 82450 with directly driven L1 inhibitory and L2 excitatory predictive inputs. Frozen preflight passed 30/30 ON and OFF availability probes. The 250-neuron/1664-edge induced circuit preserves retained topology, signs, dynamics and local rule. At 200 trials local ON anticipation improves; causal target-input weight swaps reproduce/remove the gain. OFF remains wrong-sign. Conditional fixed-spike feature analysis distinguishes timing-objective mismatch from insufficient phase discrimination without changing model weights.
+
+User requested 1000 training steps, interpreted explicitly as 1000 total trials matching the prior unit. First 200 weights and all recorded traces match exactly. 48,905 camera frames / 391,240 ticks took 512.4 seconds (95.4 FPS); total including storage and frozen evaluation 524.46 seconds. Same 50 evaluation trajectories: MSE 0.134747 (200) -> 0.133457 (1000), ON 0.928360 -> 0.906754, OFF 1.002372 -> 1.003115. Gate still fails, M1A unmet. No full-Pong/M1B advancement or architecture changes. Diagnostic overhead was not separately profiled.
+
+See docs/experiments/2026-09-21-temporal-visual-findings.md, protocol, numerical results, causal swaps, feature analysis, learning curve and artifact hashes. Raw arrays remain under runs/temporal-visual-v1 and runs/temporal-visual-1000. Next: discuss discriminating predictive traces and horizon mismatch; do not assume more repetitions alone will fix OFF. Fresh validation: 210 passed, 4 skipped.

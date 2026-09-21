@@ -1,0 +1,86 @@
+{
+  "scope": "Offline bounded linear least-squares on recorded TRAINED spikes only; no neural weights changed, no backprop, no new readout deployed. Fit trials2-25, evaluate26-50. Coupled dynamics are not rerun, so this is conditional feature analysis, not attainable-performance proof.",
+  "active_source_bodies": [
+    20655,
+    26550
+  ],
+  "reconstruction_error": 6.9665853363876096e-09,
+  "diagnostics": {
+    "one_tick": {
+      "weights": [
+        0.0,
+        0.057132919933911584
+      ],
+      "fit_unclipped_mse": 0.020267178093266048,
+      "test_eight_tick": {
+        "samples": 1084,
+        "events": 150,
+        "mse": 0.1327596632560448,
+        "event_mse": 0.9568143998824892,
+        "quiet_mse": 0.00041682546807192845,
+        "mean_signed_event_prediction": 0.022201557590140517,
+        "false_alarm_fraction": 0.0,
+        "on_mse": 0.9106074615201385,
+        "on_anticipation": 0.04591245603063505,
+        "off_mse": 1.00302133824484,
+        "off_anticipation": -0.0015093408503540136
+      },
+      "max_abs_unclipped": 0.07928733466623401
+    },
+    "eight_tick": {
+      "weights": [
+        0.0,
+        0.3343445469910915
+      ],
+      "fit_unclipped_mse": 0.12306655150118638,
+      "test_eight_tick": {
+        "samples": 1084,
+        "events": 150,
+        "mse": 0.12048858519506332,
+        "event_mse": 0.7818464491776905,
+        "quiet_mse": 0.014274795476225984,
+        "mean_signed_event_prediction": 0.12992456404396394,
+        "false_alarm_fraction": 0.16167023554603854,
+        "on_mse": 0.5459364531853016,
+        "on_anticipation": 0.2686818620607496,
+        "off_mse": 1.0177564451700796,
+        "off_anticipation": -0.008832733972821676
+      },
+      "max_abs_unclipped": 0.46399322880359795
+    }
+  },
+  "trained_reference": {
+    "samples": 1084,
+    "events": 150,
+    "mse": 0.13384157419204712,
+    "event_mse": 0.9655615091323853,
+    "quiet_mse": 0.00026773600257001817,
+    "mean_signed_event_prediction": 0.017601972445845604,
+    "false_alarm_fraction": 0.0,
+    "on_mse": 0.9287322163581848,
+    "on_anticipation": 0.03639845550060272,
+    "off_mse": 1.002390742301941,
+    "off_anticipation": -0.0011945146834477782
+  },
+  "zero_reference": {
+    "samples": 1084,
+    "events": 150,
+    "mse": 0.138376384973526,
+    "event_mse": 1.0,
+    "quiet_mse": 0.0,
+    "mean_signed_event_prediction": 0.0,
+    "false_alarm_fraction": 0.0,
+    "on_mse": 1.0,
+    "on_anticipation": 0.0,
+    "off_mse": 1.0,
+    "off_anticipation": 0.0
+  },
+  "on_source_trace_means": [
+    0.8062279849395165,
+    -0.8036077288495702
+  ],
+  "off_source_trace_means": [
+    0.026639945590650308,
+    -0.0264180590122112
+  ]
+}

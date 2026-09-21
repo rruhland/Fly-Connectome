@@ -1,0 +1,73 @@
+{
+  "metrics": {
+    "initial_with_learned_target": {
+      "samples": 2153,
+      "events": 300,
+      "mse": 0.13475355505943298,
+      "event_mse": 0.9654000997543335,
+      "quiet_mse": 0.00027220757328905165,
+      "mean_signed_event_prediction": 0.01768592745065689,
+      "false_alarm_fraction": 0.0,
+      "on_mse": 0.928441047668457,
+      "on_anticipation": 0.03655056282877922,
+      "off_mse": 1.0023590326309204,
+      "off_anticipation": -0.001178704435005784,
+      "stability": {
+        "finite": true,
+        "within_weight_bounds": true,
+        "max_abs": {
+          "voltage": 10.393192291259766,
+          "sensory_state": 30.0,
+          "feedforward_current": 2.03389048576355,
+          "predictive_current": 0.34500008821487427,
+          "behavioral_current": 0.0,
+          "adaptation": 1.7657434940338135,
+          "magnitudes": 0.4950000047683716
+        }
+      }
+    },
+    "trained_with_initial_target": {
+      "samples": 2153,
+      "events": 300,
+      "mse": 0.137235626578331,
+      "event_mse": 0.9845319390296936,
+      "quiet_mse": 5.8667606936069205e-05,
+      "mean_signed_event_prediction": 0.0078095942735672,
+      "false_alarm_fraction": 0.0,
+      "on_mse": 0.9680214524269104,
+      "on_anticipation": 0.016140347346663475,
+      "off_mse": 1.0010427236557007,
+      "off_anticipation": -0.0005211569950915873,
+      "stability": {
+        "finite": true,
+        "within_weight_bounds": true,
+        "max_abs": {
+          "voltage": 10.070550918579102,
+          "sensory_state": 30.0,
+          "feedforward_current": 2.0521087646484375,
+          "predictive_current": 0.2536849081516266,
+          "behavioral_current": 0.0,
+          "adaptation": 1.7650249004364014,
+          "magnitudes": 0.4950000047683716
+        }
+      }
+    }
+  },
+  "seconds": 21.95037219999358,
+  "source_unchanged": true,
+  "changed_edges": [
+    238,
+    346,
+    430,
+    474,
+    518,
+    547,
+    578,
+    629,
+    654,
+    669,
+    683,
+    1306
+  ],
+  "explanation": "Frozen evaluations swap only all twelve measured predictive inputs to L3 82450. All other weights stay in their respective initial/trained state; same fresh warmup and evaluation images."
+}
