@@ -1,0 +1,444 @@
+{
+  "counts": {
+    "2": {
+      "all": {
+        "count": 32,
+        "adaptation_diff_gt_1pct_SD": 32,
+        "voltage_or_adaptation_diff_gt_1pct_SD": 32
+      },
+      "events": {
+        "count": 24,
+        "adaptation_diff_gt_1pct_SD": 24,
+        "voltage_or_adaptation_diff_gt_1pct_SD": 24
+      }
+    },
+    "3": {
+      "all": {
+        "count": 139,
+        "adaptation_diff_gt_1pct_SD": 139,
+        "voltage_or_adaptation_diff_gt_1pct_SD": 139
+      },
+      "events": {
+        "count": 79,
+        "adaptation_diff_gt_1pct_SD": 79,
+        "voltage_or_adaptation_diff_gt_1pct_SD": 79
+      }
+    },
+    "4": {
+      "all": {
+        "count": 43,
+        "adaptation_diff_gt_1pct_SD": 43,
+        "voltage_or_adaptation_diff_gt_1pct_SD": 43
+      },
+      "events": {
+        "count": 22,
+        "adaptation_diff_gt_1pct_SD": 22,
+        "voltage_or_adaptation_diff_gt_1pct_SD": 22
+      }
+    },
+    "6": {
+      "all": {
+        "count": 61,
+        "adaptation_diff_gt_1pct_SD": 61,
+        "voltage_or_adaptation_diff_gt_1pct_SD": 61
+      },
+      "events": {
+        "count": 32,
+        "adaptation_diff_gt_1pct_SD": 32,
+        "voltage_or_adaptation_diff_gt_1pct_SD": 32
+      }
+    }
+  },
+  "representative_pairs": [
+    {
+      "test_tempo": 2,
+      "donor_tempo": 6,
+      "test_future": -1.0,
+      "donor_future": 0.0,
+      "EI_RMS": 1.2884704377244047e-08,
+      "features": {
+        "excitatory_prediction": {
+          "test": 4.368120087860916e-09,
+          "donor": 4.413234222511164e-09,
+          "SD_difference": 1.813709551517012e-08
+        },
+        "inhibitory_prediction": {
+          "test": -2.8600216830033914e-26,
+          "donor": -7.078450325881391e-11,
+          "SD_difference": 1.7541322788027595e-09
+        },
+        "voltage": {
+          "test": -1.0946362018585205,
+          "donor": 1.5015767812728882,
+          "SD_difference": 1.0788394623866189
+        },
+        "adaptation": {
+          "test": 0.7235697507858276,
+          "donor": 0.896024227142334,
+          "SD_difference": 0.9217948796849984
+        },
+        "own_post_trace": {
+          "test": 1.7817495745475753e-06,
+          "donor": 8.773608328738192e-07,
+          "SD_difference": 1.941291949114475e-06
+        },
+        "own_rate": {
+          "test": 3.380873203277588,
+          "donor": 3.621274709701538,
+          "SD_difference": 0.16881233828612713
+        }
+      }
+    },
+    {
+      "test_tempo": 2,
+      "donor_tempo": 4,
+      "test_future": 0.0,
+      "donor_future": 1.0,
+      "EI_RMS": 0.0007161368846273245,
+      "features": {
+        "excitatory_prediction": {
+          "test": 0.0012583304196596146,
+          "donor": 0.0012558391317725182,
+          "SD_difference": 0.001001564736071144
+        },
+        "inhibitory_prediction": {
+          "test": -0.00014828500570729375,
+          "donor": -0.0001422223576810211,
+          "SD_difference": 0.00015024032250421284
+        },
+        "voltage": {
+          "test": 0.9361425638198853,
+          "donor": -5.443429946899414,
+          "SD_difference": 2.6509899697903556
+        },
+        "adaptation": {
+          "test": 0.9012435078620911,
+          "donor": 0.9123362302780151,
+          "SD_difference": 0.059292254633203895
+        },
+        "own_post_trace": {
+          "test": 0.4611131250858307,
+          "donor": 0.3111971616744995,
+          "SD_difference": 0.32179818191405807
+        },
+        "own_rate": {
+          "test": 3.270939826965332,
+          "donor": 3.4556403160095215,
+          "SD_difference": 0.12969852769206494
+        }
+      }
+    },
+    {
+      "test_tempo": 3,
+      "donor_tempo": 2,
+      "test_future": -1.0,
+      "donor_future": 0.0,
+      "EI_RMS": 0.0014760647276211264,
+      "features": {
+        "excitatory_prediction": {
+          "test": 0.005907680839300156,
+          "donor": 0.005904293619096279,
+          "SD_difference": 0.001361753624332991
+        },
+        "inhibitory_prediction": {
+          "test": -0.11567842215299606,
+          "donor": -0.1157422661781311,
+          "SD_difference": 0.0015821381819773395
+        },
+        "voltage": {
+          "test": 0.29449108242988586,
+          "donor": -0.24476665258407593,
+          "SD_difference": 0.2240850533874869
+        },
+        "adaptation": {
+          "test": 0.9352337121963501,
+          "donor": 0.512627363204956,
+          "SD_difference": 2.258893922923337
+        },
+        "own_post_trace": {
+          "test": 0.9464450478553772,
+          "donor": 0.8119540214538574,
+          "SD_difference": 0.28868818766830184
+        },
+        "own_rate": {
+          "test": 4.351672172546387,
+          "donor": 0.29709869623184204,
+          "SD_difference": 2.847161981100545
+        }
+      }
+    },
+    {
+      "test_tempo": 3,
+      "donor_tempo": 2,
+      "test_future": 0.0,
+      "donor_future": -1.0,
+      "EI_RMS": 1.0311357688635233e-06,
+      "features": {
+        "excitatory_prediction": {
+          "test": 3.995988322458288e-07,
+          "donor": 3.959715968449018e-07,
+          "SD_difference": 1.4582461889747866e-06
+        },
+        "inhibitory_prediction": {
+          "test": -9.685525000808171e-19,
+          "donor": -9.685663553560774e-19,
+          "SD_difference": 3.4335178530335656e-22
+        },
+        "voltage": {
+          "test": 1.4991037845611572,
+          "donor": -1.086844801902771,
+          "SD_difference": 1.0745741589410167
+        },
+        "adaptation": {
+          "test": 0.8404479622840881,
+          "donor": 0.6418883800506592,
+          "SD_difference": 1.0613305614450743
+        },
+        "own_post_trace": {
+          "test": 0.0001765994675224647,
+          "donor": 0.0001119577354984358,
+          "SD_difference": 0.00013875501559519702
+        },
+        "own_rate": {
+          "test": 3.499450922012329,
+          "donor": 1.2704143524169922,
+          "SD_difference": 1.5652517367136944
+        }
+      }
+    },
+    {
+      "test_tempo": 3,
+      "donor_tempo": 2,
+      "test_future": 1.0,
+      "donor_future": 0.0,
+      "EI_RMS": 0.0025616108948700376,
+      "features": {
+        "excitatory_prediction": {
+          "test": 0.001745023182593286,
+          "donor": 0.0017362050712108612,
+          "SD_difference": 0.003545117946877614
+        },
+        "inhibitory_prediction": {
+          "test": -0.0009197652689181268,
+          "donor": -0.0009498503059148788,
+          "SD_difference": 0.0007455464413166846
+        },
+        "voltage": {
+          "test": -3.7880866527557373,
+          "donor": 0.0,
+          "SD_difference": 1.574114833600335
+        },
+        "adaptation": {
+          "test": 0.977218747138977,
+          "donor": 0.6901684999465942,
+          "SD_difference": 1.53432635478394
+        },
+        "own_post_trace": {
+          "test": 0.27119728922843933,
+          "donor": 1.2564051151275635,
+          "SD_difference": 2.114772036063753
+        },
+        "own_rate": {
+          "test": 4.717132091522217,
+          "donor": 0.46224620938301086,
+          "SD_difference": 2.9878233526451448
+        }
+      }
+    },
+    {
+      "test_tempo": 4,
+      "donor_tempo": 2,
+      "test_future": 0.0,
+      "donor_future": -1.0,
+      "EI_RMS": 2.431138984434218e-07,
+      "features": {
+        "excitatory_prediction": {
+          "test": 8.403000073542444e-09,
+          "donor": 9.258203981232782e-09,
+          "SD_difference": 3.4381497238008257e-07
+        },
+        "inhibitory_prediction": {
+          "test": -1.9950890101694126e-25,
+          "donor": -2.9628595011305074e-25,
+          "SD_difference": 2.3982614534435834e-24
+        },
+        "voltage": {
+          "test": 1.501685380935669,
+          "donor": -1.0933363437652588,
+          "SD_difference": 1.07834444267404
+        },
+        "adaptation": {
+          "test": 0.8235561847686768,
+          "donor": 0.6141790151596069,
+          "SD_difference": 1.1191521782803315
+        },
+        "own_post_trace": {
+          "test": 2.6679942948248936e-06,
+          "donor": 2.71518752015254e-06,
+          "SD_difference": 1.0130138087715622e-07
+        },
+        "own_rate": {
+          "test": 6.098110675811768,
+          "donor": 1.11707603931427,
+          "SD_difference": 3.4977322587507733
+        }
+      }
+    },
+    {
+      "test_tempo": 4,
+      "donor_tempo": 6,
+      "test_future": 1.0,
+      "donor_future": 0.0,
+      "EI_RMS": 0.0008716363554400215,
+      "features": {
+        "excitatory_prediction": {
+          "test": 0.0012368145398795605,
+          "donor": 0.0012391499476507306,
+          "SD_difference": 0.0009388967369309915
+        },
+        "inhibitory_prediction": {
+          "test": -0.00011547571193659678,
+          "donor": -8.324447844643146e-05,
+          "SD_difference": 0.0007987319886106227
+        },
+        "voltage": {
+          "test": -5.299008846282959,
+          "donor": -5.680732250213623,
+          "SD_difference": 0.1586226840989892
+        },
+        "adaptation": {
+          "test": 1.0507938861846924,
+          "donor": 1.030998706817627,
+          "SD_difference": 0.10580818409889084
+        },
+        "own_post_trace": {
+          "test": 0.3074749708175659,
+          "donor": 0.22737173736095428,
+          "SD_difference": 0.17194349624428756
+        },
+        "own_rate": {
+          "test": 5.383346080780029,
+          "donor": 3.3868277072906494,
+          "SD_difference": 1.401975137649886
+        }
+      }
+    },
+    {
+      "test_tempo": 6,
+      "donor_tempo": 2,
+      "test_future": -1.0,
+      "donor_future": 0.0,
+      "EI_RMS": 0.006391166873603375,
+      "features": {
+        "excitatory_prediction": {
+          "test": 0.006560660433024168,
+          "donor": 0.006538236979395151,
+          "SD_difference": 0.009014831458087826
+        },
+        "inhibitory_prediction": {
+          "test": -0.05426453799009323,
+          "donor": -0.054238174110651016,
+          "SD_difference": 0.0006533313055113567
+        },
+        "voltage": {
+          "test": 1.0452135801315308,
+          "donor": 0.7816394567489624,
+          "SD_difference": 0.109526517052581
+        },
+        "adaptation": {
+          "test": 0.9838184118270874,
+          "donor": 0.49741697311401367,
+          "SD_difference": 2.5998881858552125
+        },
+        "own_post_trace": {
+          "test": 1.1215953826904297,
+          "donor": 1.3291326761245728,
+          "SD_difference": 0.4454837376005801
+        },
+        "own_rate": {
+          "test": 7.6274824142456055,
+          "donor": 0.19934575259685516,
+          "SD_difference": 5.216111735799443
+        }
+      }
+    },
+    {
+      "test_tempo": 6,
+      "donor_tempo": 2,
+      "test_future": 0.0,
+      "donor_future": -1.0,
+      "EI_RMS": 7.513025756310235e-09,
+      "features": {
+        "excitatory_prediction": {
+          "test": 5.3764239282827475e-08,
+          "donor": 5.373781064577088e-08,
+          "SD_difference": 1.0625022919033785e-08
+        },
+        "inhibitory_prediction": {
+          "test": -2.871409266358301e-22,
+          "donor": -1.1253738717460131e-21,
+          "SD_difference": 2.0772505258636358e-20
+        },
+        "voltage": {
+          "test": 1.5080978870391846,
+          "donor": -1.092642068862915,
+          "SD_difference": 1.0807206165530543
+        },
+        "adaptation": {
+          "test": 0.9237525463104248,
+          "donor": 0.585164487361908,
+          "SD_difference": 1.8098036400981483
+        },
+        "own_post_trace": {
+          "test": 9.86062423180556e-06,
+          "donor": 6.058449798729271e-06,
+          "SD_difference": 8.16145787308188e-06
+        },
+        "own_rate": {
+          "test": 8.571277618408203,
+          "donor": 0.8071488738059998,
+          "SD_difference": 5.4520487314228125
+        }
+      }
+    },
+    {
+      "test_tempo": 6,
+      "donor_tempo": 2,
+      "test_future": 1.0,
+      "donor_future": 0.0,
+      "EI_RMS": 0.00013343669755403034,
+      "features": {
+        "excitatory_prediction": {
+          "test": 0.0005145945469848812,
+          "donor": 0.0005144154420122504,
+          "SD_difference": 7.200501618903996e-05
+        },
+        "inhibitory_prediction": {
+          "test": -2.4111759557854384e-06,
+          "donor": -9.449968274566345e-06,
+          "SD_difference": 0.00017443045075865671
+        },
+        "voltage": {
+          "test": -4.848235607147217,
+          "donor": 1.5805773735046387,
+          "SD_difference": 2.671451527626658
+        },
+        "adaptation": {
+          "test": 1.0436540842056274,
+          "donor": 0.7029074430465698,
+          "SD_difference": 1.8213415837404012
+        },
+        "own_post_trace": {
+          "test": 0.08798671513795853,
+          "donor": 0.057995665818452835,
+          "SD_difference": 0.06437650084155293
+        },
+        "own_rate": {
+          "test": 8.032319068908691,
+          "donor": 0.8120965957641602,
+          "SD_difference": 5.0701123165513655
+        }
+      }
+    }
+  ]
+}

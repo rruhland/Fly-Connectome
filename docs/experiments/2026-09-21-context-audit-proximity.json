@@ -1,0 +1,718 @@
+{
+  "note": "Post-result direct proximity audit, no decoder fitting. L-infinity requires EVERY retained feature to be close; threshold is fraction of its training SD.",
+  "retained_features": [
+    "predictive_current",
+    "excitatory_prediction",
+    "inhibitory_prediction",
+    "sensory_state",
+    "voltage",
+    "adaptation",
+    "refractory",
+    "local_sensory_increment",
+    "own_spike",
+    "own_post_trace",
+    "own_rate",
+    "eligibility_20655",
+    "eligibility_26550",
+    "eligibility_91572",
+    "arrival_trace_20655",
+    "arrival_trace_26550",
+    "arrival_trace_91572",
+    "arrival_now_20655",
+    "arrival_now_26550"
+  ],
+  "by_tempo": {
+    "2": {
+      "0.001": {
+        "close": 0,
+        "conflicting": 0,
+        "conflict_true_counts": {
+          "-1": 0,
+          "0": 0,
+          "1": 0
+        }
+      },
+      "0.01": {
+        "close": 0,
+        "conflicting": 0,
+        "conflict_true_counts": {
+          "-1": 0,
+          "0": 0,
+          "1": 0
+        }
+      },
+      "0.05": {
+        "close": 0,
+        "conflicting": 0,
+        "conflict_true_counts": {
+          "-1": 0,
+          "0": 0,
+          "1": 0
+        }
+      },
+      "EI_conflict_full_max_difference_quantiles": [
+        0.368382024557242,
+        1.5406168095312964,
+        2.528567572666609,
+        2.9001915645541607,
+        2.9001915645541607
+      ],
+      "EI_conflict_feature_median_differences": {
+        "predictive_current": 0.005586263969266314,
+        "excitatory_prediction": 0.004361685719841052,
+        "inhibitory_prediction": 0.004889506749343742,
+        "sensory_state": 1.0030641254087553,
+        "voltage": 1.0788860268347151,
+        "adaptation": 0.9480904952160489,
+        "refractory": 0.0,
+        "local_sensory_increment": 0.0,
+        "own_spike": 0.0,
+        "own_post_trace": 0.23116930831282367,
+        "own_rate": 0.5700967602657454,
+        "eligibility_20655": 0.0043561509458087955,
+        "eligibility_26550": 0.00488801230380842,
+        "eligibility_91572": 0.0,
+        "arrival_trace_20655": 0.004356043170899493,
+        "arrival_trace_26550": 0.0067899573454446305,
+        "arrival_trace_91572": 0.0,
+        "arrival_now_20655": 0.0,
+        "arrival_now_26550": 0.0
+      },
+      "examples": [
+        {
+          "test_future": 0.0,
+          "train_future": 1.0,
+          "donor_tempo": 6,
+          "EI_RMS": 0.002193612807056166,
+          "top_differences": [
+            {
+              "feature": "voltage",
+              "test_value": 1.2585492134094238,
+              "train_value": -5.0504255294799805,
+              "training_SD_difference": 2.6216535253668187
+            },
+            {
+              "feature": "own_rate",
+              "test_value": 3.1297836303710938,
+              "train_value": 0.19919553399085999,
+              "training_SD_difference": 2.057888224007196
+            },
+            {
+              "feature": "adaptation",
+              "test_value": 0.850965678691864,
+              "train_value": 0.490928590297699,
+              "training_SD_difference": 1.9244518993659354
+            },
+            {
+              "feature": "sensory_state",
+              "test_value": 0.32380011677742004,
+              "train_value": -3.453977346420288,
+              "training_SD_difference": 0.3388744024238389
+            },
+            {
+              "feature": "own_post_trace",
+              "test_value": 0.2616701126098633,
+              "train_value": 0.13271969556808472,
+              "training_SD_difference": 0.2767951378683365
+            }
+          ]
+        },
+        {
+          "test_future": -1.0,
+          "train_future": 0.0,
+          "donor_tempo": 6,
+          "EI_RMS": 0.0001881005202613378,
+          "top_differences": [
+            {
+              "feature": "adaptation",
+              "test_value": 0.7894782423973083,
+              "train_value": 1.0655443668365479,
+              "training_SD_difference": 1.4756145815345878
+            },
+            {
+              "feature": "own_rate",
+              "test_value": 3.1219685077667236,
+              "train_value": 4.980802536010742,
+              "training_SD_difference": 1.3052918156024984
+            },
+            {
+              "feature": "voltage",
+              "test_value": -1.0903513431549072,
+              "train_value": 1.625643014907837,
+              "training_SD_difference": 1.128613835665882
+            },
+            {
+              "feature": "sensory_state",
+              "test_value": 11.189690589904785,
+              "train_value": 0.010108676739037037,
+              "training_SD_difference": 1.0028314735526105
+            },
+            {
+              "feature": "own_post_trace",
+              "test_value": 0.00615388248115778,
+              "train_value": 0.0036529304925352335,
+              "training_SD_difference": 0.005368352940406437
+            }
+          ]
+        },
+        {
+          "test_future": -1.0,
+          "train_future": 0.0,
+          "donor_tempo": 4,
+          "EI_RMS": 0.004100645004648697,
+          "top_differences": [
+            {
+              "feature": "adaptation",
+              "test_value": 0.7871763110160828,
+              "train_value": 0.8560952544212341,
+              "training_SD_difference": 0.368382024557242
+            },
+            {
+              "feature": "own_post_trace",
+              "test_value": 0.2452799528837204,
+              "train_value": 0.11881564557552338,
+              "training_SD_difference": 0.271458644181468
+            },
+            {
+              "feature": "own_rate",
+              "test_value": 3.148339033126831,
+              "train_value": 2.7622716426849365,
+              "training_SD_difference": 0.27110037655748465
+            },
+            {
+              "feature": "sensory_state",
+              "test_value": 13.693275451660156,
+              "train_value": 16.634471893310547,
+              "training_SD_difference": 0.26383136547480546
+            },
+            {
+              "feature": "voltage",
+              "test_value": 0.36365416646003723,
+              "train_value": 0.7061355710029602,
+              "training_SD_difference": 0.14231592583319255
+            }
+          ]
+        }
+      ]
+    },
+    "3": {
+      "0.001": {
+        "close": 21,
+        "conflicting": 0,
+        "conflict_true_counts": {
+          "-1": 0,
+          "0": 0,
+          "1": 0
+        }
+      },
+      "0.01": {
+        "close": 21,
+        "conflicting": 0,
+        "conflict_true_counts": {
+          "-1": 0,
+          "0": 0,
+          "1": 0
+        }
+      },
+      "0.05": {
+        "close": 73,
+        "conflicting": 0,
+        "conflict_true_counts": {
+          "-1": 0,
+          "0": 0,
+          "1": 0
+        }
+      },
+      "EI_conflict_full_max_difference_quantiles": [
+        0.45756961347198133,
+        2.5192987754440335,
+        2.9001915645541607,
+        3.169733881522877,
+        10.447592568443284
+      ],
+      "EI_conflict_feature_median_differences": {
+        "predictive_current": 0.001107362505812226,
+        "excitatory_prediction": 0.0067120750027527265,
+        "inhibitory_prediction": 0.0012200124925637705,
+        "sensory_state": 0.9548862565495517,
+        "voltage": 0.5034327194704482,
+        "adaptation": 0.6981591697269613,
+        "refractory": 0.0,
+        "local_sensory_increment": 0.0,
+        "own_spike": 0.0,
+        "own_post_trace": 0.25739837149581907,
+        "own_rate": 1.9605876875454586,
+        "eligibility_20655": 0.006703862418111495,
+        "eligibility_26550": 0.0012196411014678867,
+        "eligibility_91572": 3.2745502323079974e-21,
+        "arrival_trace_20655": 0.006703995212110625,
+        "arrival_trace_26550": 0.011490733205951509,
+        "arrival_trace_91572": 6.549756751774997e-05,
+        "arrival_now_20655": 0.0,
+        "arrival_now_26550": 0.0
+      },
+      "examples": [
+        {
+          "test_future": 1.0,
+          "train_future": 0.0,
+          "donor_tempo": 6,
+          "EI_RMS": 0.005275789085091141,
+          "top_differences": [
+            {
+              "feature": "own_rate",
+              "test_value": 0.16609014570713043,
+              "train_value": 5.137513637542725,
+              "training_SD_difference": 3.4909832169992594
+            },
+            {
+              "feature": "adaptation",
+              "test_value": 0.45607468485832214,
+              "train_value": 1.0983302593231201,
+              "training_SD_difference": 3.4329517708019877
+            },
+            {
+              "feature": "sensory_state",
+              "test_value": -10.153956413269043,
+              "train_value": -18.277023315429688,
+              "training_SD_difference": 0.7286557954074204
+            },
+            {
+              "feature": "voltage",
+              "test_value": -4.696199417114258,
+              "train_value": -3.4025702476501465,
+              "training_SD_difference": 0.5375592090403125
+            },
+            {
+              "feature": "own_post_trace",
+              "test_value": 0.5797984600067139,
+              "train_value": 0.5420160889625549,
+              "training_SD_difference": 0.08110075827651131
+            }
+          ]
+        },
+        {
+          "test_future": 1.0,
+          "train_future": 0.0,
+          "donor_tempo": 6,
+          "EI_RMS": 0.004085615102767528,
+          "top_differences": [
+            {
+              "feature": "own_rate",
+              "test_value": 0.23242346942424774,
+              "train_value": 5.137513637542725,
+              "training_SD_difference": 3.444403294728599
+            },
+            {
+              "feature": "adaptation",
+              "test_value": 0.5313636064529419,
+              "train_value": 1.0983302593231201,
+              "training_SD_difference": 3.0305212634056082
+            },
+            {
+              "feature": "sensory_state",
+              "test_value": -10.13599681854248,
+              "train_value": -18.277023315429688,
+              "training_SD_difference": 0.7302668079644138
+            },
+            {
+              "feature": "voltage",
+              "test_value": -4.827125072479248,
+              "train_value": -3.4025702476501465,
+              "training_SD_difference": 0.5919645157560263
+            },
+            {
+              "feature": "own_post_trace",
+              "test_value": 0.6330823302268982,
+              "train_value": 0.5420160889625549,
+              "training_SD_difference": 0.1954758533099461
+            }
+          ]
+        },
+        {
+          "test_future": 1.0,
+          "train_future": 0.0,
+          "donor_tempo": 6,
+          "EI_RMS": 0.005088537670974723,
+          "top_differences": [
+            {
+              "feature": "own_rate",
+              "test_value": 0.46156030893325806,
+              "train_value": 3.0162596702575684,
+              "training_SD_difference": 1.7939354008984167
+            },
+            {
+              "feature": "adaptation",
+              "test_value": 0.6655369997024536,
+              "train_value": 0.9942125082015991,
+              "training_SD_difference": 1.7568195805254612
+            },
+            {
+              "feature": "voltage",
+              "test_value": -4.976766586303711,
+              "train_value": -3.1415181159973145,
+              "training_SD_difference": 0.7626255957872627
+            },
+            {
+              "feature": "sensory_state",
+              "test_value": -10.153956413269043,
+              "train_value": -18.28706169128418,
+              "training_SD_difference": 0.7295562583521376
+            },
+            {
+              "feature": "own_post_trace",
+              "test_value": 0.6278742551803589,
+              "train_value": 0.4874439537525177,
+              "training_SD_difference": 0.3014369828057071
+            }
+          ]
+        }
+      ]
+    },
+    "4": {
+      "0.001": {
+        "close": 0,
+        "conflicting": 0,
+        "conflict_true_counts": {
+          "-1": 0,
+          "0": 0,
+          "1": 0
+        }
+      },
+      "0.01": {
+        "close": 0,
+        "conflicting": 0,
+        "conflict_true_counts": {
+          "-1": 0,
+          "0": 0,
+          "1": 0
+        }
+      },
+      "0.05": {
+        "close": 1,
+        "conflicting": 0,
+        "conflict_true_counts": {
+          "-1": 0,
+          "0": 0,
+          "1": 0
+        }
+      },
+      "EI_conflict_full_max_difference_quantiles": [
+        0.4109331660552473,
+        2.7180623562705106,
+        3.7108937327578015,
+        4.091859227270296,
+        4.762119100957535
+      ],
+      "EI_conflict_feature_median_differences": {
+        "predictive_current": 0.0009192903720359226,
+        "excitatory_prediction": 0.006305271232382115,
+        "inhibitory_prediction": 0.0007987319886106226,
+        "sensory_state": 0.2638451384687348,
+        "voltage": 0.16278197912020254,
+        "adaptation": 1.016133618219313,
+        "refractory": 0.0,
+        "local_sensory_increment": 0.0,
+        "own_spike": 0.0,
+        "own_post_trace": 0.17987297442955802,
+        "own_rate": 3.7108937327578015,
+        "eligibility_20655": 0.006297424896710535,
+        "eligibility_26550": 0.0007984904482271835,
+        "eligibility_91572": 0.0,
+        "arrival_trace_20655": 0.006297367520871566,
+        "arrival_trace_26550": 0.0067062835351276995,
+        "arrival_trace_91572": 0.0,
+        "arrival_now_20655": 0.0,
+        "arrival_now_26550": 0.0
+      },
+      "examples": [
+        {
+          "test_future": 0.0,
+          "train_future": 1.0,
+          "donor_tempo": 6,
+          "EI_RMS": 0.0017749974687797459,
+          "top_differences": [
+            {
+              "feature": "own_rate",
+              "test_value": 5.28985071182251,
+              "train_value": 0.46347519755363464,
+              "training_SD_difference": 3.3891290788079185
+            },
+            {
+              "feature": "voltage",
+              "test_value": 1.5457931756973267,
+              "train_value": -5.332201957702637,
+              "training_SD_difference": 2.8581062571627305
+            },
+            {
+              "feature": "adaptation",
+              "test_value": 1.0825304985046387,
+              "train_value": 0.7574238181114197,
+              "training_SD_difference": 1.7377436623816003
+            },
+            {
+              "feature": "sensory_state",
+              "test_value": 0.3912220001220703,
+              "train_value": -3.4520702362060547,
+              "training_SD_difference": 0.34475121221763527
+            },
+            {
+              "feature": "own_post_trace",
+              "test_value": 0.21178174018859863,
+              "train_value": 0.17141209542751312,
+              "training_SD_difference": 0.08665440286028808
+            }
+          ]
+        },
+        {
+          "test_future": 1.0,
+          "train_future": 0.0,
+          "donor_tempo": 6,
+          "EI_RMS": 0.00488987257694276,
+          "top_differences": [
+            {
+              "feature": "own_rate",
+              "test_value": 5.328592777252197,
+              "train_value": 4.7433929443359375,
+              "training_SD_difference": 0.4109331660552473
+            },
+            {
+              "feature": "own_post_trace",
+              "test_value": 0.3390902876853943,
+              "train_value": 0.2273763120174408,
+              "training_SD_difference": 0.2397967064101299
+            },
+            {
+              "feature": "adaptation",
+              "test_value": 1.0204335451126099,
+              "train_value": 1.0405502319335938,
+              "training_SD_difference": 0.10752668935931631
+            },
+            {
+              "feature": "sensory_state",
+              "test_value": -7.278210163116455,
+              "train_value": -7.947518825531006,
+              "training_SD_difference": 0.06003836256168582
+            },
+            {
+              "feature": "voltage",
+              "test_value": -5.618626117706299,
+              "train_value": -5.680727005004883,
+              "training_SD_difference": 0.02580562084167992
+            }
+          ]
+        },
+        {
+          "test_future": 1.0,
+          "train_future": 0.0,
+          "donor_tempo": 6,
+          "EI_RMS": 0.0008716363554400215,
+          "top_differences": [
+            {
+              "feature": "own_rate",
+              "test_value": 5.383346080780029,
+              "train_value": 3.3868277072906494,
+              "training_SD_difference": 1.401975137649886
+            },
+            {
+              "feature": "own_post_trace",
+              "test_value": 0.3074749708175659,
+              "train_value": 0.22737173736095428,
+              "training_SD_difference": 0.1719434962442875
+            },
+            {
+              "feature": "voltage",
+              "test_value": -5.299008846282959,
+              "train_value": -5.680732250213623,
+              "training_SD_difference": 0.15862268409898928
+            },
+            {
+              "feature": "adaptation",
+              "test_value": 1.0507938861846924,
+              "train_value": 1.030998706817627,
+              "training_SD_difference": 0.10580818409889048
+            },
+            {
+              "feature": "sensory_state",
+              "test_value": -7.231372833251953,
+              "train_value": -7.947520732879639,
+              "training_SD_difference": 0.06423993840230036
+            }
+          ]
+        }
+      ]
+    },
+    "6": {
+      "0.001": {
+        "close": 0,
+        "conflicting": 0,
+        "conflict_true_counts": {
+          "-1": 0,
+          "0": 0,
+          "1": 0
+        }
+      },
+      "0.01": {
+        "close": 0,
+        "conflicting": 0,
+        "conflict_true_counts": {
+          "-1": 0,
+          "0": 0,
+          "1": 0
+        }
+      },
+      "0.05": {
+        "close": 0,
+        "conflicting": 0,
+        "conflict_true_counts": {
+          "-1": 0,
+          "0": 0,
+          "1": 0
+        }
+      },
+      "EI_conflict_full_max_difference_quantiles": [
+        2.739379843582534,
+        5.028696105542359,
+        5.4520487314228125,
+        5.881633150020478,
+        6.534489755774587
+      ],
+      "EI_conflict_feature_median_differences": {
+        "predictive_current": 0.00034821549800164234,
+        "excitatory_prediction": 0.0025158697742931058,
+        "inhibitory_prediction": 0.00017443045075865671,
+        "sensory_state": 0.344752281549462,
+        "voltage": 2.2773624359083966,
+        "adaptation": 1.9610155360386727,
+        "refractory": 0.0,
+        "local_sensory_increment": 0.0,
+        "own_spike": 0.0,
+        "own_post_trace": 0.44705794566395163,
+        "own_rate": 5.4520487314228125,
+        "eligibility_20655": 0.0025126069091743197,
+        "eligibility_26550": 0.00017437768242309205,
+        "eligibility_91572": 0.0,
+        "arrival_trace_20655": 0.002512696917656543,
+        "arrival_trace_26550": 0.009348824685111556,
+        "arrival_trace_91572": 0.0,
+        "arrival_now_20655": 0.0,
+        "arrival_now_26550": 0.0
+      },
+      "examples": [
+        {
+          "test_future": 0.0,
+          "train_future": 1.0,
+          "donor_tempo": 4,
+          "EI_RMS": 0.0031584361212283023,
+          "top_differences": [
+            {
+              "feature": "own_rate",
+              "test_value": 7.120370864868164,
+              "train_value": 2.0439369678497314,
+              "training_SD_difference": 3.5647225720764557
+            },
+            {
+              "feature": "adaptation",
+              "test_value": 1.0721607208251953,
+              "train_value": 0.9108589291572571,
+              "training_SD_difference": 0.8621821177674063
+            },
+            {
+              "feature": "sensory_state",
+              "test_value": -12.05555248260498,
+              "train_value": -7.229701519012451,
+              "training_SD_difference": 0.43288874937849664
+            },
+            {
+              "feature": "own_post_trace",
+              "test_value": 0.35500213503837585,
+              "train_value": 0.2590748965740204,
+              "training_SD_difference": 0.20591009944130267
+            },
+            {
+              "feature": "voltage",
+              "test_value": -5.207159519195557,
+              "train_value": -4.9205193519592285,
+              "training_SD_difference": 0.11911146193663358
+            }
+          ]
+        },
+        {
+          "test_future": 1.0,
+          "train_future": 0.0,
+          "donor_tempo": 2,
+          "EI_RMS": 0.006845300740555065,
+          "top_differences": [
+            {
+              "feature": "own_rate",
+              "test_value": 7.114442825317383,
+              "train_value": 0.6545227766036987,
+              "training_SD_difference": 4.536220362286989
+            },
+            {
+              "feature": "voltage",
+              "test_value": -5.011414527893066,
+              "train_value": 0.643627941608429,
+              "training_SD_difference": 2.3499162115012395
+            },
+            {
+              "feature": "adaptation",
+              "test_value": 1.0456892251968384,
+              "train_value": 0.7077648639678955,
+              "training_SD_difference": 1.8062560768658829
+            },
+            {
+              "feature": "own_post_trace",
+              "test_value": 0.1017097756266594,
+              "train_value": 0.4263272285461426,
+              "training_SD_difference": 0.6967990852344846
+            },
+            {
+              "feature": "sensory_state",
+              "test_value": -3.453972339630127,
+              "train_value": 0.14072288572788239,
+              "training_SD_difference": 0.32245154942449056
+            }
+          ]
+        },
+        {
+          "test_future": 1.0,
+          "train_future": 0.0,
+          "donor_tempo": 4,
+          "EI_RMS": 0.006853983789926852,
+          "top_differences": [
+            {
+              "feature": "voltage",
+              "test_value": -5.0055036544799805,
+              "train_value": 1.586777925491333,
+              "training_SD_difference": 2.739379843582534
+            },
+            {
+              "feature": "own_rate",
+              "test_value": 7.1905341148376465,
+              "train_value": 3.9092001914978027,
+              "training_SD_difference": 2.3041854459918842
+            },
+            {
+              "feature": "sensory_state",
+              "test_value": -3.4520821571350098,
+              "train_value": 0.3912220001220703,
+              "training_SD_difference": 0.344752281549462
+            },
+            {
+              "feature": "own_post_trace",
+              "test_value": 0.10239306837320328,
+              "train_value": 0.20512129366397858,
+              "training_SD_difference": 0.2205085794574604
+            },
+            {
+              "feature": "adaptation",
+              "test_value": 1.0860261917114258,
+              "train_value": 1.06798255443573,
+              "training_SD_difference": 0.09644593056109585
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
