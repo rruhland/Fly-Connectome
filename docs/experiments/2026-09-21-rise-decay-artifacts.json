@@ -1,0 +1,97 @@
+{
+  "directory": "runs\\temporal-rise-decay-excitation-v1",
+  "files": {
+    "frozen.npz": {
+      "bytes": 61444,
+      "sha256": "e3b6100f8943b712b2f999ad58f85862dd126aa3537d8794405b1487021dd90a"
+    },
+    "preflight-0-blank.npz": {
+      "bytes": 12436,
+      "sha256": "f19e9af6db8e13d6c64b5e6ddc33a245fe957b32fae31bcad6ba1db081275f25"
+    },
+    "preflight-0-full.npz": {
+      "bytes": 12699,
+      "sha256": "c2612fcc1872a8665d8dc94c506c591ce802b3f35302b822976093a7ef23df72"
+    },
+    "preflight-1-blank.npz": {
+      "bytes": 15057,
+      "sha256": "17b6fa39680f9bcb285df4c9410feddc80499da242511ad5aeb381d88733b50f"
+    },
+    "preflight-1-full.npz": {
+      "bytes": 15358,
+      "sha256": "2a6a96050c0f20f546c5f9cf106725cb2ff2ec5321db55d5edb5b4d4d787d3bc"
+    },
+    "preflight-2-blank.npz": {
+      "bytes": 11154,
+      "sha256": "076c0266edabd943144946e0d469b2bac70d87c323f501da6409438b6a4911d3"
+    },
+    "preflight-2-full.npz": {
+      "bytes": 11438,
+      "sha256": "c0e436ef7ef855051979da7da275ea92867b9f4c7280e80b7a2928ed5ecf5942"
+    },
+    "preflight-3-blank.npz": {
+      "bytes": 15269,
+      "sha256": "0430e9d85e16544de5f09930e231ce2f8fe49a01e91ade9aca0f20760ab8d9c8"
+    },
+    "preflight-3-full.npz": {
+      "bytes": 15602,
+      "sha256": "686cfc3d654bdbfd6f40eebafd8e401fb0eef67cfe6636246d7de9466c6c78d4"
+    },
+    "preflight-4-blank.npz": {
+      "bytes": 10716,
+      "sha256": "2e878442b6c6f7fbb46f20168791f4f71e59ea49e62c397847452ba26f5ecab6"
+    },
+    "preflight-4-full.npz": {
+      "bytes": 10960,
+      "sha256": "202bd4e1b31516e434018b529c2365a82088d155e416667d290df90948e3bcae"
+    },
+    "preflight-5-blank.npz": {
+      "bytes": 13982,
+      "sha256": "a8f0e55eefe4dec8bede730836209379301d471e6f98e83f71969f27056880bb"
+    },
+    "preflight-5-full.npz": {
+      "bytes": 14270,
+      "sha256": "85cb660190e05f34e37eca6eafffc7dff9b136c09792b918a521df74a2013d9f"
+    },
+    "preflight-6-blank.npz": {
+      "bytes": 12012,
+      "sha256": "02ca811ded2c21780aad156e538a4609f4ecb5ddf180f1e425db782df63ed0c6"
+    },
+    "preflight-6-full.npz": {
+      "bytes": 12273,
+      "sha256": "a90d5fda2aee2f2bec1d5e67c94f1abd6598447b7ebc330a2614327b958124e7"
+    },
+    "preflight-7-blank.npz": {
+      "bytes": 10716,
+      "sha256": "2e878442b6c6f7fbb46f20168791f4f71e59ea49e62c397847452ba26f5ecab6"
+    },
+    "preflight-7-full.npz": {
+      "bytes": 10960,
+      "sha256": "202bd4e1b31516e434018b529c2365a82088d155e416667d290df90948e3bcae"
+    },
+    "preflight-8-blank.npz": {
+      "bytes": 13323,
+      "sha256": "efd420701fe4930b927087ae1d6140331d87636f4d0f18874e29f5d0b10ef36a"
+    },
+    "preflight-8-full.npz": {
+      "bytes": 13643,
+      "sha256": "6f5ca3cbb6a9f203d47d81e8eda0ce090333237ebafff32a448b23705d61a0f2"
+    },
+    "preflight-9-blank.npz": {
+      "bytes": 11154,
+      "sha256": "076c0266edabd943144946e0d469b2bac70d87c323f501da6409438b6a4911d3"
+    },
+    "preflight-9-full.npz": {
+      "bytes": 11438,
+      "sha256": "c0e436ef7ef855051979da7da275ea92867b9f4c7280e80b7a2928ed5ecf5942"
+    },
+    "trained.npz": {
+      "bytes": 66973,
+      "sha256": "6d3e4d9ff2d5ae0aa9b479781c34a5ae781dd8c0504ea1ee04efe64518a7d090"
+    },
+    "training.npz": {
+      "bytes": 958752,
+      "sha256": "fd0877deb97ceb0987cc430ac2aca8521948809c68aea77b6f6ec5982041529a"
+    }
+  }
+}

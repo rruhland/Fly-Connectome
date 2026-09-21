@@ -42,7 +42,7 @@ def main():
     parser.add_argument('--output', default='runs/temporal-visual-v1')
     parser.add_argument('--training-trials', type=int, choices=(200,1000), default=200)
     parser.add_argument('--visual-schedule', choices=('tick-v1', 'frame-horizon-v1'), default='tick-v1')
-    parser.add_argument('--predictive-kinetics', choices=('original', 'slow-excitation-v1', 'area-matched-excitation-v1'), default='original')
+    parser.add_argument('--predictive-kinetics', choices=('original', 'slow-excitation-v1', 'area-matched-excitation-v1', 'rise-decay-excitation-v1'), default='original')
     args = parser.parse_args()
     torch.set_num_threads(1)
     sha = checksum(args.checkpoint)
@@ -77,6 +77,10 @@ def main():
     base = make_network(crop, m, predictive_kinetics=args.predictive_kinetics, capture_warmup=True)
     decay = base.visual_decay(torch.tensor(incoming)).numpy()
     impulses = base.visual_impulse(torch.tensor(incoming)).numpy()
+    rise_impulses = np.zeros_like(impulses)
+    if args.predictive_kinetics == 'rise-decay-excitation-v1':
+        impulses = np.where(signs > 0, base.kernel_gain, -1.)
+        rise_impulses = np.where(signs > 0, base.kernel_gain, 0.)
     delays = base.delays[incoming].numpy()
     weights = base.magnitudes[incoming].numpy().copy()
     manifest = dict(source_checkpoint=args.checkpoint, source_sha256=sha, graph_sha256=crop['graph'].identity(),
@@ -90,7 +94,8 @@ def main():
         stimulus=dict(row=30, target_x=39, other_x=38, dwell_frames=3, cycles=4),
         seeds=dict(preflight=9021, training=9022, evaluation=9023), primary_lead_ticks=8,
         training_trials=args.training_trials, evaluation_trials=50, visual_schedule=args.visual_schedule,
-        predictive_kinetics=args.predictive_kinetics, target_predictive_impulses=impulses.tolist())
+        predictive_kinetics=args.predictive_kinetics, target_predictive_impulses=impulses.tolist(),
+        target_subtracted_rise_impulses=rise_impulses.tolist())
     (output/'manifest.json').write_text(json.dumps(manifest,indent=2)+'\n')
     preflight, reconstruction_error = [], 0.
     for trial, blank in enumerate(np.random.default_rng(9021).integers(12,37,size=10)):
@@ -103,6 +108,9 @@ def main():
                 raise AssertionError('preflight changed weights')
             history = np.concatenate((base.warmup_spikes, r['spikes']))
             trace = delayed_traces(history,source,delays,impulses,decay)[len(base.warmup_spikes):]
+            if rise_impulses.any():
+                trace -= delayed_traces(history,source,delays,rise_impulses,
+                                        np.full_like(decay,base.inhibitory_decay))[len(base.warmup_spikes):]
             np.savez_compressed(output/f'preflight-{trial}-{condition}.npz',
                 **{k:v for k,v in r.items() if k!='stability'}, signed_trace=trace)
             pair.append((r,trace))

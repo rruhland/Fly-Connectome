@@ -1,0 +1,96 @@
+{
+  "area_matched": {
+    "groups": {
+      "after_on_1": {
+        "count": 150,
+        "false_alarms": 101,
+        "mean_prediction": -0.1841525286436081
+      },
+      "after_on_2": {
+        "count": 150,
+        "false_alarms": 94,
+        "mean_prediction": 0.1030353307723999
+      },
+      "after_off_1": {
+        "count": 150,
+        "false_alarms": 1,
+        "mean_prediction": 0.08073102682828903
+      },
+      "after_off_2": {
+        "count": 150,
+        "false_alarms": 38,
+        "mean_prediction": -0.03298017010092735
+      },
+      "initial_blank": {
+        "count": 32,
+        "false_alarms": 9,
+        "mean_prediction": 0.02082354947924614
+      },
+      "gap_1_to_3": {
+        "count": 148,
+        "false_alarms": 117,
+        "mean_prediction": -0.14944210648536682
+      },
+      "gap_4_to_6": {
+        "count": 147,
+        "false_alarms": 110,
+        "mean_prediction": 0.05489747226238251
+      },
+      "gap_7_plus": {
+        "count": 926,
+        "false_alarms": 6,
+        "mean_prediction": 0.013755694963037968
+      }
+    },
+    "on_correct": 150,
+    "off_correct": 150,
+    "events_per_polarity": 150
+  },
+  "rise_decay": {
+    "groups": {
+      "after_on_1": {
+        "count": 150,
+        "false_alarms": 92,
+        "mean_prediction": -0.1665322631597519
+      },
+      "after_on_2": {
+        "count": 150,
+        "false_alarms": 142,
+        "mean_prediction": 0.17519401013851166
+      },
+      "after_off_1": {
+        "count": 150,
+        "false_alarms": 92,
+        "mean_prediction": 0.12178929895162582
+      },
+      "after_off_2": {
+        "count": 150,
+        "false_alarms": 63,
+        "mean_prediction": -0.028074922040104866
+      },
+      "initial_blank": {
+        "count": 32,
+        "false_alarms": 9,
+        "mean_prediction": 0.00227167084813118
+      },
+      "gap_1_to_3": {
+        "count": 148,
+        "false_alarms": 146,
+        "mean_prediction": -0.13032957911491394
+      },
+      "gap_4_to_6": {
+        "count": 147,
+        "false_alarms": 120,
+        "mean_prediction": 0.1089106872677803
+      },
+      "gap_7_plus": {
+        "count": 926,
+        "false_alarms": 53,
+        "mean_prediction": 0.020687062293291092
+      }
+    },
+    "on_correct": 150,
+    "off_correct": 150,
+    "events_per_polarity": 150
+  }
+}

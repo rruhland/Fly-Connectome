@@ -26,6 +26,9 @@ class FramePrediction(Plasticity):
         behavioral = self.network.pathways[edges] == 2
         super()._accumulate(edges[behavioral], proposals[behavioral])
 
+    def _update_forecast_trace(self, activity):
+        pass
+
     @torch.no_grad()
     def observe(self, activity, reward):
         n, cfg = self.network, self.config
@@ -40,6 +43,7 @@ class FramePrediction(Plasticity):
             super()._accumulate(edges, delta)
             self.last_visual_update = edges, target, delta
         super().observe(activity, reward)
+        self._update_forecast_trace(activity)
         if boundary:
             edges = self.keys.remainder(n.e)
             visual = n.pathways[edges] == 1
