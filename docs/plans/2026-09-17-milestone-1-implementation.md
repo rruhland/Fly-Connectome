@@ -795,3 +795,12 @@ User approved sign-preserving5msrise/20msdecay excitatory response atcontrolleda
 Same200training/50frozen eval: rise/decay ONanticipation0.308595, OFF0.169321, all150correctsign each. MSE0.103932 vspriorarea0.108329; howeverquietfalsealarms38.69% vs25.69% (717vs476/1853). EarlyOFF142/150, immediatelyafterOFF92/150, lateblank53/926 vs6/926 previously. Rejectcandidate aslocalizationfix; preservepriorarea modelasreference. 20ms tail remains despite delayedpeak. No parameter sweep.
 
 Current reconstruction5.38e-9, preflight30/30both, inputs/initialweightsidentical, source/frozenweightsunchanged, statesfiniteweightsbounded. Runtime107.95s. See docs/experiments/2026-09-21-rise-decay-findings.md, protocol/results/phasecounts/hashes. M1Aunmet. Nextarchitecture discussion should distinguish retainedmemory frombrief eventforecast ratherthan onlyreshape long-livedcurrent; notimplemented orassumedapproved here.
+
+
+### 2026-09-21: separate local contrast forecast rejected at preflight
+
+User authorized continuing localmemory/brief-eventforecast proposal. Implemented event-contrast-v1: physicalarea-matched20/5ms dynamics unchanged, forecastrawI(t)-I(t-8), matching capturedlocaleligibilitydifference. Eighttickframeconfirmation, signs/topology/no-backprop preserved. No derivativefeedback tomembrane. All20 frozenprecursor spike/target/arrivalarrays exactlymatchpriorarea control; unitphysicalstateequality verified.
+
+Preflight ON10/30 OFF30/30 fails24/30minimum. Allten cases firstscoredONcyclepass, second/thirdfail: sourceL2/L1 contrastfeatures bothpositive (example+0.101629,+0.276630 atissue272,targetON-1at280), because negativeinhibitorycurrentdecays towardzero. Correctphysicalsigns but unsuitableforecastencoding. Reconstruction6.39e-9. Stoppedbeforetraining after4.50s; no gatebypass orfurtherparametersearch.
+
+Tests223passed4skipped; independentreview noblockers. Docs/experiments/2026-09-21-event-contrast-findings.md plusprotocol/results/hashes recordfailure. Existingmemorymodel remainsreference, defaultsunmodified, M1Aunmet. A futureconcretedesign shouldpreservesignedmemory whilecontrollingexpressiontime (e.g.nonnegative localtiminggate); gatemechanismnotyetdesigned/implemented.

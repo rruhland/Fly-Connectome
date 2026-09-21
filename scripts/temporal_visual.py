@@ -42,7 +42,7 @@ def main():
     parser.add_argument('--output', default='runs/temporal-visual-v1')
     parser.add_argument('--training-trials', type=int, choices=(200,1000), default=200)
     parser.add_argument('--visual-schedule', choices=('tick-v1', 'frame-horizon-v1'), default='tick-v1')
-    parser.add_argument('--predictive-kinetics', choices=('original', 'slow-excitation-v1', 'area-matched-excitation-v1', 'rise-decay-excitation-v1'), default='original')
+    parser.add_argument('--predictive-kinetics', choices=('original', 'slow-excitation-v1', 'area-matched-excitation-v1', 'rise-decay-excitation-v1', 'event-contrast-v1'), default='original')
     args = parser.parse_args()
     torch.set_num_threads(1)
     sha = checksum(args.checkpoint)
@@ -108,6 +108,11 @@ def main():
                 raise AssertionError('preflight changed weights')
             history = np.concatenate((base.warmup_spikes, r['spikes']))
             trace = delayed_traces(history,source,delays,impulses,decay)[len(base.warmup_spikes):]
+            if args.predictive_kinetics == 'event-contrast-v1':
+                memory = delayed_traces(history,source,delays,impulses,decay)
+                contrast = memory.copy()
+                contrast[8:] -= memory[:-8]
+                trace = contrast[len(base.warmup_spikes):]
             if rise_impulses.any():
                 trace -= delayed_traces(history,source,delays,rise_impulses,
                                         np.full_like(decay,base.inhibitory_decay))[len(base.warmup_spikes):]

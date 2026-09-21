@@ -68,6 +68,9 @@ def make_network(crop, metadata, weights=None, *, predictive_kinetics='original'
     elif predictive_kinetics == 'rise-decay-excitation-v1':
         from rise_decay import RiseDecayNetwork
         network_class = RiseDecayNetwork
+    elif predictive_kinetics == 'event-contrast-v1':
+        from event_contrast import EventContrastNetwork
+        network_class = EventContrastNetwork
     elif predictive_kinetics != 'original':
         raise ValueError('unknown predictive kinetics')
     net = network_class(crop['graph'], crop['delays'], crop['pathways'],
@@ -87,8 +90,9 @@ def make_network(crop, metadata, weights=None, *, predictive_kinetics='original'
 def run_sequence(net, crop, metadata, frames, targets, *, learning, deadline=float('inf'), visual_schedule='tick-v1'):
     """Continuous state across trials; the only neural input is the current image."""
     from rise_decay import RiseDecayNetwork, RiseDecayPrediction
-    if learning and isinstance(net, RiseDecayNetwork) and visual_schedule != 'frame-horizon-v1':
-        raise ValueError('rise-decay learning requires frame-horizon-v1')
+    from event_contrast import EventContrastNetwork, EventContrastPrediction
+    if learning and isinstance(net, (RiseDecayNetwork, EventContrastNetwork)) and visual_schedule != 'frame-horizon-v1':
+        raise ValueError('experimental forecast learning requires frame-horizon-v1')
     cfg = metadata['config']
     rule_cfg = LearningConfig(**metadata['learning'])
     retina = Retina(**crop['retina'])
@@ -101,6 +105,8 @@ def run_sequence(net, crop, metadata, frames, targets, *, learning, deadline=flo
         rule_class = FramePrediction
         if isinstance(net, RiseDecayNetwork):
             rule_class = RiseDecayPrediction
+        elif isinstance(net, EventContrastNetwork):
+            rule_class = EventContrastPrediction
     elif visual_schedule != 'tick-v1':
         raise ValueError('unknown visual supervision schedule')
     rule = rule_class(net, rule_cfg, sensory_mask=retina.injected,

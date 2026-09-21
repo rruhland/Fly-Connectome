@@ -29,6 +29,14 @@ class FramePrediction(Plasticity):
     def _update_forecast_trace(self, activity):
         pass
 
+    def _capture_forecast(self):
+        n = self.network
+        edges = self.keys.remainder(n.e)
+        visual = n.pathways[edges] == 1
+        keys = self.keys[visual].clone()
+        env, edges = keys.div(n.e, rounding_mode='floor'), keys.remainder(n.e)
+        self.forecast = (keys, self.values[visual].clone(), self.expected[env, n.post[edges]].clone())
+
     @torch.no_grad()
     def observe(self, activity, reward):
         n, cfg = self.network, self.config
@@ -45,9 +53,5 @@ class FramePrediction(Plasticity):
         super().observe(activity, reward)
         self._update_forecast_trace(activity)
         if boundary:
-            edges = self.keys.remainder(n.e)
-            visual = n.pathways[edges] == 1
-            keys = self.keys[visual].clone()
-            env, edges = keys.div(n.e, rounding_mode='floor'), keys.remainder(n.e)
-            self.forecast = (keys, self.values[visual].clone(), self.expected[env, n.post[edges]].clone())
+            self._capture_forecast()
         self.tick += 1
