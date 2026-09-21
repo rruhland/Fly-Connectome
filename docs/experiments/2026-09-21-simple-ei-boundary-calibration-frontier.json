@@ -1,0 +1,74 @@
+{
+  "E": {
+    "minimum_quiet_fpr_candidate": {
+      "quiet_fpr": 0.30939226519337015,
+      "on_recall": 0.9333333333333333,
+      "off_recall": 0.9666666666666667
+    },
+    "minimum_quiet_fpr_above_90pct_both": 0.30939226519337015
+  },
+  "H": {
+    "minimum_quiet_fpr_candidate": {
+      "quiet_fpr": 0.17403314917127072,
+      "on_recall": 0.9666666666666667,
+      "off_recall": 0.9333333333333333
+    },
+    "minimum_quiet_fpr_above_90pct_both": 0.17403314917127072
+  },
+  "total": {
+    "minimum_quiet_fpr_candidate": {
+      "quiet_fpr": 0.2596685082872928,
+      "on_recall": 0.9,
+      "off_recall": 0.9666666666666667
+    },
+    "minimum_quiet_fpr_above_90pct_both": 0.31215469613259667
+  },
+  "difference": {
+    "minimum_quiet_fpr_candidate": {
+      "quiet_fpr": 0.287292817679558,
+      "on_recall": 0.9666666666666667,
+      "off_recall": 0.8333333333333334
+    },
+    "minimum_quiet_fpr_above_90pct_both": 0.2983425414364641
+  },
+  "product": {
+    "minimum_quiet_fpr_candidate": {
+      "quiet_fpr": 0.19337016574585636,
+      "on_recall": 0.9,
+      "off_recall": 0.9666666666666667
+    },
+    "minimum_quiet_fpr_above_90pct_both": 0.20165745856353592
+  },
+  "coincidence": {
+    "minimum_quiet_fpr_candidate": {
+      "quiet_fpr": 0.1132596685082873,
+      "on_recall": 0.9333333333333333,
+      "off_recall": 0.9333333333333333
+    },
+    "minimum_quiet_fpr_above_90pct_both": 0.1132596685082873
+  },
+  "ratio": {
+    "minimum_quiet_fpr_candidate": {
+      "quiet_fpr": 0.052486187845303865,
+      "on_recall": 0.9333333333333333,
+      "off_recall": 0.8666666666666667
+    },
+    "minimum_quiet_fpr_above_90pct_both": 0.0718232044198895
+  },
+  "E_H": {
+    "minimum_quiet_fpr_candidate": {
+      "quiet_fpr": 0.06906077348066299,
+      "on_recall": 0.9,
+      "off_recall": 0.8666666666666667
+    },
+    "minimum_quiet_fpr_above_90pct_both": 0.09116022099447514
+  },
+  "total_ratio": {
+    "minimum_quiet_fpr_candidate": {
+      "quiet_fpr": 0.011049723756906077,
+      "on_recall": 0.7666666666666667,
+      "off_recall": 0.8
+    },
+    "minimum_quiet_fpr_above_90pct_both": 0.13259668508287292
+  }
+}

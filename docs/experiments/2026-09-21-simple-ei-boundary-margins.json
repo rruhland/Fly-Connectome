@@ -1,0 +1,42 @@
+{
+  "coordinate_order": [
+    "total",
+    "inhibitory_fraction"
+  ],
+  "training_std": [
+    0.32993998592867885,
+    0.26941590183858377
+  ],
+  "events": {
+    "ON": {
+      "detected": 139,
+      "detected_within_1pct_std_of_any_boundary": 113,
+      "near_by_coordinate": [
+        82,
+        31
+      ],
+      "minimum_normalized_margin_quantiles_detected": [
+        0.0,
+        3.191252898694082e-06,
+        6.4312202765702656e-06,
+        0.009323003986396803,
+        0.1311270842816477
+      ]
+    },
+    "OFF": {
+      "detected": 139,
+      "detected_within_1pct_std_of_any_boundary": 38,
+      "near_by_coordinate": [
+        36,
+        2
+      ],
+      "minimum_normalized_margin_quantiles_detected": [
+        0.0,
+        6.426730097342258e-05,
+        0.021842995698895876,
+        0.035007337106686895,
+        0.08974369685752556
+      ]
+    }
+  }
+}
