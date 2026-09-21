@@ -1,6 +1,6 @@
 # Adaptation-dependent local prediction: bounded architecture experiment
 
-Status: proposed for user review; not implemented or approved as a concrete rule.
+Status: user approved this concrete rule and bounded experiment; implementation underway.
 
 ## Purpose and evidence
 
