@@ -564,3 +564,35 @@ incoming FF/predictive activity in frozen initial/trained runs. Separate missing
 arrivals, subthreshold activity and lost feedback weights. No model revision,
 new training run or optimization is implied. Results and reproduction details:
 docs/experiments/2026-09-20-supported-forecasts.md. Source hashes unchanged.
+
+## L3 feedback source investigation (2026-09-20)
+
+User requested tracing upstream activity, with longer30-100ms and next-meaningful-
+event horizons considered afterward if source tracing is inconclusive. Existing
+lag evidence covers only about17ms and does not exclude those longer horizons.
+Frozen source audit uses same500frames/seeds1101,1102 and unchanged initial/10000
+checkpoints. Reconstruct physical edge traces including warmup, exclude first
+frame, classify source spikes and FF/predictive/sensory current by body/cell type.
+Post-reset voltage margins describe silent sources, not spike overshoot.
+Fixture verifies activity attribution and exact unchanged network tensors.
+No model changes, extra training, final-seed use or optimization experiments.
+Source attribution completed: C2 accounts for674/681 lost active L3 input traces;
+Lawf1 accounts for7. C2 spiking sources669->1 and spikes2350->4; mean recurrent
+current0.002239868->-7.5855e-8, while FF current changes<0.3%. C2 rest current1.0.
+Preregistered causal test: frozen trained network, replace only existing predictive
+magnitudes entering C2 with initial values before warmup. All other weights,
+configuration, signs and topology fixed. No checkpoint writes. Hybrid activity
+is diagnostic, not trained performance. Selective restoration fixture passes.
+C2 restoration completed: existing3091 incoming predictive edges reset to initial
+magnitudes in a frozen hybrid, all other parameters/weights fixed. C2 spiking
+sources1->671, active outgoing traces1->677, all L3 active traces74->750.
+Sensory MSE worsens0.000953858->0.000967914 (zero0.000938364): activity rescue is
+not effective learning. Both source checkpoints unchanged. Source tracing yields
+a meaningful mechanism; longer30/50/100ms and next-meaningful-event hypotheses
+remain open and should be diagnosed before changing target/dynamics, not inferred
+from the earlier~17ms sweep. See feedback-source-investigation report.
+Fresh review confirms instrumentation/restoration; corrected first-frame wording
+(source statistics exclude it, event metrics include it).187 tests pass,4CUDA
+skips. No model changes, new training or optimization. All experiment processes
+finished. Next bounded scientific question is the local objective/time horizon,
+not blind restoration or increased tonic firing.
