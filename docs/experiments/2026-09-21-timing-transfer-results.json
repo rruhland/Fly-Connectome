@@ -1,0 +1,254 @@
+{
+  "2": {
+    "boundary": {
+      "on_count": 75,
+      "off_count": 75,
+      "quiet_count": 789,
+      "on_recall": 0.0,
+      "off_recall": 0.0,
+      "quiet_false_positive_rate": 0.08745247148288973,
+      "precision": 0.0,
+      "quiet_by_phase": {
+        "after_off_1": {
+          "count": 75,
+          "false_positives": 37
+        },
+        "after_on_1": {
+          "count": 75,
+          "false_positives": 26
+        },
+        "blank": {
+          "count": 639,
+          "false_positives": 6
+        }
+      },
+      "branch_calls": {
+        "on": {
+          "count": 75,
+          "on_branch": 0,
+          "off_branch": 0,
+          "both": 0
+        },
+        "off": {
+          "count": 75,
+          "on_branch": 0,
+          "off_branch": 0,
+          "both": 0
+        },
+        "quiet": {
+          "count": 789,
+          "on_branch": 28,
+          "off_branch": 41,
+          "both": 0
+        }
+      }
+    },
+    "neighbor": {
+      "on_count": 75,
+      "off_count": 75,
+      "quiet_count": 789,
+      "on_recall": 0.13333333333333333,
+      "off_recall": 0.49333333333333335,
+      "quiet_false_positive_rate": 0.11533586818757921,
+      "auc": 0.5701098436839882,
+      "precision": 0.34057971014492755
+    },
+    "signed_forecast": {
+      "on": {
+        "count": 75,
+        "correct_sign": 27,
+        "mean_signed_anticipation": 0.12934189437352803
+      },
+      "off": {
+        "count": 75,
+        "correct_sign": 73,
+        "mean_signed_anticipation": 0.05316186532378197
+      }
+    },
+    "artifact_sha256": "6bafc5fe9bb7a6ed99bb576b66f44ffe6c8d7227715fb6d4df85b066d898d668"
+  },
+  "4": {
+    "boundary": {
+      "on_count": 75,
+      "off_count": 75,
+      "quiet_count": 1089,
+      "on_recall": 0.4,
+      "off_recall": 0.0,
+      "quiet_false_positive_rate": 0.1487603305785124,
+      "precision": 0.15625,
+      "quiet_by_phase": {
+        "after_off_1": {
+          "count": 75,
+          "false_positives": 0
+        },
+        "after_off_2": {
+          "count": 75,
+          "false_positives": 0
+        },
+        "after_off_3": {
+          "count": 75,
+          "false_positives": 70
+        },
+        "after_on_1": {
+          "count": 75,
+          "false_positives": 17
+        },
+        "after_on_2": {
+          "count": 75,
+          "false_positives": 25
+        },
+        "after_on_3": {
+          "count": 75,
+          "false_positives": 35
+        },
+        "blank": {
+          "count": 639,
+          "false_positives": 15
+        }
+      },
+      "branch_calls": {
+        "on": {
+          "count": 75,
+          "on_branch": 30,
+          "off_branch": 0,
+          "both": 0
+        },
+        "off": {
+          "count": 75,
+          "on_branch": 0,
+          "off_branch": 0,
+          "both": 0
+        },
+        "quiet": {
+          "count": 1089,
+          "on_branch": 99,
+          "off_branch": 63,
+          "both": 0
+        }
+      }
+    },
+    "neighbor": {
+      "on_count": 75,
+      "off_count": 75,
+      "quiet_count": 1089,
+      "on_recall": 0.0,
+      "off_recall": 0.0,
+      "quiet_false_positive_rate": 0.16437098255280075,
+      "auc": 0.5143434343434343,
+      "precision": 0.0
+    },
+    "signed_forecast": {
+      "on": {
+        "count": 75,
+        "correct_sign": 73,
+        "mean_signed_anticipation": 0.1736269478003184
+      },
+      "off": {
+        "count": 75,
+        "correct_sign": 75,
+        "mean_signed_anticipation": 0.08500965118408203
+      }
+    },
+    "artifact_sha256": "7616a7ea6da717d7ef02a3026d1eca28020d173040c3afdeffabbb620db04bed"
+  },
+  "6": {
+    "boundary": {
+      "on_count": 75,
+      "off_count": 75,
+      "quiet_count": 1389,
+      "on_recall": 0.013333333333333334,
+      "off_recall": 0.0,
+      "quiet_false_positive_rate": 0.08207343412526998,
+      "precision": 0.008695652173913044,
+      "quiet_by_phase": {
+        "after_off_1": {
+          "count": 75,
+          "false_positives": 0
+        },
+        "after_off_2": {
+          "count": 75,
+          "false_positives": 59
+        },
+        "after_off_3": {
+          "count": 75,
+          "false_positives": 0
+        },
+        "after_off_4": {
+          "count": 75,
+          "false_positives": 0
+        },
+        "after_off_5": {
+          "count": 75,
+          "false_positives": 0
+        },
+        "after_on_1": {
+          "count": 75,
+          "false_positives": 0
+        },
+        "after_on_2": {
+          "count": 75,
+          "false_positives": 33
+        },
+        "after_on_3": {
+          "count": 75,
+          "false_positives": 1
+        },
+        "after_on_4": {
+          "count": 75,
+          "false_positives": 0
+        },
+        "after_on_5": {
+          "count": 75,
+          "false_positives": 0
+        },
+        "blank": {
+          "count": 639,
+          "false_positives": 21
+        }
+      },
+      "branch_calls": {
+        "on": {
+          "count": 75,
+          "on_branch": 1,
+          "off_branch": 0,
+          "both": 0
+        },
+        "off": {
+          "count": 75,
+          "on_branch": 0,
+          "off_branch": 0,
+          "both": 0
+        },
+        "quiet": {
+          "count": 1389,
+          "on_branch": 60,
+          "off_branch": 54,
+          "both": 0
+        }
+      }
+    },
+    "neighbor": {
+      "on_count": 75,
+      "off_count": 75,
+      "quiet_count": 1389,
+      "on_recall": 0.013333333333333334,
+      "off_recall": 0.0,
+      "quiet_false_positive_rate": 0.22390208783297336,
+      "auc": 0.3614086873050156,
+      "precision": 0.003205128205128205
+    },
+    "signed_forecast": {
+      "on": {
+        "count": 75,
+        "correct_sign": 10,
+        "mean_signed_anticipation": -0.03935182611147563
+      },
+      "off": {
+        "count": 75,
+        "correct_sign": 75,
+        "mean_signed_anticipation": 0.02636699505150318
+      }
+    },
+    "artifact_sha256": "8348f9b8cce236d9b0c451dc15b8453edd23851c1f227b65cbb081e036620ed2"
+  }
+}

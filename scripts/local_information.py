@@ -57,8 +57,18 @@ def calibrate_threshold(scores,labels):
     return best[1]
 
 
+def motion_phase(frame,blank,dwell):
+    relative=frame-int(blank)
+    if not 0<=relative<8*dwell:
+        return 'blank'
+    offset=relative%(2*dwell)
+    if offset==0:return 'on'
+    if offset==dwell:return 'off'
+    return f'after_on_{offset}' if offset<dwell else f'after_off_{offset-dwell}'
+
+
 @torch.no_grad()
-def collect(crop,metadata,weights,blanks):
+def collect(crop,metadata,weights,blanks,dwell=3):
     net=make_network(crop,metadata,weights,predictive_kinetics='area-matched-excitation-v1')
     retina=Retina(**crop['retina']);camera=EventCamera(1,32,64)
     cfg=replace(LearningConfig(**metadata['learning']),eta_prediction=0.,eta_reward=0.,homeostasis_rate=0.)
@@ -73,7 +83,7 @@ def collect(crop,metadata,weights,blanks):
         names.extend(f'{prefix}_{int(crop["graph"].body_ids[net.pre[e]])}' for e in incoming)
     features=[];trial_ids=[];phases=[];predictions=[];targets=[];spikes=[]
     for trial,blank in enumerate(blanks):
-        for frame,image in enumerate(oscillation(int(blank))):
+        for frame,image in enumerate(oscillation(int(blank),dwell=dwell)):
             injection=retina.project(camera.observe(image))*metadata['config']['sensory_gain']
             for tick in range(8):
                 a=net.step(injection if tick==0 else torch.zeros_like(injection),capture_increments=True)
@@ -91,13 +101,11 @@ def collect(crop,metadata,weights,blanks):
                             float(a.spikes[0,target]),float(rule.post_trace[0,target]),float(rule.rates[0,target])]
                     features.append(row+e.tolist()+arr_trace.tolist()+arrivals.tolist())
                     trial_ids.append(trial)
-                    relative=frame-int(blank)
-                    phases.append(['on','after_on_1','after_on_2','off','after_off_1','after_off_2'][relative%6]
-                                  if 0<=relative<24 else 'blank')
+                    phases.append(motion_phase(frame,blank,dwell))
             rule.synchronize()
     assert torch.equal(net.magnitudes,weights)
     features=np.asarray(features);assert np.isfinite(features).all()
-    issue=recurrent_boundaries(blanks);target_frames=(issue+8)//8
+    issue=recurrent_boundaries(blanks,dwell=dwell);target_frames=(issue+8)//8
     # Trial IDs and phase labels belong to the TARGET frame, never to features.
     return dict(x=features[issue//8],y=np.asarray(targets)[issue+8],trial=np.asarray(trial_ids)[target_frames],
                 phase=np.asarray(phases)[target_frames],prediction=np.asarray(predictions)[issue],
