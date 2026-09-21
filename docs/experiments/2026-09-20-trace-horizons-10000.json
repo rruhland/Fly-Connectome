@@ -1,0 +1,586 @@
+{
+  "checkpoint_sha256": "6358107d489ee859f1644105eb274c29b226e6cdc71ae7e58d65a8bf6c925e58",
+  "graph_sha256": "c941a5c912dd03e2ab0868260c637c2b1d21525196d4bce93c7d5e7f618e34a8",
+  "training_steps": 10000,
+  "configuration_sha256": "2a1fe509141dd8aa9e1bfb76d68c7a38ad773b94c965392e53e8d5dca42e629e",
+  "steps": 2000,
+  "seeds": [
+    1101,
+    1102
+  ],
+  "common_frames": [
+    12,
+    1988
+  ],
+  "samples_per_seed": 1976,
+  "leads_ms": {
+    "one_tick": 1.0416666666666667,
+    "30": 30.208333333333332,
+    "50": 50.0,
+    "100": 100.0
+  },
+  "next_event_window_frames": 12,
+  "maximum_reconstruction_error": 2.9802322387695312e-08,
+  "trials": {
+    "one_tick": {
+      "L1": {
+        "measured_edges": 3310,
+        "eligible_edges_by_seed": [
+          52,
+          94
+        ],
+        "discovery_candidates": 3,
+        "selected": 3,
+        "validation_passes": 0,
+        "distinct_validated_posts": 0,
+        "candidates": [
+          {
+            "pre_body": 59980,
+            "post_body": 27733,
+            "pre_type": "Mi1",
+            "magnitude": 0.00043674695189110935,
+            "discovery_correlation": 0.06514949973101751,
+            "validation_correlation": -0.0027707019162510203,
+            "discovery_shuffle_correlation": 2.3977546083293115e-05,
+            "validation_shuffle_correlation": -0.0027730934396666576,
+            "target_event_counts": [
+              10,
+              3
+            ],
+            "validation_pass": false
+          },
+          {
+            "pre_body": 551412,
+            "post_body": 55549,
+            "pre_type": "Tm3",
+            "magnitude": 0.0,
+            "discovery_correlation": 0.05706175923022141,
+            "validation_correlation": -0.006330533304923211,
+            "discovery_shuffle_correlation": -0.006608126689289935,
+            "validation_shuffle_correlation": 0.012252831703719687,
+            "target_event_counts": [
+              7,
+              4
+            ],
+            "validation_pass": false
+          },
+          {
+            "pre_body": 21327,
+            "post_body": 31447,
+            "pre_type": "L2",
+            "magnitude": 5.9350611536501674e-08,
+            "discovery_correlation": 0.05044062520755452,
+            "validation_correlation": 0.0,
+            "discovery_shuffle_correlation": -0.07026933156549986,
+            "validation_shuffle_correlation": 0.0,
+            "target_event_counts": [
+              7,
+              0
+            ],
+            "validation_pass": false
+          }
+        ]
+      },
+      "L2": {
+        "measured_edges": 9764,
+        "eligible_edges_by_seed": [
+          109,
+          190
+        ],
+        "discovery_candidates": 0,
+        "selected": 0,
+        "validation_passes": 0,
+        "distinct_validated_posts": 0,
+        "candidates": []
+      },
+      "L3": {
+        "measured_edges": 4483,
+        "eligible_edges_by_seed": [
+          7,
+          5
+        ],
+        "discovery_candidates": 0,
+        "selected": 0,
+        "validation_passes": 0,
+        "distinct_validated_posts": 0,
+        "candidates": []
+      }
+    },
+    "30": {
+      "L1": {
+        "measured_edges": 3310,
+        "eligible_edges_by_seed": [
+          52,
+          94
+        ],
+        "discovery_candidates": 1,
+        "selected": 1,
+        "validation_passes": 0,
+        "distinct_validated_posts": 0,
+        "candidates": [
+          {
+            "pre_body": 81554,
+            "post_body": 72489,
+            "pre_type": "Mi1",
+            "magnitude": 3.662820745375939e-05,
+            "discovery_correlation": 0.07461465161798206,
+            "validation_correlation": -0.0006979445374191555,
+            "discovery_shuffle_correlation": 0.005055532716915087,
+            "validation_shuffle_correlation": -0.03760899971627821,
+            "target_event_counts": [
+              40,
+              19
+            ],
+            "validation_pass": false
+          }
+        ]
+      },
+      "L2": {
+        "measured_edges": 9764,
+        "eligible_edges_by_seed": [
+          109,
+          190
+        ],
+        "discovery_candidates": 2,
+        "selected": 2,
+        "validation_passes": 0,
+        "distinct_validated_posts": 0,
+        "candidates": [
+          {
+            "pre_body": 111663,
+            "post_body": 37107,
+            "pre_type": "C3",
+            "magnitude": 0.10670782625675201,
+            "discovery_correlation": 0.073153744900125,
+            "validation_correlation": 3.309256789339706e-43,
+            "discovery_shuffle_correlation": -3.1073448049052025e-25,
+            "validation_shuffle_correlation": 0.0,
+            "target_event_counts": [
+              6,
+              6
+            ],
+            "validation_pass": false
+          },
+          {
+            "pre_body": 14872,
+            "post_body": 61901,
+            "pre_type": "Dm6",
+            "magnitude": 0.010223675519227982,
+            "discovery_correlation": 0.05703754505520087,
+            "validation_correlation": -0.013440341359274067,
+            "discovery_shuffle_correlation": 0.000951893188226406,
+            "validation_shuffle_correlation": 0.007774002059920137,
+            "target_event_counts": [
+              10,
+              17
+            ],
+            "validation_pass": false
+          }
+        ]
+      },
+      "L3": {
+        "measured_edges": 4483,
+        "eligible_edges_by_seed": [
+          7,
+          5
+        ],
+        "discovery_candidates": 0,
+        "selected": 0,
+        "validation_passes": 0,
+        "distinct_validated_posts": 0,
+        "candidates": []
+      }
+    },
+    "50": {
+      "L1": {
+        "measured_edges": 3310,
+        "eligible_edges_by_seed": [
+          52,
+          94
+        ],
+        "discovery_candidates": 5,
+        "selected": 5,
+        "validation_passes": 1,
+        "distinct_validated_posts": 1,
+        "candidates": [
+          {
+            "pre_body": 50062,
+            "post_body": 51452,
+            "pre_type": "L2",
+            "magnitude": 0.0039987629279494286,
+            "discovery_correlation": 0.12190887038350008,
+            "validation_correlation": 0.10523419876798017,
+            "discovery_shuffle_correlation": 0.00891439707903205,
+            "validation_shuffle_correlation": -0.016246272501258627,
+            "target_event_counts": [
+              38,
+              49
+            ],
+            "validation_pass": true
+          },
+          {
+            "pre_body": 74738,
+            "post_body": 55549,
+            "pre_type": "Mi1",
+            "magnitude": 2.3355485154752387e-06,
+            "discovery_correlation": 0.06834216920388811,
+            "validation_correlation": 0.01058628110254415,
+            "discovery_shuffle_correlation": -0.000994355014281579,
+            "validation_shuffle_correlation": -1.675381677658265e-06,
+            "target_event_counts": [
+              7,
+              4
+            ],
+            "validation_pass": false
+          },
+          {
+            "pre_body": 72987,
+            "post_body": 31447,
+            "pre_type": "Mi1",
+            "magnitude": 3.9474275581596885e-06,
+            "discovery_correlation": 0.06263480963749364,
+            "validation_correlation": 0.0,
+            "discovery_shuffle_correlation": 0.0026125183671841575,
+            "validation_shuffle_correlation": 0.0,
+            "target_event_counts": [
+              7,
+              0
+            ],
+            "validation_pass": false
+          },
+          {
+            "pre_body": 43221,
+            "post_body": 30312,
+            "pre_type": "Mi1",
+            "magnitude": 2.3797547328285873e-06,
+            "discovery_correlation": 0.05766988717307857,
+            "validation_correlation": -1.3187139723680517e-08,
+            "discovery_shuffle_correlation": 2.6726317835837798e-08,
+            "validation_shuffle_correlation": -1.6780201874711503e-12,
+            "target_event_counts": [
+              8,
+              4
+            ],
+            "validation_pass": false
+          },
+          {
+            "pre_body": 65794,
+            "post_body": 51448,
+            "pre_type": "Mi1",
+            "magnitude": 0.0037674077320843935,
+            "discovery_correlation": 0.05332402214621261,
+            "validation_correlation": 0.018615487023589304,
+            "discovery_shuffle_correlation": 0.02850257896764964,
+            "validation_shuffle_correlation": -0.00299799271688394,
+            "target_event_counts": [
+              6,
+              19
+            ],
+            "validation_pass": false
+          }
+        ]
+      },
+      "L2": {
+        "measured_edges": 9764,
+        "eligible_edges_by_seed": [
+          109,
+          190
+        ],
+        "discovery_candidates": 2,
+        "selected": 2,
+        "validation_passes": 1,
+        "distinct_validated_posts": 1,
+        "candidates": [
+          {
+            "pre_body": 14872,
+            "post_body": 73435,
+            "pre_type": "Dm6",
+            "magnitude": 0.015399079769849777,
+            "discovery_correlation": 0.09513160434947497,
+            "validation_correlation": 0.024041153424863935,
+            "discovery_shuffle_correlation": 0.010305678164996529,
+            "validation_shuffle_correlation": 0.0031937819779620075,
+            "target_event_counts": [
+              13,
+              34
+            ],
+            "validation_pass": false
+          },
+          {
+            "pre_body": 101422,
+            "post_body": 87871,
+            "pre_type": "C3",
+            "magnitude": 0.007202119566500187,
+            "discovery_correlation": 0.05612495040367957,
+            "validation_correlation": 0.08041936436142796,
+            "discovery_shuffle_correlation": -0.0013199322581281027,
+            "validation_shuffle_correlation": -0.0005135370298742993,
+            "target_event_counts": [
+              30,
+              38
+            ],
+            "validation_pass": true
+          }
+        ]
+      },
+      "L3": {
+        "measured_edges": 4483,
+        "eligible_edges_by_seed": [
+          7,
+          5
+        ],
+        "discovery_candidates": 0,
+        "selected": 0,
+        "validation_passes": 0,
+        "distinct_validated_posts": 0,
+        "candidates": []
+      }
+    },
+    "100": {
+      "L1": {
+        "measured_edges": 3310,
+        "eligible_edges_by_seed": [
+          52,
+          94
+        ],
+        "discovery_candidates": 1,
+        "selected": 1,
+        "validation_passes": 1,
+        "distinct_validated_posts": 1,
+        "candidates": [
+          {
+            "pre_body": 50062,
+            "post_body": 51452,
+            "pre_type": "L2",
+            "magnitude": 0.0039987629279494286,
+            "discovery_correlation": 0.056044868008776325,
+            "validation_correlation": 0.06853069755782148,
+            "discovery_shuffle_correlation": -0.007244665870439279,
+            "validation_shuffle_correlation": -0.024320745358066023,
+            "target_event_counts": [
+              38,
+              49
+            ],
+            "validation_pass": true
+          }
+        ]
+      },
+      "L2": {
+        "measured_edges": 9764,
+        "eligible_edges_by_seed": [
+          109,
+          190
+        ],
+        "discovery_candidates": 3,
+        "selected": 3,
+        "validation_passes": 0,
+        "distinct_validated_posts": 0,
+        "candidates": [
+          {
+            "pre_body": 500004,
+            "post_body": 30374,
+            "pre_type": "L4",
+            "magnitude": 0.040989842265844345,
+            "discovery_correlation": 0.06352560760797751,
+            "validation_correlation": 0.01821504208000265,
+            "discovery_shuffle_correlation": 0.00021562126145642188,
+            "validation_shuffle_correlation": -0.00024526114272437175,
+            "target_event_counts": [
+              64,
+              50
+            ],
+            "validation_pass": false
+          },
+          {
+            "pre_body": 10845,
+            "post_body": 21327,
+            "pre_type": "Dm17",
+            "magnitude": 0.0,
+            "discovery_correlation": 0.05423583356788622,
+            "validation_correlation": 0.0,
+            "discovery_shuffle_correlation": -0.002827134974758931,
+            "validation_shuffle_correlation": 0.0,
+            "target_event_counts": [
+              7,
+              0
+            ],
+            "validation_pass": false
+          },
+          {
+            "pre_body": 13260,
+            "post_body": 21327,
+            "pre_type": "Dm6",
+            "magnitude": 0.0,
+            "discovery_correlation": 0.0500820563922208,
+            "validation_correlation": 0.0,
+            "discovery_shuffle_correlation": -0.002804102890579883,
+            "validation_shuffle_correlation": 0.0,
+            "target_event_counts": [
+              7,
+              0
+            ],
+            "validation_pass": false
+          }
+        ]
+      },
+      "L3": {
+        "measured_edges": 4483,
+        "eligible_edges_by_seed": [
+          7,
+          5
+        ],
+        "discovery_candidates": 0,
+        "selected": 0,
+        "validation_passes": 0,
+        "distinct_validated_posts": 0,
+        "candidates": []
+      }
+    },
+    "next_event": {
+      "L1": {
+        "measured_edges": 3310,
+        "eligible_edges_by_seed": [
+          55,
+          94
+        ],
+        "discovery_candidates": 4,
+        "selected": 4,
+        "validation_passes": 3,
+        "distinct_validated_posts": 3,
+        "candidates": [
+          {
+            "pre_body": 50062,
+            "post_body": 51452,
+            "pre_type": "L2",
+            "magnitude": 0.0039987629279494286,
+            "discovery_correlation": 0.12157517178555126,
+            "validation_correlation": 0.1121764051928391,
+            "discovery_shuffle_correlation": -0.02494663266973775,
+            "validation_shuffle_correlation": -0.042869070487415895,
+            "target_event_counts": [
+              37,
+              48
+            ],
+            "validation_pass": true
+          },
+          {
+            "pre_body": 75482,
+            "post_body": 71110,
+            "pre_type": "L2",
+            "magnitude": 9.734369086800143e-06,
+            "discovery_correlation": 0.06498154661369648,
+            "validation_correlation": 0.10104131057545299,
+            "discovery_shuffle_correlation": 0.0224429475484281,
+            "validation_shuffle_correlation": 0.013079822237226656,
+            "target_event_counts": [
+              8,
+              14
+            ],
+            "validation_pass": true
+          },
+          {
+            "pre_body": 42416,
+            "post_body": 44723,
+            "pre_type": "L2",
+            "magnitude": 1.3402053809841163e-05,
+            "discovery_correlation": 0.06350898640291268,
+            "validation_correlation": 0.05435457973585187,
+            "discovery_shuffle_correlation": -0.012821387419591235,
+            "validation_shuffle_correlation": 0.016166247960016,
+            "target_event_counts": [
+              20,
+              6
+            ],
+            "validation_pass": true
+          },
+          {
+            "pre_body": 59980,
+            "post_body": 27733,
+            "pre_type": "Mi1",
+            "magnitude": 0.00043674695189110935,
+            "discovery_correlation": 0.05958548800033318,
+            "validation_correlation": 0.0050742614795989335,
+            "discovery_shuffle_correlation": 0.01821241964688075,
+            "validation_shuffle_correlation": 0.03709591716154724,
+            "target_event_counts": [
+              10,
+              3
+            ],
+            "validation_pass": false
+          }
+        ]
+      },
+      "L2": {
+        "measured_edges": 9764,
+        "eligible_edges_by_seed": [
+          115,
+          190
+        ],
+        "discovery_candidates": 3,
+        "selected": 3,
+        "validation_passes": 0,
+        "distinct_validated_posts": 0,
+        "candidates": [
+          {
+            "pre_body": 111663,
+            "post_body": 37107,
+            "pre_type": "C3",
+            "magnitude": 0.10670782625675201,
+            "discovery_correlation": 0.06763634909917833,
+            "validation_correlation": -0.06359784863649183,
+            "discovery_shuffle_correlation": 5.795145547403696e-07,
+            "validation_shuffle_correlation": 1.1459016876460329e-05,
+            "target_event_counts": [
+              6,
+              6
+            ],
+            "validation_pass": false
+          },
+          {
+            "pre_body": 89531,
+            "post_body": 30374,
+            "pre_type": "C3",
+            "magnitude": 0.015139163471758366,
+            "discovery_correlation": 0.055535632074388025,
+            "validation_correlation": -0.03611728764467748,
+            "discovery_shuffle_correlation": 0.024014386581188693,
+            "validation_shuffle_correlation": -0.006866557038851749,
+            "target_event_counts": [
+              64,
+              50
+            ],
+            "validation_pass": false
+          },
+          {
+            "pre_body": 77663,
+            "post_body": 39559,
+            "pre_type": "C3",
+            "magnitude": 0.10663925111293793,
+            "discovery_correlation": 0.055492871318311425,
+            "validation_correlation": -0.0010648578740285724,
+            "discovery_shuffle_correlation": 0.0016347768602695668,
+            "validation_shuffle_correlation": 0.04999318034606074,
+            "target_event_counts": [
+              40,
+              19
+            ],
+            "validation_pass": false
+          }
+        ]
+      },
+      "L3": {
+        "measured_edges": 4483,
+        "eligible_edges_by_seed": [
+          7,
+          5
+        ],
+        "discovery_candidates": 0,
+        "selected": 0,
+        "validation_passes": 0,
+        "distinct_validated_posts": 0,
+        "candidates": []
+      }
+    }
+  },
+  "interpretation": "Frozen physical signed traces, including warmup. Frame-boundary targets for fixed leads; frame-end traces for next-event windows. First seed selects at most10 edges/population by correlation, second checks those same edges. Require >=5 distinct target events, trace power>1e-10, correlation>=0.05, positive target-trace moment, and covariance greater than one fixed timing shuffle in each seed. Next-event counts use distinct underlying events, not repeated labels. Exploratory multiple comparisons, not significance or M1A acceptance. No fitting or parameter changes; final seeds unused."
+}

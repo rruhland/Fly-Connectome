@@ -619,3 +619,36 @@ extension, new readout or current/excitability fix. Model/checkpoints unchanged.
 190 tests passed,4CUDA skips. Fresh review found no blockers; report explicitly
 separates100ms frame window from actual sampled tick leads. All measured runs
 finished; final seeds untouched. See2026-09-20-long-horizon-investigation.md.
+
+## Edge-local long-horizon signal investigation (2026-09-20)
+
+User authorized a few bounded follow-ups, stopping on meaningful evidence or a
+needed change of architecture/goals. First test physical signed predictive-edge
+traces onto L1-L3 at one-tick/30/50/100ms and next-event horizons. Extend frozen
+observation to2000frames on same development seeds for repeated local events.
+Select top10 edges per population/trial on1101; check identical edges on1102.
+Require >=5 distinct underlying target events, trace power>1e-10, correlation>=.05,
+positive target-trace moment, covariance above shuffled timing421 in each seed.
+Seek >=3 distinct validation posts in a trial as actionable exploratory evidence;
+these multiple comparisons are not statistical significance or M1A acceptance.
+Use common frames, complete next-event windows, ring of exact old physical traces,
+and validate replay against actual injections plus current reconstruction.
+Initial/trained weights remain frozen; no readout fitting or final seeds.
+Review caught next-event repetition counts including unreferenced tail events.
+Stopped the preliminary runs before interpreting output. Regression fails then
+passes after counting unique frame+wait event IDs actually referenced by retained
+windows, separately per seed/neuron. Also strengthened tests for seed separation
+(opposite relationships) and ring wraparound. Restart measured runs after fix.
+Meaningful exploratory stopping criterion met: trained next-event trial validates
+three L2->L1 edges at three posts across1101/1102; one-tick validates none. Two of
+these edges also validate initially, and their weights shrink strongly during
+training. Initial/trained current reconstruction5.96e-8/2.98e-8. Correlations are
+modest, multiple comparisons and reused development seeds prohibit acceptance
+claims. Stop expanding experiments per user instruction. Next work is a bounded
+proposal for causal local temporal credit, including event-history controls,
+quiet false alarms and C2 activity, not an unapproved implementation or blind run.
+A secondary read-only C2 sign inventory is in runs/c2-sign-audit.json (909 FF
+edges,907 inhibitory); it was not used as a causal result or model-change basis.
+194 tests passed,4CUDA skips. Source checkpoints unchanged; final seeds untouched.
+See docs/experiments/2026-09-20-local-trace-horizon-findings.md. No remaining
+experiment processes; no architecture, target, signs or topology changes.
