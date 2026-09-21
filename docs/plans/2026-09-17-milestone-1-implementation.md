@@ -667,3 +667,24 @@ next-tick metrics and final-seed/M1A gates remain intact. Written spec self-revi
 for causal ordering, deadline ties, zero-weight eligibility, no-event scoring,
 private state, schema compatibility, overhead and distinct acceptance semantics.
 Await approval under user's model-change boundary before implementing new rule.
+
+## Approved confirmation-window Gate A execution
+
+User approved written proposal. Implementation plan recorded; executing inline
+without repeat chunk approvals. Added fixed-candidate history gate, no production
+learning changes. Tests cover causal history, within-stratum label preservation,
+constant strata, both-seed pair aggregation, frozen collector and reconstruction.
+Run exactly2000frames on1103/1104 against10000 checkpoint, candidates unchanged,
+10conditional shuffles421..430. Stop if fewer than two pairs pass on both seeds
+or evidence is inadequate, as approved. Do not substitute other candidates.
+Gate A completed and FAILED:0/3 fixed pairs pass both1103/1104;2 required.
+All comparisons have>=5 distinct events, nonzero power and98.58-100% label-
+permutable windows. Two pairs fail history-controlled shuffles on both seeds;
+third beats shuffles on1103 but correlation .044<.05, and fails shuffles on1104.
+Not a missing-data inconclusive outcome. Stop approved proposal here: no rule
+implementation, training, alternative candidates, threshold changes or sweeps.
+Prior raw correlations did not establish incremental information beyond history.
+198 tests passed,4CUDA skips; independent review no findings; reconstruction4.66e-10.
+Source/checkpoint/model unchanged; final seeds untouched. All processes finished.
+Next action requires a new discussion/proposal about local target and circuit
+representation, not continuation of conditional GatesB/C. See GateA report.

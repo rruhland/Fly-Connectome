@@ -1,6 +1,8 @@
 # Bounded proposal: local prediction confirmation windows
 
-Status: proposed, awaiting user approval. No new learning mode is implemented.
+Status: approved, then stopped at failed Gate A. Zero fixed pairs passed both
+fresh development seeds (two required). No new learning mode or training was
+performed. See `../experiments/2026-09-20-confirmation-window-gate-a.md`.
 
 ## Purpose and limits
 
