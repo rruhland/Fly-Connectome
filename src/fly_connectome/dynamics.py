@@ -89,6 +89,12 @@ class Network:
         keep = ages == self.delays[edges]
         return environments[owner[keep]], edges[keep]
 
+    def visual_decay(self, edges):
+        return self.current_decay[self.post[edges]]
+
+    def _decay_prediction(self, leak):
+        self.predictive_current.mul_(leak)
+
     @torch.no_grad()
     def step(self, sensory_current, *, capture_increments=False):
         if sensory_current.shape != (self.batch, self.n):
@@ -100,7 +106,7 @@ class Network:
         leak = self.current_decay if cfg.class_parameters else math.exp(-cfg.dt / cfg.tau_current)
         # Only three fixed pathway classes; no loop over neurons, edges or spikes.
         self.feedforward_current.mul_(leak)
-        self.predictive_current.mul_(leak)
+        self._decay_prediction(leak)
         self.behavioral_current.mul_(leak)
         ff, pred, behavior = self.pathways[edges] == 0, self.pathways[edges] == 1, self.pathways[edges] == 2
         increments = None

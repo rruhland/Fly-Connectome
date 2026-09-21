@@ -57,12 +57,23 @@ def score_forecasts(target, prediction, boundaries, lead):
     return result
 
 
-def make_network(crop, metadata, weights=None):
-    net = Network(crop['graph'], crop['delays'], crop['pathways'],
+def make_network(crop, metadata, weights=None, *, predictive_kinetics='original', capture_warmup=False):
+    network_class = Network
+    if predictive_kinetics == 'slow-excitation-v1':
+        from signed_kinetics import SignedKineticsNetwork
+        network_class = SignedKineticsNetwork
+    elif predictive_kinetics != 'original':
+        raise ValueError('unknown predictive kinetics')
+    net = network_class(crop['graph'], crop['delays'], crop['pathways'],
                   config=NeuronConfig(**metadata['neurons']), cell_types=crop['retina']['cell_types'])
     net.magnitudes.copy_(crop['weights'] if weights is None else weights)
+    warmup = []
     for _ in range(metadata['config']['warmup_steps']):
-        net.step(torch.zeros_like(net.voltage))
+        activity = net.step(torch.zeros_like(net.voltage))
+        if capture_warmup:
+            warmup.append(activity.spikes[0].numpy().copy())
+    if capture_warmup:
+        net.warmup_spikes = np.asarray(warmup, dtype=bool).reshape(-1, net.n)
     return net
 
 

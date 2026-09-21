@@ -42,6 +42,7 @@ def main():
     parser.add_argument('--output', default='runs/temporal-visual-v1')
     parser.add_argument('--training-trials', type=int, choices=(200,1000), default=200)
     parser.add_argument('--visual-schedule', choices=('tick-v1', 'frame-horizon-v1'), default='tick-v1')
+    parser.add_argument('--predictive-kinetics', choices=('original', 'slow-excitation-v1'), default='original')
     args = parser.parse_args()
     torch.set_num_threads(1)
     sha = checksum(args.checkpoint)
@@ -73,8 +74,8 @@ def main():
     output.mkdir(parents=True, exist_ok=False)
     started = time.perf_counter()
     deadline = started+(900 if args.training_trials == 1000 else 600)
-    base = make_network(crop, m)
-    decay = base.current_decay[base.post[incoming]].numpy()
+    base = make_network(crop, m, predictive_kinetics=args.predictive_kinetics, capture_warmup=True)
+    decay = base.visual_decay(torch.tensor(incoming)).numpy()
     delays = base.delays[incoming].numpy()
     weights = base.magnitudes[incoming].numpy().copy()
     manifest = dict(source_checkpoint=args.checkpoint, source_sha256=sha, graph_sha256=crop['graph'].identity(),
@@ -87,7 +88,8 @@ def main():
         config=m['config'], neurons_config=m['neurons'], learning=m['learning'],
         stimulus=dict(row=30, target_x=39, other_x=38, dwell_frames=3, cycles=4),
         seeds=dict(preflight=9021, training=9022, evaluation=9023), primary_lead_ticks=8,
-        training_trials=args.training_trials, evaluation_trials=50, visual_schedule=args.visual_schedule)
+        training_trials=args.training_trials, evaluation_trials=50, visual_schedule=args.visual_schedule,
+        predictive_kinetics=args.predictive_kinetics)
     (output/'manifest.json').write_text(json.dumps(manifest,indent=2)+'\n')
     preflight, reconstruction_error = [], 0.
     for trial, blank in enumerate(np.random.default_rng(9021).integers(12,37,size=10)):
@@ -98,7 +100,8 @@ def main():
             r = run_sequence(net,crop,m,images,[target],learning=False,deadline=deadline)
             if not torch.equal(net.magnitudes,base.magnitudes):
                 raise AssertionError('preflight changed weights')
-            trace = delayed_traces(r['spikes'],source,delays,signs,decay)
+            history = np.concatenate((base.warmup_spikes, r['spikes']))
+            trace = delayed_traces(history,source,delays,signs,decay)[len(base.warmup_spikes):]
             np.savez_compressed(output/f'preflight-{trial}-{condition}.npz',
                 **{k:v for k,v in r.items() if k!='stability'}, signed_trace=trace)
             pair.append((r,trace))
@@ -128,7 +131,7 @@ def main():
         for number,seed in ((args.training_trials,9022),(50,9023)):
             blanks=np.random.default_rng(seed).integers(12,37,size=number)
             schedules.append((torch.cat([oscillation(int(b)) for b in blanks]),blanks))
-        net=make_network(crop,m)
+        net=make_network(crop,m,predictive_kinetics=args.predictive_kinetics)
         print(f'Training {args.visual_schedule} on {args.training_trials} trials',flush=True)
         train=run_sequence(net,crop,m,schedules[0][0],[target],learning=True,deadline=deadline,
                            visual_schedule=args.visual_schedule)
@@ -140,7 +143,7 @@ def main():
         boundaries=recurrent_boundaries(blanks)
         targets=None
         for name,w in (('frozen',crop['weights']),('trained',learned)):
-            net=make_network(crop,m,w)
+            net=make_network(crop,m,w,predictive_kinetics=args.predictive_kinetics)
             r=run_sequence(net,crop,m,frames,[target],learning=False,deadline=deadline)
             if not torch.equal(net.magnitudes,w):
                 raise AssertionError('evaluation changed weights')

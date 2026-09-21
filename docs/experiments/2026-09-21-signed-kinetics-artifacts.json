@@ -1,0 +1,97 @@
+{
+  "directory": "runs\\temporal-slow-excitation-v1-warmup",
+  "files": {
+    "frozen.npz": {
+      "bytes": 81845,
+      "sha256": "d2aef56f4435bc8e84bb842d57188f3945348499f0bf0a6b6189890e6c956fdb"
+    },
+    "preflight-0-blank.npz": {
+      "bytes": 19208,
+      "sha256": "e867e1a4daee79ac612bd49006d5d9c28528ca920b4131904ff23714b7a7de24"
+    },
+    "preflight-0-full.npz": {
+      "bytes": 19533,
+      "sha256": "201cfffb511f0dc13810645deb10d7e5a1d2f6d100f43411643b44702b62a7bc"
+    },
+    "preflight-1-blank.npz": {
+      "bytes": 23546,
+      "sha256": "fec2804066539c103428b8b39f8efc4a8a86838fbdb2636be0afddbd9b06da18"
+    },
+    "preflight-1-full.npz": {
+      "bytes": 23854,
+      "sha256": "145dd4517cdaf2060493e7202c10866be9da72a77b20e4b017c365a78da6ad65"
+    },
+    "preflight-2-blank.npz": {
+      "bytes": 17089,
+      "sha256": "8a2a9351c41d351e7b4f6abdd8f919557705600374cfc3b37b48e2af8d93774c"
+    },
+    "preflight-2-full.npz": {
+      "bytes": 17370,
+      "sha256": "1f48cb47e8679e01b98699ce84449b0c7bbd5df1849e2dfe0f3b62a2f5e6048e"
+    },
+    "preflight-3-blank.npz": {
+      "bytes": 23896,
+      "sha256": "7edb4f937e7d6c991f8aa53578e1dcc1cba5bdaa259fe0a07a9a1ba038b18d26"
+    },
+    "preflight-3-full.npz": {
+      "bytes": 24219,
+      "sha256": "156c519f0c5bd49dfdaf3bd412aaf28c4dd655aa9ee5bc3c9a8859177ae27775"
+    },
+    "preflight-4-blank.npz": {
+      "bytes": 16359,
+      "sha256": "4c72190aa6d59c6ca9a9de21cc71dc6c1637e4514b904791a40f23e1342234ef"
+    },
+    "preflight-4-full.npz": {
+      "bytes": 16640,
+      "sha256": "89102792c73e5f136bb1337d1e6b37439bbc829a1b5745651b4c085f97d26d39"
+    },
+    "preflight-5-blank.npz": {
+      "bytes": 21741,
+      "sha256": "42444b06cf7f36ae6c30b07d0615dd59a74753181ebfd1603e84a09d090d4cca"
+    },
+    "preflight-5-full.npz": {
+      "bytes": 22091,
+      "sha256": "a9205486bf3fe42767afa7b2704e3a2be6f63a3a547ba691bc92d456056b7206"
+    },
+    "preflight-6-blank.npz": {
+      "bytes": 18499,
+      "sha256": "e1e21105becf51a96518857f16a8a001e60705bd9e6edd956ac95c21edc3fb0e"
+    },
+    "preflight-6-full.npz": {
+      "bytes": 18853,
+      "sha256": "d9002aa8d32a587a8cab5efb42378cfa8674619ce75c0496f254a88baa014157"
+    },
+    "preflight-7-blank.npz": {
+      "bytes": 16359,
+      "sha256": "4c72190aa6d59c6ca9a9de21cc71dc6c1637e4514b904791a40f23e1342234ef"
+    },
+    "preflight-7-full.npz": {
+      "bytes": 16640,
+      "sha256": "89102792c73e5f136bb1337d1e6b37439bbc829a1b5745651b4c085f97d26d39"
+    },
+    "preflight-8-blank.npz": {
+      "bytes": 20642,
+      "sha256": "8e3e1f97fa03c5ca267a16654a4fef073908429b6b87927cfee2c4632431c58f"
+    },
+    "preflight-8-full.npz": {
+      "bytes": 20960,
+      "sha256": "70d5c12f4b1a37c4a3aec393addcaf2d2e9c3d0d2decce0f46c57faa50b122dd"
+    },
+    "preflight-9-blank.npz": {
+      "bytes": 17089,
+      "sha256": "8a2a9351c41d351e7b4f6abdd8f919557705600374cfc3b37b48e2af8d93774c"
+    },
+    "preflight-9-full.npz": {
+      "bytes": 17370,
+      "sha256": "1f48cb47e8679e01b98699ce84449b0c7bbd5df1849e2dfe0f3b62a2f5e6048e"
+    },
+    "trained.npz": {
+      "bytes": 66830,
+      "sha256": "8e5e30cbb4cbcb6f69a852cb15a1ef2b461e7dc19084e5db3e7acc8a3c86659e"
+    },
+    "training.npz": {
+      "bytes": 946146,
+      "sha256": "2a9f328829ac50bf937865282d5c5107d9a7f7ed00793dfd62c3cb63e1644bf1"
+    }
+  }
+}

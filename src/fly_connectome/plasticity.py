@@ -103,7 +103,7 @@ class Plasticity:
             visual = n.pathways[old_edges] == 1
             error = observed[old_env, old_post] - self.expected[old_env, old_post]
             self._accumulate(old_edges[visual], cfg.eta_prediction*error[visual]*self.values[visual])
-            self.values.mul_(torch.where(visual, n.current_decay[old_post], math.exp(-dt/cfg.tau_eligibility)))
+            self.values.mul_(torch.where(visual, n.visual_decay(old_edges), math.exp(-dt/cfg.tau_eligibility)))
         else:
             self.values.mul_(math.exp(-dt / cfg.tau_eligibility))
         pair_decay = math.exp(-dt / cfg.tau_pair)
