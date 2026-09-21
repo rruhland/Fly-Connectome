@@ -1,0 +1,13 @@
+{
+  "directory": "runs\\local-information-v1",
+  "files": {
+    "fresh.npz": {
+      "bytes": 193549,
+      "sha256": "37651ab0628ba830e51f277e478333472dec1f071595b544847f65774263249e"
+    },
+    "recorded.npz": {
+      "bytes": 200814,
+      "sha256": "f0521bee3d51f884aab830797f952f3b149fd7f9c8d04d057b16ce00ec168377"
+    }
+  }
+}

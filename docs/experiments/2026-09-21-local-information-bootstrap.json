@@ -1,0 +1,17 @@
+{
+  "method": "2000 resamples of fresh whole trials, fixed probe and threshold",
+  "intervals_95pct": {
+    "on_recall": [
+      0.9133333333333333,
+      0.9933333333333333
+    ],
+    "off_recall": [
+      0.9466666666666667,
+      0.9933333333333333
+    ],
+    "quiet_false_positive_rate": [
+      0.03487148803329865,
+      0.05198338808512714
+    ]
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "note": "Post-result nested scalar ablation, same fixed15-neighbor method and original train/cal split; no retuning on fresh data.",
+  "threshold": 0.6666666666666666,
+  "fresh": {
+    "on_count": 150,
+    "off_count": 150,
+    "quiet_count": 1922,
+    "on_recall": 0.7533333333333333,
+    "off_recall": 0.8933333333333333,
+    "quiet_false_positive_rate": 0.03485952133194589,
+    "auc": 0.9797467915365938,
+    "precision": 0.7866242038216561,
+    "quiet_by_phase": {
+      "after_on_1": {
+        "count": 150,
+        "false_positive_rate": 0.006666666666666667
+      },
+      "after_on_2": {
+        "count": 150,
+        "false_positive_rate": 0.16666666666666666
+      },
+      "after_off_1": {
+        "count": 150,
+        "false_positive_rate": 0.0
+      },
+      "after_off_2": {
+        "count": 150,
+        "false_positive_rate": 0.0
+      },
+      "blank": {
+        "count": 1322,
+        "false_positive_rate": 0.031013615733736764
+      }
+    }
+  }
+}
