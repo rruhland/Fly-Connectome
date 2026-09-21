@@ -596,3 +596,26 @@ Fresh review confirms instrumentation/restoration; corrected first-frame wording
 skips. No model changes, new training or optimization. All experiment processes
 finished. Next bounded scientific question is the local objective/time horizon,
 not blind restoration or increased tonic firing.
+
+## Longer-horizon frozen diagnosis (2026-09-20)
+
+User requested next investigations. Preregister30/50/100ms lead, rounded to neural
+ticks (lead includes preceding-tick interval), common target frames and fixed
+shuffle421. Persistence uses only latest camera frame known at forecast time.
+Separately score next nonzero signed input at same sensory neuron within100ms,
+from every frame end; omit incomplete tail windows, retain no-event windows,
+compare last polarity/opposite polarity/frame persistence and shuffled forecasts.
+Overlapping windows are descriptive and not independent evidence. Use unchanged
+initial/10000 checkpoints,500frames,seeds1101/1102. No fitted readout, training,
+biological changes or final seeds. Tests establish future-only event selection,
+tail censoring, and exact earlier-tick indexing before measured runs.
+Completed both frozen horizons and bounded next-event diagnostics. Trained all-
+sample MSE remains above zero at30.208/50/100ms and next-event window. Supported
+OFF event errors remain>1. Weak shuffled advantages are descriptive only.
+This does not test retraining with longer-horizon objectives or latent information
+in other states. Next evidence should examine existing edge-local trace alignment
+with future targets before proposing a causal local rule revision. No blind
+extension, new readout or current/excitability fix. Model/checkpoints unchanged.
+190 tests passed,4CUDA skips. Fresh review found no blockers; report explicitly
+separates100ms frame window from actual sampled tick leads. All measured runs
+finished; final seeds untouched. See2026-09-20-long-horizon-investigation.md.

@@ -43,7 +43,7 @@ def lag_scores(targets,timeline,neural_steps,positive,negative,lags=(-16,-8,-4,-
 
 
 @torch.no_grad()
-def audit(checkpoint,steps,seeds):
+def audit(checkpoint,steps,seeds,diagnostic=None):
     if steps<2:
         raise ValueError('at least two frames required')
     before=checksum(checkpoint)
@@ -82,12 +82,15 @@ def audit(checkpoint,steps,seeds):
     assert checksum(checkpoint)==before
     configuration=dict(neurons=asdict(net.config),learning=asdict(model.learning_config),
                        run=asdict(model.config),physics=asdict(model.environment.config),retina=model.retina.spec)
-    return dict(checkpoint_sha256=before,graph_sha256=net.graph.identity(),training_steps=model.training_step,
+    result=dict(checkpoint_sha256=before,graph_sha256=net.graph.identity(),training_steps=model.training_step,
         configuration_sha256=hashlib.sha256(json.dumps(configuration,sort_keys=True).encode()).hexdigest(),
         frames=steps,seeds=seeds,neural_ticks=len(timeline)-1,dt=net.config.dt,
         strict=strict,populations=populations,shuffled=shuffled,permutation_seed=421,
         lagged=lag_scores(targets,timeline,model.config.neural_steps,positive,negative),
         interpretation='Frozen exact scripted M1A stream. No fitting, learning or parameter changes. Structural support includes zero-weight edges and does not imply active/useful sources. Strict scores include first-frame zero forecasts; lagged scores use common frames. Positive lags use post-event activity, never acceptance forecasts. Metrics use float64 accumulation of stored float32 predictions. Final evaluation seeds are not used.')
+    if diagnostic is not None:
+        result['additional_diagnostic']=diagnostic(targets,timeline,positive,negative,model.config.neural_steps,net.config.dt)
+    return result
 
 
 if __name__=='__main__':
