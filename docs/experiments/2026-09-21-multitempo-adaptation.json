@@ -1,0 +1,24 @@
+{
+  "seconds": 73.94890350004425,
+  "frames": 4913,
+  "trials": 100,
+  "stability": {
+    "finite": true,
+    "within_weight_bounds": true,
+    "max_abs": {
+      "voltage": 10.111564636230469,
+      "sensory_state": 30.0,
+      "feedforward_current": 2.057802677154541,
+      "predictive_current": 0.6601861119270325,
+      "behavioral_current": 0.0,
+      "adaptation": 1.7486308813095093,
+      "magnitudes": 0.5290982127189636
+    }
+  },
+  "changed_weights": 159,
+  "local_update_sums": [
+    0.8774042080706803,
+    0.5392828150507731,
+    -0.6313154485841821
+  ]
+}

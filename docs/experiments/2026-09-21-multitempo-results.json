@@ -1,0 +1,742 @@
+{
+  "initial-dwell-2": {
+    "metrics": {
+      "samples": 563,
+      "events": 90,
+      "mse": 0.158234640955925,
+      "event_mse": 0.9890900254249573,
+      "quiet_mse": 0.00014376710169017315,
+      "mean_signed_event_prediction": 0.00556239765137434,
+      "false_alarm_fraction": 0.0,
+      "on_mse": 0.9776186347007751,
+      "on_anticipation": 0.011404270306229591,
+      "off_mse": 1.0005613565444946,
+      "off_anticipation": -0.00027947500348091125,
+      "correct_sign": {
+        "on": {
+          "count": 45,
+          "correct": 16
+        },
+        "off": {
+          "count": 45,
+          "correct": 23
+        }
+      }
+    },
+    "stability": {
+      "finite": true,
+      "within_weight_bounds": true,
+      "max_abs": {
+        "voltage": 9.967375755310059,
+        "sensory_state": 30.0,
+        "feedforward_current": 2.0538065433502197,
+        "predictive_current": 0.3449999988079071,
+        "behavioral_current": 0.0,
+        "adaptation": 1.4469586610794067,
+        "magnitudes": 0.4950000047683716
+      }
+    }
+  },
+  "zero-dwell-2": {
+    "metrics": {
+      "samples": 563,
+      "events": 90,
+      "mse": 0.15985789895057678,
+      "event_mse": 1.0,
+      "quiet_mse": 0.0,
+      "mean_signed_event_prediction": 0.0,
+      "false_alarm_fraction": 0.0,
+      "on_mse": 1.0,
+      "on_anticipation": 0.0,
+      "off_mse": 1.0,
+      "off_anticipation": 0.0
+    }
+  },
+  "persistence-dwell-2": {
+    "metrics": {
+      "samples": 563,
+      "events": 90,
+      "mse": 0.31971579790115356,
+      "event_mse": 1.0,
+      "quiet_mse": 0.19027483463287354,
+      "mean_signed_event_prediction": 0.0,
+      "false_alarm_fraction": 0.19027484143763213,
+      "on_mse": 1.0,
+      "on_anticipation": 0.0,
+      "off_mse": 1.0,
+      "off_anticipation": 0.0
+    }
+  },
+  "single3-dwell-2": {
+    "metrics": {
+      "samples": 563,
+      "events": 90,
+      "mse": 0.15153741836547852,
+      "event_mse": 0.848241925239563,
+      "quiet_mse": 0.018972087651491165,
+      "mean_signed_event_prediction": 0.09209103137254715,
+      "false_alarm_fraction": 0.30021141649048627,
+      "on_mse": 0.8041333556175232,
+      "on_anticipation": 0.12828215956687927,
+      "off_mse": 0.8923506140708923,
+      "off_anticipation": 0.05589991807937622,
+      "correct_sign": {
+        "on": {
+          "count": 45,
+          "correct": 15
+        },
+        "off": {
+          "count": 45,
+          "correct": 45
+        }
+      }
+    },
+    "stability": {
+      "finite": true,
+      "within_weight_bounds": true,
+      "max_abs": {
+        "voltage": 10.210381507873535,
+        "sensory_state": 30.0,
+        "feedforward_current": 2.03769588470459,
+        "predictive_current": 0.6622364521026611,
+        "behavioral_current": 0.0,
+        "adaptation": 1.4471359252929688,
+        "magnitudes": 0.6505767107009888
+      }
+    },
+    "controlled_task_pass": false
+  },
+  "mixed-dwell-2": {
+    "metrics": {
+      "samples": 563,
+      "events": 90,
+      "mse": 0.15778756141662598,
+      "event_mse": 0.9793434143066406,
+      "quiet_mse": 0.0014661862514913082,
+      "mean_signed_event_prediction": 0.011324120685458183,
+      "false_alarm_fraction": 0.06976744186046512,
+      "on_mse": 0.932908296585083,
+      "on_anticipation": 0.0354415699839592,
+      "off_mse": 1.02577805519104,
+      "off_anticipation": -0.012793331407010555,
+      "correct_sign": {
+        "on": {
+          "count": 45,
+          "correct": 17
+        },
+        "off": {
+          "count": 45,
+          "correct": 0
+        }
+      }
+    },
+    "stability": {
+      "finite": true,
+      "within_weight_bounds": true,
+      "max_abs": {
+        "voltage": 10.304841995239258,
+        "sensory_state": 30.0,
+        "feedforward_current": 2.03769588470459,
+        "predictive_current": 0.3260647654533386,
+        "behavioral_current": 0.0,
+        "adaptation": 1.4506300687789917,
+        "magnitudes": 0.4950000047683716
+      }
+    },
+    "controlled_task_pass": false
+  },
+  "initial-dwell-3": {
+    "metrics": {
+      "samples": 653,
+      "events": 90,
+      "mse": 0.13401302695274353,
+      "event_mse": 0.9714758396148682,
+      "quiet_mse": 0.00013799176667816937,
+      "mean_signed_event_prediction": 0.014446628279983997,
+      "false_alarm_fraction": 0.0,
+      "on_mse": 0.9512959122657776,
+      "on_anticipation": 0.02471201680600643,
+      "off_mse": 0.9916554689407349,
+      "off_anticipation": 0.004181242547929287,
+      "correct_sign": {
+        "on": {
+          "count": 45,
+          "correct": 45
+        },
+        "off": {
+          "count": 45,
+          "correct": 45
+        }
+      }
+    },
+    "stability": {
+      "finite": true,
+      "within_weight_bounds": true,
+      "max_abs": {
+        "voltage": 10.005568504333496,
+        "sensory_state": 30.0,
+        "feedforward_current": 2.044365644454956,
+        "predictive_current": 0.3449999988079071,
+        "behavioral_current": 0.0,
+        "adaptation": 1.7310831546783447,
+        "magnitudes": 0.4950000047683716
+      }
+    }
+  },
+  "zero-dwell-3": {
+    "metrics": {
+      "samples": 653,
+      "events": 90,
+      "mse": 0.13782541453838348,
+      "event_mse": 1.0,
+      "quiet_mse": 0.0,
+      "mean_signed_event_prediction": 0.0,
+      "false_alarm_fraction": 0.0,
+      "on_mse": 1.0,
+      "on_anticipation": 0.0,
+      "off_mse": 1.0,
+      "off_anticipation": 0.0
+    }
+  },
+  "persistence-dwell-3": {
+    "metrics": {
+      "samples": 653,
+      "events": 90,
+      "mse": 0.27565082907676697,
+      "event_mse": 1.0,
+      "quiet_mse": 0.15985789895057678,
+      "mean_signed_event_prediction": 0.0,
+      "false_alarm_fraction": 0.15985790408525755,
+      "on_mse": 1.0,
+      "on_anticipation": 0.0,
+      "off_mse": 1.0,
+      "off_anticipation": 0.0
+    }
+  },
+  "single3-dwell-3": {
+    "metrics": {
+      "samples": 653,
+      "events": 90,
+      "mse": 0.11013966798782349,
+      "event_mse": 0.6731801629066467,
+      "quiet_mse": 0.020133202895522118,
+      "mean_signed_event_prediction": 0.18790143728256226,
+      "false_alarm_fraction": 0.28596802841918295,
+      "on_mse": 0.5553749799728394,
+      "on_anticipation": 0.2648514211177826,
+      "off_mse": 0.7909854650497437,
+      "off_anticipation": 0.11095147579908371,
+      "correct_sign": {
+        "on": {
+          "count": 45,
+          "correct": 45
+        },
+        "off": {
+          "count": 45,
+          "correct": 45
+        }
+      }
+    },
+    "stability": {
+      "finite": true,
+      "within_weight_bounds": true,
+      "max_abs": {
+        "voltage": 10.308120727539062,
+        "sensory_state": 30.0,
+        "feedforward_current": 2.044365644454956,
+        "predictive_current": 0.688808798789978,
+        "behavioral_current": 0.0,
+        "adaptation": 1.7312513589859009,
+        "magnitudes": 0.6505767107009888
+      }
+    },
+    "controlled_task_pass": false
+  },
+  "mixed-dwell-3": {
+    "metrics": {
+      "samples": 653,
+      "events": 90,
+      "mse": 0.12842023372650146,
+      "event_mse": 0.9224510788917542,
+      "quiet_mse": 0.0014881164534017444,
+      "mean_signed_event_prediction": 0.04068022593855858,
+      "false_alarm_fraction": 0.09236234458259325,
+      "on_mse": 0.8447225093841553,
+      "on_anticipation": 0.08145013451576233,
+      "off_mse": 1.0001797676086426,
+      "off_anticipation": -8.968748443294317e-05,
+      "correct_sign": {
+        "on": {
+          "count": 45,
+          "correct": 45
+        },
+        "off": {
+          "count": 45,
+          "correct": 26
+        }
+      }
+    },
+    "stability": {
+      "finite": true,
+      "within_weight_bounds": true,
+      "max_abs": {
+        "voltage": 10.195859909057617,
+        "sensory_state": 30.0,
+        "feedforward_current": 2.044365644454956,
+        "predictive_current": 0.3260647654533386,
+        "behavioral_current": 0.0,
+        "adaptation": 1.7312465906143188,
+        "magnitudes": 0.4950000047683716
+      }
+    },
+    "controlled_task_pass": false
+  },
+  "initial-dwell-4": {
+    "metrics": {
+      "samples": 743,
+      "events": 90,
+      "mse": 0.11841271072626114,
+      "event_mse": 0.9762564897537231,
+      "quiet_mse": 0.0001800298923626542,
+      "mean_signed_event_prediction": 0.01199505478143692,
+      "false_alarm_fraction": 0.0,
+      "on_mse": 0.9596099853515625,
+      "on_anticipation": 0.020434977486729622,
+      "off_mse": 0.9929029941558838,
+      "off_anticipation": 0.0035551278851926327,
+      "correct_sign": {
+        "on": {
+          "count": 45,
+          "correct": 45
+        },
+        "off": {
+          "count": 45,
+          "correct": 45
+        }
+      }
+    },
+    "stability": {
+      "finite": true,
+      "within_weight_bounds": true,
+      "max_abs": {
+        "voltage": 9.975013732910156,
+        "sensory_state": 30.0,
+        "feedforward_current": 2.0302395820617676,
+        "predictive_current": 0.3449999988079071,
+        "behavioral_current": 0.0,
+        "adaptation": 1.8067960739135742,
+        "magnitudes": 0.4950000047683716
+      }
+    }
+  },
+  "zero-dwell-4": {
+    "metrics": {
+      "samples": 743,
+      "events": 90,
+      "mse": 0.1211305484175682,
+      "event_mse": 1.0,
+      "quiet_mse": 0.0,
+      "mean_signed_event_prediction": 0.0,
+      "false_alarm_fraction": 0.0,
+      "on_mse": 1.0,
+      "on_anticipation": 0.0,
+      "off_mse": 1.0,
+      "off_anticipation": 0.0
+    }
+  },
+  "persistence-dwell-4": {
+    "metrics": {
+      "samples": 743,
+      "events": 90,
+      "mse": 0.2422610968351364,
+      "event_mse": 1.0,
+      "quiet_mse": 0.13782541453838348,
+      "mean_signed_event_prediction": 0.0,
+      "false_alarm_fraction": 0.13782542113323124,
+      "on_mse": 1.0,
+      "on_anticipation": 0.0,
+      "off_mse": 1.0,
+      "off_anticipation": 0.0
+    }
+  },
+  "single3-dwell-4": {
+    "metrics": {
+      "samples": 743,
+      "events": 90,
+      "mse": 0.11645979434251785,
+      "event_mse": 0.7741074562072754,
+      "quiet_mse": 0.025819234549999237,
+      "mean_signed_event_prediction": 0.12441397458314896,
+      "false_alarm_fraction": 0.3905053598774885,
+      "on_mse": 0.7108021974563599,
+      "on_anticipation": 0.1637098491191864,
+      "off_mse": 0.8374125957489014,
+      "off_anticipation": 0.08511814475059509,
+      "correct_sign": {
+        "on": {
+          "count": 45,
+          "correct": 42
+        },
+        "off": {
+          "count": 45,
+          "correct": 45
+        }
+      }
+    },
+    "stability": {
+      "finite": true,
+      "within_weight_bounds": true,
+      "max_abs": {
+        "voltage": 10.308120727539062,
+        "sensory_state": 30.0,
+        "feedforward_current": 2.0302395820617676,
+        "predictive_current": 0.7543286085128784,
+        "behavioral_current": 0.0,
+        "adaptation": 1.8019942045211792,
+        "magnitudes": 0.6505767107009888
+      }
+    },
+    "controlled_task_pass": false
+  },
+  "mixed-dwell-4": {
+    "metrics": {
+      "samples": 743,
+      "events": 90,
+      "mse": 0.11362354457378387,
+      "event_mse": 0.9248428344726562,
+      "quiet_mse": 0.0018168957903981209,
+      "mean_signed_event_prediction": 0.03917556256055832,
+      "false_alarm_fraction": 0.06584992343032159,
+      "on_mse": 0.8523486852645874,
+      "on_anticipation": 0.0770188570022583,
+      "off_mse": 0.9973374009132385,
+      "off_anticipation": 0.0013322666054591537,
+      "correct_sign": {
+        "on": {
+          "count": 45,
+          "correct": 45
+        },
+        "off": {
+          "count": 45,
+          "correct": 45
+        }
+      }
+    },
+    "stability": {
+      "finite": true,
+      "within_weight_bounds": true,
+      "max_abs": {
+        "voltage": 10.177078247070312,
+        "sensory_state": 30.0,
+        "feedforward_current": 2.0302395820617676,
+        "predictive_current": 0.3260647654533386,
+        "behavioral_current": 0.0,
+        "adaptation": 1.801983118057251,
+        "magnitudes": 0.4950000047683716
+      }
+    },
+    "controlled_task_pass": false
+  },
+  "initial-dwell-6": {
+    "metrics": {
+      "samples": 923,
+      "events": 90,
+      "mse": 0.09707541018724442,
+      "event_mse": 0.9935973882675171,
+      "quiet_mse": 0.00021226602257229388,
+      "mean_signed_event_prediction": 0.0032202615402638912,
+      "false_alarm_fraction": 0.0,
+      "on_mse": 0.9895294308662415,
+      "on_anticipation": 0.0052725691348314285,
+      "off_mse": 0.9976654648780823,
+      "off_anticipation": 0.0011679527815431356,
+      "correct_sign": {
+        "on": {
+          "count": 45,
+          "correct": 37
+        },
+        "off": {
+          "count": 45,
+          "correct": 45
+        }
+      }
+    },
+    "stability": {
+      "finite": true,
+      "within_weight_bounds": true,
+      "max_abs": {
+        "voltage": 9.975013732910156,
+        "sensory_state": 30.0,
+        "feedforward_current": 2.0289711952209473,
+        "predictive_current": 0.3449999988079071,
+        "behavioral_current": 0.0,
+        "adaptation": 1.9566419124603271,
+        "magnitudes": 0.4950000047683716
+      }
+    }
+  },
+  "zero-dwell-6": {
+    "metrics": {
+      "samples": 923,
+      "events": 90,
+      "mse": 0.09750812500715256,
+      "event_mse": 1.0,
+      "quiet_mse": 0.0,
+      "mean_signed_event_prediction": 0.0,
+      "false_alarm_fraction": 0.0,
+      "on_mse": 1.0,
+      "on_anticipation": 0.0,
+      "off_mse": 1.0,
+      "off_anticipation": 0.0
+    }
+  },
+  "persistence-dwell-6": {
+    "metrics": {
+      "samples": 923,
+      "events": 90,
+      "mse": 0.19501625001430511,
+      "event_mse": 1.0,
+      "quiet_mse": 0.10804321616888046,
+      "mean_signed_event_prediction": 0.0,
+      "false_alarm_fraction": 0.10804321728691477,
+      "on_mse": 1.0,
+      "on_anticipation": 0.0,
+      "off_mse": 1.0,
+      "off_anticipation": 0.0
+    }
+  },
+  "single3-dwell-6": {
+    "metrics": {
+      "samples": 923,
+      "events": 90,
+      "mse": 0.12470250576734543,
+      "event_mse": 1.0229356288909912,
+      "quiet_mse": 0.027654504403471947,
+      "mean_signed_event_prediction": -0.00888820644468069,
+      "false_alarm_fraction": 0.3637454981992797,
+      "on_mse": 1.0991268157958984,
+      "on_anticipation": -0.04478111118078232,
+      "off_mse": 0.9467443823814392,
+      "off_anticipation": 0.027004705742001534,
+      "correct_sign": {
+        "on": {
+          "count": 45,
+          "correct": 6
+        },
+        "off": {
+          "count": 45,
+          "correct": 45
+        }
+      }
+    },
+    "stability": {
+      "finite": true,
+      "within_weight_bounds": true,
+      "max_abs": {
+        "voltage": 10.308120727539062,
+        "sensory_state": 30.0,
+        "feedforward_current": 2.031872510910034,
+        "predictive_current": 0.6520378589630127,
+        "behavioral_current": 0.0,
+        "adaptation": 1.9566280841827393,
+        "magnitudes": 0.6505767107009888
+      }
+    },
+    "controlled_task_pass": false
+  },
+  "mixed-dwell-6": {
+    "metrics": {
+      "samples": 923,
+      "events": 90,
+      "mse": 0.09568851441144943,
+      "event_mse": 0.9615086317062378,
+      "quiet_mse": 0.002142533892765641,
+      "mean_signed_event_prediction": 0.019703596830368042,
+      "false_alarm_fraction": 0.09963985594237695,
+      "on_mse": 0.9240978956222534,
+      "on_anticipation": 0.038866691291332245,
+      "off_mse": 0.9989191889762878,
+      "off_anticipation": 0.0005405020201578736,
+      "correct_sign": {
+        "on": {
+          "count": 45,
+          "correct": 45
+        },
+        "off": {
+          "count": 45,
+          "correct": 45
+        }
+      }
+    },
+    "stability": {
+      "finite": true,
+      "within_weight_bounds": true,
+      "max_abs": {
+        "voltage": 10.177078247070312,
+        "sensory_state": 30.0,
+        "feedforward_current": 2.031872510910034,
+        "predictive_current": 0.3260647654533386,
+        "behavioral_current": 0.0,
+        "adaptation": 1.9566280841827393,
+        "magnitudes": 0.4950000047683716
+      }
+    },
+    "controlled_task_pass": false
+  },
+  "adapted-dwell-2": {
+    "metrics": {
+      "samples": 563,
+      "events": 90,
+      "mse": 0.1539338082075119,
+      "event_mse": 0.8857781887054443,
+      "quiet_mse": 0.014682258479297161,
+      "mean_signed_event_prediction": 0.06906412541866302,
+      "false_alarm_fraction": 0.1543340380549683,
+      "on_mse": 0.8141847252845764,
+      "on_anticipation": 0.11635999381542206,
+      "off_mse": 0.9573715329170227,
+      "off_anticipation": 0.02176825888454914,
+      "correct_sign": {
+        "on": {
+          "count": 45,
+          "correct": 16
+        },
+        "off": {
+          "count": 45,
+          "correct": 31
+        }
+      }
+    },
+    "stability": {
+      "finite": true,
+      "within_weight_bounds": true,
+      "max_abs": {
+        "voltage": 10.082582473754883,
+        "sensory_state": 30.0,
+        "feedforward_current": 2.03769588470459,
+        "predictive_current": 0.5558621287345886,
+        "behavioral_current": 0.0,
+        "adaptation": 1.447105050086975,
+        "magnitudes": 0.5198091864585876
+      }
+    },
+    "controlled_task_pass": false
+  },
+  "adapted-dwell-3": {
+    "metrics": {
+      "samples": 653,
+      "events": 90,
+      "mse": 0.11238960176706314,
+      "event_mse": 0.7213197350502014,
+      "quiet_mse": 0.01504729688167572,
+      "mean_signed_event_prediction": 0.1589559018611908,
+      "false_alarm_fraction": 0.15985790408525755,
+      "on_mse": 0.5764209032058716,
+      "on_anticipation": 0.24850153923034668,
+      "off_mse": 0.8662187457084656,
+      "off_anticipation": 0.06941027194261551,
+      "correct_sign": {
+        "on": {
+          "count": 45,
+          "correct": 45
+        },
+        "off": {
+          "count": 45,
+          "correct": 45
+        }
+      }
+    },
+    "stability": {
+      "finite": true,
+      "within_weight_bounds": true,
+      "max_abs": {
+        "voltage": 10.195770263671875,
+        "sensory_state": 30.0,
+        "feedforward_current": 2.044365644454956,
+        "predictive_current": 0.5729308724403381,
+        "behavioral_current": 0.0,
+        "adaptation": 1.731247067451477,
+        "magnitudes": 0.5198091864585876
+      }
+    },
+    "controlled_task_pass": false
+  },
+  "adapted-dwell-4": {
+    "metrics": {
+      "samples": 743,
+      "events": 90,
+      "mse": 0.1121770516037941,
+      "event_mse": 0.7862368226051331,
+      "quiet_mse": 0.019274471327662468,
+      "mean_signed_event_prediction": 0.11789701133966446,
+      "false_alarm_fraction": 0.21898928024502298,
+      "on_mse": 0.6785396933555603,
+      "on_anticipation": 0.18118754029273987,
+      "off_mse": 0.8939339518547058,
+      "off_anticipation": 0.05460647493600845,
+      "correct_sign": {
+        "on": {
+          "count": 45,
+          "correct": 45
+        },
+        "off": {
+          "count": 45,
+          "correct": 45
+        }
+      }
+    },
+    "stability": {
+      "finite": true,
+      "within_weight_bounds": true,
+      "max_abs": {
+        "voltage": 10.195770263671875,
+        "sensory_state": 30.0,
+        "feedforward_current": 2.0302395820617676,
+        "predictive_current": 0.5695773363113403,
+        "behavioral_current": 0.0,
+        "adaptation": 1.8019850254058838,
+        "magnitudes": 0.5198091864585876
+      }
+    },
+    "controlled_task_pass": false
+  },
+  "adapted-dwell-6": {
+    "metrics": {
+      "samples": 923,
+      "events": 90,
+      "mse": 0.11447793245315552,
+      "event_mse": 0.974435567855835,
+      "quiet_mse": 0.021565331146121025,
+      "mean_signed_event_prediction": 0.014209365472197533,
+      "false_alarm_fraction": 0.1752701080432173,
+      "on_mse": 0.9835523962974548,
+      "on_anticipation": 0.010920003987848759,
+      "off_mse": 0.9653187990188599,
+      "off_anticipation": 0.01749872975051403,
+      "correct_sign": {
+        "on": {
+          "count": 45,
+          "correct": 28
+        },
+        "off": {
+          "count": 45,
+          "correct": 45
+        }
+      }
+    },
+    "stability": {
+      "finite": true,
+      "within_weight_bounds": true,
+      "max_abs": {
+        "voltage": 10.195770263671875,
+        "sensory_state": 30.0,
+        "feedforward_current": 2.031872510910034,
+        "predictive_current": 0.5825948119163513,
+        "behavioral_current": 0.0,
+        "adaptation": 1.9566280841827393,
+        "magnitudes": 0.5198091864585876
+      }
+    },
+    "controlled_task_pass": false
+  }
+}
