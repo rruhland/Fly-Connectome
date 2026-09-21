@@ -41,6 +41,7 @@ def main():
     parser.add_argument('--checkpoint', default='checkpoints/event-v1-combined-rate-initial.pt')
     parser.add_argument('--output', default='runs/temporal-visual-v1')
     parser.add_argument('--training-trials', type=int, choices=(200,1000), default=200)
+    parser.add_argument('--visual-schedule', choices=('tick-v1', 'frame-horizon-v1'), default='tick-v1')
     args = parser.parse_args()
     torch.set_num_threads(1)
     sha = checksum(args.checkpoint)
@@ -86,7 +87,7 @@ def main():
         config=m['config'], neurons_config=m['neurons'], learning=m['learning'],
         stimulus=dict(row=30, target_x=39, other_x=38, dwell_frames=3, cycles=4),
         seeds=dict(preflight=9021, training=9022, evaluation=9023), primary_lead_ticks=8,
-        training_trials=args.training_trials, evaluation_trials=50)
+        training_trials=args.training_trials, evaluation_trials=50, visual_schedule=args.visual_schedule)
     (output/'manifest.json').write_text(json.dumps(manifest,indent=2)+'\n')
     preflight, reconstruction_error = [], 0.
     for trial, blank in enumerate(np.random.default_rng(9021).integers(12,37,size=10)):
@@ -128,8 +129,9 @@ def main():
             blanks=np.random.default_rng(seed).integers(12,37,size=number)
             schedules.append((torch.cat([oscillation(int(b)) for b in blanks]),blanks))
         net=make_network(crop,m)
-        print(f'Training unchanged rule on {args.training_trials} trials',flush=True)
-        train=run_sequence(net,crop,m,schedules[0][0],[target],learning=True,deadline=deadline)
+        print(f'Training {args.visual_schedule} on {args.training_trials} trials',flush=True)
+        train=run_sequence(net,crop,m,schedules[0][0],[target],learning=True,deadline=deadline,
+                           visual_schedule=args.visual_schedule)
         learned=net.magnitudes.clone()
         np.savez_compressed(output/'training.npz',**{k:v for k,v in train.items() if k!='stability'},
             weights_initial=crop['weights'].numpy(),weights_trained=learned.numpy(),blank_frames=schedules[0][1])

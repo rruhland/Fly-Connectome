@@ -1,0 +1,1233 @@
+{
+  "seconds": 10.739432099973783,
+  "summary": {
+    "tick-v1": {
+      "on": {
+        "signed_prediction": 0.03849687079588572,
+        "signed_stimulus_effect": 0.037151628342499105,
+        "blank": -0.0013452424533866155
+      },
+      "off": {
+        "signed_prediction": -0.0009297206493405004,
+        "signed_stimulus_effect": 0.0022877245560463185,
+        "blank": -0.003217445205386819
+      }
+    },
+    "frame-horizon-v1": {
+      "on": {
+        "signed_prediction": 0.28445597141981127,
+        "signed_stimulus_effect": 0.2775131760009003,
+        "blank": -0.006942795418910919
+      },
+      "off": {
+        "signed_prediction": -0.006858428133030733,
+        "signed_stimulus_effect": 0.0284344537306121,
+        "blank": -0.035292881863642836
+      }
+    }
+  },
+  "rows": [
+    {
+      "condition": "tick-v1",
+      "trial": 0,
+      "cycle": 1,
+      "polarity": "on",
+      "prediction": -0.04980721324682236,
+      "blank": 4.214633008814417e-06,
+      "signed_prediction": 0.04980721324682236,
+      "signed_stimulus_effect": 0.04981142787983117
+    },
+    {
+      "condition": "tick-v1",
+      "trial": 0,
+      "cycle": 1,
+      "polarity": "off",
+      "prediction": -0.0012014236999675632,
+      "blank": -0.0398959219455719,
+      "signed_prediction": -0.0012014236999675632,
+      "signed_stimulus_effect": 0.038694498245604336
+    },
+    {
+      "condition": "tick-v1",
+      "trial": 0,
+      "cycle": 2,
+      "polarity": "on",
+      "prediction": -0.03284285217523575,
+      "blank": 0.004078821744769812,
+      "signed_prediction": 0.03284285217523575,
+      "signed_stimulus_effect": 0.03692167392000556
+    },
+    {
+      "condition": "tick-v1",
+      "trial": 0,
+      "cycle": 2,
+      "polarity": "off",
+      "prediction": -0.0008280049660243094,
+      "blank": 2.748285623965785e-05,
+      "signed_prediction": -0.0008280049660243094,
+      "signed_stimulus_effect": -0.0008554878222639672
+    },
+    {
+      "condition": "tick-v1",
+      "trial": 0,
+      "cycle": 3,
+      "polarity": "on",
+      "prediction": -0.03284032642841339,
+      "blank": 1.8517786770644307e-07,
+      "signed_prediction": 0.03284032642841339,
+      "signed_stimulus_effect": 0.0328405116062811
+    },
+    {
+      "condition": "tick-v1",
+      "trial": 0,
+      "cycle": 3,
+      "polarity": "off",
+      "prediction": -0.0007920636562630534,
+      "blank": -0.004967621061950922,
+      "signed_prediction": -0.0007920636562630534,
+      "signed_stimulus_effect": 0.004175557405687869
+    },
+    {
+      "condition": "tick-v1",
+      "trial": 1,
+      "cycle": 1,
+      "polarity": "on",
+      "prediction": -0.04980674758553505,
+      "blank": 1.8517786770644307e-07,
+      "signed_prediction": 0.04980674758553505,
+      "signed_stimulus_effect": 0.049806932763402756
+    },
+    {
+      "condition": "tick-v1",
+      "trial": 1,
+      "cycle": 1,
+      "polarity": "off",
+      "prediction": -0.0012014205567538738,
+      "blank": -0.004967621061950922,
+      "signed_prediction": -0.0012014205567538738,
+      "signed_stimulus_effect": 0.003766200505197048
+    },
+    {
+      "condition": "tick-v1",
+      "trial": 1,
+      "cycle": 2,
+      "polarity": "on",
+      "prediction": -0.03284285217523575,
+      "blank": 0.0005078721442259848,
+      "signed_prediction": 0.03284285217523575,
+      "signed_stimulus_effect": 0.03335072431946173
+    },
+    {
+      "condition": "tick-v1",
+      "trial": 1,
+      "cycle": 2,
+      "polarity": "off",
+      "prediction": -0.0007920806529000401,
+      "blank": 3.4220122415717924e-06,
+      "signed_prediction": -0.0007920806529000401,
+      "signed_stimulus_effect": -0.0007955026651416119
+    },
+    {
+      "condition": "tick-v1",
+      "trial": 1,
+      "cycle": 3,
+      "polarity": "on",
+      "prediction": -0.03284008800983429,
+      "blank": 2.305731960916546e-08,
+      "signed_prediction": 0.03284008800983429,
+      "signed_stimulus_effect": 0.0328401110671539
+    },
+    {
+      "condition": "tick-v1",
+      "trial": 1,
+      "cycle": 3,
+      "polarity": "off",
+      "prediction": -0.0007920619682408869,
+      "blank": -0.000938262150157243,
+      "signed_prediction": -0.0007920619682408869,
+      "signed_stimulus_effect": 0.0001462001819163561
+    },
+    {
+      "condition": "tick-v1",
+      "trial": 2,
+      "cycle": 1,
+      "polarity": "on",
+      "prediction": -0.04980692267417908,
+      "blank": -0.006118228659033775,
+      "signed_prediction": 0.04980692267417908,
+      "signed_stimulus_effect": 0.0436886940151453
+    },
+    {
+      "condition": "tick-v1",
+      "trial": 2,
+      "cycle": 1,
+      "polarity": "off",
+      "prediction": -0.0012014219537377357,
+      "blank": 0.0006255075568333268,
+      "signed_prediction": -0.0012014219537377357,
+      "signed_stimulus_effect": -0.0018269295105710626
+    },
+    {
+      "condition": "tick-v1",
+      "trial": 2,
+      "cycle": 2,
+      "polarity": "on",
+      "prediction": -0.03284285217523575,
+      "blank": 4.214633008814417e-06,
+      "signed_prediction": 0.03284285217523575,
+      "signed_stimulus_effect": 0.03284706680824456
+    },
+    {
+      "condition": "tick-v1",
+      "trial": 2,
+      "cycle": 2,
+      "polarity": "off",
+      "prediction": -0.0007920806529000401,
+      "blank": -0.0398959219455719,
+      "signed_prediction": -0.0007920806529000401,
+      "signed_stimulus_effect": 0.03910384129267186
+    },
+    {
+      "condition": "tick-v1",
+      "trial": 2,
+      "cycle": 3,
+      "polarity": "on",
+      "prediction": -0.03284008800983429,
+      "blank": 0.004078821744769812,
+      "signed_prediction": 0.03284008800983429,
+      "signed_stimulus_effect": 0.0369189097546041
+    },
+    {
+      "condition": "tick-v1",
+      "trial": 2,
+      "cycle": 3,
+      "polarity": "off",
+      "prediction": -0.0007920619682408869,
+      "blank": 2.748285623965785e-05,
+      "signed_prediction": -0.0007920619682408869,
+      "signed_stimulus_effect": -0.0008195448244805448
+    },
+    {
+      "condition": "tick-v1",
+      "trial": 3,
+      "cycle": 1,
+      "polarity": "on",
+      "prediction": -0.049806900322437286,
+      "blank": 3.497557443665755e-08,
+      "signed_prediction": 0.049806900322437286,
+      "signed_stimulus_effect": 0.04980693529801172
+    },
+    {
+      "condition": "tick-v1",
+      "trial": 3,
+      "cycle": 1,
+      "polarity": "off",
+      "prediction": -0.001201421720907092,
+      "blank": 0.014236490242183208,
+      "signed_prediction": -0.001201421720907092,
+      "signed_stimulus_effect": -0.0154379119630903
+    },
+    {
+      "condition": "tick-v1",
+      "trial": 3,
+      "cycle": 2,
+      "polarity": "on",
+      "prediction": -0.03284285217523575,
+      "blank": 9.592461719876155e-05,
+      "signed_prediction": 0.03284285217523575,
+      "signed_stimulus_effect": 0.03293877679243451
+    },
+    {
+      "condition": "tick-v1",
+      "trial": 3,
+      "cycle": 2,
+      "polarity": "off",
+      "prediction": -0.0007920806529000401,
+      "blank": 6.463343993345916e-07,
+      "signed_prediction": -0.0007920806529000401,
+      "signed_stimulus_effect": -0.0007927269872993747
+    },
+    {
+      "condition": "tick-v1",
+      "trial": 3,
+      "cycle": 3,
+      "polarity": "on",
+      "prediction": -0.03284008800983429,
+      "blank": -0.026301026344299316,
+      "signed_prediction": 0.03284008800983429,
+      "signed_stimulus_effect": 0.006539061665534973
+    },
+    {
+      "condition": "tick-v1",
+      "trial": 3,
+      "cycle": 3,
+      "polarity": "off",
+      "prediction": -0.0007920619682408869,
+      "blank": 0.003352790605276823,
+      "signed_prediction": -0.0007920619682408869,
+      "signed_stimulus_effect": -0.00414485257351771
+    },
+    {
+      "condition": "tick-v1",
+      "trial": 4,
+      "cycle": 1,
+      "polarity": "on",
+      "prediction": -0.04980659484863281,
+      "blank": 3.406768769309565e-07,
+      "signed_prediction": 0.04980659484863281,
+      "signed_stimulus_effect": 0.04980693552550974
+    },
+    {
+      "condition": "tick-v1",
+      "trial": 4,
+      "cycle": 1,
+      "polarity": "off",
+      "prediction": -0.0012014196254312992,
+      "blank": -0.0011555838864296675,
+      "signed_prediction": -0.0012014196254312992,
+      "signed_stimulus_effect": -4.583573900163174e-05
+    },
+    {
+      "condition": "tick-v1",
+      "trial": 4,
+      "cycle": 2,
+      "polarity": "on",
+      "prediction": -0.03284285217523575,
+      "blank": 0.00011814309254987165,
+      "signed_prediction": 0.03284285217523575,
+      "signed_stimulus_effect": 0.03296099526778562
+    },
+    {
+      "condition": "tick-v1",
+      "trial": 4,
+      "cycle": 2,
+      "polarity": "off",
+      "prediction": -0.0007920806529000401,
+      "blank": 7.960410357554792e-07,
+      "signed_prediction": -0.0007920806529000401,
+      "signed_stimulus_effect": -0.0007928766939357956
+    },
+    {
+      "condition": "tick-v1",
+      "trial": 4,
+      "cycle": 3,
+      "polarity": "on",
+      "prediction": -0.03284008800983429,
+      "blank": -0.0075353640131652355,
+      "signed_prediction": 0.03284008800983429,
+      "signed_stimulus_effect": 0.025304723996669054
+    },
+    {
+      "condition": "tick-v1",
+      "trial": 4,
+      "cycle": 3,
+      "polarity": "off",
+      "prediction": -0.0007920619682408869,
+      "blank": 0.0007703896844759583,
+      "signed_prediction": -0.0007920619682408869,
+      "signed_stimulus_effect": -0.0015624516527168453
+    },
+    {
+      "condition": "tick-v1",
+      "trial": 5,
+      "cycle": 1,
+      "polarity": "on",
+      "prediction": -0.04980693757534027,
+      "blank": 0.0007703896844759583,
+      "signed_prediction": 0.04980693757534027,
+      "signed_stimulus_effect": 0.05057732725981623
+    },
+    {
+      "condition": "tick-v1",
+      "trial": 5,
+      "cycle": 1,
+      "polarity": "off",
+      "prediction": -0.0012014219537377357,
+      "blank": 5.19083960170974e-06,
+      "signed_prediction": -0.0012014219537377357,
+      "signed_stimulus_effect": -0.0012066127933394455
+    },
+    {
+      "condition": "tick-v1",
+      "trial": 5,
+      "cycle": 2,
+      "polarity": "on",
+      "prediction": -0.03284285217523575,
+      "blank": 3.497557443665755e-08,
+      "signed_prediction": 0.03284285217523575,
+      "signed_stimulus_effect": 0.032842887150810185
+    },
+    {
+      "condition": "tick-v1",
+      "trial": 5,
+      "cycle": 2,
+      "polarity": "off",
+      "prediction": -0.0007920806529000401,
+      "blank": 0.014236490242183208,
+      "signed_prediction": -0.0007920806529000401,
+      "signed_stimulus_effect": -0.015028570895083249
+    },
+    {
+      "condition": "tick-v1",
+      "trial": 5,
+      "cycle": 3,
+      "polarity": "on",
+      "prediction": -0.03284008800983429,
+      "blank": 9.592461719876155e-05,
+      "signed_prediction": 0.03284008800983429,
+      "signed_stimulus_effect": 0.03293601262703305
+    },
+    {
+      "condition": "tick-v1",
+      "trial": 5,
+      "cycle": 3,
+      "polarity": "off",
+      "prediction": -0.0007920619682408869,
+      "blank": 6.463343993345916e-07,
+      "signed_prediction": -0.0007920619682408869,
+      "signed_stimulus_effect": -0.0007927083026402215
+    },
+    {
+      "condition": "tick-v1",
+      "trial": 6,
+      "cycle": 1,
+      "polarity": "on",
+      "prediction": -0.04981471970677376,
+      "blank": 0.00011814309254987165,
+      "signed_prediction": 0.04981471970677376,
+      "signed_stimulus_effect": 0.04993286279932363
+    },
+    {
+      "condition": "tick-v1",
+      "trial": 6,
+      "cycle": 1,
+      "polarity": "off",
+      "prediction": -0.001201474224217236,
+      "blank": 7.960410357554792e-07,
+      "signed_prediction": -0.001201474224217236,
+      "signed_stimulus_effect": -0.0012022702652529915
+    },
+    {
+      "condition": "tick-v1",
+      "trial": 6,
+      "cycle": 2,
+      "polarity": "on",
+      "prediction": -0.03284285217523575,
+      "blank": -0.0075353640131652355,
+      "signed_prediction": 0.03284285217523575,
+      "signed_stimulus_effect": 0.025307488162070513
+    },
+    {
+      "condition": "tick-v1",
+      "trial": 6,
+      "cycle": 2,
+      "polarity": "off",
+      "prediction": -0.0007920806529000401,
+      "blank": 0.0007703896844759583,
+      "signed_prediction": -0.0007920806529000401,
+      "signed_stimulus_effect": -0.0015624703373759985
+    },
+    {
+      "condition": "tick-v1",
+      "trial": 6,
+      "cycle": 3,
+      "polarity": "on",
+      "prediction": -0.03284008800983429,
+      "blank": 5.19083960170974e-06,
+      "signed_prediction": 0.03284008800983429,
+      "signed_stimulus_effect": 0.032845278849436
+    },
+    {
+      "condition": "tick-v1",
+      "trial": 6,
+      "cycle": 3,
+      "polarity": "off",
+      "prediction": -0.0007920619682408869,
+      "blank": 3.497557443665755e-08,
+      "signed_prediction": -0.0007920619682408869,
+      "signed_stimulus_effect": -0.0007920969438153236
+    },
+    {
+      "condition": "tick-v1",
+      "trial": 7,
+      "cycle": 1,
+      "polarity": "on",
+      "prediction": -0.04980659484863281,
+      "blank": 3.406768769309565e-07,
+      "signed_prediction": 0.04980659484863281,
+      "signed_stimulus_effect": 0.04980693552550974
+    },
+    {
+      "condition": "tick-v1",
+      "trial": 7,
+      "cycle": 1,
+      "polarity": "off",
+      "prediction": -0.0012014196254312992,
+      "blank": -0.0011555838864296675,
+      "signed_prediction": -0.0012014196254312992,
+      "signed_stimulus_effect": -4.583573900163174e-05
+    },
+    {
+      "condition": "tick-v1",
+      "trial": 7,
+      "cycle": 2,
+      "polarity": "on",
+      "prediction": -0.03284285217523575,
+      "blank": 0.00011814309254987165,
+      "signed_prediction": 0.03284285217523575,
+      "signed_stimulus_effect": 0.03296099526778562
+    },
+    {
+      "condition": "tick-v1",
+      "trial": 7,
+      "cycle": 2,
+      "polarity": "off",
+      "prediction": -0.0007920806529000401,
+      "blank": 7.960410357554792e-07,
+      "signed_prediction": -0.0007920806529000401,
+      "signed_stimulus_effect": -0.0007928766939357956
+    },
+    {
+      "condition": "tick-v1",
+      "trial": 7,
+      "cycle": 3,
+      "polarity": "on",
+      "prediction": -0.03284008800983429,
+      "blank": -0.0075353640131652355,
+      "signed_prediction": 0.03284008800983429,
+      "signed_stimulus_effect": 0.025304723996669054
+    },
+    {
+      "condition": "tick-v1",
+      "trial": 7,
+      "cycle": 3,
+      "polarity": "off",
+      "prediction": -0.0007920619682408869,
+      "blank": 0.0007703896844759583,
+      "signed_prediction": -0.0007920619682408869,
+      "signed_stimulus_effect": -0.0015624516527168453
+    },
+    {
+      "condition": "tick-v1",
+      "trial": 8,
+      "cycle": 1,
+      "polarity": "on",
+      "prediction": -0.049806930124759674,
+      "blank": -0.0075353640131652355,
+      "signed_prediction": 0.049806930124759674,
+      "signed_stimulus_effect": 0.04227156611159444
+    },
+    {
+      "condition": "tick-v1",
+      "trial": 8,
+      "cycle": 1,
+      "polarity": "off",
+      "prediction": -0.0012014219537377357,
+      "blank": 0.0007703896844759583,
+      "signed_prediction": -0.0012014219537377357,
+      "signed_stimulus_effect": -0.001971811638213694
+    },
+    {
+      "condition": "tick-v1",
+      "trial": 8,
+      "cycle": 2,
+      "polarity": "on",
+      "prediction": -0.03284285217523575,
+      "blank": 5.19083960170974e-06,
+      "signed_prediction": 0.03284285217523575,
+      "signed_stimulus_effect": 0.03284804301483746
+    },
+    {
+      "condition": "tick-v1",
+      "trial": 8,
+      "cycle": 2,
+      "polarity": "off",
+      "prediction": -0.0007920806529000401,
+      "blank": 3.497557443665755e-08,
+      "signed_prediction": -0.0007920806529000401,
+      "signed_stimulus_effect": -0.0007921156284744768
+    },
+    {
+      "condition": "tick-v1",
+      "trial": 8,
+      "cycle": 3,
+      "polarity": "on",
+      "prediction": -0.03284008800983429,
+      "blank": 0.014236490242183208,
+      "signed_prediction": 0.03284008800983429,
+      "signed_stimulus_effect": 0.0470765782520175
+    },
+    {
+      "condition": "tick-v1",
+      "trial": 8,
+      "cycle": 3,
+      "polarity": "off",
+      "prediction": -0.0007920619682408869,
+      "blank": 9.592461719876155e-05,
+      "signed_prediction": -0.0007920619682408869,
+      "signed_stimulus_effect": -0.0008879865854396485
+    },
+    {
+      "condition": "tick-v1",
+      "trial": 9,
+      "cycle": 1,
+      "polarity": "on",
+      "prediction": -0.04980692267417908,
+      "blank": -0.006118228659033775,
+      "signed_prediction": 0.04980692267417908,
+      "signed_stimulus_effect": 0.0436886940151453
+    },
+    {
+      "condition": "tick-v1",
+      "trial": 9,
+      "cycle": 1,
+      "polarity": "off",
+      "prediction": -0.0012014219537377357,
+      "blank": 0.0006255075568333268,
+      "signed_prediction": -0.0012014219537377357,
+      "signed_stimulus_effect": -0.0018269295105710626
+    },
+    {
+      "condition": "tick-v1",
+      "trial": 9,
+      "cycle": 2,
+      "polarity": "on",
+      "prediction": -0.03284285217523575,
+      "blank": 4.214633008814417e-06,
+      "signed_prediction": 0.03284285217523575,
+      "signed_stimulus_effect": 0.03284706680824456
+    },
+    {
+      "condition": "tick-v1",
+      "trial": 9,
+      "cycle": 2,
+      "polarity": "off",
+      "prediction": -0.0007920806529000401,
+      "blank": -0.0398959219455719,
+      "signed_prediction": -0.0007920806529000401,
+      "signed_stimulus_effect": 0.03910384129267186
+    },
+    {
+      "condition": "tick-v1",
+      "trial": 9,
+      "cycle": 3,
+      "polarity": "on",
+      "prediction": -0.03284008800983429,
+      "blank": 0.004078821744769812,
+      "signed_prediction": 0.03284008800983429,
+      "signed_stimulus_effect": 0.0369189097546041
+    },
+    {
+      "condition": "tick-v1",
+      "trial": 9,
+      "cycle": 3,
+      "polarity": "off",
+      "prediction": -0.0007920619682408869,
+      "blank": 2.748285623965785e-05,
+      "signed_prediction": -0.0007920619682408869,
+      "signed_stimulus_effect": -0.0008195448244805448
+    },
+    {
+      "condition": "frame-horizon-v1",
+      "trial": 0,
+      "cycle": 1,
+      "polarity": "on",
+      "prediction": -0.3678419888019562,
+      "blank": 0.0002834579208865762,
+      "signed_prediction": 0.3678419888019562,
+      "signed_stimulus_effect": 0.36812544672284275
+    },
+    {
+      "condition": "frame-horizon-v1",
+      "trial": 0,
+      "cycle": 1,
+      "polarity": "off",
+      "prediction": -0.008872917853295803,
+      "blank": -0.12097492069005966,
+      "signed_prediction": -0.008872917853295803,
+      "signed_stimulus_effect": 0.11210200283676386
+    },
+    {
+      "condition": "frame-horizon-v1",
+      "trial": 0,
+      "cycle": 2,
+      "polarity": "on",
+      "prediction": -0.24255570769309998,
+      "blank": -0.0008151220390573144,
+      "signed_prediction": 0.24255570769309998,
+      "signed_stimulus_effect": 0.24174058565404266
+    },
+    {
+      "condition": "frame-horizon-v1",
+      "trial": 0,
+      "cycle": 2,
+      "polarity": "off",
+      "prediction": -0.005849786568433046,
+      "blank": 0.002276506507769227,
+      "signed_prediction": -0.005849786568433046,
+      "signed_stimulus_effect": -0.008126293076202273
+    },
+    {
+      "condition": "frame-horizon-v1",
+      "trial": 0,
+      "cycle": 3,
+      "polarity": "on",
+      "prediction": -0.2425353229045868,
+      "blank": -0.022948728874325752,
+      "signed_prediction": 0.2425353229045868,
+      "signed_stimulus_effect": 0.21958659403026104
+    },
+    {
+      "condition": "frame-horizon-v1",
+      "trial": 0,
+      "cycle": 3,
+      "polarity": "off",
+      "prediction": -0.0058496505953371525,
+      "blank": -0.2785194516181946,
+      "signed_prediction": -0.0058496505953371525,
+      "signed_stimulus_effect": 0.2726698010228574
+    },
+    {
+      "condition": "frame-horizon-v1",
+      "trial": 1,
+      "cycle": 1,
+      "polarity": "on",
+      "prediction": -0.36784133315086365,
+      "blank": -0.022948728874325752,
+      "signed_prediction": 0.36784133315086365,
+      "signed_stimulus_effect": 0.3448926042765379
+    },
+    {
+      "condition": "frame-horizon-v1",
+      "trial": 1,
+      "cycle": 1,
+      "polarity": "off",
+      "prediction": -0.008872912265360355,
+      "blank": -0.2785194516181946,
+      "signed_prediction": -0.008872912265360355,
+      "signed_stimulus_effect": 0.2696465393528342
+    },
+    {
+      "condition": "frame-horizon-v1",
+      "trial": 1,
+      "cycle": 2,
+      "polarity": "on",
+      "prediction": -0.24255570769309998,
+      "blank": -0.001876647467724979,
+      "signed_prediction": 0.24255570769309998,
+      "signed_stimulus_effect": 0.240679060225375
+    },
+    {
+      "condition": "frame-horizon-v1",
+      "trial": 1,
+      "cycle": 2,
+      "polarity": "off",
+      "prediction": -0.005849786568433046,
+      "blank": 0.001208821078762412,
+      "signed_prediction": -0.005849786568433046,
+      "signed_stimulus_effect": -0.007058607647195458
+    },
+    {
+      "condition": "frame-horizon-v1",
+      "trial": 1,
+      "cycle": 3,
+      "polarity": "on",
+      "prediction": -0.2425353229045868,
+      "blank": 8.144966159306932e-06,
+      "signed_prediction": 0.2425353229045868,
+      "signed_stimulus_effect": 0.2425434678707461
+    },
+    {
+      "condition": "frame-horizon-v1",
+      "trial": 1,
+      "cycle": 3,
+      "polarity": "off",
+      "prediction": -0.0058496505953371525,
+      "blank": -0.022849511355161667,
+      "signed_prediction": -0.0058496505953371525,
+      "signed_stimulus_effect": 0.016999860759824514
+    },
+    {
+      "condition": "frame-horizon-v1",
+      "trial": 2,
+      "cycle": 1,
+      "polarity": "on",
+      "prediction": -0.36784061789512634,
+      "blank": -0.015062691643834114,
+      "signed_prediction": 0.36784061789512634,
+      "signed_stimulus_effect": 0.35277792625129223
+    },
+    {
+      "condition": "frame-horizon-v1",
+      "trial": 2,
+      "cycle": 1,
+      "polarity": "off",
+      "prediction": -0.008872907608747482,
+      "blank": -0.00010149154695682228,
+      "signed_prediction": -0.008872907608747482,
+      "signed_stimulus_effect": -0.00877141606179066
+    },
+    {
+      "condition": "frame-horizon-v1",
+      "trial": 2,
+      "cycle": 2,
+      "polarity": "on",
+      "prediction": -0.24255570769309998,
+      "blank": 0.0002834579208865762,
+      "signed_prediction": 0.24255570769309998,
+      "signed_stimulus_effect": 0.24283916561398655
+    },
+    {
+      "condition": "frame-horizon-v1",
+      "trial": 2,
+      "cycle": 2,
+      "polarity": "off",
+      "prediction": -0.005849786568433046,
+      "blank": -0.12097492069005966,
+      "signed_prediction": -0.005849786568433046,
+      "signed_stimulus_effect": 0.11512513412162662
+    },
+    {
+      "condition": "frame-horizon-v1",
+      "trial": 2,
+      "cycle": 3,
+      "polarity": "on",
+      "prediction": -0.2425353229045868,
+      "blank": -0.0008151220390573144,
+      "signed_prediction": 0.2425353229045868,
+      "signed_stimulus_effect": 0.24172020086552948
+    },
+    {
+      "condition": "frame-horizon-v1",
+      "trial": 2,
+      "cycle": 3,
+      "polarity": "off",
+      "prediction": -0.0058496505953371525,
+      "blank": 0.002276506507769227,
+      "signed_prediction": -0.0058496505953371525,
+      "signed_stimulus_effect": -0.00812615710310638
+    },
+    {
+      "condition": "frame-horizon-v1",
+      "trial": 3,
+      "cycle": 1,
+      "polarity": "on",
+      "prediction": -0.3721786439418793,
+      "blank": -0.004334453959017992,
+      "signed_prediction": 0.3721786439418793,
+      "signed_stimulus_effect": 0.3678441899828613
+    },
+    {
+      "condition": "frame-horizon-v1",
+      "trial": 3,
+      "cycle": 1,
+      "polarity": "off",
+      "prediction": -0.008902137167751789,
+      "blank": -0.05260550603270531,
+      "signed_prediction": -0.008902137167751789,
+      "signed_stimulus_effect": 0.04370336886495352
+    },
+    {
+      "condition": "frame-horizon-v1",
+      "trial": 3,
+      "cycle": 2,
+      "polarity": "on",
+      "prediction": -0.2425559014081955,
+      "blank": -0.0003544528444763273,
+      "signed_prediction": 0.2425559014081955,
+      "signed_stimulus_effect": 0.24220144856371917
+    },
+    {
+      "condition": "frame-horizon-v1",
+      "trial": 3,
+      "cycle": 2,
+      "polarity": "off",
+      "prediction": -0.00584978936240077,
+      "blank": 0.0002283167705172673,
+      "signed_prediction": -0.00584978936240077,
+      "signed_stimulus_effect": -0.0060781061329180375
+    },
+    {
+      "condition": "frame-horizon-v1",
+      "trial": 3,
+      "cycle": 3,
+      "polarity": "on",
+      "prediction": -0.2425353229045868,
+      "blank": 1.5383849358840962e-06,
+      "signed_prediction": 0.2425353229045868,
+      "signed_stimulus_effect": 0.24253686128952268
+    },
+    {
+      "condition": "frame-horizon-v1",
+      "trial": 3,
+      "cycle": 3,
+      "polarity": "off",
+      "prediction": -0.0058496505953371525,
+      "blank": -0.004315713886171579,
+      "signed_prediction": -0.0058496505953371525,
+      "signed_stimulus_effect": -0.0015339367091655731
+    },
+    {
+      "condition": "frame-horizon-v1",
+      "trial": 4,
+      "cycle": 1,
+      "polarity": "on",
+      "prediction": -0.36784136295318604,
+      "blank": 1.8852268112823367e-05,
+      "signed_prediction": 0.36784136295318604,
+      "signed_stimulus_effect": 0.36786021522129886
+    },
+    {
+      "condition": "frame-horizon-v1",
+      "trial": 4,
+      "cycle": 1,
+      "polarity": "off",
+      "prediction": -0.008872912265360355,
+      "blank": -0.0028449741657823324,
+      "signed_prediction": -0.008872912265360355,
+      "signed_stimulus_effect": -0.006027938099578023
+    },
+    {
+      "condition": "frame-horizon-v1",
+      "trial": 4,
+      "cycle": 2,
+      "polarity": "on",
+      "prediction": -0.24255570769309998,
+      "blank": 0.007945789955556393,
+      "signed_prediction": 0.24255570769309998,
+      "signed_stimulus_effect": 0.25050149764865637
+    },
+    {
+      "condition": "frame-horizon-v1",
+      "trial": 4,
+      "cycle": 2,
+      "polarity": "off",
+      "prediction": -0.005849786568433046,
+      "blank": 5.3538275096798316e-05,
+      "signed_prediction": -0.005849786568433046,
+      "signed_stimulus_effect": -0.005903324843529845
+    },
+    {
+      "condition": "frame-horizon-v1",
+      "trial": 4,
+      "cycle": 3,
+      "polarity": "on",
+      "prediction": -0.2425353229045868,
+      "blank": -0.022849204018712044,
+      "signed_prediction": 0.2425353229045868,
+      "signed_stimulus_effect": 0.21968611888587475
+    },
+    {
+      "condition": "frame-horizon-v1",
+      "trial": 4,
+      "cycle": 3,
+      "polarity": "off",
+      "prediction": -0.0058496505953371525,
+      "blank": -0.00015395662921946496,
+      "signed_prediction": -0.0058496505953371525,
+      "signed_stimulus_effect": -0.0056956939661176875
+    },
+    {
+      "condition": "frame-horizon-v1",
+      "trial": 5,
+      "cycle": 1,
+      "polarity": "on",
+      "prediction": -0.36784130334854126,
+      "blank": -0.00015395662921946496,
+      "signed_prediction": 0.36784130334854126,
+      "signed_stimulus_effect": 0.3676873467193218
+    },
+    {
+      "condition": "frame-horizon-v1",
+      "trial": 5,
+      "cycle": 1,
+      "polarity": "off",
+      "prediction": -0.008872912265360355,
+      "blank": 0.000429976440500468,
+      "signed_prediction": -0.008872912265360355,
+      "signed_stimulus_effect": -0.009302888705860823
+    },
+    {
+      "condition": "frame-horizon-v1",
+      "trial": 5,
+      "cycle": 2,
+      "polarity": "on",
+      "prediction": -0.24255570769309998,
+      "blank": -0.004334453959017992,
+      "signed_prediction": 0.24255570769309998,
+      "signed_stimulus_effect": 0.23822125373408198
+    },
+    {
+      "condition": "frame-horizon-v1",
+      "trial": 5,
+      "cycle": 2,
+      "polarity": "off",
+      "prediction": -0.005849786568433046,
+      "blank": -0.05260550603270531,
+      "signed_prediction": -0.005849786568433046,
+      "signed_stimulus_effect": 0.04675571946427226
+    },
+    {
+      "condition": "frame-horizon-v1",
+      "trial": 5,
+      "cycle": 3,
+      "polarity": "on",
+      "prediction": -0.2425353229045868,
+      "blank": -0.0003544528444763273,
+      "signed_prediction": 0.2425353229045868,
+      "signed_stimulus_effect": 0.24218087006011046
+    },
+    {
+      "condition": "frame-horizon-v1",
+      "trial": 5,
+      "cycle": 3,
+      "polarity": "off",
+      "prediction": -0.0058496505953371525,
+      "blank": 0.0002283167705172673,
+      "signed_prediction": -0.0058496505953371525,
+      "signed_stimulus_effect": -0.00607796736585442
+    },
+    {
+      "condition": "frame-horizon-v1",
+      "trial": 6,
+      "cycle": 1,
+      "polarity": "on",
+      "prediction": -0.36786046624183655,
+      "blank": 0.007945789955556393,
+      "signed_prediction": 0.36786046624183655,
+      "signed_stimulus_effect": 0.37580625619739294
+    },
+    {
+      "condition": "frame-horizon-v1",
+      "trial": 6,
+      "cycle": 1,
+      "polarity": "off",
+      "prediction": -0.008873040787875652,
+      "blank": 5.3538275096798316e-05,
+      "signed_prediction": -0.008873040787875652,
+      "signed_stimulus_effect": -0.00892657906297245
+    },
+    {
+      "condition": "frame-horizon-v1",
+      "trial": 6,
+      "cycle": 2,
+      "polarity": "on",
+      "prediction": -0.24255570769309998,
+      "blank": -0.022849204018712044,
+      "signed_prediction": 0.24255570769309998,
+      "signed_stimulus_effect": 0.21970650367438793
+    },
+    {
+      "condition": "frame-horizon-v1",
+      "trial": 6,
+      "cycle": 2,
+      "polarity": "off",
+      "prediction": -0.005849786568433046,
+      "blank": -0.00015395662921946496,
+      "signed_prediction": -0.005849786568433046,
+      "signed_stimulus_effect": -0.005695829939213581
+    },
+    {
+      "condition": "frame-horizon-v1",
+      "trial": 6,
+      "cycle": 3,
+      "polarity": "on",
+      "prediction": -0.2425353229045868,
+      "blank": 0.000429976440500468,
+      "signed_prediction": 0.2425353229045868,
+      "signed_stimulus_effect": 0.24296529934508726
+    },
+    {
+      "condition": "frame-horizon-v1",
+      "trial": 6,
+      "cycle": 3,
+      "polarity": "off",
+      "prediction": -0.0058496505953371525,
+      "blank": -0.004334453959017992,
+      "signed_prediction": -0.0058496505953371525,
+      "signed_stimulus_effect": -0.0015151966363191605
+    },
+    {
+      "condition": "frame-horizon-v1",
+      "trial": 7,
+      "cycle": 1,
+      "polarity": "on",
+      "prediction": -0.36784136295318604,
+      "blank": 1.8852268112823367e-05,
+      "signed_prediction": 0.36784136295318604,
+      "signed_stimulus_effect": 0.36786021522129886
+    },
+    {
+      "condition": "frame-horizon-v1",
+      "trial": 7,
+      "cycle": 1,
+      "polarity": "off",
+      "prediction": -0.008872912265360355,
+      "blank": -0.0028449741657823324,
+      "signed_prediction": -0.008872912265360355,
+      "signed_stimulus_effect": -0.006027938099578023
+    },
+    {
+      "condition": "frame-horizon-v1",
+      "trial": 7,
+      "cycle": 2,
+      "polarity": "on",
+      "prediction": -0.24255570769309998,
+      "blank": 0.007945789955556393,
+      "signed_prediction": 0.24255570769309998,
+      "signed_stimulus_effect": 0.25050149764865637
+    },
+    {
+      "condition": "frame-horizon-v1",
+      "trial": 7,
+      "cycle": 2,
+      "polarity": "off",
+      "prediction": -0.005849786568433046,
+      "blank": 5.3538275096798316e-05,
+      "signed_prediction": -0.005849786568433046,
+      "signed_stimulus_effect": -0.005903324843529845
+    },
+    {
+      "condition": "frame-horizon-v1",
+      "trial": 7,
+      "cycle": 3,
+      "polarity": "on",
+      "prediction": -0.2425353229045868,
+      "blank": -0.022849204018712044,
+      "signed_prediction": 0.2425353229045868,
+      "signed_stimulus_effect": 0.21968611888587475
+    },
+    {
+      "condition": "frame-horizon-v1",
+      "trial": 7,
+      "cycle": 3,
+      "polarity": "off",
+      "prediction": -0.0058496505953371525,
+      "blank": -0.00015395662921946496,
+      "signed_prediction": -0.0058496505953371525,
+      "signed_stimulus_effect": -0.0056956939661176875
+    },
+    {
+      "condition": "frame-horizon-v1",
+      "trial": 8,
+      "cycle": 1,
+      "polarity": "on",
+      "prediction": -0.3678409457206726,
+      "blank": -0.022849204018712044,
+      "signed_prediction": 0.3678409457206726,
+      "signed_stimulus_effect": 0.34499174170196056
+    },
+    {
+      "condition": "frame-horizon-v1",
+      "trial": 8,
+      "cycle": 1,
+      "polarity": "off",
+      "prediction": -0.008872909471392632,
+      "blank": -0.00015395662921946496,
+      "signed_prediction": -0.008872909471392632,
+      "signed_stimulus_effect": -0.008718952842173167
+    },
+    {
+      "condition": "frame-horizon-v1",
+      "trial": 8,
+      "cycle": 2,
+      "polarity": "on",
+      "prediction": -0.24255570769309998,
+      "blank": 0.000429976440500468,
+      "signed_prediction": 0.24255570769309998,
+      "signed_stimulus_effect": 0.24298568413360044
+    },
+    {
+      "condition": "frame-horizon-v1",
+      "trial": 8,
+      "cycle": 2,
+      "polarity": "off",
+      "prediction": -0.005849786568433046,
+      "blank": -0.004334453959017992,
+      "signed_prediction": -0.005849786568433046,
+      "signed_stimulus_effect": -0.0015153326094150543
+    },
+    {
+      "condition": "frame-horizon-v1",
+      "trial": 8,
+      "cycle": 3,
+      "polarity": "on",
+      "prediction": -0.2425353229045868,
+      "blank": -0.05260550603270531,
+      "signed_prediction": 0.2425353229045868,
+      "signed_stimulus_effect": 0.18992981687188148
+    },
+    {
+      "condition": "frame-horizon-v1",
+      "trial": 8,
+      "cycle": 3,
+      "polarity": "off",
+      "prediction": -0.0058496505953371525,
+      "blank": -0.0003544528444763273,
+      "signed_prediction": -0.0058496505953371525,
+      "signed_stimulus_effect": -0.005495197750860825
+    },
+    {
+      "condition": "frame-horizon-v1",
+      "trial": 9,
+      "cycle": 1,
+      "polarity": "on",
+      "prediction": -0.36784061789512634,
+      "blank": -0.015062691643834114,
+      "signed_prediction": 0.36784061789512634,
+      "signed_stimulus_effect": 0.35277792625129223
+    },
+    {
+      "condition": "frame-horizon-v1",
+      "trial": 9,
+      "cycle": 1,
+      "polarity": "off",
+      "prediction": -0.008872907608747482,
+      "blank": -0.00010149154695682228,
+      "signed_prediction": -0.008872907608747482,
+      "signed_stimulus_effect": -0.00877141606179066
+    },
+    {
+      "condition": "frame-horizon-v1",
+      "trial": 9,
+      "cycle": 2,
+      "polarity": "on",
+      "prediction": -0.24255570769309998,
+      "blank": 0.0002834579208865762,
+      "signed_prediction": 0.24255570769309998,
+      "signed_stimulus_effect": 0.24283916561398655
+    },
+    {
+      "condition": "frame-horizon-v1",
+      "trial": 9,
+      "cycle": 2,
+      "polarity": "off",
+      "prediction": -0.005849786568433046,
+      "blank": -0.12097492069005966,
+      "signed_prediction": -0.005849786568433046,
+      "signed_stimulus_effect": 0.11512513412162662
+    },
+    {
+      "condition": "frame-horizon-v1",
+      "trial": 9,
+      "cycle": 3,
+      "polarity": "on",
+      "prediction": -0.2425353229045868,
+      "blank": -0.0008151220390573144,
+      "signed_prediction": 0.2425353229045868,
+      "signed_stimulus_effect": 0.24172020086552948
+    },
+    {
+      "condition": "frame-horizon-v1",
+      "trial": 9,
+      "cycle": 3,
+      "polarity": "off",
+      "prediction": -0.0058496505953371525,
+      "blank": 0.002276506507769227,
+      "signed_prediction": -0.0058496505953371525,
+      "signed_stimulus_effect": -0.00812615710310638
+    }
+  ],
+  "source_unchanged": true,
+  "weights_frozen": true
+}

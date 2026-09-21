@@ -1,0 +1,97 @@
+{
+  "directory": "runs\\temporal-frame-horizon-v1",
+  "files": {
+    "frozen.npz": {
+      "bytes": 46731,
+      "sha256": "d327ba90a7f842ba67ad184e255e02ddfd75854dbbc32771170e2f39bf30f74b"
+    },
+    "preflight-0-blank.npz": {
+      "bytes": 8132,
+      "sha256": "8c3915834fc8100c696246d3e86264dc9a8c0b1397b9269b9d3ebac89cfd3ca3"
+    },
+    "preflight-0-full.npz": {
+      "bytes": 8308,
+      "sha256": "a97947e5bfd0eda485d14382ddb127cbc04c8cb06ce74ad549b9d1a0fa484627"
+    },
+    "preflight-1-blank.npz": {
+      "bytes": 9864,
+      "sha256": "7e824150281639affbe36c3bd86a2682e43f618091ee6ea2deddd22cbf35438c"
+    },
+    "preflight-1-full.npz": {
+      "bytes": 10023,
+      "sha256": "6ea62a947107d3118d20bd4ea9b17606c4a1672bc6cdddd363f5e39f1e84f662"
+    },
+    "preflight-2-blank.npz": {
+      "bytes": 7298,
+      "sha256": "aeaff4cf13b59905db2f7f6067d3d4c611289a4604176f12062cb3f4c0451e47"
+    },
+    "preflight-2-full.npz": {
+      "bytes": 7227,
+      "sha256": "d9ac9a92ebeaa497946c15427aa9f3cc4764e5cf499766e7e6185bcf08b88118"
+    },
+    "preflight-3-blank.npz": {
+      "bytes": 10001,
+      "sha256": "ecab8e55e53739e82698ce783c0fad2277b7de711342aabd1864a1ea1c5ce1d3"
+    },
+    "preflight-3-full.npz": {
+      "bytes": 10189,
+      "sha256": "50a8f15a9b057f270455d771ad5d603dee76d24cfae87703d4e60c4a84e502cb"
+    },
+    "preflight-4-blank.npz": {
+      "bytes": 7030,
+      "sha256": "5bd3cc7b8537894c67fb3d2e47d93964b21cf5abc94ee35fbf0da2bb8032a4f6"
+    },
+    "preflight-4-full.npz": {
+      "bytes": 7106,
+      "sha256": "9fb9d33e55de538b3611d3fda7e744fcdd668e4d8af9037258221cd87ceacabc"
+    },
+    "preflight-5-blank.npz": {
+      "bytes": 9182,
+      "sha256": "2cfd4e21b19d489a9fbfc1536d755697590e653d9d88a6171d636904250523e5"
+    },
+    "preflight-5-full.npz": {
+      "bytes": 9424,
+      "sha256": "3d68cc0380fb666b1b476e9baf09f48dfaeceb74c95e8a7fba96ee1aa0b26fb1"
+    },
+    "preflight-6-blank.npz": {
+      "bytes": 7854,
+      "sha256": "6e45670a70d29b35c58831442fbbaed2681d3168e2021b00b8982716434c513d"
+    },
+    "preflight-6-full.npz": {
+      "bytes": 7950,
+      "sha256": "fcb9bc15cbc887b249925f5f0cf2ea70e32683f67364937d981bce150003ba10"
+    },
+    "preflight-7-blank.npz": {
+      "bytes": 7030,
+      "sha256": "5bd3cc7b8537894c67fb3d2e47d93964b21cf5abc94ee35fbf0da2bb8032a4f6"
+    },
+    "preflight-7-full.npz": {
+      "bytes": 7106,
+      "sha256": "9fb9d33e55de538b3611d3fda7e744fcdd668e4d8af9037258221cd87ceacabc"
+    },
+    "preflight-8-blank.npz": {
+      "bytes": 8748,
+      "sha256": "3f62ccf5d06d1db8202c9e16524918cd34e2fb8b9ad25838bdfbaf5c1af6feb9"
+    },
+    "preflight-8-full.npz": {
+      "bytes": 8792,
+      "sha256": "61c4057c8ecfe8563a36105d47f4e674a165850487e3735cdf1d57466137b6bd"
+    },
+    "preflight-9-blank.npz": {
+      "bytes": 7298,
+      "sha256": "aeaff4cf13b59905db2f7f6067d3d4c611289a4604176f12062cb3f4c0451e47"
+    },
+    "preflight-9-full.npz": {
+      "bytes": 7227,
+      "sha256": "d9ac9a92ebeaa497946c15427aa9f3cc4764e5cf499766e7e6185bcf08b88118"
+    },
+    "trained.npz": {
+      "bytes": 52411,
+      "sha256": "10ba5f71914c0448a99f961fe5737f08ef1484367e935a43d7b3bac3e5e12dbd"
+    },
+    "training.npz": {
+      "bytes": 860277,
+      "sha256": "e380196e40b76e3bd8e327cb99629708bbe51965b985846e642d2f3310ac44bc"
+    }
+  }
+}

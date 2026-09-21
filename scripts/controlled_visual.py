@@ -67,13 +67,21 @@ def make_network(crop, metadata, weights=None):
 
 
 @torch.no_grad()
-def run_sequence(net, crop, metadata, frames, targets, *, learning, deadline=float('inf')):
+def run_sequence(net, crop, metadata, frames, targets, *, learning, deadline=float('inf'), visual_schedule='tick-v1'):
     """Continuous state across trials; the only neural input is the current image."""
     cfg = metadata['config']
     rule_cfg = LearningConfig(**metadata['learning'])
     retina = Retina(**crop['retina'])
     camera = EventCamera(1, retina.spec['height'], retina.spec['width'])
-    rule = Plasticity(net, rule_cfg, sensory_mask=retina.injected,
+    rule_class = Plasticity
+    if visual_schedule == 'frame-horizon-v1':
+        from frame_prediction import FramePrediction
+        if cfg['neural_steps'] != 8:
+            raise ValueError('frame-horizon-v1 requires eight ticks per frame')
+        rule_class = FramePrediction
+    elif visual_schedule != 'tick-v1':
+        raise ValueError('unknown visual supervision schedule')
+    rule = rule_class(net, rule_cfg, sensory_mask=retina.injected,
                       sensory_gain=cfg['sensory_gain']) if learning else None
     incoming = ((net.pathways == 1) & torch.isin(net.post, torch.tensor(targets))).nonzero().flatten()
     lookup = torch.full((net.e,), -1, dtype=torch.long)
@@ -111,9 +119,16 @@ def run_sequence(net, crop, metadata, frames, targets, *, learning, deadline=flo
             if rule is not None:
                 y = observed[0, net.post[incoming]]
                 delta = rule_cfg.eta_prediction * (y-rule.expected[0, net.post[incoming]]) * e
-                for category, mask in enumerate((y < 0, y > 0, y == 0)):
-                    updates[category, mask] += delta[mask].double()
+                if visual_schedule == 'tick-v1':
+                    for category, mask in enumerate((y < 0, y > 0, y == 0)):
+                        updates[category, mask] += delta[mask].double()
                 rule.observe(activity, torch.zeros(1))
+                if visual_schedule == 'frame-horizon-v1' and rule.last_visual_update is not None:
+                    edges, y, delta = rule.last_visual_update
+                    positions = lookup[edges]
+                    for category, mask in enumerate((y < 0, y > 0, y == 0)):
+                        keep = mask & (positions >= 0)
+                        updates[category, positions[keep]] += delta[keep].double()
         if rule is not None and (frame_index+1) % cfg['sync_steps'] == 0:
             rule.synchronize()
     if rule is not None:
