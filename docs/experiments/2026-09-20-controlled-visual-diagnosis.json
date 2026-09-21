@@ -1,0 +1,407 @@
+{
+  "targets": [
+    {
+      "body": 38366,
+      "cell_type": "L1",
+      "spikes": 673,
+      "incoming": [
+        {
+          "source": 33462,
+          "cell_type": "Mi1",
+          "sign": 1,
+          "contacts": 19,
+          "initial": 0.0949999988079071,
+          "trained": 0.0012432021321728826,
+          "arrivals": 250,
+          "on_trace_mean": 0.029657898470759392,
+          "off_trace_mean": 0.029230112209916115,
+          "on_active": 85,
+          "off_active": 83,
+          "updates": [
+            -0.05978333596717221,
+            0.0582277597246811,
+            -0.10752177153705349
+          ],
+          "target_term": -0.0008555678650736809,
+          "prediction_penalty": -0.10822178393870016
+        },
+        {
+          "source": 85937,
+          "cell_type": "Tm3",
+          "sign": 1,
+          "contacts": 12,
+          "initial": 0.05999999865889549,
+          "trained": 0.0003105004725512117,
+          "arrivals": 250,
+          "on_trace_mean": 0.024029474705457687,
+          "off_trace_mean": 0.020620550960302353,
+          "on_active": 59,
+          "off_active": 55,
+          "updates": [
+            -0.048232411658567606,
+            0.0411647548883505,
+            -0.06843075770343578
+          ],
+          "target_term": -0.0068178484216332436,
+          "prediction_penalty": -0.06868056935082946
+        },
+        {
+          "source": 332251,
+          "cell_type": "C2",
+          "sign": -1,
+          "contacts": 36,
+          "initial": 0.18000000715255737,
+          "trained": 0.18000000715255737,
+          "arrivals": 0,
+          "on_trace_mean": 0.0,
+          "off_trace_mean": 0.0,
+          "on_active": 0,
+          "off_active": 0,
+          "updates": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "target_term": 0.0,
+          "prediction_penalty": 0.0
+        }
+      ]
+    },
+    {
+      "body": 39087,
+      "cell_type": "L2",
+      "spikes": 673,
+      "incoming": [
+        {
+          "source": 10839,
+          "cell_type": "Dm17",
+          "sign": -1,
+          "contacts": 8,
+          "initial": 0.03999999910593033,
+          "trained": 0.03999999910593033,
+          "arrivals": 0,
+          "on_trace_mean": 0.0,
+          "off_trace_mean": 0.0,
+          "on_active": 0,
+          "off_active": 0,
+          "updates": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "target_term": 0.0,
+          "prediction_penalty": 0.0
+        },
+        {
+          "source": 11188,
+          "cell_type": "Dm17",
+          "sign": -1,
+          "contacts": 6,
+          "initial": 0.029999999329447746,
+          "trained": 0.029999999329447746,
+          "arrivals": 0,
+          "on_trace_mean": 0.0,
+          "off_trace_mean": 0.0,
+          "on_active": 0,
+          "off_active": 0,
+          "updates": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "target_term": 0.0,
+          "prediction_penalty": 0.0
+        },
+        {
+          "source": 13530,
+          "cell_type": "Dm6",
+          "sign": -1,
+          "contacts": 5,
+          "initial": 0.02500000037252903,
+          "trained": 0.02500000037252903,
+          "arrivals": 0,
+          "on_trace_mean": 0.0,
+          "off_trace_mean": 0.0,
+          "on_active": 0,
+          "off_active": 0,
+          "updates": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "target_term": 0.0,
+          "prediction_penalty": 0.0
+        },
+        {
+          "source": 14028,
+          "cell_type": "Dm6",
+          "sign": -1,
+          "contacts": 9,
+          "initial": 0.04500000178813934,
+          "trained": 0.04500000178813934,
+          "arrivals": 0,
+          "on_trace_mean": 0.0,
+          "off_trace_mean": 0.0,
+          "on_active": 0,
+          "off_active": 0,
+          "updates": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "target_term": 0.0,
+          "prediction_penalty": 0.0
+        },
+        {
+          "source": 15248,
+          "cell_type": "Dm6",
+          "sign": -1,
+          "contacts": 9,
+          "initial": 0.04500000178813934,
+          "trained": 0.04500000178813934,
+          "arrivals": 0,
+          "on_trace_mean": 0.0,
+          "off_trace_mean": 0.0,
+          "on_active": 0,
+          "off_active": 0,
+          "updates": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "target_term": 0.0,
+          "prediction_penalty": 0.0
+        },
+        {
+          "source": 51445,
+          "cell_type": "Tm2",
+          "sign": 1,
+          "contacts": 7,
+          "initial": 0.03500000014901161,
+          "trained": 1.766616514942143e-05,
+          "arrivals": 383,
+          "on_trace_mean": 0.009733924642205238,
+          "off_trace_mean": 0.014182223938405514,
+          "on_active": 44,
+          "off_active": 45,
+          "updates": [
+            -0.019491159239720987,
+            0.028266335717996697,
+            -0.05092258631470142
+          ],
+          "target_term": 0.00889659859240055,
+          "prediction_penalty": -0.05104400949885297
+        },
+        {
+          "source": 52421,
+          "cell_type": "C3",
+          "sign": -1,
+          "contacts": 70,
+          "initial": 0.3499999940395355,
+          "trained": 0.11967365443706512,
+          "arrivals": 35,
+          "on_trace_mean": -0.0019279767293483019,
+          "off_trace_mean": -0.004472978413105011,
+          "on_active": 15,
+          "off_active": 17,
+          "updates": [
+            0.0037373899896052617,
+            -0.009667826162311776,
+            -0.2243959525499852
+          ],
+          "target_term": -0.005090003367513418,
+          "prediction_penalty": -0.22523638953952033
+        },
+        {
+          "source": 82484,
+          "cell_type": "Dm15",
+          "sign": -1,
+          "contacts": 7,
+          "initial": 0.03500000014901161,
+          "trained": 0.03500000014901161,
+          "arrivals": 0,
+          "on_trace_mean": 0.0,
+          "off_trace_mean": 0.0,
+          "on_active": 0,
+          "off_active": 0,
+          "updates": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "target_term": 0.0,
+          "prediction_penalty": 0.0
+        },
+        {
+          "source": 82584,
+          "cell_type": "Dm15",
+          "sign": -1,
+          "contacts": 10,
+          "initial": 0.05000000074505806,
+          "trained": 0.05000000074505806,
+          "arrivals": 0,
+          "on_trace_mean": 0.0,
+          "off_trace_mean": 0.0,
+          "on_active": 0,
+          "off_active": 0,
+          "updates": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "target_term": 0.0,
+          "prediction_penalty": 0.0
+        },
+        {
+          "source": 119938,
+          "cell_type": "Dm15",
+          "sign": -1,
+          "contacts": 6,
+          "initial": 0.029999999329447746,
+          "trained": 0.029999999329447746,
+          "arrivals": 0,
+          "on_trace_mean": 0.0,
+          "off_trace_mean": 0.0,
+          "on_active": 0,
+          "off_active": 0,
+          "updates": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "target_term": 0.0,
+          "prediction_penalty": 0.0
+        },
+        {
+          "source": 332251,
+          "cell_type": "C2",
+          "sign": -1,
+          "contacts": 35,
+          "initial": 0.17499999701976776,
+          "trained": 0.17499999701976776,
+          "arrivals": 0,
+          "on_trace_mean": 0.0,
+          "off_trace_mean": 0.0,
+          "on_active": 0,
+          "off_active": 0,
+          "updates": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "target_term": 0.0,
+          "prediction_penalty": 0.0
+        }
+      ]
+    },
+    {
+      "body": 114687,
+      "cell_type": "L3",
+      "spikes": 586,
+      "incoming": [
+        {
+          "source": 32045,
+          "cell_type": "Dm12",
+          "sign": -1,
+          "contacts": 8,
+          "initial": 0.03999999910593033,
+          "trained": 0.03999999910593033,
+          "arrivals": 0,
+          "on_trace_mean": 0.0,
+          "off_trace_mean": 0.0,
+          "on_active": 0,
+          "off_active": 0,
+          "updates": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "target_term": 0.0,
+          "prediction_penalty": 0.0
+        },
+        {
+          "source": 33671,
+          "cell_type": "Dm12",
+          "sign": -1,
+          "contacts": 7,
+          "initial": 0.03500000014901161,
+          "trained": 0.03500000014901161,
+          "arrivals": 0,
+          "on_trace_mean": 0.0,
+          "off_trace_mean": 0.0,
+          "on_active": 0,
+          "off_active": 0,
+          "updates": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "target_term": 0.0,
+          "prediction_penalty": 0.0
+        },
+        {
+          "source": 38945,
+          "cell_type": "Dm12",
+          "sign": -1,
+          "contacts": 40,
+          "initial": 0.20000000298023224,
+          "trained": 0.20000000298023224,
+          "arrivals": 0,
+          "on_trace_mean": 0.0,
+          "off_trace_mean": 0.0,
+          "on_active": 0,
+          "off_active": 0,
+          "updates": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "target_term": 0.0,
+          "prediction_penalty": 0.0
+        },
+        {
+          "source": 52803,
+          "cell_type": "Dm12",
+          "sign": -1,
+          "contacts": 20,
+          "initial": 0.10000000149011612,
+          "trained": 0.10000000149011612,
+          "arrivals": 0,
+          "on_trace_mean": 0.0,
+          "off_trace_mean": 0.0,
+          "on_active": 0,
+          "off_active": 0,
+          "updates": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "target_term": 0.0,
+          "prediction_penalty": 0.0
+        },
+        {
+          "source": 332251,
+          "cell_type": "C2",
+          "sign": -1,
+          "contacts": 24,
+          "initial": 0.11999999731779099,
+          "trained": 0.11999999731779099,
+          "arrivals": 0,
+          "on_trace_mean": 0.0,
+          "off_trace_mean": 0.0,
+          "on_active": 0,
+          "off_active": 0,
+          "updates": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "target_term": 0.0,
+          "prediction_penalty": 0.0
+        }
+      ]
+    }
+  ],
+  "spiking_neurons": 70,
+  "total_spikes": 24701
+}

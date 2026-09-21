@@ -688,3 +688,34 @@ Prior raw correlations did not establish incremental information beyond history.
 Source/checkpoint/model unchanged; final seeds untouched. All processes finished.
 Next action requires a new discussion/proposal about local target and circuit
 representation, not continuation of conditional GatesB/C. See GateA report.
+
+
+## Approved controlled moving-dot test (2026-09-20)
+
+User approved replacing full-Pong failure investigation with a bounded small
+controlled test. Added scripts/controlled_visual.py and seven regression tests.
+No production sensor, neuron or learning code changed. Fixed anatomy-only crop:
+nine retinal columns and measured two-hop return intermediates, induced graph
+112neurons/509edges. Original weights/signs/delays/pathways/dynamics/retinotopy.
+Bright dot, fixed rightward motion, random blank intervals; 200train/50eval
+traversals, seeds9001/9002, eight-tick primary horizon, original one-tick rule.
+
+First execution112.11sec. Review found missing continuous raw-state guards and
+misleading zero frozen eligibility arrays; regression tests resolve both. Same
+verified replay67.52sec, combined179.63sec<600sec. Forecasts/targets/spikes/arrivals/
+final weights bit-identical. No sweep. Raw states finite, weights bounded.
+205tests pass,4CUDA skips. Source unchanged; full traces saved locally at
+runs/controlled-visual-v1-verified; checksums and edge mapping in committed results.
+
+FAIL: trainedMSE.05772970, frozen.05782128, zero.05770341; stimulus control perfect.
+No useful event anticipation. Major test limitation: L3 has only inhibitory
+prediction inputs (all silent here), making positive OFF prediction impossible
+at this cell. L1's only inhibitory sourceC2 is silent. This crop is not a clean
+learning-capability test; sign support should have been checked before training.
+70neurons spike, so not whole-network silence. Target incoming proposal sums:
+ON-.12377/OFF+.11799/quiet-.45127. See controlled-visual-findings report.
+
+Stop bounded attempt. Next small test needs a measured motif with verified
+sign-compatible output and actual precursor response before target, checked
+with a short frozen preflight before any more training. No model changes,
+full-Pong runs or M1B advancement. M1A remains unmet. No experiments running.
