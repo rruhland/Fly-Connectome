@@ -652,3 +652,18 @@ edges,907 inhibitory); it was not used as a causal result or model-change basis.
 194 tests passed,4CUDA skips. Source checkpoints unchanged; final seeds untouched.
 See docs/experiments/2026-09-20-local-trace-horizon-findings.md. No remaining
 experiment processes; no architecture, target, signs or topology changes.
+
+## Proposed local confirmation window (2026-09-20)
+
+User asked to continue from the longer-horizon trace finding. Wrote concrete
+proposal2026-09-20-local-confirmation-window-proposal.md; no rule implementation.
+GateA: fixed three pairs, new development1103/1104,2000frames, local-history-
+stratified shuffles; stop if no incremental information or inadequate evidence.
+If approved and GateA passes: sensory predictive edges only,100ms first-event/
+expiry confirmation, stored issuing prediction/eligibility, fixed eta/H scaling,
+unchanged other visual rules/R-STDP/dynamics/signs/topology. Exact pending-state
+resume and one B1 CPU arm to10000frames, no automatic parameter search. Original
+next-tick metrics and final-seed/M1A gates remain intact. Written spec self-reviewed
+for causal ordering, deadline ties, zero-weight eligibility, no-event scoring,
+private state, schema compatibility, overhead and distinct acceptance semantics.
+Await approval under user's model-change boundary before implementing new rule.
