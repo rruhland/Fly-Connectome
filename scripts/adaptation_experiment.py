@@ -90,18 +90,23 @@ def benchmark():
             np.testing.assert_array_equal(r['spikes'],reference['spikes'])
             np.testing.assert_array_equal(r['target'],reference['target'])
     for name in KINDS:
-        n=make_network(crop,m,predictive_kinetics=KINDS[name])
-        with torch.profiler.profile(activities=[torch.profiler.ProfilerActivity.CPU],
-                profile_memory=True,record_shapes=True,with_stack=True) as prof:
-            run_sequence(n,crop,m,frames[:4],[target],learning=True,visual_schedule='frame-horizon-v1')
-        path=OUT/f'{name}-memory.json';prof.export_memory_timeline(str(path),device='cpu')
-        _,sizes=json.loads(path.read_text())
         metrics[name]=dict(seconds=times[name],median_seconds=float(np.median(times[name])),
-            frames=len(frames),profile_frames=4,tracked_cpu_tensor_peak_bytes=max(map(sum,sizes)))
+            frames=len(frames))
     save(OUT/'benchmark.json',dict(metrics=metrics,scope='3 rotated-order learning runs, warmup excluded; '
-        'zero learning rates preserve matched activity. Separate 4-frame CPU tensor profile includes '
-        'temporary tensors but excludes Python/NumPy/process memory; not a full-training peak.'))
+        'zero learning rates preserve matched activity. Memory profiling runs separately.'))
     print('Learning benchmark saved',flush=True)
+
+
+def memory(name):
+    # Isolated process: repeated timeline exports crashed the installed Torch C extension.
+    crop,m,_=load_model();m=dict(m,learning=dict(m['learning']))
+    for key in ['eta_prediction','eta_reward','homeostasis_rate']:m['learning'][key]=0
+    target=int(np.searchsorted(crop['graph'].body_ids,82450))
+    n=make_network(crop,m,predictive_kinetics=KINDS[name])
+    with torch.profiler.profile(activities=[torch.profiler.ProfilerActivity.CPU],
+            profile_memory=True,record_shapes=True,with_stack=True) as prof:
+        run_sequence(n,crop,m,oscillation(12)[:4],[target],learning=True,visual_schedule='frame-horizon-v1')
+    prof.export_memory_timeline(str(OUT/f'{name}-memory.json'),device='cpu')
 
 
 def evaluate(confirm=False):
@@ -152,9 +157,10 @@ def evaluate(confirm=False):
 
 
 if __name__=='__main__':
-    p=argparse.ArgumentParser(description=__doc__);p.add_argument('stage',choices=['preflight','benchmark','train-A','train-B','evaluate','confirm'])
+    p=argparse.ArgumentParser(description=__doc__);p.add_argument('stage',choices=['preflight','benchmark','memory-baseline','memory-A','memory-B','train-A','train-B','evaluate','confirm'])
     args=p.parse_args();torch.set_num_threads(1)
     if args.stage=='preflight':preflight()
     elif args.stage=='benchmark':benchmark()
+    elif args.stage.startswith('memory-'):memory(args.stage[7:])
     elif args.stage.startswith('train-'):train(args.stage[-1])
     else:evaluate(args.stage=='confirm')
