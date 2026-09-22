@@ -1,6 +1,6 @@
 # Proposed correction to STP target-comparison protocol
 
-Status: proposed, not applied. No new model mechanism or parameter change.
+Status: user approved; implementation underway. No new model mechanism or parameter change.
 
 ## Why the original guard stopped the experiment
 
