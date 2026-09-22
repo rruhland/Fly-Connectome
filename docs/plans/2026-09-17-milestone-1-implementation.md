@@ -997,3 +997,23 @@ eight neural ticks each; mean firing3.86Hz, max cell30.62Hz. Detailed local
 artifacts in runs/live-local-timing-v1, summarized by docs/experiments/
 2026-09-22-live-local-training.md. Test protocol frozen before heldout.
 Evaluation underway; do not tune on its results. Scope still experimental.
+
+## 2026-09-22: approved live learner, heldout conclusion
+
+Selected eta.1 tested against initial target weights on untouched 8-trial
+sequences at dwells2/3/4/6 and both continuous challenges. MSE improves vs
+initial and persistence throughout; unseen3 ON/OFF .667/.297 quiet2.93%; dwell2
+OFF .068 and dwell6 OFF .078 fail. Standard continuous whole ON/OFF .489/.165
+quiet .96%, but steady dwell6 ON is wrong-sign -.291, OFF .057. Omitted
+whole .510/.169 quiet1.27%; first two returning events missed, third ON wrong
+sign. Physical neural spikes differ between initial/trained on every challenge,
+showing coupled neural feedback. Update reconstruction max error1.18e-7;
+non-target weights unchanged. Exact signed input audit: steady dwell6 ON L2
+-.609, L1+.319 -> -.291; OFF L2+.057, L1~0 -> +.057. Training updates on
+same L2/L1 edges oppose across ON/OFF, while issue sensory sign separates
+167/168 ON and168/168 OFF. Full findings/results/audit in docs/experiments/
+2026-09-22-live-local-*; relevant suite69 passed. M1A remains unmet.
+Wrote docs/experiments/2026-09-22-context-efficacy-proposal.md for context-
+selected magnitudes and physically matched current on existing edges. Approval
+requested because this is a further architecture change, not covered by the
+previous shared-magnitude approval. No split production/model code written yet.
