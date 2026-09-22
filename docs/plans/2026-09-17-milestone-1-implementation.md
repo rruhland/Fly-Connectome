@@ -917,3 +917,15 @@ Stop polarity-only splitting as a standalone proposed fix for these histories;
 next direction must address temporal expression plus matching local credit.
 Findings: docs/experiments/2026-09-21-credit-capacity-findings.md.
 Raw artifacts: runs/credit-capacity-v1. M1A unmet; M1B blocked.
+
+### 2026-09-21: preserve split event-balanced amplitude, audit timing
+
+Reference coefficients/forecasts preserved verbatim. Phase profiles show strong
+next-polarity forecasts too early, plus blank carryover. A shared sensory-current
+window loses all events at2/3/4. Tempo-specific diagnostic windows retain100%of
+ON/OFF amplitude at2/4/6 with quiet alarms0.32/2.33/1.64%; unchanged with1%input
+perturbation. These require external tempo selection and are not neural gates.
+No model/checkpoint change.49relevant tests pass. Next diagnostic: causal local
+window calibration from past events only, before any architecture proposal.
+Findings: docs/experiments/2026-09-21-prediction-timing-findings.md.
+M1A remains unmet; no timing mechanism approved for implementation.

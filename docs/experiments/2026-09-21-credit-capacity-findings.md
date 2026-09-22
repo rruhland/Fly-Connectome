@@ -1,5 +1,7 @@
 # Frozen-history capacity: polarity splitting strengthens events but cannot meet the quiet limit
 
+Follow-up: [preserving event-balanced amplitude with temporal selection](2026-09-21-prediction-timing-findings.md). Tempo-specific diagnostic windows preserve amplitude; a shared window does not generalize.
+
 **Polarity-specific magnitudes alone are insufficient on the recorded frozen histories.** They can express much stronger ON and OFF forecasts, but cannot simultaneously satisfy the existing anticipation and quiet-alarm requirements. Corrected feasibility checks report no solution even when each training tempo gets its own context-split coefficients. Removing the quiet constraint produces a verified feasible control.
 
 This is a result about the specified frozen eligibility basis and coefficient bounds, not a proof that the recurrent connectome lacks capacity. No neural training, model rule change, checkpoint mutation or artificial prediction head was introduced. M1A remains unmet.
