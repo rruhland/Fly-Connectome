@@ -889,3 +889,17 @@ Counterfactual proposals only, not D/F training replay. Count accuracy concealed
 missed ON updates; event-balanced probe exposes existing polarity context.
 No model change. Relevant checks 10 passed; source hashes and +8 alignment verified.
 See docs/experiments/2026-09-21-credit-context-findings.md for limits and next audit.
+
+### 2026-09-21: credit replay and omission investigation completed
+
+24-trial baseline/F replays match saved prediction/target/spike/eligibility
+prefixes exactly. Actual selected proposals and synchronized weights verified.
+Four16-trial challenges (standard/omitted for each model) completed.36tests pass.
+The cue matches last observed polarity at all6122recorded issues. Recurrent ON/OFF
+update directions separate, but quiet directions remain mixed within each tag.
+Actual target column has one pixel; repeated polarity is impossible without an
+input mapping change, so that test was explicitly not run. First omission pair
+has identical forecast history and opposite corrections; not a causal failure.
+No production/model change. Findings: docs/experiments/2026-09-21-credit-replay-findings.md.
+Next proposed diagnostic: frozen-history capacity bound before changing plasticity.
+M1A remains unmet; M1B blocked. Raw artifacts: runs/credit-replay-v1.

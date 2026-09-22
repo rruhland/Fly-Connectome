@@ -1,0 +1,2989 @@
+{
+  "runs": {
+    "baseline-replay": {
+      "seconds": 16.86216850002529,
+      "frames": 1342,
+      "source_sha256": "6b518d9021c1dd7df8f1d4c4a5c8d28b043bde27a68262ef70162ced04cd7e53",
+      "runner_sha256": "9054fb44ad7d83402f0c4a8c8baa3dd6ca243b62592724ff5c43cf9eedc7e975",
+      "stimulus_sha256": "deed27b02d2209274dd10a088423329d9045d058c3f894057b802d2081aa1491",
+      "sha256": "3b6ac43d1e4666f9d1a862429770c02932f0ca48f4db7524c52dcc9c1a084edd",
+      "second_pixel": null,
+      "exact_replay": true,
+      "accumulator_max_error": 0.0,
+      "incoming_weights_initial": [
+        0.02500000037252903,
+        0.04500000178813934
+      ],
+      "incoming_weights_final": [
+        0.008866670541465282,
+        0.09156384319067001
+      ],
+      "metrics": {
+        "20655": {
+          "all": {
+            "ON": {
+              "count": 96,
+              "correct": 95,
+              "positive": 0,
+              "negative": 96,
+              "update_sum": -0.2443627483930324,
+              "absolute_update_sum": 0.2443627483930324
+            },
+            "OFF": {
+              "count": 96,
+              "correct": 96,
+              "positive": 96,
+              "negative": 0,
+              "update_sum": 0.10786917605765367,
+              "absolute_update_sum": 0.10786917605765367
+            },
+            "quiet": {
+              "count": 1144,
+              "correct": 684,
+              "positive": 449,
+              "negative": 695,
+              "update_sum": 0.08458104492224701,
+              "absolute_update_sum": 0.08545599344410147
+            }
+          },
+          "early": {
+            "ON": {
+              "count": 48,
+              "correct": 47,
+              "positive": 0,
+              "negative": 48,
+              "update_sum": -0.13174033367666294,
+              "absolute_update_sum": 0.13174033367666294
+            },
+            "OFF": {
+              "count": 48,
+              "correct": 48,
+              "positive": 48,
+              "negative": 0,
+              "update_sum": 0.05511987012064559,
+              "absolute_update_sum": 0.05511987012064559
+            },
+            "quiet": {
+              "count": 565,
+              "correct": 328,
+              "positive": 234,
+              "negative": 331,
+              "update_sum": 0.04396541888212027,
+              "absolute_update_sum": 0.04449271010320154
+            }
+          },
+          "late": {
+            "ON": {
+              "count": 48,
+              "correct": 48,
+              "positive": 0,
+              "negative": 48,
+              "update_sum": -0.11262241471636947,
+              "absolute_update_sum": 0.11262241471636947
+            },
+            "OFF": {
+              "count": 48,
+              "correct": 48,
+              "positive": 48,
+              "negative": 0,
+              "update_sum": 0.05274930593700808,
+              "absolute_update_sum": 0.05274930593700808
+            },
+            "quiet": {
+              "count": 579,
+              "correct": 356,
+              "positive": 215,
+              "negative": 364,
+              "update_sum": 0.04061562604012674,
+              "absolute_update_sum": 0.04096328334089992
+            }
+          },
+          "dwell2": {
+            "ON": {
+              "count": 36,
+              "correct": 36,
+              "positive": 0,
+              "negative": 36,
+              "update_sum": -0.017918232701436665,
+              "absolute_update_sum": 0.017918232701436665
+            },
+            "OFF": {
+              "count": 36,
+              "correct": 36,
+              "positive": 36,
+              "negative": 0,
+              "update_sum": 0.05986190842651418,
+              "absolute_update_sum": 0.05986190842651418
+            },
+            "quiet": {
+              "count": 279,
+              "correct": 209,
+              "positive": 90,
+              "negative": 189,
+              "update_sum": 0.010132144203441803,
+              "absolute_update_sum": 0.010216537015920643
+            }
+          },
+          "dwell4": {
+            "ON": {
+              "count": 32,
+              "correct": 31,
+              "positive": 0,
+              "negative": 32,
+              "update_sum": -0.12605152881238224,
+              "absolute_update_sum": 0.12605152881238224
+            },
+            "OFF": {
+              "count": 32,
+              "correct": 32,
+              "positive": 32,
+              "negative": 0,
+              "update_sum": 0.038316264083558815,
+              "absolute_update_sum": 0.038316264083558815
+            },
+            "quiet": {
+              "count": 383,
+              "correct": 236,
+              "positive": 164,
+              "negative": 219,
+              "update_sum": 0.027089247595141315,
+              "absolute_update_sum": 0.027608456899612367
+            }
+          },
+          "dwell6": {
+            "ON": {
+              "count": 28,
+              "correct": 28,
+              "positive": 0,
+              "negative": 28,
+              "update_sum": -0.1003929868792135,
+              "absolute_update_sum": 0.1003929868792135
+            },
+            "OFF": {
+              "count": 28,
+              "correct": 28,
+              "positive": 28,
+              "negative": 0,
+              "update_sum": 0.009691003547580679,
+              "absolute_update_sum": 0.009691003547580679
+            },
+            "quiet": {
+              "count": 482,
+              "correct": 239,
+              "positive": 195,
+              "negative": 287,
+              "update_sum": 0.047359653123663886,
+              "absolute_update_sum": 0.04763099952856846
+            }
+          }
+        },
+        "26550": {
+          "all": {
+            "ON": {
+              "count": 96,
+              "correct": 95,
+              "positive": 96,
+              "negative": 0,
+              "update_sum": 0.25021094462043697,
+              "absolute_update_sum": 0.25021094462043697
+            },
+            "OFF": {
+              "count": 96,
+              "correct": 96,
+              "positive": 0,
+              "negative": 96,
+              "update_sum": -0.039820920590348016,
+              "absolute_update_sum": 0.039820920590348016
+            },
+            "quiet": {
+              "count": 1147,
+              "correct": 687,
+              "positive": 695,
+              "negative": 452,
+              "update_sum": -0.16382611253319757,
+              "absolute_update_sum": 0.16388191561828358
+            }
+          },
+          "early": {
+            "ON": {
+              "count": 48,
+              "correct": 47,
+              "positive": 48,
+              "negative": 0,
+              "update_sum": 0.14368682921071302,
+              "absolute_update_sum": 0.14368682921071302
+            },
+            "OFF": {
+              "count": 48,
+              "correct": 48,
+              "positive": 0,
+              "negative": 48,
+              "update_sum": -0.01778544857975296,
+              "absolute_update_sum": 0.01778544857975296
+            },
+            "quiet": {
+              "count": 568,
+              "correct": 331,
+              "positive": 331,
+              "negative": 237,
+              "update_sum": -0.08560107103496398,
+              "absolute_update_sum": 0.08563421129169088
+            }
+          },
+          "late": {
+            "ON": {
+              "count": 48,
+              "correct": 48,
+              "positive": 48,
+              "negative": 0,
+              "update_sum": 0.10652411540972392,
+              "absolute_update_sum": 0.10652411540972392
+            },
+            "OFF": {
+              "count": 48,
+              "correct": 48,
+              "positive": 0,
+              "negative": 48,
+              "update_sum": -0.022035472010595053,
+              "absolute_update_sum": 0.022035472010595053
+            },
+            "quiet": {
+              "count": 579,
+              "correct": 356,
+              "positive": 364,
+              "negative": 215,
+              "update_sum": -0.07822504149823357,
+              "absolute_update_sum": 0.07824770432659268
+            }
+          },
+          "dwell2": {
+            "ON": {
+              "count": 36,
+              "correct": 36,
+              "positive": 36,
+              "negative": 0,
+              "update_sum": 0.019197895937503272,
+              "absolute_update_sum": 0.019197895937503272
+            },
+            "OFF": {
+              "count": 36,
+              "correct": 36,
+              "positive": 0,
+              "negative": 36,
+              "update_sum": -0.038656699820619894,
+              "absolute_update_sum": 0.038656699820619894
+            },
+            "quiet": {
+              "count": 279,
+              "correct": 209,
+              "positive": 189,
+              "negative": 90,
+              "update_sum": -0.02333477863820712,
+              "absolute_update_sum": 0.023340368919962558
+            }
+          },
+          "dwell4": {
+            "ON": {
+              "count": 32,
+              "correct": 31,
+              "positive": 32,
+              "negative": 0,
+              "update_sum": 0.1689729917482352,
+              "absolute_update_sum": 0.1689729917482352
+            },
+            "OFF": {
+              "count": 32,
+              "correct": 32,
+              "positive": 0,
+              "negative": 32,
+              "update_sum": -0.0011544770251428007,
+              "absolute_update_sum": 0.0011544770251428007
+            },
+            "quiet": {
+              "count": 386,
+              "correct": 239,
+              "positive": 219,
+              "negative": 167,
+              "update_sum": -0.05294290701731539,
+              "absolute_update_sum": 0.05298059357200815
+            }
+          },
+          "dwell6": {
+            "ON": {
+              "count": 28,
+              "correct": 28,
+              "positive": 28,
+              "negative": 0,
+              "update_sum": 0.06204005693469848,
+              "absolute_update_sum": 0.06204005693469848
+            },
+            "OFF": {
+              "count": 28,
+              "correct": 28,
+              "positive": 0,
+              "negative": 28,
+              "update_sum": -9.743744585320343e-06,
+              "absolute_update_sum": 9.743744585320343e-06
+            },
+            "quiet": {
+              "count": 482,
+              "correct": 239,
+              "positive": 287,
+              "negative": 195,
+              "update_sum": -0.08754842687767506,
+              "absolute_update_sum": 0.08756095312631285
+            }
+          }
+        }
+      }
+    },
+    "baseline-standard": {
+      "seconds": 10.839550599979702,
+      "frames": 861,
+      "source_sha256": "6b518d9021c1dd7df8f1d4c4a5c8d28b043bde27a68262ef70162ced04cd7e53",
+      "runner_sha256": "9054fb44ad7d83402f0c4a8c8baa3dd6ca243b62592724ff5c43cf9eedc7e975",
+      "stimulus_sha256": "e451ea84ba5cf703a0f904c83ebe3c6a7d3dc8b893ddab4844ba4031a0828532",
+      "sha256": "b75170bd962120ff39c089ac983e8984642d6468f9ab4f42610880e1bfd922ec",
+      "second_pixel": null,
+      "exact_replay": false,
+      "accumulator_max_error": 0.0,
+      "incoming_weights_initial": [
+        0.012119404040277004,
+        0.11073260754346848
+      ],
+      "incoming_weights_final": [
+        0.027701344341039658,
+        0.15601687133312225
+      ],
+      "metrics": {
+        "20655": {
+          "all": {
+            "ON": {
+              "count": 64,
+              "correct": 63,
+              "positive": 0,
+              "negative": 64,
+              "update_sum": -0.16807245407239735,
+              "absolute_update_sum": 0.16807245407239735
+            },
+            "OFF": {
+              "count": 64,
+              "correct": 64,
+              "positive": 64,
+              "negative": 0,
+              "update_sum": 0.07481704225970537,
+              "absolute_update_sum": 0.07481704225970537
+            },
+            "quiet": {
+              "count": 726,
+              "correct": 438,
+              "positive": 310,
+              "negative": 416,
+              "update_sum": 0.09117926362106293,
+              "absolute_update_sum": 0.09144473926957074
+            }
+          },
+          "early": {
+            "ON": {
+              "count": 32,
+              "correct": 31,
+              "positive": 0,
+              "negative": 32,
+              "update_sum": -0.10362328131828746,
+              "absolute_update_sum": 0.10362328131828746
+            },
+            "OFF": {
+              "count": 32,
+              "correct": 32,
+              "positive": 32,
+              "negative": 0,
+              "update_sum": 0.034222458197696815,
+              "absolute_update_sum": 0.034222458197696815
+            },
+            "quiet": {
+              "count": 415,
+              "correct": 245,
+              "positive": 180,
+              "negative": 235,
+              "update_sum": 0.04743082185416056,
+              "absolute_update_sum": 0.04750399992362675
+            }
+          },
+          "late": {
+            "ON": {
+              "count": 32,
+              "correct": 32,
+              "positive": 0,
+              "negative": 32,
+              "update_sum": -0.06444917275410988,
+              "absolute_update_sum": 0.06444917275410988
+            },
+            "OFF": {
+              "count": 32,
+              "correct": 32,
+              "positive": 32,
+              "negative": 0,
+              "update_sum": 0.040594584062008554,
+              "absolute_update_sum": 0.040594584062008554
+            },
+            "quiet": {
+              "count": 311,
+              "correct": 193,
+              "positive": 130,
+              "negative": 181,
+              "update_sum": 0.043748441766902374,
+              "absolute_update_sum": 0.043940739345943974
+            }
+          },
+          "dwell2": {
+            "ON": {
+              "count": 16,
+              "correct": 16,
+              "positive": 0,
+              "negative": 16,
+              "update_sum": -0.007957367828766881,
+              "absolute_update_sum": 0.007957367828766881
+            },
+            "OFF": {
+              "count": 16,
+              "correct": 16,
+              "positive": 16,
+              "negative": 0,
+              "update_sum": 0.026727929784874038,
+              "absolute_update_sum": 0.026727929784874038
+            },
+            "quiet": {
+              "count": 133,
+              "correct": 99,
+              "positive": 42,
+              "negative": 91,
+              "update_sum": 0.0084206666223419,
+              "absolute_update_sum": 0.008535918682114084
+            }
+          },
+          "dwell3": {
+            "ON": {
+              "count": 16,
+              "correct": 16,
+              "positive": 0,
+              "negative": 16,
+              "update_sum": -0.04173305010024109,
+              "absolute_update_sum": 0.04173305010024109
+            },
+            "OFF": {
+              "count": 16,
+              "correct": 16,
+              "positive": 16,
+              "negative": 0,
+              "update_sum": 0.02426592672411587,
+              "absolute_update_sum": 0.02426592672411587
+            },
+            "quiet": {
+              "count": 142,
+              "correct": 103,
+              "positive": 55,
+              "negative": 87,
+              "update_sum": 0.015849856806477103,
+              "absolute_update_sum": 0.015905818635884916
+            }
+          },
+          "dwell4": {
+            "ON": {
+              "count": 16,
+              "correct": 15,
+              "positive": 0,
+              "negative": 16,
+              "update_sum": -0.06067059822773957,
+              "absolute_update_sum": 0.06067059822773957
+            },
+            "OFF": {
+              "count": 16,
+              "correct": 16,
+              "positive": 16,
+              "negative": 0,
+              "update_sum": 0.018566145044530524,
+              "absolute_update_sum": 0.018566145044530524
+            },
+            "quiet": {
+              "count": 189,
+              "correct": 119,
+              "positive": 84,
+              "negative": 105,
+              "update_sum": 0.021672307203883398,
+              "absolute_update_sum": 0.02173194566239807
+            }
+          },
+          "dwell6": {
+            "ON": {
+              "count": 16,
+              "correct": 16,
+              "positive": 0,
+              "negative": 16,
+              "update_sum": -0.05771143791564981,
+              "absolute_update_sum": 0.05771143791564981
+            },
+            "OFF": {
+              "count": 16,
+              "correct": 16,
+              "positive": 16,
+              "negative": 0,
+              "update_sum": 0.0052570407061849345,
+              "absolute_update_sum": 0.0052570407061849345
+            },
+            "quiet": {
+              "count": 262,
+              "correct": 117,
+              "positive": 129,
+              "negative": 133,
+              "update_sum": 0.045236432988360525,
+              "absolute_update_sum": 0.04527105628917366
+            }
+          }
+        },
+        "26550": {
+          "all": {
+            "ON": {
+              "count": 64,
+              "correct": 63,
+              "positive": 64,
+              "negative": 0,
+              "update_sum": 0.22872217675129383,
+              "absolute_update_sum": 0.22872217675129383
+            },
+            "OFF": {
+              "count": 64,
+              "correct": 64,
+              "positive": 0,
+              "negative": 64,
+              "update_sum": -0.01958180200401908,
+              "absolute_update_sum": 0.01958180200401908
+            },
+            "quiet": {
+              "count": 729,
+              "correct": 441,
+              "positive": 416,
+              "negative": 313,
+              "update_sum": -0.16385614079649222,
+              "absolute_update_sum": 0.1638613638313286
+            }
+          },
+          "early": {
+            "ON": {
+              "count": 32,
+              "correct": 31,
+              "positive": 32,
+              "negative": 0,
+              "update_sum": 0.12944582321897813,
+              "absolute_update_sum": 0.12944582321897813
+            },
+            "OFF": {
+              "count": 32,
+              "correct": 32,
+              "positive": 0,
+              "negative": 32,
+              "update_sum": -0.004748408817775666,
+              "absolute_update_sum": 0.004748408817775666
+            },
+            "quiet": {
+              "count": 418,
+              "correct": 248,
+              "positive": 235,
+              "negative": 183,
+              "update_sum": -0.08312160162227344,
+              "absolute_update_sum": 0.08312245417121902
+            }
+          },
+          "late": {
+            "ON": {
+              "count": 32,
+              "correct": 32,
+              "positive": 32,
+              "negative": 0,
+              "update_sum": 0.09927635353231569,
+              "absolute_update_sum": 0.09927635353231569
+            },
+            "OFF": {
+              "count": 32,
+              "correct": 32,
+              "positive": 0,
+              "negative": 32,
+              "update_sum": -0.014833393186243413,
+              "absolute_update_sum": 0.014833393186243413
+            },
+            "quiet": {
+              "count": 311,
+              "correct": 193,
+              "positive": 181,
+              "negative": 130,
+              "update_sum": -0.0807345391742188,
+              "absolute_update_sum": 0.08073890966010955
+            }
+          },
+          "dwell2": {
+            "ON": {
+              "count": 16,
+              "correct": 16,
+              "positive": 16,
+              "negative": 0,
+              "update_sum": 0.01738068150787424,
+              "absolute_update_sum": 0.01738068150787424
+            },
+            "OFF": {
+              "count": 16,
+              "correct": 16,
+              "positive": 0,
+              "negative": 16,
+              "update_sum": -0.01621441904138521,
+              "absolute_update_sum": 0.01621441904138521
+            },
+            "quiet": {
+              "count": 133,
+              "correct": 99,
+              "positive": 91,
+              "negative": 42,
+              "update_sum": -0.01647979955622643,
+              "absolute_update_sum": 0.016482364405001212
+            }
+          },
+          "dwell3": {
+            "ON": {
+              "count": 16,
+              "correct": 16,
+              "positive": 16,
+              "negative": 0,
+              "update_sum": 0.08720458305415654,
+              "absolute_update_sum": 0.08720458305415654
+            },
+            "OFF": {
+              "count": 16,
+              "correct": 16,
+              "positive": 0,
+              "negative": 16,
+              "update_sum": -0.0029155041924978416,
+              "absolute_update_sum": 0.0029155041924978416
+            },
+            "quiet": {
+              "count": 142,
+              "correct": 103,
+              "positive": 87,
+              "negative": 55,
+              "update_sum": -0.02801704825874,
+              "absolute_update_sum": 0.02801863972028314
+            }
+          },
+          "dwell4": {
+            "ON": {
+              "count": 16,
+              "correct": 15,
+              "positive": 16,
+              "negative": 0,
+              "update_sum": 0.08084714647366398,
+              "absolute_update_sum": 0.08084714647366398
+            },
+            "OFF": {
+              "count": 16,
+              "correct": 16,
+              "positive": 0,
+              "negative": 16,
+              "update_sum": -0.0004492243033243391,
+              "absolute_update_sum": 0.0004492243033243391
+            },
+            "quiet": {
+              "count": 192,
+              "correct": 122,
+              "positive": 105,
+              "negative": 87,
+              "update_sum": -0.03959536264337808,
+              "absolute_update_sum": 0.039596061756460535
+            }
+          },
+          "dwell6": {
+            "ON": {
+              "count": 16,
+              "correct": 16,
+              "positive": 16,
+              "negative": 0,
+              "update_sum": 0.043289765715599074,
+              "absolute_update_sum": 0.043289765715599074
+            },
+            "OFF": {
+              "count": 16,
+              "correct": 16,
+              "positive": 0,
+              "negative": 16,
+              "update_sum": -2.654466811691237e-06,
+              "absolute_update_sum": 2.654466811691237e-06
+            },
+            "quiet": {
+              "count": 262,
+              "correct": 117,
+              "positive": 133,
+              "negative": 129,
+              "update_sum": -0.07976393033814771,
+              "absolute_update_sum": 0.07976429794958369
+            }
+          }
+        }
+      }
+    },
+    "baseline-omitted": {
+      "seconds": 11.83622800000012,
+      "frames": 861,
+      "source_sha256": "6b518d9021c1dd7df8f1d4c4a5c8d28b043bde27a68262ef70162ced04cd7e53",
+      "runner_sha256": "9054fb44ad7d83402f0c4a8c8baa3dd6ca243b62592724ff5c43cf9eedc7e975",
+      "stimulus_sha256": "b4b054b29626a1255f9cb3c06e1ff54bd3d4295a7da5ad2c1d594cd3ed85cfcd",
+      "sha256": "b070cf6608abd3192dbcaa71495a3a6b216f0872ca2a2fbf549b0b7112206ab9",
+      "second_pixel": null,
+      "exact_replay": false,
+      "accumulator_max_error": 0.0,
+      "incoming_weights_initial": [
+        0.012119404040277004,
+        0.11073260754346848
+      ],
+      "incoming_weights_final": [
+        0.023600531741976738,
+        0.08566377311944962
+      ],
+      "metrics": {
+        "20655": {
+          "all": {
+            "ON": {
+              "count": 48,
+              "correct": 47,
+              "positive": 0,
+              "negative": 48,
+              "update_sum": -0.07434834761825715,
+              "absolute_update_sum": 0.07434834761825715
+            },
+            "OFF": {
+              "count": 48,
+              "correct": 48,
+              "positive": 48,
+              "negative": 0,
+              "update_sum": 0.03347698967453763,
+              "absolute_update_sum": 0.03347698967453763
+            },
+            "quiet": {
+              "count": 758,
+              "correct": 433,
+              "positive": 247,
+              "negative": 511,
+              "update_sum": 0.05235249807650527,
+              "absolute_update_sum": 0.05303425906657443
+            }
+          },
+          "early": {
+            "ON": {
+              "count": 24,
+              "correct": 23,
+              "positive": 0,
+              "negative": 24,
+              "update_sum": -0.04188997484776524,
+              "absolute_update_sum": 0.04188997484776524
+            },
+            "OFF": {
+              "count": 24,
+              "correct": 24,
+              "positive": 24,
+              "negative": 0,
+              "update_sum": 0.013364705459053022,
+              "absolute_update_sum": 0.013364705459053022
+            },
+            "quiet": {
+              "count": 431,
+              "correct": 238,
+              "positive": 140,
+              "negative": 291,
+              "update_sum": 0.03185677303637938,
+              "absolute_update_sum": 0.03216479255580551
+            }
+          },
+          "late": {
+            "ON": {
+              "count": 24,
+              "correct": 24,
+              "positive": 0,
+              "negative": 24,
+              "update_sum": -0.032458372770491906,
+              "absolute_update_sum": 0.032458372770491906
+            },
+            "OFF": {
+              "count": 24,
+              "correct": 24,
+              "positive": 24,
+              "negative": 0,
+              "update_sum": 0.02011228421548461,
+              "absolute_update_sum": 0.02011228421548461
+            },
+            "quiet": {
+              "count": 327,
+              "correct": 195,
+              "positive": 107,
+              "negative": 220,
+              "update_sum": 0.020495725040125895,
+              "absolute_update_sum": 0.020869466510768923
+            }
+          },
+          "dwell2": {
+            "ON": {
+              "count": 12,
+              "correct": 12,
+              "positive": 0,
+              "negative": 12,
+              "update_sum": -0.015447724356428383,
+              "absolute_update_sum": 0.015447724356428383
+            },
+            "OFF": {
+              "count": 12,
+              "correct": 12,
+              "positive": 12,
+              "negative": 0,
+              "update_sum": 0.01644502723278385,
+              "absolute_update_sum": 0.01644502723278385
+            },
+            "quiet": {
+              "count": 141,
+              "correct": 109,
+              "positive": 36,
+              "negative": 105,
+              "update_sum": 0.00419966850641759,
+              "absolute_update_sum": 0.004328147286186497
+            }
+          },
+          "dwell3": {
+            "ON": {
+              "count": 12,
+              "correct": 12,
+              "positive": 0,
+              "negative": 12,
+              "update_sum": -0.015830049450158867,
+              "absolute_update_sum": 0.015830049450158867
+            },
+            "OFF": {
+              "count": 12,
+              "correct": 12,
+              "positive": 12,
+              "negative": 0,
+              "update_sum": 0.008033035095010632,
+              "absolute_update_sum": 0.008033035095010632
+            },
+            "quiet": {
+              "count": 150,
+              "correct": 90,
+              "positive": 50,
+              "negative": 100,
+              "update_sum": 0.0063873977706876695,
+              "absolute_update_sum": 0.006544916865003331
+            }
+          },
+          "dwell4": {
+            "ON": {
+              "count": 12,
+              "correct": 11,
+              "positive": 0,
+              "negative": 12,
+              "update_sum": -0.022671526681862897,
+              "absolute_update_sum": 0.022671526681862897
+            },
+            "OFF": {
+              "count": 12,
+              "correct": 12,
+              "positive": 12,
+              "negative": 0,
+              "update_sum": 0.006597452349882543,
+              "absolute_update_sum": 0.006597452349882543
+            },
+            "quiet": {
+              "count": 197,
+              "correct": 103,
+              "positive": 66,
+              "negative": 131,
+              "update_sum": 0.015883864970252393,
+              "absolute_update_sum": 0.016032622577991883
+            }
+          },
+          "dwell6": {
+            "ON": {
+              "count": 12,
+              "correct": 12,
+              "positive": 0,
+              "negative": 12,
+              "update_sum": -0.020399047129807002,
+              "absolute_update_sum": 0.020399047129807002
+            },
+            "OFF": {
+              "count": 12,
+              "correct": 12,
+              "positive": 12,
+              "negative": 0,
+              "update_sum": 0.0024014749968606086,
+              "absolute_update_sum": 0.0024014749968606086
+            },
+            "quiet": {
+              "count": 270,
+              "correct": 131,
+              "positive": 95,
+              "negative": 175,
+              "update_sum": 0.02588156682914762,
+              "absolute_update_sum": 0.02612857233739272
+            }
+          }
+        },
+        "26550": {
+          "all": {
+            "ON": {
+              "count": 48,
+              "correct": 47,
+              "positive": 48,
+              "negative": 0,
+              "update_sum": 0.07122224938710733,
+              "absolute_update_sum": 0.07122224938710733
+            },
+            "OFF": {
+              "count": 48,
+              "correct": 48,
+              "positive": 0,
+              "negative": 48,
+              "update_sum": -0.007967000089132578,
+              "absolute_update_sum": 0.007967000089132578
+            },
+            "quiet": {
+              "count": 761,
+              "correct": 436,
+              "positive": 511,
+              "negative": 250,
+              "update_sum": -0.08832401200989938,
+              "absolute_update_sum": 0.08836183369809406
+            }
+          },
+          "early": {
+            "ON": {
+              "count": 24,
+              "correct": 23,
+              "positive": 24,
+              "negative": 0,
+              "update_sum": 0.04883989601796744,
+              "absolute_update_sum": 0.04883989601796744
+            },
+            "OFF": {
+              "count": 24,
+              "correct": 24,
+              "positive": 0,
+              "negative": 24,
+              "update_sum": -0.0014529228922372911,
+              "absolute_update_sum": 0.0014529228922372911
+            },
+            "quiet": {
+              "count": 434,
+              "correct": 241,
+              "positive": 291,
+              "negative": 143,
+              "update_sum": -0.052496155985205906,
+              "absolute_update_sum": 0.05250778525271903
+            }
+          },
+          "late": {
+            "ON": {
+              "count": 24,
+              "correct": 24,
+              "positive": 24,
+              "negative": 0,
+              "update_sum": 0.02238235336913989,
+              "absolute_update_sum": 0.02238235336913989
+            },
+            "OFF": {
+              "count": 24,
+              "correct": 24,
+              "positive": 0,
+              "negative": 24,
+              "update_sum": -0.006514077196895286,
+              "absolute_update_sum": 0.006514077196895286
+            },
+            "quiet": {
+              "count": 327,
+              "correct": 195,
+              "positive": 220,
+              "negative": 107,
+              "update_sum": -0.03582785602469348,
+              "absolute_update_sum": 0.03585404844537502
+            }
+          },
+          "dwell2": {
+            "ON": {
+              "count": 12,
+              "correct": 12,
+              "positive": 12,
+              "negative": 0,
+              "update_sum": 0.01022563643901021,
+              "absolute_update_sum": 0.01022563643901021
+            },
+            "OFF": {
+              "count": 12,
+              "correct": 12,
+              "positive": 0,
+              "negative": 12,
+              "update_sum": -0.007284723572274859,
+              "absolute_update_sum": 0.007284723572274859
+            },
+            "quiet": {
+              "count": 141,
+              "correct": 109,
+              "positive": 105,
+              "negative": 36,
+              "update_sum": -0.0077039698146960595,
+              "absolute_update_sum": 0.00771389322808897
+            }
+          },
+          "dwell3": {
+            "ON": {
+              "count": 12,
+              "correct": 12,
+              "positive": 12,
+              "negative": 0,
+              "update_sum": 0.0144498155808316,
+              "absolute_update_sum": 0.0144498155808316
+            },
+            "OFF": {
+              "count": 12,
+              "correct": 12,
+              "positive": 0,
+              "negative": 12,
+              "update_sum": -0.0005084415949383981,
+              "absolute_update_sum": 0.0005084415949383981
+            },
+            "quiet": {
+              "count": 150,
+              "correct": 90,
+              "positive": 100,
+              "negative": 50,
+              "update_sum": -0.009620393755268032,
+              "absolute_update_sum": 0.009629531313793615
+            }
+          },
+          "dwell4": {
+            "ON": {
+              "count": 12,
+              "correct": 11,
+              "positive": 12,
+              "negative": 0,
+              "update_sum": 0.029698627321751502,
+              "absolute_update_sum": 0.029698627321751502
+            },
+            "OFF": {
+              "count": 12,
+              "correct": 12,
+              "positive": 0,
+              "negative": 12,
+              "update_sum": -0.00016932798270292857,
+              "absolute_update_sum": 0.00016932798270292857
+            },
+            "quiet": {
+              "count": 200,
+              "correct": 106,
+              "positive": 131,
+              "negative": 69,
+              "update_sum": -0.02827635502587801,
+              "absolute_update_sum": 0.028281471651314213
+            }
+          },
+          "dwell6": {
+            "ON": {
+              "count": 12,
+              "correct": 12,
+              "positive": 12,
+              "negative": 0,
+              "update_sum": 0.01684817004551402,
+              "absolute_update_sum": 0.01684817004551402
+            },
+            "OFF": {
+              "count": 12,
+              "correct": 12,
+              "positive": 0,
+              "negative": 12,
+              "update_sum": -4.506939216391394e-06,
+              "absolute_update_sum": 4.506939216391394e-06
+            },
+            "quiet": {
+              "count": 270,
+              "correct": 131,
+              "positive": 175,
+              "negative": 95,
+              "update_sum": -0.042723293414057284,
+              "absolute_update_sum": 0.04273693750489725
+            }
+          }
+        }
+      }
+    },
+    "F-replay": {
+      "seconds": 18.993794600013644,
+      "frames": 1342,
+      "source_sha256": "a2f765635484b9ea750b6785781c10a74662fb17a57729b6d638cba642713cb3",
+      "runner_sha256": "9054fb44ad7d83402f0c4a8c8baa3dd6ca243b62592724ff5c43cf9eedc7e975",
+      "stimulus_sha256": "deed27b02d2209274dd10a088423329d9045d058c3f894057b802d2081aa1491",
+      "sha256": "9cb5b32663b57534dd4913dc52826de8b882ebb1ffd1f2bc0b94d070d4e465bf",
+      "second_pixel": null,
+      "exact_replay": true,
+      "accumulator_max_error": 0.0,
+      "incoming_weights_initial": [
+        0.02500000037252903,
+        0.04500000178813934
+      ],
+      "incoming_weights_final": [
+        0.015348442830145359,
+        0.06989501416683197
+      ],
+      "metrics": {
+        "20655": {
+          "all": {
+            "ON": {
+              "count": 96,
+              "correct": 95,
+              "positive": 0,
+              "negative": 96,
+              "update_sum": -0.4041008183733005,
+              "absolute_update_sum": 0.4041008183733005
+            },
+            "OFF": {
+              "count": 96,
+              "correct": 96,
+              "positive": 96,
+              "negative": 0,
+              "update_sum": 0.16751351473812504,
+              "absolute_update_sum": 0.16751351473812504
+            },
+            "quiet": {
+              "count": 1144,
+              "correct": 688,
+              "positive": 399,
+              "negative": 745,
+              "update_sum": 0.17581256574065482,
+              "absolute_update_sum": 0.18089817752424095
+            }
+          },
+          "early": {
+            "ON": {
+              "count": 48,
+              "correct": 47,
+              "positive": 0,
+              "negative": 48,
+              "update_sum": -0.21647567016280622,
+              "absolute_update_sum": 0.21647567016280622
+            },
+            "OFF": {
+              "count": 48,
+              "correct": 48,
+              "positive": 48,
+              "negative": 0,
+              "update_sum": 0.08700945578854957,
+              "absolute_update_sum": 0.08700945578854957
+            },
+            "quiet": {
+              "count": 565,
+              "correct": 327,
+              "positive": 211,
+              "negative": 354,
+              "update_sum": 0.10512074847325692,
+              "absolute_update_sum": 0.10757010800416714
+            }
+          },
+          "late": {
+            "ON": {
+              "count": 48,
+              "correct": 48,
+              "positive": 0,
+              "negative": 48,
+              "update_sum": -0.18762514821049425,
+              "absolute_update_sum": 0.18762514821049425
+            },
+            "OFF": {
+              "count": 48,
+              "correct": 48,
+              "positive": 48,
+              "negative": 0,
+              "update_sum": 0.08050405894957546,
+              "absolute_update_sum": 0.08050405894957546
+            },
+            "quiet": {
+              "count": 579,
+              "correct": 361,
+              "positive": 188,
+              "negative": 391,
+              "update_sum": 0.0706918172673979,
+              "absolute_update_sum": 0.07332806952007381
+            }
+          },
+          "dwell2": {
+            "ON": {
+              "count": 36,
+              "correct": 36,
+              "positive": 0,
+              "negative": 36,
+              "update_sum": -0.02360977243125184,
+              "absolute_update_sum": 0.02360977243125184
+            },
+            "OFF": {
+              "count": 36,
+              "correct": 36,
+              "positive": 36,
+              "negative": 0,
+              "update_sum": 0.08484138815596509,
+              "absolute_update_sum": 0.08484138815596509
+            },
+            "quiet": {
+              "count": 279,
+              "correct": 228,
+              "positive": 71,
+              "negative": 208,
+              "update_sum": 0.01670316487390932,
+              "absolute_update_sum": 0.0175453414952777
+            }
+          },
+          "dwell4": {
+            "ON": {
+              "count": 32,
+              "correct": 31,
+              "positive": 0,
+              "negative": 32,
+              "update_sum": -0.20569101164313708,
+              "absolute_update_sum": 0.20569101164313708
+            },
+            "OFF": {
+              "count": 32,
+              "correct": 32,
+              "positive": 32,
+              "negative": 0,
+              "update_sum": 0.06574619980080743,
+              "absolute_update_sum": 0.06574619980080743
+            },
+            "quiet": {
+              "count": 383,
+              "correct": 232,
+              "positive": 150,
+              "negative": 233,
+              "update_sum": 0.06056904658130452,
+              "absolute_update_sum": 0.06295538850285663
+            }
+          },
+          "dwell6": {
+            "ON": {
+              "count": 28,
+              "correct": 28,
+              "positive": 0,
+              "negative": 28,
+              "update_sum": -0.17480003429891156,
+              "absolute_update_sum": 0.17480003429891156
+            },
+            "OFF": {
+              "count": 28,
+              "correct": 28,
+              "positive": 28,
+              "negative": 0,
+              "update_sum": 0.01692592678135252,
+              "absolute_update_sum": 0.01692592678135252
+            },
+            "quiet": {
+              "count": 482,
+              "correct": 228,
+              "positive": 178,
+              "negative": 304,
+              "update_sum": 0.09854035428544097,
+              "absolute_update_sum": 0.10039744752610663
+            }
+          }
+        },
+        "26550": {
+          "all": {
+            "ON": {
+              "count": 96,
+              "correct": 95,
+              "positive": 96,
+              "negative": 0,
+              "update_sum": 0.42863414075815987,
+              "absolute_update_sum": 0.42863414075815987
+            },
+            "OFF": {
+              "count": 96,
+              "correct": 96,
+              "positive": 0,
+              "negative": 96,
+              "update_sum": -0.05758704800081502,
+              "absolute_update_sum": 0.05758704800081502
+            },
+            "quiet": {
+              "count": 1148,
+              "correct": 691,
+              "positive": 746,
+              "negative": 402,
+              "update_sum": -0.3461520225039406,
+              "absolute_update_sum": 0.3468707479275851
+            }
+          },
+          "early": {
+            "ON": {
+              "count": 48,
+              "correct": 47,
+              "positive": 48,
+              "negative": 0,
+              "update_sum": 0.2444283251148422,
+              "absolute_update_sum": 0.2444283251148422
+            },
+            "OFF": {
+              "count": 48,
+              "correct": 48,
+              "positive": 0,
+              "negative": 48,
+              "update_sum": -0.02578917118948557,
+              "absolute_update_sum": 0.02578917118948557
+            },
+            "quiet": {
+              "count": 569,
+              "correct": 330,
+              "positive": 355,
+              "negative": 214,
+              "update_sum": -0.20602103179329298,
+              "absolute_update_sum": 0.20623960396719646
+            }
+          },
+          "late": {
+            "ON": {
+              "count": 48,
+              "correct": 48,
+              "positive": 48,
+              "negative": 0,
+              "update_sum": 0.18420581564331773,
+              "absolute_update_sum": 0.18420581564331773
+            },
+            "OFF": {
+              "count": 48,
+              "correct": 48,
+              "positive": 0,
+              "negative": 48,
+              "update_sum": -0.03179787681132946,
+              "absolute_update_sum": 0.03179787681132946
+            },
+            "quiet": {
+              "count": 579,
+              "correct": 361,
+              "positive": 391,
+              "negative": 188,
+              "update_sum": -0.14013099071064766,
+              "absolute_update_sum": 0.14063114396038862
+            }
+          },
+          "dwell2": {
+            "ON": {
+              "count": 36,
+              "correct": 36,
+              "positive": 36,
+              "negative": 0,
+              "update_sum": 0.028867321458905103,
+              "absolute_update_sum": 0.028867321458905103
+            },
+            "OFF": {
+              "count": 36,
+              "correct": 36,
+              "positive": 0,
+              "negative": 36,
+              "update_sum": -0.055501204391826146,
+              "absolute_update_sum": 0.055501204391826146
+            },
+            "quiet": {
+              "count": 279,
+              "correct": 228,
+              "positive": 208,
+              "negative": 71,
+              "update_sum": -0.039409264139132164,
+              "absolute_update_sum": 0.039522548427849385
+            }
+          },
+          "dwell4": {
+            "ON": {
+              "count": 32,
+              "correct": 31,
+              "positive": 32,
+              "negative": 0,
+              "update_sum": 0.28746560024563755,
+              "absolute_update_sum": 0.28746560024563755
+            },
+            "OFF": {
+              "count": 32,
+              "correct": 32,
+              "positive": 0,
+              "negative": 32,
+              "update_sum": -0.002068448377762204,
+              "absolute_update_sum": 0.002068448377762204
+            },
+            "quiet": {
+              "count": 387,
+              "correct": 235,
+              "positive": 234,
+              "negative": 153,
+              "update_sum": -0.11574026216142025,
+              "absolute_update_sum": 0.11620716674917736
+            }
+          },
+          "dwell6": {
+            "ON": {
+              "count": 28,
+              "correct": 28,
+              "positive": 28,
+              "negative": 0,
+              "update_sum": 0.11230121905361724,
+              "absolute_update_sum": 0.11230121905361724
+            },
+            "OFF": {
+              "count": 28,
+              "correct": 28,
+              "positive": 0,
+              "negative": 28,
+              "update_sum": -1.739523122667644e-05,
+              "absolute_update_sum": 1.739523122667644e-05
+            },
+            "quiet": {
+              "count": 482,
+              "correct": 228,
+              "positive": 304,
+              "negative": 178,
+              "update_sum": -0.19100249620338822,
+              "absolute_update_sum": 0.19114103275055833
+            }
+          }
+        }
+      }
+    },
+    "F-standard": {
+      "seconds": 12.377165800018702,
+      "frames": 861,
+      "source_sha256": "a2f765635484b9ea750b6785781c10a74662fb17a57729b6d638cba642713cb3",
+      "runner_sha256": "9054fb44ad7d83402f0c4a8c8baa3dd6ca243b62592724ff5c43cf9eedc7e975",
+      "stimulus_sha256": "e451ea84ba5cf703a0f904c83ebe3c6a7d3dc8b893ddab4844ba4031a0828532",
+      "sha256": "6fcbe6df5282e08ffcc71126f5583833dc5cfc89cbecb1efb573931920918717",
+      "second_pixel": null,
+      "exact_replay": false,
+      "accumulator_max_error": 0.0,
+      "incoming_weights_initial": [
+        0.014316361397504807,
+        0.049295760691165924
+      ],
+      "incoming_weights_final": [
+        0.051236290484666824,
+        0.10111263394355774
+      ],
+      "metrics": {
+        "20655": {
+          "all": {
+            "ON": {
+              "count": 64,
+              "correct": 63,
+              "positive": 0,
+              "negative": 64,
+              "update_sum": -0.2747996102901926,
+              "absolute_update_sum": 0.2747996102901926
+            },
+            "OFF": {
+              "count": 64,
+              "correct": 64,
+              "positive": 64,
+              "negative": 0,
+              "update_sum": 0.11752559530122286,
+              "absolute_update_sum": 0.11752559530122286
+            },
+            "quiet": {
+              "count": 727,
+              "correct": 451,
+              "positive": 261,
+              "negative": 466,
+              "update_sum": 0.16103451097255922,
+              "absolute_update_sum": 0.16441940671009986
+            }
+          },
+          "early": {
+            "ON": {
+              "count": 32,
+              "correct": 31,
+              "positive": 0,
+              "negative": 32,
+              "update_sum": -0.1721908473089544,
+              "absolute_update_sum": 0.1721908473089544
+            },
+            "OFF": {
+              "count": 32,
+              "correct": 32,
+              "positive": 32,
+              "negative": 0,
+              "update_sum": 0.05605168033423413,
+              "absolute_update_sum": 0.05605168033423413
+            },
+            "quiet": {
+              "count": 416,
+              "correct": 249,
+              "positive": 160,
+              "negative": 256,
+              "update_sum": 0.0855168094967164,
+              "absolute_update_sum": 0.08600332918639648
+            }
+          },
+          "late": {
+            "ON": {
+              "count": 32,
+              "correct": 32,
+              "positive": 0,
+              "negative": 32,
+              "update_sum": -0.10260876298123822,
+              "absolute_update_sum": 0.10260876298123822
+            },
+            "OFF": {
+              "count": 32,
+              "correct": 32,
+              "positive": 32,
+              "negative": 0,
+              "update_sum": 0.06147391496698873,
+              "absolute_update_sum": 0.06147391496698873
+            },
+            "quiet": {
+              "count": 311,
+              "correct": 202,
+              "positive": 101,
+              "negative": 210,
+              "update_sum": 0.07551770147584283,
+              "absolute_update_sum": 0.07841607752370337
+            }
+          },
+          "dwell2": {
+            "ON": {
+              "count": 16,
+              "correct": 16,
+              "positive": 0,
+              "negative": 16,
+              "update_sum": -0.010539754441001303,
+              "absolute_update_sum": 0.010539754441001303
+            },
+            "OFF": {
+              "count": 16,
+              "correct": 16,
+              "positive": 16,
+              "negative": 0,
+              "update_sum": 0.03770142519975894,
+              "absolute_update_sum": 0.03770142519975894
+            },
+            "quiet": {
+              "count": 133,
+              "correct": 112,
+              "positive": 29,
+              "negative": 104,
+              "update_sum": 0.01112023379583519,
+              "absolute_update_sum": 0.012314691297704315
+            }
+          },
+          "dwell3": {
+            "ON": {
+              "count": 16,
+              "correct": 16,
+              "positive": 0,
+              "negative": 16,
+              "update_sum": -0.06289965263887609,
+              "absolute_update_sum": 0.06289965263887609
+            },
+            "OFF": {
+              "count": 16,
+              "correct": 16,
+              "positive": 16,
+              "negative": 0,
+              "update_sum": 0.038809494690784874,
+              "absolute_update_sum": 0.038809494690784874
+            },
+            "quiet": {
+              "count": 142,
+              "correct": 107,
+              "positive": 43,
+              "negative": 99,
+              "update_sum": 0.02741925187186435,
+              "absolute_update_sum": 0.028452877719670408
+            }
+          },
+          "dwell4": {
+            "ON": {
+              "count": 16,
+              "correct": 15,
+              "positive": 0,
+              "negative": 16,
+              "update_sum": -0.10111594853744932,
+              "absolute_update_sum": 0.10111594853744932
+            },
+            "OFF": {
+              "count": 16,
+              "correct": 16,
+              "positive": 16,
+              "negative": 0,
+              "update_sum": 0.03182916012332093,
+              "absolute_update_sum": 0.03182916012332093
+            },
+            "quiet": {
+              "count": 190,
+              "correct": 116,
+              "positive": 75,
+              "negative": 115,
+              "update_sum": 0.03777156461658027,
+              "absolute_update_sum": 0.038132246258580804
+            }
+          },
+          "dwell6": {
+            "ON": {
+              "count": 16,
+              "correct": 16,
+              "positive": 0,
+              "negative": 16,
+              "update_sum": -0.1002442546728659,
+              "absolute_update_sum": 0.1002442546728659
+            },
+            "OFF": {
+              "count": 16,
+              "correct": 16,
+              "positive": 16,
+              "negative": 0,
+              "update_sum": 0.009185515287358115,
+              "absolute_update_sum": 0.009185515287358115
+            },
+            "quiet": {
+              "count": 262,
+              "correct": 116,
+              "positive": 114,
+              "negative": 148,
+              "update_sum": 0.08472346068827943,
+              "absolute_update_sum": 0.08551959143414431
+            }
+          }
+        },
+        "26550": {
+          "all": {
+            "ON": {
+              "count": 64,
+              "correct": 63,
+              "positive": 64,
+              "negative": 0,
+              "update_sum": 0.382473656324515,
+              "absolute_update_sum": 0.382473656324515
+            },
+            "OFF": {
+              "count": 64,
+              "correct": 64,
+              "positive": 0,
+              "negative": 64,
+              "update_sum": -0.02883411928105558,
+              "absolute_update_sum": 0.02883411928105558
+            },
+            "quiet": {
+              "count": 729,
+              "correct": 453,
+              "positive": 466,
+              "negative": 263,
+              "update_sum": -0.30182254597920927,
+              "absolute_update_sum": 0.30209183272590384
+            }
+          },
+          "early": {
+            "ON": {
+              "count": 32,
+              "correct": 31,
+              "positive": 32,
+              "negative": 0,
+              "update_sum": 0.22108804195963602,
+              "absolute_update_sum": 0.22108804195963602
+            },
+            "OFF": {
+              "count": 32,
+              "correct": 32,
+              "positive": 0,
+              "negative": 32,
+              "update_sum": -0.007051462660684379,
+              "absolute_update_sum": 0.007051462660684379
+            },
+            "quiet": {
+              "count": 418,
+              "correct": 251,
+              "positive": 256,
+              "negative": 162,
+              "update_sum": -0.15082093421295523,
+              "absolute_update_sum": 0.1508429889133575
+            }
+          },
+          "late": {
+            "ON": {
+              "count": 32,
+              "correct": 32,
+              "positive": 32,
+              "negative": 0,
+              "update_sum": 0.161385614364879,
+              "absolute_update_sum": 0.161385614364879
+            },
+            "OFF": {
+              "count": 32,
+              "correct": 32,
+              "positive": 0,
+              "negative": 32,
+              "update_sum": -0.021782656620371196,
+              "absolute_update_sum": 0.021782656620371196
+            },
+            "quiet": {
+              "count": 311,
+              "correct": 202,
+              "positive": 210,
+              "negative": 101,
+              "update_sum": -0.15100161176625404,
+              "absolute_update_sum": 0.15124884381254633
+            }
+          },
+          "dwell2": {
+            "ON": {
+              "count": 16,
+              "correct": 16,
+              "positive": 16,
+              "negative": 0,
+              "update_sum": 0.026219224112547325,
+              "absolute_update_sum": 0.026219224112547325
+            },
+            "OFF": {
+              "count": 16,
+              "correct": 16,
+              "positive": 0,
+              "negative": 16,
+              "update_sum": -0.023068913711623,
+              "absolute_update_sum": 0.023068913711623
+            },
+            "quiet": {
+              "count": 133,
+              "correct": 112,
+              "positive": 104,
+              "negative": 29,
+              "update_sum": -0.022522515531993713,
+              "absolute_update_sum": 0.022616564369097182
+            }
+          },
+          "dwell3": {
+            "ON": {
+              "count": 16,
+              "correct": 16,
+              "positive": 16,
+              "negative": 0,
+              "update_sum": 0.13702714500954905,
+              "absolute_update_sum": 0.13702714500954905
+            },
+            "OFF": {
+              "count": 16,
+              "correct": 16,
+              "positive": 0,
+              "negative": 16,
+              "update_sum": -0.00495359253621069,
+              "absolute_update_sum": 0.00495359253621069
+            },
+            "quiet": {
+              "count": 142,
+              "correct": 107,
+              "positive": 99,
+              "negative": 43,
+              "update_sum": -0.05373694591605283,
+              "absolute_update_sum": 0.053862976015300205
+            }
+          },
+          "dwell4": {
+            "ON": {
+              "count": 16,
+              "correct": 15,
+              "positive": 16,
+              "negative": 0,
+              "update_sum": 0.1412553991948225,
+              "absolute_update_sum": 0.1412553991948225
+            },
+            "OFF": {
+              "count": 16,
+              "correct": 16,
+              "positive": 0,
+              "negative": 16,
+              "update_sum": -0.0008068059761263985,
+              "absolute_update_sum": 0.0008068059761263985
+            },
+            "quiet": {
+              "count": 192,
+              "correct": 118,
+              "positive": 115,
+              "negative": 77,
+              "update_sum": -0.06819373049569995,
+              "absolute_update_sum": 0.0682128597273181
+            }
+          },
+          "dwell6": {
+            "ON": {
+              "count": 16,
+              "correct": 16,
+              "positive": 16,
+              "negative": 0,
+              "update_sum": 0.07797188800759616,
+              "absolute_update_sum": 0.07797188800759616
+            },
+            "OFF": {
+              "count": 16,
+              "correct": 16,
+              "positive": 0,
+              "negative": 16,
+              "update_sum": -4.807057095490564e-06,
+              "absolute_update_sum": 4.807057095490564e-06
+            },
+            "quiet": {
+              "count": 262,
+              "correct": 116,
+              "positive": 148,
+              "negative": 114,
+              "update_sum": -0.15736935403546276,
+              "absolute_update_sum": 0.15739943261418837
+            }
+          }
+        }
+      }
+    },
+    "F-omitted": {
+      "seconds": 8.370166400040034,
+      "frames": 861,
+      "source_sha256": "a2f765635484b9ea750b6785781c10a74662fb17a57729b6d638cba642713cb3",
+      "runner_sha256": "9054fb44ad7d83402f0c4a8c8baa3dd6ca243b62592724ff5c43cf9eedc7e975",
+      "stimulus_sha256": "b4b054b29626a1255f9cb3c06e1ff54bd3d4295a7da5ad2c1d594cd3ed85cfcd",
+      "sha256": "6894d7499b2d12aee77c90ebb135f64eeeb6ebfa9b8c1f000d6b3801695967a1",
+      "second_pixel": null,
+      "exact_replay": false,
+      "accumulator_max_error": 0.0,
+      "incoming_weights_initial": [
+        0.014316361397504807,
+        0.049295760691165924
+      ],
+      "incoming_weights_final": [
+        0.015497561544179916,
+        0.039043404161930084
+      ],
+      "metrics": {
+        "20655": {
+          "all": {
+            "ON": {
+              "count": 48,
+              "correct": 47,
+              "positive": 0,
+              "negative": 48,
+              "update_sum": -0.12046668032567087,
+              "absolute_update_sum": 0.12046668032567087
+            },
+            "OFF": {
+              "count": 48,
+              "correct": 48,
+              "positive": 48,
+              "negative": 0,
+              "update_sum": 0.05324722338500887,
+              "absolute_update_sum": 0.05324722338500887
+            },
+            "quiet": {
+              "count": 759,
+              "correct": 438,
+              "positive": 234,
+              "negative": 525,
+              "update_sum": 0.0684006549662782,
+              "absolute_update_sum": 0.07060965076436868
+            }
+          },
+          "early": {
+            "ON": {
+              "count": 24,
+              "correct": 23,
+              "positive": 0,
+              "negative": 24,
+              "update_sum": -0.06910409066916312,
+              "absolute_update_sum": 0.06910409066916312
+            },
+            "OFF": {
+              "count": 24,
+              "correct": 24,
+              "positive": 24,
+              "negative": 0,
+              "update_sum": 0.0216757346526818,
+              "absolute_update_sum": 0.0216757346526818
+            },
+            "quiet": {
+              "count": 432,
+              "correct": 248,
+              "positive": 130,
+              "negative": 302,
+              "update_sum": 0.04219789487158188,
+              "absolute_update_sum": 0.04323778946871522
+            }
+          },
+          "late": {
+            "ON": {
+              "count": 24,
+              "correct": 24,
+              "positive": 0,
+              "negative": 24,
+              "update_sum": -0.05136258965650775,
+              "absolute_update_sum": 0.05136258965650775
+            },
+            "OFF": {
+              "count": 24,
+              "correct": 24,
+              "positive": 24,
+              "negative": 0,
+              "update_sum": 0.03157148873232707,
+              "absolute_update_sum": 0.03157148873232707
+            },
+            "quiet": {
+              "count": 327,
+              "correct": 190,
+              "positive": 104,
+              "negative": 223,
+              "update_sum": 0.026202760094696312,
+              "absolute_update_sum": 0.027371861295653457
+            }
+          },
+          "dwell2": {
+            "ON": {
+              "count": 12,
+              "correct": 12,
+              "positive": 0,
+              "negative": 12,
+              "update_sum": -0.02308092215571822,
+              "absolute_update_sum": 0.02308092215571822
+            },
+            "OFF": {
+              "count": 12,
+              "correct": 12,
+              "positive": 12,
+              "negative": 0,
+              "update_sum": 0.025246635568698883,
+              "absolute_update_sum": 0.025246635568698883
+            },
+            "quiet": {
+              "count": 141,
+              "correct": 102,
+              "positive": 41,
+              "negative": 100,
+              "update_sum": 0.004240244462139529,
+              "absolute_update_sum": 0.004596887991648308
+            }
+          },
+          "dwell3": {
+            "ON": {
+              "count": 12,
+              "correct": 12,
+              "positive": 0,
+              "negative": 12,
+              "update_sum": -0.024448248879210155,
+              "absolute_update_sum": 0.024448248879210155
+            },
+            "OFF": {
+              "count": 12,
+              "correct": 12,
+              "positive": 12,
+              "negative": 0,
+              "update_sum": 0.012798183388220252,
+              "absolute_update_sum": 0.012798183388220252
+            },
+            "quiet": {
+              "count": 150,
+              "correct": 92,
+              "positive": 48,
+              "negative": 102,
+              "update_sum": 0.009116316372969512,
+              "absolute_update_sum": 0.00954287928965213
+            }
+          },
+          "dwell4": {
+            "ON": {
+              "count": 12,
+              "correct": 11,
+              "positive": 0,
+              "negative": 12,
+              "update_sum": -0.037178376168267135,
+              "absolute_update_sum": 0.037178376168267135
+            },
+            "OFF": {
+              "count": 12,
+              "correct": 12,
+              "positive": 12,
+              "negative": 0,
+              "update_sum": 0.011026049276797178,
+              "absolute_update_sum": 0.011026049276797178
+            },
+            "quiet": {
+              "count": 198,
+              "correct": 105,
+              "positive": 60,
+              "negative": 138,
+              "update_sum": 0.02017851656404758,
+              "absolute_update_sum": 0.02070530987719764
+            }
+          },
+          "dwell6": {
+            "ON": {
+              "count": 12,
+              "correct": 12,
+              "positive": 0,
+              "negative": 12,
+              "update_sum": -0.03575913312247536,
+              "absolute_update_sum": 0.03575913312247536
+            },
+            "OFF": {
+              "count": 12,
+              "correct": 12,
+              "positive": 12,
+              "negative": 0,
+              "update_sum": 0.0041763551512925545,
+              "absolute_update_sum": 0.0041763551512925545
+            },
+            "quiet": {
+              "count": 270,
+              "correct": 139,
+              "positive": 85,
+              "negative": 185,
+              "update_sum": 0.034865577567121574,
+              "absolute_update_sum": 0.0357645736058706
+            }
+          }
+        },
+        "26550": {
+          "all": {
+            "ON": {
+              "count": 48,
+              "correct": 47,
+              "positive": 48,
+              "negative": 0,
+              "update_sum": 0.12123032523694129,
+              "absolute_update_sum": 0.12123032523694129
+            },
+            "OFF": {
+              "count": 48,
+              "correct": 48,
+              "positive": 0,
+              "negative": 48,
+              "update_sum": -0.012594423407916224,
+              "absolute_update_sum": 0.012594423407916224
+            },
+            "quiet": {
+              "count": 761,
+              "correct": 440,
+              "positive": 525,
+              "negative": 236,
+              "update_sum": -0.11888827908344027,
+              "absolute_update_sum": 0.11912222055958452
+            }
+          },
+          "early": {
+            "ON": {
+              "count": 24,
+              "correct": 23,
+              "positive": 24,
+              "negative": 0,
+              "update_sum": 0.08547975750665214,
+              "absolute_update_sum": 0.08547975750665214
+            },
+            "OFF": {
+              "count": 24,
+              "correct": 24,
+              "positive": 0,
+              "negative": 24,
+              "update_sum": -0.002290596014693315,
+              "absolute_update_sum": 0.002290596014693315
+            },
+            "quiet": {
+              "count": 434,
+              "correct": 250,
+              "positive": 302,
+              "negative": 132,
+              "update_sum": -0.07101811822138132,
+              "absolute_update_sum": 0.0710984924463463
+            }
+          },
+          "late": {
+            "ON": {
+              "count": 24,
+              "correct": 24,
+              "positive": 24,
+              "negative": 0,
+              "update_sum": 0.035750567730289146,
+              "absolute_update_sum": 0.035750567730289146
+            },
+            "OFF": {
+              "count": 24,
+              "correct": 24,
+              "positive": 0,
+              "negative": 24,
+              "update_sum": -0.01030382739322291,
+              "absolute_update_sum": 0.01030382739322291
+            },
+            "quiet": {
+              "count": 327,
+              "correct": 190,
+              "positive": 223,
+              "negative": 104,
+              "update_sum": -0.04787016086205896,
+              "absolute_update_sum": 0.0480237281132382
+            }
+          },
+          "dwell2": {
+            "ON": {
+              "count": 12,
+              "correct": 12,
+              "positive": 12,
+              "negative": 0,
+              "update_sum": 0.01669671672008173,
+              "absolute_update_sum": 0.01669671672008173
+            },
+            "OFF": {
+              "count": 12,
+              "correct": 12,
+              "positive": 0,
+              "negative": 12,
+              "update_sum": -0.01145664478467609,
+              "absolute_update_sum": 0.01145664478467609
+            },
+            "quiet": {
+              "count": 141,
+              "correct": 102,
+              "positive": 100,
+              "negative": 41,
+              "update_sum": -0.007744129618154046,
+              "absolute_update_sum": 0.007790159869379169
+            }
+          },
+          "dwell3": {
+            "ON": {
+              "count": 12,
+              "correct": 12,
+              "positive": 12,
+              "negative": 0,
+              "update_sum": 0.021244669084625613,
+              "absolute_update_sum": 0.021244669084625613
+            },
+            "OFF": {
+              "count": 12,
+              "correct": 12,
+              "positive": 0,
+              "negative": 12,
+              "update_sum": -0.0008282817812751001,
+              "absolute_update_sum": 0.0008282817812751001
+            },
+            "quiet": {
+              "count": 150,
+              "correct": 92,
+              "positive": 102,
+              "negative": 48,
+              "update_sum": -0.014450572555280174,
+              "absolute_update_sum": 0.014514254219146736
+            }
+          },
+          "dwell4": {
+            "ON": {
+              "count": 12,
+              "correct": 11,
+              "positive": 12,
+              "negative": 0,
+              "update_sum": 0.0519303604552917,
+              "absolute_update_sum": 0.0519303604552917
+            },
+            "OFF": {
+              "count": 12,
+              "correct": 12,
+              "positive": 0,
+              "negative": 12,
+              "update_sum": -0.00030146008297922476,
+              "absolute_update_sum": 0.00030146008297922476
+            },
+            "quiet": {
+              "count": 200,
+              "correct": 107,
+              "positive": 138,
+              "negative": 62,
+              "update_sum": -0.03620911248132383,
+              "absolute_update_sum": 0.036251034275515265
+            }
+          },
+          "dwell6": {
+            "ON": {
+              "count": 12,
+              "correct": 12,
+              "positive": 12,
+              "negative": 0,
+              "update_sum": 0.031358578976942234,
+              "absolute_update_sum": 0.031358578976942234
+            },
+            "OFF": {
+              "count": 12,
+              "correct": 12,
+              "positive": 0,
+              "negative": 12,
+              "update_sum": -8.036758985810818e-06,
+              "absolute_update_sum": 8.036758985810818e-06
+            },
+            "quiet": {
+              "count": 270,
+              "correct": 139,
+              "positive": 185,
+              "negative": 85,
+              "update_sum": -0.06048446442868222,
+              "absolute_update_sum": 0.06056677219554334
+            }
+          }
+        }
+      }
+    }
+  },
+  "analysis": {
+    "baseline-replay": {
+      "last_polarity_matches": 1341,
+      "issue_count": 1341,
+      "recurrent": {
+        "20655": {
+          "recurrent": {
+            "ON": {
+              "count": 72,
+              "correct": 72,
+              "positive": 0,
+              "negative": 72,
+              "update_sum": -0.24242511667135602,
+              "absolute_update_sum": 0.24242511667135602
+            },
+            "OFF": {
+              "count": 72,
+              "correct": 72,
+              "positive": 72,
+              "negative": 0,
+              "update_sum": 0.10749433326418512,
+              "absolute_update_sum": 0.10749433326418512
+            },
+            "quiet": {
+              "count": 1008,
+              "correct": 640,
+              "positive": 389,
+              "negative": 619,
+              "update_sum": 0.07190336350117939,
+              "absolute_update_sum": 0.07276772449722826
+            }
+          }
+        },
+        "26550": {
+          "recurrent": {
+            "ON": {
+              "count": 72,
+              "correct": 72,
+              "positive": 72,
+              "negative": 0,
+              "update_sum": 0.25020898428738997,
+              "absolute_update_sum": 0.25020898428738997
+            },
+            "OFF": {
+              "count": 72,
+              "correct": 72,
+              "positive": 0,
+              "negative": 72,
+              "update_sum": -0.039820918108006254,
+              "absolute_update_sum": 0.039820918108006254
+            },
+            "quiet": {
+              "count": 1011,
+              "correct": 643,
+              "positive": 619,
+              "negative": 392,
+              "update_sum": -0.13916185888077715,
+              "absolute_update_sum": 0.13921765959618002
+            }
+          }
+        }
+      },
+      "context_update_sums": {
+        "20655": {
+          "-1": {
+            "ON": 0.0,
+            "OFF": 0.10786917605765367,
+            "quiet": 0.014599610831829616
+          },
+          "0": {
+            "ON": -0.0017214042600244284,
+            "OFF": 0.0,
+            "quiet": -5.7700591482801045e-05
+          },
+          "1": {
+            "ON": -0.24264134413300797,
+            "OFF": 0.0,
+            "quiet": 0.07003913468190019
+          }
+        },
+        "26550": {
+          "-1": {
+            "ON": 0.0,
+            "OFF": -0.039820920590348016,
+            "quiet": -0.027000068113613763
+          },
+          "0": {
+            "ON": 1.9599774532252923e-06,
+            "OFF": 0.0,
+            "quiet": -0.0009201162378795875
+          },
+          "1": {
+            "ON": 0.25020898464298374,
+            "OFF": 0.0,
+            "quiet": -0.13590592818170422
+          }
+        }
+      },
+      "confirmation_tag_change": {
+        "ON": {
+          "count": 96,
+          "changes": 96
+        },
+        "OFF": {
+          "count": 96,
+          "changes": 96
+        },
+        "quiet": {
+          "count": 1149,
+          "changes": 0
+        }
+      }
+    },
+    "baseline-standard": {
+      "last_polarity_matches": 860,
+      "issue_count": 860,
+      "recurrent": {
+        "20655": {
+          "recurrent": {
+            "ON": {
+              "count": 48,
+              "correct": 48,
+              "positive": 0,
+              "negative": 48,
+              "update_sum": -0.16724194862491226,
+              "absolute_update_sum": 0.16724194862491226
+            },
+            "OFF": {
+              "count": 48,
+              "correct": 48,
+              "positive": 48,
+              "negative": 0,
+              "update_sum": 0.0746255025442224,
+              "absolute_update_sum": 0.0746255025442224
+            },
+            "quiet": {
+              "count": 638,
+              "correct": 411,
+              "positive": 283,
+              "negative": 355,
+              "update_sum": 0.0829755826766688,
+              "absolute_update_sum": 0.08324038524545152
+            }
+          }
+        },
+        "26550": {
+          "recurrent": {
+            "ON": {
+              "count": 48,
+              "correct": 48,
+              "positive": 48,
+              "negative": 0,
+              "update_sum": 0.22872204484187175,
+              "absolute_update_sum": 0.22872204484187175
+            },
+            "OFF": {
+              "count": 48,
+              "correct": 48,
+              "positive": 0,
+              "negative": 48,
+              "update_sum": -0.01958180177837221,
+              "absolute_update_sum": 0.01958180177837221
+            },
+            "quiet": {
+              "count": 641,
+              "correct": 414,
+              "positive": 355,
+              "negative": 286,
+              "update_sum": -0.14885998894470043,
+              "absolute_update_sum": 0.1488652119521422
+            }
+          }
+        }
+      },
+      "context_update_sums": {
+        "20655": {
+          "-1": {
+            "ON": 0.0,
+            "OFF": 0.07481704225970537,
+            "quiet": 0.01730971731198398
+          },
+          "0": {
+            "ON": -0.000611106283031404,
+            "OFF": 0.0,
+            "quiet": -1.1570499033553006e-05
+          },
+          "1": {
+            "ON": -0.16746134778936594,
+            "OFF": 0.0,
+            "quiet": 0.0738811168081125
+          }
+        },
+        "26550": {
+          "-1": {
+            "ON": 0.0,
+            "OFF": -0.01958180200401908,
+            "quiet": -0.027020235139247083
+          },
+          "0": {
+            "ON": 1.3016892808082048e-07,
+            "OFF": 0.0,
+            "quiet": -0.0004201617594133333
+          },
+          "1": {
+            "ON": 0.22872204658236575,
+            "OFF": 0.0,
+            "quiet": -0.1364157438978318
+          }
+        }
+      },
+      "confirmation_tag_change": {
+        "ON": {
+          "count": 64,
+          "changes": 64
+        },
+        "OFF": {
+          "count": 64,
+          "changes": 64
+        },
+        "quiet": {
+          "count": 732,
+          "changes": 0
+        }
+      }
+    },
+    "baseline-omitted": {
+      "last_polarity_matches": 860,
+      "issue_count": 860,
+      "recurrent": {
+        "20655": {
+          "recurrent": {
+            "ON": {
+              "count": 32,
+              "correct": 32,
+              "positive": 0,
+              "negative": 32,
+              "update_sum": -0.07349937659455463,
+              "absolute_update_sum": 0.07349937659455463
+            },
+            "OFF": {
+              "count": 32,
+              "correct": 32,
+              "positive": 32,
+              "negative": 0,
+              "update_sum": 0.0332811110347393,
+              "absolute_update_sum": 0.0332811110347393
+            },
+            "quiet": {
+              "count": 670,
+              "correct": 408,
+              "positive": 222,
+              "negative": 448,
+              "update_sum": 0.04363412921886889,
+              "absolute_update_sum": 0.04431520183118601
+            }
+          }
+        },
+        "26550": {
+          "recurrent": {
+            "ON": {
+              "count": 32,
+              "correct": 32,
+              "positive": 32,
+              "negative": 0,
+              "update_sum": 0.07122211704180695,
+              "absolute_update_sum": 0.07122211704180695
+            },
+            "OFF": {
+              "count": 32,
+              "correct": 32,
+              "positive": 0,
+              "negative": 32,
+              "update_sum": -0.007966999849533201,
+              "absolute_update_sum": 0.007966999849533201
+            },
+            "quiet": {
+              "count": 673,
+              "correct": 411,
+              "positive": 448,
+              "negative": 225,
+              "update_sum": -0.0721733075077334,
+              "absolute_update_sum": 0.07221112916847168
+            }
+          }
+        }
+      },
+      "context_update_sums": {
+        "20655": {
+          "-1": {
+            "ON": 0.0,
+            "OFF": 0.03347698967453763,
+            "quiet": 0.0036102297949344078
+          },
+          "0": {
+            "ON": -0.000611106283031404,
+            "OFF": 0.0,
+            "quiet": -1.1570499033553006e-05
+          },
+          "1": {
+            "ON": -0.07373724133522574,
+            "OFF": 0.0,
+            "quiet": 0.048753838780604415
+          }
+        },
+        "26550": {
+          "-1": {
+            "ON": 0.0,
+            "OFF": -0.007967000089132578,
+            "quiet": -0.005427859296625444
+          },
+          "0": {
+            "ON": 1.3016892808082048e-07,
+            "OFF": 0.0,
+            "quiet": -0.0004201617594133333
+          },
+          "1": {
+            "ON": 0.07122211921817925,
+            "OFF": 0.0,
+            "quiet": -0.0824759909538606
+          }
+        }
+      },
+      "confirmation_tag_change": {
+        "ON": {
+          "count": 48,
+          "changes": 48
+        },
+        "OFF": {
+          "count": 48,
+          "changes": 48
+        },
+        "quiet": {
+          "count": 764,
+          "changes": 0
+        }
+      }
+    },
+    "F-replay": {
+      "last_polarity_matches": 1341,
+      "issue_count": 1341,
+      "recurrent": {
+        "20655": {
+          "recurrent": {
+            "ON": {
+              "count": 72,
+              "correct": 72,
+              "positive": 0,
+              "negative": 72,
+              "update_sum": -0.4015110357438534,
+              "absolute_update_sum": 0.4015110357438534
+            },
+            "OFF": {
+              "count": 72,
+              "correct": 72,
+              "positive": 72,
+              "negative": 0,
+              "update_sum": 0.16700883745215833,
+              "absolute_update_sum": 0.16700883745215833
+            },
+            "quiet": {
+              "count": 1008,
+              "correct": 644,
+              "positive": 339,
+              "negative": 669,
+              "update_sum": 0.15280650000355478,
+              "absolute_update_sum": 0.15787475489862995
+            }
+          }
+        },
+        "26550": {
+          "recurrent": {
+            "ON": {
+              "count": 72,
+              "correct": 72,
+              "positive": 72,
+              "negative": 0,
+              "update_sum": 0.4286327936097348,
+              "absolute_update_sum": 0.4286327936097348
+            },
+            "OFF": {
+              "count": 72,
+              "correct": 72,
+              "positive": 0,
+              "negative": 72,
+              "update_sum": -0.05758704629715794,
+              "absolute_update_sum": 0.05758704629715794
+            },
+            "quiet": {
+              "count": 1012,
+              "correct": 647,
+              "positive": 670,
+              "negative": 342,
+              "update_sum": -0.2990093338465377,
+              "absolute_update_sum": 0.29972805719187445
+            }
+          }
+        }
+      },
+      "context_update_sums": {
+        "20655": {
+          "-1": {
+            "ON": 0.0,
+            "OFF": 0.16751351473812504,
+            "quiet": 0.028192909178649264
+          },
+          "0": {
+            "ON": -0.0022072196006774902,
+            "OFF": 0.0,
+            "quiet": -0.0001253445924884744
+          },
+          "1": {
+            "ON": -0.401893598772623,
+            "OFF": 0.0,
+            "quiet": 0.14774500115449404
+          }
+        },
+        "26550": {
+          "-1": {
+            "ON": 0.0,
+            "OFF": -0.05758704800081502,
+            "quiet": -0.051578590971955766
+          },
+          "0": {
+            "ON": 1.3465214578900486e-06,
+            "OFF": 0.0,
+            "quiet": -0.0012736014180061068
+          },
+          "1": {
+            "ON": 0.42863279423670203,
+            "OFF": 0.0,
+            "quiet": -0.2932998301139788
+          }
+        }
+      },
+      "confirmation_tag_change": {
+        "ON": {
+          "count": 96,
+          "changes": 96
+        },
+        "OFF": {
+          "count": 96,
+          "changes": 96
+        },
+        "quiet": {
+          "count": 1149,
+          "changes": 0
+        }
+      }
+    },
+    "F-standard": {
+      "last_polarity_matches": 860,
+      "issue_count": 860,
+      "recurrent": {
+        "20655": {
+          "recurrent": {
+            "ON": {
+              "count": 48,
+              "correct": 48,
+              "positive": 0,
+              "negative": 48,
+              "update_sum": -0.2737931024093805,
+              "absolute_update_sum": 0.2737931024093805
+            },
+            "OFF": {
+              "count": 48,
+              "correct": 48,
+              "positive": 48,
+              "negative": 0,
+              "update_sum": 0.11727513972437009,
+              "absolute_update_sum": 0.11727513972437009
+            },
+            "quiet": {
+              "count": 639,
+              "correct": 420,
+              "positive": 232,
+              "negative": 407,
+              "update_sum": 0.15019162741937414,
+              "absolute_update_sum": 0.15357556851359944
+            }
+          }
+        },
+        "26550": {
+          "recurrent": {
+            "ON": {
+              "count": 48,
+              "correct": 48,
+              "positive": 48,
+              "negative": 0,
+              "update_sum": 0.3824734800928778,
+              "absolute_update_sum": 0.3824734800928778
+            },
+            "OFF": {
+              "count": 48,
+              "correct": 48,
+              "positive": 0,
+              "negative": 48,
+              "update_sum": -0.028834118956339694,
+              "absolute_update_sum": 0.028834118956339694
+            },
+            "quiet": {
+              "count": 641,
+              "correct": 422,
+              "positive": 407,
+              "negative": 234,
+              "update_sum": -0.2821907949304665,
+              "absolute_update_sum": 0.282460081632953
+            }
+          }
+        }
+      },
+      "context_update_sums": {
+        "20655": {
+          "-1": {
+            "ON": 0.0,
+            "OFF": 0.11752559530122286,
+            "quiet": 0.027026231128528585
+          },
+          "0": {
+            "ON": -0.0006231645820662379,
+            "OFF": 0.0,
+            "quiet": -4.638938658274583e-05
+          },
+          "1": {
+            "ON": -0.2741764457081264,
+            "OFF": 0.0,
+            "quiet": 0.13405466923061338
+          }
+        },
+        "26550": {
+          "-1": {
+            "ON": 0.0,
+            "OFF": -0.02883411928105558,
+            "quiet": -0.04486192177795148
+          },
+          "0": {
+            "ON": 1.7320520839803066e-07,
+            "OFF": 0.0,
+            "quiet": -0.0003363407171924314
+          },
+          "1": {
+            "ON": 0.3824734831193066,
+            "OFF": 0.0,
+            "quiet": -0.2566242834840653
+          }
+        }
+      },
+      "confirmation_tag_change": {
+        "ON": {
+          "count": 64,
+          "changes": 64
+        },
+        "OFF": {
+          "count": 64,
+          "changes": 64
+        },
+        "quiet": {
+          "count": 732,
+          "changes": 0
+        }
+      }
+    },
+    "F-omitted": {
+      "last_polarity_matches": 860,
+      "issue_count": 860,
+      "recurrent": {
+        "20655": {
+          "recurrent": {
+            "ON": {
+              "count": 32,
+              "correct": 32,
+              "positive": 0,
+              "negative": 32,
+              "update_sum": -0.11942923836613772,
+              "absolute_update_sum": 0.11942923836613772
+            },
+            "OFF": {
+              "count": 32,
+              "correct": 32,
+              "positive": 32,
+              "negative": 0,
+              "update_sum": 0.052989679386882926,
+              "absolute_update_sum": 0.052989679386882926
+            },
+            "quiet": {
+              "count": 671,
+              "correct": 413,
+              "positive": 211,
+              "negative": 460,
+              "update_sum": 0.05793884947001219,
+              "absolute_update_sum": 0.060146967792467615
+            }
+          }
+        },
+        "26550": {
+          "recurrent": {
+            "ON": {
+              "count": 32,
+              "correct": 32,
+              "positive": 32,
+              "negative": 0,
+              "update_sum": 0.12123014826027427,
+              "absolute_update_sum": 0.12123014826027427
+            },
+            "OFF": {
+              "count": 32,
+              "correct": 32,
+              "positive": 0,
+              "negative": 32,
+              "update_sum": -0.0125944230593838,
+              "absolute_update_sum": 0.0125944230593838
+            },
+            "quiet": {
+              "count": 673,
+              "correct": 415,
+              "positive": 460,
+              "negative": 213,
+              "update_sum": -0.09887930972282846,
+              "absolute_update_sum": 0.0991132511549648
+            }
+          }
+        }
+      },
+      "context_update_sums": {
+        "20655": {
+          "-1": {
+            "ON": 0.0,
+            "OFF": 0.05324722338500887,
+            "quiet": 0.004229556322160433
+          },
+          "0": {
+            "ON": -0.0006231645820662379,
+            "OFF": 0.0,
+            "quiet": -4.638938658274583e-05
+          },
+          "1": {
+            "ON": -0.11984351574360463,
+            "OFF": 0.0,
+            "quiet": 0.06421748803070051
+          }
+        },
+        "26550": {
+          "-1": {
+            "ON": 0.0,
+            "OFF": -0.012594423407916224,
+            "quiet": -0.006940764521816408
+          },
+          "0": {
+            "ON": 1.7320520839803066e-07,
+            "OFF": 0.0,
+            "quiet": -0.0003363407171924314
+          },
+          "1": {
+            "ON": 0.12123015203173289,
+            "OFF": 0.0,
+            "quiet": -0.11161117384443144
+          }
+        }
+      },
+      "confirmation_tag_change": {
+        "ON": {
+          "count": 48,
+          "changes": 48
+        },
+        "OFF": {
+          "count": 48,
+          "changes": 48
+        },
+        "quiet": {
+          "count": 764,
+          "changes": 0
+        }
+      }
+    }
+  },
+  "first_omission_pairs": {
+    "baseline": {
+      "issue_tick": 208,
+      "confirm_tick": 216,
+      "identical_prefix": true,
+      "identical_recorded_issue_state": true,
+      "prediction": [
+        -0.12000226229429245,
+        -0.12000226229429245
+      ],
+      "standard_target": [
+        -1.0,
+        -1.0
+      ],
+      "omitted_target": [
+        0.0,
+        0.0
+      ],
+      "standard_delta": [
+        -0.00622576056048274,
+        0.010228379629552364
+      ],
+      "omitted_delta": [
+        0.0008489855681546032,
+        -0.0013948091072961688
+      ]
+    },
+    "F": {
+      "issue_tick": 208,
+      "confirm_tick": 216,
+      "identical_prefix": true,
+      "identical_recorded_issue_state": true,
+      "prediction": [
+        -0.08471660315990448,
+        -0.08471660315990448
+      ],
+      "standard_target": [
+        -1.0,
+        -1.0
+      ],
+      "omitted_target": [
+        0.0,
+        0.0
+      ],
+      "standard_delta": [
+        -0.010849982500076294,
+        0.01888796128332615
+      ],
+      "omitted_delta": [
+        0.0010042503708973527,
+        -0.0017482279799878597
+      ]
+    }
+  },
+  "repeat_unavailable": {
+    "reason": "Only one rendered pixel maps to the scored retinal column; repeated polarity is impossible without changing the input mapping.",
+    "column": 30,
+    "pixels": [
+      [
+        30,
+        39
+      ]
+    ],
+    "resolution": [
+      32,
+      64
+    ],
+    "target_body": 82450,
+    "topology_changed": false,
+    "input_mapping_changed": false
+  },
+  "state_columns": [
+    "sensory_state",
+    "predictive_current",
+    "excitatory_prediction",
+    "inhibitory_prediction",
+    "voltage",
+    "adaptation",
+    "presynaptic_voltage",
+    "presynaptic_adaptation"
+  ]
+}

@@ -28,3 +28,10 @@ findings. No model mechanism is changed.
 
 Recorder tests: 3 passed before real-data runs. Source and runner checksums gate
 reuse of completed saved conditions. Raw results live in runs/credit-replay-v1.
+
+Preflight correction: the actual scored retinal column has only one rendered
+pixel at32x64. A second-pixel repeated-polarity challenge cannot be constructed
+without changing the input mapping. Do not change the mapping. Record the exact
+column evidence and run only replay, ordinary alternation and omission for this
+column. The generic stimulus fixture remains tested, but cannot establish a
+real-data result on this target. This reinforces the binary-occupancy caveat.

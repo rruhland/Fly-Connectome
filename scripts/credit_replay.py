@@ -150,9 +150,15 @@ def main():
     retina = Retina(**crop['retina']);column = int(retina.pixel_bins[30*64+39])
     candidates = np.flatnonzero(retina.pixel_bins.numpy() == column)
     candidates = candidates[candidates != 30*64+39]
-    assert len(candidates), 'repeat challenge requires two pixels in the existing column'
-    other = min(candidates, key=lambda p: abs(p//64-30)+abs(p%64-39))
-    second = (int(other//64), int(other%64))
+    second = None
+    if len(candidates):
+        other = min(candidates, key=lambda p: abs(p//64-30)+abs(p%64-39))
+        second = (int(other//64), int(other%64))
+    else:
+        (out/'repeat-unavailable.json').write_text(json.dumps(dict(
+            reason='Only one rendered pixel maps to the scored retinal column; repeated polarity is impossible without changing the input mapping.',
+            column=column, pixels=[[30, 39]], resolution=[32, 64],
+            target_body=82450, topology_changed=False, input_mapping_changed=False), indent=2)+'\n')
     full, blanks, dwells = training_schedule(200, 9060)
     prefix_length = int((blanks[:24]+8*dwells[:24]+1).sum())
     rng = np.random.default_rng(9091)
@@ -162,7 +168,7 @@ def main():
         ('baseline', Path('runs/multitempo-v1/mixed-training.npz'), 'area-matched-excitation-v1'),
         ('F', Path('runs/short-term-v1/F-training.npz'), 'short-term-F-v1')]:
         old = np.load(source);source_hash = checksum(source)
-        for kind in ['replay', 'standard', 'omitted', 'repeat']:
+        for kind in ['replay', 'standard', 'omitted']+(['repeat'] if second is not None else []):
             key = f'{name}-{kind}';path = out/f'{key}.npz'
             if kind == 'replay':
                 frames = full[:prefix_length]

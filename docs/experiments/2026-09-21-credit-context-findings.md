@@ -1,5 +1,7 @@
 # Credit context: polarity is separable locally; quiet credit remains mixed
 
+Follow-up: [actual-learning replay and omission results](2026-09-21-credit-replay-findings.md) show that the tag exactly tracks last polarity; event direction separates, but quiet credit remains mixed.
+
 The saved frozen-baseline audit contains a simple local cue that distinguishes the opposing ON/OFF update directions on both examined predictive edges. The sign of the postsynaptic sensory current **at forecast time** correctly separates all examined nonzero ON/OFF proposals at every test tempo. At held-out dwell 3, that is 90 ON and 90 OFF cases per edge. This supports investigating context-dependent plasticity, but does not establish a working learning rule or sufficient forecast capacity. M1A remains unmet.
 
 No new neural simulations or training runs were needed. No model, weights, topology, transmitter signs, local rule or production code changed. The existing signed sensory state supplies the cue; no future label is injected as a feature.
