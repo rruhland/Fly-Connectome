@@ -1,4 +1,5 @@
 """Exact midstream resume check for the opt-in full-graph Pong M1A runner."""
+import argparse
 import json
 from pathlib import Path
 
@@ -22,15 +23,19 @@ def equal_nested(a, b):
 
 
 def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--always-open', action='store_true')
+    args = parser.parse_args()
     torch.set_num_threads(4)
     source = Path('checkpoints/event-v1-combined-rate-initial.pt')
     source_sha = checksum(source)
     payload = torch.load(source, weights_only=True)
-    continuous = OpenLoopContextRun(payload, 1101, 1.)
+    continuous = OpenLoopContextRun(payload, 1101, 1., always_open=args.always_open)
     continuous.run(19)
-    interrupted = OpenLoopContextRun(payload, 1101, 1.)
+    interrupted = OpenLoopContextRun(payload, 1101, 1., always_open=args.always_open)
     interrupted.run(9)
-    checkpoint = Path('runs/full-context-m1a-v1/resume-fixture-v2.pt')
+    label = 'always-open' if args.always_open else 'gated'
+    checkpoint = Path(f'runs/full-context-m1a-v1/resume-fixture-{label}-v3.pt')
     interrupted.save(checkpoint, source_sha)
     resumed = OpenLoopContextRun.load(checkpoint, payload, source_sha)
     resumed.run(10)
@@ -45,7 +50,7 @@ def main():
         if not equal_nested(getattr(continuous.rule, name), getattr(resumed.rule, name)):
             raise AssertionError(f'exact resume mismatch: {name}')
     for name in ('previous_prediction', 'previous_target', 'metrics', 'trace',
-                 'events', 'spike_counts', 'peak_spikes_per_tick', 'max_keys',
+                 'events', 'forecasts', 'spike_counts', 'peak_spikes_per_tick', 'max_keys',
                  'open_gate_issues', 'max_update_error'):
         if not equal_nested(getattr(continuous, name), getattr(resumed, name)):
             raise AssertionError(f'exact resume mismatch: {name}')
@@ -56,14 +61,16 @@ def main():
     if checksum(source) != source_sha:
         raise AssertionError('source checkpoint changed')
     report = dict(source_sha256=source_sha, checkpoint_sha256=checksum(checkpoint),
-        seed=1101, eta=1., uninterrupted_frames=19, checkpoint_frame=9,
+        seed=1101, eta=1., always_open=args.always_open,
+        uninterrupted_frames=19, checkpoint_frame=9,
         exact_fields=list(NETWORK_STATE)+list(RULE_STATE)+list(PONG_STATE)+list(BODY_STATE)
             + ['forecast', 'last_issue', 'last_confirmation', 'camera.previous',
                'previous_prediction', 'previous_target', 'metrics', 'trace', 'events',
+               'forecasts',
                'spike_counts', 'peak_spikes_per_tick', 'max_keys', 'open_gate_issues',
                'max_update_error', 'step counters'],
         source_unchanged=True, script_sha256=checksum(Path(__file__)))
-    output = Path('runs/full-context-m1a-v1/resume-check-v2.json')
+    output = Path(f'runs/full-context-m1a-v1/resume-check-{label}-v3.json')
     if output.exists():
         raise FileExistsError(output)
     output.write_text(json.dumps(report, indent=2)+'\n')

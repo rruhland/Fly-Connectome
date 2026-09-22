@@ -170,3 +170,21 @@ class MultiContextTimedPrediction(FramePrediction):
         n.components.add_(self.context_proposals).clamp_(0, self.config.maximum_weight)
         n.magnitudes[n.incoming] = n.components[0]
         self.context_proposals.zero_()
+
+
+class AlwaysOpenContextPrediction(MultiContextTimedPrediction):
+    """Use the physical forecast and local eligibility without a timing window."""
+
+    def _capture_forecast(self):
+        FramePrediction._capture_forecast(self)
+        n = self.network
+        keys, eligibility, prediction = self.forecast
+        edges = keys.remainder(n.e)
+        keep = n.target_lookup[n.post[edges]] >= 0
+        self.forecast = keys[keep], eligibility[keep], prediction[keep]
+
+    @torch.no_grad()
+    def observe(self, activity, reward):
+        super().observe(activity, reward)
+        if self.tick % 8 == 1:
+            self.last_issue['prediction'] = self.last_issue['raw_prediction'].clone()

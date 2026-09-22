@@ -5,7 +5,8 @@ import math
 import torch
 
 sys.path.insert(0, str(Path(__file__).parents[1]/'scripts'))
-from full_context_efficacy import MultiContextEfficacyNetwork, MultiContextTimedPrediction
+from full_context_efficacy import (AlwaysOpenContextPrediction, MultiContextEfficacyNetwork,
+                                   MultiContextTimedPrediction)
 from context_efficacy import ContextEfficacyNetwork, ContextTimedPrediction
 from signed_kinetics import AreaMatchedKineticsNetwork
 from fly_connectome.dynamics import NeuronConfig
@@ -191,3 +192,44 @@ def test_frozen_predictive_edges_do_not_consume_eligibility_state():
     rule.observe(activity, torch.zeros(1))
     assert rule.keys.tolist() == [0]
     assert rule.forecast[0].tolist() == [0]
+
+
+def test_always_open_rule_credits_surprise_with_closed_timing_window():
+    _, net = networks()
+    config = LearningConfig(prediction_encoding='signed-current-v1',
+        visual_target='input-arrivals-v1', visual_eligibility='forecast-causal-v1',
+        eta_prediction=1., eta_reward=0., homeostasis_rate=0.)
+    rule = AlwaysOpenContextPrediction(net, config,
+        sensory_mask=torch.tensor([False, True, True, False]), sensory_gain=30.)
+    net.history[(net.step_index-1) % net.history_length, 0, 0] = True
+    for tick in range(9):
+        sensory = torch.zeros(1, 4)
+        if tick == 8:
+            sensory[0, 1] = 30
+        activity = net.step(sensory, capture_increments=True)
+        rule.observe(activity, torch.zeros(1))
+        if tick == 0:
+            assert not rule.last_issue['gate'].any()
+            assert rule.last_issue['prediction'][0] == rule.last_issue['raw_prediction'][0]
+            assert rule.last_issue['eligibility'].abs().sum() > 0
+    assert rule.last_confirmation['delta'].abs().sum() > 0
+    assert rule.last_confirmation['context'].tolist() == [False, False]
+
+
+def test_always_open_quiet_confirmation_uses_raw_current_and_local_eligibility():
+    _, net = networks()
+    config = LearningConfig(prediction_encoding='signed-current-v1',
+        visual_target='input-arrivals-v1', visual_eligibility='forecast-causal-v1',
+        eta_prediction=.5, eta_reward=0., homeostasis_rate=0.)
+    rule = AlwaysOpenContextPrediction(net, config,
+        sensory_mask=torch.tensor([False, True, True, False]), sensory_gain=30.)
+    net.history[(net.step_index-1) % net.history_length, 0, 0] = True
+    first_issue = None
+    for tick in range(9):
+        activity = net.step(torch.zeros(1, 4), capture_increments=True)
+        rule.observe(activity, torch.zeros(1))
+        if tick == 0:
+            first_issue = rule.last_issue
+    target_positions = net.target_lookup[net.post[first_issue['edges']]]
+    expected = -.5*first_issue['prediction'][target_positions]*first_issue['eligibility']
+    torch.testing.assert_close(rule.last_confirmation['delta'], expected, rtol=1e-6, atol=1e-6)

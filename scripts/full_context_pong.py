@@ -7,7 +7,8 @@ import time
 
 import torch
 
-from full_context_efficacy import MultiContextEfficacyNetwork, MultiContextTimedPrediction
+from full_context_efficacy import (AlwaysOpenContextPrediction, MultiContextEfficacyNetwork,
+                                   MultiContextTimedPrediction)
 from fly_connectome.dynamics import NeuronConfig
 from fly_connectome.graph import Graph
 from fly_connectome.plasticity import LearningConfig
@@ -35,12 +36,30 @@ def _restore(obj, values):
         setattr(obj, name, value.clone())
 
 
+def adjacent_quiet_alarms(forecasts, events, targets):
+    """Quiet target cells neighboring an event in the same cell, excluding edges."""
+    samples = alarms = 0
+    for frame in range(1, len(events)-1):
+        current = torch.zeros(targets, dtype=torch.bool)
+        current[events[frame][0]] = True
+        neighboring = torch.zeros_like(current)
+        neighboring[events[frame-1][0]] = True
+        neighboring[events[frame+1][0]] = True
+        eligible = neighboring & ~current
+        samples += int(eligible.sum())
+        alarms += int((forecasts[frame-1][eligible].abs() >= .1).sum())
+    return dict(samples=samples, false_alarms=alarms,
+                fraction=alarms/samples if samples else None)
+
+
 class OpenLoopContextRun:
-    def __init__(self, payload, seed, eta, *, components=None, warmup=True):
+    def __init__(self, payload, seed, eta, *, components=None, warmup=True,
+                 always_open=False):
         m = payload['metadata']
         if m['config']['stage'] != 'M1A' or m['config']['neural_steps'] != 8:
             raise ValueError('context bridge requires eight-tick open-loop M1A')
         self.seed, self.eta, self.frame = int(seed), float(eta), 0
+        self.always_open = bool(always_open)
         self.retina = Retina(**m['retina'])
         graph = Graph(**m['graph'], gain=m['gain'])
         self.learning = replace(LearningConfig(**m['learning']), eta_prediction=eta,
@@ -55,7 +74,8 @@ class OpenLoopContextRun:
         if warmup:
             for _ in range(m['config']['warmup_steps']):
                 self.net.step(torch.zeros_like(self.net.voltage))
-        self.rule = MultiContextTimedPrediction(self.net, self.learning,
+        rule_type = AlwaysOpenContextPrediction if self.always_open else MultiContextTimedPrediction
+        self.rule = rule_type(self.net, self.learning,
             sensory_mask=self.retina.injected, sensory_gain=self.sensory_gain)
         self.camera = EventCamera(1, self.retina.spec['height'], self.retina.spec['width'])
         self.pong = Pong([seed], Physics(**m['physics']))
@@ -66,6 +86,7 @@ class OpenLoopContextRun:
                         for name in ('all', 'on', 'off', 'quiet')}
         self.trace = []
         self.events = []
+        self.forecasts = []
         self.spike_counts = torch.zeros(self.net.n, dtype=torch.long)
         self.peak_spikes_per_tick = 0
         self.max_keys = 0
@@ -124,6 +145,7 @@ class OpenLoopContextRun:
         self.max_update_error = max(self.max_update_error,
                                     float((proposed-self.net.components).abs().max()))
         self.previous_prediction, self.previous_target = issue, target.clone()
+        self.forecasts.append(issue)
         self.pong.step(-(self.pong.ball[:, 1]-self.pong.body.position)*10)
         self.frame += 1
         self.elapsed_seconds += time.perf_counter()-started
@@ -149,9 +171,13 @@ class OpenLoopContextRun:
                 anticipation=stats['anticipation']/count if count else None,
                 false_alarm_fraction=stats['false_alarms']/count if name == 'quiet' and count else None)
         duration = self.frame*8*self.net.config.dt
-        return dict(seed=self.seed, eta=self.eta, frames=self.frame, seconds=self.elapsed_seconds,
+        return dict(seed=self.seed, eta=self.eta, frames=self.frame,
+            always_open=self.always_open, seconds=self.elapsed_seconds,
             frames_per_second=self.frame/self.elapsed_seconds if self.elapsed_seconds else None,
-            scores=scores, max_active_eligibility_keys=self.max_keys,
+            scores=scores,
+            event_adjacent_quiet=adjacent_quiet_alarms(self.forecasts, self.events,
+                                                        len(self.net.targets)),
+            max_active_eligibility_keys=self.max_keys,
             open_gate_issues=self.open_gate_issues,
             peak_spikes_per_tick=self.peak_spikes_per_tick,
             mean_cell_rate_hz=float(self.spike_counts.float().mean()/duration) if duration else None,
@@ -163,6 +189,7 @@ class OpenLoopContextRun:
 
     def save(self, path, source_sha):
         state = dict(schema_version=1, source_sha256=source_sha, seed=self.seed, eta=self.eta,
+            always_open=self.always_open,
             frame=self.frame, network=_tensors(self.net, NETWORK_STATE),
             network_step=self.net.step_index, rule=_tensors(self.rule, RULE_STATE),
             rule_tick=self.rule.tick, forecast=self.rule.forecast,
@@ -171,6 +198,7 @@ class OpenLoopContextRun:
             camera_previous=self.camera.previous.clone(),
             previous_prediction=self.previous_prediction, previous_target=self.previous_target,
             metrics=self.metrics, trace=self.trace, events=self.events,
+            forecasts=self.forecasts,
             spike_counts=self.spike_counts.clone(), peak_spikes_per_tick=self.peak_spikes_per_tick,
             max_keys=self.max_keys, open_gate_issues=self.open_gate_issues,
             max_update_error=self.max_update_error, elapsed_seconds=self.elapsed_seconds)
@@ -190,7 +218,8 @@ class OpenLoopContextRun:
         state = torch.load(path, weights_only=True)
         if state['schema_version'] != 1 or state['source_sha256'] != source_sha:
             raise ValueError('context run checkpoint/source mismatch')
-        result = cls(payload, state['seed'], state['eta'], warmup=False)
+        result = cls(payload, state['seed'], state['eta'], warmup=False,
+                     always_open=state.get('always_open', False))
         _restore(result.net, state['network'])
         result.net.step_index = state['network_step']
         _restore(result.rule, state['rule'])
@@ -205,6 +234,7 @@ class OpenLoopContextRun:
         result.previous_target = state['previous_target']
         result.frame, result.metrics = state['frame'], state['metrics']
         result.trace, result.events = state['trace'], state['events']
+        result.forecasts = state.get('forecasts', [])
         result.spike_counts = state['spike_counts']
         result.peak_spikes_per_tick = state['peak_spikes_per_tick']
         result.max_keys = state['max_keys']
