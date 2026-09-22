@@ -60,7 +60,11 @@ information available at the prior forecast issue:
 
 Thus the rule can issue amplitude credit on only about 2% of ON and 4% of OFF
 events in these Pong frames. The timing window learned on repeated two-position
-motion rarely opens at an irregular Pong event. Yet merely removing the window
+motion rarely opens at an irregular Pong event. Even a perfect unit-amplitude
+forecast whenever this fixed gate opens could average at most 27/612=.044 ON
+and 47/610=.077 OFF anticipation on this stream, below the .1 criterion.
+Changing credit alone while keeping this expression gate cannot pass here.
+Yet merely removing the window
 at evaluation does not reveal a strong hidden predictor: with trained weights,
 only 2 ON and 6 OFF raw event forecasts reach magnitude .1. Ungated raw
 anticipation is -.0030 ON and +.0086 OFF; 3,242 of 1,326,118 quiet samples
