@@ -34,7 +34,7 @@ class SignedKineticsNetwork(Network):
         activity = super().step(sensory_current, capture_increments=capture_increments)
         env, edges = activity.arrival_environments, activity.arrival_edges
         targets = env*self.n+self.post[edges]
-        weights = self.magnitudes[edges]*self.visual_impulse(edges)
+        weights = self.magnitudes[edges]*self.visual_arrival_impulse(env,edges)
         visual = self.pathways[edges] == 1
         for current, mask in ((self.excitatory_prediction, visual & (weights > 0)),
                               (self.inhibitory_prediction, visual & (weights < 0))):

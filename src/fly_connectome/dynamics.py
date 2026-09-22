@@ -95,6 +95,9 @@ class Network:
     def visual_impulse(self, edges):
         return self.signs[edges]
 
+    def visual_arrival_impulse(self, environments, edges):
+        return self.visual_impulse(edges)
+
     def _decay_prediction(self, leak):
         self.predictive_current.mul_(leak)
 
@@ -118,7 +121,7 @@ class Network:
             increments.view(-1).index_add_(0, targets[ff], weights[ff])
         self.feedforward_current.view(-1).index_add_(0, targets[ff], weights[ff])
         self.predictive_current.view(-1).index_add_(0, targets[pred],
-                                                   self.magnitudes[edges[pred]]*self.visual_impulse(edges[pred]))
+                                                   self.magnitudes[edges[pred]]*self.visual_arrival_impulse(env[pred],edges[pred]))
         self.behavioral_current.view(-1).index_add_(0, targets[behavior], weights[behavior])
         if cfg.tau_sensory:
             self.sensory_state.mul_(math.exp(-cfg.dt / cfg.tau_sensory)).add_(sensory_current.detach())

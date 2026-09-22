@@ -120,7 +120,7 @@ class Plasticity:
         # Causal arrival followed by a spike potentiates; post-before-pre depresses.
         pairing = (activity.spikes[environments, post] * traces
                    - arrivals * self.post_trace[environments, post])
-        values.add_(torch.where(behavioral, pairing, arrivals * n.visual_impulse(edge_ids)))
+        values.add_(torch.where(behavioral, pairing, arrivals * n.visual_arrival_impulse(environments,edge_ids)))
         alive = (values.abs() > cfg.prune_epsilon) | (traces > cfg.prune_epsilon)
         self.keys, self.values = keys[alive], values[alive]
         self.arrival_trace = traces[alive]

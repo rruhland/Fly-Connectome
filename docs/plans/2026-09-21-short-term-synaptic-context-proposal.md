@@ -1,6 +1,6 @@
 # Short-term synaptic context: bounded next experiment
 
-Status: proposed, not approved or implemented. The fixed adaptation A/B family
+Status: user approved; implementation underway. The fixed adaptation A/B family
 is now complete and rejected; see
 [findings](../experiments/2026-09-21-adaptation-context-findings.md).
 No production architecture changes.
@@ -155,7 +155,7 @@ negative result rejects these two fixed settings, not all short-term plasticity.
 
 ## Approval boundary
 
-Approval is requested for the two formulas, physical transmission change,
+Approval covers the two formulas, physical transmission change,
 matching arrival eligibility, and bounded preflight/training/evaluation above.
-Until approved, this file is a proposal only. No STP implementation is included
-in the adaptation-context work.
+STP remains an opt-in controlled experiment, separate from production and the
+completed adaptation-context work.
