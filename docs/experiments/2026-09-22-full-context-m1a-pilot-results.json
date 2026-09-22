@@ -1,0 +1,157 @@
+{
+  "source": "checkpoints\\event-v1-combined-rate-initial.pt",
+  "source_sha256": "8c4af80ff3904881bac9313b618dd9989bb51174b47606f28eca88865296005c",
+  "train_seed": 1101,
+  "evaluation_seed": 1102,
+  "frames": 500,
+  "horizon_ticks": 8,
+  "selected_eta": 1.0,
+  "training": {
+    "checkpoint_sha256": "14479ca644db715f3e5aa8c2265891c4c90239dac9fcc94d7d3cf93b21172921",
+    "seed": 1101,
+    "eta": 1.0,
+    "frames": 500,
+    "seconds": 40.37360060052015,
+    "frames_per_second": 12.384330170283556,
+    "scores": {
+      "all": {
+        "samples": 1327340,
+        "mse": 0.0008363814212200068,
+        "persistence_mse": 0.0017320354995705696,
+        "anticipation": 5.941976711877889e-07,
+        "false_alarm_fraction": null
+      },
+      "on": {
+        "samples": 553,
+        "mse": 1.000002217767036,
+        "persistence_mse": 1.1464737793851718,
+        "anticipation": -1.0743076149731262e-06,
+        "false_alarm_fraction": null
+      },
+      "off": {
+        "samples": 555,
+        "mse": 0.9982400314227955,
+        "persistence_mse": 1.0810810810810811,
+        "anticipation": 0.0014221557279017656,
+        "false_alarm_fraction": null
+      },
+      "quiet": {
+        "samples": 1326232,
+        "mse": 2.3661558151186577e-06,
+        "persistence_mse": 0.0008030269213832874,
+        "anticipation": 0.0,
+        "false_alarm_fraction": 3.7700794431140252e-06
+      }
+    },
+    "max_active_eligibility_keys": 5852,
+    "open_gate_issues": 466,
+    "peak_spikes_per_tick": 631,
+    "mean_cell_rate_hz": 1.13934326171875,
+    "max_cell_rate_hz": 30.240001678466797,
+    "changed_context_magnitudes": 260,
+    "max_update_reconstruction_error": 0.0,
+    "non_target_magnitudes_unchanged": true
+  },
+  "evaluations": {
+    "initial": {
+      "checkpoint_sha256": "ba0a57503b76f1aaa08e2e08fd0cd07ae8694b19c9dcbc9673e7ecdd65341249",
+      "seed": 1102,
+      "eta": 0.0,
+      "frames": 500,
+      "seconds": 42.61761190148536,
+      "frames_per_second": 11.732238802019157,
+      "scores": {
+        "all": {
+          "samples": 1327340,
+          "mse": 0.0009207318584459716,
+          "persistence_mse": 0.0019429837117844711,
+          "anticipation": 5.844503317793605e-09,
+          "false_alarm_fraction": null
+        },
+        "on": {
+          "samples": 612,
+          "mse": 0.9999967945946587,
+          "persistence_mse": 1.1568627450980393,
+          "anticipation": 1.6062607585285006e-06,
+          "false_alarm_fraction": null
+        },
+        "off": {
+          "samples": 610,
+          "mse": 0.9999794090380434,
+          "persistence_mse": 1.157377049180328,
+          "anticipation": 1.1105920409214296e-05,
+          "false_alarm_fraction": null
+        },
+        "quiet": {
+          "samples": 1326118,
+          "mse": 1.0462796322535386e-07,
+          "persistence_mse": 0.0008785040245287372,
+          "anticipation": 0.0,
+          "false_alarm_fraction": 7.54080707749989e-07
+        }
+      },
+      "max_active_eligibility_keys": 5846,
+      "open_gate_issues": 503,
+      "peak_spikes_per_tick": 627,
+      "mean_cell_rate_hz": 1.1389737129211426,
+      "max_cell_rate_hz": 30.000001907348633,
+      "changed_context_magnitudes": 0,
+      "max_update_reconstruction_error": 0.0,
+      "non_target_magnitudes_unchanged": true
+    },
+    "trained": {
+      "checkpoint_sha256": "341d8600c8b3a3643f1d8641046fbc5956171404ed8f0ea7c755e71a6102cd1a",
+      "seed": 1102,
+      "eta": 0.0,
+      "frames": 500,
+      "seconds": 40.83629279962042,
+      "frames_per_second": 12.244010553393023,
+      "scores": {
+        "all": {
+          "samples": 1327340,
+          "mse": 0.0009215414483570735,
+          "persistence_mse": 0.0019429837117844711,
+          "anticipation": 1.3408828003070349e-06,
+          "false_alarm_fraction": null
+        },
+        "on": {
+          "samples": 612,
+          "mse": 1.0000019591618208,
+          "persistence_mse": 1.1568627450980393,
+          "anticipation": -9.795554679173666e-07,
+          "false_alarm_fraction": null
+        },
+        "off": {
+          "samples": 610,
+          "mse": 0.9968188850606075,
+          "persistence_mse": 1.157377049180328,
+          "anticipation": 0.0029186997772227955,
+          "false_alarm_fraction": null
+        },
+        "quiet": {
+          "samples": 1326118,
+          "mse": 2.366386448790841e-06,
+          "persistence_mse": 0.0008785040245287372,
+          "anticipation": 0.0,
+          "false_alarm_fraction": 3.7704035387499455e-06
+        }
+      },
+      "max_active_eligibility_keys": 5851,
+      "open_gate_issues": 503,
+      "peak_spikes_per_tick": 627,
+      "mean_cell_rate_hz": 1.1392419338226318,
+      "max_cell_rate_hz": 30.000001907348633,
+      "changed_context_magnitudes": 260,
+      "max_update_reconstruction_error": 0.0,
+      "non_target_magnitudes_unchanged": true
+    }
+  },
+  "camera_event_sequences_equal": true,
+  "final_seeds_untouched": [
+    1201,
+    1202,
+    1203,
+    1204
+  ],
+  "script_sha256": "bd08474d0cf28fb52504721a11f231f34059dd61736eb2cba5f3a1893cdcfc86"
+}

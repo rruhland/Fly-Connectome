@@ -1,0 +1,42 @@
+{
+  "source_sha256": "8c4af80ff3904881bac9313b618dd9989bb51174b47606f28eca88865296005c",
+  "seed": 1102,
+  "frames": 500,
+  "weights": "initial",
+  "training": false,
+  "eligible_edges": 17557,
+  "targets": 2660,
+  "counts": {
+    "on": {
+      "events": 612,
+      "gate_open": 27,
+      "raw_eligibility": 361,
+      "both": 12,
+      "raw_correct_sign": 323,
+      "gated_correct_sign": 14,
+      "gated_abs_at_least_point_one": 0,
+      "raw_abs_at_least_point_one": 0,
+      "raw_anticipation_sum": 0.13003883655116746,
+      "gated_anticipation_sum": 0.0009830315842194425
+    },
+    "off": {
+      "events": 610,
+      "gate_open": 47,
+      "raw_eligibility": 365,
+      "both": 24,
+      "raw_correct_sign": 189,
+      "gated_correct_sign": 12,
+      "gated_abs_at_least_point_one": 0,
+      "raw_abs_at_least_point_one": 0,
+      "raw_anticipation_sum": -0.08988946198095596,
+      "gated_anticipation_sum": 0.006774611449620721
+    }
+  },
+  "quiet": {
+    "samples": 1326118,
+    "raw_false_alarms": 2991,
+    "gated_false_alarms": 1
+  },
+  "camera_events_identical_to_frozen_pilot": true,
+  "script_sha256": "de71bd0703eb122269c5d72c2fab403da0a6c521884ccf3165c0fe030a315469"
+}

@@ -1042,3 +1042,31 @@ camera fps, 8 neural ticks/frame). Results and limitations in docs/experiments/
 motif criterion passes; full Pong M1A and M1B remain unmet. Production-scale
 integration requires separate review, especially for neurons without direct
 sensory injection.
+
+## 2026-09-22: approved full-graph context bridge, capped Pong pilot
+
+Opt-in vectorized network generalized context efficacy only to 2,660 directly
+observed L1/L2/L3 targets and their 17,557 existing predictive edges in the
+47,413-neuron/1,377,103-edge T5 visual graph. Area-matched E20/I5 kernels,
+fixed signs/topology/delays, local rule, and no-backprop preserved. Full-graph
+50-frame neural parity exact, including 53,653 target arrivals. Selected
+eligibility/forecast parity exact versus generic reference after sparse
+filtering: peak keys 302,118 -> 7,642. One original source edge exceeded
+maximum magnitude10; bounded once in both arms before warmup. Exact checkpoint
+resume frame9->19 versus uninterrupted19 passes all dynamic state, camera,
+Pong, rule, forecasts and metrics. Full suite316passed4CUDA skips at runner
+chunk. Training benchmark50 frames14.28fps; 500-frame run12.38fps.
+
+Capped development train500frames seed1101 eta1.0, frozen initial/trained
+seed1102 500frames, equal camera targets. 260 context magnitudes change;
+non-target magnitudes fixed, updates reconstruct exactly, saved states finite,
+mean firing1.14Hz. Event-conditioned ON MSE .999997->1.000002 (wrong-sign
+anticipation), OFF .999979->.996819 (anticipation .002919), whole MSE
+.00092073->.00092154. Fails Pong M1A; final seeds1201-1204 untouched, M1B
+blocked. Local audit on exact heldout camera stream: gate open27/612 ON and
+47/610 OFF, raw eligible361/612 ON and365/610 OFF, both only12/612 and24/610.
+Trained raw prediction reaches |.1| on just2 ON and6 OFF events; ungated raw
+ON anticipation-.0030, OFF+.0086. Same rule should not simply train longer.
+No further architecture implemented. See docs/experiments/
+2026-09-22-full-context-m1a-bridge-findings.md and linked compact evidence;
+raw checkpoints/traces in runs/full-context-m1a-v1.
