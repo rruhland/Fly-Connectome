@@ -1,0 +1,316 @@
+{
+  "source_sha256": "8c4af80ff3904881bac9313b618dd9989bb51174b47606f28eca88865296005c",
+  "train_seed": 1101,
+  "evaluation_seed": 1102,
+  "frames": 500,
+  "horizon_ticks": 8,
+  "selected_eta": 1.0,
+  "always_open_training": {
+    "checkpoint_sha256": "3ed32036aa20d63af95a529b16f27560919ca63b46e98e663a01bc01978e8c9f",
+    "seed": 1101,
+    "eta": 1.0,
+    "frames": 500,
+    "always_open": true,
+    "seconds": 95.55733919993509,
+    "frames_per_second": 5.232460470187932,
+    "scores": {
+      "all": {
+        "samples": 1327340,
+        "mse": 0.0009751430584653947,
+        "persistence_mse": 0.0017320354995705696,
+        "anticipation": 1.0774021581337245e-06,
+        "false_alarm_fraction": null
+      },
+      "on": {
+        "samples": 553,
+        "mse": 0.9975695394478051,
+        "persistence_mse": 1.1464737793851718,
+        "anticipation": 0.0016814148404516193,
+        "false_alarm_fraction": null
+      },
+      "off": {
+        "samples": 555,
+        "mse": 1.0011683294364997,
+        "persistence_mse": 1.0810810810810811,
+        "anticipation": 0.0009013631553182451,
+        "false_alarm_fraction": null
+      },
+      "quiet": {
+        "samples": 1326232,
+        "mse": 0.00014103264784278585,
+        "persistence_mse": 0.0008030269213832874,
+        "anticipation": 0.0,
+        "false_alarm_fraction": 0.0014823952370324348
+      }
+    },
+    "event_adjacent_quiet": {
+      "samples": 1966,
+      "false_alarms": 27,
+      "fraction": 0.013733468972533061
+    },
+    "max_active_eligibility_keys": 6399,
+    "open_gate_issues": 466,
+    "peak_spikes_per_tick": 635,
+    "mean_cell_rate_hz": 1.1461058855056763,
+    "max_cell_rate_hz": 29.520000457763672,
+    "changed_context_magnitudes": 9447,
+    "max_update_reconstruction_error": 0.0,
+    "non_target_magnitudes_unchanged": true
+  },
+  "frozen_evaluations": {
+    "always-open-initial": {
+      "checkpoint_sha256": "a464473a889ad0d96b87ae4dc6f422b63be9ab55deaee4249b9687db29a34a9a",
+      "seed": 1102,
+      "eta": 0.0,
+      "frames": 500,
+      "always_open": true,
+      "seconds": 93.99045890039997,
+      "frames_per_second": 5.3196888902291795,
+      "scores": {
+        "all": {
+          "samples": 1327340,
+          "mse": 0.0010780142425944707,
+          "persistence_mse": 0.0019429837117844711,
+          "anticipation": 3.0247998011498386e-08,
+          "false_alarm_fraction": null
+        },
+        "on": {
+          "samples": 612,
+          "mse": 0.9996342951176214,
+          "persistence_mse": 1.1568627450980393,
+          "anticipation": 0.00021248175907053507,
+          "false_alarm_fraction": null
+        },
+        "off": {
+          "samples": 610,
+          "mse": 1.000337640574721,
+          "persistence_mse": 1.157377049180328,
+          "anticipation": -0.00014735977373927207,
+          "false_alarm_fraction": null
+        },
+        "quiet": {
+          "samples": 1326118,
+          "mse": 0.00015753446910826162,
+          "persistence_mse": 0.0008785040245287372,
+          "anticipation": 0.0,
+          "false_alarm_fraction": 0.0022554553968802175
+        }
+      },
+      "event_adjacent_quiet": {
+        "samples": 2147,
+        "false_alarms": 5,
+        "fraction": 0.002328830926874709
+      },
+      "max_active_eligibility_keys": 5846,
+      "open_gate_issues": 503,
+      "peak_spikes_per_tick": 627,
+      "mean_cell_rate_hz": 1.1389737129211426,
+      "max_cell_rate_hz": 30.000001907348633,
+      "changed_context_magnitudes": 0,
+      "max_update_reconstruction_error": 0.0,
+      "non_target_magnitudes_unchanged": true
+    },
+    "always-open-trained": {
+      "checkpoint_sha256": "92e681f1de9d7bcfa1c6650a42aae82503764eb060e91df96b1bf14a01488e65",
+      "seed": 1102,
+      "eta": 0.0,
+      "frames": 500,
+      "always_open": true,
+      "seconds": 99.2961980997934,
+      "frames_per_second": 5.035439519018607,
+      "scores": {
+        "all": {
+          "samples": 1327340,
+          "mse": 0.0014136403948967146,
+          "persistence_mse": 0.0019429837117844711,
+          "anticipation": -4.6607661417306045e-08,
+          "false_alarm_fraction": null
+        },
+        "on": {
+          "samples": 612,
+          "mse": 0.9983112757502038,
+          "persistence_mse": 1.1568627450980393,
+          "anticipation": 0.0012966782994305287,
+          "false_alarm_fraction": null
+        },
+        "off": {
+          "samples": 610,
+          "mse": 1.0049798592192227,
+          "persistence_mse": 1.157377049180328,
+          "anticipation": -0.0014023464234015483,
+          "false_alarm_fraction": null
+        },
+        "quiet": {
+          "samples": 1326118,
+          "mse": 0.000491945089809478,
+          "persistence_mse": 0.0008785040245287372,
+          "anticipation": 0.0,
+          "false_alarm_fraction": 0.0020910658025907196
+        }
+      },
+      "event_adjacent_quiet": {
+        "samples": 2147,
+        "false_alarms": 17,
+        "fraction": 0.007918025151374011
+      },
+      "max_active_eligibility_keys": 6592,
+      "open_gate_issues": 503,
+      "peak_spikes_per_tick": 839,
+      "mean_cell_rate_hz": 1.1551060676574707,
+      "max_cell_rate_hz": 28.560001373291016,
+      "changed_context_magnitudes": 9447,
+      "max_update_reconstruction_error": 0.0,
+      "non_target_magnitudes_unchanged": true
+    },
+    "gated-initial-control": {
+      "checkpoint_sha256": "57e1ff52f4e8de45415b30558a6e9c2b210f728012001b6b671b8f76937e97f0",
+      "seed": 1102,
+      "eta": 0.0,
+      "frames": 500,
+      "always_open": false,
+      "seconds": 78.33846679871203,
+      "frames_per_second": 6.382560451236972,
+      "scores": {
+        "all": {
+          "samples": 1327340,
+          "mse": 0.0009207318584459716,
+          "persistence_mse": 0.0019429837117844711,
+          "anticipation": 5.844503317793605e-09,
+          "false_alarm_fraction": null
+        },
+        "on": {
+          "samples": 612,
+          "mse": 0.9999967945946587,
+          "persistence_mse": 1.1568627450980393,
+          "anticipation": 1.6062607585285006e-06,
+          "false_alarm_fraction": null
+        },
+        "off": {
+          "samples": 610,
+          "mse": 0.9999794090380434,
+          "persistence_mse": 1.157377049180328,
+          "anticipation": 1.1105920409214296e-05,
+          "false_alarm_fraction": null
+        },
+        "quiet": {
+          "samples": 1326118,
+          "mse": 1.0462796322535386e-07,
+          "persistence_mse": 0.0008785040245287372,
+          "anticipation": 0.0,
+          "false_alarm_fraction": 7.54080707749989e-07
+        }
+      },
+      "event_adjacent_quiet": {
+        "samples": 2147,
+        "false_alarms": 1,
+        "fraction": 0.0004657661853749418
+      },
+      "max_active_eligibility_keys": 5846,
+      "open_gate_issues": 503,
+      "peak_spikes_per_tick": 627,
+      "mean_cell_rate_hz": 1.1389737129211426,
+      "max_cell_rate_hz": 30.000001907348633,
+      "changed_context_magnitudes": 0,
+      "max_update_reconstruction_error": 0.0,
+      "non_target_magnitudes_unchanged": true
+    },
+    "gated-trained-control": {
+      "checkpoint_sha256": "729e00abb4ae2a9310a9985aa2887742feafda0415fb9608633a1e90f769b41f",
+      "seed": 1102,
+      "eta": 0.0,
+      "frames": 500,
+      "always_open": false,
+      "seconds": 93.16918599989731,
+      "frames_per_second": 5.3665811784654975,
+      "scores": {
+        "all": {
+          "samples": 1327340,
+          "mse": 0.0009215414483570735,
+          "persistence_mse": 0.0019429837117844711,
+          "anticipation": 1.3408828003070349e-06,
+          "false_alarm_fraction": null
+        },
+        "on": {
+          "samples": 612,
+          "mse": 1.0000019591618208,
+          "persistence_mse": 1.1568627450980393,
+          "anticipation": -9.795554679173666e-07,
+          "false_alarm_fraction": null
+        },
+        "off": {
+          "samples": 610,
+          "mse": 0.9968188850606075,
+          "persistence_mse": 1.157377049180328,
+          "anticipation": 0.0029186997772227955,
+          "false_alarm_fraction": null
+        },
+        "quiet": {
+          "samples": 1326118,
+          "mse": 2.366386448790841e-06,
+          "persistence_mse": 0.0008785040245287372,
+          "anticipation": 0.0,
+          "false_alarm_fraction": 3.7704035387499455e-06
+        }
+      },
+      "event_adjacent_quiet": {
+        "samples": 2147,
+        "false_alarms": 2,
+        "fraction": 0.0009315323707498836
+      },
+      "max_active_eligibility_keys": 5851,
+      "open_gate_issues": 503,
+      "peak_spikes_per_tick": 627,
+      "mean_cell_rate_hz": 1.1392419338226318,
+      "max_cell_rate_hz": 30.000001907348633,
+      "changed_context_magnitudes": 260,
+      "max_update_reconstruction_error": 0.0,
+      "non_target_magnitudes_unchanged": true
+    }
+  },
+  "original_gated_control": {
+    "initial": {
+      "camera_events_and_scores_replayed": true,
+      "original_checkpoint_sha256": "ba0a57503b76f1aaa08e2e08fd0cd07ae8694b19c9dcbc9673e7ecdd65341249"
+    },
+    "trained": {
+      "camera_events_and_scores_replayed": true,
+      "original_checkpoint_sha256": "341d8600c8b3a3643f1d8641046fbc5956171404ed8f0ea7c755e71a6102cd1a"
+    }
+  },
+  "always_open_initial_to_trained": {
+    "changed_neuron_spike_counts": 4984,
+    "total_spikes_initial": 225009,
+    "total_spikes_trained": 228196,
+    "absolute_neuron_spike_count_change": 6895,
+    "on_anticipation_change": 0.0010841965403599937,
+    "off_anticipation_change": -0.0012549866496622763,
+    "on_mse_change": -0.0013230193674175217,
+    "off_mse_change": 0.00464221864450165
+  },
+  "gated_initial_to_trained": {
+    "changed_neuron_spike_counts": 832,
+    "total_spikes_initial": 225009,
+    "total_spikes_trained": 225062,
+    "absolute_neuron_spike_count_change": 855,
+    "on_anticipation_change": -2.585816226445867e-06,
+    "off_anticipation_change": 0.0029075938568135814,
+    "on_mse_change": 5.1645671620415e-06,
+    "off_mse_change": -0.003160523977435936
+  },
+  "criteria": {
+    "on_anticipation_at_least_point_one": false,
+    "off_anticipation_at_least_point_one": false,
+    "on_mse_improved": true,
+    "off_mse_improved": false,
+    "event_adjacent_quiet_alarms_at_most_five_percent": true
+  },
+  "all_criteria_pass": false,
+  "camera_event_sequences_equal": true,
+  "final_seeds_untouched": [
+    1201,
+    1202,
+    1203,
+    1204
+  ],
+  "script_sha256": "325f2470b052208e3646158e831a4b688deae98253c453cd7943d8e27f17ebb4"
+}

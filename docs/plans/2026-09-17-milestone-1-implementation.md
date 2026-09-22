@@ -1070,3 +1070,26 @@ ON anticipation-.0030, OFF+.0086. Same rule should not simply train longer.
 No further architecture implemented. See docs/experiments/
 2026-09-22-full-context-m1a-bridge-findings.md and linked compact evidence;
 raw checkpoints/traces in runs/full-context-m1a-v1.
+
+## 2026-09-22: bounded always-open Pong gate ablation
+
+Approved opt-in ablation removed the periodic timing multiplier from both
+forecast expression and issue eligibility; physical currents, anatomy,
+signs, delays, local context selection/credit, 8-tick horizon, and no-backprop
+are unchanged. Full-graph 50-frame/400-tick no-learning parity was exact for
+spikes, currents, state, raw forecasts and local eligibility; only intended
+gate multipliers differed. Exact resume frame9->19 passed for always-open and
+gated modes. Suite: 319 passed, 4 skipped.
+
+Capped train500 seed1101 eta1.0 and frozen initial/trained seed1102 500frames
+used equal camera targets. Original gated controls replayed exact saved
+scores. Always-open trained ON anticipation .001297 versus initial .000212;
+OFF -.001402 versus initial -.000147. Both miss .1 target; OFF event MSE
+worsens 1.000338->1.004980. Event-adjacent quiet alarms .792% meet 5% cap,
+but are not enough. 9447 context magnitudes changed, predominantly decreased;
+4984 neurons changed frozen-evaluation spike count, states finite, non-target
+weights fixed, update reconstruction exact. Training 5.23 camera fps in this
+run; same-host gated replays 5.37-6.38 fps. No longer run/rate sweep authorized
+by protocol. M1A and M1B still blocked, final seeds1201-1204 untouched.
+Findings/evidence: docs/experiments/2026-09-22-pong-gate-ablation-findings.md;
+checkpoints under runs/full-context-gate-ablation-v1.
