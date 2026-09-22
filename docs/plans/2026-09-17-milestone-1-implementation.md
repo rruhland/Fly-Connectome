@@ -974,3 +974,14 @@ findings, full result JSON and bounded live proposal in docs/experiments/
 Earlier user requirement: architecture adjustments must come through user first;
 approval request sent for the bounded experimental live subclass. No production
 model change made in this chunk.
+
+## 2026-09-22: approved live learner, first implementation chunk
+
+User approved docs/experiments/2026-09-22-live-local-timing-proposal.md.
+Added experimental TimedLocalPrediction for one measured L3 target, keeping
+physical recurrent current and all production model code unchanged. Unit tests
+for local reference/gate, surprise, prior count gain, target-only update pass.
+Eta0 on saved 411-frame continuous challenge exactly matches every spike,
+raw/gated forecast, target, sensory state, reference/gate and final weights.
+Parity manifest SHA in docs/experiments/2026-09-22-live-local-timing-parity.md.
+Direct suite13 passed. Next: live one-pass training and heldout tests.
