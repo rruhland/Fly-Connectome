@@ -1,5 +1,7 @@
 # STP preflight stops on an overly broad target-equality requirement
 
+Historical preflight report. The subsequent approved amendment and completed learning results are recorded in [learning findings](2026-09-21-short-term-learning-findings.md).
+
 Both approved release variants are implemented and verified. **No training was
 run.** Preflight found changed internal observation targets and obeyed the
 approved stop rule. This is not a negative learning result: the experiment has

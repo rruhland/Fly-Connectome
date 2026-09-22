@@ -1,0 +1,6 @@
+{
+  "qualifying": [],
+  "seed": 9081,
+  "trials": 15,
+  "criterion": "Every tempo passes unchanged criteria and held3 MSE improves over trained baseline"
+}

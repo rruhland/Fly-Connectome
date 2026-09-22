@@ -3,7 +3,9 @@
 Status: user approved; implementation and preflight completed. Preflight stopped
 before training because internal observation targets changed. See
 [findings](../experiments/2026-09-21-short-term-findings.md) and the
-[unapproved comparison amendment](2026-09-21-short-term-target-comparison-amendment.md).
+[approved comparison amendment](2026-09-21-short-term-target-comparison-amendment.md).
+The amended learning protocol is now complete: neither candidate qualifies. See
+[learning findings](../experiments/2026-09-21-short-term-learning-findings.md).
 The fixed adaptation A/B family
 is now complete and rejected; see
 [findings](../experiments/2026-09-21-adaptation-context-findings.md).

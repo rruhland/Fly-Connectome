@@ -1,0 +1,42 @@
+{
+  "D": {
+    "seconds": 417.6056568000349,
+    "frames": 11158,
+    "trials": 200,
+    "stability": {
+      "finite": true,
+      "within_weight_bounds": true,
+      "max_abs": {
+        "voltage": 10.046592712402344,
+        "sensory_state": 30.0,
+        "feedforward_current": 2.0391416549682617,
+        "predictive_current": 0.46357572078704834,
+        "behavioral_current": 0.0,
+        "adaptation": 1.963152527809143,
+        "magnitudes": 0.4950000047683716
+      }
+    },
+    "sha256": "b8dcb521960600447aee77cc9645ed2c9d11d10ba7111b82edc26d6c6822a852",
+    "stimulus_sha256": "670074104275495ff6fb0a270ba8e501c2ab314813785207247079c7a793deb2"
+  },
+  "F": {
+    "seconds": 415.6606260999688,
+    "frames": 11158,
+    "trials": 200,
+    "stability": {
+      "finite": true,
+      "within_weight_bounds": true,
+      "max_abs": {
+        "voltage": 10.083517074584961,
+        "sensory_state": 30.0,
+        "feedforward_current": 2.0391416549682617,
+        "predictive_current": 0.3449999988079071,
+        "behavioral_current": 0.0,
+        "adaptation": 1.9622446298599243,
+        "magnitudes": 0.4950000047683716
+      }
+    },
+    "sha256": "a2f765635484b9ea750b6785781c10a74662fb17a57729b6d638cba642713cb3",
+    "stimulus_sha256": "670074104275495ff6fb0a270ba8e501c2ab314813785207247079c7a793deb2"
+  }
+}

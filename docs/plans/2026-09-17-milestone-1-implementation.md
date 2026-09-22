@@ -867,3 +867,15 @@ Preflight5trials each2/3/4/6 seed9080 completed finite/bounded. All-neuron targe
 Releasepersistentstate/timestamps/index27052bytes;12frozen diagnostic sequences55.83s excludingwarmup/neutral/compression, notmatched overheadbenchmark. Raw runs/short-term-v1; scripts/short_term_experiment.py and short_term_audit.py. Findings/metrics/reconstruction/gains/hashes docs/experiments/2026-09-21-short-term-*. M1Aunmet,M1Bblocked.
 
 Ruling: compare every local observation and reportscoredL3separately; originalguard is too broad for physical transmission change, but cannot silently bypass approvedstop. New docs/plans/2026-09-21-short-term-target-comparison-amendment.md proposes identical allinjected/scoredtargets with internal targets following actualphysicalfeedforward arrivals, unchanged learning/model/200trial settings. Pendinguserapproval; notapplied. Next step is protocol correction then alreadyplanned D/Ftraining, notanother mechanism or preflight repetition.
+
+### 2026-09-21: bounded STP learning completed
+
+Approved target-comparison amendment applied; original failed preflight preserved.
+D/F each completed 200 mixed-tempo trials. All 24 frozen evaluations passed
+sensory-target equality, frozen-weight and internal reconstruction checks (zero
+reconstruction error). Saved-result resume revalidated hashes and recomputed
+selection. Neither candidate passes at any tempo; no confirmation/ablation/tuning.
+F held3 OFF anticipation weakened with training despite retained correct signs.
+M1A remains unmet; M1B blocked. Full tests: 269 passed, 4 skipped.
+Findings: docs/experiments/2026-09-21-short-term-learning-findings.md.
+Raw resumable artifacts: runs/short-term-v1. No new architecture approved here.
