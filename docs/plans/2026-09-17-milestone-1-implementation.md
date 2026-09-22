@@ -985,3 +985,15 @@ Eta0 on saved 411-frame continuous challenge exactly matches every spike,
 raw/gated forecast, target, sensory state, reference/gate and final weights.
 Parity manifest SHA in docs/experiments/2026-09-22-live-local-timing-parity.md.
 Direct suite13 passed. Next: live one-pass training and heldout tests.
+
+## 2026-09-22: approved live learner, training/validation chunk
+
+One-pass live 42-trial training completed at eta .1 and1, identical source and
+original L3 incoming magnitudes. Eta .1 selected on nine validation trials:
+ON .2706, OFF .1250, quiet alarms2.35%, MSE .0997. Eta1 OFF only .0353.
+Training eta.1 prequential OFF only .0373: final snapshot improvement should
+not be described as fully online-converged. 2453 frames in61.05s=40.18fps,
+eight neural ticks each; mean firing3.86Hz, max cell30.62Hz. Detailed local
+artifacts in runs/live-local-timing-v1, summarized by docs/experiments/
+2026-09-22-live-local-training.md. Test protocol frozen before heldout.
+Evaluation underway; do not tune on its results. Scope still experimental.
