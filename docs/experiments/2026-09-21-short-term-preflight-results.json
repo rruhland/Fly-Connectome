@@ -1,0 +1,902 @@
+{
+  "baseline-2": {
+    "seconds": 6.75095010001678,
+    "frames": 206,
+    "stability": {
+      "finite": true,
+      "within_weight_bounds": true,
+      "max_abs": {
+        "voltage": 10.21048641204834,
+        "sensory_state": 30.0,
+        "feedforward_current": 2.0354714393615723,
+        "predictive_current": 0.22999998927116394,
+        "behavioral_current": 0.0,
+        "adaptation": 1.3552825450897217,
+        "magnitudes": 0.4950000047683716
+      }
+    },
+    "target_mismatches": 0,
+    "target_samples": 412000,
+    "scored_target_mismatches": 0,
+    "first_mismatch_ticks": [],
+    "affected_body_ids": [],
+    "spike_count": 1707,
+    "release": {},
+    "sha256": "4cb65a057f64ad0b0150068520a35ec96a6f46556c89bbcd1097c5ebe91f0964"
+  },
+  "D-2": {
+    "seconds": 6.097477900038939,
+    "frames": 206,
+    "stability": {
+      "finite": true,
+      "within_weight_bounds": true,
+      "max_abs": {
+        "voltage": 10.129838943481445,
+        "sensory_state": 30.0,
+        "feedforward_current": 2.0354714393615723,
+        "predictive_current": 0.2174595594406128,
+        "behavioral_current": 0.0,
+        "adaptation": 1.3550125360488892,
+        "magnitudes": 0.4950000047683716
+      }
+    },
+    "target_mismatches": 291,
+    "target_samples": 412000,
+    "scored_target_mismatches": 0,
+    "first_mismatch_ticks": [
+      10,
+      15,
+      18,
+      19,
+      26,
+      28,
+      34,
+      37,
+      51,
+      52
+    ],
+    "affected_body_ids": [
+      10170,
+      10190,
+      10845,
+      12099,
+      12823,
+      13260,
+      16140,
+      17999,
+      20114,
+      20483,
+      22044,
+      22488,
+      29650,
+      30851,
+      31621,
+      40000,
+      46290,
+      64007,
+      64043,
+      71236,
+      73308,
+      74091,
+      76281,
+      82347,
+      85907,
+      90160,
+      91102,
+      91572,
+      103290,
+      110565
+    ],
+    "spike_count": 1708,
+    "release": {
+      "event": {
+        "count": 33,
+        "gain_quantiles": [
+          0.3332473039627075,
+          0.3336414694786072,
+          0.3483920693397522,
+          0.9437222480773926,
+          0.9449695944786072
+        ],
+        "state_quantiles": [
+          0.16662365198135376,
+          0.1668207347393036,
+          0.1741960346698761,
+          0.4718611240386963,
+          0.4724847972393036
+        ]
+      },
+      "quiet": {
+        "count": 1504,
+        "gain_quantiles": [
+          0.15213656425476074,
+          0.33024513721466064,
+          0.9374690651893616,
+          0.9455084800720215,
+          1.0
+        ],
+        "state_quantiles": [
+          0.07606828212738037,
+          0.16512256860733032,
+          0.4687345325946808,
+          0.47275424003601074,
+          0.5
+        ]
+      },
+      "persistent_release_bytes": 27052
+    },
+    "sha256": "46f34b6b1532afc9e0110e840e9f22864c762c0b8812bd0b4db5a7405508015d"
+  },
+  "F-2": {
+    "seconds": 5.828483499994036,
+    "frames": 206,
+    "stability": {
+      "finite": true,
+      "within_weight_bounds": true,
+      "max_abs": {
+        "voltage": 10.210481643676758,
+        "sensory_state": 30.0,
+        "feedforward_current": 2.0354714393615723,
+        "predictive_current": 0.26349082589149475,
+        "behavioral_current": 0.0,
+        "adaptation": 1.3552825450897217,
+        "magnitudes": 0.4950000047683716
+      }
+    },
+    "target_mismatches": 181,
+    "target_samples": 412000,
+    "scored_target_mismatches": 0,
+    "first_mismatch_ticks": [
+      8,
+      10,
+      16,
+      18,
+      28,
+      32,
+      41,
+      42,
+      51,
+      52
+    ],
+    "affected_body_ids": [
+      10170,
+      10190,
+      10845,
+      12099,
+      12823,
+      13260,
+      16140,
+      17999,
+      20114,
+      20483,
+      22044,
+      22488,
+      29650,
+      30851,
+      31621,
+      40000,
+      46290,
+      64007,
+      64043,
+      73308,
+      74091,
+      85907,
+      90160,
+      91102,
+      91572,
+      103290,
+      110565
+    ],
+    "spike_count": 1708,
+    "release": {
+      "event": {
+        "count": 27,
+        "gain_quantiles": [
+          1.032433032989502,
+          1.0568369626998901,
+          1.6516079902648926,
+          1.6663844585418701,
+          1.6667526960372925
+        ],
+        "state_quantiles": [
+          0.516216516494751,
+          0.5284184813499451,
+          0.8258039951324463,
+          0.8331922292709351,
+          0.8333763480186462
+        ]
+      },
+      "quiet": {
+        "count": 1510,
+        "gain_quantiles": [
+          1.0,
+          1.0545235872268677,
+          1.0635062456130981,
+          1.6697548627853394,
+          1.8478810787200928
+        ],
+        "state_quantiles": [
+          0.5,
+          0.5272617936134338,
+          0.5317531228065491,
+          0.8348774313926697,
+          0.9239405393600464
+        ]
+      },
+      "persistent_release_bytes": 27052
+    },
+    "sha256": "3967cc8f306b8b775fa2d48d2d01f0dce870f2146d27c66111ba5746e11cb2d7"
+  },
+  "baseline-3": {
+    "seconds": 4.76747369999066,
+    "frames": 246,
+    "stability": {
+      "finite": true,
+      "within_weight_bounds": true,
+      "max_abs": {
+        "voltage": 10.308225631713867,
+        "sensory_state": 30.0,
+        "feedforward_current": 2.0250003337860107,
+        "predictive_current": 0.22999998927116394,
+        "behavioral_current": 0.0,
+        "adaptation": 1.5357158184051514,
+        "magnitudes": 0.4950000047683716
+      }
+    },
+    "target_mismatches": 0,
+    "target_samples": 492000,
+    "scored_target_mismatches": 0,
+    "first_mismatch_ticks": [],
+    "affected_body_ids": [],
+    "spike_count": 2074,
+    "release": {},
+    "sha256": "057a621f047849bbeb5ad7a23879a8b12deed0a2338c07bb1e4c84bc12defffc"
+  },
+  "D-3": {
+    "seconds": 8.484304899990093,
+    "frames": 246,
+    "stability": {
+      "finite": true,
+      "within_weight_bounds": true,
+      "max_abs": {
+        "voltage": 10.236197471618652,
+        "sensory_state": 30.0,
+        "feedforward_current": 2.0250003337860107,
+        "predictive_current": 0.2174595594406128,
+        "behavioral_current": 0.0,
+        "adaptation": 1.5353947877883911,
+        "magnitudes": 0.4950000047683716
+      }
+    },
+    "target_mismatches": 298,
+    "target_samples": 492000,
+    "scored_target_mismatches": 0,
+    "first_mismatch_ticks": [
+      10,
+      15,
+      18,
+      19,
+      26,
+      28,
+      34,
+      37,
+      51,
+      52
+    ],
+    "affected_body_ids": [
+      10170,
+      10190,
+      10845,
+      12099,
+      12823,
+      13260,
+      22488,
+      46290,
+      64007,
+      64043,
+      71236,
+      74091,
+      76281,
+      82347,
+      85907,
+      90160,
+      91102,
+      91572
+    ],
+    "spike_count": 2071,
+    "release": {
+      "event": {
+        "count": 28,
+        "gain_quantiles": [
+          0.29328203201293945,
+          0.2941097617149353,
+          0.9388648569583893,
+          0.944994592666626,
+          0.9455727934837341
+        ],
+        "state_quantiles": [
+          0.14664101600646973,
+          0.14705488085746765,
+          0.46943242847919464,
+          0.472497296333313,
+          0.47278639674186707
+        ]
+      },
+      "quiet": {
+        "count": 1826,
+        "gain_quantiles": [
+          0.14865273237228394,
+          0.2397383749485016,
+          0.937633216381073,
+          0.9461352825164795,
+          1.0
+        ],
+        "state_quantiles": [
+          0.07432636618614197,
+          0.1198691874742508,
+          0.4688166081905365,
+          0.47306764125823975,
+          0.5
+        ]
+      },
+      "persistent_release_bytes": 27052
+    },
+    "sha256": "bf4b705b0b9009ce8e1cdff3a0b091acd75454ca1973af3a6d65181409800fb6"
+  },
+  "F-3": {
+    "seconds": 8.623266600014176,
+    "frames": 246,
+    "stability": {
+      "finite": true,
+      "within_weight_bounds": true,
+      "max_abs": {
+        "voltage": 10.308220863342285,
+        "sensory_state": 30.0,
+        "feedforward_current": 2.0250003337860107,
+        "predictive_current": 0.26349082589149475,
+        "behavioral_current": 0.0,
+        "adaptation": 1.5357158184051514,
+        "magnitudes": 0.4950000047683716
+      }
+    },
+    "target_mismatches": 215,
+    "target_samples": 492000,
+    "scored_target_mismatches": 0,
+    "first_mismatch_ticks": [
+      8,
+      10,
+      16,
+      18,
+      28,
+      32,
+      41,
+      42,
+      51,
+      52
+    ],
+    "affected_body_ids": [
+      10170,
+      10190,
+      10845,
+      12099,
+      12823,
+      13260,
+      16140,
+      17999,
+      20114,
+      20483,
+      22044,
+      22488,
+      29650,
+      30851,
+      31621,
+      40000,
+      46290,
+      64007,
+      64043,
+      73308,
+      74091,
+      85907,
+      90160,
+      91102,
+      91572,
+      103290,
+      110565
+    ],
+    "spike_count": 2073,
+    "release": {
+      "event": {
+        "count": 33,
+        "gain_quantiles": [
+          1.054427146911621,
+          1.0553564071655273,
+          1.0574816465377808,
+          1.7058902978897095,
+          1.7067179679870605
+        ],
+        "state_quantiles": [
+          0.5272135734558105,
+          0.5276782035827636,
+          0.5287408232688904,
+          0.8529451489448547,
+          0.8533589839935303
+        ]
+      },
+      "quiet": {
+        "count": 1836,
+        "gain_quantiles": [
+          1.0,
+          1.0538614988327026,
+          1.0625367164611816,
+          1.7602615356445312,
+          1.851346492767334
+        ],
+        "state_quantiles": [
+          0.5,
+          0.5269307494163513,
+          0.5312683582305908,
+          0.8801307678222656,
+          0.925673246383667
+        ]
+      },
+      "persistent_release_bytes": 27052
+    },
+    "sha256": "b9b3e5b366f42cc9983aff75446ba8f24fa8462ddd65bf27d3444211468e74ee"
+  },
+  "baseline-4": {
+    "seconds": 2.0717040000017732,
+    "frames": 286,
+    "stability": {
+      "finite": true,
+      "within_weight_bounds": true,
+      "max_abs": {
+        "voltage": 10.308225631713867,
+        "sensory_state": 30.0,
+        "feedforward_current": 2.0250003337860107,
+        "predictive_current": 0.3449999988079071,
+        "behavioral_current": 0.0,
+        "adaptation": 1.766631841659546,
+        "magnitudes": 0.4950000047683716
+      }
+    },
+    "target_mismatches": 0,
+    "target_samples": 572000,
+    "scored_target_mismatches": 0,
+    "first_mismatch_ticks": [],
+    "affected_body_ids": [],
+    "spike_count": 2451,
+    "release": {},
+    "sha256": "f2fe784a85a0d2717303a1c7b865aae2044ca0de3806b552b85710dac8e729f6"
+  },
+  "D-4": {
+    "seconds": 2.4902757999952883,
+    "frames": 286,
+    "stability": {
+      "finite": true,
+      "within_weight_bounds": true,
+      "max_abs": {
+        "voltage": 10.236197471618652,
+        "sensory_state": 30.0,
+        "feedforward_current": 2.0250003337860107,
+        "predictive_current": 0.2174595594406128,
+        "behavioral_current": 0.0,
+        "adaptation": 1.7679513692855835,
+        "magnitudes": 0.4950000047683716
+      }
+    },
+    "target_mismatches": 439,
+    "target_samples": 572000,
+    "scored_target_mismatches": 0,
+    "first_mismatch_ticks": [
+      10,
+      15,
+      18,
+      19,
+      26,
+      28,
+      34,
+      37,
+      51,
+      52
+    ],
+    "affected_body_ids": [
+      10170,
+      10190,
+      10845,
+      12099,
+      12823,
+      13260,
+      16140,
+      17999,
+      20114,
+      20483,
+      22044,
+      22488,
+      29650,
+      30851,
+      31621,
+      40000,
+      46290,
+      64007,
+      64043,
+      71236,
+      73308,
+      74091,
+      76281,
+      82347,
+      85907,
+      90160,
+      91102,
+      91572,
+      103290,
+      110565
+    ],
+    "spike_count": 2452,
+    "release": {
+      "event": {
+        "count": 44,
+        "gain_quantiles": [
+          0.2329069972038269,
+          0.2330448031425476,
+          0.8878925740718842,
+          0.9437862157821655,
+          0.9455727934837341
+        ],
+        "state_quantiles": [
+          0.11645349860191345,
+          0.1165224015712738,
+          0.4439462870359421,
+          0.47189310789108274,
+          0.47278639674186707
+        ]
+      },
+      "quiet": {
+        "count": 2202,
+        "gain_quantiles": [
+          0.13747018575668335,
+          0.23490263223648072,
+          0.937466025352478,
+          0.9461092948913574,
+          1.0
+        ],
+        "state_quantiles": [
+          0.06873509287834167,
+          0.11745131611824036,
+          0.468733012676239,
+          0.4730546474456787,
+          0.5
+        ]
+      },
+      "persistent_release_bytes": 27052
+    },
+    "sha256": "dcda1b4edf6de8e43e96607bcc08ed84a025043e176915e99ce31dd61fa2e01b"
+  },
+  "F-4": {
+    "seconds": 2.256892399978824,
+    "frames": 286,
+    "stability": {
+      "finite": true,
+      "within_weight_bounds": true,
+      "max_abs": {
+        "voltage": 10.308220863342285,
+        "sensory_state": 30.0,
+        "feedforward_current": 2.0250003337860107,
+        "predictive_current": 0.3449999988079071,
+        "behavioral_current": 0.0,
+        "adaptation": 1.7665867805480957,
+        "magnitudes": 0.4950000047683716
+      }
+    },
+    "target_mismatches": 206,
+    "target_samples": 572000,
+    "scored_target_mismatches": 0,
+    "first_mismatch_ticks": [
+      8,
+      10,
+      16,
+      18,
+      28,
+      32,
+      41,
+      42,
+      51,
+      52
+    ],
+    "affected_body_ids": [
+      10170,
+      10190,
+      10845,
+      12099,
+      12823,
+      13260,
+      16140,
+      17999,
+      20114,
+      20483,
+      22044,
+      22488,
+      29650,
+      30851,
+      31621,
+      40000,
+      46290,
+      64007,
+      64043,
+      73308,
+      74091,
+      85907,
+      90160,
+      91102,
+      91572,
+      103290,
+      110565
+    ],
+    "spike_count": 2451,
+    "release": {
+      "event": {
+        "count": 37,
+        "gain_quantiles": [
+          1.054427146911621,
+          1.0551271438598633,
+          1.1601762771606445,
+          1.7670929431915283,
+          1.7670929431915283
+        ],
+        "state_quantiles": [
+          0.5272135734558105,
+          0.5275635719299316,
+          0.5800881385803223,
+          0.8835464715957642,
+          0.8835464715957642
+        ]
+      },
+      "quiet": {
+        "count": 2205,
+        "gain_quantiles": [
+          1.0,
+          1.0538631677627563,
+          1.0637950897216797,
+          1.7639186859130864,
+          1.8625515699386597
+        ],
+        "state_quantiles": [
+          0.5,
+          0.5269315838813782,
+          0.5318975448608398,
+          0.8819593429565432,
+          0.9312757849693298
+        ]
+      },
+      "persistent_release_bytes": 27052
+    },
+    "sha256": "ce60ca9f2cd3da4d4cdc7f05ee4626e4c5b6f60680672273b583df62d2fde66d"
+  },
+  "baseline-6": {
+    "seconds": 2.2236776999779977,
+    "frames": 366,
+    "stability": {
+      "finite": true,
+      "within_weight_bounds": true,
+      "max_abs": {
+        "voltage": 10.308225631713867,
+        "sensory_state": 30.0,
+        "feedforward_current": 2.032928943634033,
+        "predictive_current": 0.3449999988079071,
+        "behavioral_current": 0.0,
+        "adaptation": 1.8207162618637085,
+        "magnitudes": 0.4950000047683716
+      }
+    },
+    "target_mismatches": 0,
+    "target_samples": 732000,
+    "scored_target_mismatches": 0,
+    "first_mismatch_ticks": [],
+    "affected_body_ids": [],
+    "spike_count": 3131,
+    "release": {},
+    "sha256": "6d39fedfb55f80e77c07d2af89c06e5b1af759d0ae2992bb66330a2d2bd39485"
+  },
+  "D-6": {
+    "seconds": 3.030079799995292,
+    "frames": 366,
+    "stability": {
+      "finite": true,
+      "within_weight_bounds": true,
+      "max_abs": {
+        "voltage": 10.236197471618652,
+        "sensory_state": 30.0,
+        "feedforward_current": 2.032928943634033,
+        "predictive_current": 0.3449999988079071,
+        "behavioral_current": 0.0,
+        "adaptation": 1.8206590414047241,
+        "magnitudes": 0.4950000047683716
+      }
+    },
+    "target_mismatches": 444,
+    "target_samples": 732000,
+    "scored_target_mismatches": 0,
+    "first_mismatch_ticks": [
+      10,
+      15,
+      18,
+      19,
+      26,
+      28,
+      34,
+      37,
+      51,
+      52
+    ],
+    "affected_body_ids": [
+      10170,
+      10190,
+      10845,
+      12099,
+      12823,
+      13260,
+      16140,
+      17999,
+      20114,
+      20483,
+      22044,
+      22488,
+      29650,
+      30851,
+      31621,
+      40000,
+      46290,
+      64007,
+      64043,
+      71236,
+      73308,
+      74091,
+      76281,
+      82347,
+      85907,
+      90160,
+      91102,
+      91572,
+      103290,
+      110565
+    ],
+    "spike_count": 3130,
+    "release": {
+      "event": {
+        "count": 42,
+        "gain_quantiles": [
+          0.19256556034088135,
+          0.22281306982040405,
+          0.943170577287674,
+          0.9677600264549255,
+          0.9677607417106628
+        ],
+        "state_quantiles": [
+          0.09628278017044067,
+          0.11140653491020203,
+          0.471585288643837,
+          0.48388001322746277,
+          0.4838803708553314
+        ]
+      },
+      "quiet": {
+        "count": 2827,
+        "gain_quantiles": [
+          0.1311437487602234,
+          0.20566153526306152,
+          0.9374632835388184,
+          0.9461368322372437,
+          1.0
+        ],
+        "state_quantiles": [
+          0.0655718743801117,
+          0.10283076763153076,
+          0.4687316417694092,
+          0.4730684161186218,
+          0.5
+        ]
+      },
+      "persistent_release_bytes": 27052
+    },
+    "sha256": "16fd5d55eb74396bb4ad40de6aa1df675655186a7fe008f926fef36b7f6771b1"
+  },
+  "F-6": {
+    "seconds": 3.208394000015687,
+    "frames": 366,
+    "stability": {
+      "finite": true,
+      "within_weight_bounds": true,
+      "max_abs": {
+        "voltage": 10.308220863342285,
+        "sensory_state": 30.0,
+        "feedforward_current": 2.032928943634033,
+        "predictive_current": 0.34500014781951904,
+        "behavioral_current": 0.0,
+        "adaptation": 1.8191554546356201,
+        "magnitudes": 0.4950000047683716
+      }
+    },
+    "target_mismatches": 394,
+    "target_samples": 732000,
+    "scored_target_mismatches": 0,
+    "first_mismatch_ticks": [
+      8,
+      10,
+      16,
+      18,
+      28,
+      32,
+      41,
+      42,
+      51,
+      52
+    ],
+    "affected_body_ids": [
+      10170,
+      10190,
+      10845,
+      12099,
+      12823,
+      13260,
+      16140,
+      17999,
+      20114,
+      20483,
+      22044,
+      22488,
+      29650,
+      30851,
+      31621,
+      40000,
+      46290,
+      64007,
+      64043,
+      73308,
+      74091,
+      85907,
+      90160,
+      91102,
+      91572,
+      103290,
+      110565
+    ],
+    "spike_count": 3130,
+    "release": {
+      "event": {
+        "count": 41,
+        "gain_quantiles": [
+          1.0313057899475098,
+          1.053859829902649,
+          1.0568691492080688,
+          1.7771868705749512,
+          1.7771871089935303
+        ],
+        "state_quantiles": [
+          0.5156528949737549,
+          0.5269299149513245,
+          0.5284345746040344,
+          0.8885934352874756,
+          0.8885935544967651
+        ]
+      },
+      "quiet": {
+        "count": 2826,
+        "gain_quantiles": [
+          1.0,
+          1.0538184642791748,
+          1.0627127885818481,
+          1.7956151962280273,
+          1.8700968027114868
+        ],
+        "state_quantiles": [
+          0.5,
+          0.5269092321395874,
+          0.5313563942909241,
+          0.8978075981140137,
+          0.9350484013557434
+        ]
+      },
+      "persistent_release_bytes": 27052
+    },
+    "sha256": "cadb597377f58531a7c0e458b5d2c93c19b25ea7dc4791bd952e42a14da2c79f"
+  }
+}

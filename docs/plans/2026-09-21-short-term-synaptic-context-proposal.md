@@ -1,6 +1,10 @@
 # Short-term synaptic context: bounded next experiment
 
-Status: user approved; implementation underway. The fixed adaptation A/B family
+Status: user approved; implementation and preflight completed. Preflight stopped
+before training because internal observation targets changed. See
+[findings](../experiments/2026-09-21-short-term-findings.md) and the
+[unapproved comparison amendment](2026-09-21-short-term-target-comparison-amendment.md).
+The fixed adaptation A/B family
 is now complete and rejected; see
 [findings](../experiments/2026-09-21-adaptation-context-findings.md).
 No production architecture changes.

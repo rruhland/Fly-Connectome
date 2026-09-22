@@ -1,0 +1,17 @@
+{
+  "passed": false,
+  "neutral_learning_exact": {
+    "baseline": true,
+    "D": true,
+    "F": true
+  },
+  "blank_frames": [
+    14,
+    24,
+    23,
+    24,
+    36
+  ],
+  "seed": 9080,
+  "decision": "STOP: observation targets changed; no training authorized under this protocol"
+}
