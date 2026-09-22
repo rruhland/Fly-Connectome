@@ -3,6 +3,7 @@ import math
 
 import torch
 
+from frame_prediction import FramePrediction
 from signed_kinetics import AreaMatchedKineticsNetwork
 
 
@@ -75,3 +76,90 @@ class MultiContextEfficacyNetwork(AreaMatchedKineticsNetwork):
         self.inhibitory_prediction[:, self.targets] = torch.where(
             self.current_context, self.context_inh[1], self.context_inh[0])
         return activity
+
+
+class MultiContextTimedPrediction(FramePrediction):
+    """Frame-horizon local credit gated and selected independently per target."""
+
+    def __init__(self, network, config, **kwargs):
+        if not isinstance(network, MultiContextEfficacyNetwork):
+            raise ValueError('full context rule requires matching neural dynamics')
+        super().__init__(network, config, **kwargs)
+        if not self.sensory_mask[network.targets].all():
+            raise ValueError('all context targets need direct local sensory input')
+        self.reference = torch.zeros(len(network.targets), device=network.device)
+        self.previous_state = torch.zeros_like(self.reference)
+        self.gate = torch.zeros(len(network.targets), dtype=torch.bool, device=network.device)
+        self.quiet_count = torch.ones_like(self.reference)
+        self.event_count = torch.ones_like(self.reference)
+        self.margin = math.exp(-4*network.config.dt/network.config.tau_sensory)
+        self.context_proposals = torch.zeros_like(network.components)
+        self.last_issue = None
+        self.last_confirmation = None
+
+    def _capture_forecast(self):
+        super()._capture_forecast()
+        n = self.network
+        keys, eligibility, prediction = self.forecast
+        edges = keys.remainder(n.e)
+        positions = n.target_lookup[n.post[edges]]
+        keep = positions >= 0
+        positions = positions[keep]
+        gate = self.gate[positions].float()
+        self.forecast = keys[keep], eligibility[keep]*gate, prediction[keep]*gate
+
+    @torch.no_grad()
+    def observe(self, activity, reward):
+        boundary = self.tick % 8 == 0
+        self.last_confirmation = None
+        if boundary:
+            n = self.network
+            observed = self.config.observation(activity, n.config.threshold,
+                                               self.sensory_mask, self.sensory_gain)
+            event = observed[0, n.targets] != 0
+            due = self.forecast is not None
+            if due:
+                gain = torch.where(event,
+                    (self.quiet_count/self.event_count).clamp(1, 8), 1.)
+                keys, eligibility, prediction = self.forecast
+                positions = n.target_lookup[n.post[keys.remainder(n.e)]]
+                self.forecast = keys, eligibility*gain[positions], prediction
+                prior_context = self.last_issue['context']
+                self.last_confirmation = dict(gain=gain.clone())
+            current_state = n.sensory_state[0, n.targets]
+            self.reference[event] = self.previous_state[event].abs()
+            value = current_state.abs()
+            self.gate = ((self.reference > 0)
+                         & (self.reference*self.margin <= value)
+                         & (value <= self.reference/self.margin))
+            self.previous_state.copy_(current_state)
+        super().observe(activity, reward)
+        if boundary:
+            n = self.network
+            if self.last_confirmation is not None:
+                edges, targets, delta = self.last_visual_update
+                positions = n.incoming_lookup[edges]
+                local_targets = n.edge_targets[positions]
+                contexts = prior_context[local_targets].long()
+                flat = contexts*len(n.incoming)+positions
+                self.context_proposals.view(-1).index_add_(0, flat, delta)
+                self.proposals[edges] = 0
+                self.last_confirmation.update(edges=edges.clone(), targets=targets.clone(),
+                                              delta=delta.clone(), context=contexts.bool().clone())
+            raw = self.config.encode(activity.predicted[0, n.targets], n.config.threshold)
+            keys, eligibility, _ = self.forecast
+            self.last_issue = dict(tick=self.tick-1, context=n.current_context[0].clone(),
+                gate=self.gate.clone(), reference=self.reference.clone(),
+                sensory_state=self.previous_state.clone(), raw_prediction=raw.clone(),
+                prediction=raw*self.gate, edges=keys.remainder(n.e).clone(),
+                eligibility=eligibility.clone())
+            self.event_count.add_(event.float())
+            self.quiet_count.add_((~event).float())
+
+    @torch.no_grad()
+    def synchronize(self):
+        super().synchronize()
+        n = self.network
+        n.components.add_(self.context_proposals).clamp_(0, self.config.maximum_weight)
+        n.magnitudes[n.incoming] = n.components[0]
+        self.context_proposals.zero_()
