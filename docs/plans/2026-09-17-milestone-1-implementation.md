@@ -903,3 +903,17 @@ has identical forecast history and opposite corrections; not a causal failure.
 No production/model change. Findings: docs/experiments/2026-09-21-credit-replay-findings.md.
 Next proposed diagnostic: frozen-history capacity bound before changing plasticity.
 M1A remains unmet; M1B blocked. Raw artifacts: runs/credit-replay-v1.
+
+### 2026-09-21: frozen-history capacity investigation completed
+
+Existing incoming eligibility reconstructs frozen predictions after warmup;
+no neural training/model change. Shared/split bounded offline fits compared
+with held3 untouched. Split MSE anticipates both signs (.152/.173) but19.6%
+quiet alarms. Direct feasibility (corrected presolve=false) rejects both joint
+and each single-tempo polarity-split fits at existing anticipation/quiet limits.
+No-quiet control feasible. Presolve false-infeasibility caught by known witness,
+regression fixture added;45relevant tests pass. No new architecture authorized.
+Stop polarity-only splitting as a standalone proposed fix for these histories;
+next direction must address temporal expression plus matching local credit.
+Findings: docs/experiments/2026-09-21-credit-capacity-findings.md.
+Raw artifacts: runs/credit-capacity-v1. M1A unmet; M1B blocked.

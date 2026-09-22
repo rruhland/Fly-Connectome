@@ -1,0 +1,12 @@
+Regression fixture: credit_capacity_feasible.npz
+
+Derived from runs/context-audit-v1 frozen baseline records through
+scripts/credit_capacity.py. Only trials1-14 at training tempos2/4/6 are included.
+Columns are the six active polarity-split incoming eligibility features, with
+known_weights from the split event-balanced fit. Each polarity's clipped mean
+exceeds0.1 at each training tempo; no quiet cap is imposed in the regression.
+
+The installed solver's presolve incorrectly rejected this known-feasible case.
+Direct evaluation of the constructed constraints gives zero violation for the
+known vector. With presolve disabled, the solver finds a feasible solution.
+No weights from this fixture are installed in the neural model.

@@ -1,5 +1,7 @@
 # Credit replay: real polarity context, unresolved event-versus-quiet credit
 
+Follow-up completed: [frozen-history capacity findings](2026-09-21-credit-capacity-findings.md). Polarity splitting improves event amplitude but cannot meet the quiet constraint on these traces.
+
 The polarity cue survives actual learning, but the follow-up sharply limits what that means. At every recorded forecast, its sign equals the last observed sensory-event polarity. The scored column contains one binary pixel, so its nonzero events must alternate. Thus the earlier perfect ON/OFF separator is a local occupancy/history signal, not evidence that the network has learned timing or that the credit rule is the sole bottleneck.
 
 Quiet and event proposals still oppose each other inside the same polarity context. There is no evidence here that a polarity-only channel split would solve prediction. M1A remains unmet; no new plasticity mechanism was implemented.
