@@ -46,6 +46,7 @@ def main():
     pong = Pong([1101], Physics(**metadata['physics']))
     frames = 50
     max_keys = 0
+    max_reference_keys = 0
     forecast_edges = 0
     open_gates = 0
     started = time.perf_counter()
@@ -60,10 +61,15 @@ def main():
                 raise AssertionError(f'frame {frame} tick {tick}: neural parity')
             old_rule.observe(old, torch.zeros(1))
             new_rule.observe(new, torch.zeros(1))
-            for field in ('keys', 'values', 'arrival_trace', 'post_trace', 'expected'):
+            selected = candidate.incoming_lookup[old_rule.keys.remainder(reference.e)] >= 0
+            for field in ('keys', 'values', 'arrival_trace'):
+                if not torch.equal(getattr(old_rule, field)[selected], getattr(new_rule, field)):
+                    raise AssertionError(f'frame {frame} tick {tick}: selected {field}')
+            for field in ('post_trace', 'expected', 'rates'):
                 if not torch.equal(getattr(old_rule, field), getattr(new_rule, field)):
                     raise AssertionError(f'frame {frame} tick {tick}: {field}')
             max_keys = max(max_keys, len(new_rule.keys))
+            max_reference_keys = max(max_reference_keys, len(old_rule.keys))
             if tick == 0:
                 keys, eligibility, prediction = old_rule.forecast
                 edges = keys.remainder(reference.e)
@@ -87,11 +93,12 @@ def main():
     result = dict(source=str(source), source_sha256=source_sha, graph_sha256=graph.identity(),
         bounded_source_edges=out_of_bounds_source_edges,
         frames=frames, ticks=8*frames, targets=len(candidate.targets), edges=len(candidate.incoming),
-        max_active_eligibility_keys=max_keys, captured_target_edge_forecasts=forecast_edges,
+        max_active_eligibility_keys=max_keys, max_reference_eligibility_keys=max_reference_keys,
+        captured_target_edge_forecasts=forecast_edges,
         open_target_gates=open_gates, exact_fields=['spikes', 'predicted', 'keys', 'values',
-            'arrival_trace', 'post_trace', 'expected', 'gated target forecast', 'weights'],
+            'arrival_trace', 'post_trace', 'expected', 'rates', 'gated target forecast', 'weights'],
         seconds=time.perf_counter()-started, script_sha256=checksum(Path(__file__)))
-    output = Path('runs/full-context-m1a-v1/rule-parity.json')
+    output = Path('runs/full-context-m1a-v1/sparse-rule-parity.json')
     if output.exists():
         raise FileExistsError(output)
     output.write_text(json.dumps(result, indent=2)+'\n')

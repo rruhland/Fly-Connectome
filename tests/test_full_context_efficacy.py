@@ -173,3 +173,21 @@ def test_one_target_rule_matches_verified_single_target_rule_tick_by_tick():
             old_rule.synchronize()
             new_rule.synchronize()
             torch.testing.assert_close(new.components, old.components, rtol=0, atol=0)
+
+
+def test_frozen_predictive_edges_do_not_consume_eligibility_state():
+    graph = Graph.from_contacts([10, 20, 30], [10, 10], [20, 30], [1, 1], [1]*3, .5)
+    net = MultiContextEfficacyNetwork(graph, [1, 1], ['predictive', 'predictive'],
+        config=NeuronConfig(tau_sensory=.02),
+        target_mask=torch.tensor([False, True, False]))
+    cfg = LearningConfig(prediction_encoding='signed-current-v1',
+        visual_target='input-arrivals-v1', visual_eligibility='forecast-causal-v1',
+        eta_prediction=.1, eta_reward=0., homeostasis_rate=0.)
+    rule = MultiContextTimedPrediction(net, cfg,
+        sensory_mask=torch.tensor([False, True, False]), sensory_gain=30.)
+    net.history[(net.step_index-1) % net.history_length, 0, 0] = True
+    activity = net.step(torch.zeros(1, 3), capture_increments=True)
+    assert activity.arrival_edges.tolist() == [0, 1]
+    rule.observe(activity, torch.zeros(1))
+    assert rule.keys.tolist() == [0]
+    assert rule.forecast[0].tolist() == [0]

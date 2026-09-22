@@ -1,4 +1,5 @@
 """Opt-in vectorized context efficacy for directly observed visual neurons."""
+from dataclasses import replace
 import math
 
 import torch
@@ -133,7 +134,13 @@ class MultiContextTimedPrediction(FramePrediction):
                          & (self.reference*self.margin <= value)
                          & (value <= self.reference/self.margin))
             self.previous_state.copy_(current_state)
-        super().observe(activity, reward)
+        # All other predictive and behavioral magnitudes are frozen in this
+        # M1A bridge, so their arrivals need no eligibility or pair state.
+        arrivals = self.network.incoming_lookup[activity.arrival_edges] >= 0
+        learning_activity = replace(activity,
+            arrival_environments=activity.arrival_environments[arrivals],
+            arrival_edges=activity.arrival_edges[arrivals])
+        super().observe(learning_activity, reward)
         if boundary:
             n = self.network
             if self.last_confirmation is not None:

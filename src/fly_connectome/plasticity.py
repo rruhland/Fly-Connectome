@@ -136,8 +136,9 @@ class Plasticity:
         self.expected.copy_(cfg.encode(activity.predicted, n.config.threshold))
         self.post_trace.add_(activity.spikes)
         self.rates.lerp_(activity.spikes.float() / dt, 1 - math.exp(-dt / cfg.tau_homeostasis))
-        overload = (self.rates.mean(0)[n.post] - cfg.maximum_rate).clamp(min=0)
-        self.homeostatic_exponent.add_(overload, alpha=cfg.homeostasis_rate * dt)
+        if cfg.homeostasis_rate:
+            overload = (self.rates.mean(0)[n.post] - cfg.maximum_rate).clamp(min=0)
+            self.homeostatic_exponent.add_(overload, alpha=cfg.homeostasis_rate * dt)
 
     @torch.no_grad()
     def reward(self, reward):
