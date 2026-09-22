@@ -1,0 +1,26 @@
+[
+  {
+    "dwell": 2,
+    "samples": 1121,
+    "issue_target_alignment": true,
+    "source_checksum": true
+  },
+  {
+    "dwell": 3,
+    "samples": 1301,
+    "issue_target_alignment": true,
+    "source_checksum": true
+  },
+  {
+    "dwell": 4,
+    "samples": 1481,
+    "issue_target_alignment": true,
+    "source_checksum": true
+  },
+  {
+    "dwell": 6,
+    "samples": 1841,
+    "issue_target_alignment": true,
+    "source_checksum": true
+  }
+]

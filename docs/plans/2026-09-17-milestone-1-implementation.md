@@ -879,3 +879,13 @@ F held3 OFF anticipation weakened with training despite retained correct signs.
 M1A remains unmet; M1B blocked. Full tests: 269 passed, 4 skipped.
 Findings: docs/experiments/2026-09-21-short-term-learning-findings.md.
 Raw resumable artifacts: runs/short-term-v1. No new architecture approved here.
+
+### 2026-09-21: per-edge credit-context pilot
+
+Offline frozen-baseline audit finds forecast-time sensory-state sign separates
+all tested ON/OFF proposal directions on L2/L1 target edges, including held3.
+Quiet directions remain mixed; this is not event detection or learned prediction.
+Counterfactual proposals only, not D/F training replay. Count accuracy concealed
+missed ON updates; event-balanced probe exposes existing polarity context.
+No model change. Relevant checks 10 passed; source hashes and +8 alignment verified.
+See docs/experiments/2026-09-21-credit-context-findings.md for limits and next audit.

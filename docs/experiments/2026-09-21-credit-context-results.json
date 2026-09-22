@@ -1,0 +1,2648 @@
+{
+  "source_hashes": {
+    "runs\\context-audit-v1\\dwell-2.npz": "70ff47ec81daac63f88632cbd1ea9865336c79649aad4118fb953676dde7d804",
+    "runs\\context-audit-v1\\dwell-3.npz": "cbfb752033f69df62849cf38dc741f124c44e7149fb15ddaaa7ccc6a09520969",
+    "runs\\context-audit-v1\\dwell-4.npz": "1756672ecc99b80135dc02664503b01e4c4d83d5e4af1659dfcaa757375215c2",
+    "runs\\context-audit-v1\\dwell-6.npz": "baf9b040624d4aca87bd8726adbd54d077952a6c1d159fe300c76f03ee80d162"
+  },
+  "results": {
+    "20655": {
+      "zero_update_count": 24,
+      "groups": {
+        "EI_eligibility": {
+          "features": [
+            "excitatory_prediction",
+            "inhibitory_prediction",
+            "eligibility_20655"
+          ],
+          "stump": {
+            "feature": "inhibitory_prediction",
+            "threshold": -0.00256995705422014,
+            "polarity": -1
+          },
+          "alternative_boundaries": {
+            "event_balanced": {
+              "feature": "excitatory_prediction",
+              "threshold": 0.004914925899356604,
+              "polarity": -1
+            },
+            "update_mass": {
+              "feature": "excitatory_prediction",
+              "threshold": 0.004914925899356604,
+              "polarity": -1
+            }
+          },
+          "scores": {
+            "2": {
+              "stump": {
+                "count": 370,
+                "balanced_sign_accuracy": 0.9711607337506618,
+                "update_mass_correct": 0.7714811883329611,
+                "scalar_retention": 0.4338539509401876,
+                "two_context_retention": 0.5429623766659218,
+                "categories": {
+                  "ON": {
+                    "count": 30,
+                    "sign_accuracy": 0.6666666666666666,
+                    "positive": 0,
+                    "negative": 30,
+                    "sum": -3.708628808787825,
+                    "absolute_sum": 3.708628808787825
+                  },
+                  "OFF": {
+                    "count": 30,
+                    "sign_accuracy": 1.0,
+                    "positive": 30,
+                    "negative": 0,
+                    "sum": 7.05960644764524,
+                    "absolute_sum": 7.05960644764524
+                  },
+                  "quiet": {
+                    "count": 310,
+                    "sign_accuracy": 0.9935483870967742,
+                    "positive": 109,
+                    "negative": 201,
+                    "sum": 2.3456738833502397,
+                    "absolute_sum": 2.3621085144664917
+                  }
+                }
+              },
+              "knn": {
+                "count": 370,
+                "balanced_sign_accuracy": 0.9552773365723006,
+                "update_mass_correct": 0.7702418628871939,
+                "scalar_retention": 0.4338539509401876,
+                "two_context_retention": 0.5404837257743877,
+                "categories": {
+                  "ON": {
+                    "count": 30,
+                    "sign_accuracy": 0.6666666666666666,
+                    "positive": 0,
+                    "negative": 30,
+                    "sum": -3.708628808787825,
+                    "absolute_sum": 3.708628808787825
+                  },
+                  "OFF": {
+                    "count": 30,
+                    "sign_accuracy": 1.0,
+                    "positive": 30,
+                    "negative": 0,
+                    "sum": 7.05960644764524,
+                    "absolute_sum": 7.05960644764524
+                  },
+                  "quiet": {
+                    "count": 310,
+                    "sign_accuracy": 0.967741935483871,
+                    "positive": 109,
+                    "negative": 201,
+                    "sum": 2.3456738833502397,
+                    "absolute_sum": 2.3621085144664917
+                  }
+                }
+              },
+              "event_balanced": {
+                "count": 370,
+                "balanced_sign_accuracy": 0.3503846273630446,
+                "update_mass_correct": 0.647504620121163,
+                "scalar_retention": 0.4338539509401876,
+                "two_context_retention": 0.4338539509401876,
+                "categories": {
+                  "ON": {
+                    "count": 30,
+                    "sign_accuracy": 0.1,
+                    "positive": 0,
+                    "negative": 30,
+                    "sum": -3.708628808787825,
+                    "absolute_sum": 3.708628808787825
+                  },
+                  "OFF": {
+                    "count": 30,
+                    "sign_accuracy": 1.0,
+                    "positive": 30,
+                    "negative": 0,
+                    "sum": 7.05960644764524,
+                    "absolute_sum": 7.05960644764524
+                  },
+                  "quiet": {
+                    "count": 310,
+                    "sign_accuracy": 0.2129032258064516,
+                    "positive": 109,
+                    "negative": 201,
+                    "sum": 2.3456738833502397,
+                    "absolute_sum": 2.3621085144664917
+                  }
+                }
+              },
+              "update_mass": {
+                "count": 370,
+                "balanced_sign_accuracy": 0.3503846273630446,
+                "update_mass_correct": 0.647504620121163,
+                "scalar_retention": 0.4338539509401876,
+                "two_context_retention": 0.4338539509401876,
+                "categories": {
+                  "ON": {
+                    "count": 30,
+                    "sign_accuracy": 0.1,
+                    "positive": 0,
+                    "negative": 30,
+                    "sum": -3.708628808787825,
+                    "absolute_sum": 3.708628808787825
+                  },
+                  "OFF": {
+                    "count": 30,
+                    "sign_accuracy": 1.0,
+                    "positive": 30,
+                    "negative": 0,
+                    "sum": 7.05960644764524,
+                    "absolute_sum": 7.05960644764524
+                  },
+                  "quiet": {
+                    "count": 310,
+                    "sign_accuracy": 0.2129032258064516,
+                    "positive": 109,
+                    "negative": 201,
+                    "sum": 2.3456738833502397,
+                    "absolute_sum": 2.3621085144664917
+                  }
+                }
+              }
+            },
+            "3": {
+              "stump": {
+                "count": 1295,
+                "balanced_sign_accuracy": 0.9011231795896602,
+                "update_mass_correct": 0.3717280192829354,
+                "scalar_retention": 0.07593644408943383,
+                "two_context_retention": 0.25654396143412905,
+                "categories": {
+                  "ON": {
+                    "count": 90,
+                    "sign_accuracy": 0.0,
+                    "positive": 0,
+                    "negative": 90,
+                    "sum": -32.71685651807977,
+                    "absolute_sum": 32.71685651807977
+                  },
+                  "OFF": {
+                    "count": 90,
+                    "sign_accuracy": 0.6111111111111112,
+                    "positive": 90,
+                    "negative": 0,
+                    "sum": 19.196924179923123,
+                    "absolute_sum": 19.196924179923123
+                  },
+                  "quiet": {
+                    "count": 1115,
+                    "sign_accuracy": 0.9937219730941704,
+                    "positive": 376,
+                    "negative": 739,
+                    "sum": 8.895757527981852,
+                    "absolute_sum": 8.981549148212858
+                  }
+                }
+              },
+              "knn": {
+                "count": 1295,
+                "balanced_sign_accuracy": 0.8357683128232474,
+                "update_mass_correct": 0.32658475123019776,
+                "scalar_retention": 0.07593644408943383,
+                "two_context_retention": 0.3468304975396045,
+                "categories": {
+                  "ON": {
+                    "count": 90,
+                    "sign_accuracy": 0.0,
+                    "positive": 0,
+                    "negative": 90,
+                    "sum": -32.71685651807977,
+                    "absolute_sum": 32.71685651807977
+                  },
+                  "OFF": {
+                    "count": 90,
+                    "sign_accuracy": 0.5,
+                    "positive": 90,
+                    "negative": 0,
+                    "sum": 19.196924179923123,
+                    "absolute_sum": 19.196924179923123
+                  },
+                  "quiet": {
+                    "count": 1115,
+                    "sign_accuracy": 0.9201793721973094,
+                    "positive": 376,
+                    "negative": 739,
+                    "sum": 8.895757527981852,
+                    "absolute_sum": 8.981549148212858
+                  }
+                }
+              },
+              "event_balanced": {
+                "count": 1295,
+                "balanced_sign_accuracy": 0.3753772837639847,
+                "update_mass_correct": 0.7864738805343815,
+                "scalar_retention": 0.07593644408943383,
+                "two_context_retention": 0.572947761068763,
+                "categories": {
+                  "ON": {
+                    "count": 90,
+                    "sign_accuracy": 0.6777777777777778,
+                    "positive": 0,
+                    "negative": 90,
+                    "sum": -32.71685651807977,
+                    "absolute_sum": 32.71685651807977
+                  },
+                  "OFF": {
+                    "count": 90,
+                    "sign_accuracy": 1.0,
+                    "positive": 90,
+                    "negative": 0,
+                    "sum": 19.196924179923123,
+                    "absolute_sum": 19.196924179923123
+                  },
+                  "quiet": {
+                    "count": 1115,
+                    "sign_accuracy": 0.20269058295964126,
+                    "positive": 376,
+                    "negative": 739,
+                    "sum": 8.895757527981852,
+                    "absolute_sum": 8.981549148212858
+                  }
+                }
+              },
+              "update_mass": {
+                "count": 1295,
+                "balanced_sign_accuracy": 0.3753772837639847,
+                "update_mass_correct": 0.7864738805343815,
+                "scalar_retention": 0.07593644408943383,
+                "two_context_retention": 0.572947761068763,
+                "categories": {
+                  "ON": {
+                    "count": 90,
+                    "sign_accuracy": 0.6777777777777778,
+                    "positive": 0,
+                    "negative": 90,
+                    "sum": -32.71685651807977,
+                    "absolute_sum": 32.71685651807977
+                  },
+                  "OFF": {
+                    "count": 90,
+                    "sign_accuracy": 1.0,
+                    "positive": 90,
+                    "negative": 0,
+                    "sum": 19.196924179923123,
+                    "absolute_sum": 19.196924179923123
+                  },
+                  "quiet": {
+                    "count": 1115,
+                    "sign_accuracy": 0.20269058295964126,
+                    "positive": 376,
+                    "negative": 739,
+                    "sum": 8.895757527981852,
+                    "absolute_sum": 8.981549148212858
+                  }
+                }
+              }
+            },
+            "4": {
+              "stump": {
+                "count": 490,
+                "balanced_sign_accuracy": 0.8607142857142858,
+                "update_mass_correct": 0.17157158643848633,
+                "scalar_retention": 0.28733086512330897,
+                "two_context_retention": 0.6568568271230274,
+                "categories": {
+                  "ON": {
+                    "count": 30,
+                    "sign_accuracy": 0.0,
+                    "positive": 0,
+                    "negative": 30,
+                    "sum": -14.799303202006639,
+                    "absolute_sum": 14.799303202006639
+                  },
+                  "OFF": {
+                    "count": 30,
+                    "sign_accuracy": 0.0,
+                    "positive": 30,
+                    "negative": 0,
+                    "sum": 4.262769694875651,
+                    "absolute_sum": 4.262769694875651
+                  },
+                  "quiet": {
+                    "count": 430,
+                    "sign_accuracy": 0.986046511627907,
+                    "positive": 180,
+                    "negative": 250,
+                    "sum": 3.9250728068141907,
+                    "absolute_sum": 3.9478487747051494
+                  }
+                }
+              },
+              "knn": {
+                "count": 490,
+                "balanced_sign_accuracy": 0.9494047619047619,
+                "update_mass_correct": 0.6143955870031084,
+                "scalar_retention": 0.28733086512330897,
+                "two_context_retention": 0.287330865123309,
+                "categories": {
+                  "ON": {
+                    "count": 30,
+                    "sign_accuracy": 0.4,
+                    "positive": 0,
+                    "negative": 30,
+                    "sum": -14.799303202006639,
+                    "absolute_sum": 14.799303202006639
+                  },
+                  "OFF": {
+                    "count": 30,
+                    "sign_accuracy": 1.0,
+                    "positive": 30,
+                    "negative": 0,
+                    "sum": 4.262769694875651,
+                    "absolute_sum": 4.262769694875651
+                  },
+                  "quiet": {
+                    "count": 430,
+                    "sign_accuracy": 0.9790697674418605,
+                    "positive": 180,
+                    "negative": 250,
+                    "sum": 3.9250728068141907,
+                    "absolute_sum": 3.9478487747051494
+                  }
+                }
+              },
+              "event_balanced": {
+                "count": 490,
+                "balanced_sign_accuracy": 0.3845238095238095,
+                "update_mass_correct": 0.8810219306034874,
+                "scalar_retention": 0.28733086512330897,
+                "two_context_retention": 0.7620438612069744,
+                "categories": {
+                  "ON": {
+                    "count": 30,
+                    "sign_accuracy": 1.0,
+                    "positive": 0,
+                    "negative": 30,
+                    "sum": -14.799303202006639,
+                    "absolute_sum": 14.799303202006639
+                  },
+                  "OFF": {
+                    "count": 30,
+                    "sign_accuracy": 1.0,
+                    "positive": 30,
+                    "negative": 0,
+                    "sum": 4.262769694875651,
+                    "absolute_sum": 4.262769694875651
+                  },
+                  "quiet": {
+                    "count": 430,
+                    "sign_accuracy": 0.2534883720930233,
+                    "positive": 180,
+                    "negative": 250,
+                    "sum": 3.9250728068141907,
+                    "absolute_sum": 3.9478487747051494
+                  }
+                }
+              },
+              "update_mass": {
+                "count": 490,
+                "balanced_sign_accuracy": 0.3845238095238095,
+                "update_mass_correct": 0.8810219306034874,
+                "scalar_retention": 0.28733086512330897,
+                "two_context_retention": 0.7620438612069744,
+                "categories": {
+                  "ON": {
+                    "count": 30,
+                    "sign_accuracy": 1.0,
+                    "positive": 0,
+                    "negative": 30,
+                    "sum": -14.799303202006639,
+                    "absolute_sum": 14.799303202006639
+                  },
+                  "OFF": {
+                    "count": 30,
+                    "sign_accuracy": 1.0,
+                    "positive": 30,
+                    "negative": 0,
+                    "sum": 4.262769694875651,
+                    "absolute_sum": 4.262769694875651
+                  },
+                  "quiet": {
+                    "count": 430,
+                    "sign_accuracy": 0.2534883720930233,
+                    "positive": 180,
+                    "negative": 250,
+                    "sum": 3.9250728068141907,
+                    "absolute_sum": 3.9478487747051494
+                  }
+                }
+              }
+            },
+            "6": {
+              "stump": {
+                "count": 610,
+                "balanced_sign_accuracy": 0.8755967983523685,
+                "update_mass_correct": 0.27851501074548896,
+                "scalar_retention": 0.316577088550386,
+                "two_context_retention": 0.442969978509022,
+                "categories": {
+                  "ON": {
+                    "count": 30,
+                    "sign_accuracy": 0.0,
+                    "positive": 0,
+                    "negative": 30,
+                    "sum": -13.83728604302909,
+                    "absolute_sum": 13.83728604302909
+                  },
+                  "OFF": {
+                    "count": 30,
+                    "sign_accuracy": 0.0,
+                    "positive": 30,
+                    "negative": 0,
+                    "sum": 1.3536014819034596,
+                    "absolute_sum": 1.3536014819034596
+                  },
+                  "quiet": {
+                    "count": 550,
+                    "sign_accuracy": 0.9854545454545455,
+                    "positive": 188,
+                    "negative": 362,
+                    "sum": 5.818097459195123,
+                    "absolute_sum": 5.864290954509493
+                  }
+                }
+              },
+              "knn": {
+                "count": 610,
+                "balanced_sign_accuracy": 0.9153482493914997,
+                "update_mass_correct": 0.5933433734714663,
+                "scalar_retention": 0.316577088550386,
+                "two_context_retention": 0.31657708855038597,
+                "categories": {
+                  "ON": {
+                    "count": 30,
+                    "sign_accuracy": 0.4,
+                    "positive": 0,
+                    "negative": 30,
+                    "sum": -13.83728604302909,
+                    "absolute_sum": 13.83728604302909
+                  },
+                  "OFF": {
+                    "count": 30,
+                    "sign_accuracy": 0.8,
+                    "positive": 30,
+                    "negative": 0,
+                    "sum": 1.3536014819034596,
+                    "absolute_sum": 1.3536014819034596
+                  },
+                  "quiet": {
+                    "count": 550,
+                    "sign_accuracy": 0.9490909090909091,
+                    "positive": 188,
+                    "negative": 362,
+                    "sum": 5.818097459195123,
+                    "absolute_sum": 5.864290954509493
+                  }
+                }
+              },
+              "event_balanced": {
+                "count": 610,
+                "balanced_sign_accuracy": 0.3081351806777757,
+                "update_mass_correct": 0.6613954667379754,
+                "scalar_retention": 0.316577088550386,
+                "two_context_retention": 0.3227909334759509,
+                "categories": {
+                  "ON": {
+                    "count": 30,
+                    "sign_accuracy": 0.8,
+                    "positive": 0,
+                    "negative": 30,
+                    "sum": -13.83728604302909,
+                    "absolute_sum": 13.83728604302909
+                  },
+                  "OFF": {
+                    "count": 30,
+                    "sign_accuracy": 1.0,
+                    "positive": 30,
+                    "negative": 0,
+                    "sum": 1.3536014819034596,
+                    "absolute_sum": 1.3536014819034596
+                  },
+                  "quiet": {
+                    "count": 550,
+                    "sign_accuracy": 0.16545454545454547,
+                    "positive": 188,
+                    "negative": 362,
+                    "sum": 5.818097459195123,
+                    "absolute_sum": 5.864290954509493
+                  }
+                }
+              },
+              "update_mass": {
+                "count": 610,
+                "balanced_sign_accuracy": 0.3081351806777757,
+                "update_mass_correct": 0.6613954667379754,
+                "scalar_retention": 0.316577088550386,
+                "two_context_retention": 0.3227909334759509,
+                "categories": {
+                  "ON": {
+                    "count": 30,
+                    "sign_accuracy": 0.8,
+                    "positive": 0,
+                    "negative": 30,
+                    "sum": -13.83728604302909,
+                    "absolute_sum": 13.83728604302909
+                  },
+                  "OFF": {
+                    "count": 30,
+                    "sign_accuracy": 1.0,
+                    "positive": 30,
+                    "negative": 0,
+                    "sum": 1.3536014819034596,
+                    "absolute_sum": 1.3536014819034596
+                  },
+                  "quiet": {
+                    "count": 550,
+                    "sign_accuracy": 0.16545454545454547,
+                    "positive": 188,
+                    "negative": 362,
+                    "sum": 5.818097459195123,
+                    "absolute_sum": 5.864290954509493
+                  }
+                }
+              }
+            }
+          },
+          "held3_knn_shuffled_balanced_accuracy": [
+            0.3541510274025792,
+            0.6344023255693555,
+            0.47575029639101873,
+            0.4746902778568729,
+            0.4628372256765222,
+            0.5282943408729686,
+            0.4621577266161723,
+            0.4250803750317099,
+            0.5012101554693851,
+            0.6290569329612699,
+            0.6379771377687581,
+            0.396186780701709,
+            0.3762573968326284,
+            0.5048665075560296,
+            0.4554028588143324,
+            0.5148467308976635,
+            0.49400358257790294,
+            0.4674655849904482,
+            0.44543428402801866,
+            0.4349337585487453
+          ]
+        },
+        "edge_and_post": {
+          "features": [
+            "predictive_current",
+            "excitatory_prediction",
+            "inhibitory_prediction",
+            "sensory_state",
+            "feedforward_current",
+            "behavioral_current",
+            "voltage",
+            "adaptation",
+            "refractory",
+            "local_sensory_increment",
+            "local_feedforward_increment",
+            "own_spike",
+            "own_post_trace",
+            "own_rate",
+            "eligibility_20655",
+            "arrival_trace_20655",
+            "arrival_now_20655"
+          ],
+          "stump": {
+            "feature": "predictive_current",
+            "threshold": -1.555096573735426e-08,
+            "polarity": -1
+          },
+          "alternative_boundaries": {
+            "event_balanced": {
+              "feature": "sensory_state",
+              "threshold": -1.7260351181030273,
+              "polarity": -1
+            },
+            "update_mass": {
+              "feature": "sensory_state",
+              "threshold": 3.285395860671997,
+              "polarity": -1
+            }
+          },
+          "scores": {
+            "2": {
+              "stump": {
+                "count": 370,
+                "balanced_sign_accuracy": 0.9761904761904762,
+                "update_mass_correct": 0.7714811638410928,
+                "scalar_retention": 0.4338539509401876,
+                "two_context_retention": 0.5429623276821853,
+                "categories": {
+                  "ON": {
+                    "count": 30,
+                    "sign_accuracy": 0.6333333333333333,
+                    "positive": 0,
+                    "negative": 30,
+                    "sum": -3.708628808787825,
+                    "absolute_sum": 3.708628808787825
+                  },
+                  "OFF": {
+                    "count": 30,
+                    "sign_accuracy": 1.0,
+                    "positive": 30,
+                    "negative": 0,
+                    "sum": 7.05960644764524,
+                    "absolute_sum": 7.05960644764524
+                  },
+                  "quiet": {
+                    "count": 310,
+                    "sign_accuracy": 1.0,
+                    "positive": 109,
+                    "negative": 201,
+                    "sum": 2.3456738833502397,
+                    "absolute_sum": 2.3621085144664917
+                  }
+                }
+              },
+              "knn": {
+                "count": 370,
+                "balanced_sign_accuracy": 0.907845152449469,
+                "update_mass_correct": 0.7562278613116835,
+                "scalar_retention": 0.4338539509401876,
+                "two_context_retention": 0.5124557226233672,
+                "categories": {
+                  "ON": {
+                    "count": 30,
+                    "sign_accuracy": 0.6666666666666666,
+                    "positive": 0,
+                    "negative": 30,
+                    "sum": -3.708628808787825,
+                    "absolute_sum": 3.708628808787825
+                  },
+                  "OFF": {
+                    "count": 30,
+                    "sign_accuracy": 0.9666666666666667,
+                    "positive": 30,
+                    "negative": 0,
+                    "sum": 7.05960644764524,
+                    "absolute_sum": 7.05960644764524
+                  },
+                  "quiet": {
+                    "count": 310,
+                    "sign_accuracy": 0.9387096774193548,
+                    "positive": 109,
+                    "negative": 201,
+                    "sum": 2.3456738833502397,
+                    "absolute_sum": 2.3621085144664917
+                  }
+                }
+              },
+              "event_balanced": {
+                "count": 370,
+                "balanced_sign_accuracy": 0.7158273381294964,
+                "update_mass_correct": 0.8868594195389586,
+                "scalar_retention": 0.4338539509401876,
+                "two_context_retention": 0.7737188390779172,
+                "categories": {
+                  "ON": {
+                    "count": 30,
+                    "sign_accuracy": 1.0,
+                    "positive": 0,
+                    "negative": 30,
+                    "sum": -3.708628808787825,
+                    "absolute_sum": 3.708628808787825
+                  },
+                  "OFF": {
+                    "count": 30,
+                    "sign_accuracy": 1.0,
+                    "positive": 30,
+                    "negative": 0,
+                    "sum": 7.05960644764524,
+                    "absolute_sum": 7.05960644764524
+                  },
+                  "quiet": {
+                    "count": 310,
+                    "sign_accuracy": 0.7451612903225806,
+                    "positive": 109,
+                    "negative": 201,
+                    "sum": 2.3456738833502397,
+                    "absolute_sum": 2.3621085144664917
+                  }
+                }
+              },
+              "update_mass": {
+                "count": 370,
+                "balanced_sign_accuracy": 0.41108411971721326,
+                "update_mass_correct": 0.9102279218218445,
+                "scalar_retention": 0.4338539509401876,
+                "two_context_retention": 0.8204558436436888,
+                "categories": {
+                  "ON": {
+                    "count": 30,
+                    "sign_accuracy": 1.0,
+                    "positive": 0,
+                    "negative": 30,
+                    "sum": -3.708628808787825,
+                    "absolute_sum": 3.708628808787825
+                  },
+                  "OFF": {
+                    "count": 30,
+                    "sign_accuracy": 1.0,
+                    "positive": 30,
+                    "negative": 0,
+                    "sum": 7.05960644764524,
+                    "absolute_sum": 7.05960644764524
+                  },
+                  "quiet": {
+                    "count": 310,
+                    "sign_accuracy": 0.23548387096774193,
+                    "positive": 109,
+                    "negative": 201,
+                    "sum": 2.3456738833502397,
+                    "absolute_sum": 2.3621085144664917
+                  }
+                }
+              },
+              "sensory_zero": {
+                "count": 370,
+                "balanced_sign_accuracy": 0.7158273381294964,
+                "update_mass_correct": 0.8868594195389586,
+                "scalar_retention": 0.4338539509401876,
+                "two_context_retention": 0.7737188390779172,
+                "categories": {
+                  "ON": {
+                    "count": 30,
+                    "sign_accuracy": 1.0,
+                    "positive": 0,
+                    "negative": 30,
+                    "sum": -3.708628808787825,
+                    "absolute_sum": 3.708628808787825
+                  },
+                  "OFF": {
+                    "count": 30,
+                    "sign_accuracy": 1.0,
+                    "positive": 30,
+                    "negative": 0,
+                    "sum": 7.05960644764524,
+                    "absolute_sum": 7.05960644764524
+                  },
+                  "quiet": {
+                    "count": 310,
+                    "sign_accuracy": 0.7451612903225806,
+                    "positive": 109,
+                    "negative": 201,
+                    "sum": 2.3456738833502397,
+                    "absolute_sum": 2.3621085144664917
+                  }
+                }
+              }
+            },
+            "3": {
+              "stump": {
+                "count": 1295,
+                "balanced_sign_accuracy": 0.8995803931516849,
+                "update_mass_correct": 0.33712813982811757,
+                "scalar_retention": 0.07593644408943383,
+                "two_context_retention": 0.3257437203437648,
+                "categories": {
+                  "ON": {
+                    "count": 90,
+                    "sign_accuracy": 0.0,
+                    "positive": 0,
+                    "negative": 90,
+                    "sum": -32.71685651807977,
+                    "absolute_sum": 32.71685651807977
+                  },
+                  "OFF": {
+                    "count": 90,
+                    "sign_accuracy": 0.5222222222222223,
+                    "positive": 90,
+                    "negative": 0,
+                    "sum": 19.196924179923123,
+                    "absolute_sum": 19.196924179923123
+                  },
+                  "quiet": {
+                    "count": 1115,
+                    "sign_accuracy": 1.0,
+                    "positive": 376,
+                    "negative": 739,
+                    "sum": 8.895757527981852,
+                    "absolute_sum": 8.981549148212858
+                  }
+                }
+              },
+              "knn": {
+                "count": 1295,
+                "balanced_sign_accuracy": 0.8378948213111614,
+                "update_mass_correct": 0.3230440173937011,
+                "scalar_retention": 0.07593644408943383,
+                "two_context_retention": 0.35391196521259777,
+                "categories": {
+                  "ON": {
+                    "count": 90,
+                    "sign_accuracy": 0.0,
+                    "positive": 0,
+                    "negative": 90,
+                    "sum": -32.71685651807977,
+                    "absolute_sum": 32.71685651807977
+                  },
+                  "OFF": {
+                    "count": 90,
+                    "sign_accuracy": 0.5777777777777777,
+                    "positive": 90,
+                    "negative": 0,
+                    "sum": 19.196924179923123,
+                    "absolute_sum": 19.196924179923123
+                  },
+                  "quiet": {
+                    "count": 1115,
+                    "sign_accuracy": 0.9345291479820628,
+                    "positive": 376,
+                    "negative": 739,
+                    "sum": 8.895757527981852,
+                    "absolute_sum": 8.981549148212858
+                  }
+                }
+              },
+              "event_balanced": {
+                "count": 1295,
+                "balanced_sign_accuracy": 0.7896995708154506,
+                "update_mass_correct": 0.9171014229991573,
+                "scalar_retention": 0.07593644408943383,
+                "two_context_retention": 0.8342028459983147,
+                "categories": {
+                  "ON": {
+                    "count": 90,
+                    "sign_accuracy": 1.0,
+                    "positive": 0,
+                    "negative": 90,
+                    "sum": -32.71685651807977,
+                    "absolute_sum": 32.71685651807977
+                  },
+                  "OFF": {
+                    "count": 90,
+                    "sign_accuracy": 1.0,
+                    "positive": 90,
+                    "negative": 0,
+                    "sum": 19.196924179923123,
+                    "absolute_sum": 19.196924179923123
+                  },
+                  "quiet": {
+                    "count": 1115,
+                    "sign_accuracy": 0.8242152466367713,
+                    "positive": 376,
+                    "negative": 739,
+                    "sum": 8.895757527981852,
+                    "absolute_sum": 8.981549148212858
+                  }
+                }
+              },
+              "update_mass": {
+                "count": 1295,
+                "balanced_sign_accuracy": 0.5315520535108746,
+                "update_mass_correct": 0.9315164595997835,
+                "scalar_retention": 0.07593644408943383,
+                "two_context_retention": 0.8630329191995675,
+                "categories": {
+                  "ON": {
+                    "count": 90,
+                    "sign_accuracy": 1.0,
+                    "positive": 0,
+                    "negative": 90,
+                    "sum": -32.71685651807977,
+                    "absolute_sum": 32.71685651807977
+                  },
+                  "OFF": {
+                    "count": 90,
+                    "sign_accuracy": 1.0,
+                    "positive": 90,
+                    "negative": 0,
+                    "sum": 19.196924179923123,
+                    "absolute_sum": 19.196924179923123
+                  },
+                  "quiet": {
+                    "count": 1115,
+                    "sign_accuracy": 0.38026905829596414,
+                    "positive": 376,
+                    "negative": 739,
+                    "sum": 8.895757527981852,
+                    "absolute_sum": 8.981549148212858
+                  }
+                }
+              },
+              "sensory_zero": {
+                "count": 1295,
+                "balanced_sign_accuracy": 0.7856808192299528,
+                "update_mass_correct": 0.9170812476108348,
+                "scalar_retention": 0.07593644408943383,
+                "two_context_retention": 0.8341624952216695,
+                "categories": {
+                  "ON": {
+                    "count": 90,
+                    "sign_accuracy": 1.0,
+                    "positive": 0,
+                    "negative": 90,
+                    "sum": -32.71685651807977,
+                    "absolute_sum": 32.71685651807977
+                  },
+                  "OFF": {
+                    "count": 90,
+                    "sign_accuracy": 1.0,
+                    "positive": 90,
+                    "negative": 0,
+                    "sum": 19.196924179923123,
+                    "absolute_sum": 19.196924179923123
+                  },
+                  "quiet": {
+                    "count": 1115,
+                    "sign_accuracy": 0.8161434977578476,
+                    "positive": 376,
+                    "negative": 739,
+                    "sum": 8.895757527981852,
+                    "absolute_sum": 8.981549148212858
+                  }
+                }
+              }
+            },
+            "4": {
+              "stump": {
+                "count": 490,
+                "balanced_sign_accuracy": 0.875,
+                "update_mass_correct": 0.17157158685941712,
+                "scalar_retention": 0.28733086512330897,
+                "two_context_retention": 0.6568568262811657,
+                "categories": {
+                  "ON": {
+                    "count": 30,
+                    "sign_accuracy": 0.0,
+                    "positive": 0,
+                    "negative": 30,
+                    "sum": -14.799303202006639,
+                    "absolute_sum": 14.799303202006639
+                  },
+                  "OFF": {
+                    "count": 30,
+                    "sign_accuracy": 0.0,
+                    "positive": 30,
+                    "negative": 0,
+                    "sum": 4.262769694875651,
+                    "absolute_sum": 4.262769694875651
+                  },
+                  "quiet": {
+                    "count": 430,
+                    "sign_accuracy": 1.0,
+                    "positive": 180,
+                    "negative": 250,
+                    "sum": 3.9250728068141907,
+                    "absolute_sum": 3.9478487747051494
+                  }
+                }
+              },
+              "knn": {
+                "count": 490,
+                "balanced_sign_accuracy": 0.7714285714285714,
+                "update_mass_correct": 0.45624981860505287,
+                "scalar_retention": 0.28733086512330897,
+                "two_context_retention": 0.2873308651233091,
+                "categories": {
+                  "ON": {
+                    "count": 30,
+                    "sign_accuracy": 0.4666666666666667,
+                    "positive": 0,
+                    "negative": 30,
+                    "sum": -14.799303202006639,
+                    "absolute_sum": 14.799303202006639
+                  },
+                  "OFF": {
+                    "count": 30,
+                    "sign_accuracy": 0.0,
+                    "positive": 30,
+                    "negative": 0,
+                    "sum": 4.262769694875651,
+                    "absolute_sum": 4.262769694875651
+                  },
+                  "quiet": {
+                    "count": 430,
+                    "sign_accuracy": 0.8744186046511628,
+                    "positive": 180,
+                    "negative": 250,
+                    "sum": 3.9250728068141907,
+                    "absolute_sum": 3.9478487747051494
+                  }
+                }
+              },
+              "event_balanced": {
+                "count": 490,
+                "balanced_sign_accuracy": 0.7107142857142857,
+                "update_mass_correct": 0.877749718840744,
+                "scalar_retention": 0.28733086512330897,
+                "two_context_retention": 0.7554994376814884,
+                "categories": {
+                  "ON": {
+                    "count": 30,
+                    "sign_accuracy": 1.0,
+                    "positive": 0,
+                    "negative": 30,
+                    "sum": -14.799303202006639,
+                    "absolute_sum": 14.799303202006639
+                  },
+                  "OFF": {
+                    "count": 30,
+                    "sign_accuracy": 1.0,
+                    "positive": 30,
+                    "negative": 0,
+                    "sum": 4.262769694875651,
+                    "absolute_sum": 4.262769694875651
+                  },
+                  "quiet": {
+                    "count": 430,
+                    "sign_accuracy": 0.7069767441860465,
+                    "positive": 180,
+                    "negative": 250,
+                    "sum": 3.9250728068141907,
+                    "absolute_sum": 3.9478487747051494
+                  }
+                }
+              },
+              "update_mass": {
+                "count": 490,
+                "balanced_sign_accuracy": 0.4166666666666667,
+                "update_mass_correct": 0.8822010578352285,
+                "scalar_retention": 0.28733086512330897,
+                "two_context_retention": 0.7644021156704575,
+                "categories": {
+                  "ON": {
+                    "count": 30,
+                    "sign_accuracy": 1.0,
+                    "positive": 0,
+                    "negative": 30,
+                    "sum": -14.799303202006639,
+                    "absolute_sum": 14.799303202006639
+                  },
+                  "OFF": {
+                    "count": 30,
+                    "sign_accuracy": 1.0,
+                    "positive": 30,
+                    "negative": 0,
+                    "sum": 4.262769694875651,
+                    "absolute_sum": 4.262769694875651
+                  },
+                  "quiet": {
+                    "count": 430,
+                    "sign_accuracy": 0.3023255813953488,
+                    "positive": 180,
+                    "negative": 250,
+                    "sum": 3.9250728068141907,
+                    "absolute_sum": 3.9478487747051494
+                  }
+                }
+              },
+              "sensory_zero": {
+                "count": 490,
+                "balanced_sign_accuracy": 0.7107142857142857,
+                "update_mass_correct": 0.877749718840744,
+                "scalar_retention": 0.28733086512330897,
+                "two_context_retention": 0.7554994376814884,
+                "categories": {
+                  "ON": {
+                    "count": 30,
+                    "sign_accuracy": 1.0,
+                    "positive": 0,
+                    "negative": 30,
+                    "sum": -14.799303202006639,
+                    "absolute_sum": 14.799303202006639
+                  },
+                  "OFF": {
+                    "count": 30,
+                    "sign_accuracy": 1.0,
+                    "positive": 30,
+                    "negative": 0,
+                    "sum": 4.262769694875651,
+                    "absolute_sum": 4.262769694875651
+                  },
+                  "quiet": {
+                    "count": 430,
+                    "sign_accuracy": 0.7069767441860465,
+                    "positive": 180,
+                    "negative": 250,
+                    "sum": 3.9250728068141907,
+                    "absolute_sum": 3.9478487747051494
+                  }
+                }
+              }
+            },
+            "6": {
+              "stump": {
+                "count": 610,
+                "balanced_sign_accuracy": 0.8929273544280097,
+                "update_mass_correct": 0.27852012559453243,
+                "scalar_retention": 0.316577088550386,
+                "two_context_retention": 0.4429597488109352,
+                "categories": {
+                  "ON": {
+                    "count": 30,
+                    "sign_accuracy": 0.0,
+                    "positive": 0,
+                    "negative": 30,
+                    "sum": -13.83728604302909,
+                    "absolute_sum": 13.83728604302909
+                  },
+                  "OFF": {
+                    "count": 30,
+                    "sign_accuracy": 0.0,
+                    "positive": 30,
+                    "negative": 0,
+                    "sum": 1.3536014819034596,
+                    "absolute_sum": 1.3536014819034596
+                  },
+                  "quiet": {
+                    "count": 550,
+                    "sign_accuracy": 1.0,
+                    "positive": 188,
+                    "negative": 362,
+                    "sum": 5.818097459195123,
+                    "absolute_sum": 5.864290954509493
+                  }
+                }
+              },
+              "knn": {
+                "count": 610,
+                "balanced_sign_accuracy": 0.9145876240404418,
+                "update_mass_correct": 0.3312383575117552,
+                "scalar_retention": 0.316577088550386,
+                "two_context_retention": 0.3375232849764897,
+                "categories": {
+                  "ON": {
+                    "count": 30,
+                    "sign_accuracy": 0.0,
+                    "positive": 0,
+                    "negative": 30,
+                    "sum": -13.83728604302909,
+                    "absolute_sum": 13.83728604302909
+                  },
+                  "OFF": {
+                    "count": 30,
+                    "sign_accuracy": 0.8333333333333334,
+                    "positive": 30,
+                    "negative": 0,
+                    "sum": 1.3536014819034596,
+                    "absolute_sum": 1.3536014819034596
+                  },
+                  "quiet": {
+                    "count": 550,
+                    "sign_accuracy": 0.9709090909090909,
+                    "positive": 188,
+                    "negative": 362,
+                    "sum": 5.818097459195123,
+                    "absolute_sum": 5.864290954509493
+                  }
+                }
+              },
+              "event_balanced": {
+                "count": 610,
+                "balanced_sign_accuracy": 0.5023988953379517,
+                "update_mass_correct": 0.7298887977020831,
+                "scalar_retention": 0.316577088550386,
+                "two_context_retention": 0.45977759540416635,
+                "categories": {
+                  "ON": {
+                    "count": 30,
+                    "sign_accuracy": 1.0,
+                    "positive": 0,
+                    "negative": 30,
+                    "sum": -13.83728604302909,
+                    "absolute_sum": 13.83728604302909
+                  },
+                  "OFF": {
+                    "count": 30,
+                    "sign_accuracy": 1.0,
+                    "positive": 30,
+                    "negative": 0,
+                    "sum": 1.3536014819034596,
+                    "absolute_sum": 1.3536014819034596
+                  },
+                  "quiet": {
+                    "count": 550,
+                    "sign_accuracy": 0.5127272727272727,
+                    "positive": 188,
+                    "negative": 362,
+                    "sum": 5.818097459195123,
+                    "absolute_sum": 5.864290954509493
+                  }
+                }
+              },
+              "update_mass": {
+                "count": 610,
+                "balanced_sign_accuracy": 0.2783654746302191,
+                "update_mass_correct": 0.7345863268045447,
+                "scalar_retention": 0.316577088550386,
+                "two_context_retention": 0.46917265360908955,
+                "categories": {
+                  "ON": {
+                    "count": 30,
+                    "sign_accuracy": 1.0,
+                    "positive": 0,
+                    "negative": 30,
+                    "sum": -13.83728604302909,
+                    "absolute_sum": 13.83728604302909
+                  },
+                  "OFF": {
+                    "count": 30,
+                    "sign_accuracy": 1.0,
+                    "positive": 30,
+                    "negative": 0,
+                    "sum": 1.3536014819034596,
+                    "absolute_sum": 1.3536014819034596
+                  },
+                  "quiet": {
+                    "count": 550,
+                    "sign_accuracy": 0.16,
+                    "positive": 188,
+                    "negative": 362,
+                    "sum": 5.818097459195123,
+                    "absolute_sum": 5.864290954509493
+                  }
+                }
+              },
+              "sensory_zero": {
+                "count": 610,
+                "balanced_sign_accuracy": 0.5023988953379517,
+                "update_mass_correct": 0.7298887977020831,
+                "scalar_retention": 0.316577088550386,
+                "two_context_retention": 0.45977759540416635,
+                "categories": {
+                  "ON": {
+                    "count": 30,
+                    "sign_accuracy": 1.0,
+                    "positive": 0,
+                    "negative": 30,
+                    "sum": -13.83728604302909,
+                    "absolute_sum": 13.83728604302909
+                  },
+                  "OFF": {
+                    "count": 30,
+                    "sign_accuracy": 1.0,
+                    "positive": 30,
+                    "negative": 0,
+                    "sum": 1.3536014819034596,
+                    "absolute_sum": 1.3536014819034596
+                  },
+                  "quiet": {
+                    "count": 550,
+                    "sign_accuracy": 0.5127272727272727,
+                    "positive": 188,
+                    "negative": 362,
+                    "sum": 5.818097459195123,
+                    "absolute_sum": 5.864290954509493
+                  }
+                }
+              }
+            }
+          },
+          "held3_knn_shuffled_balanced_accuracy": [
+            0.49609255683200715,
+            0.575351915799065,
+            0.51762167563174,
+            0.5742465973275626,
+            0.4786520809496938,
+            0.5045105794767987,
+            0.4622340893677164,
+            0.46088156266663904,
+            0.5502479847999295,
+            0.4525515513287119,
+            0.5323376838530314,
+            0.4310806753055805,
+            0.522217677847554,
+            0.5792554761152845,
+            0.48708304643373007,
+            0.5449401264256537,
+            0.3473456825276847,
+            0.4910383781069286,
+            0.48300087493593297,
+            0.4515873098049773
+          ]
+        }
+      }
+    },
+    "26550": {
+      "zero_update_count": 12,
+      "groups": {
+        "EI_eligibility": {
+          "features": [
+            "excitatory_prediction",
+            "inhibitory_prediction",
+            "eligibility_26550"
+          ],
+          "stump": {
+            "feature": "inhibitory_prediction",
+            "threshold": -0.00256995705422014,
+            "polarity": 1
+          },
+          "alternative_boundaries": {
+            "event_balanced": {
+              "feature": "excitatory_prediction",
+              "threshold": 0.004914925899356604,
+              "polarity": 1
+            },
+            "update_mass": {
+              "feature": "inhibitory_prediction",
+              "threshold": -0.11176575720310211,
+              "polarity": 1
+            }
+          },
+          "scores": {
+            "2": {
+              "stump": {
+                "count": 370,
+                "balanced_sign_accuracy": 0.9711607337506618,
+                "update_mass_correct": 0.48541771950147783,
+                "scalar_retention": 0.03452954141430529,
+                "two_context_retention": 0.03452954141430531,
+                "categories": {
+                  "ON": {
+                    "count": 30,
+                    "sign_accuracy": 0.6666666666666666,
+                    "positive": 30,
+                    "negative": 0,
+                    "sum": 9.010845882436087,
+                    "absolute_sum": 9.010845882436087
+                  },
+                  "OFF": {
+                    "count": 30,
+                    "sign_accuracy": 1.0,
+                    "positive": 0,
+                    "negative": 30,
+                    "sum": -4.072350662031266,
+                    "absolute_sum": 4.072350662031266
+                  },
+                  "quiet": {
+                    "count": 310,
+                    "sign_accuracy": 0.9935483870967742,
+                    "positive": 201,
+                    "negative": 109,
+                    "sum": -4.336968470211618,
+                    "absolute_sum": 4.3374446096023505
+                  }
+                }
+              },
+              "knn": {
+                "count": 370,
+                "balanced_sign_accuracy": 0.9552773365723006,
+                "update_mass_correct": 0.48486104088624443,
+                "scalar_retention": 0.03452954141430529,
+                "two_context_retention": 0.034529541414305316,
+                "categories": {
+                  "ON": {
+                    "count": 30,
+                    "sign_accuracy": 0.6666666666666666,
+                    "positive": 30,
+                    "negative": 0,
+                    "sum": 9.010845882436087,
+                    "absolute_sum": 9.010845882436087
+                  },
+                  "OFF": {
+                    "count": 30,
+                    "sign_accuracy": 1.0,
+                    "positive": 0,
+                    "negative": 30,
+                    "sum": -4.072350662031266,
+                    "absolute_sum": 4.072350662031266
+                  },
+                  "quiet": {
+                    "count": 310,
+                    "sign_accuracy": 0.967741935483871,
+                    "positive": 201,
+                    "negative": 109,
+                    "sum": -4.336968470211618,
+                    "absolute_sum": 4.3374446096023505
+                  }
+                }
+              },
+              "event_balanced": {
+                "count": 370,
+                "balanced_sign_accuracy": 0.3503846273630446,
+                "update_mass_correct": 0.4241120044792327,
+                "scalar_retention": 0.03452954141430529,
+                "two_context_retention": 0.1517759910415346,
+                "categories": {
+                  "ON": {
+                    "count": 30,
+                    "sign_accuracy": 0.1,
+                    "positive": 30,
+                    "negative": 0,
+                    "sum": 9.010845882436087,
+                    "absolute_sum": 9.010845882436087
+                  },
+                  "OFF": {
+                    "count": 30,
+                    "sign_accuracy": 1.0,
+                    "positive": 0,
+                    "negative": 30,
+                    "sum": -4.072350662031266,
+                    "absolute_sum": 4.072350662031266
+                  },
+                  "quiet": {
+                    "count": 310,
+                    "sign_accuracy": 0.2129032258064516,
+                    "positive": 201,
+                    "negative": 109,
+                    "sum": -4.336968470211618,
+                    "absolute_sum": 4.3374446096023505
+                  }
+                }
+              },
+              "update_mass": {
+                "count": 370,
+                "balanced_sign_accuracy": 0.579136690647482,
+                "update_mass_correct": 0.6766940337164715,
+                "scalar_retention": 0.03452954141430529,
+                "two_context_retention": 0.353388067432943,
+                "categories": {
+                  "ON": {
+                    "count": 30,
+                    "sign_accuracy": 1.0,
+                    "positive": 30,
+                    "negative": 0,
+                    "sum": 9.010845882436087,
+                    "absolute_sum": 9.010845882436087
+                  },
+                  "OFF": {
+                    "count": 30,
+                    "sign_accuracy": 0.0,
+                    "positive": 0,
+                    "negative": 30,
+                    "sum": -4.072350662031266,
+                    "absolute_sum": 4.072350662031266
+                  },
+                  "quiet": {
+                    "count": 310,
+                    "sign_accuracy": 0.7193548387096774,
+                    "positive": 201,
+                    "negative": 109,
+                    "sum": -4.336968470211618,
+                    "absolute_sum": 4.3374446096023505
+                  }
+                }
+              }
+            },
+            "3": {
+              "stump": {
+                "count": 1298,
+                "balanced_sign_accuracy": 0.900338476495688,
+                "update_mass_correct": 0.2100545639068887,
+                "scalar_retention": 0.5685143827247611,
+                "two_context_retention": 0.5798908721862227,
+                "categories": {
+                  "ON": {
+                    "count": 90,
+                    "sign_accuracy": 0.0,
+                    "positive": 90,
+                    "negative": 0,
+                    "sum": 64.36373365209532,
+                    "absolute_sum": 64.36373365209532
+                  },
+                  "OFF": {
+                    "count": 90,
+                    "sign_accuracy": 0.6111111111111112,
+                    "positive": 0,
+                    "negative": 90,
+                    "sum": -2.308193388501608,
+                    "absolute_sum": 2.308193388501608
+                  },
+                  "quiet": {
+                    "count": 1118,
+                    "sign_accuracy": 0.9928443649373881,
+                    "positive": 739,
+                    "negative": 379,
+                    "sum": -15.396927524494815,
+                    "absolute_sum": 15.39919403724581
+                  }
+                }
+              },
+              "knn": {
+                "count": 1298,
+                "balanced_sign_accuracy": 0.8419872891273428,
+                "update_mass_correct": 0.19995160244659882,
+                "scalar_retention": 0.5685143827247611,
+                "two_context_retention": 0.6000967951068026,
+                "categories": {
+                  "ON": {
+                    "count": 90,
+                    "sign_accuracy": 0.0,
+                    "positive": 90,
+                    "negative": 0,
+                    "sum": 64.36373365209532,
+                    "absolute_sum": 64.36373365209532
+                  },
+                  "OFF": {
+                    "count": 90,
+                    "sign_accuracy": 0.6111111111111112,
+                    "positive": 0,
+                    "negative": 90,
+                    "sum": -2.308193388501608,
+                    "absolute_sum": 2.308193388501608
+                  },
+                  "quiet": {
+                    "count": 1118,
+                    "sign_accuracy": 0.9159212880143113,
+                    "positive": 739,
+                    "negative": 379,
+                    "sum": -15.396927524494815,
+                    "absolute_sum": 15.39919403724581
+                  }
+                }
+              },
+              "event_balanced": {
+                "count": 1298,
+                "balanced_sign_accuracy": 0.3764136409114174,
+                "update_mass_correct": 0.7291812632033271,
+                "scalar_retention": 0.5685143827247611,
+                "two_context_retention": 0.5685143827247611,
+                "categories": {
+                  "ON": {
+                    "count": 90,
+                    "sign_accuracy": 0.6777777777777778,
+                    "positive": 90,
+                    "negative": 0,
+                    "sum": 64.36373365209532,
+                    "absolute_sum": 64.36373365209532
+                  },
+                  "OFF": {
+                    "count": 90,
+                    "sign_accuracy": 1.0,
+                    "positive": 0,
+                    "negative": 90,
+                    "sum": -2.308193388501608,
+                    "absolute_sum": 2.308193388501608
+                  },
+                  "quiet": {
+                    "count": 1118,
+                    "sign_accuracy": 0.20483005366726298,
+                    "positive": 739,
+                    "negative": 379,
+                    "sum": -15.396927524494815,
+                    "absolute_sum": 15.39919403724581
+                  }
+                }
+              },
+              "update_mass": {
+                "count": 1298,
+                "balanced_sign_accuracy": 0.5075771410052957,
+                "update_mass_correct": 0.32894395912077495,
+                "scalar_retention": 0.5685143827247611,
+                "two_context_retention": 0.5685143827247611,
+                "categories": {
+                  "ON": {
+                    "count": 90,
+                    "sign_accuracy": 0.5111111111111111,
+                    "positive": 90,
+                    "negative": 0,
+                    "sum": 64.36373365209532,
+                    "absolute_sum": 64.36373365209532
+                  },
+                  "OFF": {
+                    "count": 90,
+                    "sign_accuracy": 0.0,
+                    "positive": 0,
+                    "negative": 90,
+                    "sum": -2.308193388501608,
+                    "absolute_sum": 2.308193388501608
+                  },
+                  "quiet": {
+                    "count": 1118,
+                    "sign_accuracy": 0.6896243291592129,
+                    "positive": 739,
+                    "negative": 379,
+                    "sum": -15.396927524494815,
+                    "absolute_sum": 15.39919403724581
+                  }
+                }
+              }
+            },
+            "4": {
+              "stump": {
+                "count": 490,
+                "balanced_sign_accuracy": 0.8607142857142858,
+                "update_mass_correct": 0.2560591024520522,
+                "scalar_retention": 0.47978826076014436,
+                "two_context_retention": 0.4878817950958954,
+                "categories": {
+                  "ON": {
+                    "count": 30,
+                    "sign_accuracy": 0.0,
+                    "positive": 30,
+                    "negative": 0,
+                    "sum": 21.631464605285174,
+                    "absolute_sum": 21.631464605285174
+                  },
+                  "OFF": {
+                    "count": 30,
+                    "sign_accuracy": 0.0,
+                    "positive": 0,
+                    "negative": 30,
+                    "sum": -0.11862911031481312,
+                    "absolute_sum": 0.11862911031481312
+                  },
+                  "quiet": {
+                    "count": 430,
+                    "sign_accuracy": 0.986046511627907,
+                    "positive": 250,
+                    "negative": 180,
+                    "sum": -7.485592646010991,
+                    "absolute_sum": 7.4862257115063455
+                  }
+                }
+              },
+              "knn": {
+                "count": 490,
+                "balanced_sign_accuracy": 0.9511904761904761,
+                "update_mass_correct": 0.5281250925876131,
+                "scalar_retention": 0.47978826076014436,
+                "two_context_retention": 0.47978826076014436,
+                "categories": {
+                  "ON": {
+                    "count": 30,
+                    "sign_accuracy": 0.43333333333333335,
+                    "positive": 30,
+                    "negative": 0,
+                    "sum": 21.631464605285174,
+                    "absolute_sum": 21.631464605285174
+                  },
+                  "OFF": {
+                    "count": 30,
+                    "sign_accuracy": 1.0,
+                    "positive": 0,
+                    "negative": 30,
+                    "sum": -0.11862911031481312,
+                    "absolute_sum": 0.11862911031481312
+                  },
+                  "quiet": {
+                    "count": 430,
+                    "sign_accuracy": 0.9790697674418605,
+                    "positive": 250,
+                    "negative": 180,
+                    "sum": -7.485592646010991,
+                    "absolute_sum": 7.4862257115063455
+                  }
+                }
+              },
+              "event_balanced": {
+                "count": 490,
+                "balanced_sign_accuracy": 0.3845238095238095,
+                "update_mass_correct": 0.8499442604968048,
+                "scalar_retention": 0.47978826076014436,
+                "two_context_retention": 0.6998885209936098,
+                "categories": {
+                  "ON": {
+                    "count": 30,
+                    "sign_accuracy": 1.0,
+                    "positive": 30,
+                    "negative": 0,
+                    "sum": 21.631464605285174,
+                    "absolute_sum": 21.631464605285174
+                  },
+                  "OFF": {
+                    "count": 30,
+                    "sign_accuracy": 1.0,
+                    "positive": 0,
+                    "negative": 30,
+                    "sum": -0.11862911031481312,
+                    "absolute_sum": 0.11862911031481312
+                  },
+                  "quiet": {
+                    "count": 430,
+                    "sign_accuracy": 0.2534883720930233,
+                    "positive": 250,
+                    "negative": 180,
+                    "sum": -7.485592646010991,
+                    "absolute_sum": 7.4862257115063455
+                  }
+                }
+              },
+              "update_mass": {
+                "count": 490,
+                "balanced_sign_accuracy": 0.5095238095238095,
+                "update_mass_correct": 0.7591425127581577,
+                "scalar_retention": 0.47978826076014436,
+                "two_context_retention": 0.5182850255163154,
+                "categories": {
+                  "ON": {
+                    "count": 30,
+                    "sign_accuracy": 1.0,
+                    "positive": 30,
+                    "negative": 0,
+                    "sum": 21.631464605285174,
+                    "absolute_sum": 21.631464605285174
+                  },
+                  "OFF": {
+                    "count": 30,
+                    "sign_accuracy": 0.0,
+                    "positive": 0,
+                    "negative": 30,
+                    "sum": -0.11862911031481312,
+                    "absolute_sum": 0.11862911031481312
+                  },
+                  "quiet": {
+                    "count": 430,
+                    "sign_accuracy": 0.5906976744186047,
+                    "positive": 250,
+                    "negative": 180,
+                    "sum": -7.485592646010991,
+                    "absolute_sum": 7.4862257115063455
+                  }
+                }
+              }
+            },
+            "6": {
+              "stump": {
+                "count": 610,
+                "balanced_sign_accuracy": 0.8755967983523685,
+                "update_mass_correct": 0.48902162393113713,
+                "scalar_retention": 0.021926168515744273,
+                "two_context_retention": 0.021956752137725733,
+                "categories": {
+                  "ON": {
+                    "count": 30,
+                    "sign_accuracy": 0.0,
+                    "positive": 30,
+                    "negative": 0,
+                    "sum": 11.34465146902455,
+                    "absolute_sum": 11.34465146902455
+                  },
+                  "OFF": {
+                    "count": 30,
+                    "sign_accuracy": 0.0,
+                    "positive": 0,
+                    "negative": 30,
+                    "sum": -0.0010804225399845496,
+                    "absolute_sum": 0.0010804225399845496
+                  },
+                  "quiet": {
+                    "count": 550,
+                    "sign_accuracy": 0.9854545454545455,
+                    "positive": 362,
+                    "negative": 188,
+                    "sum": -10.856723330560058,
+                    "absolute_sum": 10.858225702527749
+                  }
+                }
+              },
+              "knn": {
+                "count": 610,
+                "balanced_sign_accuracy": 0.929109717281408,
+                "update_mass_correct": 0.6821773761783406,
+                "scalar_retention": 0.021926168515744273,
+                "two_context_retention": 0.36435475235668136,
+                "categories": {
+                  "ON": {
+                    "count": 30,
+                    "sign_accuracy": 0.4,
+                    "positive": 30,
+                    "negative": 0,
+                    "sum": 11.34465146902455,
+                    "absolute_sum": 11.34465146902455
+                  },
+                  "OFF": {
+                    "count": 30,
+                    "sign_accuracy": 0.8,
+                    "positive": 0,
+                    "negative": 30,
+                    "sum": -0.0010804225399845496,
+                    "absolute_sum": 0.0010804225399845496
+                  },
+                  "quiet": {
+                    "count": 550,
+                    "sign_accuracy": 0.96,
+                    "positive": 362,
+                    "negative": 188,
+                    "sum": -10.856723330560058,
+                    "absolute_sum": 10.858225702527749
+                  }
+                }
+              },
+              "event_balanced": {
+                "count": 610,
+                "balanced_sign_accuracy": 0.3081351806777757,
+                "update_mass_correct": 0.5124527354162067,
+                "scalar_retention": 0.021926168515744273,
+                "two_context_retention": 0.024905470832413446,
+                "categories": {
+                  "ON": {
+                    "count": 30,
+                    "sign_accuracy": 0.8,
+                    "positive": 30,
+                    "negative": 0,
+                    "sum": 11.34465146902455,
+                    "absolute_sum": 11.34465146902455
+                  },
+                  "OFF": {
+                    "count": 30,
+                    "sign_accuracy": 1.0,
+                    "positive": 0,
+                    "negative": 30,
+                    "sum": -0.0010804225399845496,
+                    "absolute_sum": 0.0010804225399845496
+                  },
+                  "quiet": {
+                    "count": 550,
+                    "sign_accuracy": 0.16545454545454547,
+                    "positive": 362,
+                    "negative": 188,
+                    "sum": -10.856723330560058,
+                    "absolute_sum": 10.858225702527749
+                  }
+                }
+              },
+              "update_mass": {
+                "count": 610,
+                "balanced_sign_accuracy": 0.6146788990825688,
+                "update_mass_correct": 0.9132367700903733,
+                "scalar_retention": 0.021926168515744273,
+                "two_context_retention": 0.8264735401807465,
+                "categories": {
+                  "ON": {
+                    "count": 30,
+                    "sign_accuracy": 1.0,
+                    "positive": 30,
+                    "negative": 0,
+                    "sum": 11.34465146902455,
+                    "absolute_sum": 11.34465146902455
+                  },
+                  "OFF": {
+                    "count": 30,
+                    "sign_accuracy": 0.0,
+                    "positive": 0,
+                    "negative": 30,
+                    "sum": -0.0010804225399845496,
+                    "absolute_sum": 0.0010804225399845496
+                  },
+                  "quiet": {
+                    "count": 550,
+                    "sign_accuracy": 0.7490909090909091,
+                    "positive": 362,
+                    "negative": 188,
+                    "sum": -10.856723330560058,
+                    "absolute_sum": 10.858225702527749
+                  }
+                }
+              }
+            }
+          },
+          "held3_knn_shuffled_balanced_accuracy": [
+            0.5132239886214285,
+            0.5036844041038989,
+            0.4549666796124495,
+            0.4663156730563965,
+            0.6028701057867649,
+            0.46938279479733847,
+            0.4985956826242731,
+            0.48107515155568015,
+            0.5051748838094552,
+            0.6455860453033815,
+            0.5502403543200763,
+            0.47855715391678516,
+            0.5767822099222996,
+            0.5614324551634383,
+            0.47575366318502266,
+            0.6164618918161219,
+            0.5810594622956217,
+            0.5517308340256326,
+            0.5027713406086918,
+            0.5152417303453438
+          ]
+        },
+        "edge_and_post": {
+          "features": [
+            "predictive_current",
+            "excitatory_prediction",
+            "inhibitory_prediction",
+            "sensory_state",
+            "feedforward_current",
+            "behavioral_current",
+            "voltage",
+            "adaptation",
+            "refractory",
+            "local_sensory_increment",
+            "local_feedforward_increment",
+            "own_spike",
+            "own_post_trace",
+            "own_rate",
+            "eligibility_26550",
+            "arrival_trace_26550",
+            "arrival_now_26550"
+          ],
+          "stump": {
+            "feature": "predictive_current",
+            "threshold": -1.555096573735426e-08,
+            "polarity": 1
+          },
+          "alternative_boundaries": {
+            "event_balanced": {
+              "feature": "sensory_state",
+              "threshold": -1.7260351181030273,
+              "polarity": 1
+            },
+            "update_mass": {
+              "feature": "predictive_current",
+              "threshold": -0.10687357187271118,
+              "polarity": 1
+            }
+          },
+          "scores": {
+            "2": {
+              "stump": {
+                "count": 370,
+                "balanced_sign_accuracy": 0.9761904761904762,
+                "update_mass_correct": 0.48541771950147783,
+                "scalar_retention": 0.03452954141430529,
+                "two_context_retention": 0.03452954141430531,
+                "categories": {
+                  "ON": {
+                    "count": 30,
+                    "sign_accuracy": 0.6333333333333333,
+                    "positive": 30,
+                    "negative": 0,
+                    "sum": 9.010845882436087,
+                    "absolute_sum": 9.010845882436087
+                  },
+                  "OFF": {
+                    "count": 30,
+                    "sign_accuracy": 1.0,
+                    "positive": 0,
+                    "negative": 30,
+                    "sum": -4.072350662031266,
+                    "absolute_sum": 4.072350662031266
+                  },
+                  "quiet": {
+                    "count": 310,
+                    "sign_accuracy": 1.0,
+                    "positive": 201,
+                    "negative": 109,
+                    "sum": -4.336968470211618,
+                    "absolute_sum": 4.3374446096023505
+                  }
+                }
+              },
+              "knn": {
+                "count": 370,
+                "balanced_sign_accuracy": 0.8992182877074963,
+                "update_mass_correct": 0.4805938955265116,
+                "scalar_retention": 0.03452954141430529,
+                "two_context_retention": 0.038812208946976685,
+                "categories": {
+                  "ON": {
+                    "count": 30,
+                    "sign_accuracy": 0.6666666666666666,
+                    "positive": 30,
+                    "negative": 0,
+                    "sum": 9.010845882436087,
+                    "absolute_sum": 9.010845882436087
+                  },
+                  "OFF": {
+                    "count": 30,
+                    "sign_accuracy": 0.9666666666666667,
+                    "positive": 0,
+                    "negative": 30,
+                    "sum": -4.072350662031266,
+                    "absolute_sum": 4.072350662031266
+                  },
+                  "quiet": {
+                    "count": 310,
+                    "sign_accuracy": 0.932258064516129,
+                    "positive": 201,
+                    "negative": 109,
+                    "sum": -4.336968470211618,
+                    "absolute_sum": 4.3374446096023505
+                  }
+                }
+              },
+              "event_balanced": {
+                "count": 370,
+                "balanced_sign_accuracy": 0.7158273381294964,
+                "update_mass_correct": 0.8568176539008946,
+                "scalar_retention": 0.03452954141430529,
+                "two_context_retention": 0.7136353078017893,
+                "categories": {
+                  "ON": {
+                    "count": 30,
+                    "sign_accuracy": 1.0,
+                    "positive": 30,
+                    "negative": 0,
+                    "sum": 9.010845882436087,
+                    "absolute_sum": 9.010845882436087
+                  },
+                  "OFF": {
+                    "count": 30,
+                    "sign_accuracy": 1.0,
+                    "positive": 0,
+                    "negative": 30,
+                    "sum": -4.072350662031266,
+                    "absolute_sum": 4.072350662031266
+                  },
+                  "quiet": {
+                    "count": 310,
+                    "sign_accuracy": 0.7451612903225806,
+                    "positive": 201,
+                    "negative": 109,
+                    "sum": -4.336968470211618,
+                    "absolute_sum": 4.3374446096023505
+                  }
+                }
+              },
+              "update_mass": {
+                "count": 370,
+                "balanced_sign_accuracy": 0.551792332367872,
+                "update_mass_correct": 0.5831649372321007,
+                "scalar_retention": 0.03452954141430529,
+                "two_context_retention": 0.16632987446420167,
+                "categories": {
+                  "ON": {
+                    "count": 30,
+                    "sign_accuracy": 0.9666666666666667,
+                    "positive": 30,
+                    "negative": 0,
+                    "sum": 9.010845882436087,
+                    "absolute_sum": 9.010845882436087
+                  },
+                  "OFF": {
+                    "count": 30,
+                    "sign_accuracy": 0.0,
+                    "positive": 0,
+                    "negative": 30,
+                    "sum": -4.072350662031266,
+                    "absolute_sum": 4.072350662031266
+                  },
+                  "quiet": {
+                    "count": 310,
+                    "sign_accuracy": 0.6967741935483871,
+                    "positive": 201,
+                    "negative": 109,
+                    "sum": -4.336968470211618,
+                    "absolute_sum": 4.3374446096023505
+                  }
+                }
+              },
+              "sensory_zero": {
+                "count": 370,
+                "balanced_sign_accuracy": 0.7158273381294964,
+                "update_mass_correct": 0.8568176539008946,
+                "scalar_retention": 0.03452954141430529,
+                "two_context_retention": 0.7136353078017893,
+                "categories": {
+                  "ON": {
+                    "count": 30,
+                    "sign_accuracy": 1.0,
+                    "positive": 30,
+                    "negative": 0,
+                    "sum": 9.010845882436087,
+                    "absolute_sum": 9.010845882436087
+                  },
+                  "OFF": {
+                    "count": 30,
+                    "sign_accuracy": 1.0,
+                    "positive": 0,
+                    "negative": 30,
+                    "sum": -4.072350662031266,
+                    "absolute_sum": 4.072350662031266
+                  },
+                  "quiet": {
+                    "count": 310,
+                    "sign_accuracy": 0.7451612903225806,
+                    "positive": 201,
+                    "negative": 109,
+                    "sum": -4.336968470211618,
+                    "absolute_sum": 4.3374446096023505
+                  }
+                }
+              }
+            },
+            "3": {
+              "stump": {
+                "count": 1298,
+                "balanced_sign_accuracy": 0.8998755147234704,
+                "update_mass_correct": 0.2074050145717385,
+                "scalar_retention": 0.5685143827247611,
+                "two_context_retention": 0.585189970856523,
+                "categories": {
+                  "ON": {
+                    "count": 90,
+                    "sign_accuracy": 0.0,
+                    "positive": 90,
+                    "negative": 0,
+                    "sum": 64.36373365209532,
+                    "absolute_sum": 64.36373365209532
+                  },
+                  "OFF": {
+                    "count": 90,
+                    "sign_accuracy": 0.5222222222222223,
+                    "positive": 0,
+                    "negative": 90,
+                    "sum": -2.308193388501608,
+                    "absolute_sum": 2.308193388501608
+                  },
+                  "quiet": {
+                    "count": 1118,
+                    "sign_accuracy": 1.0,
+                    "positive": 739,
+                    "negative": 379,
+                    "sum": -15.396927524494815,
+                    "absolute_sum": 15.39919403724581
+                  }
+                }
+              },
+              "knn": {
+                "count": 1298,
+                "balanced_sign_accuracy": 0.8401611621369287,
+                "update_mass_correct": 0.1905620962583946,
+                "scalar_retention": 0.5685143827247611,
+                "two_context_retention": 0.6188758074832108,
+                "categories": {
+                  "ON": {
+                    "count": 90,
+                    "sign_accuracy": 0.0,
+                    "positive": 90,
+                    "negative": 0,
+                    "sum": 64.36373365209532,
+                    "absolute_sum": 64.36373365209532
+                  },
+                  "OFF": {
+                    "count": 90,
+                    "sign_accuracy": 0.5888888888888889,
+                    "positive": 0,
+                    "negative": 90,
+                    "sum": -2.308193388501608,
+                    "absolute_sum": 2.308193388501608
+                  },
+                  "quiet": {
+                    "count": 1118,
+                    "sign_accuracy": 0.9355992844364938,
+                    "positive": 739,
+                    "negative": 379,
+                    "sum": -15.396927524494815,
+                    "absolute_sum": 15.39919403724581
+                  }
+                }
+              },
+              "event_balanced": {
+                "count": 1298,
+                "balanced_sign_accuracy": 0.7878464818763327,
+                "update_mass_correct": 0.8828386311385461,
+                "scalar_retention": 0.5685143827247611,
+                "two_context_retention": 0.7656772622770923,
+                "categories": {
+                  "ON": {
+                    "count": 90,
+                    "sign_accuracy": 1.0,
+                    "positive": 90,
+                    "negative": 0,
+                    "sum": 64.36373365209532,
+                    "absolute_sum": 64.36373365209532
+                  },
+                  "OFF": {
+                    "count": 90,
+                    "sign_accuracy": 1.0,
+                    "positive": 0,
+                    "negative": 90,
+                    "sum": -2.308193388501608,
+                    "absolute_sum": 2.308193388501608
+                  },
+                  "quiet": {
+                    "count": 1118,
+                    "sign_accuracy": 0.8220035778175313,
+                    "positive": 739,
+                    "negative": 379,
+                    "sum": -15.396927524494815,
+                    "absolute_sum": 15.39919403724581
+                  }
+                }
+              },
+              "update_mass": {
+                "count": 1298,
+                "balanced_sign_accuracy": 0.5129076314104131,
+                "update_mass_correct": 0.33560303271132313,
+                "scalar_retention": 0.5685143827247611,
+                "two_context_retention": 0.5685143827247612,
+                "categories": {
+                  "ON": {
+                    "count": 90,
+                    "sign_accuracy": 0.5111111111111111,
+                    "positive": 90,
+                    "negative": 0,
+                    "sum": 64.36373365209532,
+                    "absolute_sum": 64.36373365209532
+                  },
+                  "OFF": {
+                    "count": 90,
+                    "sign_accuracy": 0.0,
+                    "positive": 0,
+                    "negative": 90,
+                    "sum": -2.308193388501608,
+                    "absolute_sum": 2.308193388501608
+                  },
+                  "quiet": {
+                    "count": 1118,
+                    "sign_accuracy": 0.6940966010733453,
+                    "positive": 739,
+                    "negative": 379,
+                    "sum": -15.396927524494815,
+                    "absolute_sum": 15.39919403724581
+                  }
+                }
+              },
+              "sensory_zero": {
+                "count": 1298,
+                "balanced_sign_accuracy": 0.7870054346568038,
+                "update_mass_correct": 0.8833509184896796,
+                "scalar_retention": 0.5685143827247611,
+                "two_context_retention": 0.7667018369793595,
+                "categories": {
+                  "ON": {
+                    "count": 90,
+                    "sign_accuracy": 1.0,
+                    "positive": 90,
+                    "negative": 0,
+                    "sum": 64.36373365209532,
+                    "absolute_sum": 64.36373365209532
+                  },
+                  "OFF": {
+                    "count": 90,
+                    "sign_accuracy": 1.0,
+                    "positive": 0,
+                    "negative": 90,
+                    "sum": -2.308193388501608,
+                    "absolute_sum": 2.308193388501608
+                  },
+                  "quiet": {
+                    "count": 1118,
+                    "sign_accuracy": 0.8166368515205724,
+                    "positive": 739,
+                    "negative": 379,
+                    "sum": -15.396927524494815,
+                    "absolute_sum": 15.39919403724581
+                  }
+                }
+              }
+            },
+            "4": {
+              "stump": {
+                "count": 490,
+                "balanced_sign_accuracy": 0.875,
+                "update_mass_correct": 0.25605910245205227,
+                "scalar_retention": 0.47978826076014436,
+                "two_context_retention": 0.4878817950958955,
+                "categories": {
+                  "ON": {
+                    "count": 30,
+                    "sign_accuracy": 0.0,
+                    "positive": 30,
+                    "negative": 0,
+                    "sum": 21.631464605285174,
+                    "absolute_sum": 21.631464605285174
+                  },
+                  "OFF": {
+                    "count": 30,
+                    "sign_accuracy": 0.0,
+                    "positive": 0,
+                    "negative": 30,
+                    "sum": -0.11862911031481312,
+                    "absolute_sum": 0.11862911031481312
+                  },
+                  "quiet": {
+                    "count": 430,
+                    "sign_accuracy": 1.0,
+                    "positive": 250,
+                    "negative": 180,
+                    "sum": -7.485592646010991,
+                    "absolute_sum": 7.4862257115063455
+                  }
+                }
+              },
+              "knn": {
+                "count": 490,
+                "balanced_sign_accuracy": 0.7785714285714286,
+                "update_mass_correct": 0.5502422853591494,
+                "scalar_retention": 0.47978826076014436,
+                "two_context_retention": 0.47978826076014436,
+                "categories": {
+                  "ON": {
+                    "count": 30,
+                    "sign_accuracy": 0.4666666666666667,
+                    "positive": 30,
+                    "negative": 0,
+                    "sum": 21.631464605285174,
+                    "absolute_sum": 21.631464605285174
+                  },
+                  "OFF": {
+                    "count": 30,
+                    "sign_accuracy": 0.0,
+                    "positive": 0,
+                    "negative": 30,
+                    "sum": -0.11862911031481312,
+                    "absolute_sum": 0.11862911031481312
+                  },
+                  "quiet": {
+                    "count": 430,
+                    "sign_accuracy": 0.8813953488372093,
+                    "positive": 250,
+                    "negative": 180,
+                    "sum": -7.485592646010991,
+                    "absolute_sum": 7.4862257115063455
+                  }
+                }
+              },
+              "event_balanced": {
+                "count": 490,
+                "balanced_sign_accuracy": 0.7107142857142857,
+                "update_mass_correct": 0.7979363536285047,
+                "scalar_retention": 0.47978826076014436,
+                "two_context_retention": 0.5958727072570092,
+                "categories": {
+                  "ON": {
+                    "count": 30,
+                    "sign_accuracy": 1.0,
+                    "positive": 30,
+                    "negative": 0,
+                    "sum": 21.631464605285174,
+                    "absolute_sum": 21.631464605285174
+                  },
+                  "OFF": {
+                    "count": 30,
+                    "sign_accuracy": 1.0,
+                    "positive": 0,
+                    "negative": 30,
+                    "sum": -0.11862911031481312,
+                    "absolute_sum": 0.11862911031481312
+                  },
+                  "quiet": {
+                    "count": 430,
+                    "sign_accuracy": 0.7069767441860465,
+                    "positive": 250,
+                    "negative": 180,
+                    "sum": -7.485592646010991,
+                    "absolute_sum": 7.4862257115063455
+                  }
+                }
+              },
+              "update_mass": {
+                "count": 490,
+                "balanced_sign_accuracy": 0.5380952380952381,
+                "update_mass_correct": 0.8030304473552581,
+                "scalar_retention": 0.47978826076014436,
+                "two_context_retention": 0.6060608947105164,
+                "categories": {
+                  "ON": {
+                    "count": 30,
+                    "sign_accuracy": 1.0,
+                    "positive": 30,
+                    "negative": 0,
+                    "sum": 21.631464605285174,
+                    "absolute_sum": 21.631464605285174
+                  },
+                  "OFF": {
+                    "count": 30,
+                    "sign_accuracy": 0.0,
+                    "positive": 0,
+                    "negative": 30,
+                    "sum": -0.11862911031481312,
+                    "absolute_sum": 0.11862911031481312
+                  },
+                  "quiet": {
+                    "count": 430,
+                    "sign_accuracy": 0.6186046511627907,
+                    "positive": 250,
+                    "negative": 180,
+                    "sum": -7.485592646010991,
+                    "absolute_sum": 7.4862257115063455
+                  }
+                }
+              },
+              "sensory_zero": {
+                "count": 490,
+                "balanced_sign_accuracy": 0.7107142857142857,
+                "update_mass_correct": 0.7979363536285047,
+                "scalar_retention": 0.47978826076014436,
+                "two_context_retention": 0.5958727072570092,
+                "categories": {
+                  "ON": {
+                    "count": 30,
+                    "sign_accuracy": 1.0,
+                    "positive": 30,
+                    "negative": 0,
+                    "sum": 21.631464605285174,
+                    "absolute_sum": 21.631464605285174
+                  },
+                  "OFF": {
+                    "count": 30,
+                    "sign_accuracy": 1.0,
+                    "positive": 0,
+                    "negative": 30,
+                    "sum": -0.11862911031481312,
+                    "absolute_sum": 0.11862911031481312
+                  },
+                  "quiet": {
+                    "count": 430,
+                    "sign_accuracy": 0.7069767441860465,
+                    "positive": 250,
+                    "negative": 180,
+                    "sum": -7.485592646010991,
+                    "absolute_sum": 7.4862257115063455
+                  }
+                }
+              }
+            },
+            "6": {
+              "stump": {
+                "count": 610,
+                "balanced_sign_accuracy": 0.8929273544280097,
+                "update_mass_correct": 0.4890220879099838,
+                "scalar_retention": 0.021926168515744273,
+                "two_context_retention": 0.02195582418003245,
+                "categories": {
+                  "ON": {
+                    "count": 30,
+                    "sign_accuracy": 0.0,
+                    "positive": 30,
+                    "negative": 0,
+                    "sum": 11.34465146902455,
+                    "absolute_sum": 11.34465146902455
+                  },
+                  "OFF": {
+                    "count": 30,
+                    "sign_accuracy": 0.0,
+                    "positive": 0,
+                    "negative": 30,
+                    "sum": -0.0010804225399845496,
+                    "absolute_sum": 0.0010804225399845496
+                  },
+                  "quiet": {
+                    "count": 550,
+                    "sign_accuracy": 1.0,
+                    "positive": 362,
+                    "negative": 188,
+                    "sum": -10.856723330560058,
+                    "absolute_sum": 10.858225702527749
+                  }
+                }
+              },
+              "knn": {
+                "count": 610,
+                "balanced_sign_accuracy": 0.9089824002995693,
+                "update_mass_correct": 0.48882785266915973,
+                "scalar_retention": 0.021926168515744273,
+                "two_context_retention": 0.022344294661680662,
+                "categories": {
+                  "ON": {
+                    "count": 30,
+                    "sign_accuracy": 0.0,
+                    "positive": 30,
+                    "negative": 0,
+                    "sum": 11.34465146902455,
+                    "absolute_sum": 11.34465146902455
+                  },
+                  "OFF": {
+                    "count": 30,
+                    "sign_accuracy": 0.7333333333333333,
+                    "positive": 0,
+                    "negative": 30,
+                    "sum": -0.0010804225399845496,
+                    "absolute_sum": 0.0010804225399845496
+                  },
+                  "quiet": {
+                    "count": 550,
+                    "sign_accuracy": 0.9727272727272728,
+                    "positive": 362,
+                    "negative": 188,
+                    "sum": -10.856723330560058,
+                    "absolute_sum": 10.858225702527749
+                  }
+                }
+              },
+              "event_balanced": {
+                "count": 610,
+                "balanced_sign_accuracy": 0.5023988953379517,
+                "update_mass_correct": 0.5193370164431064,
+                "scalar_retention": 0.021926168515744273,
+                "two_context_retention": 0.038674032886212774,
+                "categories": {
+                  "ON": {
+                    "count": 30,
+                    "sign_accuracy": 1.0,
+                    "positive": 30,
+                    "negative": 0,
+                    "sum": 11.34465146902455,
+                    "absolute_sum": 11.34465146902455
+                  },
+                  "OFF": {
+                    "count": 30,
+                    "sign_accuracy": 1.0,
+                    "positive": 0,
+                    "negative": 30,
+                    "sum": -0.0010804225399845496,
+                    "absolute_sum": 0.0010804225399845496
+                  },
+                  "quiet": {
+                    "count": 550,
+                    "sign_accuracy": 0.5127272727272727,
+                    "positive": 362,
+                    "negative": 188,
+                    "sum": -10.856723330560058,
+                    "absolute_sum": 10.858225702527749
+                  }
+                }
+              },
+              "update_mass": {
+                "count": 610,
+                "balanced_sign_accuracy": 0.6146788990825688,
+                "update_mass_correct": 0.9132367700903733,
+                "scalar_retention": 0.021926168515744273,
+                "two_context_retention": 0.8264735401807465,
+                "categories": {
+                  "ON": {
+                    "count": 30,
+                    "sign_accuracy": 1.0,
+                    "positive": 30,
+                    "negative": 0,
+                    "sum": 11.34465146902455,
+                    "absolute_sum": 11.34465146902455
+                  },
+                  "OFF": {
+                    "count": 30,
+                    "sign_accuracy": 0.0,
+                    "positive": 0,
+                    "negative": 30,
+                    "sum": -0.0010804225399845496,
+                    "absolute_sum": 0.0010804225399845496
+                  },
+                  "quiet": {
+                    "count": 550,
+                    "sign_accuracy": 0.7490909090909091,
+                    "positive": 362,
+                    "negative": 188,
+                    "sum": -10.856723330560058,
+                    "absolute_sum": 10.858225702527749
+                  }
+                }
+              },
+              "sensory_zero": {
+                "count": 610,
+                "balanced_sign_accuracy": 0.5023988953379517,
+                "update_mass_correct": 0.5193370164431064,
+                "scalar_retention": 0.021926168515744273,
+                "two_context_retention": 0.038674032886212774,
+                "categories": {
+                  "ON": {
+                    "count": 30,
+                    "sign_accuracy": 1.0,
+                    "positive": 30,
+                    "negative": 0,
+                    "sum": 11.34465146902455,
+                    "absolute_sum": 11.34465146902455
+                  },
+                  "OFF": {
+                    "count": 30,
+                    "sign_accuracy": 1.0,
+                    "positive": 0,
+                    "negative": 30,
+                    "sum": -0.0010804225399845496,
+                    "absolute_sum": 0.0010804225399845496
+                  },
+                  "quiet": {
+                    "count": 550,
+                    "sign_accuracy": 0.5127272727272727,
+                    "positive": 362,
+                    "negative": 188,
+                    "sum": -10.856723330560058,
+                    "absolute_sum": 10.858225702527749
+                  }
+                }
+              }
+            }
+          },
+          "held3_knn_shuffled_balanced_accuracy": [
+            0.6010696988948074,
+            0.554305415881132,
+            0.5499432871829033,
+            0.5527634959786627,
+            0.42569334955414206,
+            0.5176285554821104,
+            0.5829498895321772,
+            0.48757847845041546,
+            0.5727775905926168,
+            0.5861610438244758,
+            0.4806507699311473,
+            0.4908783670823892,
+            0.6130089685983318,
+            0.4574679591873478,
+            0.5108243034354336,
+            0.5689247198438276,
+            0.5242887749774306,
+            0.5276696819195424,
+            0.4597660499844394,
+            0.5387974825167631
+          ]
+        }
+      }
+    }
+  }
+}
