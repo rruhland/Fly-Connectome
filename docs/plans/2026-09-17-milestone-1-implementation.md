@@ -956,3 +956,21 @@ is not local learning. Relevant suite55 passed; plot inspected. Protocol/results
 findings: docs/experiments/2026-09-22-continuous-timing-*. Next meaningful direction
 is an approved expression-and-credit proposal followed by causal online learning
 replay against this preserved reference, not further fixed threshold searches.
+
+## 2026-09-22: frozen-history local credit probe
+
+Completed scripts/local_credit_probe.py: original shared scalar, shared gate-
+consistent (balanced/unbalanced), split ungated, split gate-consistent
+(balanced/unbalanced), all starting original target magnitudes and using causal
+issue/confirmation on fixed anatomical traces. Validation selects eta only from
+trials15-19. On unseen tempo3, shared gated balanced ON/OFF .667/.857 and quiet
+2.67%; split gated balanced .667/1.000 and quiet2.67%. Original shared scalar
+.273/.085 fails OFF. First-pass prequential shared gated balanced .525/.423,
+so useful amplitude appears without five passes. Shared tempo2 OFF only .080;
+split better in tempo-specific and continuous challenges. This is off-policy
+replay on frozen neural histories, not a live or M1A pass. See protocol,
+findings, full result JSON and bounded live proposal in docs/experiments/
+2026-09-22-local-credit-* and 2026-09-22-live-local-timing-proposal.md.
+Earlier user requirement: architecture adjustments must come through user first;
+approval request sent for the bounded experimental live subclass. No production
+model change made in this chunk.
