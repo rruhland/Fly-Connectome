@@ -929,3 +929,15 @@ No model/checkpoint change.49relevant tests pass. Next diagnostic: causal local
 window calibration from past events only, before any architecture proposal.
 Findings: docs/experiments/2026-09-21-prediction-timing-findings.md.
 M1A remains unmet; no timing mechanism approved for implementation.
+
+## 2026-09-22: causal timing-reference diagnostic
+
+Completed scripts/causal_timing.py with fixed saved split-balanced amplitudes.
+Past-event reference reduces unseen-tempo-3 quiet alarms 29.81% -> 2.67%,
+retaining ON 84.2% and OFF 100%. Tempo4 retains only 59.8% ON. Complete sensory
+reconstruction matches saved states exactly. Sensory-only continuous switches
+miss the first event at each new tempo; omission recovery misses two returning
+events. No production architecture/plasticity changes and no M1A pass claimed.
+Protocol, findings and exact results: docs/experiments/2026-09-22-causal-timing-*.
+Relevant suite: 53 passed. Next: unchanged selector/readout on actual continuous
+frozen-network tempo-switch/omission histories before any architecture proposal.
