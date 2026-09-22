@@ -1017,3 +1017,28 @@ Wrote docs/experiments/2026-09-22-context-efficacy-proposal.md for context-
 selected magnitudes and physically matched current on existing edges. Approval
 requested because this is a further architecture change, not covered by the
 previous shared-magnitude approval. No split production/model code written yet.
+
+## 2026-09-22: approved context efficacy, live coupled validation
+
+User approved the bounded context-efficacy proposal. Experimental network and
+rule in scripts/context_efficacy.py implement two nonnegative magnitudes on
+each of the measured L3 target's 12 predictive edges, selected by local sensory
+state sign. Selected magnitude controls physical current and issue-context
+local credit. Fixed topology, signs, delays, kernels, no-backprop, production
+network/checkpoints, and behavior rule remain unchanged. Equal components
+match the 411-frame prior run exactly in spikes, currents/forecasts, targets,
+state, gate and weights; fixture checks edge eligibility tick by tick.
+
+One-pass 42-trial training and nine-trial validation selected eta1.0 using
+validation only. Heldout dwells2/3/4/6 all pass ON/OFF>=.1, quiet<5%, and MSE
+below initial, zero and persistence. Unseen dwell3 ON/OFF .667/1.000; dwell6
+.805/.455. Standard/omitted continuous MSE .0679/.0649 vs shared-magnitude
+.1627/.1551, with quiet alarms .64%/.95%. Steady dwell6 ON/OFF now
+.105/.333 (shared -.291/.057); first two post-omission returning events still
+missed. Update reconstruction max error4.7e-7; non-target weights unchanged,
+all states finite, components bounded. Training 2453 frames in51.78s (47.37
+camera fps, 8 neural ticks/frame). Results and limitations in docs/experiments/
+2026-09-22-context-efficacy-findings.md and accompanying JSON. Controlled
+motif criterion passes; full Pong M1A and M1B remain unmet. Production-scale
+integration requires separate review, especially for neurons without direct
+sensory injection.

@@ -1,0 +1,20 @@
+{
+  "source_sha256": "6b518d9021c1dd7df8f1d4c4a5c8d28b043bde27a68262ef70162ced04cd7e53",
+  "old_sha256": "80a66107ecc12755aa95c6c0a711896df42ae47173aee5b44cefbe473ad59501",
+  "parity_sha256": "f559a72ef6706503f644ace001c93066107b5327e2efe0fafd2845b07b3ee07a",
+  "frames": 411,
+  "seconds": 8.774042200006079,
+  "exact_fields": [
+    "raw",
+    "gated",
+    "target",
+    "gate",
+    "state",
+    "reference",
+    "gain",
+    "spikes",
+    "incoming_edges",
+    "presynaptic_bodies",
+    "weights_trained"
+  ]
+}

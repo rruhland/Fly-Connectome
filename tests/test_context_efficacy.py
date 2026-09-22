@@ -112,3 +112,30 @@ def test_only_issued_context_receives_local_credit_and_bounds():
     torch.testing.assert_close(net.components[1, 0],
                                torch.clamp(initial[1, 0]+rule.last_confirmation['delta'][0], 0, 10))
     assert 0 <= float(net.components.min()) <= float(net.components.max()) <= 10
+
+
+def test_closed_gate_surprise_updates_reference_without_efficacy_credit():
+    _, net = networks()
+    cfg = LearningConfig(prediction_encoding='signed-current-v1',
+                         visual_target='input-arrivals-v1',
+                         visual_eligibility='forecast-causal-v1',
+                         eta_prediction=1., eta_reward=0., homeostasis_rate=0.)
+    rule = ContextTimedPrediction(net, cfg, target=1,
+                                  sensory_mask=torch.tensor([False, True, False]), sensory_gain=30.)
+    initial = net.components.clone()
+    net.history[(net.step_index-1) % net.history_length, 0, 0] = True
+    for tick in range(9):
+        sensory = torch.zeros(1, 3)
+        if tick == 0:
+            sensory[0, 1] = -30
+        elif tick == 8:
+            sensory[0, 1] = 30
+        activity = net.step(sensory, capture_increments=True)
+        rule.observe(activity, torch.zeros(1))
+        if tick == 0:
+            assert not rule.last_issue['gate']
+    assert rule.last_confirmation['gain'] >= 1
+    assert rule.last_confirmation['delta'].abs().sum() == 0
+    assert rule.reference > 0
+    rule.synchronize()
+    torch.testing.assert_close(net.components, initial, rtol=0, atol=0)
