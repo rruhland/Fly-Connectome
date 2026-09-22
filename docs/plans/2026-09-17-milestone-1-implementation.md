@@ -941,3 +941,18 @@ events. No production architecture/plasticity changes and no M1A pass claimed.
 Protocol, findings and exact results: docs/experiments/2026-09-22-causal-timing-*.
 Relevant suite: 53 passed. Next: unchanged selector/readout on actual continuous
 frozen-network tempo-switch/omission histories before any architecture proposal.
+
+## 2026-09-22: continuous frozen-network timing challenge
+
+Completed scripts/continuous_timing.py and saved standard/omitted histories.
+New collector exactly matches the old collector control (eligibility, sensory
+state, targets, predictions, spikes); omission prefixes and sensory replay exact.
+No weight changes or amplitude refits. Whole-stream standard ON/OFF .6029/.5745,
+quiet alarms 70.38% -> 0.64%; omitted ON/OFF .6105/.5876, quiet 66.14% -> 0.95%.
+Startup misses4 events, tempo switches miss1, omission return misses2. Returning
+amplitudes are also nearzero without gating: recovery includes neural state.
+Interval6 steady anticipation only .1141/.1478. M1A still unmet: offline capacity
+is not local learning. Relevant suite55 passed; plot inspected. Protocol/results/
+findings: docs/experiments/2026-09-22-continuous-timing-*. Next meaningful direction
+is an approved expression-and-credit proposal followed by causal online learning
+replay against this preserved reference, not further fixed threshold searches.
