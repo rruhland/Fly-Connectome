@@ -1,0 +1,194 @@
+{
+  "source_sha256": "8c4af80ff3904881bac9313b618dd9989bb51174b47606f28eca88865296005c",
+  "graph_sha256": "c941a5c912dd03e2ab0868260c637c2b1d21525196d4bce93c7d5e7f618e34a8",
+  "annotations_sha256": "2177e246113e4cfbf1e7772ec37c6da1955ff22e8063d0b1f833101f99a9a3b2",
+  "center": 16,
+  "speed": 2,
+  "next_frame_gate_threshold": 0.05,
+  "tm4_arm_support_threshold": 0.001,
+  "source_current_deviation_threshold": 0.01,
+  "source_state": "signed synaptic current, paired against bright blank",
+  "groups": {
+    "down": {
+      "T5c": {
+        "cells": 224,
+        "cells_without_tm4_contacts": 2,
+        "future_gate_events": 364,
+        "missing_arm_events": {
+          "samples": 173,
+          "mean_source_current_deviation": 0.04497306048870087,
+          "mean_positive_source_current_deviation": 0.05630506947636604,
+          "positive_deviation_above_01_fraction": 0.49132949113845825,
+          "mean_absolute_voltage_deviation": 0.029276462271809578,
+          "weighted_source_spike_fraction": 0.009274790994822979
+        },
+        "supported_arm_events": {
+          "samples": 191,
+          "mean_source_current_deviation": 0.35580959916114807,
+          "mean_positive_source_current_deviation": 0.3563038408756256,
+          "positive_deviation_above_01_fraction": 0.9895287752151489,
+          "mean_absolute_voltage_deviation": 0.47993242740631104,
+          "weighted_source_spike_fraction": 0.009986677207052708
+        },
+        "quiet": {
+          "samples": 2100,
+          "mean_source_current_deviation": 0.022899571806192398,
+          "mean_positive_source_current_deviation": 0.037485748529434204,
+          "positive_deviation_above_01_fraction": 0.26476189494132996,
+          "mean_absolute_voltage_deviation": 0.07776138931512833,
+          "weighted_source_spike_fraction": 0.0020501045510172844
+        }
+      },
+      "T5d": {
+        "cells": 207,
+        "cells_without_tm4_contacts": 3,
+        "future_gate_events": 472,
+        "missing_arm_events": {
+          "samples": 203,
+          "mean_source_current_deviation": 0.05035794898867607,
+          "mean_positive_source_current_deviation": 0.063168466091156,
+          "positive_deviation_above_01_fraction": 0.4433497488498688,
+          "mean_absolute_voltage_deviation": 0.03645443543791771,
+          "weighted_source_spike_fraction": 0.01362704299390316
+        },
+        "supported_arm_events": {
+          "samples": 269,
+          "mean_source_current_deviation": 0.35712021589279175,
+          "mean_positive_source_current_deviation": 0.3574462831020355,
+          "positive_deviation_above_01_fraction": 0.9925650358200073,
+          "mean_absolute_voltage_deviation": 0.5044722557067871,
+          "weighted_source_spike_fraction": 0.017067236825823784
+        },
+        "quiet": {
+          "samples": 1805,
+          "mean_source_current_deviation": 0.003770040115341544,
+          "mean_positive_source_current_deviation": 0.01938427984714508,
+          "positive_deviation_above_01_fraction": 0.20221607387065887,
+          "mean_absolute_voltage_deviation": 0.05427169054746628,
+          "weighted_source_spike_fraction": 0.0004616805526893586
+        }
+      }
+    },
+    "up": {
+      "T5c": {
+        "cells": 224,
+        "cells_without_tm4_contacts": 2,
+        "future_gate_events": 582,
+        "missing_arm_events": {
+          "samples": 249,
+          "mean_source_current_deviation": 0.05846530571579933,
+          "mean_positive_source_current_deviation": 0.06510600447654724,
+          "positive_deviation_above_01_fraction": 0.522088348865509,
+          "mean_absolute_voltage_deviation": 0.0461912639439106,
+          "weighted_source_spike_fraction": 0.02669510245323181
+        },
+        "supported_arm_events": {
+          "samples": 333,
+          "mean_source_current_deviation": 0.3249182105064392,
+          "mean_positive_source_current_deviation": 0.3254207968711853,
+          "positive_deviation_above_01_fraction": 0.9879879951477051,
+          "mean_absolute_voltage_deviation": 0.4529963731765747,
+          "weighted_source_spike_fraction": 0.010938136838376522
+        },
+        "quiet": {
+          "samples": 1882,
+          "mean_source_current_deviation": -0.0014275615103542805,
+          "mean_positive_source_current_deviation": 0.015888527035713196,
+          "positive_deviation_above_01_fraction": 0.19819341599941254,
+          "mean_absolute_voltage_deviation": 0.0571158193051815,
+          "weighted_source_spike_fraction": 0.0005294033326208591
+        }
+      },
+      "T5d": {
+        "cells": 207,
+        "cells_without_tm4_contacts": 3,
+        "future_gate_events": 309,
+        "missing_arm_events": {
+          "samples": 164,
+          "mean_source_current_deviation": 0.09445323050022125,
+          "mean_positive_source_current_deviation": 0.09964282065629959,
+          "positive_deviation_above_01_fraction": 0.6280487775802612,
+          "mean_absolute_voltage_deviation": 0.0732763484120369,
+          "weighted_source_spike_fraction": 0.047695524990558624
+        },
+        "supported_arm_events": {
+          "samples": 145,
+          "mean_source_current_deviation": 0.3844100832939148,
+          "mean_positive_source_current_deviation": 0.3844100832939148,
+          "positive_deviation_above_01_fraction": 1.0,
+          "mean_absolute_voltage_deviation": 0.558801531791687,
+          "weighted_source_spike_fraction": 0.01105407066643238
+        },
+        "quiet": {
+          "samples": 1968,
+          "mean_source_current_deviation": 0.021104948595166206,
+          "mean_positive_source_current_deviation": 0.037852268666028976,
+          "positive_deviation_above_01_fraction": 0.25508129596710205,
+          "mean_absolute_voltage_deviation": 0.08176765590906143,
+          "weighted_source_spike_fraction": 0.0008276361040771008
+        }
+      }
+    },
+    "static": {
+      "T5c": {
+        "cells": 224,
+        "cells_without_tm4_contacts": 2,
+        "future_gate_events": 176,
+        "missing_arm_events": {
+          "samples": 22,
+          "mean_source_current_deviation": 0.1675587296485901,
+          "mean_positive_source_current_deviation": 0.1675587296485901,
+          "positive_deviation_above_01_fraction": 1.0,
+          "mean_absolute_voltage_deviation": 0.09494459629058838,
+          "weighted_source_spike_fraction": 0.07260101288557053
+        },
+        "supported_arm_events": {
+          "samples": 154,
+          "mean_source_current_deviation": 0.29584696888923645,
+          "mean_positive_source_current_deviation": 0.29584696888923645,
+          "positive_deviation_above_01_fraction": 0.9870129823684692,
+          "mean_absolute_voltage_deviation": 0.2704283595085144,
+          "weighted_source_spike_fraction": 0.011681991629302502
+        },
+        "quiet": {
+          "samples": 2288,
+          "mean_source_current_deviation": 0.014266233891248703,
+          "mean_positive_source_current_deviation": 0.019488755613565445,
+          "positive_deviation_above_01_fraction": 0.2565559446811676,
+          "mean_absolute_voltage_deviation": 0.012023959308862686,
+          "weighted_source_spike_fraction": 0.0
+        }
+      },
+      "T5d": {
+        "cells": 207,
+        "cells_without_tm4_contacts": 3,
+        "future_gate_events": 149,
+        "missing_arm_events": {
+          "samples": 23,
+          "mean_source_current_deviation": 0.17482782900333405,
+          "mean_positive_source_current_deviation": 0.17482782900333405,
+          "positive_deviation_above_01_fraction": 1.0,
+          "mean_absolute_voltage_deviation": 0.08545120060443878,
+          "weighted_source_spike_fraction": 0.03708439692854881
+        },
+        "supported_arm_events": {
+          "samples": 126,
+          "mean_source_current_deviation": 0.3501113951206207,
+          "mean_positive_source_current_deviation": 0.35014116764068604,
+          "positive_deviation_above_01_fraction": 0.9841269850730896,
+          "mean_absolute_voltage_deviation": 0.3338368833065033,
+          "weighted_source_spike_fraction": 0.012872985564172268
+        },
+        "quiet": {
+          "samples": 2128,
+          "mean_source_current_deviation": 0.01932458207011223,
+          "mean_positive_source_current_deviation": 0.025182349607348442,
+          "positive_deviation_above_01_fraction": 0.263627827167511,
+          "mean_absolute_voltage_deviation": 0.017073379829525948,
+          "weighted_source_spike_fraction": 0.00019580200023483485
+        }
+      }
+    }
+  },
+  "passes_latent_tm4_screen": true
+}
