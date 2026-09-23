@@ -1,6 +1,6 @@
 # Proposed M1A visual-architecture amendment
 
-**Status: proposed, not implemented.** This would change the [original Milestone 1 design](2026-09-16-milestone-1-design.md), which explicitly limits M1 to spiking point neurons, defers graded potentials and dendritic compartments, and excludes LC11. The current production checkpoint, graph, and learning loop remain unchanged until this amendment is approved and an opt-in prototype passes the gates below.
+**Status: approved for opt-in experiments; production promotion pending the gates below.** This would change the [original Milestone 1 design](2026-09-16-milestone-1-design.md), which explicitly limits M1 to spiking point neurons, defers graded potentials and dendritic compartments, and excludes LC11. The current production checkpoint, graph, and learning loop remain unchanged until an opt-in prototype passes the gates below.
 
 ## Why the original architecture is now the bottleneck
 

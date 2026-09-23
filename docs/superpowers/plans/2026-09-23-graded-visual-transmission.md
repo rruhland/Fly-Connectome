@@ -45,10 +45,10 @@
 
 **Interfaces:** Consume the source-audit-selected release variable and the frozen graph; produce a separate experimental `GradedVisualNetwork` with local release state, fixed measured edge signs/weights/delays, and per-class downstream arrival reports. First test T2, the only class that passed the source screen; extend to T2a/T3 only if a new bounded source test justifies doing so. The release law and its bounded calibration must be specified in the protocol before running motion labels.
 
-- [ ] Write failing small-graph tests for all selected outgoing edges, fixed sign, exact delay, and state restoration.
-- [ ] Implement the smallest opt-in release path; run targeted tests and full suite.
-- [ ] Run matched blank, ON/OFF dot, bar, and static probes at both locations; report source release, Li15/MeLo10 and other target arrivals, per-cell distributions, and finite state.
-- [ ] Apply the preregistered transmission gate; write findings and commit only with a valid full suite.
+- [x] Write failing small-graph tests for all selected outgoing edges, fixed sign, and exact delay; verify restored state by an exact repeated-blank probe.
+- [x] Implement the smallest opt-in release path; run targeted tests and full suite.
+- [x] Run matched blank, ON/OFF dot, bar, and static probes at both locations; report source release, Li15/MeLo10 and other target arrivals, per-cell distributions, and finite state.
+- [x] Apply the preregistered transmission gate; write findings and commit only with a valid full suite. The partial T2→Li15 gate failed, so production promotion is suspended.
 
 ### Task 3: Conditional motion and learning gates
 
