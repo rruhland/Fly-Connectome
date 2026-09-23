@@ -50,6 +50,17 @@
 - [x] Run matched blank, ON/OFF dot, bar, and static probes at both locations; report source release, Li15/MeLo10 and other target arrivals, per-cell distributions, and finite state.
 - [x] Apply the preregistered transmission gate; write findings and commit only with a valid full suite. The partial T2→Li15 gate failed, so production promotion is suspended.
 
+### Task 2b: Local Li15 state after partial T2 propagation
+
+**Files:** Extend `scripts/motion_graded_propagation.py` and `tests/test_motion_graded_propagation.py`; create the `2026-09-23-li15-*` protocols, results, and findings in `docs/experiments`.
+
+**Interfaces:** Consume the frozen T2 pilot's already captured Li15 voltage/current and measured T2→Li15 contacts. Produce matched blank-versus-stimulus summaries for causal 250 ms residuals across all Li15 cells and anatomically dominant local groups. No Li15 output is transmitted.
+
+- [x] Write failing tests for causal high-pass state, local blank quantiles, and wiring-only contact-mass grouping; implement the minimal helpers and verify targeted tests.
+- [x] Preregister the all-cell and afferent-local screens, then run the frozen probe with dot/bar/static and matched blanks at both locations and polarities.
+- [x] Record both screens without changing their thresholds after viewing responses; positive current passes only in the anatomy-defined local groups.
+- [x] Run the full regression suite and commit the verified result.
+
 ### Task 3: Conditional motion and learning gates
 
 **Files:** Extend opt-in motion probes and test files only if Task 2 passes; create versioned findings for each gate.

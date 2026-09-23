@@ -1,0 +1,567 @@
+{
+  "source_sha256": "8c4af80ff3904881bac9313b618dd9989bb51174b47606f28eca88865296005c",
+  "graph_sha256": "c941a5c912dd03e2ab0868260c637c2b1d21525196d4bce93c7d5e7f618e34a8",
+  "selected_t2_cap": 0.03,
+  "baseline_ms": 250,
+  "li15_cells": 21,
+  "conditions": {
+    "18-on-dot": {
+      "positive_voltage": {
+        "neurons": 21,
+        "fraction_above_blank_p99": 0.0421626977622509,
+        "blank_fraction_above_blank_p99": 0.0024801588151603937,
+        "mean_absolute_change": 0.0005692921113222837,
+        "mean_signed_change": 0.0005667527439072728,
+        "per_cell_signed_p10": 0.0,
+        "per_cell_signed_p50": 0.0,
+        "per_cell_signed_p90": 0.0026264155749231577,
+        "finite": true
+      },
+      "negative_voltage": {
+        "neurons": 21,
+        "fraction_above_blank_p99": 0.009424603544175625,
+        "blank_fraction_above_blank_p99": 0.010416666977107525,
+        "mean_absolute_change": 0.00017888008733280003,
+        "mean_signed_change": -0.0001680696732364595,
+        "per_cell_signed_p10": -0.0007097406778484583,
+        "per_cell_signed_p50": 0.0,
+        "per_cell_signed_p90": 1.6804124243208207e-05,
+        "finite": true
+      },
+      "positive_current": {
+        "neurons": 21,
+        "fraction_above_blank_p99": 0.0580357126891613,
+        "blank_fraction_above_blank_p99": 0.0069444444961845875,
+        "mean_absolute_change": 0.001277643023058772,
+        "mean_signed_change": 0.0012683793902397156,
+        "per_cell_signed_p10": -1.0350835509598255e-05,
+        "per_cell_signed_p50": 0.0,
+        "per_cell_signed_p90": 0.007113321218639612,
+        "finite": true
+      },
+      "negative_current": {
+        "neurons": 21,
+        "fraction_above_blank_p99": 0.008432540111243725,
+        "blank_fraction_above_blank_p99": 0.009920635260641575,
+        "mean_absolute_change": 0.00019570013682823628,
+        "mean_signed_change": -0.00016859412426128983,
+        "per_cell_signed_p10": -0.00025877970620058477,
+        "per_cell_signed_p50": 0.0,
+        "per_cell_signed_p90": 3.491235474939458e-05,
+        "finite": true
+      }
+    },
+    "18-on-bar": {
+      "positive_voltage": {
+        "neurons": 21,
+        "fraction_above_blank_p99": 0.0704365074634552,
+        "blank_fraction_above_blank_p99": 0.0024801588151603937,
+        "mean_absolute_change": 0.0027127463836222887,
+        "mean_signed_change": 0.002660393249243498,
+        "per_cell_signed_p10": 0.0,
+        "per_cell_signed_p50": 0.0,
+        "per_cell_signed_p90": 0.015506633557379246,
+        "finite": true
+      },
+      "negative_voltage": {
+        "neurons": 21,
+        "fraction_above_blank_p99": 0.0233134925365448,
+        "blank_fraction_above_blank_p99": 0.010416666977107525,
+        "mean_absolute_change": 0.0010072217555716634,
+        "mean_signed_change": -0.0002308932162122801,
+        "per_cell_signed_p10": -0.0015759948873892426,
+        "per_cell_signed_p50": 0.0003774591314140707,
+        "per_cell_signed_p90": 0.000847185670863837,
+        "finite": true
+      },
+      "positive_current": {
+        "neurons": 21,
+        "fraction_above_blank_p99": 0.1140872985124588,
+        "blank_fraction_above_blank_p99": 0.0069444444961845875,
+        "mean_absolute_change": 0.005720703396946192,
+        "mean_signed_change": 0.005083220545202494,
+        "per_cell_signed_p10": -0.0006724749691784382,
+        "per_cell_signed_p50": 0.0,
+        "per_cell_signed_p90": 0.028859972953796387,
+        "finite": true
+      },
+      "negative_current": {
+        "neurons": 21,
+        "fraction_above_blank_p99": 0.0183531753718853,
+        "blank_fraction_above_blank_p99": 0.009920635260641575,
+        "mean_absolute_change": 0.0009993206476792693,
+        "mean_signed_change": -0.00032125276629813015,
+        "per_cell_signed_p10": -0.0026791878044605255,
+        "per_cell_signed_p50": 0.0001899124908959493,
+        "per_cell_signed_p90": 0.0010583956027403474,
+        "finite": true
+      }
+    },
+    "18-on-static": {
+      "positive_voltage": {
+        "neurons": 21,
+        "fraction_above_blank_p99": 0.0014880952658131719,
+        "blank_fraction_above_blank_p99": 0.0024801588151603937,
+        "mean_absolute_change": 0.00010567068966338411,
+        "mean_signed_change": -0.00010567068966338411,
+        "per_cell_signed_p10": 0.0,
+        "per_cell_signed_p50": 0.0,
+        "per_cell_signed_p90": 0.0,
+        "finite": true
+      },
+      "negative_voltage": {
+        "neurons": 21,
+        "fraction_above_blank_p99": 0.010416666977107525,
+        "blank_fraction_above_blank_p99": 0.010416666977107525,
+        "mean_absolute_change": 7.333725079661235e-05,
+        "mean_signed_change": 7.026263483567163e-05,
+        "per_cell_signed_p10": 0.0,
+        "per_cell_signed_p50": 0.0,
+        "per_cell_signed_p90": 0.00027534563560038805,
+        "finite": true
+      },
+      "positive_current": {
+        "neurons": 21,
+        "fraction_above_blank_p99": 0.0074404762126505375,
+        "blank_fraction_above_blank_p99": 0.0069444444961845875,
+        "mean_absolute_change": 0.00022592527966480702,
+        "mean_signed_change": -0.00021803013805765659,
+        "per_cell_signed_p10": -0.0005329276900738478,
+        "per_cell_signed_p50": 0.0,
+        "per_cell_signed_p90": 0.0,
+        "finite": true
+      },
+      "negative_current": {
+        "neurons": 21,
+        "fraction_above_blank_p99": 0.009920635260641575,
+        "blank_fraction_above_blank_p99": 0.009920635260641575,
+        "mean_absolute_change": 2.4187671442632563e-05,
+        "mean_signed_change": 1.9862431145156734e-05,
+        "per_cell_signed_p10": 0.0,
+        "per_cell_signed_p50": 0.0,
+        "per_cell_signed_p90": 7.30749816284515e-05,
+        "finite": true
+      }
+    },
+    "18-off-dot": {
+      "positive_voltage": {
+        "neurons": 21,
+        "fraction_above_blank_p99": 0.0555555559694767,
+        "blank_fraction_above_blank_p99": 0.0024801588151603937,
+        "mean_absolute_change": 0.0010890924604609609,
+        "mean_signed_change": 0.001076500746421516,
+        "per_cell_signed_p10": 0.0,
+        "per_cell_signed_p50": 0.0,
+        "per_cell_signed_p90": 0.004957080353051424,
+        "finite": true
+      },
+      "negative_voltage": {
+        "neurons": 21,
+        "fraction_above_blank_p99": 0.010416666977107525,
+        "blank_fraction_above_blank_p99": 0.010416666977107525,
+        "mean_absolute_change": 0.000990724191069603,
+        "mean_signed_change": -0.0009864356834441423,
+        "per_cell_signed_p10": -0.003805304877460003,
+        "per_cell_signed_p50": -0.00011383493983885273,
+        "per_cell_signed_p90": -7.265441581694176e-06,
+        "finite": true
+      },
+      "positive_current": {
+        "neurons": 21,
+        "fraction_above_blank_p99": 0.1001984104514122,
+        "blank_fraction_above_blank_p99": 0.0069444444961845875,
+        "mean_absolute_change": 0.002197693334892392,
+        "mean_signed_change": 0.002155779395252466,
+        "per_cell_signed_p10": 0.0,
+        "per_cell_signed_p50": 9.285561827709898e-05,
+        "per_cell_signed_p90": 0.01084339339286089,
+        "finite": true
+      },
+      "negative_current": {
+        "neurons": 21,
+        "fraction_above_blank_p99": 0.009424603544175625,
+        "blank_fraction_above_blank_p99": 0.009920635260641575,
+        "mean_absolute_change": 0.0009646441321820021,
+        "mean_signed_change": -0.0009509894880466163,
+        "per_cell_signed_p10": -0.003760709660127759,
+        "per_cell_signed_p50": -5.521897037397139e-05,
+        "per_cell_signed_p90": 0.0,
+        "finite": true
+      }
+    },
+    "18-off-bar": {
+      "positive_voltage": {
+        "neurons": 21,
+        "fraction_above_blank_p99": 0.1403769850730896,
+        "blank_fraction_above_blank_p99": 0.0024801588151603937,
+        "mean_absolute_change": 0.006726893130689859,
+        "mean_signed_change": 0.006702577229589224,
+        "per_cell_signed_p10": 0.0,
+        "per_cell_signed_p50": 0.0,
+        "per_cell_signed_p90": 0.036812543869018555,
+        "finite": true
+      },
+      "negative_voltage": {
+        "neurons": 21,
+        "fraction_above_blank_p99": 0.0347222238779068,
+        "blank_fraction_above_blank_p99": 0.010416666977107525,
+        "mean_absolute_change": 0.0023209890350699425,
+        "mean_signed_change": -0.0019143123645335436,
+        "per_cell_signed_p10": -0.008302386850118637,
+        "per_cell_signed_p50": -6.437484262278304e-05,
+        "per_cell_signed_p90": 0.000403665384510532,
+        "finite": true
+      },
+      "positive_current": {
+        "neurons": 21,
+        "fraction_above_blank_p99": 0.1964285671710968,
+        "blank_fraction_above_blank_p99": 0.0069444444961845875,
+        "mean_absolute_change": 0.011718879453837872,
+        "mean_signed_change": 0.011431057937443256,
+        "per_cell_signed_p10": -0.0002673800918273628,
+        "per_cell_signed_p50": 8.567108307033777e-05,
+        "per_cell_signed_p90": 0.05279704928398132,
+        "finite": true
+      },
+      "negative_current": {
+        "neurons": 21,
+        "fraction_above_blank_p99": 0.013888888992369175,
+        "blank_fraction_above_blank_p99": 0.009920635260641575,
+        "mean_absolute_change": 0.002096095122396946,
+        "mean_signed_change": -0.0016549871070310473,
+        "per_cell_signed_p10": -0.007646995130926371,
+        "per_cell_signed_p50": 0.0,
+        "per_cell_signed_p90": 0.00047255519893951714,
+        "finite": true
+      }
+    },
+    "18-off-static": {
+      "positive_voltage": {
+        "neurons": 21,
+        "fraction_above_blank_p99": 0.004464285913854837,
+        "blank_fraction_above_blank_p99": 0.0024801588151603937,
+        "mean_absolute_change": 0.0001251596986548975,
+        "mean_signed_change": 3.636409746832214e-05,
+        "per_cell_signed_p10": 0.0,
+        "per_cell_signed_p50": 0.0,
+        "per_cell_signed_p90": 1.5725265257060528e-05,
+        "finite": true
+      },
+      "negative_voltage": {
+        "neurons": 21,
+        "fraction_above_blank_p99": 0.01587301678955555,
+        "blank_fraction_above_blank_p99": 0.010416666977107525,
+        "mean_absolute_change": 0.0006768114981241524,
+        "mean_signed_change": -0.00024883850710466504,
+        "per_cell_signed_p10": -0.0016680947737768292,
+        "per_cell_signed_p50": -6.673578172922134e-05,
+        "per_cell_signed_p90": 0.0005843420512974262,
+        "finite": true
+      },
+      "positive_current": {
+        "neurons": 21,
+        "fraction_above_blank_p99": 0.0163690485060215,
+        "blank_fraction_above_blank_p99": 0.0069444444961845875,
+        "mean_absolute_change": 0.000650490284897387,
+        "mean_signed_change": -1.4507019841403235e-05,
+        "per_cell_signed_p10": -0.0003568703541532159,
+        "per_cell_signed_p50": 0.0,
+        "per_cell_signed_p90": 0.00038392384885810316,
+        "finite": true
+      },
+      "negative_current": {
+        "neurons": 21,
+        "fraction_above_blank_p99": 0.011408730410039425,
+        "blank_fraction_above_blank_p99": 0.009920635260641575,
+        "mean_absolute_change": 0.0006166365928947926,
+        "mean_signed_change": -0.0001374332350678742,
+        "per_cell_signed_p10": -0.00025511925923638046,
+        "per_cell_signed_p50": -2.931440576503519e-05,
+        "per_cell_signed_p90": 0.0002798168861772865,
+        "finite": true
+      }
+    },
+    "46-on-dot": {
+      "positive_voltage": {
+        "neurons": 21,
+        "fraction_above_blank_p99": 0.008928571827709675,
+        "blank_fraction_above_blank_p99": 0.0024801588151603937,
+        "mean_absolute_change": 8.490816253470257e-05,
+        "mean_signed_change": 4.1658593545434996e-05,
+        "per_cell_signed_p10": 0.0,
+        "per_cell_signed_p50": 0.0,
+        "per_cell_signed_p90": 0.0,
+        "finite": true
+      },
+      "negative_voltage": {
+        "neurons": 21,
+        "fraction_above_blank_p99": 0.008928571827709675,
+        "blank_fraction_above_blank_p99": 0.010416666977107525,
+        "mean_absolute_change": 0.0008329978445544839,
+        "mean_signed_change": -0.0007825185311958194,
+        "per_cell_signed_p10": -0.004200038965791464,
+        "per_cell_signed_p50": 0.0,
+        "per_cell_signed_p90": 2.655584830790758e-05,
+        "finite": true
+      },
+      "positive_current": {
+        "neurons": 21,
+        "fraction_above_blank_p99": 0.0272817462682724,
+        "blank_fraction_above_blank_p99": 0.0069444444961845875,
+        "mean_absolute_change": 0.0007474428275600076,
+        "mean_signed_change": 0.0005415138439275324,
+        "per_cell_signed_p10": -1.1027043910871726e-05,
+        "per_cell_signed_p50": 0.0,
+        "per_cell_signed_p90": 0.00193415570538491,
+        "finite": true
+      },
+      "negative_current": {
+        "neurons": 21,
+        "fraction_above_blank_p99": 0.009424603544175625,
+        "blank_fraction_above_blank_p99": 0.009920635260641575,
+        "mean_absolute_change": 0.0007041219505481422,
+        "mean_signed_change": -0.0005600636941380799,
+        "per_cell_signed_p10": -0.002798110945150256,
+        "per_cell_signed_p50": 0.0,
+        "per_cell_signed_p90": 7.746824849164113e-05,
+        "finite": true
+      }
+    },
+    "46-on-bar": {
+      "positive_voltage": {
+        "neurons": 21,
+        "fraction_above_blank_p99": 0.0788690447807312,
+        "blank_fraction_above_blank_p99": 0.0024801588151603937,
+        "mean_absolute_change": 0.003002902027219534,
+        "mean_signed_change": 0.0028147604316473007,
+        "per_cell_signed_p10": -0.00011771295248763636,
+        "per_cell_signed_p50": 0.0,
+        "per_cell_signed_p90": 0.009926741011440754,
+        "finite": true
+      },
+      "negative_voltage": {
+        "neurons": 21,
+        "fraction_above_blank_p99": 0.02777777798473835,
+        "blank_fraction_above_blank_p99": 0.010416666977107525,
+        "mean_absolute_change": 0.002953527495265007,
+        "mean_signed_change": -0.0022428284864872694,
+        "per_cell_signed_p10": -0.008593575097620487,
+        "per_cell_signed_p50": 5.9148089349037036e-05,
+        "per_cell_signed_p90": 0.0010389754315838218,
+        "finite": true
+      },
+      "positive_current": {
+        "neurons": 21,
+        "fraction_above_blank_p99": 0.1374007910490036,
+        "blank_fraction_above_blank_p99": 0.0069444444961845875,
+        "mean_absolute_change": 0.00898556225001812,
+        "mean_signed_change": 0.008168553002178669,
+        "per_cell_signed_p10": -0.0015886119799688458,
+        "per_cell_signed_p50": 0.0,
+        "per_cell_signed_p90": 0.02609863318502903,
+        "finite": true
+      },
+      "negative_current": {
+        "neurons": 21,
+        "fraction_above_blank_p99": 0.01984127052128315,
+        "blank_fraction_above_blank_p99": 0.009920635260641575,
+        "mean_absolute_change": 0.00208416860550642,
+        "mean_signed_change": -0.0016380446031689644,
+        "per_cell_signed_p10": -0.005546850617974997,
+        "per_cell_signed_p50": 2.3699976736679673e-06,
+        "per_cell_signed_p90": 0.0005505135632120073,
+        "finite": true
+      }
+    },
+    "46-on-static": {
+      "positive_voltage": {
+        "neurons": 21,
+        "fraction_above_blank_p99": 0.0019841270986944437,
+        "blank_fraction_above_blank_p99": 0.0024801588151603937,
+        "mean_absolute_change": 7.235140401462559e-06,
+        "mean_signed_change": -7.235140401462559e-06,
+        "per_cell_signed_p10": 0.0,
+        "per_cell_signed_p50": 0.0,
+        "per_cell_signed_p90": 0.0,
+        "finite": true
+      },
+      "negative_voltage": {
+        "neurons": 21,
+        "fraction_above_blank_p99": 0.009920635260641575,
+        "blank_fraction_above_blank_p99": 0.010416666977107525,
+        "mean_absolute_change": 2.0241346646798775e-05,
+        "mean_signed_change": -2.8459139684855472e-06,
+        "per_cell_signed_p10": -2.4667882826179266e-05,
+        "per_cell_signed_p50": 0.0,
+        "per_cell_signed_p90": 1.3866073459212203e-05,
+        "finite": true
+      },
+      "positive_current": {
+        "neurons": 21,
+        "fraction_above_blank_p99": 0.007936508394777775,
+        "blank_fraction_above_blank_p99": 0.0069444444961845875,
+        "mean_absolute_change": 4.133506809012033e-05,
+        "mean_signed_change": -3.1130162824410945e-05,
+        "per_cell_signed_p10": -0.0001112199024646543,
+        "per_cell_signed_p50": 0.0,
+        "per_cell_signed_p90": 0.0,
+        "finite": true
+      },
+      "negative_current": {
+        "neurons": 21,
+        "fraction_above_blank_p99": 0.009920635260641575,
+        "blank_fraction_above_blank_p99": 0.009920635260641575,
+        "mean_absolute_change": 4.505837569013238e-05,
+        "mean_signed_change": -3.255458068451844e-05,
+        "per_cell_signed_p10": -5.565898027271032e-05,
+        "per_cell_signed_p50": 0.0,
+        "per_cell_signed_p90": 1.0402330190117937e-05,
+        "finite": true
+      }
+    },
+    "46-off-dot": {
+      "positive_voltage": {
+        "neurons": 21,
+        "fraction_above_blank_p99": 0.0352182537317276,
+        "blank_fraction_above_blank_p99": 0.0024801588151603937,
+        "mean_absolute_change": 0.0009278311626985669,
+        "mean_signed_change": 0.000747637590393424,
+        "per_cell_signed_p10": -6.428856431739405e-05,
+        "per_cell_signed_p50": 0.0,
+        "per_cell_signed_p90": 0.0002812696620821953,
+        "finite": true
+      },
+      "negative_voltage": {
+        "neurons": 21,
+        "fraction_above_blank_p99": 0.0386904776096344,
+        "blank_fraction_above_blank_p99": 0.010416666977107525,
+        "mean_absolute_change": 0.0025670714676380157,
+        "mean_signed_change": -0.0017171321669593453,
+        "per_cell_signed_p10": -0.008466939441859722,
+        "per_cell_signed_p50": 0.00029400698258541524,
+        "per_cell_signed_p90": 0.0010974942706525326,
+        "finite": true
+      },
+      "positive_current": {
+        "neurons": 21,
+        "fraction_above_blank_p99": 0.0719246044754982,
+        "blank_fraction_above_blank_p99": 0.0069444444961845875,
+        "mean_absolute_change": 0.0029546404257416725,
+        "mean_signed_change": 0.0021917817648500204,
+        "per_cell_signed_p10": -0.0015358567470684648,
+        "per_cell_signed_p50": 0.0,
+        "per_cell_signed_p90": 0.008673982694745064,
+        "finite": true
+      },
+      "negative_current": {
+        "neurons": 21,
+        "fraction_above_blank_p99": 0.0282738097012043,
+        "blank_fraction_above_blank_p99": 0.009920635260641575,
+        "mean_absolute_change": 0.0017701858887448907,
+        "mean_signed_change": -0.0011430595768615603,
+        "per_cell_signed_p10": -0.006633751560002565,
+        "per_cell_signed_p50": 0.00018717192870099097,
+        "per_cell_signed_p90": 0.0006243081879802048,
+        "finite": true
+      }
+    },
+    "46-off-bar": {
+      "positive_voltage": {
+        "neurons": 21,
+        "fraction_above_blank_p99": 0.1527777761220932,
+        "blank_fraction_above_blank_p99": 0.0024801588151603937,
+        "mean_absolute_change": 0.009016042575240135,
+        "mean_signed_change": 0.008945351466536522,
+        "per_cell_signed_p10": -5.716996383853257e-05,
+        "per_cell_signed_p50": 0.0,
+        "per_cell_signed_p90": 0.035793714225292206,
+        "finite": true
+      },
+      "negative_voltage": {
+        "neurons": 21,
+        "fraction_above_blank_p99": 0.0193452388048172,
+        "blank_fraction_above_blank_p99": 0.010416666977107525,
+        "mean_absolute_change": 0.006730546709150076,
+        "mean_signed_change": -0.006364799104630947,
+        "per_cell_signed_p10": -0.020312629640102386,
+        "per_cell_signed_p50": -0.0006787331658415496,
+        "per_cell_signed_p90": 0.000895309669431299,
+        "finite": true
+      },
+      "positive_current": {
+        "neurons": 21,
+        "fraction_above_blank_p99": 0.2212301641702652,
+        "blank_fraction_above_blank_p99": 0.0069444444961845875,
+        "mean_absolute_change": 0.016729073598980904,
+        "mean_signed_change": 0.016350679099559784,
+        "per_cell_signed_p10": -0.0008179882424883544,
+        "per_cell_signed_p50": 0.0,
+        "per_cell_signed_p90": 0.06252292543649673,
+        "finite": true
+      },
+      "negative_current": {
+        "neurons": 21,
+        "fraction_above_blank_p99": 0.02380952425301075,
+        "blank_fraction_above_blank_p99": 0.009920635260641575,
+        "mean_absolute_change": 0.004896548576653004,
+        "mean_signed_change": -0.004650723189115524,
+        "per_cell_signed_p10": -0.014867744408547878,
+        "per_cell_signed_p50": -0.0007655938970856369,
+        "per_cell_signed_p90": 0.0002519272093195468,
+        "finite": true
+      }
+    },
+    "46-off-static": {
+      "positive_voltage": {
+        "neurons": 21,
+        "fraction_above_blank_p99": 0.02182539738714695,
+        "blank_fraction_above_blank_p99": 0.0024801588151603937,
+        "mean_absolute_change": 0.00018250278662890196,
+        "mean_signed_change": 0.00018250278662890196,
+        "per_cell_signed_p10": 0.0,
+        "per_cell_signed_p50": 0.0,
+        "per_cell_signed_p90": 0.0,
+        "finite": true
+      },
+      "negative_voltage": {
+        "neurons": 21,
+        "fraction_above_blank_p99": 0.0074404762126505375,
+        "blank_fraction_above_blank_p99": 0.010416666977107525,
+        "mean_absolute_change": 0.0012529523810371757,
+        "mean_signed_change": -0.0011976200621575117,
+        "per_cell_signed_p10": -0.0042750961147248745,
+        "per_cell_signed_p50": 0.0,
+        "per_cell_signed_p90": 4.828958117286675e-05,
+        "finite": true
+      },
+      "positive_current": {
+        "neurons": 21,
+        "fraction_above_blank_p99": 0.0262896828353405,
+        "blank_fraction_above_blank_p99": 0.0069444444961845875,
+        "mean_absolute_change": 0.0010747893247753382,
+        "mean_signed_change": 0.0006009555072523654,
+        "per_cell_signed_p10": -2.9406859539449215e-05,
+        "per_cell_signed_p50": 0.0,
+        "per_cell_signed_p90": 0.0005740313790738583,
+        "finite": true
+      },
+      "negative_current": {
+        "neurons": 21,
+        "fraction_above_blank_p99": 0.0069444444961845875,
+        "blank_fraction_above_blank_p99": 0.009920635260641575,
+        "mean_absolute_change": 0.000956802861765027,
+        "mean_signed_change": -0.0007976586348377168,
+        "per_cell_signed_p10": -0.003127102507278323,
+        "per_cell_signed_p50": -2.2718042600899935e-05,
+        "per_cell_signed_p90": 0.0,
+        "finite": true
+      }
+    }
+  },
+  "candidate_screens": {
+    "positive_voltage": false,
+    "negative_voltage": false,
+    "positive_current": false,
+    "negative_current": false
+  }
+}
