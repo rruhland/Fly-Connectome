@@ -1,0 +1,1933 @@
+{
+  "source_sha256": "8c4af80ff3904881bac9313b618dd9989bb51174b47606f28eca88865296005c",
+  "graph_sha256": "c941a5c912dd03e2ab0868260c637c2b1d21525196d4bce93c7d5e7f618e34a8",
+  "warmup_ticks": 500,
+  "ticks_per_frame": 8,
+  "frames_per_condition": 18,
+  "source": "initial",
+  "stimulus": "dot",
+  "groups": {
+    "18-on-+1": {
+      "transit_pixel_events": 72,
+      "transit_neural_inputs": 147,
+      "groups": {
+        "L1:global": {
+          "neurons": 892,
+          "spikes": 979,
+          "blank_spikes": 901,
+          "excess_spikes": 78,
+          "changed_spike_counts": 16,
+          "mean_voltage_change": -0.06721998006105423
+        },
+        "L1:local": {
+          "neurons": 60,
+          "spikes": 138,
+          "blank_spikes": 60,
+          "excess_spikes": 78,
+          "changed_spike_counts": 16,
+          "mean_voltage_change": -0.9993331432342529
+        },
+        "L2:global": {
+          "neurons": 893,
+          "spikes": 1647,
+          "blank_spikes": 1587,
+          "excess_spikes": 60,
+          "changed_spike_counts": 41,
+          "mean_voltage_change": -0.06555783748626709
+        },
+        "L2:local": {
+          "neurons": 60,
+          "spikes": 173,
+          "blank_spikes": 109,
+          "excess_spikes": 64,
+          "changed_spike_counts": 25,
+          "mean_voltage_change": -0.9882552623748779
+        },
+        "L3:global": {
+          "neurons": 892,
+          "spikes": 937,
+          "blank_spikes": 892,
+          "excess_spikes": 45,
+          "changed_spike_counts": 15,
+          "mean_voltage_change": -0.045770470052957535
+        },
+        "L3:local": {
+          "neurons": 60,
+          "spikes": 105,
+          "blank_spikes": 60,
+          "excess_spikes": 45,
+          "changed_spike_counts": 15,
+          "mean_voltage_change": -0.6804556250572205
+        },
+        "L4:global": {
+          "neurons": 891,
+          "spikes": 4,
+          "blank_spikes": 0,
+          "excess_spikes": 4,
+          "changed_spike_counts": 4,
+          "mean_voltage_change": -0.0006721355020999908
+        },
+        "Mi1:global": {
+          "neurons": 887,
+          "spikes": 297,
+          "blank_spikes": 301,
+          "excess_spikes": -4,
+          "changed_spike_counts": 4,
+          "mean_voltage_change": 7.778345752740279e-05
+        },
+        "Tm3:global": {
+          "neurons": 1037,
+          "spikes": 95,
+          "blank_spikes": 95,
+          "excess_spikes": 0,
+          "changed_spike_counts": 0,
+          "mean_voltage_change": -0.0016194988274946809
+        },
+        "Mi4:global": {
+          "neurons": 889,
+          "spikes": 0,
+          "blank_spikes": 0,
+          "excess_spikes": 0,
+          "changed_spike_counts": 0,
+          "mean_voltage_change": -6.24340318609029e-05
+        },
+        "Mi9:global": {
+          "neurons": 889,
+          "spikes": 428,
+          "blank_spikes": 425,
+          "excess_spikes": 3,
+          "changed_spike_counts": 3,
+          "mean_voltage_change": 0.00023723453341517597
+        },
+        "Tm1:global": {
+          "neurons": 890,
+          "spikes": 825,
+          "blank_spikes": 819,
+          "excess_spikes": 6,
+          "changed_spike_counts": 25,
+          "mean_voltage_change": -0.0011480014072731137
+        },
+        "Tm2:global": {
+          "neurons": 883,
+          "spikes": 902,
+          "blank_spikes": 897,
+          "excess_spikes": 5,
+          "changed_spike_counts": 40,
+          "mean_voltage_change": 0.00035850770655088127
+        },
+        "Tm4:global": {
+          "neurons": 833,
+          "spikes": 0,
+          "blank_spikes": 0,
+          "excess_spikes": 0,
+          "changed_spike_counts": 0,
+          "mean_voltage_change": 0.001579242292791605
+        },
+        "Tm9:global": {
+          "neurons": 887,
+          "spikes": 0,
+          "blank_spikes": 0,
+          "excess_spikes": 0,
+          "changed_spike_counts": 0,
+          "mean_voltage_change": 0.00022132507001515478
+        },
+        "T4a:global": {
+          "neurons": 849,
+          "spikes": 2,
+          "blank_spikes": 2,
+          "excess_spikes": 0,
+          "changed_spike_counts": 0,
+          "mean_voltage_change": -4.3586860556388274e-05
+        },
+        "T4b:global": {
+          "neurons": 846,
+          "spikes": 6,
+          "blank_spikes": 6,
+          "excess_spikes": 0,
+          "changed_spike_counts": 0,
+          "mean_voltage_change": -5.375049659051001e-05
+        },
+        "T4c:global": {
+          "neurons": 883,
+          "spikes": 2,
+          "blank_spikes": 2,
+          "excess_spikes": 0,
+          "changed_spike_counts": 0,
+          "mean_voltage_change": -5.1478567911544815e-05
+        },
+        "T4d:global": {
+          "neurons": 859,
+          "spikes": 5,
+          "blank_spikes": 5,
+          "excess_spikes": 0,
+          "changed_spike_counts": 0,
+          "mean_voltage_change": -3.567764724721201e-05
+        },
+        "T5a:global": {
+          "neurons": 838,
+          "spikes": 2,
+          "blank_spikes": 0,
+          "excess_spikes": 2,
+          "changed_spike_counts": 2,
+          "mean_voltage_change": -0.00033543381141498685
+        },
+        "T5b:global": {
+          "neurons": 852,
+          "spikes": 1,
+          "blank_spikes": 1,
+          "excess_spikes": 0,
+          "changed_spike_counts": 0,
+          "mean_voltage_change": 8.0763733421918e-05
+        },
+        "T5c:global": {
+          "neurons": 858,
+          "spikes": 1,
+          "blank_spikes": 0,
+          "excess_spikes": 1,
+          "changed_spike_counts": 1,
+          "mean_voltage_change": -0.00011057627125410363
+        },
+        "T5d:global": {
+          "neurons": 808,
+          "spikes": 0,
+          "blank_spikes": 0,
+          "excess_spikes": 0,
+          "changed_spike_counts": 0,
+          "mean_voltage_change": 9.036145638674498e-05
+        },
+        "LPi:global": {
+          "neurons": 375,
+          "spikes": 0,
+          "blank_spikes": 0,
+          "excess_spikes": 0,
+          "changed_spike_counts": 0,
+          "mean_voltage_change": 6.603639485547319e-05
+        }
+      }
+    },
+    "18-on--1": {
+      "transit_pixel_events": 72,
+      "transit_neural_inputs": 147,
+      "groups": {
+        "L1:global": {
+          "neurons": 892,
+          "spikes": 978,
+          "blank_spikes": 901,
+          "excess_spikes": 77,
+          "changed_spike_counts": 19,
+          "mean_voltage_change": -0.0734608843922615
+        },
+        "L1:local": {
+          "neurons": 60,
+          "spikes": 137,
+          "blank_spikes": 60,
+          "excess_spikes": 77,
+          "changed_spike_counts": 19,
+          "mean_voltage_change": -1.0921155214309692
+        },
+        "L2:global": {
+          "neurons": 893,
+          "spikes": 1649,
+          "blank_spikes": 1587,
+          "excess_spikes": 62,
+          "changed_spike_counts": 37,
+          "mean_voltage_change": -0.07136409729719162
+        },
+        "L2:local": {
+          "neurons": 60,
+          "spikes": 173,
+          "blank_spikes": 109,
+          "excess_spikes": 64,
+          "changed_spike_counts": 23,
+          "mean_voltage_change": -1.080156922340393
+        },
+        "L3:global": {
+          "neurons": 892,
+          "spikes": 931,
+          "blank_spikes": 892,
+          "excess_spikes": 39,
+          "changed_spike_counts": 18,
+          "mean_voltage_change": -0.050238389521837234
+        },
+        "L3:local": {
+          "neurons": 60,
+          "spikes": 99,
+          "blank_spikes": 60,
+          "excess_spikes": 39,
+          "changed_spike_counts": 18,
+          "mean_voltage_change": -0.7468776702880859
+        },
+        "L4:global": {
+          "neurons": 891,
+          "spikes": 2,
+          "blank_spikes": 0,
+          "excess_spikes": 2,
+          "changed_spike_counts": 2,
+          "mean_voltage_change": -0.00017272637342102826
+        },
+        "Mi1:global": {
+          "neurons": 887,
+          "spikes": 300,
+          "blank_spikes": 301,
+          "excess_spikes": -1,
+          "changed_spike_counts": 1,
+          "mean_voltage_change": -0.0015352409100160003
+        },
+        "Tm3:global": {
+          "neurons": 1037,
+          "spikes": 93,
+          "blank_spikes": 95,
+          "excess_spikes": -2,
+          "changed_spike_counts": 2,
+          "mean_voltage_change": -0.0017951666377484798
+        },
+        "Mi4:global": {
+          "neurons": 889,
+          "spikes": 0,
+          "blank_spikes": 0,
+          "excess_spikes": 0,
+          "changed_spike_counts": 0,
+          "mean_voltage_change": -7.797728176228702e-05
+        },
+        "Mi9:global": {
+          "neurons": 889,
+          "spikes": 434,
+          "blank_spikes": 425,
+          "excess_spikes": 9,
+          "changed_spike_counts": 9,
+          "mean_voltage_change": -0.001414058730006218
+        },
+        "Tm1:global": {
+          "neurons": 890,
+          "spikes": 823,
+          "blank_spikes": 819,
+          "excess_spikes": 4,
+          "changed_spike_counts": 26,
+          "mean_voltage_change": -0.0013179575325921178
+        },
+        "Tm2:global": {
+          "neurons": 883,
+          "spikes": 907,
+          "blank_spikes": 897,
+          "excess_spikes": 10,
+          "changed_spike_counts": 41,
+          "mean_voltage_change": -0.0012226463295519352
+        },
+        "Tm4:global": {
+          "neurons": 833,
+          "spikes": 0,
+          "blank_spikes": 0,
+          "excess_spikes": 0,
+          "changed_spike_counts": 0,
+          "mean_voltage_change": 0.0019885520450770855
+        },
+        "Tm9:global": {
+          "neurons": 887,
+          "spikes": 0,
+          "blank_spikes": 0,
+          "excess_spikes": 0,
+          "changed_spike_counts": 0,
+          "mean_voltage_change": 0.00021605714573524892
+        },
+        "T4a:global": {
+          "neurons": 849,
+          "spikes": 2,
+          "blank_spikes": 2,
+          "excess_spikes": 0,
+          "changed_spike_counts": 0,
+          "mean_voltage_change": -5.2126895752735436e-05
+        },
+        "T4b:global": {
+          "neurons": 846,
+          "spikes": 6,
+          "blank_spikes": 6,
+          "excess_spikes": 0,
+          "changed_spike_counts": 0,
+          "mean_voltage_change": -5.6381486501777545e-05
+        },
+        "T4c:global": {
+          "neurons": 883,
+          "spikes": 2,
+          "blank_spikes": 2,
+          "excess_spikes": 0,
+          "changed_spike_counts": 0,
+          "mean_voltage_change": -5.304860678734258e-05
+        },
+        "T4d:global": {
+          "neurons": 859,
+          "spikes": 5,
+          "blank_spikes": 5,
+          "excess_spikes": 0,
+          "changed_spike_counts": 0,
+          "mean_voltage_change": -4.5328117266763e-05
+        },
+        "T5a:global": {
+          "neurons": 838,
+          "spikes": 1,
+          "blank_spikes": 0,
+          "excess_spikes": 1,
+          "changed_spike_counts": 1,
+          "mean_voltage_change": 0.00014526420272886753
+        },
+        "T5b:global": {
+          "neurons": 852,
+          "spikes": 3,
+          "blank_spikes": 1,
+          "excess_spikes": 2,
+          "changed_spike_counts": 2,
+          "mean_voltage_change": -0.00013129098806530237
+        },
+        "T5c:global": {
+          "neurons": 858,
+          "spikes": 1,
+          "blank_spikes": 0,
+          "excess_spikes": 1,
+          "changed_spike_counts": 1,
+          "mean_voltage_change": 9.25526037462987e-05
+        },
+        "T5d:global": {
+          "neurons": 808,
+          "spikes": 1,
+          "blank_spikes": 0,
+          "excess_spikes": 1,
+          "changed_spike_counts": 1,
+          "mean_voltage_change": 0.00010309227945981547
+        },
+        "LPi:global": {
+          "neurons": 375,
+          "spikes": 0,
+          "blank_spikes": 0,
+          "excess_spikes": 0,
+          "changed_spike_counts": 0,
+          "mean_voltage_change": 0.00011907012958545238
+        }
+      }
+    },
+    "18-off-+1": {
+      "transit_pixel_events": 72,
+      "transit_neural_inputs": 147,
+      "groups": {
+        "L1:global": {
+          "neurons": 892,
+          "spikes": 1007,
+          "blank_spikes": 901,
+          "excess_spikes": 106,
+          "changed_spike_counts": 24,
+          "mean_voltage_change": -0.07334107160568237
+        },
+        "L1:local": {
+          "neurons": 60,
+          "spikes": 166,
+          "blank_spikes": 60,
+          "excess_spikes": 106,
+          "changed_spike_counts": 24,
+          "mean_voltage_change": -1.0903304815292358
+        },
+        "L2:global": {
+          "neurons": 893,
+          "spikes": 1664,
+          "blank_spikes": 1587,
+          "excess_spikes": 77,
+          "changed_spike_counts": 55,
+          "mean_voltage_change": -0.07093958556652069
+        },
+        "L2:local": {
+          "neurons": 60,
+          "spikes": 202,
+          "blank_spikes": 109,
+          "excess_spikes": 93,
+          "changed_spike_counts": 27,
+          "mean_voltage_change": -1.0872416496276855
+        },
+        "L3:global": {
+          "neurons": 892,
+          "spikes": 972,
+          "blank_spikes": 892,
+          "excess_spikes": 80,
+          "changed_spike_counts": 24,
+          "mean_voltage_change": -0.05805236101150513
+        },
+        "L3:local": {
+          "neurons": 60,
+          "spikes": 140,
+          "blank_spikes": 60,
+          "excess_spikes": 80,
+          "changed_spike_counts": 24,
+          "mean_voltage_change": -0.8630515336990356
+        },
+        "L4:global": {
+          "neurons": 891,
+          "spikes": 9,
+          "blank_spikes": 0,
+          "excess_spikes": 9,
+          "changed_spike_counts": 9,
+          "mean_voltage_change": -0.0016642106929793954
+        },
+        "Mi1:global": {
+          "neurons": 887,
+          "spikes": 299,
+          "blank_spikes": 301,
+          "excess_spikes": -2,
+          "changed_spike_counts": 2,
+          "mean_voltage_change": -0.001719819032587111
+        },
+        "Tm3:global": {
+          "neurons": 1037,
+          "spikes": 94,
+          "blank_spikes": 95,
+          "excess_spikes": -1,
+          "changed_spike_counts": 1,
+          "mean_voltage_change": -0.0031333810184150934
+        },
+        "Mi4:global": {
+          "neurons": 889,
+          "spikes": 0,
+          "blank_spikes": 0,
+          "excess_spikes": 0,
+          "changed_spike_counts": 0,
+          "mean_voltage_change": -0.0002429835294606164
+        },
+        "Mi9:global": {
+          "neurons": 889,
+          "spikes": 437,
+          "blank_spikes": 425,
+          "excess_spikes": 12,
+          "changed_spike_counts": 12,
+          "mean_voltage_change": -0.0011163958115503192
+        },
+        "Tm1:global": {
+          "neurons": 890,
+          "spikes": 825,
+          "blank_spikes": 819,
+          "excess_spikes": 6,
+          "changed_spike_counts": 32,
+          "mean_voltage_change": -0.0012291426537558436
+        },
+        "Tm2:global": {
+          "neurons": 883,
+          "spikes": 905,
+          "blank_spikes": 897,
+          "excess_spikes": 8,
+          "changed_spike_counts": 44,
+          "mean_voltage_change": -0.0007027777610346675
+        },
+        "Tm4:global": {
+          "neurons": 833,
+          "spikes": 0,
+          "blank_spikes": 0,
+          "excess_spikes": 0,
+          "changed_spike_counts": 0,
+          "mean_voltage_change": 0.00299956020899117
+        },
+        "Tm9:global": {
+          "neurons": 887,
+          "spikes": 0,
+          "blank_spikes": 0,
+          "excess_spikes": 0,
+          "changed_spike_counts": 0,
+          "mean_voltage_change": 0.0005880059325136244
+        },
+        "T4a:global": {
+          "neurons": 849,
+          "spikes": 2,
+          "blank_spikes": 2,
+          "excess_spikes": 0,
+          "changed_spike_counts": 0,
+          "mean_voltage_change": -7.198197999969125e-05
+        },
+        "T4b:global": {
+          "neurons": 846,
+          "spikes": 6,
+          "blank_spikes": 6,
+          "excess_spikes": 0,
+          "changed_spike_counts": 0,
+          "mean_voltage_change": -8.121196151478216e-05
+        },
+        "T4c:global": {
+          "neurons": 883,
+          "spikes": 2,
+          "blank_spikes": 2,
+          "excess_spikes": 0,
+          "changed_spike_counts": 0,
+          "mean_voltage_change": -7.30081956135109e-05
+        },
+        "T4d:global": {
+          "neurons": 859,
+          "spikes": 5,
+          "blank_spikes": 5,
+          "excess_spikes": 0,
+          "changed_spike_counts": 0,
+          "mean_voltage_change": -6.119870522525162e-05
+        },
+        "T5a:global": {
+          "neurons": 838,
+          "spikes": 2,
+          "blank_spikes": 0,
+          "excess_spikes": 2,
+          "changed_spike_counts": 2,
+          "mean_voltage_change": -0.00016943246009759605
+        },
+        "T5b:global": {
+          "neurons": 852,
+          "spikes": 4,
+          "blank_spikes": 1,
+          "excess_spikes": 3,
+          "changed_spike_counts": 3,
+          "mean_voltage_change": -0.0003289725282229483
+        },
+        "T5c:global": {
+          "neurons": 858,
+          "spikes": 5,
+          "blank_spikes": 0,
+          "excess_spikes": 5,
+          "changed_spike_counts": 5,
+          "mean_voltage_change": -0.0008122682920657098
+        },
+        "T5d:global": {
+          "neurons": 808,
+          "spikes": 4,
+          "blank_spikes": 0,
+          "excess_spikes": 4,
+          "changed_spike_counts": 4,
+          "mean_voltage_change": -0.0005953256622888148
+        },
+        "LPi:global": {
+          "neurons": 375,
+          "spikes": 0,
+          "blank_spikes": 0,
+          "excess_spikes": 0,
+          "changed_spike_counts": 0,
+          "mean_voltage_change": 0.0005530293565243483
+        }
+      }
+    },
+    "18-off--1": {
+      "transit_pixel_events": 72,
+      "transit_neural_inputs": 147,
+      "groups": {
+        "L1:global": {
+          "neurons": 892,
+          "spikes": 1004,
+          "blank_spikes": 901,
+          "excess_spikes": 103,
+          "changed_spike_counts": 23,
+          "mean_voltage_change": -0.0650157555937767
+        },
+        "L1:local": {
+          "neurons": 60,
+          "spikes": 163,
+          "blank_spikes": 60,
+          "excess_spikes": 103,
+          "changed_spike_counts": 23,
+          "mean_voltage_change": -0.9665679931640625
+        },
+        "L2:global": {
+          "neurons": 893,
+          "spikes": 1672,
+          "blank_spikes": 1587,
+          "excess_spikes": 85,
+          "changed_spike_counts": 44,
+          "mean_voltage_change": -0.06276904791593552
+        },
+        "L2:local": {
+          "neurons": 60,
+          "spikes": 200,
+          "blank_spikes": 109,
+          "excess_spikes": 91,
+          "changed_spike_counts": 24,
+          "mean_voltage_change": -0.9680799841880798
+        },
+        "L3:global": {
+          "neurons": 892,
+          "spikes": 967,
+          "blank_spikes": 892,
+          "excess_spikes": 75,
+          "changed_spike_counts": 22,
+          "mean_voltage_change": -0.05002855882048607
+        },
+        "L3:local": {
+          "neurons": 60,
+          "spikes": 135,
+          "blank_spikes": 60,
+          "excess_spikes": 75,
+          "changed_spike_counts": 22,
+          "mean_voltage_change": -0.7437575459480286
+        },
+        "L4:global": {
+          "neurons": 891,
+          "spikes": 9,
+          "blank_spikes": 0,
+          "excess_spikes": 9,
+          "changed_spike_counts": 9,
+          "mean_voltage_change": -0.001623919466510415
+        },
+        "Mi1:global": {
+          "neurons": 887,
+          "spikes": 299,
+          "blank_spikes": 301,
+          "excess_spikes": -2,
+          "changed_spike_counts": 2,
+          "mean_voltage_change": -0.0024342932738363743
+        },
+        "Tm3:global": {
+          "neurons": 1037,
+          "spikes": 92,
+          "blank_spikes": 95,
+          "excess_spikes": -3,
+          "changed_spike_counts": 3,
+          "mean_voltage_change": -0.0034710478503257036
+        },
+        "Mi4:global": {
+          "neurons": 889,
+          "spikes": 0,
+          "blank_spikes": 0,
+          "excess_spikes": 0,
+          "changed_spike_counts": 0,
+          "mean_voltage_change": -0.00028435722924768925
+        },
+        "Mi9:global": {
+          "neurons": 889,
+          "spikes": 428,
+          "blank_spikes": 425,
+          "excess_spikes": 3,
+          "changed_spike_counts": 5,
+          "mean_voltage_change": 0.0005350541323423386
+        },
+        "Tm1:global": {
+          "neurons": 890,
+          "spikes": 838,
+          "blank_spikes": 819,
+          "excess_spikes": 19,
+          "changed_spike_counts": 33,
+          "mean_voltage_change": -0.004130853805691004
+        },
+        "Tm2:global": {
+          "neurons": 883,
+          "spikes": 907,
+          "blank_spikes": 897,
+          "excess_spikes": 10,
+          "changed_spike_counts": 55,
+          "mean_voltage_change": -0.0013024451909586787
+        },
+        "Tm4:global": {
+          "neurons": 833,
+          "spikes": 0,
+          "blank_spikes": 0,
+          "excess_spikes": 0,
+          "changed_spike_counts": 0,
+          "mean_voltage_change": 0.0036855884827673435
+        },
+        "Tm9:global": {
+          "neurons": 887,
+          "spikes": 0,
+          "blank_spikes": 0,
+          "excess_spikes": 0,
+          "changed_spike_counts": 0,
+          "mean_voltage_change": 0.0006578553002327681
+        },
+        "T4a:global": {
+          "neurons": 849,
+          "spikes": 2,
+          "blank_spikes": 2,
+          "excess_spikes": 0,
+          "changed_spike_counts": 0,
+          "mean_voltage_change": -7.454076694557443e-05
+        },
+        "T4b:global": {
+          "neurons": 846,
+          "spikes": 6,
+          "blank_spikes": 6,
+          "excess_spikes": 0,
+          "changed_spike_counts": 0,
+          "mean_voltage_change": -6.966415821807459e-05
+        },
+        "T4c:global": {
+          "neurons": 883,
+          "spikes": 2,
+          "blank_spikes": 2,
+          "excess_spikes": 0,
+          "changed_spike_counts": 0,
+          "mean_voltage_change": -7.601016841363162e-05
+        },
+        "T4d:global": {
+          "neurons": 859,
+          "spikes": 5,
+          "blank_spikes": 5,
+          "excess_spikes": 0,
+          "changed_spike_counts": 0,
+          "mean_voltage_change": -5.8906527556246147e-05
+        },
+        "T5a:global": {
+          "neurons": 838,
+          "spikes": 2,
+          "blank_spikes": 0,
+          "excess_spikes": 2,
+          "changed_spike_counts": 2,
+          "mean_voltage_change": -4.408588574733585e-05
+        },
+        "T5b:global": {
+          "neurons": 852,
+          "spikes": 7,
+          "blank_spikes": 1,
+          "excess_spikes": 6,
+          "changed_spike_counts": 6,
+          "mean_voltage_change": -0.0009954642737284303
+        },
+        "T5c:global": {
+          "neurons": 858,
+          "spikes": 5,
+          "blank_spikes": 0,
+          "excess_spikes": 5,
+          "changed_spike_counts": 5,
+          "mean_voltage_change": -0.000763032934628427
+        },
+        "T5d:global": {
+          "neurons": 808,
+          "spikes": 4,
+          "blank_spikes": 0,
+          "excess_spikes": 4,
+          "changed_spike_counts": 4,
+          "mean_voltage_change": -0.0006678678910247982
+        },
+        "LPi:global": {
+          "neurons": 375,
+          "spikes": 0,
+          "blank_spikes": 0,
+          "excess_spikes": 0,
+          "changed_spike_counts": 0,
+          "mean_voltage_change": 0.0008365990943275392
+        }
+      }
+    },
+    "46-on-+1": {
+      "transit_pixel_events": 72,
+      "transit_neural_inputs": 141,
+      "groups": {
+        "L1:global": {
+          "neurons": 892,
+          "spikes": 975,
+          "blank_spikes": 901,
+          "excess_spikes": 74,
+          "changed_spike_counts": 21,
+          "mean_voltage_change": -0.07022620737552643
+        },
+        "L1:local": {
+          "neurons": 65,
+          "spikes": 139,
+          "blank_spikes": 65,
+          "excess_spikes": 74,
+          "changed_spike_counts": 21,
+          "mean_voltage_change": -0.9637746810913086
+        },
+        "L2:global": {
+          "neurons": 893,
+          "spikes": 1644,
+          "blank_spikes": 1587,
+          "excess_spikes": 57,
+          "changed_spike_counts": 31,
+          "mean_voltage_change": -0.0685398131608963
+        },
+        "L2:local": {
+          "neurons": 65,
+          "spikes": 184,
+          "blank_spikes": 121,
+          "excess_spikes": 63,
+          "changed_spike_counts": 25,
+          "mean_voltage_change": -0.9601048827171326
+        },
+        "L3:global": {
+          "neurons": 892,
+          "spikes": 930,
+          "blank_spikes": 892,
+          "excess_spikes": 38,
+          "changed_spike_counts": 18,
+          "mean_voltage_change": -0.048934418708086014
+        },
+        "L3:local": {
+          "neurons": 65,
+          "spikes": 103,
+          "blank_spikes": 65,
+          "excess_spikes": 38,
+          "changed_spike_counts": 18,
+          "mean_voltage_change": -0.6715294122695923
+        },
+        "L4:global": {
+          "neurons": 891,
+          "spikes": 0,
+          "blank_spikes": 0,
+          "excess_spikes": 0,
+          "changed_spike_counts": 0,
+          "mean_voltage_change": 6.404629675671458e-05
+        },
+        "Mi1:global": {
+          "neurons": 887,
+          "spikes": 298,
+          "blank_spikes": 301,
+          "excess_spikes": -3,
+          "changed_spike_counts": 3,
+          "mean_voltage_change": -0.0005615278496406972
+        },
+        "Tm3:global": {
+          "neurons": 1037,
+          "spikes": 95,
+          "blank_spikes": 95,
+          "excess_spikes": 0,
+          "changed_spike_counts": 0,
+          "mean_voltage_change": -0.002083251252770424
+        },
+        "Mi4:global": {
+          "neurons": 889,
+          "spikes": 0,
+          "blank_spikes": 0,
+          "excess_spikes": 0,
+          "changed_spike_counts": 0,
+          "mean_voltage_change": -0.000136083152028732
+        },
+        "Mi9:global": {
+          "neurons": 889,
+          "spikes": 433,
+          "blank_spikes": 425,
+          "excess_spikes": 8,
+          "changed_spike_counts": 8,
+          "mean_voltage_change": -0.0005138058331795037
+        },
+        "Tm1:global": {
+          "neurons": 890,
+          "spikes": 825,
+          "blank_spikes": 819,
+          "excess_spikes": 6,
+          "changed_spike_counts": 17,
+          "mean_voltage_change": -0.001377146109007299
+        },
+        "Tm2:global": {
+          "neurons": 883,
+          "spikes": 889,
+          "blank_spikes": 897,
+          "excess_spikes": -8,
+          "changed_spike_counts": 42,
+          "mean_voltage_change": -0.00019280692504253238
+        },
+        "Tm4:global": {
+          "neurons": 833,
+          "spikes": 0,
+          "blank_spikes": 0,
+          "excess_spikes": 0,
+          "changed_spike_counts": 0,
+          "mean_voltage_change": 0.0014887357829138637
+        },
+        "Tm9:global": {
+          "neurons": 887,
+          "spikes": 0,
+          "blank_spikes": 0,
+          "excess_spikes": 0,
+          "changed_spike_counts": 0,
+          "mean_voltage_change": 0.00016891784616746008
+        },
+        "T4a:global": {
+          "neurons": 849,
+          "spikes": 2,
+          "blank_spikes": 2,
+          "excess_spikes": 0,
+          "changed_spike_counts": 0,
+          "mean_voltage_change": -7.365463534370065e-05
+        },
+        "T4b:global": {
+          "neurons": 846,
+          "spikes": 6,
+          "blank_spikes": 6,
+          "excess_spikes": 0,
+          "changed_spike_counts": 0,
+          "mean_voltage_change": -7.536260818596929e-05
+        },
+        "T4c:global": {
+          "neurons": 883,
+          "spikes": 2,
+          "blank_spikes": 2,
+          "excess_spikes": 0,
+          "changed_spike_counts": 0,
+          "mean_voltage_change": -6.67044150759466e-05
+        },
+        "T4d:global": {
+          "neurons": 859,
+          "spikes": 5,
+          "blank_spikes": 5,
+          "excess_spikes": 0,
+          "changed_spike_counts": 0,
+          "mean_voltage_change": -6.779137038392946e-05
+        },
+        "T5a:global": {
+          "neurons": 838,
+          "spikes": 0,
+          "blank_spikes": 0,
+          "excess_spikes": 0,
+          "changed_spike_counts": 0,
+          "mean_voltage_change": 0.00015827934839762747
+        },
+        "T5b:global": {
+          "neurons": 852,
+          "spikes": 1,
+          "blank_spikes": 1,
+          "excess_spikes": 0,
+          "changed_spike_counts": 2,
+          "mean_voltage_change": 0.00010148900764761493
+        },
+        "T5c:global": {
+          "neurons": 858,
+          "spikes": 0,
+          "blank_spikes": 0,
+          "excess_spikes": 0,
+          "changed_spike_counts": 0,
+          "mean_voltage_change": 0.00020824591047130525
+        },
+        "T5d:global": {
+          "neurons": 808,
+          "spikes": 0,
+          "blank_spikes": 0,
+          "excess_spikes": 0,
+          "changed_spike_counts": 0,
+          "mean_voltage_change": 0.00020172410586383194
+        },
+        "LPi:global": {
+          "neurons": 375,
+          "spikes": 0,
+          "blank_spikes": 0,
+          "excess_spikes": 0,
+          "changed_spike_counts": 0,
+          "mean_voltage_change": 3.8567304727621377e-05
+        }
+      }
+    },
+    "46-on--1": {
+      "transit_pixel_events": 72,
+      "transit_neural_inputs": 141,
+      "groups": {
+        "L1:global": {
+          "neurons": 892,
+          "spikes": 974,
+          "blank_spikes": 901,
+          "excess_spikes": 73,
+          "changed_spike_counts": 16,
+          "mean_voltage_change": -0.06879592686891556
+        },
+        "L1:local": {
+          "neurons": 65,
+          "spikes": 138,
+          "blank_spikes": 65,
+          "excess_spikes": 73,
+          "changed_spike_counts": 16,
+          "mean_voltage_change": -0.9441066980361938
+        },
+        "L2:global": {
+          "neurons": 893,
+          "spikes": 1650,
+          "blank_spikes": 1587,
+          "excess_spikes": 63,
+          "changed_spike_counts": 25,
+          "mean_voltage_change": -0.06756860017776489
+        },
+        "L2:local": {
+          "neurons": 65,
+          "spikes": 185,
+          "blank_spikes": 121,
+          "excess_spikes": 64,
+          "changed_spike_counts": 22,
+          "mean_voltage_change": -0.9362467527389526
+        },
+        "L3:global": {
+          "neurons": 892,
+          "spikes": 928,
+          "blank_spikes": 892,
+          "excess_spikes": 36,
+          "changed_spike_counts": 15,
+          "mean_voltage_change": -0.04709494113922119
+        },
+        "L3:local": {
+          "neurons": 65,
+          "spikes": 101,
+          "blank_spikes": 65,
+          "excess_spikes": 36,
+          "changed_spike_counts": 15,
+          "mean_voltage_change": -0.6462870836257935
+        },
+        "L4:global": {
+          "neurons": 891,
+          "spikes": 0,
+          "blank_spikes": 0,
+          "excess_spikes": 0,
+          "changed_spike_counts": 0,
+          "mean_voltage_change": 9.408335608895868e-05
+        },
+        "Mi1:global": {
+          "neurons": 887,
+          "spikes": 300,
+          "blank_spikes": 301,
+          "excess_spikes": -1,
+          "changed_spike_counts": 1,
+          "mean_voltage_change": -0.0005168261122889817
+        },
+        "Tm3:global": {
+          "neurons": 1037,
+          "spikes": 95,
+          "blank_spikes": 95,
+          "excess_spikes": 0,
+          "changed_spike_counts": 0,
+          "mean_voltage_change": -0.0008189157233573496
+        },
+        "Mi4:global": {
+          "neurons": 889,
+          "spikes": 0,
+          "blank_spikes": 0,
+          "excess_spikes": 0,
+          "changed_spike_counts": 0,
+          "mean_voltage_change": -4.233279832988046e-05
+        },
+        "Mi9:global": {
+          "neurons": 889,
+          "spikes": 429,
+          "blank_spikes": 425,
+          "excess_spikes": 4,
+          "changed_spike_counts": 4,
+          "mean_voltage_change": -0.0003360375121701509
+        },
+        "Tm1:global": {
+          "neurons": 890,
+          "spikes": 822,
+          "blank_spikes": 819,
+          "excess_spikes": 3,
+          "changed_spike_counts": 21,
+          "mean_voltage_change": 0.0003360467671882361
+        },
+        "Tm2:global": {
+          "neurons": 883,
+          "spikes": 895,
+          "blank_spikes": 897,
+          "excess_spikes": -2,
+          "changed_spike_counts": 22,
+          "mean_voltage_change": 7.208584429463372e-05
+        },
+        "Tm4:global": {
+          "neurons": 833,
+          "spikes": 0,
+          "blank_spikes": 0,
+          "excess_spikes": 0,
+          "changed_spike_counts": 0,
+          "mean_voltage_change": 0.0006452954839915037
+        },
+        "Tm9:global": {
+          "neurons": 887,
+          "spikes": 0,
+          "blank_spikes": 0,
+          "excess_spikes": 0,
+          "changed_spike_counts": 0,
+          "mean_voltage_change": 0.00013408871018327773
+        },
+        "T4a:global": {
+          "neurons": 849,
+          "spikes": 2,
+          "blank_spikes": 2,
+          "excess_spikes": 0,
+          "changed_spike_counts": 0,
+          "mean_voltage_change": -2.3574233637191355e-05
+        },
+        "T4b:global": {
+          "neurons": 846,
+          "spikes": 6,
+          "blank_spikes": 6,
+          "excess_spikes": 0,
+          "changed_spike_counts": 0,
+          "mean_voltage_change": -1.7859552826848812e-05
+        },
+        "T4c:global": {
+          "neurons": 883,
+          "spikes": 2,
+          "blank_spikes": 2,
+          "excess_spikes": 0,
+          "changed_spike_counts": 0,
+          "mean_voltage_change": -1.733928183966782e-05
+        },
+        "T4d:global": {
+          "neurons": 859,
+          "spikes": 5,
+          "blank_spikes": 5,
+          "excess_spikes": 0,
+          "changed_spike_counts": 0,
+          "mean_voltage_change": -2.663210398168303e-05
+        },
+        "T5a:global": {
+          "neurons": 838,
+          "spikes": 1,
+          "blank_spikes": 0,
+          "excess_spikes": 1,
+          "changed_spike_counts": 1,
+          "mean_voltage_change": 6.395635136868805e-05
+        },
+        "T5b:global": {
+          "neurons": 852,
+          "spikes": 2,
+          "blank_spikes": 1,
+          "excess_spikes": 1,
+          "changed_spike_counts": 1,
+          "mean_voltage_change": 4.302587694837712e-05
+        },
+        "T5c:global": {
+          "neurons": 858,
+          "spikes": 0,
+          "blank_spikes": 0,
+          "excess_spikes": 0,
+          "changed_spike_counts": 0,
+          "mean_voltage_change": 5.3507465054281056e-05
+        },
+        "T5d:global": {
+          "neurons": 808,
+          "spikes": 0,
+          "blank_spikes": 0,
+          "excess_spikes": 0,
+          "changed_spike_counts": 0,
+          "mean_voltage_change": 4.926943438476883e-05
+        },
+        "LPi:global": {
+          "neurons": 375,
+          "spikes": 0,
+          "blank_spikes": 0,
+          "excess_spikes": 0,
+          "changed_spike_counts": 0,
+          "mean_voltage_change": -2.829989625752205e-06
+        }
+      }
+    },
+    "46-off-+1": {
+      "transit_pixel_events": 72,
+      "transit_neural_inputs": 141,
+      "groups": {
+        "L1:global": {
+          "neurons": 892,
+          "spikes": 996,
+          "blank_spikes": 901,
+          "excess_spikes": 95,
+          "changed_spike_counts": 23,
+          "mean_voltage_change": -0.06441999226808548
+        },
+        "L1:local": {
+          "neurons": 65,
+          "spikes": 160,
+          "blank_spikes": 65,
+          "excess_spikes": 95,
+          "changed_spike_counts": 23,
+          "mean_voltage_change": -0.8840412497520447
+        },
+        "L2:global": {
+          "neurons": 893,
+          "spikes": 1673,
+          "blank_spikes": 1587,
+          "excess_spikes": 86,
+          "changed_spike_counts": 41,
+          "mean_voltage_change": -0.06151661276817322
+        },
+        "L2:local": {
+          "neurons": 65,
+          "spikes": 205,
+          "blank_spikes": 121,
+          "excess_spikes": 84,
+          "changed_spike_counts": 27,
+          "mean_voltage_change": -0.8735787868499756
+        },
+        "L3:global": {
+          "neurons": 892,
+          "spikes": 965,
+          "blank_spikes": 892,
+          "excess_spikes": 73,
+          "changed_spike_counts": 22,
+          "mean_voltage_change": -0.04966289550065994
+        },
+        "L3:local": {
+          "neurons": 65,
+          "spikes": 138,
+          "blank_spikes": 65,
+          "excess_spikes": 73,
+          "changed_spike_counts": 22,
+          "mean_voltage_change": -0.681526780128479
+        },
+        "L4:global": {
+          "neurons": 891,
+          "spikes": 3,
+          "blank_spikes": 0,
+          "excess_spikes": 3,
+          "changed_spike_counts": 3,
+          "mean_voltage_change": -0.00051785574760288
+        },
+        "Mi1:global": {
+          "neurons": 887,
+          "spikes": 298,
+          "blank_spikes": 301,
+          "excess_spikes": -3,
+          "changed_spike_counts": 3,
+          "mean_voltage_change": -0.0017344088992103934
+        },
+        "Tm3:global": {
+          "neurons": 1037,
+          "spikes": 96,
+          "blank_spikes": 95,
+          "excess_spikes": 1,
+          "changed_spike_counts": 1,
+          "mean_voltage_change": -0.00361541286110878
+        },
+        "Mi4:global": {
+          "neurons": 889,
+          "spikes": 0,
+          "blank_spikes": 0,
+          "excess_spikes": 0,
+          "changed_spike_counts": 0,
+          "mean_voltage_change": -0.0001690512872301042
+        },
+        "Mi9:global": {
+          "neurons": 889,
+          "spikes": 429,
+          "blank_spikes": 425,
+          "excess_spikes": 4,
+          "changed_spike_counts": 8,
+          "mean_voltage_change": 1.9449284081929363e-05
+        },
+        "Tm1:global": {
+          "neurons": 890,
+          "spikes": 826,
+          "blank_spikes": 819,
+          "excess_spikes": 7,
+          "changed_spike_counts": 29,
+          "mean_voltage_change": 0.0007963025127537549
+        },
+        "Tm2:global": {
+          "neurons": 883,
+          "spikes": 910,
+          "blank_spikes": 897,
+          "excess_spikes": 13,
+          "changed_spike_counts": 46,
+          "mean_voltage_change": -0.002161993645131588
+        },
+        "Tm4:global": {
+          "neurons": 833,
+          "spikes": 0,
+          "blank_spikes": 0,
+          "excess_spikes": 0,
+          "changed_spike_counts": 0,
+          "mean_voltage_change": 0.002338767284527421
+        },
+        "Tm9:global": {
+          "neurons": 887,
+          "spikes": 0,
+          "blank_spikes": 0,
+          "excess_spikes": 0,
+          "changed_spike_counts": 0,
+          "mean_voltage_change": 0.0005030400934629142
+        },
+        "T4a:global": {
+          "neurons": 849,
+          "spikes": 2,
+          "blank_spikes": 2,
+          "excess_spikes": 0,
+          "changed_spike_counts": 0,
+          "mean_voltage_change": -8.296243322547525e-05
+        },
+        "T4b:global": {
+          "neurons": 846,
+          "spikes": 6,
+          "blank_spikes": 6,
+          "excess_spikes": 0,
+          "changed_spike_counts": 0,
+          "mean_voltage_change": -9.254544420400634e-05
+        },
+        "T4c:global": {
+          "neurons": 883,
+          "spikes": 2,
+          "blank_spikes": 2,
+          "excess_spikes": 0,
+          "changed_spike_counts": 0,
+          "mean_voltage_change": -7.98883120296523e-05
+        },
+        "T4d:global": {
+          "neurons": 859,
+          "spikes": 5,
+          "blank_spikes": 5,
+          "excess_spikes": 0,
+          "changed_spike_counts": 0,
+          "mean_voltage_change": -9.471011435380206e-05
+        },
+        "T5a:global": {
+          "neurons": 838,
+          "spikes": 3,
+          "blank_spikes": 0,
+          "excess_spikes": 3,
+          "changed_spike_counts": 3,
+          "mean_voltage_change": -0.00043376072426326573
+        },
+        "T5b:global": {
+          "neurons": 852,
+          "spikes": 6,
+          "blank_spikes": 1,
+          "excess_spikes": 5,
+          "changed_spike_counts": 5,
+          "mean_voltage_change": -0.0010619992390275002
+        },
+        "T5c:global": {
+          "neurons": 858,
+          "spikes": 1,
+          "blank_spikes": 0,
+          "excess_spikes": 1,
+          "changed_spike_counts": 1,
+          "mean_voltage_change": 5.274121940601617e-05
+        },
+        "T5d:global": {
+          "neurons": 808,
+          "spikes": 4,
+          "blank_spikes": 0,
+          "excess_spikes": 4,
+          "changed_spike_counts": 4,
+          "mean_voltage_change": -0.000736276910174638
+        },
+        "LPi:global": {
+          "neurons": 375,
+          "spikes": 0,
+          "blank_spikes": 0,
+          "excess_spikes": 0,
+          "changed_spike_counts": 0,
+          "mean_voltage_change": 0.0006733575719408691
+        }
+      }
+    },
+    "46-off--1": {
+      "transit_pixel_events": 72,
+      "transit_neural_inputs": 141,
+      "groups": {
+        "L1:global": {
+          "neurons": 892,
+          "spikes": 1004,
+          "blank_spikes": 901,
+          "excess_spikes": 103,
+          "changed_spike_counts": 24,
+          "mean_voltage_change": -0.06435836106538773
+        },
+        "L1:local": {
+          "neurons": 65,
+          "spikes": 168,
+          "blank_spikes": 65,
+          "excess_spikes": 103,
+          "changed_spike_counts": 24,
+          "mean_voltage_change": -0.8832030296325684
+        },
+        "L2:global": {
+          "neurons": 893,
+          "spikes": 1670,
+          "blank_spikes": 1587,
+          "excess_spikes": 83,
+          "changed_spike_counts": 37,
+          "mean_voltage_change": -0.06155606359243393
+        },
+        "L2:local": {
+          "neurons": 65,
+          "spikes": 210,
+          "blank_spikes": 121,
+          "excess_spikes": 89,
+          "changed_spike_counts": 29,
+          "mean_voltage_change": -0.8702055215835571
+        },
+        "L3:global": {
+          "neurons": 892,
+          "spikes": 969,
+          "blank_spikes": 892,
+          "excess_spikes": 77,
+          "changed_spike_counts": 24,
+          "mean_voltage_change": -0.05048799142241478
+        },
+        "L3:local": {
+          "neurons": 65,
+          "spikes": 142,
+          "blank_spikes": 65,
+          "excess_spikes": 77,
+          "changed_spike_counts": 24,
+          "mean_voltage_change": -0.6928486824035645
+        },
+        "L4:global": {
+          "neurons": 891,
+          "spikes": 3,
+          "blank_spikes": 0,
+          "excess_spikes": 3,
+          "changed_spike_counts": 3,
+          "mean_voltage_change": -0.0002063230494968593
+        },
+        "Mi1:global": {
+          "neurons": 887,
+          "spikes": 301,
+          "blank_spikes": 301,
+          "excess_spikes": 0,
+          "changed_spike_counts": 2,
+          "mean_voltage_change": -0.0022265915758907795
+        },
+        "Tm3:global": {
+          "neurons": 1037,
+          "spikes": 95,
+          "blank_spikes": 95,
+          "excess_spikes": 0,
+          "changed_spike_counts": 0,
+          "mean_voltage_change": -0.0024846652522683144
+        },
+        "Mi4:global": {
+          "neurons": 889,
+          "spikes": 0,
+          "blank_spikes": 0,
+          "excess_spikes": 0,
+          "changed_spike_counts": 0,
+          "mean_voltage_change": -0.00011420596274547279
+        },
+        "Mi9:global": {
+          "neurons": 889,
+          "spikes": 434,
+          "blank_spikes": 425,
+          "excess_spikes": 9,
+          "changed_spike_counts": 9,
+          "mean_voltage_change": -0.0006260485970415175
+        },
+        "Tm1:global": {
+          "neurons": 890,
+          "spikes": 821,
+          "blank_spikes": 819,
+          "excess_spikes": 2,
+          "changed_spike_counts": 23,
+          "mean_voltage_change": -0.0001804810599423945
+        },
+        "Tm2:global": {
+          "neurons": 883,
+          "spikes": 889,
+          "blank_spikes": 897,
+          "excess_spikes": -8,
+          "changed_spike_counts": 39,
+          "mean_voltage_change": 0.0013171716127544641
+        },
+        "Tm4:global": {
+          "neurons": 833,
+          "spikes": 0,
+          "blank_spikes": 0,
+          "excess_spikes": 0,
+          "changed_spike_counts": 0,
+          "mean_voltage_change": 0.0020169115159660578
+        },
+        "Tm9:global": {
+          "neurons": 887,
+          "spikes": 0,
+          "blank_spikes": 0,
+          "excess_spikes": 0,
+          "changed_spike_counts": 0,
+          "mean_voltage_change": 0.0004565260314848274
+        },
+        "T4a:global": {
+          "neurons": 849,
+          "spikes": 2,
+          "blank_spikes": 2,
+          "excess_spikes": 0,
+          "changed_spike_counts": 0,
+          "mean_voltage_change": -3.558004027581774e-05
+        },
+        "T4b:global": {
+          "neurons": 846,
+          "spikes": 6,
+          "blank_spikes": 6,
+          "excess_spikes": 0,
+          "changed_spike_counts": 0,
+          "mean_voltage_change": -3.924373959307559e-05
+        },
+        "T4c:global": {
+          "neurons": 883,
+          "spikes": 2,
+          "blank_spikes": 2,
+          "excess_spikes": 0,
+          "changed_spike_counts": 0,
+          "mean_voltage_change": -3.223511157557368e-05
+        },
+        "T4d:global": {
+          "neurons": 859,
+          "spikes": 5,
+          "blank_spikes": 5,
+          "excess_spikes": 0,
+          "changed_spike_counts": 0,
+          "mean_voltage_change": -4.485579120228067e-05
+        },
+        "T5a:global": {
+          "neurons": 838,
+          "spikes": 2,
+          "blank_spikes": 0,
+          "excess_spikes": 2,
+          "changed_spike_counts": 2,
+          "mean_voltage_change": -0.00011780452769016847
+        },
+        "T5b:global": {
+          "neurons": 852,
+          "spikes": 5,
+          "blank_spikes": 1,
+          "excess_spikes": 4,
+          "changed_spike_counts": 4,
+          "mean_voltage_change": -0.000567564507946372
+        },
+        "T5c:global": {
+          "neurons": 858,
+          "spikes": 0,
+          "blank_spikes": 0,
+          "excess_spikes": 0,
+          "changed_spike_counts": 0,
+          "mean_voltage_change": 0.0002044553984887898
+        },
+        "T5d:global": {
+          "neurons": 808,
+          "spikes": 3,
+          "blank_spikes": 0,
+          "excess_spikes": 3,
+          "changed_spike_counts": 3,
+          "mean_voltage_change": -0.00018103752518072724
+        },
+        "LPi:global": {
+          "neurons": 375,
+          "spikes": 0,
+          "blank_spikes": 0,
+          "excess_spikes": 0,
+          "changed_spike_counts": 0,
+          "mean_voltage_change": 0.00024212911375798285
+        }
+      }
+    }
+  },
+  "direction_contrasts": {
+    "on:L1:global": {
+      "right_minus_left": [
+        1,
+        1
+      ],
+      "sign_consistent": true
+    },
+    "on:L1:local": {
+      "right_minus_left": [
+        1,
+        1
+      ],
+      "sign_consistent": true
+    },
+    "on:L2:global": {
+      "right_minus_left": [
+        -2,
+        -6
+      ],
+      "sign_consistent": true
+    },
+    "on:L2:local": {
+      "right_minus_left": [
+        0,
+        -1
+      ],
+      "sign_consistent": false
+    },
+    "on:L3:global": {
+      "right_minus_left": [
+        6,
+        2
+      ],
+      "sign_consistent": true
+    },
+    "on:L3:local": {
+      "right_minus_left": [
+        6,
+        2
+      ],
+      "sign_consistent": true
+    },
+    "on:L4:global": {
+      "right_minus_left": [
+        2,
+        0
+      ],
+      "sign_consistent": false
+    },
+    "on:Mi1:global": {
+      "right_minus_left": [
+        -3,
+        -2
+      ],
+      "sign_consistent": true
+    },
+    "on:Tm3:global": {
+      "right_minus_left": [
+        2,
+        0
+      ],
+      "sign_consistent": false
+    },
+    "on:Mi4:global": {
+      "right_minus_left": [
+        0,
+        0
+      ],
+      "sign_consistent": false
+    },
+    "on:Mi9:global": {
+      "right_minus_left": [
+        -6,
+        4
+      ],
+      "sign_consistent": false
+    },
+    "on:Tm1:global": {
+      "right_minus_left": [
+        2,
+        3
+      ],
+      "sign_consistent": true
+    },
+    "on:Tm2:global": {
+      "right_minus_left": [
+        -5,
+        -6
+      ],
+      "sign_consistent": true
+    },
+    "on:Tm4:global": {
+      "right_minus_left": [
+        0,
+        0
+      ],
+      "sign_consistent": false
+    },
+    "on:Tm9:global": {
+      "right_minus_left": [
+        0,
+        0
+      ],
+      "sign_consistent": false
+    },
+    "on:T4a:global": {
+      "right_minus_left": [
+        0,
+        0
+      ],
+      "sign_consistent": false
+    },
+    "on:T4b:global": {
+      "right_minus_left": [
+        0,
+        0
+      ],
+      "sign_consistent": false
+    },
+    "on:T4c:global": {
+      "right_minus_left": [
+        0,
+        0
+      ],
+      "sign_consistent": false
+    },
+    "on:T4d:global": {
+      "right_minus_left": [
+        0,
+        0
+      ],
+      "sign_consistent": false
+    },
+    "on:T5a:global": {
+      "right_minus_left": [
+        1,
+        -1
+      ],
+      "sign_consistent": false
+    },
+    "on:T5b:global": {
+      "right_minus_left": [
+        -2,
+        -1
+      ],
+      "sign_consistent": true
+    },
+    "on:T5c:global": {
+      "right_minus_left": [
+        0,
+        0
+      ],
+      "sign_consistent": false
+    },
+    "on:T5d:global": {
+      "right_minus_left": [
+        -1,
+        0
+      ],
+      "sign_consistent": false
+    },
+    "on:LPi:global": {
+      "right_minus_left": [
+        0,
+        0
+      ],
+      "sign_consistent": false
+    },
+    "off:L1:global": {
+      "right_minus_left": [
+        3,
+        -8
+      ],
+      "sign_consistent": false
+    },
+    "off:L1:local": {
+      "right_minus_left": [
+        3,
+        -8
+      ],
+      "sign_consistent": false
+    },
+    "off:L2:global": {
+      "right_minus_left": [
+        -8,
+        3
+      ],
+      "sign_consistent": false
+    },
+    "off:L2:local": {
+      "right_minus_left": [
+        2,
+        -5
+      ],
+      "sign_consistent": false
+    },
+    "off:L3:global": {
+      "right_minus_left": [
+        5,
+        -4
+      ],
+      "sign_consistent": false
+    },
+    "off:L3:local": {
+      "right_minus_left": [
+        5,
+        -4
+      ],
+      "sign_consistent": false
+    },
+    "off:L4:global": {
+      "right_minus_left": [
+        0,
+        0
+      ],
+      "sign_consistent": false
+    },
+    "off:Mi1:global": {
+      "right_minus_left": [
+        0,
+        -3
+      ],
+      "sign_consistent": false
+    },
+    "off:Tm3:global": {
+      "right_minus_left": [
+        2,
+        1
+      ],
+      "sign_consistent": true
+    },
+    "off:Mi4:global": {
+      "right_minus_left": [
+        0,
+        0
+      ],
+      "sign_consistent": false
+    },
+    "off:Mi9:global": {
+      "right_minus_left": [
+        9,
+        -5
+      ],
+      "sign_consistent": false
+    },
+    "off:Tm1:global": {
+      "right_minus_left": [
+        -13,
+        5
+      ],
+      "sign_consistent": false
+    },
+    "off:Tm2:global": {
+      "right_minus_left": [
+        -2,
+        21
+      ],
+      "sign_consistent": false
+    },
+    "off:Tm4:global": {
+      "right_minus_left": [
+        0,
+        0
+      ],
+      "sign_consistent": false
+    },
+    "off:Tm9:global": {
+      "right_minus_left": [
+        0,
+        0
+      ],
+      "sign_consistent": false
+    },
+    "off:T4a:global": {
+      "right_minus_left": [
+        0,
+        0
+      ],
+      "sign_consistent": false
+    },
+    "off:T4b:global": {
+      "right_minus_left": [
+        0,
+        0
+      ],
+      "sign_consistent": false
+    },
+    "off:T4c:global": {
+      "right_minus_left": [
+        0,
+        0
+      ],
+      "sign_consistent": false
+    },
+    "off:T4d:global": {
+      "right_minus_left": [
+        0,
+        0
+      ],
+      "sign_consistent": false
+    },
+    "off:T5a:global": {
+      "right_minus_left": [
+        0,
+        1
+      ],
+      "sign_consistent": false
+    },
+    "off:T5b:global": {
+      "right_minus_left": [
+        -3,
+        1
+      ],
+      "sign_consistent": false
+    },
+    "off:T5c:global": {
+      "right_minus_left": [
+        0,
+        1
+      ],
+      "sign_consistent": false
+    },
+    "off:T5d:global": {
+      "right_minus_left": [
+        0,
+        1
+      ],
+      "sign_consistent": false
+    },
+    "off:LPi:global": {
+      "right_minus_left": [
+        0,
+        0
+      ],
+      "sign_consistent": false
+    }
+  }
+}

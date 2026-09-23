@@ -1,0 +1,817 @@
+{
+  "source_sha256": "8c4af80ff3904881bac9313b618dd9989bb51174b47606f28eca88865296005c",
+  "annotations_sha256": "2177e246113e4cfbf1e7772ec37c6da1955ff22e8063d0b1f833101f99a9a3b2",
+  "method": "contact-weighted centroid of direct Mi1 to T4 or Tm1/Tm2 to T5 inputs",
+  "groups": {
+    "T4a": {
+      "neurons": 849,
+      "inferred_columns": 849,
+      "median_afferent_contacts": 64.0,
+      "18": {
+        "local_neurons": 53,
+        "on": {
+          "right": {
+            "spikes": 0,
+            "blank_spikes": 0,
+            "changed_cells": 0,
+            "excess": 0
+          },
+          "left": {
+            "spikes": 0,
+            "blank_spikes": 0,
+            "changed_cells": 0,
+            "excess": 0
+          },
+          "right_minus_left_excess": 0,
+          "mean_voltage_right_minus_left": 0.002622139872983098,
+          "mean_absolute_voltage_difference": 0.004479359835386276,
+          "voltage_positive_cells": 35,
+          "voltage_negative_cells": 13
+        },
+        "off": {
+          "right": {
+            "spikes": 0,
+            "blank_spikes": 0,
+            "changed_cells": 0,
+            "excess": 0
+          },
+          "left": {
+            "spikes": 0,
+            "blank_spikes": 0,
+            "changed_cells": 0,
+            "excess": 0
+          },
+          "right_minus_left_excess": 0,
+          "mean_voltage_right_minus_left": 0.0011480945395305753,
+          "mean_absolute_voltage_difference": 0.0021889873314648867,
+          "voltage_positive_cells": 29,
+          "voltage_negative_cells": 19
+        }
+      },
+      "46": {
+        "local_neurons": 61,
+        "on": {
+          "right": {
+            "spikes": 0,
+            "blank_spikes": 0,
+            "changed_cells": 0,
+            "excess": 0
+          },
+          "left": {
+            "spikes": 0,
+            "blank_spikes": 0,
+            "changed_cells": 0,
+            "excess": 0
+          },
+          "right_minus_left_excess": 0,
+          "mean_voltage_right_minus_left": -0.000762743060477078,
+          "mean_absolute_voltage_difference": 0.0029523069970309734,
+          "voltage_positive_cells": 18,
+          "voltage_negative_cells": 35
+        },
+        "off": {
+          "right": {
+            "spikes": 0,
+            "blank_spikes": 0,
+            "changed_cells": 0,
+            "excess": 0
+          },
+          "left": {
+            "spikes": 0,
+            "blank_spikes": 0,
+            "changed_cells": 0,
+            "excess": 0
+          },
+          "right_minus_left_excess": 0,
+          "mean_voltage_right_minus_left": -0.0004662763967644423,
+          "mean_absolute_voltage_difference": 0.0016805363120511174,
+          "voltage_positive_cells": 25,
+          "voltage_negative_cells": 31
+        }
+      }
+    },
+    "T4b": {
+      "neurons": 846,
+      "inferred_columns": 846,
+      "median_afferent_contacts": 56.0,
+      "18": {
+        "local_neurons": 61,
+        "on": {
+          "right": {
+            "spikes": 0,
+            "blank_spikes": 0,
+            "changed_cells": 0,
+            "excess": 0
+          },
+          "left": {
+            "spikes": 0,
+            "blank_spikes": 0,
+            "changed_cells": 0,
+            "excess": 0
+          },
+          "right_minus_left_excess": 0,
+          "mean_voltage_right_minus_left": 0.0021546268835663795,
+          "mean_absolute_voltage_difference": 0.004008157178759575,
+          "voltage_positive_cells": 39,
+          "voltage_negative_cells": 16
+        },
+        "off": {
+          "right": {
+            "spikes": 0,
+            "blank_spikes": 0,
+            "changed_cells": 0,
+            "excess": 0
+          },
+          "left": {
+            "spikes": 0,
+            "blank_spikes": 0,
+            "changed_cells": 0,
+            "excess": 0
+          },
+          "right_minus_left_excess": 0,
+          "mean_voltage_right_minus_left": 0.0007086484110914171,
+          "mean_absolute_voltage_difference": 0.00201890105381608,
+          "voltage_positive_cells": 30,
+          "voltage_negative_cells": 29
+        }
+      },
+      "46": {
+        "local_neurons": 61,
+        "on": {
+          "right": {
+            "spikes": 0,
+            "blank_spikes": 0,
+            "changed_cells": 0,
+            "excess": 0
+          },
+          "left": {
+            "spikes": 0,
+            "blank_spikes": 0,
+            "changed_cells": 0,
+            "excess": 0
+          },
+          "right_minus_left_excess": 0,
+          "mean_voltage_right_minus_left": -0.00109113531652838,
+          "mean_absolute_voltage_difference": 0.002909247064962983,
+          "voltage_positive_cells": 17,
+          "voltage_negative_cells": 34
+        },
+        "off": {
+          "right": {
+            "spikes": 0,
+            "blank_spikes": 0,
+            "changed_cells": 0,
+            "excess": 0
+          },
+          "left": {
+            "spikes": 0,
+            "blank_spikes": 0,
+            "changed_cells": 0,
+            "excess": 0
+          },
+          "right_minus_left_excess": 0,
+          "mean_voltage_right_minus_left": -0.000611042371019721,
+          "mean_absolute_voltage_difference": 0.0016912700375542045,
+          "voltage_positive_cells": 25,
+          "voltage_negative_cells": 33
+        }
+      }
+    },
+    "T4c": {
+      "neurons": 883,
+      "inferred_columns": 883,
+      "median_afferent_contacts": 61.0,
+      "18": {
+        "local_neurons": 59,
+        "on": {
+          "right": {
+            "spikes": 0,
+            "blank_spikes": 0,
+            "changed_cells": 0,
+            "excess": 0
+          },
+          "left": {
+            "spikes": 0,
+            "blank_spikes": 0,
+            "changed_cells": 0,
+            "excess": 0
+          },
+          "right_minus_left_excess": 0,
+          "mean_voltage_right_minus_left": 0.002166287275031209,
+          "mean_absolute_voltage_difference": 0.004623924382030964,
+          "voltage_positive_cells": 33,
+          "voltage_negative_cells": 21
+        },
+        "off": {
+          "right": {
+            "spikes": 0,
+            "blank_spikes": 0,
+            "changed_cells": 0,
+            "excess": 0
+          },
+          "left": {
+            "spikes": 0,
+            "blank_spikes": 0,
+            "changed_cells": 0,
+            "excess": 0
+          },
+          "right_minus_left_excess": 0,
+          "mean_voltage_right_minus_left": 0.001106063136830926,
+          "mean_absolute_voltage_difference": 0.002109738765284419,
+          "voltage_positive_cells": 32,
+          "voltage_negative_cells": 21
+        }
+      },
+      "46": {
+        "local_neurons": 62,
+        "on": {
+          "right": {
+            "spikes": 0,
+            "blank_spikes": 0,
+            "changed_cells": 0,
+            "excess": 0
+          },
+          "left": {
+            "spikes": 0,
+            "blank_spikes": 0,
+            "changed_cells": 0,
+            "excess": 0
+          },
+          "right_minus_left_excess": 0,
+          "mean_voltage_right_minus_left": -0.0007281370926648378,
+          "mean_absolute_voltage_difference": 0.0027476942632347345,
+          "voltage_positive_cells": 19,
+          "voltage_negative_cells": 29
+        },
+        "off": {
+          "right": {
+            "spikes": 0,
+            "blank_spikes": 0,
+            "changed_cells": 0,
+            "excess": 0
+          },
+          "left": {
+            "spikes": 0,
+            "blank_spikes": 0,
+            "changed_cells": 0,
+            "excess": 0
+          },
+          "right_minus_left_excess": 0,
+          "mean_voltage_right_minus_left": -0.0006437099655158818,
+          "mean_absolute_voltage_difference": 0.0013523496454581618,
+          "voltage_positive_cells": 18,
+          "voltage_negative_cells": 34
+        }
+      }
+    },
+    "T4d": {
+      "neurons": 859,
+      "inferred_columns": 859,
+      "median_afferent_contacts": 55.0,
+      "18": {
+        "local_neurons": 51,
+        "on": {
+          "right": {
+            "spikes": 0,
+            "blank_spikes": 0,
+            "changed_cells": 0,
+            "excess": 0
+          },
+          "left": {
+            "spikes": 0,
+            "blank_spikes": 0,
+            "changed_cells": 0,
+            "excess": 0
+          },
+          "right_minus_left_excess": 0,
+          "mean_voltage_right_minus_left": 0.0026947774458676577,
+          "mean_absolute_voltage_difference": 0.003992503974586725,
+          "voltage_positive_cells": 34,
+          "voltage_negative_cells": 11
+        },
+        "off": {
+          "right": {
+            "spikes": 0,
+            "blank_spikes": 0,
+            "changed_cells": 0,
+            "excess": 0
+          },
+          "left": {
+            "spikes": 0,
+            "blank_spikes": 0,
+            "changed_cells": 0,
+            "excess": 0
+          },
+          "right_minus_left_excess": 0,
+          "mean_voltage_right_minus_left": 0.0013942379737272859,
+          "mean_absolute_voltage_difference": 0.002413783688098192,
+          "voltage_positive_cells": 26,
+          "voltage_negative_cells": 18
+        }
+      },
+      "46": {
+        "local_neurons": 65,
+        "on": {
+          "right": {
+            "spikes": 0,
+            "blank_spikes": 0,
+            "changed_cells": 0,
+            "excess": 0
+          },
+          "left": {
+            "spikes": 0,
+            "blank_spikes": 0,
+            "changed_cells": 0,
+            "excess": 0
+          },
+          "right_minus_left_excess": 0,
+          "mean_voltage_right_minus_left": -0.0006651823059655726,
+          "mean_absolute_voltage_difference": 0.0028551083523780107,
+          "voltage_positive_cells": 23,
+          "voltage_negative_cells": 31
+        },
+        "off": {
+          "right": {
+            "spikes": 0,
+            "blank_spikes": 0,
+            "changed_cells": 0,
+            "excess": 0
+          },
+          "left": {
+            "spikes": 0,
+            "blank_spikes": 0,
+            "changed_cells": 0,
+            "excess": 0
+          },
+          "right_minus_left_excess": 0,
+          "mean_voltage_right_minus_left": -0.0003822647558990866,
+          "mean_absolute_voltage_difference": 0.0018635318847373128,
+          "voltage_positive_cells": 28,
+          "voltage_negative_cells": 33
+        }
+      }
+    },
+    "T5a": {
+      "neurons": 838,
+      "inferred_columns": 838,
+      "median_afferent_contacts": 55.0,
+      "18": {
+        "local_neurons": 51,
+        "on": {
+          "right": {
+            "spikes": 3,
+            "blank_spikes": 0,
+            "changed_cells": 3,
+            "excess": 3
+          },
+          "left": {
+            "spikes": 3,
+            "blank_spikes": 0,
+            "changed_cells": 3,
+            "excess": 3
+          },
+          "right_minus_left_excess": 0,
+          "mean_voltage_right_minus_left": -0.007356755901128054,
+          "mean_absolute_voltage_difference": 0.028202010318636894,
+          "voltage_positive_cells": 15,
+          "voltage_negative_cells": 36
+        },
+        "off": {
+          "right": {
+            "spikes": 5,
+            "blank_spikes": 0,
+            "changed_cells": 5,
+            "excess": 5
+          },
+          "left": {
+            "spikes": 6,
+            "blank_spikes": 0,
+            "changed_cells": 6,
+            "excess": 6
+          },
+          "right_minus_left_excess": -1,
+          "mean_voltage_right_minus_left": 0.004115093965083361,
+          "mean_absolute_voltage_difference": 0.013388197869062424,
+          "voltage_positive_cells": 17,
+          "voltage_negative_cells": 34
+        }
+      },
+      "46": {
+        "local_neurons": 67,
+        "on": {
+          "right": {
+            "spikes": 3,
+            "blank_spikes": 0,
+            "changed_cells": 3,
+            "excess": 3
+          },
+          "left": {
+            "spikes": 2,
+            "blank_spikes": 0,
+            "changed_cells": 2,
+            "excess": 2
+          },
+          "right_minus_left_excess": 1,
+          "mean_voltage_right_minus_left": 0.0006370126502588391,
+          "mean_absolute_voltage_difference": 0.016286587342619896,
+          "voltage_positive_cells": 37,
+          "voltage_negative_cells": 30
+        },
+        "off": {
+          "right": {
+            "spikes": 8,
+            "blank_spikes": 0,
+            "changed_cells": 8,
+            "excess": 8
+          },
+          "left": {
+            "spikes": 5,
+            "blank_spikes": 0,
+            "changed_cells": 5,
+            "excess": 5
+          },
+          "right_minus_left_excess": 3,
+          "mean_voltage_right_minus_left": -0.007874342612922192,
+          "mean_absolute_voltage_difference": 0.014540658332407475,
+          "voltage_positive_cells": 36,
+          "voltage_negative_cells": 31
+        }
+      }
+    },
+    "T5b": {
+      "neurons": 852,
+      "inferred_columns": 852,
+      "median_afferent_contacts": 52.0,
+      "18": {
+        "local_neurons": 57,
+        "on": {
+          "right": {
+            "spikes": 8,
+            "blank_spikes": 0,
+            "changed_cells": 8,
+            "excess": 8
+          },
+          "left": {
+            "spikes": 14,
+            "blank_spikes": 0,
+            "changed_cells": 14,
+            "excess": 14
+          },
+          "right_minus_left_excess": -6,
+          "mean_voltage_right_minus_left": 0.012820996344089508,
+          "mean_absolute_voltage_difference": 0.05247307941317558,
+          "voltage_positive_cells": 26,
+          "voltage_negative_cells": 31
+        },
+        "off": {
+          "right": {
+            "spikes": 21,
+            "blank_spikes": 0,
+            "changed_cells": 21,
+            "excess": 21
+          },
+          "left": {
+            "spikes": 18,
+            "blank_spikes": 0,
+            "changed_cells": 18,
+            "excess": 18
+          },
+          "right_minus_left_excess": 3,
+          "mean_voltage_right_minus_left": 0.002120613120496273,
+          "mean_absolute_voltage_difference": 0.0321865975856781,
+          "voltage_positive_cells": 25,
+          "voltage_negative_cells": 32
+        }
+      },
+      "46": {
+        "local_neurons": 56,
+        "on": {
+          "right": {
+            "spikes": 5,
+            "blank_spikes": 1,
+            "changed_cells": 6,
+            "excess": 4
+          },
+          "left": {
+            "spikes": 4,
+            "blank_spikes": 1,
+            "changed_cells": 5,
+            "excess": 3
+          },
+          "right_minus_left_excess": 1,
+          "mean_voltage_right_minus_left": 1.9482204152154736e-05,
+          "mean_absolute_voltage_difference": 0.024265330284833908,
+          "voltage_positive_cells": 37,
+          "voltage_negative_cells": 19
+        },
+        "off": {
+          "right": {
+            "spikes": 12,
+            "blank_spikes": 1,
+            "changed_cells": 11,
+            "excess": 11
+          },
+          "left": {
+            "spikes": 10,
+            "blank_spikes": 1,
+            "changed_cells": 9,
+            "excess": 9
+          },
+          "right_minus_left_excess": 2,
+          "mean_voltage_right_minus_left": -0.009842878207564354,
+          "mean_absolute_voltage_difference": 0.020879579707980156,
+          "voltage_positive_cells": 30,
+          "voltage_negative_cells": 26
+        }
+      }
+    },
+    "T5c": {
+      "neurons": 858,
+      "inferred_columns": 858,
+      "median_afferent_contacts": 56.0,
+      "18": {
+        "local_neurons": 62,
+        "on": {
+          "right": {
+            "spikes": 3,
+            "blank_spikes": 0,
+            "changed_cells": 3,
+            "excess": 3
+          },
+          "left": {
+            "spikes": 3,
+            "blank_spikes": 0,
+            "changed_cells": 3,
+            "excess": 3
+          },
+          "right_minus_left_excess": 0,
+          "mean_voltage_right_minus_left": -0.005396757274866104,
+          "mean_absolute_voltage_difference": 0.022797519341111183,
+          "voltage_positive_cells": 21,
+          "voltage_negative_cells": 41
+        },
+        "off": {
+          "right": {
+            "spikes": 12,
+            "blank_spikes": 0,
+            "changed_cells": 12,
+            "excess": 12
+          },
+          "left": {
+            "spikes": 9,
+            "blank_spikes": 0,
+            "changed_cells": 9,
+            "excess": 9
+          },
+          "right_minus_left_excess": 3,
+          "mean_voltage_right_minus_left": -0.005349424667656422,
+          "mean_absolute_voltage_difference": 0.03159897401928902,
+          "voltage_positive_cells": 19,
+          "voltage_negative_cells": 43
+        }
+      },
+      "46": {
+        "local_neurons": 61,
+        "on": {
+          "right": {
+            "spikes": 0,
+            "blank_spikes": 0,
+            "changed_cells": 0,
+            "excess": 0
+          },
+          "left": {
+            "spikes": 1,
+            "blank_spikes": 0,
+            "changed_cells": 1,
+            "excess": 1
+          },
+          "right_minus_left_excess": -1,
+          "mean_voltage_right_minus_left": 0.00554279051721096,
+          "mean_absolute_voltage_difference": 0.013043206185102463,
+          "voltage_positive_cells": 39,
+          "voltage_negative_cells": 22
+        },
+        "off": {
+          "right": {
+            "spikes": 7,
+            "blank_spikes": 0,
+            "changed_cells": 7,
+            "excess": 7
+          },
+          "left": {
+            "spikes": 4,
+            "blank_spikes": 0,
+            "changed_cells": 4,
+            "excess": 4
+          },
+          "right_minus_left_excess": 3,
+          "mean_voltage_right_minus_left": -0.008401229046285152,
+          "mean_absolute_voltage_difference": 0.02197260409593582,
+          "voltage_positive_cells": 40,
+          "voltage_negative_cells": 21
+        }
+      }
+    },
+    "T5d": {
+      "neurons": 808,
+      "inferred_columns": 808,
+      "median_afferent_contacts": 51.0,
+      "18": {
+        "local_neurons": 55,
+        "on": {
+          "right": {
+            "spikes": 3,
+            "blank_spikes": 0,
+            "changed_cells": 3,
+            "excess": 3
+          },
+          "left": {
+            "spikes": 6,
+            "blank_spikes": 0,
+            "changed_cells": 6,
+            "excess": 6
+          },
+          "right_minus_left_excess": -3,
+          "mean_voltage_right_minus_left": 0.004109944216907024,
+          "mean_absolute_voltage_difference": 0.03159759193658829,
+          "voltage_positive_cells": 20,
+          "voltage_negative_cells": 35
+        },
+        "off": {
+          "right": {
+            "spikes": 19,
+            "blank_spikes": 0,
+            "changed_cells": 19,
+            "excess": 19
+          },
+          "left": {
+            "spikes": 18,
+            "blank_spikes": 0,
+            "changed_cells": 18,
+            "excess": 18
+          },
+          "right_minus_left_excess": 1,
+          "mean_voltage_right_minus_left": 0.005753491073846817,
+          "mean_absolute_voltage_difference": 0.03730238601565361,
+          "voltage_positive_cells": 24,
+          "voltage_negative_cells": 31
+        }
+      },
+      "46": {
+        "local_neurons": 60,
+        "on": {
+          "right": {
+            "spikes": 3,
+            "blank_spikes": 0,
+            "changed_cells": 3,
+            "excess": 3
+          },
+          "left": {
+            "spikes": 0,
+            "blank_spikes": 0,
+            "changed_cells": 0,
+            "excess": 0
+          },
+          "right_minus_left_excess": 3,
+          "mean_voltage_right_minus_left": -0.006425534840673208,
+          "mean_absolute_voltage_difference": 0.017846548929810524,
+          "voltage_positive_cells": 33,
+          "voltage_negative_cells": 27
+        },
+        "off": {
+          "right": {
+            "spikes": 11,
+            "blank_spikes": 0,
+            "changed_cells": 11,
+            "excess": 11
+          },
+          "left": {
+            "spikes": 8,
+            "blank_spikes": 0,
+            "changed_cells": 8,
+            "excess": 8
+          },
+          "right_minus_left_excess": 3,
+          "mean_voltage_right_minus_left": -0.011209249496459961,
+          "mean_absolute_voltage_difference": 0.039443690329790115,
+          "voltage_positive_cells": 31,
+          "voltage_negative_cells": 29
+        }
+      }
+    }
+  },
+  "direction_contrasts": {
+    "T4a:on": {
+      "right_minus_left": [
+        0,
+        0
+      ],
+      "sign_consistent": false
+    },
+    "T4a:off": {
+      "right_minus_left": [
+        0,
+        0
+      ],
+      "sign_consistent": false
+    },
+    "T4b:on": {
+      "right_minus_left": [
+        0,
+        0
+      ],
+      "sign_consistent": false
+    },
+    "T4b:off": {
+      "right_minus_left": [
+        0,
+        0
+      ],
+      "sign_consistent": false
+    },
+    "T4c:on": {
+      "right_minus_left": [
+        0,
+        0
+      ],
+      "sign_consistent": false
+    },
+    "T4c:off": {
+      "right_minus_left": [
+        0,
+        0
+      ],
+      "sign_consistent": false
+    },
+    "T4d:on": {
+      "right_minus_left": [
+        0,
+        0
+      ],
+      "sign_consistent": false
+    },
+    "T4d:off": {
+      "right_minus_left": [
+        0,
+        0
+      ],
+      "sign_consistent": false
+    },
+    "T5a:on": {
+      "right_minus_left": [
+        0,
+        1
+      ],
+      "sign_consistent": false
+    },
+    "T5a:off": {
+      "right_minus_left": [
+        -1,
+        3
+      ],
+      "sign_consistent": false
+    },
+    "T5b:on": {
+      "right_minus_left": [
+        -6,
+        1
+      ],
+      "sign_consistent": false
+    },
+    "T5b:off": {
+      "right_minus_left": [
+        3,
+        2
+      ],
+      "sign_consistent": true
+    },
+    "T5c:on": {
+      "right_minus_left": [
+        0,
+        -1
+      ],
+      "sign_consistent": false
+    },
+    "T5c:off": {
+      "right_minus_left": [
+        3,
+        3
+      ],
+      "sign_consistent": true
+    },
+    "T5d:on": {
+      "right_minus_left": [
+        -3,
+        3
+      ],
+      "sign_consistent": false
+    },
+    "T5d:off": {
+      "right_minus_left": [
+        1,
+        3
+      ],
+      "sign_consistent": true
+    }
+  }
+}

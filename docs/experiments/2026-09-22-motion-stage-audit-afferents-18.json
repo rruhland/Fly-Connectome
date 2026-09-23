@@ -1,0 +1,244 @@
+{
+  "source_sha256": "8c4af80ff3904881bac9313b618dd9989bb51174b47606f28eca88865296005c",
+  "annotations_sha256": "2177e246113e4cfbf1e7772ec37c6da1955ff22e8063d0b1f833101f99a9a3b2",
+  "center": 18,
+  "stimulus": "3x13 moving bar",
+  "groups": {
+    "T4": {
+      "neurons": 509
+    },
+    "T5": {
+      "neurons": 505
+    }
+  },
+  "cases": {
+    "blank-on": {
+      "T4": {
+        "spikes": 2,
+        "peak_voltage": 1.0309444665908813,
+        "max_feedforward_current": 0.32632580399513245,
+        "min_feedforward_current": -0.14780743420124054,
+        "arrival_edges": 1488,
+        "positive_arrival_magnitude": 61.57999953813851,
+        "negative_arrival_magnitude": -29.910000016912818,
+        "afferent_arrivals": {
+          "C3": 7,
+          "Mi9": 631,
+          "Mi1": 647,
+          "Tm3": 196,
+          "T4b": 4,
+          "Tm1": 1,
+          "T4c": 1,
+          "Tm2": 1
+        }
+      },
+      "T5": {
+        "spikes": 0,
+        "peak_voltage": 1.0119789838790894,
+        "max_feedforward_current": 0.2625632882118225,
+        "min_feedforward_current": 1.7999124868502137e-13,
+        "arrival_edges": 2254,
+        "positive_arrival_magnitude": 132.9200004991144,
+        "negative_arrival_magnitude": 0.0,
+        "afferent_arrivals": {
+          "Tm1": 991,
+          "Tm2": 1262,
+          "Tm3": 1
+        }
+      }
+    },
+    "blank-off": {
+      "T4": {
+        "spikes": 2,
+        "peak_voltage": 1.0309444665908813,
+        "max_feedforward_current": 0.32632580399513245,
+        "min_feedforward_current": -0.14780743420124054,
+        "arrival_edges": 1488,
+        "positive_arrival_magnitude": 61.57999953813851,
+        "negative_arrival_magnitude": -29.910000016912818,
+        "afferent_arrivals": {
+          "C3": 7,
+          "Mi9": 631,
+          "Mi1": 647,
+          "Tm3": 196,
+          "T4b": 4,
+          "Tm1": 1,
+          "T4c": 1,
+          "Tm2": 1
+        }
+      },
+      "T5": {
+        "spikes": 0,
+        "peak_voltage": 1.0119789838790894,
+        "max_feedforward_current": 0.2625632882118225,
+        "min_feedforward_current": 1.7999124868502137e-13,
+        "arrival_edges": 2254,
+        "positive_arrival_magnitude": 132.9200004991144,
+        "negative_arrival_magnitude": 0.0,
+        "afferent_arrivals": {
+          "Tm1": 991,
+          "Tm2": 1262,
+          "Tm3": 1
+        }
+      }
+    },
+    "on-right": {
+      "T4": {
+        "spikes": 2,
+        "peak_voltage": 1.0309444665908813,
+        "max_feedforward_current": 0.32632580399513245,
+        "min_feedforward_current": -0.14780743420124054,
+        "arrival_edges": 1499,
+        "positive_arrival_magnitude": 50.859999377280474,
+        "negative_arrival_magnitude": -36.78999995999038,
+        "afferent_arrivals": {
+          "C3": 7,
+          "Mi9": 778,
+          "Mi1": 514,
+          "Tm3": 192,
+          "T4b": 4,
+          "T4c": 1,
+          "T5b": 2,
+          "Tm2": 1
+        }
+      },
+      "T5": {
+        "spikes": 27,
+        "peak_voltage": 1.028568148612976,
+        "max_feedforward_current": 0.27470213174819946,
+        "min_feedforward_current": 1.9477063530255224e-14,
+        "arrival_edges": 2865,
+        "positive_arrival_magnitude": 168.14999985322356,
+        "negative_arrival_magnitude": 0.0,
+        "afferent_arrivals": {
+          "Tm1": 1231,
+          "Tm2": 1598,
+          "T5b": 21,
+          "Tm3": 1,
+          "T5c": 6,
+          "T5a": 6,
+          "T5d": 2
+        }
+      }
+    },
+    "on-left": {
+      "T4": {
+        "spikes": 1,
+        "peak_voltage": 1.0309444665908813,
+        "max_feedforward_current": 0.2748771607875824,
+        "min_feedforward_current": -0.1589314341545105,
+        "arrival_edges": 1559,
+        "positive_arrival_magnitude": 37.48500011861324,
+        "negative_arrival_magnitude": -51.61500039510429,
+        "afferent_arrivals": {
+          "C3": 3,
+          "Mi9": 1060,
+          "Mi1": 439,
+          "Tm1": 2,
+          "Tm3": 50,
+          "T4c": 1,
+          "T5c": 1,
+          "Tm2": 1,
+          "T5b": 2
+        }
+      },
+      "T5": {
+        "spikes": 44,
+        "peak_voltage": 1.0288550853729248,
+        "max_feedforward_current": 0.28293585777282715,
+        "min_feedforward_current": 2.630447400696345e-13,
+        "arrival_edges": 3606,
+        "positive_arrival_magnitude": 214.5600004158914,
+        "negative_arrival_magnitude": 0.0,
+        "afferent_arrivals": {
+          "Tm1": 1581,
+          "Tm2": 1966,
+          "T5b": 33,
+          "T5d": 11,
+          "T5c": 11,
+          "T5a": 4
+        }
+      }
+    },
+    "off-right": {
+      "T4": {
+        "spikes": 2,
+        "peak_voltage": 1.0309444665908813,
+        "max_feedforward_current": 0.3428473174571991,
+        "min_feedforward_current": -0.15442755818367004,
+        "arrival_edges": 1833,
+        "positive_arrival_magnitude": 50.79500081576407,
+        "negative_arrival_magnitude": -54.809999195858836,
+        "afferent_arrivals": {
+          "C3": 7,
+          "Mi9": 1120,
+          "Mi1": 524,
+          "Tm3": 169,
+          "T5b": 4,
+          "T4b": 4,
+          "T4c": 1,
+          "Tm1": 2,
+          "Tm2": 1,
+          "T5c": 1
+        }
+      },
+      "T5": {
+        "spikes": 90,
+        "peak_voltage": 1.0297245979309082,
+        "max_feedforward_current": 0.2686932384967804,
+        "min_feedforward_current": 2.1357557649509529e-13,
+        "arrival_edges": 3825,
+        "positive_arrival_magnitude": 225.80499746650457,
+        "negative_arrival_magnitude": 0.0,
+        "afferent_arrivals": {
+          "Tm1": 1622,
+          "Tm2": 2093,
+          "T5b": 58,
+          "T5d": 24,
+          "T5c": 19,
+          "T5a": 8,
+          "Tm3": 1
+        }
+      }
+    },
+    "off-left": {
+      "T4": {
+        "spikes": 2,
+        "peak_voltage": 1.0309444665908813,
+        "max_feedforward_current": 0.2748771607875824,
+        "min_feedforward_current": -0.16359898447990417,
+        "arrival_edges": 1489,
+        "positive_arrival_magnitude": 43.719999980181456,
+        "negative_arrival_magnitude": -42.34499993734062,
+        "afferent_arrivals": {
+          "C3": 3,
+          "Mi9": 891,
+          "Mi1": 472,
+          "Tm1": 1,
+          "T5c": 1,
+          "Tm3": 116,
+          "T4c": 1,
+          "T5b": 3,
+          "Tm2": 1
+        }
+      },
+      "T5": {
+        "spikes": 89,
+        "peak_voltage": 1.0306485891342163,
+        "max_feedforward_current": 0.27970564365386963,
+        "min_feedforward_current": 1.4079767896284928e-13,
+        "arrival_edges": 3735,
+        "positive_arrival_magnitude": 218.70999976992607,
+        "negative_arrival_magnitude": 0.0,
+        "afferent_arrivals": {
+          "Tm1": 1625,
+          "Tm2": 2006,
+          "T5b": 51,
+          "T5d": 24,
+          "T5c": 19,
+          "T5a": 10
+        }
+      }
+    }
+  }
+}

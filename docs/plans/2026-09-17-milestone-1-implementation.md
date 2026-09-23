@@ -1093,3 +1093,18 @@ run; same-host gated replays 5.37-6.38 fps. No longer run/rate sweep authorized
 by protocol. M1A and M1B still blocked, final seeds1201-1204 untouched.
 Findings/evidence: docs/experiments/2026-09-22-pong-gate-ablation-findings.md;
 checkpoints under runs/full-context-gate-ablation-v1.
+
+## 2026-09-22: frozen motion-stage audit before further learning
+
+Read-only dot/bar probes on the pinned initial full graph at two locations, both
+directions and polarities, with matched blanks and 8 ticks/frame. Local T4a-d
+spikes are zero throughout; T5 responds chiefly to OFF but has only weak,
+inconsistent local direction contrasts. Mi4, Tm4, Tm9 never spike or send
+arrivals despite preserved measured edges. Signed T4 afferent balance during
+ON motion shifts toward less excitation and more inhibition. T4 subthreshold
+direction contrasts are tiny and flip between positions. No production dynamics
+or learning changed. Diagnostics, data, and bounded next architecture proposal
+are in docs/experiments/2026-09-22-motion-stage-audit-findings.md and
+docs/experiments/2026-09-22-motion-stage-recovery-proposal.md. Full suite:
+322 passed, 4 skipped. M1A remains unmet; resume with the approved recovery
+proposal if authorized, not another full-Pong learning sweep.
