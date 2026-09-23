@@ -1,0 +1,507 @@
+{
+  "source_sha256": "8c4af80ff3904881bac9313b618dd9989bb51174b47606f28eca88865296005c",
+  "graph_sha256": "c941a5c912dd03e2ab0868260c637c2b1d21525196d4bce93c7d5e7f618e34a8",
+  "selected_cap": 0.1,
+  "lag_ticks": 8,
+  "conditions": {
+    "32-right": {
+      "pixel_events": 312,
+      "source_spikes": 9,
+      "source": {
+        "local_mean_absolute_change": 0.005880572367459536,
+        "local_mean_signed_change": 0.0052455454133450985,
+        "remote_mean_absolute_change": 0.00024999212473630905,
+        "local_fraction_above_blank_p99": 0.06327985972166061,
+        "blank_fraction_above_blank_p99": 0.010416666977107525,
+        "per_cell_signed_change_p10": 0.0,
+        "per_cell_signed_change_p50": 0.00624999962747097,
+        "per_cell_signed_change_p90": 0.01458333432674408,
+        "finite": true
+      },
+      "targets": {
+        "T5c": {
+          "impulse": {
+            "mean_signed_change": 0.001241076155565679,
+            "mean_absolute_change": 0.0013825270580127835,
+            "per_cell_absolute_p10": 0.0,
+            "per_cell_absolute_p50": 0.0013489583507180214,
+            "per_cell_absolute_p90": 0.0028596047777682543
+          },
+          "current": {
+            "mean_signed_change": 0.02015725150704384,
+            "mean_absolute_change": 0.031331516802310944,
+            "per_cell_absolute_p10": 0.0082313921302557,
+            "per_cell_absolute_p50": 0.02806551195681095,
+            "per_cell_absolute_p90": 0.06082730367779732
+          },
+          "voltage": {
+            "mean_signed_change": -0.09348399937152863,
+            "mean_absolute_change": 0.10183919221162796,
+            "per_cell_absolute_p10": 0.0026485275011509657,
+            "per_cell_absolute_p50": 0.11910828202962875,
+            "per_cell_absolute_p90": 0.20297980308532715
+          },
+          "stimulus_spikes": 120,
+          "blank_spikes": 0
+        },
+        "T5d": {
+          "impulse": {
+            "mean_signed_change": 0.0010632824851199985,
+            "mean_absolute_change": 0.0011779776541516185,
+            "per_cell_absolute_p10": 0.0,
+            "per_cell_absolute_p50": 0.0011171875521540642,
+            "per_cell_absolute_p90": 0.0024979361332952976
+          },
+          "current": {
+            "mean_signed_change": 0.0181450042873621,
+            "mean_absolute_change": 0.029301216825842857,
+            "per_cell_absolute_p10": 0.008237235248088837,
+            "per_cell_absolute_p50": 0.028249148279428482,
+            "per_cell_absolute_p90": 0.05172593146562576
+          },
+          "voltage": {
+            "mean_signed_change": -0.09840258210897446,
+            "mean_absolute_change": 0.10716989636421204,
+            "per_cell_absolute_p10": 0.0026865489780902863,
+            "per_cell_absolute_p50": 0.13013918697834015,
+            "per_cell_absolute_p90": 0.20787671208381653
+          },
+          "stimulus_spikes": 112,
+          "blank_spikes": 0
+        }
+      },
+      "order": {
+        "T5c": {
+          "mean": -0.0025801362935453653,
+          "median": -0.0008348686387762427
+        },
+        "T5d": {
+          "mean": 0.0036380281671881676,
+          "median": 0.0018806777661666274
+        }
+      }
+    },
+    "32-left": {
+      "pixel_events": 312,
+      "source_spikes": 10,
+      "source": {
+        "local_mean_absolute_change": 0.005733014550060034,
+        "local_mean_signed_change": 0.005075706169009209,
+        "remote_mean_absolute_change": 0.000762749055866152,
+        "local_fraction_above_blank_p99": 0.06155303120613098,
+        "blank_fraction_above_blank_p99": 0.010416666977107525,
+        "per_cell_signed_change_p10": 0.0,
+        "per_cell_signed_change_p50": 0.00624999962747097,
+        "per_cell_signed_change_p90": 0.014583333395421505,
+        "finite": true
+      },
+      "targets": {
+        "T5c": {
+          "impulse": {
+            "mean_signed_change": 0.0012340717948973179,
+            "mean_absolute_change": 0.0013650755863636732,
+            "per_cell_absolute_p10": 0.0,
+            "per_cell_absolute_p50": 0.00122916663531214,
+            "per_cell_absolute_p90": 0.002902444452047348
+          },
+          "current": {
+            "mean_signed_change": 0.019895046949386597,
+            "mean_absolute_change": 0.03097447380423546,
+            "per_cell_absolute_p10": 0.008241892792284489,
+            "per_cell_absolute_p50": 0.027991538867354393,
+            "per_cell_absolute_p90": 0.05730566009879112
+          },
+          "voltage": {
+            "mean_signed_change": -0.10020282864570618,
+            "mean_absolute_change": 0.10871550440788269,
+            "per_cell_absolute_p10": 0.002581779146566987,
+            "per_cell_absolute_p50": 0.14535371959209442,
+            "per_cell_absolute_p90": 0.2113552689552307
+          },
+          "stimulus_spikes": 130,
+          "blank_spikes": 0
+        },
+        "T5d": {
+          "impulse": {
+            "mean_signed_change": 0.0010258650872856379,
+            "mean_absolute_change": 0.001150585012510419,
+            "per_cell_absolute_p10": 0.0,
+            "per_cell_absolute_p50": 0.001059895963408053,
+            "per_cell_absolute_p90": 0.0025069154798984528
+          },
+          "current": {
+            "mean_signed_change": 0.017862437292933464,
+            "mean_absolute_change": 0.02853519283235073,
+            "per_cell_absolute_p10": 0.008442188613116741,
+            "per_cell_absolute_p50": 0.028617210686206818,
+            "per_cell_absolute_p90": 0.047828055918216705
+          },
+          "voltage": {
+            "mean_signed_change": -0.09818946570158005,
+            "mean_absolute_change": 0.10743491351604462,
+            "per_cell_absolute_p10": 0.0027399673126637936,
+            "per_cell_absolute_p50": 0.13715843856334686,
+            "per_cell_absolute_p90": 0.20634153485298157
+          },
+          "stimulus_spikes": 111,
+          "blank_spikes": 0
+        }
+      },
+      "order": {
+        "T5c": {
+          "mean": 0.006071590352803469,
+          "median": 0.004301250912249088
+        },
+        "T5d": {
+          "mean": 7.185505819506943e-05,
+          "median": 0.0
+        }
+      }
+    },
+    "32-static": {
+      "pixel_events": 0,
+      "source_spikes": 0,
+      "source": {
+        "local_mean_absolute_change": 0.0011881050886586308,
+        "local_mean_signed_change": 0.0008650212548673153,
+        "remote_mean_absolute_change": 0.0,
+        "local_fraction_above_blank_p99": 0.019997771829366684,
+        "blank_fraction_above_blank_p99": 0.010416666977107525,
+        "per_cell_signed_change_p10": 0.0,
+        "per_cell_signed_change_p50": 0.0,
+        "per_cell_signed_change_p90": 0.005273828282952309,
+        "finite": true
+      },
+      "targets": {
+        "T5c": {
+          "impulse": {
+            "mean_signed_change": 0.0002443979028612375,
+            "mean_absolute_change": 0.0003213170275557786,
+            "per_cell_absolute_p10": 0.0,
+            "per_cell_absolute_p50": 0.0,
+            "per_cell_absolute_p90": 0.001423098612576723
+          },
+          "current": {
+            "mean_signed_change": 0.006532731000334024,
+            "mean_absolute_change": 0.014932983554899693,
+            "per_cell_absolute_p10": 0.0014947375748306513,
+            "per_cell_absolute_p50": 0.00936184823513031,
+            "per_cell_absolute_p90": 0.03821144625544548
+          },
+          "voltage": {
+            "mean_signed_change": -0.020069358870387077,
+            "mean_absolute_change": 0.02714972384274006,
+            "per_cell_absolute_p10": 0.00020028762810397893,
+            "per_cell_absolute_p50": 0.0028683971613645554,
+            "per_cell_absolute_p90": 0.18413116037845612
+          },
+          "stimulus_spikes": 23,
+          "blank_spikes": 0
+        },
+        "T5d": {
+          "impulse": {
+            "mean_signed_change": 0.00020359409973025322,
+            "mean_absolute_change": 0.0002672701666597277,
+            "per_cell_absolute_p10": 0.0,
+            "per_cell_absolute_p50": 0.0,
+            "per_cell_absolute_p90": 0.0011511323973536491
+          },
+          "current": {
+            "mean_signed_change": 0.006129193119704723,
+            "mean_absolute_change": 0.014159850776195526,
+            "per_cell_absolute_p10": 0.0022812997922301292,
+            "per_cell_absolute_p50": 0.00842550490051508,
+            "per_cell_absolute_p90": 0.03504142910242081
+          },
+          "voltage": {
+            "mean_signed_change": -0.026342958211898804,
+            "mean_absolute_change": 0.03238564357161522,
+            "per_cell_absolute_p10": 0.00032577599631622434,
+            "per_cell_absolute_p50": 0.0027654278092086315,
+            "per_cell_absolute_p90": 0.19320839643478394
+          },
+          "stimulus_spikes": 27,
+          "blank_spikes": 0
+        }
+      },
+      "order": {
+        "T5c": {
+          "mean": 0.0006607832619920373,
+          "median": 0.0
+        },
+        "T5d": {
+          "mean": 0.0005271850968711078,
+          "median": 0.0
+        }
+      }
+    },
+    "32-s2-right": {
+      "pixel_events": 624,
+      "source_spikes": 1,
+      "source": {
+        "local_mean_absolute_change": 0.004926884081214666,
+        "local_mean_signed_change": 0.004269575234502554,
+        "remote_mean_absolute_change": 0.0022699583787471056,
+        "local_fraction_above_blank_p99": 0.05325311794877052,
+        "blank_fraction_above_blank_p99": 0.010416666977107525,
+        "per_cell_signed_change_p10": 0.0,
+        "per_cell_signed_change_p50": 0.004166666883975267,
+        "per_cell_signed_change_p90": 0.009073510766029358,
+        "finite": true
+      },
+      "targets": {
+        "T5c": {
+          "impulse": {
+            "mean_signed_change": 0.000990338041447103,
+            "mean_absolute_change": 0.0011740201152861118,
+            "per_cell_absolute_p10": 0.0002093750226777047,
+            "per_cell_absolute_p50": 0.0011666668578982353,
+            "per_cell_absolute_p90": 0.0019874998833984137
+          },
+          "current": {
+            "mean_signed_change": 0.01905856467783451,
+            "mean_absolute_change": 0.029125990346074104,
+            "per_cell_absolute_p10": 0.0109100928530097,
+            "per_cell_absolute_p50": 0.029226427897810936,
+            "per_cell_absolute_p90": 0.046575795859098434
+          },
+          "voltage": {
+            "mean_signed_change": -0.12401840090751648,
+            "mean_absolute_change": 0.13336656987667084,
+            "per_cell_absolute_p10": 0.005855184514075518,
+            "per_cell_absolute_p50": 0.17262671887874603,
+            "per_cell_absolute_p90": 0.2088988721370697
+          },
+          "stimulus_spikes": 145,
+          "blank_spikes": 0
+        },
+        "T5d": {
+          "impulse": {
+            "mean_signed_change": 0.0008955395314842463,
+            "mean_absolute_change": 0.0010052506113424897,
+            "per_cell_absolute_p10": 0.00017187501362059265,
+            "per_cell_absolute_p50": 0.0009999999310821295,
+            "per_cell_absolute_p90": 0.0017395834438502789
+          },
+          "current": {
+            "mean_signed_change": 0.01711350865662098,
+            "mean_absolute_change": 0.026796843856573105,
+            "per_cell_absolute_p10": 0.012112414464354515,
+            "per_cell_absolute_p50": 0.025847535580396652,
+            "per_cell_absolute_p90": 0.04254421964287758
+          },
+          "voltage": {
+            "mean_signed_change": -0.09913086891174316,
+            "mean_absolute_change": 0.11202672123908997,
+            "per_cell_absolute_p10": 0.006408245302736759,
+            "per_cell_absolute_p50": 0.14827847480773926,
+            "per_cell_absolute_p90": 0.20661696791648865
+          },
+          "stimulus_spikes": 110,
+          "blank_spikes": 0
+        }
+      },
+      "order": {
+        "T5c": {
+          "mean": -0.006065821275115013,
+          "median": -0.004555416293442249
+        },
+        "T5d": {
+          "mean": 0.004953866824507713,
+          "median": 0.004107302986085415
+        }
+      }
+    },
+    "32-s2-left": {
+      "pixel_events": 624,
+      "source_spikes": 1,
+      "source": {
+        "local_mean_absolute_change": 0.003761706408113241,
+        "local_mean_signed_change": 0.00311553874053061,
+        "remote_mean_absolute_change": 0.0024481085129082203,
+        "local_fraction_above_blank_p99": 0.0416666679084301,
+        "blank_fraction_above_blank_p99": 0.010416666977107525,
+        "per_cell_signed_change_p10": 0.0,
+        "per_cell_signed_change_p50": 0.0031250000465661287,
+        "per_cell_signed_change_p90": 0.0052083334885537624,
+        "finite": true
+      },
+      "targets": {
+        "T5c": {
+          "impulse": {
+            "mean_signed_change": 0.0007376301218755543,
+            "mean_absolute_change": 0.000851392571348697,
+            "per_cell_absolute_p10": 0.00026875000912696123,
+            "per_cell_absolute_p50": 0.0008958333637565374,
+            "per_cell_absolute_p90": 0.0013748016208410263
+          },
+          "current": {
+            "mean_signed_change": 0.014679307118058205,
+            "mean_absolute_change": 0.02569354698061943,
+            "per_cell_absolute_p10": 0.010236763395369053,
+            "per_cell_absolute_p50": 0.025560712441802025,
+            "per_cell_absolute_p90": 0.03954314813017845
+          },
+          "voltage": {
+            "mean_signed_change": -0.09477346390485764,
+            "mean_absolute_change": 0.1071755513548851,
+            "per_cell_absolute_p10": 0.004367211367934942,
+            "per_cell_absolute_p50": 0.12782317399978638,
+            "per_cell_absolute_p90": 0.21172042191028595
+          },
+          "stimulus_spikes": 115,
+          "blank_spikes": 0
+        },
+        "T5d": {
+          "impulse": {
+            "mean_signed_change": 0.0006326909060589969,
+            "mean_absolute_change": 0.0007903034565970302,
+            "per_cell_absolute_p10": 0.00013281250721774995,
+            "per_cell_absolute_p50": 0.0007911707507446408,
+            "per_cell_absolute_p90": 0.0012787950690835714
+          },
+          "current": {
+            "mean_signed_change": 0.013418399728834629,
+            "mean_absolute_change": 0.024133915081620216,
+            "per_cell_absolute_p10": 0.011270812712609768,
+            "per_cell_absolute_p50": 0.023872505873441696,
+            "per_cell_absolute_p90": 0.03586134314537048
+          },
+          "voltage": {
+            "mean_signed_change": -0.09579436480998993,
+            "mean_absolute_change": 0.10797062516212463,
+            "per_cell_absolute_p10": 0.004884475842118263,
+            "per_cell_absolute_p50": 0.1299622356891632,
+            "per_cell_absolute_p90": 0.21161609888076782
+          },
+          "stimulus_spikes": 103,
+          "blank_spikes": 0
+        }
+      },
+      "order": {
+        "T5c": {
+          "mean": 0.0050696418620646,
+          "median": 0.0036035135854035616
+        },
+        "T5d": {
+          "mean": -0.003436366096138954,
+          "median": -0.0027174686547368765
+        }
+      }
+    },
+    "32-s2-static": {
+      "pixel_events": 0,
+      "source_spikes": 0,
+      "source": {
+        "local_mean_absolute_change": 0.0011881050886586308,
+        "local_mean_signed_change": 0.0008650212548673153,
+        "remote_mean_absolute_change": 0.0,
+        "local_fraction_above_blank_p99": 0.019997771829366684,
+        "blank_fraction_above_blank_p99": 0.010416666977107525,
+        "per_cell_signed_change_p10": 0.0,
+        "per_cell_signed_change_p50": 0.0,
+        "per_cell_signed_change_p90": 0.005273828282952309,
+        "finite": true
+      },
+      "targets": {
+        "T5c": {
+          "impulse": {
+            "mean_signed_change": 0.0002443979028612375,
+            "mean_absolute_change": 0.0003213170275557786,
+            "per_cell_absolute_p10": 0.0,
+            "per_cell_absolute_p50": 0.0,
+            "per_cell_absolute_p90": 0.001423098612576723
+          },
+          "current": {
+            "mean_signed_change": 0.006532731000334024,
+            "mean_absolute_change": 0.014932983554899693,
+            "per_cell_absolute_p10": 0.0014947375748306513,
+            "per_cell_absolute_p50": 0.00936184823513031,
+            "per_cell_absolute_p90": 0.03821144625544548
+          },
+          "voltage": {
+            "mean_signed_change": -0.020069358870387077,
+            "mean_absolute_change": 0.02714972384274006,
+            "per_cell_absolute_p10": 0.00020028762810397893,
+            "per_cell_absolute_p50": 0.0028683971613645554,
+            "per_cell_absolute_p90": 0.18413116037845612
+          },
+          "stimulus_spikes": 23,
+          "blank_spikes": 0
+        },
+        "T5d": {
+          "impulse": {
+            "mean_signed_change": 0.00020359409973025322,
+            "mean_absolute_change": 0.0002672701666597277,
+            "per_cell_absolute_p10": 0.0,
+            "per_cell_absolute_p50": 0.0,
+            "per_cell_absolute_p90": 0.0011511323973536491
+          },
+          "current": {
+            "mean_signed_change": 0.006129193119704723,
+            "mean_absolute_change": 0.014159850776195526,
+            "per_cell_absolute_p10": 0.0022812997922301292,
+            "per_cell_absolute_p50": 0.00842550490051508,
+            "per_cell_absolute_p90": 0.03504142910242081
+          },
+          "voltage": {
+            "mean_signed_change": -0.026342958211898804,
+            "mean_absolute_change": 0.03238564357161522,
+            "per_cell_absolute_p10": 0.00032577599631622434,
+            "per_cell_absolute_p50": 0.0027654278092086315,
+            "per_cell_absolute_p90": 0.19320839643478394
+          },
+          "stimulus_spikes": 27,
+          "blank_spikes": 0
+        }
+      },
+      "order": {
+        "T5c": {
+          "mean": 0.0006607832619920373,
+          "median": 0.0
+        },
+        "T5d": {
+          "mean": 0.0005271850968711078,
+          "median": 0.0
+        }
+      }
+    }
+  },
+  "order_contrasts": {
+    "32/T5c": {
+      "mean": -0.008651725947856903,
+      "median": -0.006212216801941395,
+      "positive_cells": 16,
+      "negative_cells": 143,
+      "static_magnitude": 0.0006607832619920373
+    },
+    "32/T5d": {
+      "mean": 0.003566172905266285,
+      "median": 0.0016031544655561447,
+      "positive_cells": 124,
+      "negative_cells": 24,
+      "static_magnitude": 0.0005271850968711078
+    },
+    "32-s2/T5c": {
+      "mean": -0.011135461740195751,
+      "median": -0.009037470445036888,
+      "positive_cells": 5,
+      "negative_cells": 173,
+      "static_magnitude": 0.0006607832619920373
+    },
+    "32-s2/T5d": {
+      "mean": 0.008390233851969242,
+      "median": 0.007216618862003088,
+      "positive_cells": 150,
+      "negative_cells": 13,
+      "static_magnitude": 0.0005271850968711078
+    }
+  },
+  "screen_parts": {
+    "signs": true,
+    "medians": true,
+    "static_lower": true,
+    "transmission": false
+  },
+  "passes_holdout_screen": false
+}

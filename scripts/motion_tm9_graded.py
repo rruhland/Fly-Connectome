@@ -22,8 +22,24 @@ from motion_t5_arm_order import lag_order
 
 
 OUT = Path('docs/experiments/2026-09-23-tm9-graded-results.json')
+HOLDOUT_OUT = Path('docs/experiments/2026-09-23-tm9-graded-holdout-results.json')
 CAPS = (.01, .03, .10)
 SUBTYPES = ('T5c', 'T5d')
+
+
+def moving_bar_frames(center, direction, speed):
+    if direction not in (-1, 1) or speed < 1:
+        raise ValueError('positive speed and explicit direction required')
+    y, x = torch.meshgrid(torch.arange(32), torch.arange(64), indexing='ij')
+    frames = []
+    for frame in range(18):
+        if 2 <= frame < 15:
+            position = center+direction*speed*(frame-8)
+            bar = ((x-position).abs() <= 1) & ((y-16).abs() <= 6)
+            frames.append((~bar).unsqueeze(0))
+        else:
+            frames.append(torch.ones(1, 32, 64, dtype=torch.bool))
+    return frames
 
 
 @torch.no_grad()
@@ -104,6 +120,8 @@ def main():
         calibration.append(row)
         print(json.dumps(dict(calibration=row)), flush=True)
     selected_cap = select_cap(calibration)
+    if selected_cap != .10:
+        raise AssertionError('held-out run changed the blank-selected Tm9 cap')
     report = dict(source_sha256=source_sha,
         annotations_sha256=checksum(ANNOTATIONS),
         graph_sha256=graph.identity(), graded_edges=len(net.graded_edges),
@@ -145,7 +163,7 @@ def main():
     source_lookup[net.graded_nodes.numpy()] = np.arange(len(net.graded_nodes))
     y, x = torch.meshgrid(torch.arange(32), torch.arange(64), indexing='ij')
     source_regions, target_regions = {}, {}
-    for center in (18, 46):
+    for center in (18, 46, 32):
         field = (x >= center-8) & (x <= center+8) & (y >= 9) & (y <= 23)
         bins = retina.pixel_bins[field.flatten()].unique().numpy()
         source_regions[center] = torch.tensor(source_lookup[
@@ -212,10 +230,15 @@ def main():
         raise AssertionError('restored graded state changed repeated blank')
     report['state_restoration_reproducible'] = True
     order_scores = {}
-    for center in (18, 46):
+    for center, speed in ((18, 1), (46, 1), (32, 1), (32, 2)):
         other = 46 if center == 18 else 18
-        images = dict(right=frames_for_condition(center, 1, 'off', kind='bar'),
-                      left=frames_for_condition(center, -1, 'off', kind='bar'))
+        if center == 32:
+            other = 18
+        prefix = str(center) if speed == 1 else f'{center}-s{speed}'
+        images = dict(right=(frames_for_condition(center, 1, 'off', kind='bar')
+                             if speed == 1 else moving_bar_frames(center, 1, speed)),
+                      left=(frames_for_condition(center, -1, 'off', kind='bar')
+                            if speed == 1 else moving_bar_frames(center, -1, speed)))
         static = frames_for_condition(center, 1, 'off', kind='bar')
         for frame in range(2, 15):
             static[frame] = static[8]
@@ -225,13 +248,13 @@ def main():
             tm4_delta = observed['tm4_arm']-blank['tm4_arm']
             tm9_delta = observed['tm9_arm']-blank['tm9_arm']
             order = lag_order(tm4_delta, tm9_delta, 8)[24:120].sum(0)
-            order_scores[f'{center}-{direction}'] = order
+            order_scores[f'{prefix}-{direction}'] = order
             source = summarize_feature(observed['release'], blank['release'],
                                        source_regions[center], source_regions[other])
             targets = {subtype: summarize_target(
                 observed, blank, target_regions[center][subtype])
                 for subtype in SUBTYPES}
-            report['conditions'][f'{center}-{direction}'] = dict(
+            report['conditions'][f'{prefix}-{direction}'] = dict(
                 pixel_events=observed['pixel_events'],
                 source_spikes=observed['source_spikes'],
                 source=source, targets=targets,
@@ -244,6 +267,9 @@ def main():
                 target_impulses={subtype: targets[subtype]['impulse']
                                  ['mean_absolute_change'] for subtype in SUBTYPES})),
                 flush=True)
+        if (report['conditions'][f'{prefix}-right']['pixel_events'] !=
+                report['conditions'][f'{prefix}-left']['pixel_events']):
+            raise AssertionError('opposite held-out directions have unequal event counts')
     report['partial_tm9_t5_screen'] = bool(all(
         (row := report['conditions'][f'{center}-{direction}'])['source']
             ['local_fraction_above_blank_p99'] >= .05
@@ -252,13 +278,13 @@ def main():
                 for subtype in SUBTYPES)
         for center in (18, 46) for direction in ('right', 'left')))
     report['order_contrasts'] = {}
-    for center in (18, 46):
+    for prefix, center in (('18', 18), ('46', 46), ('32', 32), ('32-s2', 32)):
         for subtype in SUBTYPES:
             mask = target_regions[center][subtype]
-            contrast = (order_scores[f'{center}-right'][mask]
-                        -order_scores[f'{center}-left'][mask])
-            static = order_scores[f'{center}-static'][mask]
-            report['order_contrasts'][f'{center}/{subtype}'] = dict(
+            contrast = (order_scores[f'{prefix}-right'][mask]
+                        -order_scores[f'{prefix}-left'][mask])
+            static = order_scores[f'{prefix}-static'][mask]
+            report['order_contrasts'][f'{prefix}/{subtype}'] = dict(
                 mean=float(contrast.mean()), median=float(contrast.median()),
                 positive_cells=int((contrast > 0).sum()),
                 negative_cells=int((contrast < 0).sum()),
@@ -270,23 +296,58 @@ def main():
     opposite = all(
         contrasts[f'{center}/T5c']['mean']*contrasts[f'{center}/T5d']['mean'] < 0
         for center in (18, 46))
+    calibration_entries = [contrasts[f'{center}/{subtype}']
+                           for center in (18, 46) for subtype in SUBTYPES]
     median_agrees = all(
-        entry['mean']*entry['median'] > 0 for entry in contrasts.values())
+        entry['mean']*entry['median'] > 0 for entry in calibration_entries)
     static_lower = all(abs(entry['mean']) > entry['static_magnitude']
-                       for entry in contrasts.values())
+                       for entry in calibration_entries)
     report['order_screen_parts'] = dict(consistent=consistent,
         opposite=opposite, median_agrees=median_agrees,
         static_lower=static_lower)
     report['passes_order_screen'] = bool(consistent and opposite
                                           and median_agrees and static_lower)
+    holdout_rows = [contrasts[f'{prefix}/{subtype}']
+                    for prefix in ('32', '32-s2') for subtype in SUBTYPES]
+    holdout_signs = all(
+        contrasts[f'{prefix}/T5c']['mean'] < 0
+        and contrasts[f'{prefix}/T5d']['mean'] > 0
+        for prefix in ('32', '32-s2'))
+    holdout_medians = all(row['mean']*row['median'] > 0
+                          for row in holdout_rows)
+    holdout_static = all(abs(row['mean']) > row['static_magnitude']
+                         for row in holdout_rows)
+    holdout_transmission = all(
+        (row := report['conditions'][f'{prefix}-{direction}'])['source']
+            ['local_fraction_above_blank_p99'] >= .05
+        and all(row['targets'][subtype]['impulse']['mean_absolute_change'] >= .0005
+                for subtype in SUBTYPES)
+        for prefix in ('32', '32-s2') for direction in ('right', 'left'))
+    holdout_parts = dict(signs=holdout_signs, medians=holdout_medians,
+                         static_lower=holdout_static,
+                         transmission=holdout_transmission)
+    report['holdout_screen_parts'] = holdout_parts
+    report['passes_holdout_screen'] = bool(all(holdout_parts.values()))
     if (not torch.equal(net.magnitudes, original_weights)
             or checksum(SOURCE) != source_sha):
         raise AssertionError('frozen weights or checkpoint changed')
     OUT.write_text(json.dumps(report, indent=2, allow_nan=False)+'\n')
+    HOLDOUT_OUT.write_text(json.dumps(dict(
+        source_sha256=source_sha, graph_sha256=graph.identity(),
+        selected_cap=selected_cap, lag_ticks=8,
+        conditions={key: value for key, value in report['conditions'].items()
+                    if key.startswith('32-')},
+        order_contrasts={key: value for key, value in contrasts.items()
+                         if key.startswith('32/') or key.startswith('32-s2/')},
+        screen_parts=holdout_parts,
+        passes_holdout_screen=report['passes_holdout_screen']),
+        indent=2, allow_nan=False)+'\n')
     print(json.dumps(dict(output=str(OUT), selected_cap=selected_cap,
                           partial_tm9_t5_screen=report['partial_tm9_t5_screen'],
                           passes_order_screen=report['passes_order_screen'],
-                          order_parts=report['order_screen_parts'])),
+                          order_parts=report['order_screen_parts'],
+                          passes_holdout_screen=report['passes_holdout_screen'],
+                          holdout_parts=holdout_parts)),
           flush=True)
 
 

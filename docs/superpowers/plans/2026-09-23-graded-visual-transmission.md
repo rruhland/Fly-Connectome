@@ -110,6 +110,6 @@
 
 **Interfaces:** Preserve the selected Tm9 cap and eight-tick order rule; evaluate x=32 at one and two pixels/frame with the same bright blank and static controls.
 
-- [ ] Write a failing test for the doubled-speed bar geometry before implementing it.
-- [ ] Run both withheld conditions without recalibration and report per-cell subtype contrasts and static controls.
-- [ ] Apply the fixed cross-position/speed screen, run the full suite, and commit the result.
+- [x] Write a failing test for the doubled-speed bar geometry before implementing it.
+- [x] Run both withheld conditions without recalibration and report per-cell subtype contrasts and static controls.
+- [x] Apply the fixed cross-position/speed screen, run the full suite, and commit the result. The order components passed; the predeclared source-occupancy component failed at doubled-speed leftward motion.
