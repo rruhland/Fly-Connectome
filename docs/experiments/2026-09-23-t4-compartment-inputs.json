@@ -1,0 +1,484 @@
+{
+  "source_sha256": "8c4af80ff3904881bac9313b618dd9989bb51174b47606f28eca88865296005c",
+  "annotations_sha256": "2177e246113e4cfbf1e7772ec37c6da1955ff22e8063d0b1f833101f99a9a3b2",
+  "graph_sha256": "c941a5c912dd03e2ab0868260c637c2b1d21525196d4bce93c7d5e7f618e34a8",
+  "trace_decay": "existing per-T4 current_decay",
+  "score_names": [
+    "divisive",
+    "coincident_disinhibition"
+  ],
+  "groups": {
+    "18-horizontal": {
+      "T4a": {
+        "neurons": 122,
+        "positive_divisive": {
+          "right": 1.8488781452178955,
+          "left": 11.201956748962402,
+          "static": 12.217401504516602,
+          "right_minus_left": -9.353078603744507,
+          "direction_index": -0.7166651543431359
+        },
+        "signed_divisive": {
+          "right": -13.314053535461426,
+          "left": -32.28206253051758,
+          "static": 4.523107051849365,
+          "right_minus_left": 18.968008995056152,
+          "direction_index": 0.0
+        },
+        "coincident": {
+          "right": 9.254412725567818e-05,
+          "left": 0.00042999221477657557,
+          "static": 0.0,
+          "right_minus_left": -0.0003374480875208974,
+          "direction_index": -0.6457887430537191
+        },
+        "excess_spikes": {
+          "right": 0,
+          "left": 0,
+          "static": 0
+        }
+      },
+      "T4b": {
+        "neurons": 135,
+        "positive_divisive": {
+          "right": 1.9479695558547974,
+          "left": 12.224998474121094,
+          "static": 13.588650703430176,
+          "right_minus_left": -10.277028918266296,
+          "direction_index": -0.7251148028084403
+        },
+        "signed_divisive": {
+          "right": -15.658221244812012,
+          "left": -32.169612884521484,
+          "static": 6.211041450500488,
+          "right_minus_left": 16.511391639709473,
+          "direction_index": 0.0
+        },
+        "coincident": {
+          "right": 0.0006682958919554949,
+          "left": 0.00035534962080419064,
+          "static": 2.231774260508246e-06,
+          "right_minus_left": 0.00031294627115130424,
+          "direction_index": 0.3057174258573364
+        },
+        "excess_spikes": {
+          "right": 0,
+          "left": -1,
+          "static": 0
+        }
+      },
+      "T4c": {
+        "neurons": 133,
+        "positive_divisive": {
+          "right": 2.0778679847717285,
+          "left": 13.853052139282227,
+          "static": 13.60218620300293,
+          "right_minus_left": -11.775184154510498,
+          "direction_index": -0.7391402419205688
+        },
+        "signed_divisive": {
+          "right": -17.46615982055664,
+          "left": -34.336578369140625,
+          "static": 5.128718852996826,
+          "right_minus_left": 16.870418548583984,
+          "direction_index": 0.0
+        },
+        "coincident": {
+          "right": 4.703409649664536e-05,
+          "left": 0.003020010655745864,
+          "static": 1.7757024579623248e-06,
+          "right_minus_left": -0.0029729765592492186,
+          "direction_index": -0.969329370585639
+        },
+        "excess_spikes": {
+          "right": 0,
+          "left": 0,
+          "static": 0
+        }
+      },
+      "T4d": {
+        "neurons": 119,
+        "positive_divisive": {
+          "right": 2.254410743713379,
+          "left": 12.439648628234863,
+          "static": 12.183489799499512,
+          "right_minus_left": -10.185237884521484,
+          "direction_index": -0.693153445668367
+        },
+        "signed_divisive": {
+          "right": -10.686263084411621,
+          "left": -29.398672103881836,
+          "static": 5.225069522857666,
+          "right_minus_left": 18.712409019470215,
+          "direction_index": 0.0
+        },
+        "coincident": {
+          "right": 4.476662240904261e-07,
+          "left": 0.00011728820390999317,
+          "static": 0.0,
+          "right_minus_left": -0.00011684053768590275,
+          "direction_index": -0.9923954148624272
+        },
+        "excess_spikes": {
+          "right": 0,
+          "left": 0,
+          "static": 0
+        }
+      }
+    },
+    "18-vertical": {
+      "T4a": {
+        "neurons": 123,
+        "positive_divisive": {
+          "right": 10.335110664367676,
+          "left": 7.7425217628479,
+          "static": 6.921947002410889,
+          "right_minus_left": 2.5925889015197754,
+          "direction_index": 0.14341418390699634
+        },
+        "signed_divisive": {
+          "right": -30.407886505126953,
+          "left": -1.9012112617492676,
+          "static": 2.4583675861358643,
+          "right_minus_left": -28.506675243377686,
+          "direction_index": 0.0
+        },
+        "coincident": {
+          "right": 2.6750971301225945e-05,
+          "left": 1.92125571629731e-05,
+          "static": 7.311390390896122e-07,
+          "right_minus_left": 7.538414138252847e-06,
+          "direction_index": 0.16400860399837475
+        },
+        "excess_spikes": {
+          "right": 0,
+          "left": 0,
+          "static": 0
+        }
+      },
+      "T4b": {
+        "neurons": 137,
+        "positive_divisive": {
+          "right": 10.558423042297363,
+          "left": 7.7653961181640625,
+          "static": 7.880918979644775,
+          "right_minus_left": 2.793026924133301,
+          "direction_index": 0.15242602536484362
+        },
+        "signed_divisive": {
+          "right": -30.395030975341797,
+          "left": -5.012786388397217,
+          "static": 3.194441318511963,
+          "right_minus_left": -25.38224458694458,
+          "direction_index": 0.0
+        },
+        "coincident": {
+          "right": 0.0043955231085419655,
+          "left": 8.865973541105632e-06,
+          "static": 0.00027197255985811353,
+          "right_minus_left": 0.00438665713500086,
+          "direction_index": 0.9959740280089368
+        },
+        "excess_spikes": {
+          "right": -1,
+          "left": 0,
+          "static": 0
+        }
+      },
+      "T4c": {
+        "neurons": 137,
+        "positive_divisive": {
+          "right": 11.994915008544922,
+          "left": 7.554689407348633,
+          "static": 8.375264167785645,
+          "right_minus_left": 4.440225601196289,
+          "direction_index": 0.22712610990667656
+        },
+        "signed_divisive": {
+          "right": -31.874515533447266,
+          "left": -4.724404335021973,
+          "static": 2.673011302947998,
+          "right_minus_left": -27.150111198425293,
+          "direction_index": 0.0
+        },
+        "coincident": {
+          "right": 5.855070412508212e-05,
+          "left": 2.675896575965453e-05,
+          "static": 2.200428070864291e-06,
+          "right_minus_left": 3.179173836542759e-05,
+          "direction_index": 0.3726627756077588
+        },
+        "excess_spikes": {
+          "right": -1,
+          "left": 0,
+          "static": 0
+        }
+      },
+      "T4d": {
+        "neurons": 123,
+        "positive_divisive": {
+          "right": 9.988096237182617,
+          "left": 6.643190383911133,
+          "static": 5.013174533843994,
+          "right_minus_left": 3.3449058532714844,
+          "direction_index": 0.20112129202494064
+        },
+        "signed_divisive": {
+          "right": -27.78958511352539,
+          "left": -2.208681583404541,
+          "static": 1.6268635988235474,
+          "right_minus_left": -25.58090353012085,
+          "direction_index": 0.0
+        },
+        "coincident": {
+          "right": 0.001980351284146309,
+          "left": 5.302948125063267e-07,
+          "static": 4.520388188211655e-07,
+          "right_minus_left": 0.0019798209893338026,
+          "direction_index": 0.9994645870625087
+        },
+        "excess_spikes": {
+          "right": -1,
+          "left": 0,
+          "static": 0
+        }
+      }
+    },
+    "46-horizontal": {
+      "T4a": {
+        "neurons": 134,
+        "positive_divisive": {
+          "right": 8.817620277404785,
+          "left": 4.205663204193115,
+          "static": 24.832929611206055,
+          "right_minus_left": 4.61195707321167,
+          "direction_index": 0.35413166577602617
+        },
+        "signed_divisive": {
+          "right": -10.97628402709961,
+          "left": -5.846810340881348,
+          "static": 14.751079559326172,
+          "right_minus_left": -5.129473686218262,
+          "direction_index": 0.0
+        },
+        "coincident": {
+          "right": 0.05759904533624649,
+          "left": 0.016857139766216278,
+          "static": 0.099093958735466,
+          "right_minus_left": 0.04074190557003021,
+          "direction_index": 0.5471930305583519
+        },
+        "excess_spikes": {
+          "right": 0,
+          "left": 0,
+          "static": 0
+        }
+      },
+      "T4b": {
+        "neurons": 132,
+        "positive_divisive": {
+          "right": 7.775795936584473,
+          "left": 3.450538158416748,
+          "static": 18.560653686523438,
+          "right_minus_left": 4.325257778167725,
+          "direction_index": 0.3852778423985835
+        },
+        "signed_divisive": {
+          "right": -8.101418495178223,
+          "left": -3.954300880432129,
+          "static": 11.469247817993164,
+          "right_minus_left": -4.147117614746094,
+          "direction_index": 0.0
+        },
+        "coincident": {
+          "right": 0.00012173300638096407,
+          "left": 0.002815093146637082,
+          "static": 0.030149271711707115,
+          "right_minus_left": -0.002693360140256118,
+          "direction_index": -0.9170989360361937
+        },
+        "excess_spikes": {
+          "right": 0,
+          "left": 0,
+          "static": 0
+        }
+      },
+      "T4c": {
+        "neurons": 135,
+        "positive_divisive": {
+          "right": 8.257378578186035,
+          "left": 2.9170124530792236,
+          "static": 21.929494857788086,
+          "right_minus_left": 5.3403661251068115,
+          "direction_index": 0.47791115508351156
+        },
+        "signed_divisive": {
+          "right": -11.817754745483398,
+          "left": -7.156566143035889,
+          "static": 13.325942993164062,
+          "right_minus_left": -4.66118860244751,
+          "direction_index": 0.0
+        },
+        "coincident": {
+          "right": 0.015751956030726433,
+          "left": 0.002331941155716777,
+          "static": 0.09191453456878662,
+          "right_minus_left": 0.013420014875009656,
+          "direction_index": 0.7420974990429672
+        },
+        "excess_spikes": {
+          "right": 0,
+          "left": 0,
+          "static": 0
+        }
+      },
+      "T4d": {
+        "neurons": 136,
+        "positive_divisive": {
+          "right": 7.313284873962402,
+          "left": 3.0250086784362793,
+          "static": 20.290794372558594,
+          "right_minus_left": 4.288276195526123,
+          "direction_index": 0.41479535996839256
+        },
+        "signed_divisive": {
+          "right": -9.318755149841309,
+          "left": -6.101309299468994,
+          "static": 11.864323616027832,
+          "right_minus_left": -3.2174458503723145,
+          "direction_index": 0.0
+        },
+        "coincident": {
+          "right": 0.01485177781432867,
+          "left": 0.008764902129769325,
+          "static": 0.050540145486593246,
+          "right_minus_left": 0.006086875684559345,
+          "direction_index": 0.2577362990465773
+        },
+        "excess_spikes": {
+          "right": 0,
+          "left": 0,
+          "static": 1
+        }
+      }
+    },
+    "46-vertical": {
+      "T4a": {
+        "neurons": 124,
+        "positive_divisive": {
+          "right": 8.975311279296875,
+          "left": 11.099536895751953,
+          "static": 18.16788673400879,
+          "right_minus_left": -2.124225616455078,
+          "direction_index": -0.10581527680469799
+        },
+        "signed_divisive": {
+          "right": -6.853214263916016,
+          "left": -3.5960006713867188,
+          "static": 12.813291549682617,
+          "right_minus_left": -3.257213592529297,
+          "direction_index": 0.0
+        },
+        "coincident": {
+          "right": 0.027411911636590958,
+          "left": 0.0010363326873630285,
+          "static": 0.0398893840610981,
+          "right_minus_left": 0.02637557894922793,
+          "direction_index": 0.9271425909056598
+        },
+        "excess_spikes": {
+          "right": 0,
+          "left": 0,
+          "static": 0
+        }
+      },
+      "T4b": {
+        "neurons": 124,
+        "positive_divisive": {
+          "right": 7.869033336639404,
+          "left": 9.256586074829102,
+          "static": 17.403106689453125,
+          "right_minus_left": -1.3875527381896973,
+          "direction_index": -0.08102204684406891
+        },
+        "signed_divisive": {
+          "right": -1.8411409854888916,
+          "left": -3.846996784210205,
+          "static": 12.125943183898926,
+          "right_minus_left": 2.0058557987213135,
+          "direction_index": 0.0
+        },
+        "coincident": {
+          "right": 8.760155469644815e-05,
+          "left": 0.0038616685196757317,
+          "static": 0.0036757562775164843,
+          "right_minus_left": -0.0037740669649792835,
+          "direction_index": -0.9556365844590285
+        },
+        "excess_spikes": {
+          "right": 0,
+          "left": 0,
+          "static": 0
+        }
+      },
+      "T4c": {
+        "neurons": 124,
+        "positive_divisive": {
+          "right": 8.47778606414795,
+          "left": 10.349038124084473,
+          "static": 18.54704475402832,
+          "right_minus_left": -1.8712520599365234,
+          "direction_index": -0.09939286845341323
+        },
+        "signed_divisive": {
+          "right": -6.674421310424805,
+          "left": -5.5908355712890625,
+          "static": 12.950249671936035,
+          "right_minus_left": -1.0835857391357422,
+          "direction_index": 0.0
+        },
+        "coincident": {
+          "right": 0.01195115689188242,
+          "left": 0.004422259517014027,
+          "static": 0.0025306770112365484,
+          "right_minus_left": 0.007528897374868393,
+          "direction_index": 0.45982446099505475
+        },
+        "excess_spikes": {
+          "right": 0,
+          "left": 0,
+          "static": 0
+        }
+      },
+      "T4d": {
+        "neurons": 122,
+        "positive_divisive": {
+          "right": 7.552244186401367,
+          "left": 10.420286178588867,
+          "static": 16.387863159179688,
+          "right_minus_left": -2.8680419921875,
+          "direction_index": -0.1595791985848765
+        },
+        "signed_divisive": {
+          "right": -5.720280170440674,
+          "left": -3.722694158554077,
+          "static": 10.79276180267334,
+          "right_minus_left": -1.9975860118865967,
+          "direction_index": 0.0
+        },
+        "coincident": {
+          "right": 0.0015271940501406789,
+          "left": 0.006070923525840044,
+          "static": 0.022335371002554893,
+          "right_minus_left": -0.004543729475699365,
+          "direction_index": -0.5980072603855285
+        },
+        "excess_spikes": {
+          "right": 0,
+          "left": 0,
+          "static": 0
+        }
+      }
+    }
+  }
+}

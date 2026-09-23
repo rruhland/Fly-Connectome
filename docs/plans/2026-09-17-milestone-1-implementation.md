@@ -1135,3 +1135,15 @@ all below preregistered .005 at both locations. No fraction selected; no
 moving-bar or Pong run. Finite state; 328 tests passed, 4 skipped. See
 docs/experiments/2026-09-23-graded-mi4-findings.md. Next isolate active
 Mi9/Mi1/Tm3 compartmental information without relaxing this gate.
+
+## 2026-09-23: frozen T4 arm readout and small-object pathway pivot
+
+Read-only Mi1/Tm3 versus Mi9/Mi4 arm traces were evaluated with fixed
+divisive and coincident-disinhibition formulas for horizontal and vertical
+bars at two positions. No T4 subtype pair showed the preregistered stable,
+opposed directional responses over locations and static control. No
+compartmental neuron was implemented. The M1 design excludes LC11 despite
+143 LC11 cells in raw annotation; T2/T2a/T3 are included but spike-silent
+in existing dot/bar probes. Next bounded experiment tests existing T3
+operating state before proposing any in-place roster expansion. Details:
+docs/experiments/2026-09-23-t4-compartment-input-findings.md.
