@@ -81,3 +81,14 @@
 - [x] Run the frozen per-tick source audit, verify input identities and finite state, and evaluate the fixed screen.
 - [x] Record that Mi4 current fails, its voltage cue is late, and Tm4/Tm9 carry OFF source state without demonstrating transferable T5 direction preference.
 - [x] Run the full regression suite and commit the verified result.
+
+### Task 3b: Frozen T5 arm-order diagnostic
+
+**Files:** Create `scripts/motion_t5_arm_order.py`, `tests/test_t5_arm_order.py`, and versioned protocol/result/findings in `docs/experiments`.
+
+**Interfaces:** Consume the frozen opt-in Tm4/Tm9 rest-current profile and measured T5 feedforward edges. Produce per-cell Tm4/Tm9 arm currents and a fixed eight-tick antisymmetric order score for T5c/d at two locations, opposite directions, static, and blank.
+
+- [x] Write and fail a test for causal signed order before implementing the score.
+- [x] Preregister the fixed lag, local groups, and subtype-transfer screen; run the frozen probe.
+- [x] Record the failed order screen and sparse local Tm9 arrival as the next concrete bottleneck.
+- [x] Run the full regression suite and commit the verified result.

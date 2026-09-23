@@ -1,0 +1,497 @@
+{
+  "source_sha256": "8c4af80ff3904881bac9313b618dd9989bb51174b47606f28eca88865296005c",
+  "annotations_sha256": "2177e246113e4cfbf1e7772ec37c6da1955ff22e8063d0b1f833101f99a9a3b2",
+  "graph_sha256": "c941a5c912dd03e2ab0868260c637c2b1d21525196d4bce93c7d5e7f618e34a8",
+  "warmup_ticks": 500,
+  "ticks_per_frame": 8,
+  "lag_ticks": 8,
+  "rest_overrides": {
+    "Tm4": 0.85,
+    "Tm9": 0.85
+  },
+  "arm_edges": {
+    "Tm1": 7253,
+    "Tm2": 8773,
+    "Tm4": 6572,
+    "Tm9": 11572
+  },
+  "local_groups": {
+    "18": {
+      "T5c": {
+        "cells": 134,
+        "median_reference_contacts": 54.0
+      },
+      "T5d": {
+        "cells": 122,
+        "median_reference_contacts": 52.5
+      }
+    },
+    "46": {
+      "T5c": {
+        "cells": 130,
+        "median_reference_contacts": 58.0
+      },
+      "T5d": {
+        "cells": 129,
+        "median_reference_contacts": 51.0
+      }
+    }
+  },
+  "conditions": {
+    "18": {
+      "right": {
+        "pixel_events": 312,
+        "groups": {
+          "T5c": {
+            "neurons": 134,
+            "order_mean": -7.368952356046066e-05,
+            "order_median": 0.0,
+            "order_p10": 0.0,
+            "order_p90": 0.00013202551053836942,
+            "positive_cells": 14,
+            "negative_cells": 11,
+            "excess_spikes": 41,
+            "arm_modulation": {
+              "Tm1": {
+                "mean_signed": 0.003187175141647458,
+                "mean_absolute": 0.0071984464302659035,
+                "p90_cell_absolute": 0.01293026003986597
+              },
+              "Tm2": {
+                "mean_signed": 0.006005777511745691,
+                "mean_absolute": 0.013307041488587856,
+                "p90_cell_absolute": 0.023065604269504547
+              },
+              "Tm4": {
+                "mean_signed": 0.0036953510716557503,
+                "mean_absolute": 0.0036953510716557503,
+                "p90_cell_absolute": 0.006917873863130808
+              },
+              "Tm9": {
+                "mean_signed": 0.0005179771105758846,
+                "mean_absolute": 0.0005179771105758846,
+                "p90_cell_absolute": 0.0022155395708978176
+              }
+            }
+          },
+          "T5d": {
+            "neurons": 122,
+            "order_mean": 0.00017637254495639354,
+            "order_median": 0.0,
+            "order_p10": 0.0,
+            "order_p90": 0.00011153057857882231,
+            "positive_cells": 16,
+            "negative_cells": 3,
+            "excess_spikes": 31,
+            "arm_modulation": {
+              "Tm1": {
+                "mean_signed": 0.0036054332740604877,
+                "mean_absolute": 0.007987883873283863,
+                "p90_cell_absolute": 0.015109176747500896
+              },
+              "Tm2": {
+                "mean_signed": 0.005604987498372793,
+                "mean_absolute": 0.012501262128353119,
+                "p90_cell_absolute": 0.02217833139002323
+              },
+              "Tm4": {
+                "mean_signed": 0.002958594122901559,
+                "mean_absolute": 0.002958594122901559,
+                "p90_cell_absolute": 0.00658146757632494
+              },
+              "Tm9": {
+                "mean_signed": 0.0005177779821678996,
+                "mean_absolute": 0.0005177779821678996,
+                "p90_cell_absolute": 0.002464804332703352
+              }
+            }
+          }
+        }
+      },
+      "left": {
+        "pixel_events": 312,
+        "groups": {
+          "T5c": {
+            "neurons": 134,
+            "order_mean": 0.0006002194131724536,
+            "order_median": 0.0,
+            "order_p10": 0.0,
+            "order_p90": 0.0019803913310170174,
+            "positive_cells": 23,
+            "negative_cells": 0,
+            "excess_spikes": 43,
+            "arm_modulation": {
+              "Tm1": {
+                "mean_signed": 0.0034513373393565416,
+                "mean_absolute": 0.009907817468047142,
+                "p90_cell_absolute": 0.016789615154266357
+              },
+              "Tm2": {
+                "mean_signed": 0.005274340510368347,
+                "mean_absolute": 0.016251640394330025,
+                "p90_cell_absolute": 0.025180459022521973
+              },
+              "Tm4": {
+                "mean_signed": 0.00400386331602931,
+                "mean_absolute": 0.00400386331602931,
+                "p90_cell_absolute": 0.007175091654062271
+              },
+              "Tm9": {
+                "mean_signed": 0.00048651802353560925,
+                "mean_absolute": 0.00048651802353560925,
+                "p90_cell_absolute": 0.0020486966241151094
+              }
+            }
+          },
+          "T5d": {
+            "neurons": 122,
+            "order_mean": 0.0003761998377740383,
+            "order_median": 0.0,
+            "order_p10": 0.0,
+            "order_p90": 0.0,
+            "positive_cells": 12,
+            "negative_cells": 2,
+            "excess_spikes": 37,
+            "arm_modulation": {
+              "Tm1": {
+                "mean_signed": 0.003744821297004819,
+                "mean_absolute": 0.011191204190254211,
+                "p90_cell_absolute": 0.01863318681716919
+              },
+              "Tm2": {
+                "mean_signed": 0.004887609276920557,
+                "mean_absolute": 0.01489186566323042,
+                "p90_cell_absolute": 0.021963004022836685
+              },
+              "Tm4": {
+                "mean_signed": 0.0031507781241089106,
+                "mean_absolute": 0.0031507781241089106,
+                "p90_cell_absolute": 0.006646651774644852
+              },
+              "Tm9": {
+                "mean_signed": 0.00044901762157678604,
+                "mean_absolute": 0.00044901762157678604,
+                "p90_cell_absolute": 0.0021601554471999407
+              }
+            }
+          }
+        }
+      },
+      "static": {
+        "pixel_events": 0,
+        "groups": {
+          "T5c": {
+            "neurons": 134,
+            "order_mean": 0.00010565161937847733,
+            "order_median": 0.0,
+            "order_p10": 0.0,
+            "order_p90": 0.0,
+            "positive_cells": 5,
+            "negative_cells": 1,
+            "excess_spikes": 10,
+            "arm_modulation": {
+              "Tm1": {
+                "mean_signed": 0.0011593503877520561,
+                "mean_absolute": 0.005382999312132597,
+                "p90_cell_absolute": 0.011650231666862965
+              },
+              "Tm2": {
+                "mean_signed": 0.002276470884680748,
+                "mean_absolute": 0.009821485728025436,
+                "p90_cell_absolute": 0.021501360461115837
+              },
+              "Tm4": {
+                "mean_signed": 0.0015984410420060158,
+                "mean_absolute": 0.0015984410420060158,
+                "p90_cell_absolute": 0.0059848204255104065
+              },
+              "Tm9": {
+                "mean_signed": 0.00011780505155911669,
+                "mean_absolute": 0.00011780505155911669,
+                "p90_cell_absolute": 0.0
+              }
+            }
+          },
+          "T5d": {
+            "neurons": 122,
+            "order_mean": 9.688764839665964e-05,
+            "order_median": 0.0,
+            "order_p10": 0.0,
+            "order_p90": 0.0,
+            "positive_cells": 2,
+            "negative_cells": 0,
+            "excess_spikes": 11,
+            "arm_modulation": {
+              "Tm1": {
+                "mean_signed": 0.0012803428107872605,
+                "mean_absolute": 0.0061289300210773945,
+                "p90_cell_absolute": 0.012936891987919807
+              },
+              "Tm2": {
+                "mean_signed": 0.0021010488271713257,
+                "mean_absolute": 0.009179720655083656,
+                "p90_cell_absolute": 0.01982951909303665
+              },
+              "Tm4": {
+                "mean_signed": 0.0012589722173288465,
+                "mean_absolute": 0.0012589722173288465,
+                "p90_cell_absolute": 0.004985013511031866
+              },
+              "Tm9": {
+                "mean_signed": 7.491141150239855e-05,
+                "mean_absolute": 7.491141150239855e-05,
+                "p90_cell_absolute": 0.0
+              }
+            }
+          }
+        }
+      }
+    },
+    "46": {
+      "right": {
+        "pixel_events": 312,
+        "groups": {
+          "T5c": {
+            "neurons": 130,
+            "order_mean": 0.0,
+            "order_median": 0.0,
+            "order_p10": 0.0,
+            "order_p90": 0.0,
+            "positive_cells": 0,
+            "negative_cells": 0,
+            "excess_spikes": 43,
+            "arm_modulation": {
+              "Tm1": {
+                "mean_signed": 0.0019789431244134903,
+                "mean_absolute": 0.008263560011982918,
+                "p90_cell_absolute": 0.013850245624780655
+              },
+              "Tm2": {
+                "mean_signed": 0.005403593648225069,
+                "mean_absolute": 0.0176809411495924,
+                "p90_cell_absolute": 0.02903660573065281
+              },
+              "Tm4": {
+                "mean_signed": 0.00458459323272109,
+                "mean_absolute": 0.00458459323272109,
+                "p90_cell_absolute": 0.009724922478199005
+              },
+              "Tm9": {
+                "mean_signed": 0.0,
+                "mean_absolute": 0.0,
+                "p90_cell_absolute": 0.0
+              }
+            }
+          },
+          "T5d": {
+            "neurons": 129,
+            "order_mean": 0.0,
+            "order_median": 0.0,
+            "order_p10": 0.0,
+            "order_p90": 0.0,
+            "positive_cells": 0,
+            "negative_cells": 0,
+            "excess_spikes": 44,
+            "arm_modulation": {
+              "Tm1": {
+                "mean_signed": 0.0020045386627316475,
+                "mean_absolute": 0.008091532625257969,
+                "p90_cell_absolute": 0.013835908845067024
+              },
+              "Tm2": {
+                "mean_signed": 0.004944654647260904,
+                "mean_absolute": 0.01577683910727501,
+                "p90_cell_absolute": 0.024446235969662666
+              },
+              "Tm4": {
+                "mean_signed": 0.0042587583884596825,
+                "mean_absolute": 0.0042587583884596825,
+                "p90_cell_absolute": 0.008076710626482964
+              },
+              "Tm9": {
+                "mean_signed": 0.0,
+                "mean_absolute": 0.0,
+                "p90_cell_absolute": 0.0
+              }
+            }
+          }
+        }
+      },
+      "left": {
+        "pixel_events": 312,
+        "groups": {
+          "T5c": {
+            "neurons": 130,
+            "order_mean": 0.00010695307719288394,
+            "order_median": 0.0,
+            "order_p10": 0.0,
+            "order_p90": 0.0,
+            "positive_cells": 5,
+            "negative_cells": 0,
+            "excess_spikes": 40,
+            "arm_modulation": {
+              "Tm1": {
+                "mean_signed": 0.002226216020062566,
+                "mean_absolute": 0.00673270970582962,
+                "p90_cell_absolute": 0.012394900433719158
+              },
+              "Tm2": {
+                "mean_signed": 0.0055451663210988045,
+                "mean_absolute": 0.015406847931444645,
+                "p90_cell_absolute": 0.028926044702529907
+              },
+              "Tm4": {
+                "mean_signed": 0.004264353774487972,
+                "mean_absolute": 0.004264353774487972,
+                "p90_cell_absolute": 0.00936572253704071
+              },
+              "Tm9": {
+                "mean_signed": 0.00012970033276360482,
+                "mean_absolute": 0.00012970033276360482,
+                "p90_cell_absolute": 0.0
+              }
+            }
+          },
+          "T5d": {
+            "neurons": 129,
+            "order_mean": 5.02833463542629e-05,
+            "order_median": 0.0,
+            "order_p10": 0.0,
+            "order_p90": 0.0,
+            "positive_cells": 3,
+            "negative_cells": 4,
+            "excess_spikes": 39,
+            "arm_modulation": {
+              "Tm1": {
+                "mean_signed": 0.0024149350356310606,
+                "mean_absolute": 0.006814710330218077,
+                "p90_cell_absolute": 0.012677657417953014
+              },
+              "Tm2": {
+                "mean_signed": 0.005099124275147915,
+                "mean_absolute": 0.0134937958791852,
+                "p90_cell_absolute": 0.02358618937432766
+              },
+              "Tm4": {
+                "mean_signed": 0.0039559113793075085,
+                "mean_absolute": 0.0039559113793075085,
+                "p90_cell_absolute": 0.008030231110751629
+              },
+              "Tm9": {
+                "mean_signed": 0.00014784751692786813,
+                "mean_absolute": 0.00014784751692786813,
+                "p90_cell_absolute": 0.0
+              }
+            }
+          }
+        }
+      },
+      "static": {
+        "pixel_events": 0,
+        "groups": {
+          "T5c": {
+            "neurons": 130,
+            "order_mean": 0.0,
+            "order_median": 0.0,
+            "order_p10": 0.0,
+            "order_p90": 0.0,
+            "positive_cells": 0,
+            "negative_cells": 0,
+            "excess_spikes": 10,
+            "arm_modulation": {
+              "Tm1": {
+                "mean_signed": 0.0007641124539077282,
+                "mean_absolute": 0.005341754760593176,
+                "p90_cell_absolute": 0.010486490093171597
+              },
+              "Tm2": {
+                "mean_signed": 0.0015716783236712217,
+                "mean_absolute": 0.011849537491798401,
+                "p90_cell_absolute": 0.020799731835722923
+              },
+              "Tm4": {
+                "mean_signed": 0.001605588011443615,
+                "mean_absolute": 0.001605588011443615,
+                "p90_cell_absolute": 0.0056219869293272495
+              },
+              "Tm9": {
+                "mean_signed": 0.0,
+                "mean_absolute": 0.0,
+                "p90_cell_absolute": 0.0
+              }
+            }
+          },
+          "T5d": {
+            "neurons": 129,
+            "order_mean": 0.0,
+            "order_median": 0.0,
+            "order_p10": 0.0,
+            "order_p90": 0.0,
+            "positive_cells": 0,
+            "negative_cells": 0,
+            "excess_spikes": 9,
+            "arm_modulation": {
+              "Tm1": {
+                "mean_signed": 0.0008618903229944408,
+                "mean_absolute": 0.005472705699503422,
+                "p90_cell_absolute": 0.012284095399081707
+              },
+              "Tm2": {
+                "mean_signed": 0.0017390471184626222,
+                "mean_absolute": 0.011064941994845867,
+                "p90_cell_absolute": 0.020115364342927933
+              },
+              "Tm4": {
+                "mean_signed": 0.0016855258727446198,
+                "mean_absolute": 0.0016855258727446198,
+                "p90_cell_absolute": 0.00587123678997159
+              },
+              "Tm9": {
+                "mean_signed": 0.0,
+                "mean_absolute": 0.0,
+                "p90_cell_absolute": 0.0
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "direction_contrasts": {
+    "18/T5c": {
+      "mean": -0.0006739089731127024,
+      "median": 0.0,
+      "positive_cells": 6,
+      "negative_cells": 20,
+      "static_magnitude": 0.00010565161937847733
+    },
+    "18/T5d": {
+      "mean": -0.00019982730736956,
+      "median": 0.0,
+      "positive_cells": 8,
+      "negative_cells": 11,
+      "static_magnitude": 9.688764839665964e-05
+    },
+    "46/T5c": {
+      "mean": -0.00010695307719288394,
+      "median": 0.0,
+      "positive_cells": 0,
+      "negative_cells": 5,
+      "static_magnitude": 0.0
+    },
+    "46/T5d": {
+      "mean": -5.02833463542629e-05,
+      "median": 0.0,
+      "positive_cells": 4,
+      "negative_cells": 3,
+      "static_magnitude": 0.0
+    }
+  },
+  "passes_order_screen": false,
+  "screen_parts": {
+    "consistent": true,
+    "opposite": false,
+    "median_agrees": false,
+    "static_lower": true
+  }
+}
