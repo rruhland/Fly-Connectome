@@ -1,0 +1,19 @@
+{
+  "source_sha256": "8c4af80ff3904881bac9313b618dd9989bb51174b47606f28eca88865296005c",
+  "sites_sha256": "cb3a1c5e9c66366b9c20c2b77a32eeb369875a63ab3a0a2042d1094d25de2ff8",
+  "skeleton_url": "https://storage.googleapis.com/flyem-male-cns/v1.0/segmentation/skeletons-malecns/skeletons-swc/10009.swc",
+  "skeleton_sha256": "e12a20cb8aee8ae9c3d3232bd84a09742826ac81d61898e4e27e37c4ea5edf2b",
+  "coordinate_units": "8 nm voxels",
+  "skeleton_nodes": 43761,
+  "input_sites": 32728,
+  "output_sites": 37186,
+  "maximum_median_attachment_voxels": 125,
+  "attachment_distance_voxels": {
+    "input_median": 140.38874598770374,
+    "input_p95": 238.01680612931517,
+    "output_median": 119.89161772200757,
+    "output_p95": 211.57031927943012
+  },
+  "passes_attachment_screen": false,
+  "stopped_before_cable_assignment": true
+}
