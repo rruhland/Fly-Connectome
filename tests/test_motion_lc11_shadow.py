@@ -4,7 +4,8 @@ from pathlib import Path
 import torch
 
 sys.path.insert(0, str(Path(__file__).parents[1]/'scripts'))
-from motion_lc11_shadow import ShadowLC11, release_from_voltage, select_fraction
+from motion_lc11_shadow import (ShadowLC11, adaptive_release,
+                                release_from_voltage, select_fraction)
 from fly_connectome.dynamics import NeuronConfig
 
 
@@ -21,6 +22,14 @@ def test_release_is_nonnegative_local_and_bounded():
     rest = torch.tensor([.002, .001, .001])
     release = release_from_voltage(voltage, rest, .1)
     assert torch.allclose(release, torch.tensor([0., .1, .1]))
+
+
+def test_adaptive_reference_uses_only_previous_local_voltage():
+    baseline = torch.tensor([.001, .004])
+    release = adaptive_release(torch.tensor([.004, .002]), baseline,
+                               .1, .5)
+    assert torch.allclose(release, torch.tensor([.1, 0.]))
+    assert torch.allclose(baseline, torch.tensor([.0025, .003]))
 
 
 def test_calibration_requires_both_polarities_and_quiet_blank():

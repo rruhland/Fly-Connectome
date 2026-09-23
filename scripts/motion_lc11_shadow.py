@@ -1,4 +1,5 @@
 """Opt-in partial LC11 readout of measured T2/T2a/T3 contacts."""
+import argparse
 import json
 import math
 from pathlib import Path
@@ -21,8 +22,11 @@ from motion_t3_target import static_dot
 
 OUT = Path('docs/experiments/2026-09-23-lc11-shadow-results.json')
 RAW = Path('runs/motion-lc11-shadow-v1/per-tick.npz')
+ADAPTIVE_OUT = Path('docs/experiments/2026-09-23-lc11-adaptive-results.json')
+ADAPTIVE_RAW = Path('runs/motion-lc11-adaptive-v1/per-tick.npz')
 FRACTIONS = (.05, .10, .25)
 VOLTAGE_SCALE = .003
+BASELINE_TAU = .250
 TRANSIT = slice(3*8, 15*8)
 SOURCE_TYPES = ('T2', 'T2a', 'T3')
 
@@ -76,6 +80,12 @@ def release_from_voltage(voltage, rest, fraction):
         max=fraction)
 
 
+def adaptive_release(voltage, baseline, fraction, decay):
+    release = release_from_voltage(voltage, baseline, fraction)
+    baseline.mul_(decay).add_(voltage, alpha=1-decay)
+    return release
+
+
 def select_fraction(rows):
     for row in rows:
         if (row['finite'] and row['blank_rate'] < .01
@@ -87,6 +97,12 @@ def select_fraction(rows):
 
 @torch.no_grad()
 def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--adaptive', action='store_true',
+                        help='use a local 250 ms moving voltage baseline')
+    args = parser.parse_args()
+    output_path = ADAPTIVE_OUT if args.adaptive else OUT
+    raw_path = ADAPTIVE_RAW if args.adaptive else RAW
     torch.set_num_threads(4)
     source_sha = checksum(SOURCE)
     payload = torch.load(SOURCE, weights_only=True)
@@ -120,12 +136,20 @@ def main():
     net.set_weights(payload['state']['network']['magnitudes'].clamp(
         0, metadata['learning']['maximum_weight']))
     zero = torch.zeros_like(net.voltage)
+    node_indices = torch.tensor(source_nodes)
+    baseline_decay = math.exp(-config.dt/BASELINE_TAU)
+    warm_baseline = None
     for _ in range(metadata['config']['warmup_steps']):
         net.step(zero)
+        voltage = net.voltage[0, node_indices]
+        if warm_baseline is None:
+            warm_baseline = voltage.clone()
+        else:
+            warm_baseline.mul_(baseline_decay).add_(
+                voltage, alpha=1-baseline_decay)
     warm = {name: getattr(net, name).clone() for name in NETWORK_STATE}
     warm_tick = net.step_index
     rest_voltage = net.voltage[0, source_nodes].clone()
-    node_indices = torch.tensor(source_nodes)
 
     def capture(images, polarity):
         for name, value in warm.items():
@@ -152,13 +176,20 @@ def main():
 
     def readout(captured, fraction):
         shadow.reset()
+        local_baseline = warm_baseline.clone()
         spikes = torch.empty((144, len(targets)), dtype=torch.bool)
         currents = torch.empty((144, len(targets)))
         releases = torch.empty_like(captured['voltage'])
         for tick in range(144):
-            release = (captured['spikes'][tick] if fraction is None else
-                       release_from_voltage(captured['voltage'][tick],
-                                            rest_voltage, fraction))
+            if fraction is None:
+                release = captured['spikes'][tick]
+            elif args.adaptive:
+                release = adaptive_release(captured['voltage'][tick],
+                                           local_baseline, fraction,
+                                           baseline_decay)
+            else:
+                release = release_from_voltage(captured['voltage'][tick],
+                                               rest_voltage, fraction)
             spikes[tick] = shadow.step(release)
             currents[tick] = shadow.current
             releases[tick] = release
@@ -194,6 +225,7 @@ def main():
                   lc11_neurons=len(targets), source_neurons=len(sources),
                   measured_edges=len(pre), measured_contacts=int(contacts.sum()),
                   voltage_scale=VOLTAGE_SCALE, fractions=FRACTIONS,
+                  baseline_mode='adaptive-250ms' if args.adaptive else 'fixed-warm',
                   calibration=[], selected_fraction=None, spike_only={}, frozen={})
     report['blank_voltage_drift'] = {}
     for polarity, pair in calibration_inputs.items():
@@ -213,11 +245,13 @@ def main():
         report['spike_only'][polarity] = compare(spike_dot, spike_blank)
     for fraction in FRACTIONS:
         values = {}
+        blank_release_means = []
         for polarity in ('on', 'off'):
             pair = calibration_inputs[polarity]
             dot = readout(pair['dot'], fraction)
             blank = readout(pair['blank'], fraction)
             values[polarity] = compare(dot, blank)
+            blank_release_means.append(float(blank['releases'].mean()))
             for condition, result in (('dot', dot), ('blank', blank)):
                 key = f'calibration/{fraction}/{polarity}/{condition}'
                 traces[f'{key}/release'] = result['releases'].numpy()
@@ -230,6 +264,7 @@ def main():
                                   for p in ('on', 'off'))/(len(targets)*96),
                    peak_fraction=max(values[p]['peak_fraction']
                                      for p in ('on', 'off')),
+                   blank_release_mean=max(blank_release_means),
                    finite=all(values[p]['finite'] for p in ('on', 'off')),
                    on=values['on'], off=values['off'])
         report['calibration'].append(row)
@@ -260,12 +295,12 @@ def main():
                               result=report['frozen'][key])), flush=True)
     if checksum(SOURCE) != source_sha:
         raise AssertionError('source checkpoint changed')
-    RAW.parent.mkdir(parents=True, exist_ok=True)
-    np.savez_compressed(RAW, **traces)
-    report['per_tick_file'] = str(RAW)
-    report['per_tick_sha256'] = checksum(RAW)
-    OUT.write_text(json.dumps(report, indent=2, allow_nan=False)+'\n')
-    print(json.dumps(dict(output=str(OUT), selected_fraction=selected,
+    raw_path.parent.mkdir(parents=True, exist_ok=True)
+    np.savez_compressed(raw_path, **traces)
+    report['per_tick_file'] = str(raw_path)
+    report['per_tick_sha256'] = checksum(raw_path)
+    output_path.write_text(json.dumps(report, indent=2, allow_nan=False)+'\n')
+    print(json.dumps(dict(output=str(output_path), selected_fraction=selected,
                           frozen_cases=len(report['frozen']))), flush=True)
 
 
