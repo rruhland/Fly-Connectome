@@ -1,0 +1,641 @@
+{
+  "source_sha256": "8c4af80ff3904881bac9313b618dd9989bb51174b47606f28eca88865296005c",
+  "graph_sha256": "c941a5c912dd03e2ab0868260c637c2b1d21525196d4bce93c7d5e7f618e34a8",
+  "annotations_sha256": "2177e246113e4cfbf1e7772ec37c6da1955ff22e8063d0b1f833101f99a9a3b2",
+  "weights_sha256": "e35da783d1c686b2b58b3b87cd6a403ae43bfcfba8bff28e08ef752c1a56afc1",
+  "ct1_body": 10009,
+  "contacts": {
+    "input_edges": {
+      "Tm1": 836,
+      "Tm9": 879
+    },
+    "output_edges": 3355,
+    "input_contacts": {
+      "Tm1": 5383,
+      "Tm9": 27262
+    },
+    "output_contacts": 80977
+  },
+  "ticks_per_frame": 8,
+  "release_scale": 0.02,
+  "release_cap": 0.1,
+  "conditions": {
+    "10-s1": {
+      "arms": {
+        "off": {
+          "blank": {
+            "pixel_events": 0,
+            "spikes": {
+              "T5c": 0,
+              "T5d": 0
+            },
+            "ct1_inhibition_per_cell_tick": {
+              "T5c": 0.0,
+              "T5d": 0.0
+            },
+            "feedforward_current_per_cell_tick": {
+              "T5c": 0.01456460879361051,
+              "T5d": 0.01389867407813957
+            },
+            "local_release_occupancy": 0.017139050556579608
+          },
+          "down": {
+            "pixel_events": 312,
+            "spikes": {
+              "T5c": 160,
+              "T5d": 194
+            },
+            "ct1_inhibition_per_cell_tick": {
+              "T5c": 0.0,
+              "T5d": 0.0
+            },
+            "feedforward_current_per_cell_tick": {
+              "T5c": 0.0346034651932617,
+              "T5d": 0.03195322607643901
+            },
+            "local_release_occupancy": 0.11791424468780559
+          },
+          "up": {
+            "pixel_events": 312,
+            "spikes": {
+              "T5c": 224,
+              "T5d": 135
+            },
+            "ct1_inhibition_per_cell_tick": {
+              "T5c": 0.0,
+              "T5d": 0.0
+            },
+            "feedforward_current_per_cell_tick": {
+              "T5c": 0.034099908273977526,
+              "T5d": 0.03132783377077431
+            },
+            "local_release_occupancy": 0.1164607566703732
+          },
+          "static": {
+            "pixel_events": 0,
+            "spikes": {
+              "T5c": 77,
+              "T5d": 59
+            },
+            "ct1_inhibition_per_cell_tick": {
+              "T5c": 0.0,
+              "T5d": 0.0
+            },
+            "feedforward_current_per_cell_tick": {
+              "T5c": 0.022617581533268094,
+              "T5d": 0.02082508341603291
+            },
+            "local_release_occupancy": 0.04711724843946284
+          }
+        },
+        "on": {
+          "blank": {
+            "pixel_events": 0,
+            "spikes": {
+              "T5c": 0,
+              "T5d": 0
+            },
+            "ct1_inhibition_per_cell_tick": {
+              "T5c": 0.0001543823596108495,
+              "T5d": 0.00015486608004759247
+            },
+            "feedforward_current_per_cell_tick": {
+              "T5c": 0.013723678126931798,
+              "T5d": 0.013038733004615704
+            },
+            "local_release_occupancy": 0.017139050556579608
+          },
+          "down": {
+            "pixel_events": 312,
+            "spikes": {
+              "T5c": 155,
+              "T5d": 182
+            },
+            "ct1_inhibition_per_cell_tick": {
+              "T5c": 0.001351719237087916,
+              "T5d": 0.001344517176524581
+            },
+            "feedforward_current_per_cell_tick": {
+              "T5c": 0.02753967663738875,
+              "T5d": 0.024899171296662335
+            },
+            "local_release_occupancy": 0.11791424468780559
+          },
+          "up": {
+            "pixel_events": 312,
+            "spikes": {
+              "T5c": 218,
+              "T5d": 127
+            },
+            "ct1_inhibition_per_cell_tick": {
+              "T5c": 0.0013345188005284092,
+              "T5d": 0.0013060832631405608
+            },
+            "feedforward_current_per_cell_tick": {
+              "T5c": 0.027071210254992675,
+              "T5d": 0.02440219170724353
+            },
+            "local_release_occupancy": 0.1164607566703732
+          },
+          "static": {
+            "pixel_events": 0,
+            "spikes": {
+              "T5c": 76,
+              "T5d": 58
+            },
+            "ct1_inhibition_per_cell_tick": {
+              "T5c": 0.0005733220260673021,
+              "T5d": 0.000546072161335953
+            },
+            "feedforward_current_per_cell_tick": {
+              "T5c": 0.019647354742725536,
+              "T5d": 0.017976333993525863
+            },
+            "local_release_occupancy": 0.04711724843946284
+          }
+        }
+      },
+      "screen": {
+        "T5c": {
+          "preferred": "up",
+          "null_reduction": 0.03125,
+          "preferred_retention": 0.9732142857142857,
+          "null_greater_ct1_current": true,
+          "blank_safe": true,
+          "passes": false
+        },
+        "T5d": {
+          "preferred": "down",
+          "null_reduction": 0.05925925925925926,
+          "preferred_retention": 0.9381443298969072,
+          "null_greater_ct1_current": false,
+          "blank_safe": true,
+          "passes": false
+        }
+      }
+    },
+    "22-s1": {
+      "arms": {
+        "off": {
+          "blank": {
+            "pixel_events": 0,
+            "spikes": {
+              "T5c": 0,
+              "T5d": 0
+            },
+            "ct1_inhibition_per_cell_tick": {
+              "T5c": 0.0,
+              "T5d": 0.0
+            },
+            "feedforward_current_per_cell_tick": {
+              "T5c": 0.013892707244849587,
+              "T5d": 0.01232112498625308
+            },
+            "local_release_occupancy": 0.01741996223184591
+          },
+          "down": {
+            "pixel_events": 312,
+            "spikes": {
+              "T5c": 164,
+              "T5d": 202
+            },
+            "ct1_inhibition_per_cell_tick": {
+              "T5c": 0.0,
+              "T5d": 0.0
+            },
+            "feedforward_current_per_cell_tick": {
+              "T5c": 0.033194378794481366,
+              "T5d": 0.028472101859127477
+            },
+            "local_release_occupancy": 0.10869821013572313
+          },
+          "up": {
+            "pixel_events": 312,
+            "spikes": {
+              "T5c": 243,
+              "T5d": 149
+            },
+            "ct1_inhibition_per_cell_tick": {
+              "T5c": 0.0,
+              "T5d": 0.0
+            },
+            "feedforward_current_per_cell_tick": {
+              "T5c": 0.03430444834521039,
+              "T5d": 0.029385571329233546
+            },
+            "local_release_occupancy": 0.11181732492210962
+          },
+          "static": {
+            "pixel_events": 0,
+            "spikes": {
+              "T5c": 66,
+              "T5d": 56
+            },
+            "ct1_inhibition_per_cell_tick": {
+              "T5c": 0.0,
+              "T5d": 0.0
+            },
+            "feedforward_current_per_cell_tick": {
+              "T5c": 0.021312165195316382,
+              "T5d": 0.018617320822765276
+            },
+            "local_release_occupancy": 0.04419726932731769
+          }
+        },
+        "on": {
+          "blank": {
+            "pixel_events": 0,
+            "spikes": {
+              "T5c": 0,
+              "T5d": 0
+            },
+            "ct1_inhibition_per_cell_tick": {
+              "T5c": 0.00014842180077797212,
+              "T5d": 0.0001475567869609525
+            },
+            "feedforward_current_per_cell_tick": {
+              "T5c": 0.013115512619151557,
+              "T5d": 0.011565124438675413
+            },
+            "local_release_occupancy": 0.01741996223184591
+          },
+          "down": {
+            "pixel_events": 312,
+            "spikes": {
+              "T5c": 152,
+              "T5d": 192
+            },
+            "ct1_inhibition_per_cell_tick": {
+              "T5c": 0.001245518922890672,
+              "T5d": 0.0011791542722979407
+            },
+            "feedforward_current_per_cell_tick": {
+              "T5c": 0.026608258456690227,
+              "T5d": 0.022216913959709945
+            },
+            "local_release_occupancy": 0.10869821013572313
+          },
+          "up": {
+            "pixel_events": 312,
+            "spikes": {
+              "T5c": 238,
+              "T5d": 144
+            },
+            "ct1_inhibition_per_cell_tick": {
+              "T5c": 0.0012696475356885149,
+              "T5d": 0.0012134881605258367
+            },
+            "feedforward_current_per_cell_tick": {
+              "T5c": 0.027718335564713932,
+              "T5d": 0.02313593985551658
+            },
+            "local_release_occupancy": 0.11181732492210962
+          },
+          "static": {
+            "pixel_events": 0,
+            "spikes": {
+              "T5c": 63,
+              "T5d": 61
+            },
+            "ct1_inhibition_per_cell_tick": {
+              "T5c": 0.000501629458038148,
+              "T5d": 0.00043482633250846453
+            },
+            "feedforward_current_per_cell_tick": {
+              "T5c": 0.01855575982456988,
+              "T5d": 0.01624005051780842
+            },
+            "local_release_occupancy": 0.04419726932731769
+          }
+        }
+      },
+      "screen": {
+        "T5c": {
+          "preferred": "up",
+          "null_reduction": 0.07317073170731707,
+          "preferred_retention": 0.9794238683127572,
+          "null_greater_ct1_current": false,
+          "blank_safe": true,
+          "passes": false
+        },
+        "T5d": {
+          "preferred": "down",
+          "null_reduction": 0.03355704697986577,
+          "preferred_retention": 0.9504950495049505,
+          "null_greater_ct1_current": true,
+          "blank_safe": true,
+          "passes": false
+        }
+      }
+    },
+    "16-s1": {
+      "arms": {
+        "off": {
+          "blank": {
+            "pixel_events": 0,
+            "spikes": {
+              "T5c": 0,
+              "T5d": 0
+            },
+            "ct1_inhibition_per_cell_tick": {
+              "T5c": 0.0,
+              "T5d": 0.0
+            },
+            "feedforward_current_per_cell_tick": {
+              "T5c": 0.014284887328964642,
+              "T5d": 0.01311242854656787
+            },
+            "local_release_occupancy": 0.01859051009038618
+          },
+          "down": {
+            "pixel_events": 312,
+            "spikes": {
+              "T5c": 177,
+              "T5d": 208
+            },
+            "ct1_inhibition_per_cell_tick": {
+              "T5c": 0.0,
+              "T5d": 0.0
+            },
+            "feedforward_current_per_cell_tick": {
+              "T5c": 0.030882515149035797,
+              "T5d": 0.027726649151494105
+            },
+            "local_release_occupancy": 0.10596092487685382
+          },
+          "up": {
+            "pixel_events": 312,
+            "spikes": {
+              "T5c": 237,
+              "T5d": 158
+            },
+            "ct1_inhibition_per_cell_tick": {
+              "T5c": 0.0,
+              "T5d": 0.0
+            },
+            "feedforward_current_per_cell_tick": {
+              "T5c": 0.030859131598845124,
+              "T5d": 0.02788576155823345
+            },
+            "local_release_occupancy": 0.10541267949156462
+          },
+          "static": {
+            "pixel_events": 0,
+            "spikes": {
+              "T5c": 56,
+              "T5d": 49
+            },
+            "ct1_inhibition_per_cell_tick": {
+              "T5c": 0.0,
+              "T5d": 0.0
+            },
+            "feedforward_current_per_cell_tick": {
+              "T5c": 0.01869830393479787,
+              "T5d": 0.017029275751459263
+            },
+            "local_release_occupancy": 0.03414074899531747
+          }
+        },
+        "on": {
+          "blank": {
+            "pixel_events": 0,
+            "spikes": {
+              "T5c": 0,
+              "T5d": 0
+            },
+            "ct1_inhibition_per_cell_tick": {
+              "T5c": 0.00015997363328779104,
+              "T5d": 0.00015795597971883055
+            },
+            "feedforward_current_per_cell_tick": {
+              "T5c": 0.013428099697193828,
+              "T5d": 0.012261206667062655
+            },
+            "local_release_occupancy": 0.01859051009038618
+          },
+          "down": {
+            "pixel_events": 312,
+            "spikes": {
+              "T5c": 167,
+              "T5d": 195
+            },
+            "ct1_inhibition_per_cell_tick": {
+              "T5c": 0.0011836599666518546,
+              "T5d": 0.0011923916717933027
+            },
+            "feedforward_current_per_cell_tick": {
+              "T5c": 0.024748513688488547,
+              "T5d": 0.021519737221145384
+            },
+            "local_release_occupancy": 0.10596092487685382
+          },
+          "up": {
+            "pixel_events": 312,
+            "spikes": {
+              "T5c": 227,
+              "T5d": 153
+            },
+            "ct1_inhibition_per_cell_tick": {
+              "T5c": 0.001158261478243124,
+              "T5d": 0.0011660972110500247
+            },
+            "feedforward_current_per_cell_tick": {
+              "T5c": 0.02479133634672811,
+              "T5d": 0.021774383999096855
+            },
+            "local_release_occupancy": 0.10541267949156462
+          },
+          "static": {
+            "pixel_events": 0,
+            "spikes": {
+              "T5c": 55,
+              "T5d": 48
+            },
+            "ct1_inhibition_per_cell_tick": {
+              "T5c": 0.0003415113498969429,
+              "T5d": 0.00033355755343222887
+            },
+            "feedforward_current_per_cell_tick": {
+              "T5c": 0.016815473160628855,
+              "T5d": 0.015175482161187878
+            },
+            "local_release_occupancy": 0.03414074899531747
+          }
+        }
+      },
+      "screen": {
+        "T5c": {
+          "preferred": "up",
+          "null_reduction": 0.05649717514124294,
+          "preferred_retention": 0.9578059071729957,
+          "null_greater_ct1_current": true,
+          "blank_safe": true,
+          "passes": false
+        },
+        "T5d": {
+          "preferred": "down",
+          "null_reduction": 0.03164556962025317,
+          "preferred_retention": 0.9375,
+          "null_greater_ct1_current": false,
+          "blank_safe": true,
+          "passes": false
+        }
+      }
+    },
+    "16-s2": {
+      "arms": {
+        "off": {
+          "blank": {
+            "pixel_events": 0,
+            "spikes": {
+              "T5c": 0,
+              "T5d": 0
+            },
+            "ct1_inhibition_per_cell_tick": {
+              "T5c": 0.0,
+              "T5d": 0.0
+            },
+            "feedforward_current_per_cell_tick": {
+              "T5c": 0.014284887328964642,
+              "T5d": 0.01311242854656787
+            },
+            "local_release_occupancy": 0.01859051009038618
+          },
+          "down": {
+            "pixel_events": 624,
+            "spikes": {
+              "T5c": 173,
+              "T5d": 178
+            },
+            "ct1_inhibition_per_cell_tick": {
+              "T5c": 0.0,
+              "T5d": 0.0
+            },
+            "feedforward_current_per_cell_tick": {
+              "T5c": 0.027945199059710518,
+              "T5d": 0.024832966562826186
+            },
+            "local_release_occupancy": 0.08183811749525677
+          },
+          "up": {
+            "pixel_events": 624,
+            "spikes": {
+              "T5c": 221,
+              "T5d": 152
+            },
+            "ct1_inhibition_per_cell_tick": {
+              "T5c": 0.0,
+              "T5d": 0.0
+            },
+            "feedforward_current_per_cell_tick": {
+              "T5c": 0.027815486546993885,
+              "T5d": 0.024830926728706498
+            },
+            "local_release_occupancy": 0.08049242417231045
+          },
+          "static": {
+            "pixel_events": 0,
+            "spikes": {
+              "T5c": 56,
+              "T5d": 49
+            },
+            "ct1_inhibition_per_cell_tick": {
+              "T5c": 0.0,
+              "T5d": 0.0
+            },
+            "feedforward_current_per_cell_tick": {
+              "T5c": 0.01869830393479787,
+              "T5d": 0.017029275751459263
+            },
+            "local_release_occupancy": 0.03414074899531747
+          }
+        },
+        "on": {
+          "blank": {
+            "pixel_events": 0,
+            "spikes": {
+              "T5c": 0,
+              "T5d": 0
+            },
+            "ct1_inhibition_per_cell_tick": {
+              "T5c": 0.00015997363328779104,
+              "T5d": 0.00015795597971883055
+            },
+            "feedforward_current_per_cell_tick": {
+              "T5c": 0.013428099697193828,
+              "T5d": 0.012261206667062655
+            },
+            "local_release_occupancy": 0.01859051009038618
+          },
+          "down": {
+            "pixel_events": 624,
+            "spikes": {
+              "T5c": 159,
+              "T5d": 170
+            },
+            "ct1_inhibition_per_cell_tick": {
+              "T5c": 0.0009233717244872726,
+              "T5d": 0.0008868930561144834
+            },
+            "feedforward_current_per_cell_tick": {
+              "T5c": 0.0229640696294761,
+              "T5d": 0.02003667357591136
+            },
+            "local_release_occupancy": 0.08183811749525677
+          },
+          "up": {
+            "pixel_events": 624,
+            "spikes": {
+              "T5c": 214,
+              "T5d": 147
+            },
+            "ct1_inhibition_per_cell_tick": {
+              "T5c": 0.0008956511172376243,
+              "T5d": 0.0008898903993970935
+            },
+            "feedforward_current_per_cell_tick": {
+              "T5c": 0.022985831203792873,
+              "T5d": 0.02001609780321208
+            },
+            "local_release_occupancy": 0.08049242417231045
+          },
+          "static": {
+            "pixel_events": 0,
+            "spikes": {
+              "T5c": 55,
+              "T5d": 48
+            },
+            "ct1_inhibition_per_cell_tick": {
+              "T5c": 0.0003415113498969429,
+              "T5d": 0.00033355755343222887
+            },
+            "feedforward_current_per_cell_tick": {
+              "T5c": 0.016815473160628855,
+              "T5d": 0.015175482161187878
+            },
+            "local_release_occupancy": 0.03414074899531747
+          }
+        }
+      },
+      "screen": {
+        "T5c": {
+          "preferred": "up",
+          "null_reduction": 0.08092485549132948,
+          "preferred_retention": 0.9683257918552036,
+          "null_greater_ct1_current": true,
+          "blank_safe": true,
+          "passes": false
+        },
+        "T5d": {
+          "preferred": "down",
+          "null_reduction": 0.03289473684210526,
+          "preferred_retention": 0.9550561797752809,
+          "null_greater_ct1_current": true,
+          "blank_safe": true,
+          "passes": false
+        }
+      }
+    }
+  },
+  "passes_rescue": false
+}
