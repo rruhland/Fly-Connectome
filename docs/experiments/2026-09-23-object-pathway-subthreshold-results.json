@@ -1,0 +1,893 @@
+{
+  "source_sha256": "8c4af80ff3904881bac9313b618dd9989bb51174b47606f28eca88865296005c",
+  "annotations_sha256": "2177e246113e4cfbf1e7772ec37c6da1955ff22e8063d0b1f833101f99a9a3b2",
+  "graph_sha256": "c941a5c912dd03e2ab0868260c637c2b1d21525196d4bce93c7d5e7f618e34a8",
+  "warmup_ticks": 500,
+  "ticks_per_frame": 8,
+  "inferred": {
+    "T2": {
+      "neurons": 822,
+      "coverage": 822,
+      "median_input_contacts": 90.0,
+      "local_cells": {
+        "18": 54,
+        "46": 63
+      }
+    },
+    "T2a": {
+      "neurons": 939,
+      "coverage": 938,
+      "median_input_contacts": 103.0,
+      "local_cells": {
+        "18": 69,
+        "46": 55
+      }
+    },
+    "T3": {
+      "neurons": 976,
+      "coverage": 976,
+      "median_input_contacts": 102.0,
+      "local_cells": {
+        "18": 69,
+        "46": 72
+      }
+    }
+  },
+  "conditions": {
+    "18-on-dot": {
+      "T2": {
+        "voltage": {
+          "local_mean_absolute": 0.0031375987455248833,
+          "local_mean_signed": 0.001923656091094017,
+          "remote_mean_absolute": 2.245113137178123e-05,
+          "peak_local_absolute": 0.009401521645486355,
+          "peak_tick": 114,
+          "local_cells_above_002": 20
+        },
+        "current": {
+          "local_mean_absolute": 0.005919719114899635,
+          "local_mean_signed": 0.0028964721132069826,
+          "remote_mean_absolute": 0.00015262798115145415,
+          "peak_local_absolute": 0.016108982264995575,
+          "peak_tick": 113,
+          "local_cells_above_002": 30
+        },
+        "local_spikes": 0,
+        "blank_local_spikes": 0,
+        "local_neurons": 4197,
+        "remote_neurons": 8773,
+        "pixel_events": 72
+      },
+      "T2a": {
+        "voltage": {
+          "local_mean_absolute": 0.000940584868658334,
+          "local_mean_signed": 0.00021648329857271165,
+          "remote_mean_absolute": 0.0,
+          "peak_local_absolute": 0.003581782802939415,
+          "peak_tick": 119,
+          "local_cells_above_002": 11
+        },
+        "current": {
+          "local_mean_absolute": 0.002000211039558053,
+          "local_mean_signed": 0.000340361992130056,
+          "remote_mean_absolute": 0.0,
+          "peak_local_absolute": 0.0069413925521075726,
+          "peak_tick": 115,
+          "local_cells_above_002": 20
+        },
+        "local_spikes": 0,
+        "blank_local_spikes": 0,
+        "local_neurons": 10202,
+        "remote_neurons": 6503,
+        "pixel_events": 72
+      },
+      "T3": {
+        "voltage": {
+          "local_mean_absolute": 0.0011070547625422478,
+          "local_mean_signed": 0.0005375862820073962,
+          "remote_mean_absolute": 0.0,
+          "peak_local_absolute": 0.0039024807047098875,
+          "peak_tick": 119,
+          "local_cells_above_002": 13
+        },
+        "current": {
+          "local_mean_absolute": 0.002500378293916583,
+          "local_mean_signed": 0.0008294084691442549,
+          "remote_mean_absolute": 0.0,
+          "peak_local_absolute": 0.008703668601810932,
+          "peak_tick": 115,
+          "local_cells_above_002": 24
+        },
+        "local_spikes": 0,
+        "blank_local_spikes": 0,
+        "local_neurons": 20294,
+        "remote_neurons": 22802,
+        "pixel_events": 72
+      }
+    },
+    "18-on-bar": {
+      "T2": {
+        "voltage": {
+          "local_mean_absolute": 0.005627356003969908,
+          "local_mean_signed": 0.004009057302027941,
+          "remote_mean_absolute": 9.92200875771232e-05,
+          "peak_local_absolute": 0.016330288723111153,
+          "peak_tick": 114,
+          "local_cells_above_002": 26
+        },
+        "current": {
+          "local_mean_absolute": 0.010823305696249008,
+          "local_mean_signed": 0.005983332172036171,
+          "remote_mean_absolute": 0.0007852751878090203,
+          "peak_local_absolute": 0.032576460391283035,
+          "peak_tick": 116,
+          "local_cells_above_002": 45
+        },
+        "local_spikes": 0,
+        "blank_local_spikes": 0,
+        "local_neurons": 4197,
+        "remote_neurons": 8773,
+        "pixel_events": 312
+      },
+      "T2a": {
+        "voltage": {
+          "local_mean_absolute": 0.002219573361799121,
+          "local_mean_signed": 0.0007430971600115299,
+          "remote_mean_absolute": 0.0,
+          "peak_local_absolute": 0.008162085898220539,
+          "peak_tick": 119,
+          "local_cells_above_002": 24
+        },
+        "current": {
+          "local_mean_absolute": 0.0046890960074961185,
+          "local_mean_signed": 0.0011997735127806664,
+          "remote_mean_absolute": 0.0,
+          "peak_local_absolute": 0.014367659576237202,
+          "peak_tick": 115,
+          "local_cells_above_002": 40
+        },
+        "local_spikes": 0,
+        "blank_local_spikes": 0,
+        "local_neurons": 10202,
+        "remote_neurons": 6503,
+        "pixel_events": 312
+      },
+      "T3": {
+        "voltage": {
+          "local_mean_absolute": 0.0027093414682894945,
+          "local_mean_signed": 0.0011121107963845134,
+          "remote_mean_absolute": 0.0,
+          "peak_local_absolute": 0.010342535562813282,
+          "peak_tick": 119,
+          "local_cells_above_002": 25
+        },
+        "current": {
+          "local_mean_absolute": 0.006032319739460945,
+          "local_mean_signed": 0.001755753648467362,
+          "remote_mean_absolute": 0.0,
+          "peak_local_absolute": 0.01932552643120289,
+          "peak_tick": 115,
+          "local_cells_above_002": 44
+        },
+        "local_spikes": 0,
+        "blank_local_spikes": 0,
+        "local_neurons": 20294,
+        "remote_neurons": 22802,
+        "pixel_events": 312
+      }
+    },
+    "18-on-static": {
+      "T2": {
+        "voltage": {
+          "local_mean_absolute": 0.0010678548133000731,
+          "local_mean_signed": -0.0010245336452499032,
+          "remote_mean_absolute": 0.0,
+          "peak_local_absolute": 0.0021032842341810465,
+          "peak_tick": 65,
+          "local_cells_above_002": 7
+        },
+        "current": {
+          "local_mean_absolute": 0.0013652112102136016,
+          "local_mean_signed": -0.0012598000466823578,
+          "remote_mean_absolute": 0.0,
+          "peak_local_absolute": 0.00634754030033946,
+          "peak_tick": 48,
+          "local_cells_above_002": 7
+        },
+        "local_spikes": 0,
+        "blank_local_spikes": 0,
+        "local_neurons": 4197,
+        "remote_neurons": 8773,
+        "pixel_events": 0
+      },
+      "T2a": {
+        "voltage": {
+          "local_mean_absolute": 0.0005759955965913832,
+          "local_mean_signed": -0.0005713986465707421,
+          "remote_mean_absolute": 0.0,
+          "peak_local_absolute": 0.0008781267097219825,
+          "peak_tick": 85,
+          "local_cells_above_002": 8
+        },
+        "current": {
+          "local_mean_absolute": 0.0007076101028360426,
+          "local_mean_signed": -0.0006968379602767527,
+          "remote_mean_absolute": 0.0,
+          "peak_local_absolute": 0.001651868806220591,
+          "peak_tick": 73,
+          "local_cells_above_002": 8
+        },
+        "local_spikes": 0,
+        "blank_local_spikes": 0,
+        "local_neurons": 10202,
+        "remote_neurons": 6503,
+        "pixel_events": 0
+      },
+      "T3": {
+        "voltage": {
+          "local_mean_absolute": 0.0007859112811274827,
+          "local_mean_signed": -0.0007859112811274827,
+          "remote_mean_absolute": 0.0,
+          "peak_local_absolute": 0.0011697785230353475,
+          "peak_tick": 57,
+          "local_cells_above_002": 7
+        },
+        "current": {
+          "local_mean_absolute": 0.0009457499836571515,
+          "local_mean_signed": -0.0009395857341587543,
+          "remote_mean_absolute": 0.0,
+          "peak_local_absolute": 0.002432349370792508,
+          "peak_tick": 42,
+          "local_cells_above_002": 8
+        },
+        "local_spikes": 0,
+        "blank_local_spikes": 0,
+        "local_neurons": 20294,
+        "remote_neurons": 22802,
+        "pixel_events": 0
+      }
+    },
+    "18-off-dot": {
+      "T2": {
+        "voltage": {
+          "local_mean_absolute": 0.006217379122972488,
+          "local_mean_signed": 0.005566863808780909,
+          "remote_mean_absolute": 3.76220305042807e-05,
+          "peak_local_absolute": 0.012571585364639759,
+          "peak_tick": 115,
+          "local_cells_above_002": 31
+        },
+        "current": {
+          "local_mean_absolute": 0.009807765483856201,
+          "local_mean_signed": 0.00716100400313735,
+          "remote_mean_absolute": 0.0002860041568055749,
+          "peak_local_absolute": 0.02253005839884281,
+          "peak_tick": 116,
+          "local_cells_above_002": 43
+        },
+        "local_spikes": 0,
+        "blank_local_spikes": 0,
+        "local_neurons": 4197,
+        "remote_neurons": 8773,
+        "pixel_events": 72
+      },
+      "T2a": {
+        "voltage": {
+          "local_mean_absolute": 0.002149729523807764,
+          "local_mean_signed": 0.0016163584077730775,
+          "remote_mean_absolute": 0.0,
+          "peak_local_absolute": 0.005163855850696564,
+          "peak_tick": 106,
+          "local_cells_above_002": 27
+        },
+        "current": {
+          "local_mean_absolute": 0.003603691468015313,
+          "local_mean_signed": 0.002058867597952485,
+          "remote_mean_absolute": 0.0,
+          "peak_local_absolute": 0.009089240804314613,
+          "peak_tick": 101,
+          "local_cells_above_002": 36
+        },
+        "local_spikes": 0,
+        "blank_local_spikes": 0,
+        "local_neurons": 10202,
+        "remote_neurons": 6503,
+        "pixel_events": 72
+      },
+      "T3": {
+        "voltage": {
+          "local_mean_absolute": 0.002662639832124114,
+          "local_mean_signed": 0.0020561034325510263,
+          "remote_mean_absolute": 0.0,
+          "peak_local_absolute": 0.006206043064594269,
+          "peak_tick": 106,
+          "local_cells_above_002": 25
+        },
+        "current": {
+          "local_mean_absolute": 0.004390966147184372,
+          "local_mean_signed": 0.0026117118541151285,
+          "remote_mean_absolute": 0.0,
+          "peak_local_absolute": 0.009939981624484062,
+          "peak_tick": 101,
+          "local_cells_above_002": 37
+        },
+        "local_spikes": 0,
+        "blank_local_spikes": 0,
+        "local_neurons": 20294,
+        "remote_neurons": 22802,
+        "pixel_events": 72
+      }
+    },
+    "18-off-bar": {
+      "T2": {
+        "voltage": {
+          "local_mean_absolute": 0.014043622650206089,
+          "local_mean_signed": 0.010850914753973484,
+          "remote_mean_absolute": 0.0004613906203303486,
+          "peak_local_absolute": 0.02591235749423504,
+          "peak_tick": 119,
+          "local_cells_above_002": 48
+        },
+        "current": {
+          "local_mean_absolute": 0.022575482726097107,
+          "local_mean_signed": 0.015143443830311298,
+          "remote_mean_absolute": 0.001538943382911384,
+          "peak_local_absolute": 0.041431911289691925,
+          "peak_tick": 117,
+          "local_cells_above_002": 54
+        },
+        "local_spikes": 0,
+        "blank_local_spikes": 0,
+        "local_neurons": 4197,
+        "remote_neurons": 8773,
+        "pixel_events": 312
+      },
+      "T2a": {
+        "voltage": {
+          "local_mean_absolute": 0.005439525004476309,
+          "local_mean_signed": 0.004443500656634569,
+          "remote_mean_absolute": 3.4832889923563926e-06,
+          "peak_local_absolute": 0.012332594022154808,
+          "peak_tick": 106,
+          "local_cells_above_002": 47
+        },
+        "current": {
+          "local_mean_absolute": 0.00876256637275219,
+          "local_mean_signed": 0.0057835932821035385,
+          "remote_mean_absolute": 1.9133789464831352e-05,
+          "peak_local_absolute": 0.018924621865153313,
+          "peak_tick": 100,
+          "local_cells_above_002": 57
+        },
+        "local_spikes": 0,
+        "blank_local_spikes": 0,
+        "local_neurons": 10202,
+        "remote_neurons": 6503,
+        "pixel_events": 312
+      },
+      "T3": {
+        "voltage": {
+          "local_mean_absolute": 0.006210706662386656,
+          "local_mean_signed": 0.004936912562698126,
+          "remote_mean_absolute": 7.658825779799372e-06,
+          "peak_local_absolute": 0.01357453316450119,
+          "peak_tick": 106,
+          "local_cells_above_002": 49
+        },
+        "current": {
+          "local_mean_absolute": 0.010171848349273205,
+          "local_mean_signed": 0.0063444580882787704,
+          "remote_mean_absolute": 2.5023118723765947e-05,
+          "peak_local_absolute": 0.020463712513446808,
+          "peak_tick": 100,
+          "local_cells_above_002": 61
+        },
+        "local_spikes": 0,
+        "blank_local_spikes": 0,
+        "local_neurons": 20294,
+        "remote_neurons": 22802,
+        "pixel_events": 312
+      }
+    },
+    "18-off-static": {
+      "T2": {
+        "voltage": {
+          "local_mean_absolute": 0.005329641979187727,
+          "local_mean_signed": 0.003643714589998126,
+          "remote_mean_absolute": 6.678520730929449e-05,
+          "peak_local_absolute": 0.007420642301440239,
+          "peak_tick": 63,
+          "local_cells_above_002": 25
+        },
+        "current": {
+          "local_mean_absolute": 0.007902653887867928,
+          "local_mean_signed": 0.004129664972424507,
+          "remote_mean_absolute": 0.00045893239439465106,
+          "peak_local_absolute": 0.021451100707054138,
+          "peak_tick": 116,
+          "local_cells_above_002": 38
+        },
+        "local_spikes": 0,
+        "blank_local_spikes": 0,
+        "local_neurons": 4197,
+        "remote_neurons": 8773,
+        "pixel_events": 0
+      },
+      "T2a": {
+        "voltage": {
+          "local_mean_absolute": 0.001652034930884838,
+          "local_mean_signed": 0.0014916086802259088,
+          "remote_mean_absolute": 1.008455797091301e-06,
+          "peak_local_absolute": 0.0024476798716932535,
+          "peak_tick": 72,
+          "local_cells_above_002": 16
+        },
+        "current": {
+          "local_mean_absolute": 0.0022714678198099136,
+          "local_mean_signed": 0.0014374073361977935,
+          "remote_mean_absolute": 3.4453357784514083e-06,
+          "peak_local_absolute": 0.00504686264321208,
+          "peak_tick": 67,
+          "local_cells_above_002": 18
+        },
+        "local_spikes": 0,
+        "blank_local_spikes": 0,
+        "local_neurons": 10202,
+        "remote_neurons": 6503,
+        "pixel_events": 0
+      },
+      "T3": {
+        "voltage": {
+          "local_mean_absolute": 0.0021849521435797215,
+          "local_mean_signed": 0.002045621396973729,
+          "remote_mean_absolute": 6.479739113274263e-06,
+          "peak_local_absolute": 0.002837630221620202,
+          "peak_tick": 67,
+          "local_cells_above_002": 14
+        },
+        "current": {
+          "local_mean_absolute": 0.0029633876401931047,
+          "local_mean_signed": 0.002081062411889434,
+          "remote_mean_absolute": 2.121921716025099e-05,
+          "peak_local_absolute": 0.00547029310837388,
+          "peak_tick": 67,
+          "local_cells_above_002": 18
+        },
+        "local_spikes": 0,
+        "blank_local_spikes": 0,
+        "local_neurons": 20294,
+        "remote_neurons": 22802,
+        "pixel_events": 0
+      }
+    },
+    "46-on-dot": {
+      "T2": {
+        "voltage": {
+          "local_mean_absolute": 0.00524497777223587,
+          "local_mean_signed": 0.0032715017441660166,
+          "remote_mean_absolute": 8.968861220637336e-05,
+          "peak_local_absolute": 0.010841947048902512,
+          "peak_tick": 107,
+          "local_cells_above_002": 30
+        },
+        "current": {
+          "local_mean_absolute": 0.008979247882962227,
+          "local_mean_signed": 0.003932630177587271,
+          "remote_mean_absolute": 0.0005339754279702902,
+          "peak_local_absolute": 0.016895562410354614,
+          "peak_tick": 110,
+          "local_cells_above_002": 41
+        },
+        "local_spikes": 0,
+        "blank_local_spikes": 0,
+        "local_neurons": 8773,
+        "remote_neurons": 4197,
+        "pixel_events": 72
+      },
+      "T2a": {
+        "voltage": {
+          "local_mean_absolute": 0.0018662131624296308,
+          "local_mean_signed": 0.0008260566391982138,
+          "remote_mean_absolute": 7.684709089517128e-06,
+          "peak_local_absolute": 0.004148762673139572,
+          "peak_tick": 108,
+          "local_cells_above_002": 16
+        },
+        "current": {
+          "local_mean_absolute": 0.003349112579599023,
+          "local_mean_signed": 0.0011945752194151282,
+          "remote_mean_absolute": 3.124271097476594e-05,
+          "peak_local_absolute": 0.008989810943603516,
+          "peak_tick": 102,
+          "local_cells_above_002": 25
+        },
+        "local_spikes": 0,
+        "blank_local_spikes": 0,
+        "local_neurons": 6503,
+        "remote_neurons": 10202,
+        "pixel_events": 72
+      },
+      "T3": {
+        "voltage": {
+          "local_mean_absolute": 0.002105977386236191,
+          "local_mean_signed": 0.0008389816503040493,
+          "remote_mean_absolute": 7.0222781687334646e-06,
+          "peak_local_absolute": 0.004191129934042692,
+          "peak_tick": 106,
+          "local_cells_above_002": 26
+        },
+        "current": {
+          "local_mean_absolute": 0.0037979765329509974,
+          "local_mean_signed": 0.0011844919063150883,
+          "remote_mean_absolute": 3.02795506286202e-05,
+          "peak_local_absolute": 0.008362344466149807,
+          "peak_tick": 102,
+          "local_cells_above_002": 35
+        },
+        "local_spikes": 0,
+        "blank_local_spikes": 0,
+        "local_neurons": 22802,
+        "remote_neurons": 20294,
+        "pixel_events": 72
+      }
+    },
+    "46-on-bar": {
+      "T2": {
+        "voltage": {
+          "local_mean_absolute": 0.011327732354402542,
+          "local_mean_signed": 0.007826211862266064,
+          "remote_mean_absolute": 0.0002688284730538726,
+          "peak_local_absolute": 0.02563079074025154,
+          "peak_tick": 111,
+          "local_cells_above_002": 51
+        },
+        "current": {
+          "local_mean_absolute": 0.019116437062621117,
+          "local_mean_signed": 0.011227852664887905,
+          "remote_mean_absolute": 0.001681902096606791,
+          "peak_local_absolute": 0.0354640893638134,
+          "peak_tick": 104,
+          "local_cells_above_002": 59
+        },
+        "local_spikes": 0,
+        "blank_local_spikes": 0,
+        "local_neurons": 8773,
+        "remote_neurons": 4197,
+        "pixel_events": 312
+      },
+      "T2a": {
+        "voltage": {
+          "local_mean_absolute": 0.00480452599003911,
+          "local_mean_signed": 0.002682829974219203,
+          "remote_mean_absolute": 1.238828099303646e-05,
+          "peak_local_absolute": 0.011874370276927948,
+          "peak_tick": 117,
+          "local_cells_above_002": 37
+        },
+        "current": {
+          "local_mean_absolute": 0.00886086281388998,
+          "local_mean_signed": 0.004242433700710535,
+          "remote_mean_absolute": 5.831442467751913e-05,
+          "peak_local_absolute": 0.02199697308242321,
+          "peak_tick": 102,
+          "local_cells_above_002": 49
+        },
+        "local_spikes": 0,
+        "blank_local_spikes": 0,
+        "local_neurons": 6503,
+        "remote_neurons": 10202,
+        "pixel_events": 312
+      },
+      "T3": {
+        "voltage": {
+          "local_mean_absolute": 0.004187821876257658,
+          "local_mean_signed": 0.0022359327413141727,
+          "remote_mean_absolute": 1.1471648576844018e-05,
+          "peak_local_absolute": 0.01025444082915783,
+          "peak_tick": 117,
+          "local_cells_above_002": 52
+        },
+        "current": {
+          "local_mean_absolute": 0.008042124100029469,
+          "local_mean_signed": 0.0034366759937256575,
+          "remote_mean_absolute": 5.857818541699089e-05,
+          "peak_local_absolute": 0.018758390098810196,
+          "peak_tick": 102,
+          "local_cells_above_002": 65
+        },
+        "local_spikes": 0,
+        "blank_local_spikes": 0,
+        "local_neurons": 22802,
+        "remote_neurons": 20294,
+        "pixel_events": 312
+      }
+    },
+    "46-on-static": {
+      "T2": {
+        "voltage": {
+          "local_mean_absolute": 0.0015809241449460387,
+          "local_mean_signed": -0.0007945880643092096,
+          "remote_mean_absolute": 0.0,
+          "peak_local_absolute": 0.002791726728901267,
+          "peak_tick": 119,
+          "local_cells_above_002": 15
+        },
+        "current": {
+          "local_mean_absolute": 0.0025081948842853308,
+          "local_mean_signed": -0.0011666561476886272,
+          "remote_mean_absolute": 0.0,
+          "peak_local_absolute": 0.009258689358830452,
+          "peak_tick": 119,
+          "local_cells_above_002": 19
+        },
+        "local_spikes": 0,
+        "blank_local_spikes": 0,
+        "local_neurons": 8773,
+        "remote_neurons": 4197,
+        "pixel_events": 0
+      },
+      "T2a": {
+        "voltage": {
+          "local_mean_absolute": 0.0006878412677906454,
+          "local_mean_signed": -0.000563545327167958,
+          "remote_mean_absolute": 0.0,
+          "peak_local_absolute": 0.0012137118028476834,
+          "peak_tick": 69,
+          "local_cells_above_002": 6
+        },
+        "current": {
+          "local_mean_absolute": 0.0010174439521506429,
+          "local_mean_signed": -0.0004784979682881385,
+          "remote_mean_absolute": 0.0,
+          "peak_local_absolute": 0.002651909599080682,
+          "peak_tick": 45,
+          "local_cells_above_002": 10
+        },
+        "local_spikes": 0,
+        "blank_local_spikes": 0,
+        "local_neurons": 6503,
+        "remote_neurons": 10202,
+        "pixel_events": 0
+      },
+      "T3": {
+        "voltage": {
+          "local_mean_absolute": 0.0007075506146065891,
+          "local_mean_signed": -0.000525041192304343,
+          "remote_mean_absolute": 0.0,
+          "peak_local_absolute": 0.001189366215839982,
+          "peak_tick": 69,
+          "local_cells_above_002": 8
+        },
+        "current": {
+          "local_mean_absolute": 0.001104338327422738,
+          "local_mean_signed": -0.00044560772948898375,
+          "remote_mean_absolute": 0.0,
+          "peak_local_absolute": 0.002812449587509036,
+          "peak_tick": 48,
+          "local_cells_above_002": 10
+        },
+        "local_spikes": 0,
+        "blank_local_spikes": 0,
+        "local_neurons": 22802,
+        "remote_neurons": 20294,
+        "pixel_events": 0
+      }
+    },
+    "46-off-dot": {
+      "T2": {
+        "voltage": {
+          "local_mean_absolute": 0.007321037817746401,
+          "local_mean_signed": 0.005105671938508749,
+          "remote_mean_absolute": 4.785431428899756e-06,
+          "peak_local_absolute": 0.010109706781804562,
+          "peak_tick": 97,
+          "local_cells_above_002": 49
+        },
+        "current": {
+          "local_mean_absolute": 0.011280220001935959,
+          "local_mean_signed": 0.005503532942384481,
+          "remote_mean_absolute": 5.978670378681272e-05,
+          "peak_local_absolute": 0.020761752501130104,
+          "peak_tick": 117,
+          "local_cells_above_002": 55
+        },
+        "local_spikes": 0,
+        "blank_local_spikes": 0,
+        "local_neurons": 8773,
+        "remote_neurons": 4197,
+        "pixel_events": 72
+      },
+      "T2a": {
+        "voltage": {
+          "local_mean_absolute": 0.002396431053057313,
+          "local_mean_signed": 0.0013681752607226372,
+          "remote_mean_absolute": 0.00014113448560237885,
+          "peak_local_absolute": 0.0034165983088314533,
+          "peak_tick": 97,
+          "local_cells_above_002": 21
+        },
+        "current": {
+          "local_mean_absolute": 0.004220541100949049,
+          "local_mean_signed": 0.0013266486348584294,
+          "remote_mean_absolute": 0.00022214330965653062,
+          "peak_local_absolute": 0.006832284852862358,
+          "peak_tick": 107,
+          "local_cells_above_002": 36
+        },
+        "local_spikes": 0,
+        "blank_local_spikes": 0,
+        "local_neurons": 6503,
+        "remote_neurons": 10202,
+        "pixel_events": 72
+      },
+      "T3": {
+        "voltage": {
+          "local_mean_absolute": 0.002502887276932597,
+          "local_mean_signed": 0.001389178796671331,
+          "remote_mean_absolute": 0.00021294981706887484,
+          "peak_local_absolute": 0.0038227918557822704,
+          "peak_tick": 119,
+          "local_cells_above_002": 31
+        },
+        "current": {
+          "local_mean_absolute": 0.00444685248658061,
+          "local_mean_signed": 0.001259039156138897,
+          "remote_mean_absolute": 0.00033337471541017294,
+          "peak_local_absolute": 0.008021215908229351,
+          "peak_tick": 114,
+          "local_cells_above_002": 42
+        },
+        "local_spikes": 0,
+        "blank_local_spikes": 0,
+        "local_neurons": 22802,
+        "remote_neurons": 20294,
+        "pixel_events": 72
+      }
+    },
+    "46-off-bar": {
+      "T2": {
+        "voltage": {
+          "local_mean_absolute": 0.015266981907188892,
+          "local_mean_signed": 0.012575939297676086,
+          "remote_mean_absolute": 0.0008041405235417187,
+          "peak_local_absolute": 0.019664637744426727,
+          "peak_tick": 100,
+          "local_cells_above_002": 59
+        },
+        "current": {
+          "local_mean_absolute": 0.02278466708958149,
+          "local_mean_signed": 0.013728021644055843,
+          "remote_mean_absolute": 0.0029233992099761963,
+          "peak_local_absolute": 0.03768940269947052,
+          "peak_tick": 117,
+          "local_cells_above_002": 62
+        },
+        "local_spikes": 0,
+        "blank_local_spikes": 0,
+        "local_neurons": 8773,
+        "remote_neurons": 4197,
+        "pixel_events": 312
+      },
+      "T2a": {
+        "voltage": {
+          "local_mean_absolute": 0.0056599960662424564,
+          "local_mean_signed": 0.0033580230083316565,
+          "remote_mean_absolute": 0.0001492860756115988,
+          "peak_local_absolute": 0.007583107333630323,
+          "peak_tick": 104,
+          "local_cells_above_002": 48
+        },
+        "current": {
+          "local_mean_absolute": 0.009720156900584698,
+          "local_mean_signed": 0.003308075712993741,
+          "remote_mean_absolute": 0.0003062916512135416,
+          "peak_local_absolute": 0.011903217993676662,
+          "peak_tick": 53,
+          "local_cells_above_002": 54
+        },
+        "local_spikes": 0,
+        "blank_local_spikes": 0,
+        "local_neurons": 6503,
+        "remote_neurons": 10202,
+        "pixel_events": 312
+      },
+      "T3": {
+        "voltage": {
+          "local_mean_absolute": 0.005595972761511803,
+          "local_mean_signed": 0.003498859005048871,
+          "remote_mean_absolute": 3.366464443388395e-05,
+          "peak_local_absolute": 0.008351853117346764,
+          "peak_tick": 119,
+          "local_cells_above_002": 64
+        },
+        "current": {
+          "local_mean_absolute": 0.009756715036928654,
+          "local_mean_signed": 0.003350915154442191,
+          "remote_mean_absolute": 0.0001260238204849884,
+          "peak_local_absolute": 0.014618671499192715,
+          "peak_tick": 113,
+          "local_cells_above_002": 72
+        },
+        "local_spikes": 0,
+        "blank_local_spikes": 0,
+        "local_neurons": 22802,
+        "remote_neurons": 20294,
+        "pixel_events": 312
+      }
+    },
+    "46-off-static": {
+      "T2": {
+        "voltage": {
+          "local_mean_absolute": 0.004340333864092827,
+          "local_mean_signed": 0.0021872881334275007,
+          "remote_mean_absolute": 8.05830568424426e-05,
+          "peak_local_absolute": 0.006401313468813896,
+          "peak_tick": 63,
+          "local_cells_above_002": 23
+        },
+        "current": {
+          "local_mean_absolute": 0.006614759564399719,
+          "local_mean_signed": 0.002236036816611886,
+          "remote_mean_absolute": 0.0004880380292888731,
+          "peak_local_absolute": 0.019955260679125786,
+          "peak_tick": 63,
+          "local_cells_above_002": 40
+        },
+        "local_spikes": 0,
+        "blank_local_spikes": 0,
+        "local_neurons": 8773,
+        "remote_neurons": 4197,
+        "pixel_events": 0
+      },
+      "T2a": {
+        "voltage": {
+          "local_mean_absolute": 0.0012357918312773108,
+          "local_mean_signed": 0.0008571320213377476,
+          "remote_mean_absolute": 0.0,
+          "peak_local_absolute": 0.0016182278050109744,
+          "peak_tick": 55,
+          "local_cells_above_002": 10
+        },
+        "current": {
+          "local_mean_absolute": 0.0018252882873639464,
+          "local_mean_signed": 0.0007348176441155374,
+          "remote_mean_absolute": 0.0,
+          "peak_local_absolute": 0.0042299493215978146,
+          "peak_tick": 54,
+          "local_cells_above_002": 14
+        },
+        "local_spikes": 0,
+        "blank_local_spikes": 0,
+        "local_neurons": 6503,
+        "remote_neurons": 10202,
+        "pixel_events": 0
+      },
+      "T3": {
+        "voltage": {
+          "local_mean_absolute": 0.0011441371170803905,
+          "local_mean_signed": 0.0009883145103231072,
+          "remote_mean_absolute": 0.0,
+          "peak_local_absolute": 0.0017980393022298813,
+          "peak_tick": 55,
+          "local_cells_above_002": 12
+        },
+        "current": {
+          "local_mean_absolute": 0.0017050947062671185,
+          "local_mean_signed": 0.0008375474717468023,
+          "remote_mean_absolute": 0.0,
+          "peak_local_absolute": 0.0036664840299636126,
+          "peak_tick": 55,
+          "local_cells_above_002": 13
+        },
+        "local_spikes": 0,
+        "blank_local_spikes": 0,
+        "local_neurons": 22802,
+        "remote_neurons": 20294,
+        "pixel_events": 0
+      }
+    }
+  },
+  "passes_screen": true,
+  "traces_file": "docs\\experiments\\2026-09-23-object-pathway-subthreshold-traces.npz",
+  "traces_sha256": "f538e40b5a9ce42495914ac6f0805b8df8590b4036d7a83bb32318062817173f"
+}

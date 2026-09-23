@@ -23,6 +23,21 @@ def test_t3_locality_uses_measured_mi1_tm1_inputs():
     assert mass.tolist() == [0, 0, 0, 5, 7]
 
 
+def test_object_column_inference_can_use_a_different_measured_afferent():
+    types = ['Tm2', 'T2']
+    retina = Retina(2, 2, [[0, 0]], [0, -1], types, {})
+    metadata = dict(retina=dict(cell_types=types),
+                    graph=dict(body_ids=[20, 40], pre=[0], post=[1],
+                               contacts=[6]))
+    annotations = pa.table(dict(bodyId=[20], assignedOlHex1=[0.],
+                                assignedOlHex2=[0.]))
+    inferred, mass = infer_t3_columns(
+        metadata, retina, annotations, target_type='T2',
+        source_types=('Tm2', 'Mi1'))
+    assert inferred.tolist() == [-1, 0]
+    assert mass.tolist() == [0, 6]
+
+
 def test_t3_calibration_requires_both_polarities_and_quiet_blank():
     rows = [dict(rest_current=0., on_excess=0, off_excess=0,
                  blank_rate=0., finite=True),

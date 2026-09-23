@@ -21,7 +21,8 @@ OUT = Path('runs/motion-t3-target-v1')
 CURRENTS = (0., .85, .95, 1.05, 1.15)
 
 
-def infer_t3_columns(metadata, retina, annotations):
+def infer_t3_columns(metadata, retina, annotations, *, target_type='T3',
+                     source_types=('Mi1', 'Tm1')):
     graph = metadata['graph']
     types = np.asarray(metadata['retina']['cell_types'])
     ids = np.asarray(graph['body_ids'])
@@ -31,7 +32,7 @@ def infer_t3_columns(metadata, retina, annotations):
     positions = {int(b): (float(x), float(y)) for b, x, y in zip(body, q, r)
                  if np.isfinite(x) and np.isfinite(y)}
     source = np.asarray([positions.get(int(b), (np.nan, np.nan)) for b in ids])
-    selected = ((types[post] == 'T3') & np.isin(types[pre], ('Mi1', 'Tm1'))
+    selected = ((types[post] == target_type) & np.isin(types[pre], source_types)
                 & np.isfinite(source[pre]).all(1))
     mass = np.bincount(post[selected], weights=contacts[selected], minlength=len(ids))
     centers = np.column_stack([
@@ -42,7 +43,7 @@ def infer_t3_columns(metadata, retina, annotations):
     axes = np.column_stack((hexes[:, 0]+hexes[:, 1]/2,
                             hexes[:, 1]*math.sqrt(3)/2))
     inferred = np.full(len(ids), -1, dtype=np.int64)
-    good = np.flatnonzero((types == 'T3') & (mass > 0))
+    good = np.flatnonzero((types == target_type) & (mass > 0))
     for batch in np.array_split(good, max(1, math.ceil(len(good)/500))):
         xy = np.column_stack((centers[batch, 0]+centers[batch, 1]/2,
                               centers[batch, 1]*math.sqrt(3)/2))
