@@ -1,0 +1,1984 @@
+{
+  "source_sha256": "8c4af80ff3904881bac9313b618dd9989bb51174b47606f28eca88865296005c",
+  "annotations_sha256": "2177e246113e4cfbf1e7772ec37c6da1955ff22e8063d0b1f833101f99a9a3b2",
+  "graph_sha256": "c941a5c912dd03e2ab0868260c637c2b1d21525196d4bce93c7d5e7f618e34a8",
+  "warmup_ticks": 500,
+  "ticks_per_frame": 8,
+  "fast_baseline_ms": 250,
+  "conditions": {
+    "18-on-bar": {
+      "pixel_events": 312,
+      "classes": {
+        "Mi4": {
+          "local_neurons": 132,
+          "remote_neurons": 139,
+          "local_spikes": 0,
+          "blank_local_spikes": 0,
+          "features": {
+            "voltage": {
+              "local_mean_absolute_change": 0.0017739435425028205,
+              "local_mean_signed_change": -0.0014439424267038703,
+              "remote_mean_absolute_change": 3.822906728601083e-05,
+              "local_fraction_above_blank_p99": 0.015072600916028023,
+              "blank_fraction_above_blank_p99": 0.010416666977107525,
+              "per_cell_signed_change_p10": -0.004412853624671698,
+              "per_cell_signed_change_p50": -0.0005762483924627304,
+              "per_cell_signed_change_p90": 0.00014365327660925686,
+              "finite": true,
+              "peak_positive_tick": 61
+            },
+            "current": {
+              "local_mean_absolute_change": 0.00405582832172513,
+              "local_mean_signed_change": -0.002729409374296665,
+              "remote_mean_absolute_change": 0.0004217115929350257,
+              "local_fraction_above_blank_p99": 0.011205808259546757,
+              "blank_fraction_above_blank_p99": 0.010416666977107525,
+              "per_cell_signed_change_p10": -0.0073755350895226,
+              "per_cell_signed_change_p50": -0.0017154461238533258,
+              "per_cell_signed_change_p90": 0.0008961032144725323,
+              "finite": true,
+              "peak_positive_tick": 37
+            },
+            "positive_fast_voltage": {
+              "local_mean_absolute_change": 0.00046910863602533937,
+              "local_mean_signed_change": -0.00032937678042799234,
+              "remote_mean_absolute_change": 2.4455412130919285e-05,
+              "local_fraction_above_blank_p99": 0.01365214679390192,
+              "blank_fraction_above_blank_p99": 0.00978535320609808,
+              "per_cell_signed_change_p10": -0.0012433622032403946,
+              "per_cell_signed_change_p50": -4.983311737305485e-05,
+              "per_cell_signed_change_p90": 0.0001446976966690272,
+              "finite": true,
+              "peak_positive_tick": 67
+            },
+            "negative_fast_voltage": {
+              "local_mean_absolute_change": 0.001213029376231134,
+              "local_mean_signed_change": 0.0010289741912856698,
+              "remote_mean_absolute_change": 1.3559835679188836e-05,
+              "local_fraction_above_blank_p99": 0.05279356241226196,
+              "blank_fraction_above_blank_p99": 0.008838383480906487,
+              "per_cell_signed_change_p10": 0.0,
+              "per_cell_signed_change_p50": 0.00022165023256093264,
+              "per_cell_signed_change_p90": 0.003367172321304679,
+              "finite": true,
+              "peak_positive_tick": 137
+            },
+            "positive_fast_current": {
+              "local_mean_absolute_change": 0.0006344816065393388,
+              "local_mean_signed_change": -0.00034955289447680116,
+              "remote_mean_absolute_change": 8.710638212505728e-05,
+              "local_fraction_above_blank_p99": 0.00828598439693451,
+              "blank_fraction_above_blank_p99": 0.00844381283968687,
+              "per_cell_signed_change_p10": -0.0019241516711190343,
+              "per_cell_signed_change_p50": 0.0,
+              "per_cell_signed_change_p90": 7.274992094608024e-05,
+              "finite": true,
+              "peak_positive_tick": 116
+            },
+            "negative_fast_current": {
+              "local_mean_absolute_change": 0.003251052461564541,
+              "local_mean_signed_change": 0.0021935487166047096,
+              "remote_mean_absolute_change": 0.00033490220084786415,
+              "local_fraction_above_blank_p99": 0.03953598439693451,
+              "blank_fraction_above_blank_p99": 0.008996211923658848,
+              "per_cell_signed_change_p10": -0.00030623978818766773,
+              "per_cell_signed_change_p50": 0.001064195530489087,
+              "per_cell_signed_change_p90": 0.006210775580257177,
+              "finite": true,
+              "peak_positive_tick": 132
+            }
+          }
+        },
+        "Tm4": {
+          "local_neurons": 132,
+          "remote_neurons": 128,
+          "local_spikes": 0,
+          "blank_local_spikes": 0,
+          "features": {
+            "voltage": {
+              "local_mean_absolute_change": 0.04511458799242973,
+              "local_mean_signed_change": 0.034988369792699814,
+              "remote_mean_absolute_change": 5.503042120835744e-05,
+              "local_fraction_above_blank_p99": 0.21085858345031738,
+              "blank_fraction_above_blank_p99": 0.010416666977107525,
+              "per_cell_signed_change_p10": -0.009460421279072762,
+              "per_cell_signed_change_p50": -0.00033362797694280744,
+              "per_cell_signed_change_p90": 0.12346258014440536,
+              "finite": true,
+              "peak_positive_tick": 143
+            },
+            "current": {
+              "local_mean_absolute_change": 0.07581455260515213,
+              "local_mean_signed_change": 0.04890354722738266,
+              "remote_mean_absolute_change": 0.00043561882921494544,
+              "local_fraction_above_blank_p99": 0.12192235141992569,
+              "blank_fraction_above_blank_p99": 0.010416666977107525,
+              "per_cell_signed_change_p10": -0.022345812991261482,
+              "per_cell_signed_change_p50": 0.000588500639423728,
+              "per_cell_signed_change_p90": 0.16564776003360748,
+              "finite": true,
+              "peak_positive_tick": 135
+            },
+            "positive_fast_voltage": {
+              "local_mean_absolute_change": 0.03406493365764618,
+              "local_mean_signed_change": 0.030353225767612457,
+              "remote_mean_absolute_change": 3.8906789995962754e-05,
+              "local_fraction_above_blank_p99": 0.20714962482452393,
+              "blank_fraction_above_blank_p99": 0.010416666977107525,
+              "per_cell_signed_change_p10": -0.003675838466733694,
+              "per_cell_signed_change_p50": 2.739190313150175e-05,
+              "per_cell_signed_change_p90": 0.10189572721719742,
+              "finite": true,
+              "peak_positive_tick": 143
+            },
+            "negative_fast_voltage": {
+              "local_mean_absolute_change": 0.007457536179572344,
+              "local_mean_signed_change": -0.0013799312291666865,
+              "remote_mean_absolute_change": 1.566632454341743e-05,
+              "local_fraction_above_blank_p99": 0.03330176696181297,
+              "blank_fraction_above_blank_p99": 0.010416666977107525,
+              "per_cell_signed_change_p10": -0.010109988041222095,
+              "per_cell_signed_change_p50": 0.0003562074853107333,
+              "per_cell_signed_change_p90": 0.006506760139018297,
+              "finite": true,
+              "peak_positive_tick": 110
+            },
+            "positive_fast_current": {
+              "local_mean_absolute_change": 0.06564942747354507,
+              "local_mean_signed_change": 0.04209231957793236,
+              "remote_mean_absolute_change": 0.00033361141686327755,
+              "local_fraction_above_blank_p99": 0.10921717435121536,
+              "blank_fraction_above_blank_p99": 0.010416666977107525,
+              "per_cell_signed_change_p10": -0.018222589045763016,
+              "per_cell_signed_change_p50": 0.003955855034291744,
+              "per_cell_signed_change_p90": 0.14085029065608978,
+              "finite": true,
+              "peak_positive_tick": 135
+            },
+            "negative_fast_current": {
+              "local_mean_absolute_change": 0.005440457258373499,
+              "local_mean_signed_change": -0.0011358378687873483,
+              "remote_mean_absolute_change": 0.000102497790066991,
+              "local_fraction_above_blank_p99": 0.0329861119389534,
+              "blank_fraction_above_blank_p99": 0.010101010091602802,
+              "per_cell_signed_change_p10": -0.008366545662283897,
+              "per_cell_signed_change_p50": 0.0,
+              "per_cell_signed_change_p90": 0.004501609597355127,
+              "finite": true,
+              "peak_positive_tick": 107
+            }
+          }
+        },
+        "Tm9": {
+          "local_neurons": 133,
+          "remote_neurons": 139,
+          "local_spikes": 0,
+          "blank_local_spikes": 0,
+          "features": {
+            "voltage": {
+              "local_mean_absolute_change": 0.0068702660501003265,
+              "local_mean_signed_change": 0.00507383793592453,
+              "remote_mean_absolute_change": 0.0,
+              "local_fraction_above_blank_p99": 0.12977756559848785,
+              "blank_fraction_above_blank_p99": 0.010416666977107525,
+              "per_cell_signed_change_p10": 0.0,
+              "per_cell_signed_change_p50": 0.0,
+              "per_cell_signed_change_p90": 0.013346165418624878,
+              "finite": true,
+              "peak_positive_tick": 133
+            },
+            "current": {
+              "local_mean_absolute_change": 0.011329405009746552,
+              "local_mean_signed_change": 0.00831336434930563,
+              "remote_mean_absolute_change": 0.0,
+              "local_fraction_above_blank_p99": 0.039317041635513306,
+              "blank_fraction_above_blank_p99": 0.010416666977107525,
+              "per_cell_signed_change_p10": 0.0,
+              "per_cell_signed_change_p50": 0.0,
+              "per_cell_signed_change_p90": 0.022092025727033615,
+              "finite": true,
+              "peak_positive_tick": 124
+            },
+            "positive_fast_voltage": {
+              "local_mean_absolute_change": 0.004996026866137981,
+              "local_mean_signed_change": 0.00424294825643301,
+              "remote_mean_absolute_change": 0.0,
+              "local_fraction_above_blank_p99": 0.1282111555337906,
+              "blank_fraction_above_blank_p99": 0.010416666977107525,
+              "per_cell_signed_change_p10": 0.0,
+              "per_cell_signed_change_p50": 0.0,
+              "per_cell_signed_change_p90": 0.011136182583868504,
+              "finite": true,
+              "peak_positive_tick": 133
+            },
+            "negative_fast_voltage": {
+              "local_mean_absolute_change": 0.0014007306890562177,
+              "local_mean_signed_change": -0.0004691410867962986,
+              "remote_mean_absolute_change": 0.0,
+              "local_fraction_above_blank_p99": 0.019893484190106392,
+              "blank_fraction_above_blank_p99": 0.010416666977107525,
+              "per_cell_signed_change_p10": -0.0019271897617727518,
+              "per_cell_signed_change_p50": 0.0,
+              "per_cell_signed_change_p90": 0.00010769228538265452,
+              "finite": true,
+              "peak_positive_tick": 136
+            },
+            "positive_fast_current": {
+              "local_mean_absolute_change": 0.01010141521692276,
+              "local_mean_signed_change": 0.007347231265157461,
+              "remote_mean_absolute_change": 0.0,
+              "local_fraction_above_blank_p99": 0.036105889827013016,
+              "blank_fraction_above_blank_p99": 0.010416666977107525,
+              "per_cell_signed_change_p10": 0.0,
+              "per_cell_signed_change_p50": 0.0,
+              "per_cell_signed_change_p90": 0.02076103165745735,
+              "finite": true,
+              "peak_positive_tick": 124
+            },
+            "negative_fast_current": {
+              "local_mean_absolute_change": 0.0005636524292640388,
+              "local_mean_signed_change": -0.0002499097026884556,
+              "remote_mean_absolute_change": 0.0,
+              "local_fraction_above_blank_p99": 0.04135338217020035,
+              "blank_fraction_above_blank_p99": 0.010338345542550087,
+              "per_cell_signed_change_p10": -0.0010781341698020697,
+              "per_cell_signed_change_p50": 0.0,
+              "per_cell_signed_change_p90": 0.0,
+              "finite": true,
+              "peak_positive_tick": 141
+            }
+          }
+        }
+      }
+    },
+    "18-on-static": {
+      "pixel_events": 0,
+      "classes": {
+        "Mi4": {
+          "local_neurons": 132,
+          "remote_neurons": 139,
+          "local_spikes": 0,
+          "blank_local_spikes": 0,
+          "features": {
+            "voltage": {
+              "local_mean_absolute_change": 0.00044551605242304504,
+              "local_mean_signed_change": 7.1112963269115426e-06,
+              "remote_mean_absolute_change": 4.710779194283532e-06,
+              "local_fraction_above_blank_p99": 0.029198233038187027,
+              "blank_fraction_above_blank_p99": 0.010416666977107525,
+              "per_cell_signed_change_p10": -8.757159230299294e-05,
+              "per_cell_signed_change_p50": 0.0,
+              "per_cell_signed_change_p90": 0.00042049805051647127,
+              "finite": true,
+              "peak_positive_tick": 45
+            },
+            "current": {
+              "local_mean_absolute_change": 0.0009164459188468754,
+              "local_mean_signed_change": -4.973835530108772e-05,
+              "remote_mean_absolute_change": 3.271433888585307e-05,
+              "local_fraction_above_blank_p99": 0.01601957157254219,
+              "blank_fraction_above_blank_p99": 0.010416666977107525,
+              "per_cell_signed_change_p10": -0.0001459060440538451,
+              "per_cell_signed_change_p50": 0.0,
+              "per_cell_signed_change_p90": 0.0006017991690896451,
+              "finite": true,
+              "peak_positive_tick": 107
+            },
+            "positive_fast_voltage": {
+              "local_mean_absolute_change": 0.00021675002062693238,
+              "local_mean_signed_change": -7.207515591289848e-05,
+              "remote_mean_absolute_change": 3.412693558857427e-06,
+              "local_fraction_above_blank_p99": 0.02477904036641121,
+              "blank_fraction_above_blank_p99": 0.00978535320609808,
+              "per_cell_signed_change_p10": -0.00013826096255797893,
+              "per_cell_signed_change_p50": 0.0,
+              "per_cell_signed_change_p90": 3.841723082587123e-05,
+              "finite": true,
+              "peak_positive_tick": 107
+            },
+            "negative_fast_voltage": {
+              "local_mean_absolute_change": 0.0001837618328863755,
+              "local_mean_signed_change": -7.423590432154015e-05,
+              "remote_mean_absolute_change": 1.3791698165732669e-06,
+              "local_fraction_above_blank_p99": 0.009864267893135548,
+              "blank_fraction_above_blank_p99": 0.008838383480906487,
+              "per_cell_signed_change_p10": -7.397683657472953e-05,
+              "per_cell_signed_change_p50": 0.0,
+              "per_cell_signed_change_p90": 3.073862899327651e-05,
+              "finite": true,
+              "peak_positive_tick": 141
+            },
+            "positive_fast_current": {
+              "local_mean_absolute_change": 0.00032878335332497954,
+              "local_mean_signed_change": -3.463803295744583e-05,
+              "remote_mean_absolute_change": 6.902865607116837e-06,
+              "local_fraction_above_blank_p99": 0.012468433938920498,
+              "blank_fraction_above_blank_p99": 0.00844381283968687,
+              "per_cell_signed_change_p10": -9.592586866347119e-05,
+              "per_cell_signed_change_p50": 0.0,
+              "per_cell_signed_change_p90": 1.960957706614863e-05,
+              "finite": true,
+              "peak_positive_tick": 115
+            },
+            "negative_fast_current": {
+              "local_mean_absolute_change": 0.0006203233497217298,
+              "local_mean_signed_change": 2.045671863015741e-05,
+              "remote_mean_absolute_change": 2.6123050702153705e-05,
+              "local_fraction_above_blank_p99": 0.009548611007630825,
+              "blank_fraction_above_blank_p99": 0.008996211923658848,
+              "per_cell_signed_change_p10": -0.00026346647064201534,
+              "per_cell_signed_change_p50": 0.0,
+              "per_cell_signed_change_p90": 0.00010618309897836298,
+              "finite": true,
+              "peak_positive_tick": 139
+            }
+          }
+        },
+        "Tm4": {
+          "local_neurons": 132,
+          "remote_neurons": 128,
+          "local_spikes": 0,
+          "blank_local_spikes": 0,
+          "features": {
+            "voltage": {
+              "local_mean_absolute_change": 0.008962427265942097,
+              "local_mean_signed_change": -0.008059735409915447,
+              "remote_mean_absolute_change": 1.4823448282186291e-06,
+              "local_fraction_above_blank_p99": 0.015546086244285107,
+              "blank_fraction_above_blank_p99": 0.010416666977107525,
+              "per_cell_signed_change_p10": -0.026292776688933372,
+              "per_cell_signed_change_p50": -6.387252597050974e-06,
+              "per_cell_signed_change_p90": 0.00042843373375944793,
+              "finite": true,
+              "peak_positive_tick": 143
+            },
+            "current": {
+              "local_mean_absolute_change": 0.01636202447116375,
+              "local_mean_signed_change": -0.010520203039050102,
+              "remote_mean_absolute_change": 1.1584997992031276e-05,
+              "local_fraction_above_blank_p99": 0.008364899083971977,
+              "blank_fraction_above_blank_p99": 0.010416666977107525,
+              "per_cell_signed_change_p10": -0.034570325165987015,
+              "per_cell_signed_change_p50": -1.3066406845396727e-09,
+              "per_cell_signed_change_p90": 0.001191095681861043,
+              "finite": true,
+              "peak_positive_tick": 133
+            },
+            "positive_fast_voltage": {
+              "local_mean_absolute_change": 0.0029100787360221148,
+              "local_mean_signed_change": -0.00250182393938303,
+              "remote_mean_absolute_change": 9.581071935826913e-07,
+              "local_fraction_above_blank_p99": 0.015625,
+              "blank_fraction_above_blank_p99": 0.010416666977107525,
+              "per_cell_signed_change_p10": -0.00989410001784563,
+              "per_cell_signed_change_p50": -0.0001383611815981567,
+              "per_cell_signed_change_p90": 0.00037960358895361423,
+              "finite": true,
+              "peak_positive_tick": 143
+            },
+            "negative_fast_voltage": {
+              "local_mean_absolute_change": 0.004733640234917402,
+              "local_mean_signed_change": 0.004214409273117781,
+              "remote_mean_absolute_change": 5.369494715523615e-07,
+              "local_fraction_above_blank_p99": 0.0381944440305233,
+              "blank_fraction_above_blank_p99": 0.010416666977107525,
+              "per_cell_signed_change_p10": -0.0003571807756088674,
+              "per_cell_signed_change_p50": 0.00020272235269658267,
+              "per_cell_signed_change_p90": 0.0167799424380064,
+              "finite": true,
+              "peak_positive_tick": 64
+            },
+            "positive_fast_current": {
+              "local_mean_absolute_change": 0.013212335295975208,
+              "local_mean_signed_change": -0.008108900859951973,
+              "remote_mean_absolute_change": 6.762619250366697e-06,
+              "local_fraction_above_blank_p99": 0.0086805559694767,
+              "blank_fraction_above_blank_p99": 0.010416666977107525,
+              "per_cell_signed_change_p10": -0.025809194892644882,
+              "per_cell_signed_change_p50": -9.971929102903232e-05,
+              "per_cell_signed_change_p90": 0.0011840943479910493,
+              "finite": true,
+              "peak_positive_tick": 133
+            },
+            "negative_fast_current": {
+              "local_mean_absolute_change": 0.0025224126875400543,
+              "local_mean_signed_change": 0.000553554855287075,
+              "remote_mean_absolute_change": 4.9292912081000395e-06,
+              "local_fraction_above_blank_p99": 0.017913511022925377,
+              "blank_fraction_above_blank_p99": 0.010101010091602802,
+              "per_cell_signed_change_p10": -0.0009798255050554872,
+              "per_cell_signed_change_p50": 5.2749237511307e-07,
+              "per_cell_signed_change_p90": 0.002406568732112646,
+              "finite": true,
+              "peak_positive_tick": 49
+            }
+          }
+        },
+        "Tm9": {
+          "local_neurons": 133,
+          "remote_neurons": 139,
+          "local_spikes": 0,
+          "blank_local_spikes": 0,
+          "features": {
+            "voltage": {
+              "local_mean_absolute_change": 0.0014943897258490324,
+              "local_mean_signed_change": -0.0014931383775547147,
+              "remote_mean_absolute_change": 0.0,
+              "local_fraction_above_blank_p99": 0.00853696744889021,
+              "blank_fraction_above_blank_p99": 0.010416666977107525,
+              "per_cell_signed_change_p10": -0.007744322996586561,
+              "per_cell_signed_change_p50": 0.0,
+              "per_cell_signed_change_p90": 0.0,
+              "finite": true,
+              "peak_positive_tick": 143
+            },
+            "current": {
+              "local_mean_absolute_change": 0.00156662636436522,
+              "local_mean_signed_change": -0.001555514638312161,
+              "remote_mean_absolute_change": 0.0,
+              "local_fraction_above_blank_p99": 0.00853696744889021,
+              "blank_fraction_above_blank_p99": 0.010416666977107525,
+              "per_cell_signed_change_p10": -0.008031406439840794,
+              "per_cell_signed_change_p50": 0.0,
+              "per_cell_signed_change_p90": 0.0,
+              "finite": true,
+              "peak_positive_tick": 133
+            },
+            "positive_fast_voltage": {
+              "local_mean_absolute_change": 0.0004549018922261894,
+              "local_mean_signed_change": -0.0004549018922261894,
+              "remote_mean_absolute_change": 0.0,
+              "local_fraction_above_blank_p99": 0.00853696744889021,
+              "blank_fraction_above_blank_p99": 0.010416666977107525,
+              "per_cell_signed_change_p10": -0.002417626092210412,
+              "per_cell_signed_change_p50": 0.0,
+              "per_cell_signed_change_p90": 0.0,
+              "finite": true,
+              "peak_positive_tick": 143
+            },
+            "negative_fast_voltage": {
+              "local_mean_absolute_change": 0.0008000232628546655,
+              "local_mean_signed_change": 0.0007753141107968986,
+              "remote_mean_absolute_change": 0.0,
+              "local_fraction_above_blank_p99": 0.023652881383895874,
+              "blank_fraction_above_blank_p99": 0.010416666977107525,
+              "per_cell_signed_change_p10": 0.0,
+              "per_cell_signed_change_p50": 0.0,
+              "per_cell_signed_change_p90": 0.0041219876147806644,
+              "finite": true,
+              "peak_positive_tick": 54
+            },
+            "positive_fast_current": {
+              "local_mean_absolute_change": 0.0013999335933476686,
+              "local_mean_signed_change": -0.0013982157688587904,
+              "remote_mean_absolute_change": 0.0,
+              "local_fraction_above_blank_p99": 0.00853696744889021,
+              "blank_fraction_above_blank_p99": 0.010416666977107525,
+              "per_cell_signed_change_p10": -0.007348938379436731,
+              "per_cell_signed_change_p50": 0.0,
+              "per_cell_signed_change_p90": 0.0,
+              "finite": true,
+              "peak_positive_tick": 133
+            },
+            "negative_fast_current": {
+              "local_mean_absolute_change": 0.000275493657682091,
+              "local_mean_signed_change": -0.00020143919391557574,
+              "remote_mean_absolute_change": 0.0,
+              "local_fraction_above_blank_p99": 0.011356516741216183,
+              "blank_fraction_above_blank_p99": 0.010338345542550087,
+              "per_cell_signed_change_p10": -0.0011057124938815832,
+              "per_cell_signed_change_p50": 0.0,
+              "per_cell_signed_change_p90": 0.0,
+              "finite": true,
+              "peak_positive_tick": 52
+            }
+          }
+        }
+      }
+    },
+    "18-off-bar": {
+      "pixel_events": 312,
+      "classes": {
+        "Mi4": {
+          "local_neurons": 132,
+          "remote_neurons": 139,
+          "local_spikes": 0,
+          "blank_local_spikes": 0,
+          "features": {
+            "voltage": {
+              "local_mean_absolute_change": 0.005950089078396559,
+              "local_mean_signed_change": -0.005426543299108744,
+              "remote_mean_absolute_change": 0.00010715889220591635,
+              "local_fraction_above_blank_p99": 0.015703914687037468,
+              "blank_fraction_above_blank_p99": 0.010416666977107525,
+              "per_cell_signed_change_p10": -0.012435942888259888,
+              "per_cell_signed_change_p50": -0.004382316023111343,
+              "per_cell_signed_change_p90": -4.0541628550272435e-05,
+              "finite": true,
+              "peak_positive_tick": 18
+            },
+            "current": {
+              "local_mean_absolute_change": 0.009460858069360256,
+              "local_mean_signed_change": -0.007618381641805172,
+              "remote_mean_absolute_change": 0.0007103284006007016,
+              "local_fraction_above_blank_p99": 0.010101010091602802,
+              "blank_fraction_above_blank_p99": 0.010416666977107525,
+              "per_cell_signed_change_p10": -0.01605336368083954,
+              "per_cell_signed_change_p50": -0.0070695290341973305,
+              "per_cell_signed_change_p90": -1.5213601489705297e-09,
+              "finite": true,
+              "peak_positive_tick": 143
+            },
+            "positive_fast_voltage": {
+              "local_mean_absolute_change": 0.001222564373165369,
+              "local_mean_signed_change": -0.0010767698986455798,
+              "remote_mean_absolute_change": 4.987888678442687e-05,
+              "local_fraction_above_blank_p99": 0.016177399083971977,
+              "blank_fraction_above_blank_p99": 0.00978535320609808,
+              "per_cell_signed_change_p10": -0.0029144613072276115,
+              "per_cell_signed_change_p50": -0.0006752744666300714,
+              "per_cell_signed_change_p90": 0.0,
+              "finite": true,
+              "peak_positive_tick": 19
+            },
+            "negative_fast_voltage": {
+              "local_mean_absolute_change": 0.004142367281019688,
+              "local_mean_signed_change": 0.003682882757857442,
+              "remote_mean_absolute_change": 5.8800491387955844e-05,
+              "local_fraction_above_blank_p99": 0.21251578629016876,
+              "blank_fraction_above_blank_p99": 0.008838383480906487,
+              "per_cell_signed_change_p10": 0.0,
+              "per_cell_signed_change_p50": 0.002458017785102129,
+              "per_cell_signed_change_p90": 0.010079775005578995,
+              "finite": true,
+              "peak_positive_tick": 122
+            },
+            "positive_fast_current": {
+              "local_mean_absolute_change": 0.0013836714206263423,
+              "local_mean_signed_change": -0.000782339193392545,
+              "remote_mean_absolute_change": 0.00021602177002932876,
+              "local_fraction_above_blank_p99": 0.012705177068710327,
+              "blank_fraction_above_blank_p99": 0.00844381283968687,
+              "per_cell_signed_change_p10": -0.002616236684843898,
+              "per_cell_signed_change_p50": -0.00031898904126137495,
+              "per_cell_signed_change_p90": 2.2990363959252136e-06,
+              "finite": true,
+              "peak_positive_tick": 137
+            },
+            "negative_fast_current": {
+              "local_mean_absolute_change": 0.00734031992033124,
+              "local_mean_signed_change": 0.005806587170809507,
+              "remote_mean_absolute_change": 0.0004998078802600503,
+              "local_fraction_above_blank_p99": 0.10740214586257935,
+              "blank_fraction_above_blank_p99": 0.008996211923658848,
+              "per_cell_signed_change_p10": 0.0,
+              "per_cell_signed_change_p50": 0.004865302704274654,
+              "per_cell_signed_change_p90": 0.012454344891011715,
+              "finite": true,
+              "peak_positive_tick": 113
+            }
+          }
+        },
+        "Tm4": {
+          "local_neurons": 132,
+          "remote_neurons": 128,
+          "local_spikes": 0,
+          "blank_local_spikes": 0,
+          "features": {
+            "voltage": {
+              "local_mean_absolute_change": 0.09222234040498734,
+              "local_mean_signed_change": 0.08559209853410721,
+              "remote_mean_absolute_change": 0.00032109845778904855,
+              "local_fraction_above_blank_p99": 0.38565340638160706,
+              "blank_fraction_above_blank_p99": 0.010416666977107525,
+              "per_cell_signed_change_p10": -0.002739707240834832,
+              "per_cell_signed_change_p50": 0.07741022109985352,
+              "per_cell_signed_change_p90": 0.18645615875720978,
+              "finite": true,
+              "peak_positive_tick": 98
+            },
+            "current": {
+              "local_mean_absolute_change": 0.13607704639434814,
+              "local_mean_signed_change": 0.10473428666591644,
+              "remote_mean_absolute_change": 0.00229276274330914,
+              "local_fraction_above_blank_p99": 0.21204230189323425,
+              "blank_fraction_above_blank_p99": 0.010416666977107525,
+              "per_cell_signed_change_p10": -0.0030128152575343847,
+              "per_cell_signed_change_p50": 0.10817022621631622,
+              "per_cell_signed_change_p90": 0.22241170704364777,
+              "finite": true,
+              "peak_positive_tick": 97
+            },
+            "positive_fast_voltage": {
+              "local_mean_absolute_change": 0.07137588411569595,
+              "local_mean_signed_change": 0.06790933012962341,
+              "remote_mean_absolute_change": 0.00011759746848838404,
+              "local_fraction_above_blank_p99": 0.35953283309936523,
+              "blank_fraction_above_blank_p99": 0.010416666977107525,
+              "per_cell_signed_change_p10": -0.0004986952408216894,
+              "per_cell_signed_change_p50": 0.058617398142814636,
+              "per_cell_signed_change_p90": 0.14967551827430725,
+              "finite": true,
+              "peak_positive_tick": 101
+            },
+            "negative_fast_voltage": {
+              "local_mean_absolute_change": 0.012418325059115887,
+              "local_mean_signed_change": -0.006087866611778736,
+              "remote_mean_absolute_change": 0.00020701822359114885,
+              "local_fraction_above_blank_p99": 0.0520833320915699,
+              "blank_fraction_above_blank_p99": 0.010416666977107525,
+              "per_cell_signed_change_p10": -0.01681733876466751,
+              "per_cell_signed_change_p50": -0.006160177290439606,
+              "per_cell_signed_change_p90": 0.0038576882798224688,
+              "finite": true,
+              "peak_positive_tick": 135
+            },
+            "positive_fast_current": {
+              "local_mean_absolute_change": 0.11709891259670258,
+              "local_mean_signed_change": 0.09039827436208725,
+              "remote_mean_absolute_change": 0.001669316552579403,
+              "local_fraction_above_blank_p99": 0.1957859843969345,
+              "blank_fraction_above_blank_p99": 0.010416666977107525,
+              "per_cell_signed_change_p10": -0.0012784816790372133,
+              "per_cell_signed_change_p50": 0.09513907134532928,
+              "per_cell_signed_change_p90": 0.184038907289505,
+              "finite": true,
+              "peak_positive_tick": 97
+            },
+            "negative_fast_current": {
+              "local_mean_absolute_change": 0.014425447210669518,
+              "local_mean_signed_change": 0.0029579410329461098,
+              "remote_mean_absolute_change": 0.0006390819908119738,
+              "local_fraction_above_blank_p99": 0.1532512605190277,
+              "blank_fraction_above_blank_p99": 0.010101010091602802,
+              "per_cell_signed_change_p10": -0.007820216938853264,
+              "per_cell_signed_change_p50": 0.0,
+              "per_cell_signed_change_p90": 0.021289292722940445,
+              "finite": true,
+              "peak_positive_tick": 134
+            }
+          }
+        },
+        "Tm9": {
+          "local_neurons": 133,
+          "remote_neurons": 139,
+          "local_spikes": 0,
+          "blank_local_spikes": 0,
+          "features": {
+            "voltage": {
+              "local_mean_absolute_change": 0.018436981365084648,
+              "local_mean_signed_change": 0.01809791848063469,
+              "remote_mean_absolute_change": 4.275245260032534e-07,
+              "local_fraction_above_blank_p99": 0.29174497723579407,
+              "blank_fraction_above_blank_p99": 0.010416666977107525,
+              "per_cell_signed_change_p10": 0.0,
+              "per_cell_signed_change_p50": 0.016573453322052956,
+              "per_cell_signed_change_p90": 0.037691663950681686,
+              "finite": true,
+              "peak_positive_tick": 118
+            },
+            "current": {
+              "local_mean_absolute_change": 0.026155849918723106,
+              "local_mean_signed_change": 0.024187127128243446,
+              "remote_mean_absolute_change": 1.3792594018013915e-06,
+              "local_fraction_above_blank_p99": 0.09868421405553818,
+              "blank_fraction_above_blank_p99": 0.010416666977107525,
+              "per_cell_signed_change_p10": 0.0,
+              "per_cell_signed_change_p50": 0.024925073608756065,
+              "per_cell_signed_change_p90": 0.05007772892713547,
+              "finite": true,
+              "peak_positive_tick": 113
+            },
+            "positive_fast_voltage": {
+              "local_mean_absolute_change": 0.014459631405770779,
+              "local_mean_signed_change": 0.014193681068718433,
+              "remote_mean_absolute_change": 2.541920309795387e-07,
+              "local_fraction_above_blank_p99": 0.26730889081954956,
+              "blank_fraction_above_blank_p99": 0.010416666977107525,
+              "per_cell_signed_change_p10": 0.0,
+              "per_cell_signed_change_p50": 0.012655575759708881,
+              "per_cell_signed_change_p90": 0.03004109486937523,
+              "finite": true,
+              "peak_positive_tick": 118
+            },
+            "negative_fast_voltage": {
+              "local_mean_absolute_change": 0.0024168197996914387,
+              "local_mean_signed_change": -0.0015700329095125198,
+              "remote_mean_absolute_change": 1.8721796379850275e-07,
+              "local_fraction_above_blank_p99": 0.06798245757818222,
+              "blank_fraction_above_blank_p99": 0.010416666977107525,
+              "per_cell_signed_change_p10": -0.003401231486350298,
+              "per_cell_signed_change_p50": -0.0015675671165809035,
+              "per_cell_signed_change_p90": 4.7941968659870327e-05,
+              "finite": true,
+              "peak_positive_tick": 143
+            },
+            "positive_fast_current": {
+              "local_mean_absolute_change": 0.023763826116919518,
+              "local_mean_signed_change": 0.02179194800555706,
+              "remote_mean_absolute_change": 1.084915879800974e-06,
+              "local_fraction_above_blank_p99": 0.09265350550413132,
+              "blank_fraction_above_blank_p99": 0.010416666977107525,
+              "per_cell_signed_change_p10": 0.0,
+              "per_cell_signed_change_p50": 0.02256747893989086,
+              "per_cell_signed_change_p90": 0.0453619658946991,
+              "finite": true,
+              "peak_positive_tick": 113
+            },
+            "negative_fast_current": {
+              "local_mean_absolute_change": 0.002170183230191469,
+              "local_mean_signed_change": 0.0011447048746049404,
+              "remote_mean_absolute_change": 3.4091229395016853e-07,
+              "local_fraction_above_blank_p99": 0.20841164886951447,
+              "blank_fraction_above_blank_p99": 0.010338345542550087,
+              "per_cell_signed_change_p10": -0.0009693749598227441,
+              "per_cell_signed_change_p50": 0.0,
+              "per_cell_signed_change_p90": 0.004841886926442385,
+              "finite": true,
+              "peak_positive_tick": 143
+            }
+          }
+        }
+      }
+    },
+    "18-off-static": {
+      "pixel_events": 0,
+      "classes": {
+        "Mi4": {
+          "local_neurons": 132,
+          "remote_neurons": 139,
+          "local_spikes": 0,
+          "blank_local_spikes": 0,
+          "features": {
+            "voltage": {
+              "local_mean_absolute_change": 0.0035761112812906504,
+              "local_mean_signed_change": -0.0033223023638129234,
+              "remote_mean_absolute_change": 0.00021224403462838382,
+              "local_fraction_above_blank_p99": 0.008759469725191593,
+              "blank_fraction_above_blank_p99": 0.010416666977107525,
+              "per_cell_signed_change_p10": -0.008147716522216797,
+              "per_cell_signed_change_p50": -0.0022760408464819193,
+              "per_cell_signed_change_p90": 0.0,
+              "finite": true,
+              "peak_positive_tick": 143
+            },
+            "current": {
+              "local_mean_absolute_change": 0.004927874077111483,
+              "local_mean_signed_change": -0.003286481834948063,
+              "remote_mean_absolute_change": 0.0013032689457759261,
+              "local_fraction_above_blank_p99": 0.00844381283968687,
+              "blank_fraction_above_blank_p99": 0.010416666977107525,
+              "per_cell_signed_change_p10": -0.008172507397830486,
+              "per_cell_signed_change_p50": -0.0023786139208823442,
+              "per_cell_signed_change_p90": 4.534709829862038e-10,
+              "finite": true,
+              "peak_positive_tick": 107
+            },
+            "positive_fast_voltage": {
+              "local_mean_absolute_change": 0.0008290787227451801,
+              "local_mean_signed_change": -0.000685941253323108,
+              "remote_mean_absolute_change": 0.00010456904419697821,
+              "local_fraction_above_blank_p99": 0.02525252476334572,
+              "blank_fraction_above_blank_p99": 0.00978535320609808,
+              "per_cell_signed_change_p10": -0.00197494775056839,
+              "per_cell_signed_change_p50": -0.0003138044849038124,
+              "per_cell_signed_change_p90": 3.6022811400471255e-05,
+              "finite": true,
+              "peak_positive_tick": 136
+            },
+            "negative_fast_voltage": {
+              "local_mean_absolute_change": 0.0022360519506037235,
+              "local_mean_signed_change": 0.001983855850994587,
+              "remote_mean_absolute_change": 0.00011035711213480681,
+              "local_fraction_above_blank_p99": 0.1463068127632141,
+              "blank_fraction_above_blank_p99": 0.008838383480906487,
+              "per_cell_signed_change_p10": 0.0,
+              "per_cell_signed_change_p50": 0.0011190315708518028,
+              "per_cell_signed_change_p90": 0.005635572597384453,
+              "finite": true,
+              "peak_positive_tick": 54
+            },
+            "positive_fast_current": {
+              "local_mean_absolute_change": 0.0010700018610805273,
+              "local_mean_signed_change": -0.00014817903866060078,
+              "remote_mean_absolute_change": 0.0004028159019071609,
+              "local_fraction_above_blank_p99": 0.029750632122159004,
+              "blank_fraction_above_blank_p99": 0.00844381283968687,
+              "per_cell_signed_change_p10": -0.0009005980100482702,
+              "per_cell_signed_change_p50": 0.0,
+              "per_cell_signed_change_p90": 0.0004760578158311546,
+              "finite": true,
+              "peak_positive_tick": 116
+            },
+            "negative_fast_current": {
+              "local_mean_absolute_change": 0.0039467597380280495,
+              "local_mean_signed_change": 0.0022771439980715513,
+              "remote_mean_absolute_change": 0.0009039173019118607,
+              "local_fraction_above_blank_p99": 0.05973800644278526,
+              "blank_fraction_above_blank_p99": 0.008996211923658848,
+              "per_cell_signed_change_p10": -1.2213824902573833e-06,
+              "per_cell_signed_change_p50": 0.0015298204962164164,
+              "per_cell_signed_change_p90": 0.006101354490965605,
+              "finite": true,
+              "peak_positive_tick": 51
+            }
+          }
+        },
+        "Tm4": {
+          "local_neurons": 132,
+          "remote_neurons": 128,
+          "local_spikes": 0,
+          "blank_local_spikes": 0,
+          "features": {
+            "voltage": {
+              "local_mean_absolute_change": 0.05023772642016411,
+              "local_mean_signed_change": 0.04169703647494316,
+              "remote_mean_absolute_change": 0.0006921676103956997,
+              "local_fraction_above_blank_p99": 0.24163509905338287,
+              "blank_fraction_above_blank_p99": 0.010416666977107525,
+              "per_cell_signed_change_p10": -0.0051765660755336285,
+              "per_cell_signed_change_p50": -0.0007640722906216979,
+              "per_cell_signed_change_p90": 0.1488812416791916,
+              "finite": true,
+              "peak_positive_tick": 35
+            },
+            "current": {
+              "local_mean_absolute_change": 0.06898918747901917,
+              "local_mean_signed_change": 0.034118905663490295,
+              "remote_mean_absolute_change": 0.0036384528502821922,
+              "local_fraction_above_blank_p99": 0.07236427068710327,
+              "blank_fraction_above_blank_p99": 0.010416666977107525,
+              "per_cell_signed_change_p10": -0.006304306909441948,
+              "per_cell_signed_change_p50": -0.0004474355955608189,
+              "per_cell_signed_change_p90": 0.1240793839097023,
+              "finite": true,
+              "peak_positive_tick": 29
+            },
+            "positive_fast_voltage": {
+              "local_mean_absolute_change": 0.033097609877586365,
+              "local_mean_signed_change": 0.02820468880236149,
+              "remote_mean_absolute_change": 0.00022973310842644423,
+              "local_fraction_above_blank_p99": 0.21669822931289673,
+              "blank_fraction_above_blank_p99": 0.010416666977107525,
+              "per_cell_signed_change_p10": -0.0030894021037966013,
+              "per_cell_signed_change_p50": -5.199340648687212e-06,
+              "per_cell_signed_change_p90": 0.09348621964454651,
+              "finite": true,
+              "peak_positive_tick": 36
+            },
+            "negative_fast_voltage": {
+              "local_mean_absolute_change": 0.011119834147393703,
+              "local_mean_signed_change": -0.0037408091593533754,
+              "remote_mean_absolute_change": 0.00047337377327494323,
+              "local_fraction_above_blank_p99": 0.0338541679084301,
+              "blank_fraction_above_blank_p99": 0.010416666977107525,
+              "per_cell_signed_change_p10": -0.013930147513747215,
+              "per_cell_signed_change_p50": -0.0003178390325047076,
+              "per_cell_signed_change_p90": 0.0020371086429804564,
+              "finite": true,
+              "peak_positive_tick": 128
+            },
+            "positive_fast_current": {
+              "local_mean_absolute_change": 0.05595956742763519,
+              "local_mean_signed_change": 0.024612683802843094,
+              "remote_mean_absolute_change": 0.0027480022981762886,
+              "local_fraction_above_blank_p99": 0.06273674219846725,
+              "blank_fraction_above_blank_p99": 0.010416666977107525,
+              "per_cell_signed_change_p10": -0.00609921058639884,
+              "per_cell_signed_change_p50": -0.00012078728468623012,
+              "per_cell_signed_change_p90": 0.09062241017818451,
+              "finite": true,
+              "peak_positive_tick": 29
+            },
+            "negative_fast_current": {
+              "local_mean_absolute_change": 0.010771023109555244,
+              "local_mean_signed_change": 0.00277181644923985,
+              "remote_mean_absolute_change": 0.0009096080902963877,
+              "local_fraction_above_blank_p99": 0.12105429172515869,
+              "blank_fraction_above_blank_p99": 0.010101010091602802,
+              "per_cell_signed_change_p10": -0.0020892140455543995,
+              "per_cell_signed_change_p50": 0.00016108466661535203,
+              "per_cell_signed_change_p90": 0.009903622791171074,
+              "finite": true,
+              "peak_positive_tick": 125
+            }
+          }
+        },
+        "Tm9": {
+          "local_neurons": 133,
+          "remote_neurons": 139,
+          "local_spikes": 0,
+          "blank_local_spikes": 0,
+          "features": {
+            "voltage": {
+              "local_mean_absolute_change": 0.008653386496007442,
+              "local_mean_signed_change": 0.008635131642222404,
+              "remote_mean_absolute_change": 1.9158790109941037e-06,
+              "local_fraction_above_blank_p99": 0.1470864713191986,
+              "blank_fraction_above_blank_p99": 0.010416666977107525,
+              "per_cell_signed_change_p10": 0.0,
+              "per_cell_signed_change_p50": 0.0,
+              "per_cell_signed_change_p90": 0.04518447816371918,
+              "finite": true,
+              "peak_positive_tick": 44
+            },
+            "current": {
+              "local_mean_absolute_change": 0.007916531525552273,
+              "local_mean_signed_change": 0.007519529666751623,
+              "remote_mean_absolute_change": 8.205958692997228e-06,
+              "local_fraction_above_blank_p99": 0.03438283130526543,
+              "blank_fraction_above_blank_p99": 0.010416666977107525,
+              "per_cell_signed_change_p10": 0.0,
+              "per_cell_signed_change_p50": 0.0,
+              "per_cell_signed_change_p90": 0.03923908993601799,
+              "finite": true,
+              "peak_positive_tick": 27
+            },
+            "positive_fast_voltage": {
+              "local_mean_absolute_change": 0.0059807198122143745,
+              "local_mean_signed_change": 0.005970540922135115,
+              "remote_mean_absolute_change": 8.33329636407143e-07,
+              "local_fraction_above_blank_p99": 0.12985588610172272,
+              "blank_fraction_above_blank_p99": 0.010416666977107525,
+              "per_cell_signed_change_p10": 0.0,
+              "per_cell_signed_change_p50": 0.0,
+              "per_cell_signed_change_p90": 0.03142740949988365,
+              "finite": true,
+              "peak_positive_tick": 43
+            },
+            "negative_fast_voltage": {
+              "local_mean_absolute_change": 0.000896541983820498,
+              "local_mean_signed_change": -0.0006539233145304024,
+              "remote_mean_absolute_change": 1.138718062065891e-06,
+              "local_fraction_above_blank_p99": 0.03140664100646973,
+              "blank_fraction_above_blank_p99": 0.010416666977107525,
+              "per_cell_signed_change_p10": -0.0032786333467811346,
+              "per_cell_signed_change_p50": 0.0,
+              "per_cell_signed_change_p90": 0.0,
+              "finite": true,
+              "peak_positive_tick": 143
+            },
+            "positive_fast_current": {
+              "local_mean_absolute_change": 0.006590905133634806,
+              "local_mean_signed_change": 0.00593437347561121,
+              "remote_mean_absolute_change": 3.4319452879572054e-06,
+              "local_fraction_above_blank_p99": 0.029213659465312958,
+              "blank_fraction_above_blank_p99": 0.010416666977107525,
+              "per_cell_signed_change_p10": 0.0,
+              "per_cell_signed_change_p50": 0.0,
+              "per_cell_signed_change_p90": 0.031246811151504517,
+              "finite": true,
+              "peak_positive_tick": 27
+            },
+            "negative_fast_current": {
+              "local_mean_absolute_change": 0.0012179160257801414,
+              "local_mean_signed_change": 0.0009475215920247138,
+              "remote_mean_absolute_change": 4.942435680277413e-06,
+              "local_fraction_above_blank_p99": 0.09187030047178268,
+              "blank_fraction_above_blank_p99": 0.010338345542550087,
+              "per_cell_signed_change_p10": 0.0,
+              "per_cell_signed_change_p50": 0.0,
+              "per_cell_signed_change_p90": 0.0051629566587507725,
+              "finite": true,
+              "peak_positive_tick": 135
+            }
+          }
+        }
+      }
+    },
+    "46-on-bar": {
+      "pixel_events": 312,
+      "classes": {
+        "Mi4": {
+          "local_neurons": 139,
+          "remote_neurons": 132,
+          "local_spikes": 0,
+          "blank_local_spikes": 0,
+          "features": {
+            "voltage": {
+              "local_mean_absolute_change": 0.003867624793201685,
+              "local_mean_signed_change": -0.0026485139969736338,
+              "remote_mean_absolute_change": 5.0888156692963094e-05,
+              "local_fraction_above_blank_p99": 0.03522182255983353,
+              "blank_fraction_above_blank_p99": 0.010416666977107525,
+              "per_cell_signed_change_p10": -0.006829339545220137,
+              "per_cell_signed_change_p50": -0.002268074778839946,
+              "per_cell_signed_change_p90": 0.0006724022096022964,
+              "finite": true,
+              "peak_positive_tick": 46
+            },
+            "current": {
+              "local_mean_absolute_change": 0.008429310284554958,
+              "local_mean_signed_change": -0.004080670420080423,
+              "remote_mean_absolute_change": 0.00016874843277037144,
+              "local_fraction_above_blank_p99": 0.021208032965660095,
+              "blank_fraction_above_blank_p99": 0.010416666977107525,
+              "per_cell_signed_change_p10": -0.010041741654276848,
+              "per_cell_signed_change_p50": -0.003773011500015855,
+              "per_cell_signed_change_p90": 0.0006957416189834476,
+              "finite": true,
+              "peak_positive_tick": 42
+            },
+            "positive_fast_voltage": {
+              "local_mean_absolute_change": 0.0011782835936173797,
+              "local_mean_signed_change": -0.000738851900678128,
+              "remote_mean_absolute_change": 4.513317617238499e-05,
+              "local_fraction_above_blank_p99": 0.02982613816857338,
+              "blank_fraction_above_blank_p99": 0.00966726616024971,
+              "per_cell_signed_change_p10": -0.0026512874756008387,
+              "per_cell_signed_change_p50": -0.00029177332180552185,
+              "per_cell_signed_change_p90": 0.00011305593943689018,
+              "finite": true,
+              "peak_positive_tick": 42
+            },
+            "negative_fast_voltage": {
+              "local_mean_absolute_change": 0.002433719579130411,
+              "local_mean_signed_change": 0.0017162051517516375,
+              "remote_mean_absolute_change": 9.630706472307793e-07,
+              "local_fraction_above_blank_p99": 0.10184352844953537,
+              "blank_fraction_above_blank_p99": 0.009967026300728321,
+              "per_cell_signed_change_p10": -0.00011997089313808829,
+              "per_cell_signed_change_p50": 0.0014658746076747775,
+              "per_cell_signed_change_p90": 0.004969055764377117,
+              "finite": true,
+              "peak_positive_tick": 129
+            },
+            "positive_fast_current": {
+              "local_mean_absolute_change": 0.0026765852235257626,
+              "local_mean_signed_change": -0.0009794780053198338,
+              "remote_mean_absolute_change": 6.100210885051638e-05,
+              "local_fraction_above_blank_p99": 0.018210431560873985,
+              "blank_fraction_above_blank_p99": 0.008618105202913284,
+              "per_cell_signed_change_p10": -0.0041968789882957935,
+              "per_cell_signed_change_p50": -0.00015913101378828287,
+              "per_cell_signed_change_p90": 0.0006383556174114347,
+              "finite": true,
+              "peak_positive_tick": 42
+            },
+            "negative_fast_current": {
+              "local_mean_absolute_change": 0.005417401436716318,
+              "local_mean_signed_change": 0.0027219823095947504,
+              "remote_mean_absolute_change": 0.00010784367623273283,
+              "local_fraction_above_blank_p99": 0.03649580478668213,
+              "blank_fraction_above_blank_p99": 0.010116906836628914,
+              "per_cell_signed_change_p10": 0.0,
+              "per_cell_signed_change_p50": 0.001993284560739994,
+              "per_cell_signed_change_p90": 0.0068743485026061535,
+              "finite": true,
+              "peak_positive_tick": 127
+            }
+          }
+        },
+        "Tm4": {
+          "local_neurons": 128,
+          "remote_neurons": 132,
+          "local_spikes": 0,
+          "blank_local_spikes": 0,
+          "features": {
+            "voltage": {
+              "local_mean_absolute_change": 0.06400059163570404,
+              "local_mean_signed_change": 0.05184796452522278,
+              "remote_mean_absolute_change": 0.0002605313784442842,
+              "local_fraction_above_blank_p99": 0.35693359375,
+              "blank_fraction_above_blank_p99": 0.010416666977107525,
+              "per_cell_signed_change_p10": -0.007607542909681797,
+              "per_cell_signed_change_p50": 0.04309763014316559,
+              "per_cell_signed_change_p90": 0.13195133209228516,
+              "finite": true,
+              "peak_positive_tick": 101
+            },
+            "current": {
+              "local_mean_absolute_change": 0.10299426317214966,
+              "local_mean_signed_change": 0.06759670376777649,
+              "remote_mean_absolute_change": 0.0019307613838464022,
+              "local_fraction_above_blank_p99": 0.16552734375,
+              "blank_fraction_above_blank_p99": 0.010416666977107525,
+              "per_cell_signed_change_p10": -0.0167306549847126,
+              "per_cell_signed_change_p50": 0.07087575644254684,
+              "per_cell_signed_change_p90": 0.157362699508667,
+              "finite": true,
+              "peak_positive_tick": 95
+            },
+            "positive_fast_voltage": {
+              "local_mean_absolute_change": 0.047648727893829346,
+              "local_mean_signed_change": 0.04289369657635689,
+              "remote_mean_absolute_change": 0.00013478401524480432,
+              "local_fraction_above_blank_p99": 0.3418782651424408,
+              "blank_fraction_above_blank_p99": 0.010335286147892475,
+              "per_cell_signed_change_p10": -0.0016806336352601647,
+              "per_cell_signed_change_p50": 0.03324113041162491,
+              "per_cell_signed_change_p90": 0.10935638844966888,
+              "finite": true,
+              "peak_positive_tick": 101
+            },
+            "negative_fast_voltage": {
+              "local_mean_absolute_change": 0.011059698648750782,
+              "local_mean_signed_change": -0.003851128974929452,
+              "remote_mean_absolute_change": 0.0001244146260432899,
+              "local_fraction_above_blank_p99": 0.0381673164665699,
+              "blank_fraction_above_blank_p99": 0.010416666977107525,
+              "per_cell_signed_change_p10": -0.014013820327818394,
+              "per_cell_signed_change_p50": -0.0036790643353015184,
+              "per_cell_signed_change_p90": 0.004946728702634573,
+              "finite": true,
+              "peak_positive_tick": 39
+            },
+            "positive_fast_current": {
+              "local_mean_absolute_change": 0.08492115885019302,
+              "local_mean_signed_change": 0.054267119616270065,
+              "remote_mean_absolute_change": 0.0017250481760129333,
+              "local_fraction_above_blank_p99": 0.1466471403837204,
+              "blank_fraction_above_blank_p99": 0.010416666977107525,
+              "per_cell_signed_change_p10": -0.012517247349023819,
+              "per_cell_signed_change_p50": 0.053018517792224884,
+              "per_cell_signed_change_p90": 0.1260863095521927,
+              "finite": true,
+              "peak_positive_tick": 95
+            },
+            "negative_fast_current": {
+              "local_mean_absolute_change": 0.01204045582562685,
+              "local_mean_signed_change": -0.004641565028578043,
+              "remote_mean_absolute_change": 0.00021840263798367232,
+              "local_fraction_above_blank_p99": 0.0369466133415699,
+              "blank_fraction_above_blank_p99": 0.01025390625,
+              "per_cell_signed_change_p10": -0.014693920500576496,
+              "per_cell_signed_change_p50": -0.002414685906842351,
+              "per_cell_signed_change_p90": 0.0036611156538128853,
+              "finite": true,
+              "peak_positive_tick": 138
+            }
+          }
+        },
+        "Tm9": {
+          "local_neurons": 139,
+          "remote_neurons": 133,
+          "local_spikes": 0,
+          "blank_local_spikes": 0,
+          "features": {
+            "voltage": {
+              "local_mean_absolute_change": 0.008249626494944096,
+              "local_mean_signed_change": 0.00607209512963891,
+              "remote_mean_absolute_change": 2.9788984079459624e-07,
+              "local_fraction_above_blank_p99": 0.19416967034339905,
+              "blank_fraction_above_blank_p99": 0.010416666977107525,
+              "per_cell_signed_change_p10": 0.0,
+              "per_cell_signed_change_p50": 0.003983772825449705,
+              "per_cell_signed_change_p90": 0.014233061112463474,
+              "finite": true,
+              "peak_positive_tick": 132
+            },
+            "current": {
+              "local_mean_absolute_change": 0.01357316318899393,
+              "local_mean_signed_change": 0.009264376014471054,
+              "remote_mean_absolute_change": 1.017687282001134e-06,
+              "local_fraction_above_blank_p99": 0.04264088720083237,
+              "blank_fraction_above_blank_p99": 0.010416666977107525,
+              "per_cell_signed_change_p10": 0.0,
+              "per_cell_signed_change_p50": 0.006369386333972216,
+              "per_cell_signed_change_p90": 0.02136528491973877,
+              "finite": true,
+              "peak_positive_tick": 74
+            },
+            "positive_fast_voltage": {
+              "local_mean_absolute_change": 0.005923564545810223,
+              "local_mean_signed_change": 0.004925811663269997,
+              "remote_mean_absolute_change": 1.7627715465096117e-07,
+              "local_fraction_above_blank_p99": 0.18854916095733643,
+              "blank_fraction_above_blank_p99": 0.010416666977107525,
+              "per_cell_signed_change_p10": 0.0,
+              "per_cell_signed_change_p50": 0.002955355914309621,
+              "per_cell_signed_change_p90": 0.012124489061534405,
+              "finite": true,
+              "peak_positive_tick": 93
+            },
+            "negative_fast_voltage": {
+              "local_mean_absolute_change": 0.001768222777172923,
+              "local_mean_signed_change": -0.0007077442714944482,
+              "remote_mean_absolute_change": 1.3017793776270992e-07,
+              "local_fraction_above_blank_p99": 0.02607913687825203,
+              "blank_fraction_above_blank_p99": 0.010416666977107525,
+              "per_cell_signed_change_p10": -0.002189991530030966,
+              "per_cell_signed_change_p50": -0.0001112218014895916,
+              "per_cell_signed_change_p90": 6.526833749376237e-05,
+              "finite": true,
+              "peak_positive_tick": 53
+            },
+            "positive_fast_current": {
+              "local_mean_absolute_change": 0.012145770713686943,
+              "local_mean_signed_change": 0.008103854954242706,
+              "remote_mean_absolute_change": 3.985389582794596e-07,
+              "local_fraction_above_blank_p99": 0.03964328393340111,
+              "blank_fraction_above_blank_p99": 0.010416666977107525,
+              "per_cell_signed_change_p10": 0.0,
+              "per_cell_signed_change_p50": 0.0054659596644341946,
+              "per_cell_signed_change_p90": 0.019472762942314148,
+              "finite": true,
+              "peak_positive_tick": 74
+            },
+            "negative_fast_current": {
+              "local_mean_absolute_change": 0.0007304464816115797,
+              "local_mean_signed_change": -0.000295345758786425,
+              "remote_mean_absolute_change": 6.539561923091242e-07,
+              "local_fraction_above_blank_p99": 0.060626499354839325,
+              "blank_fraction_above_blank_p99": 0.010416666977107525,
+              "per_cell_signed_change_p10": -0.0011162548325955868,
+              "per_cell_signed_change_p50": -3.0200573746697046e-05,
+              "per_cell_signed_change_p90": 0.00016576600319240242,
+              "finite": true,
+              "peak_positive_tick": 141
+            }
+          }
+        }
+      }
+    },
+    "46-on-static": {
+      "pixel_events": 0,
+      "classes": {
+        "Mi4": {
+          "local_neurons": 139,
+          "remote_neurons": 132,
+          "local_spikes": 0,
+          "blank_local_spikes": 0,
+          "features": {
+            "voltage": {
+              "local_mean_absolute_change": 0.001220601610839367,
+              "local_mean_signed_change": 0.0006104058702476323,
+              "remote_mean_absolute_change": 4.690821242547827e-06,
+              "local_fraction_above_blank_p99": 0.049385491758584976,
+              "blank_fraction_above_blank_p99": 0.010416666977107525,
+              "per_cell_signed_change_p10": -0.0001354536070721224,
+              "per_cell_signed_change_p50": 0.0,
+              "per_cell_signed_change_p90": 0.0026958403177559376,
+              "finite": true,
+              "peak_positive_tick": 44
+            },
+            "current": {
+              "local_mean_absolute_change": 0.0030941986478865147,
+              "local_mean_signed_change": 0.0007182836998254061,
+              "remote_mean_absolute_change": 4.705650280811824e-05,
+              "local_fraction_above_blank_p99": 0.018360311165452003,
+              "blank_fraction_above_blank_p99": 0.010416666977107525,
+              "per_cell_signed_change_p10": -0.0010296576656401157,
+              "per_cell_signed_change_p50": 0.0,
+              "per_cell_signed_change_p90": 0.003492375835776329,
+              "finite": true,
+              "peak_positive_tick": 42
+            },
+            "positive_fast_voltage": {
+              "local_mean_absolute_change": 0.00035421078791841865,
+              "local_mean_signed_change": 7.98412729636766e-05,
+              "remote_mean_absolute_change": 4.224197709845612e-06,
+              "local_fraction_above_blank_p99": 0.03424760326743126,
+              "blank_fraction_above_blank_p99": 0.00966726616024971,
+              "per_cell_signed_change_p10": -0.0001570424938108772,
+              "per_cell_signed_change_p50": 0.0,
+              "per_cell_signed_change_p90": 0.0005446071736514568,
+              "finite": true,
+              "peak_positive_tick": 44
+            },
+            "negative_fast_voltage": {
+              "local_mean_absolute_change": 0.0007687903707846999,
+              "local_mean_signed_change": -0.00040836227708496153,
+              "remote_mean_absolute_change": 4.039010548240185e-07,
+              "local_fraction_above_blank_p99": 0.015212830156087875,
+              "blank_fraction_above_blank_p99": 0.009967026300728321,
+              "per_cell_signed_change_p10": -0.0018126957584172487,
+              "per_cell_signed_change_p50": 0.0,
+              "per_cell_signed_change_p90": 9.888681233860552e-05,
+              "finite": true,
+              "peak_positive_tick": 141
+            },
+            "positive_fast_current": {
+              "local_mean_absolute_change": 0.0009427924524061382,
+              "local_mean_signed_change": -3.5974877391709015e-05,
+              "remote_mean_absolute_change": 9.973578926292248e-06,
+              "local_fraction_above_blank_p99": 0.013863909058272839,
+              "blank_fraction_above_blank_p99": 0.008618105202913284,
+              "per_cell_signed_change_p10": -0.0007051171269267797,
+              "per_cell_signed_change_p50": 0.0,
+              "per_cell_signed_change_p90": 0.0006644040695391595,
+              "finite": true,
+              "peak_positive_tick": 42
+            },
+            "negative_fast_current": {
+              "local_mean_absolute_change": 0.0021789532620459795,
+              "local_mean_signed_change": -0.0005943794967606664,
+              "remote_mean_absolute_change": 3.748261951841414e-05,
+              "local_fraction_above_blank_p99": 0.011990407481789589,
+              "blank_fraction_above_blank_p99": 0.010116906836628914,
+              "per_cell_signed_change_p10": -0.002801791997626424,
+              "per_cell_signed_change_p50": 0.0,
+              "per_cell_signed_change_p90": 0.00036162236938253045,
+              "finite": true,
+              "peak_positive_tick": 135
+            }
+          }
+        },
+        "Tm4": {
+          "local_neurons": 128,
+          "remote_neurons": 132,
+          "local_spikes": 0,
+          "blank_local_spikes": 0,
+          "features": {
+            "voltage": {
+              "local_mean_absolute_change": 0.007951198145747185,
+              "local_mean_signed_change": -0.0063569131307303905,
+              "remote_mean_absolute_change": 0.00010005776857724413,
+              "local_fraction_above_blank_p99": 0.02978515625,
+              "blank_fraction_above_blank_p99": 0.010416666977107525,
+              "per_cell_signed_change_p10": -0.02543463557958603,
+              "per_cell_signed_change_p50": 2.27873306357651e-06,
+              "per_cell_signed_change_p90": 0.0013155551860108972,
+              "finite": true,
+              "peak_positive_tick": 143
+            },
+            "current": {
+              "local_mean_absolute_change": 0.015292949043214321,
+              "local_mean_signed_change": -0.007309854030609131,
+              "remote_mean_absolute_change": 0.0007145775016397238,
+              "local_fraction_above_blank_p99": 0.011393229477107525,
+              "blank_fraction_above_blank_p99": 0.010416666977107525,
+              "per_cell_signed_change_p10": -0.031003382056951523,
+              "per_cell_signed_change_p50": 4.136040843150113e-09,
+              "per_cell_signed_change_p90": 0.002195618813857436,
+              "finite": true,
+              "peak_positive_tick": 143
+            },
+            "positive_fast_voltage": {
+              "local_mean_absolute_change": 0.0022701092530041933,
+              "local_mean_signed_change": -0.0012799894902855158,
+              "remote_mean_absolute_change": 5.218454680289142e-05,
+              "local_fraction_above_blank_p99": 0.02693684957921505,
+              "blank_fraction_above_blank_p99": 0.010335286147892475,
+              "per_cell_signed_change_p10": -0.007283995393663645,
+              "per_cell_signed_change_p50": 2.954038791358471e-05,
+              "per_cell_signed_change_p90": 0.0010797696886584163,
+              "finite": true,
+              "peak_positive_tick": 143
+            },
+            "negative_fast_voltage": {
+              "local_mean_absolute_change": 0.004659753758460283,
+              "local_mean_signed_change": 0.004037302453070879,
+              "remote_mean_absolute_change": 4.913370139547624e-05,
+              "local_fraction_above_blank_p99": 0.0472005195915699,
+              "blank_fraction_above_blank_p99": 0.010416666977107525,
+              "per_cell_signed_change_p10": -0.00020255114941392094,
+              "per_cell_signed_change_p50": 0.00017621107690501958,
+              "per_cell_signed_change_p90": 0.015704026445746422,
+              "finite": true,
+              "peak_positive_tick": 73
+            },
+            "positive_fast_current": {
+              "local_mean_absolute_change": 0.011467198841273785,
+              "local_mean_signed_change": -0.004482160788029432,
+              "remote_mean_absolute_change": 0.0006818680558353662,
+              "local_fraction_above_blank_p99": 0.010823567397892475,
+              "blank_fraction_above_blank_p99": 0.010416666977107525,
+              "per_cell_signed_change_p10": -0.018815329298377037,
+              "per_cell_signed_change_p50": 6.19039055891335e-05,
+              "per_cell_signed_change_p90": 0.0020783848594874144,
+              "finite": true,
+              "peak_positive_tick": 133
+            },
+            "negative_fast_current": {
+              "local_mean_absolute_change": 0.0031698576640337706,
+              "local_mean_signed_change": 0.0013767847558483481,
+              "remote_mean_absolute_change": 3.8815061998320743e-05,
+              "local_fraction_above_blank_p99": 0.02262369729578495,
+              "blank_fraction_above_blank_p99": 0.01025390625,
+              "per_cell_signed_change_p10": -0.0005243791383691132,
+              "per_cell_signed_change_p50": 0.00014688783267047256,
+              "per_cell_signed_change_p90": 0.003420615568757057,
+              "finite": true,
+              "peak_positive_tick": 70
+            }
+          }
+        },
+        "Tm9": {
+          "local_neurons": 139,
+          "remote_neurons": 133,
+          "local_spikes": 0,
+          "blank_local_spikes": 0,
+          "features": {
+            "voltage": {
+              "local_mean_absolute_change": 0.001166025409474969,
+              "local_mean_signed_change": -0.0011617831187322736,
+              "remote_mean_absolute_change": 0.0,
+              "local_fraction_above_blank_p99": 0.008543165400624275,
+              "blank_fraction_above_blank_p99": 0.010416666977107525,
+              "per_cell_signed_change_p10": -0.006027545779943466,
+              "per_cell_signed_change_p50": 0.0,
+              "per_cell_signed_change_p90": 0.0,
+              "finite": true,
+              "peak_positive_tick": 143
+            },
+            "current": {
+              "local_mean_absolute_change": 0.001228900859132409,
+              "local_mean_signed_change": -0.0012080194428563118,
+              "remote_mean_absolute_change": 0.0,
+              "local_fraction_above_blank_p99": 0.008468225598335266,
+              "blank_fraction_above_blank_p99": 0.010416666977107525,
+              "per_cell_signed_change_p10": -0.0062556485645473,
+              "per_cell_signed_change_p50": 0.0,
+              "per_cell_signed_change_p90": 0.0,
+              "finite": true,
+              "peak_positive_tick": 133
+            },
+            "positive_fast_voltage": {
+              "local_mean_absolute_change": 0.00035840392229147255,
+              "local_mean_signed_change": -0.00035803060745820403,
+              "remote_mean_absolute_change": 0.0,
+              "local_fraction_above_blank_p99": 0.008618105202913284,
+              "blank_fraction_above_blank_p99": 0.010416666977107525,
+              "per_cell_signed_change_p10": -0.0018915178952738643,
+              "per_cell_signed_change_p50": 0.0,
+              "per_cell_signed_change_p90": 0.0,
+              "finite": true,
+              "peak_positive_tick": 143
+            },
+            "negative_fast_voltage": {
+              "local_mean_absolute_change": 0.0006222242955118418,
+              "local_mean_signed_change": 0.0005989576457068324,
+              "remote_mean_absolute_change": 0.0,
+              "local_fraction_above_blank_p99": 0.026378896087408066,
+              "blank_fraction_above_blank_p99": 0.010416666977107525,
+              "per_cell_signed_change_p10": 0.0,
+              "per_cell_signed_change_p50": 0.0,
+              "per_cell_signed_change_p90": 0.0030611720867455006,
+              "finite": true,
+              "peak_positive_tick": 53
+            },
+            "positive_fast_current": {
+              "local_mean_absolute_change": 0.0010953015880659223,
+              "local_mean_signed_change": -0.001092924503609538,
+              "remote_mean_absolute_change": 0.0,
+              "local_fraction_above_blank_p99": 0.008468225598335266,
+              "blank_fraction_above_blank_p99": 0.010416666977107525,
+              "per_cell_signed_change_p10": -0.005669933278113604,
+              "per_cell_signed_change_p50": 0.0,
+              "per_cell_signed_change_p90": 0.0,
+              "finite": true,
+              "peak_positive_tick": 133
+            },
+            "negative_fast_current": {
+              "local_mean_absolute_change": 0.00021417673269752413,
+              "local_mean_signed_change": -0.00016424493514932692,
+              "remote_mean_absolute_change": 0.0,
+              "local_fraction_above_blank_p99": 0.008992806077003479,
+              "blank_fraction_above_blank_p99": 0.010416666977107525,
+              "per_cell_signed_change_p10": -0.0008685223874635994,
+              "per_cell_signed_change_p50": 0.0,
+              "per_cell_signed_change_p90": 0.0,
+              "finite": true,
+              "peak_positive_tick": 52
+            }
+          }
+        }
+      }
+    },
+    "46-off-bar": {
+      "pixel_events": 312,
+      "classes": {
+        "Mi4": {
+          "local_neurons": 139,
+          "remote_neurons": 132,
+          "local_spikes": 0,
+          "blank_local_spikes": 0,
+          "features": {
+            "voltage": {
+              "local_mean_absolute_change": 0.0065451995469629765,
+              "local_mean_signed_change": -0.005314914509654045,
+              "remote_mean_absolute_change": 0.00012136004079366103,
+              "local_fraction_above_blank_p99": 0.03184952214360237,
+              "blank_fraction_above_blank_p99": 0.010416666977107525,
+              "per_cell_signed_change_p10": -0.012930728495121002,
+              "per_cell_signed_change_p50": -0.004749287385493517,
+              "per_cell_signed_change_p90": 0.00012891273945569992,
+              "finite": true,
+              "peak_positive_tick": 17
+            },
+            "current": {
+              "local_mean_absolute_change": 0.01213159877806902,
+              "local_mean_signed_change": -0.006286531686782837,
+              "remote_mean_absolute_change": 0.0004390390822663903,
+              "local_fraction_above_blank_p99": 0.016936451196670532,
+              "blank_fraction_above_blank_p99": 0.010416666977107525,
+              "per_cell_signed_change_p10": -0.015358245931565762,
+              "per_cell_signed_change_p50": -0.005053746048361063,
+              "per_cell_signed_change_p90": 0.0002533546066842973,
+              "finite": true,
+              "peak_positive_tick": 49
+            },
+            "positive_fast_voltage": {
+              "local_mean_absolute_change": 0.0013656863011419773,
+              "local_mean_signed_change": -0.0009666436235420406,
+              "remote_mean_absolute_change": 9.328570740763098e-05,
+              "local_fraction_above_blank_p99": 0.030350718647241592,
+              "blank_fraction_above_blank_p99": 0.00966726616024971,
+              "per_cell_signed_change_p10": -0.002884770045056939,
+              "per_cell_signed_change_p50": -0.0006233859458006918,
+              "per_cell_signed_change_p90": 0.00010885290976148099,
+              "finite": true,
+              "peak_positive_tick": 142
+            },
+            "negative_fast_voltage": {
+              "local_mean_absolute_change": 0.004467524588108063,
+              "local_mean_signed_change": 0.0035910815931856632,
+              "remote_mean_absolute_change": 2.5137864213320427e-05,
+              "local_fraction_above_blank_p99": 0.22152277827262878,
+              "blank_fraction_above_blank_p99": 0.009967026300728321,
+              "per_cell_signed_change_p10": -0.000103284815850202,
+              "per_cell_signed_change_p50": 0.00271838647313416,
+              "per_cell_signed_change_p90": 0.009320906363427639,
+              "finite": true,
+              "peak_positive_tick": 75
+            },
+            "positive_fast_current": {
+              "local_mean_absolute_change": 0.003283398225903511,
+              "local_mean_signed_change": -0.0013241579290479422,
+              "remote_mean_absolute_change": 0.00016308076737914234,
+              "local_fraction_above_blank_p99": 0.018360311165452003,
+              "blank_fraction_above_blank_p99": 0.008618105202913284,
+              "per_cell_signed_change_p10": -0.00461104791611433,
+              "per_cell_signed_change_p50": -0.00043719602399505675,
+              "per_cell_signed_change_p90": 0.0002448747109156102,
+              "finite": true,
+              "peak_positive_tick": 52
+            },
+            "negative_fast_current": {
+              "local_mean_absolute_change": 0.008352898992598057,
+              "local_mean_signed_change": 0.003853296395391226,
+              "remote_mean_absolute_change": 0.00027796492213383317,
+              "local_fraction_above_blank_p99": 0.03702038526535034,
+              "blank_fraction_above_blank_p99": 0.010116906836628914,
+              "per_cell_signed_change_p10": -0.0002631554671097547,
+              "per_cell_signed_change_p50": 0.003092400496825576,
+              "per_cell_signed_change_p90": 0.01081090047955513,
+              "finite": true,
+              "peak_positive_tick": 34
+            }
+          }
+        },
+        "Tm4": {
+          "local_neurons": 128,
+          "remote_neurons": 132,
+          "local_spikes": 0,
+          "blank_local_spikes": 0,
+          "features": {
+            "voltage": {
+              "local_mean_absolute_change": 0.09021035581827164,
+              "local_mean_signed_change": 0.08000639081001282,
+              "remote_mean_absolute_change": 0.0008682325133122504,
+              "local_fraction_above_blank_p99": 0.4485677182674408,
+              "blank_fraction_above_blank_p99": 0.010416666977107525,
+              "per_cell_signed_change_p10": -0.002562269801273942,
+              "per_cell_signed_change_p50": 0.07372696697711945,
+              "per_cell_signed_change_p90": 0.17278234660625458,
+              "finite": true,
+              "peak_positive_tick": 82
+            },
+            "current": {
+              "local_mean_absolute_change": 0.12338105589151382,
+              "local_mean_signed_change": 0.08033419400453568,
+              "remote_mean_absolute_change": 0.005280919838696718,
+              "local_fraction_above_blank_p99": 0.210205078125,
+              "blank_fraction_above_blank_p99": 0.010416666977107525,
+              "per_cell_signed_change_p10": -0.007302925456315279,
+              "per_cell_signed_change_p50": 0.07704192399978638,
+              "per_cell_signed_change_p90": 0.18870890140533447,
+              "finite": true,
+              "peak_positive_tick": 25
+            },
+            "positive_fast_voltage": {
+              "local_mean_absolute_change": 0.06696664541959763,
+              "local_mean_signed_change": 0.0624881274998188,
+              "remote_mean_absolute_change": 0.00036772299790754914,
+              "local_fraction_above_blank_p99": 0.4034830629825592,
+              "blank_fraction_above_blank_p99": 0.010335286147892475,
+              "per_cell_signed_change_p10": -0.00046253521577455103,
+              "per_cell_signed_change_p50": 0.05744104087352753,
+              "per_cell_signed_change_p90": 0.14066976308822632,
+              "finite": true,
+              "peak_positive_tick": 77
+            },
+            "negative_fast_voltage": {
+              "local_mean_absolute_change": 0.01459573581814766,
+              "local_mean_signed_change": -0.0032886136323213577,
+              "remote_mean_absolute_change": 0.0004999871016480029,
+              "local_fraction_above_blank_p99": 0.092529296875,
+              "blank_fraction_above_blank_p99": 0.010416666977107525,
+              "per_cell_signed_change_p10": -0.014282564632594585,
+              "per_cell_signed_change_p50": -0.0020940005779266357,
+              "per_cell_signed_change_p90": 0.004820742178708315,
+              "finite": true,
+              "peak_positive_tick": 140
+            },
+            "positive_fast_current": {
+              "local_mean_absolute_change": 0.10231367498636246,
+              "local_mean_signed_change": 0.06671782582998276,
+              "remote_mean_absolute_change": 0.004583351314067841,
+              "local_fraction_above_blank_p99": 0.1931966096162796,
+              "blank_fraction_above_blank_p99": 0.010416666977107525,
+              "per_cell_signed_change_p10": -0.009094815701246262,
+              "per_cell_signed_change_p50": 0.06927500665187836,
+              "per_cell_signed_change_p90": 0.15884333848953247,
+              "finite": true,
+              "peak_positive_tick": 29
+            },
+            "negative_fast_current": {
+              "local_mean_absolute_change": 0.02032088302075863,
+              "local_mean_signed_change": 0.005748892668634653,
+              "remote_mean_absolute_change": 0.0007299978751689196,
+              "local_fraction_above_blank_p99": 0.2181803435087204,
+              "blank_fraction_above_blank_p99": 0.01025390625,
+              "per_cell_signed_change_p10": -0.005204740911722183,
+              "per_cell_signed_change_p50": 0.003308217041194439,
+              "per_cell_signed_change_p90": 0.02285594493150711,
+              "finite": true,
+              "peak_positive_tick": 138
+            }
+          }
+        },
+        "Tm9": {
+          "local_neurons": 139,
+          "remote_neurons": 133,
+          "local_spikes": 0,
+          "blank_local_spikes": 0,
+          "features": {
+            "voltage": {
+              "local_mean_absolute_change": 0.015590077266097069,
+              "local_mean_signed_change": 0.01468810997903347,
+              "remote_mean_absolute_change": 9.73173314378073e-07,
+              "local_fraction_above_blank_p99": 0.3202188313007355,
+              "blank_fraction_above_blank_p99": 0.010416666977107525,
+              "per_cell_signed_change_p10": 0.0,
+              "per_cell_signed_change_p50": 0.012669834308326244,
+              "per_cell_signed_change_p90": 0.0333326980471611,
+              "finite": true,
+              "peak_positive_tick": 50
+            },
+            "current": {
+              "local_mean_absolute_change": 0.019949551671743393,
+              "local_mean_signed_change": 0.016037266701459885,
+              "remote_mean_absolute_change": 3.5910795759264147e-06,
+              "local_fraction_above_blank_p99": 0.09262590110301971,
+              "blank_fraction_above_blank_p99": 0.010416666977107525,
+              "per_cell_signed_change_p10": 0.0,
+              "per_cell_signed_change_p50": 0.013098571449518204,
+              "per_cell_signed_change_p90": 0.03730769827961922,
+              "finite": true,
+              "peak_positive_tick": 22
+            },
+            "positive_fast_voltage": {
+              "local_mean_absolute_change": 0.011931603774428368,
+              "local_mean_signed_change": 0.011287914589047432,
+              "remote_mean_absolute_change": 2.741991522725584e-07,
+              "local_fraction_above_blank_p99": 0.28664568066596985,
+              "blank_fraction_above_blank_p99": 0.010416666977107525,
+              "per_cell_signed_change_p10": 0.0,
+              "per_cell_signed_change_p50": 0.010073895566165447,
+              "per_cell_signed_change_p90": 0.026227887719869614,
+              "finite": true,
+              "peak_positive_tick": 79
+            },
+            "negative_fast_voltage": {
+              "local_mean_absolute_change": 0.002565873321145773,
+              "local_mean_signed_change": -0.000791781407315284,
+              "remote_mean_absolute_change": 7.128921311050362e-07,
+              "local_fraction_above_blank_p99": 0.12305156141519547,
+              "blank_fraction_above_blank_p99": 0.010416666977107525,
+              "per_cell_signed_change_p10": -0.0026459060609340668,
+              "per_cell_signed_change_p50": -0.0006628642440773547,
+              "per_cell_signed_change_p90": 0.000688983011059463,
+              "finite": true,
+              "peak_positive_tick": 143
+            },
+            "positive_fast_current": {
+              "local_mean_absolute_change": 0.018124578520655632,
+              "local_mean_signed_change": 0.014269447885453701,
+              "remote_mean_absolute_change": 1.8475149090591003e-06,
+              "local_fraction_above_blank_p99": 0.08708033710718155,
+              "blank_fraction_above_blank_p99": 0.010416666977107525,
+              "per_cell_signed_change_p10": -9.502381726633757e-05,
+              "per_cell_signed_change_p50": 0.01145583763718605,
+              "per_cell_signed_change_p90": 0.032523490488529205,
+              "finite": true,
+              "peak_positive_tick": 22
+            },
+            "negative_fast_current": {
+              "local_mean_absolute_change": 0.0023862540256232023,
+              "local_mean_signed_change": 0.0017783526564016938,
+              "remote_mean_absolute_change": 1.8412413282931084e-06,
+              "local_fraction_above_blank_p99": 0.32134291529655457,
+              "blank_fraction_above_blank_p99": 0.010416666977107525,
+              "per_cell_signed_change_p10": -0.00038988381857052445,
+              "per_cell_signed_change_p50": 0.0016640411922708154,
+              "per_cell_signed_change_p90": 0.0048969220370054245,
+              "finite": true,
+              "peak_positive_tick": 137
+            }
+          }
+        }
+      }
+    },
+    "46-off-static": {
+      "pixel_events": 0,
+      "classes": {
+        "Mi4": {
+          "local_neurons": 139,
+          "remote_neurons": 132,
+          "local_spikes": 0,
+          "blank_local_spikes": 0,
+          "features": {
+            "voltage": {
+              "local_mean_absolute_change": 0.003361927345395088,
+              "local_mean_signed_change": -0.0022667511366307735,
+              "remote_mean_absolute_change": 7.151170575525612e-05,
+              "local_fraction_above_blank_p99": 0.01948441192507744,
+              "blank_fraction_above_blank_p99": 0.010416666977107525,
+              "per_cell_signed_change_p10": -0.005282339174300432,
+              "per_cell_signed_change_p50": -0.0019068889087066054,
+              "per_cell_signed_change_p90": 0.0,
+              "finite": true,
+              "peak_positive_tick": 120
+            },
+            "current": {
+              "local_mean_absolute_change": 0.006894582882523537,
+              "local_mean_signed_change": -0.0017808950506150723,
+              "remote_mean_absolute_change": 0.00044326146598905325,
+              "local_fraction_above_blank_p99": 0.011765587143599987,
+              "blank_fraction_above_blank_p99": 0.010416666977107525,
+              "per_cell_signed_change_p10": -0.004252391867339611,
+              "per_cell_signed_change_p50": -0.0016867169179022312,
+              "per_cell_signed_change_p90": 3.78924891464294e-10,
+              "finite": true,
+              "peak_positive_tick": 116
+            },
+            "positive_fast_voltage": {
+              "local_mean_absolute_change": 0.0008081219275481999,
+              "local_mean_signed_change": -0.00041388528188690543,
+              "remote_mean_absolute_change": 4.5462147681973875e-05,
+              "local_fraction_above_blank_p99": 0.03784472495317459,
+              "blank_fraction_above_blank_p99": 0.00966726616024971,
+              "per_cell_signed_change_p10": -0.001292581669986248,
+              "per_cell_signed_change_p50": -0.00016212112677749246,
+              "per_cell_signed_change_p90": 8.248785889009014e-05,
+              "finite": true,
+              "peak_positive_tick": 119
+            },
+            "negative_fast_voltage": {
+              "local_mean_absolute_change": 0.002208152785897255,
+              "local_mean_signed_change": 0.001349831698462367,
+              "remote_mean_absolute_change": 2.6943778721033596e-05,
+              "local_fraction_above_blank_p99": 0.12305156141519547,
+              "blank_fraction_above_blank_p99": 0.009967026300728321,
+              "per_cell_signed_change_p10": -1.4257651628213353e-06,
+              "per_cell_signed_change_p50": 0.001088848221115768,
+              "per_cell_signed_change_p90": 0.0035191900096833706,
+              "finite": true,
+              "peak_positive_tick": 46
+            },
+            "positive_fast_current": {
+              "local_mean_absolute_change": 0.002089223125949502,
+              "local_mean_signed_change": -0.0003632746229413897,
+              "remote_mean_absolute_change": 7.485016249120235e-05,
+              "local_fraction_above_blank_p99": 0.015137889422476292,
+              "blank_fraction_above_blank_p99": 0.008618105202913284,
+              "per_cell_signed_change_p10": -0.0015082542086020112,
+              "per_cell_signed_change_p50": 0.0,
+              "per_cell_signed_change_p90": 0.0003247064887546003,
+              "finite": true,
+              "peak_positive_tick": 51
+            },
+            "negative_fast_current": {
+              "local_mean_absolute_change": 0.0048744254745543,
+              "local_mean_signed_change": 0.000774816086050123,
+              "remote_mean_absolute_change": 0.00036994702531956136,
+              "local_fraction_above_blank_p99": 0.022856714203953743,
+              "blank_fraction_above_blank_p99": 0.010116906836628914,
+              "per_cell_signed_change_p10": -0.0003163804649375379,
+              "per_cell_signed_change_p50": 0.0006577863241545856,
+              "per_cell_signed_change_p90": 0.0026380065828561783,
+              "finite": true,
+              "peak_positive_tick": 30
+            }
+          }
+        },
+        "Tm4": {
+          "local_neurons": 128,
+          "remote_neurons": 132,
+          "local_spikes": 0,
+          "blank_local_spikes": 0,
+          "features": {
+            "voltage": {
+              "local_mean_absolute_change": 0.045618847012519836,
+              "local_mean_signed_change": 0.03653779998421669,
+              "remote_mean_absolute_change": 0.0006809558835811913,
+              "local_fraction_above_blank_p99": 0.2569986879825592,
+              "blank_fraction_above_blank_p99": 0.010416666977107525,
+              "per_cell_signed_change_p10": -0.006124512292444706,
+              "per_cell_signed_change_p50": -0.0011207482311874628,
+              "per_cell_signed_change_p90": 0.1378253549337387,
+              "finite": true,
+              "peak_positive_tick": 57
+            },
+            "current": {
+              "local_mean_absolute_change": 0.06407355517148972,
+              "local_mean_signed_change": 0.03070012293756008,
+              "remote_mean_absolute_change": 0.004085072781890631,
+              "local_fraction_above_blank_p99": 0.0782063826918602,
+              "blank_fraction_above_blank_p99": 0.010416666977107525,
+              "per_cell_signed_change_p10": -0.008716018870472908,
+              "per_cell_signed_change_p50": -0.001069855410605669,
+              "per_cell_signed_change_p90": 0.11502215266227722,
+              "finite": true,
+              "peak_positive_tick": 29
+            },
+            "positive_fast_voltage": {
+              "local_mean_absolute_change": 0.029429560527205467,
+              "local_mean_signed_change": 0.024645952507853508,
+              "remote_mean_absolute_change": 0.0002939346304628998,
+              "local_fraction_above_blank_p99": 0.2245279997587204,
+              "blank_fraction_above_blank_p99": 0.010335286147892475,
+              "per_cell_signed_change_p10": -0.003100378904491663,
+              "per_cell_signed_change_p50": -9.650721040088683e-05,
+              "per_cell_signed_change_p90": 0.09205890446901321,
+              "finite": true,
+              "peak_positive_tick": 58
+            },
+            "negative_fast_voltage": {
+              "local_mean_absolute_change": 0.010116265155375004,
+              "local_mean_signed_change": -0.003297751769423485,
+              "remote_mean_absolute_change": 0.0003829866473097354,
+              "local_fraction_above_blank_p99": 0.02986653707921505,
+              "blank_fraction_above_blank_p99": 0.010416666977107525,
+              "per_cell_signed_change_p10": -0.015557905659079552,
+              "per_cell_signed_change_p50": -0.00032673851819708943,
+              "per_cell_signed_change_p90": 0.0036698738113045692,
+              "finite": true,
+              "peak_positive_tick": 139
+            },
+            "positive_fast_current": {
+              "local_mean_absolute_change": 0.049810294061899185,
+              "local_mean_signed_change": 0.020574158057570457,
+              "remote_mean_absolute_change": 0.0035440349020063877,
+              "local_fraction_above_blank_p99": 0.0659993514418602,
+              "blank_fraction_above_blank_p99": 0.010416666977107525,
+              "per_cell_signed_change_p10": -0.0068226344883441925,
+              "per_cell_signed_change_p50": -0.0010874809231609106,
+              "per_cell_signed_change_p90": 0.07993291318416595,
+              "finite": true,
+              "peak_positive_tick": 29
+            },
+            "negative_fast_current": {
+              "local_mean_absolute_change": 0.012238316237926483,
+              "local_mean_signed_change": 0.00067483278689906,
+              "remote_mean_absolute_change": 0.0005566924228332937,
+              "local_fraction_above_blank_p99": 0.0931803360581398,
+              "blank_fraction_above_blank_p99": 0.01025390625,
+              "per_cell_signed_change_p10": -0.0026643124874681234,
+              "per_cell_signed_change_p50": -0.00011252867989242077,
+              "per_cell_signed_change_p90": 0.005982948001474142,
+              "finite": true,
+              "peak_positive_tick": 104
+            }
+          }
+        },
+        "Tm9": {
+          "local_neurons": 139,
+          "remote_neurons": 133,
+          "local_spikes": 0,
+          "blank_local_spikes": 0,
+          "features": {
+            "voltage": {
+              "local_mean_absolute_change": 0.006704832427203655,
+              "local_mean_signed_change": 0.006688693538308144,
+              "remote_mean_absolute_change": 9.007586641018861e-07,
+              "local_fraction_above_blank_p99": 0.14890587329864502,
+              "blank_fraction_above_blank_p99": 0.010416666977107525,
+              "per_cell_signed_change_p10": 0.0,
+              "per_cell_signed_change_p50": 0.0,
+              "per_cell_signed_change_p90": 0.03432048484683037,
+              "finite": true,
+              "peak_positive_tick": 44
+            },
+            "current": {
+              "local_mean_absolute_change": 0.0061854529194533825,
+              "local_mean_signed_change": 0.005822771694511175,
+              "remote_mean_absolute_change": 2.8120268780185143e-06,
+              "local_fraction_above_blank_p99": 0.034622300416231155,
+              "blank_fraction_above_blank_p99": 0.010416666977107525,
+              "per_cell_signed_change_p10": 0.0,
+              "per_cell_signed_change_p50": 0.0,
+              "per_cell_signed_change_p90": 0.029804779216647148,
+              "finite": true,
+              "peak_positive_tick": 27
+            },
+            "positive_fast_voltage": {
+              "local_mean_absolute_change": 0.004618226084858179,
+              "local_mean_signed_change": 0.004612884949892759,
+              "remote_mean_absolute_change": 2.0054741867170378e-07,
+              "local_fraction_above_blank_p99": 0.13166967034339905,
+              "blank_fraction_above_blank_p99": 0.010416666977107525,
+              "per_cell_signed_change_p10": 0.0,
+              "per_cell_signed_change_p50": 0.0,
+              "per_cell_signed_change_p90": 0.023907477036118507,
+              "finite": true,
+              "peak_positive_tick": 43
+            },
+            "negative_fast_voltage": {
+              "local_mean_absolute_change": 0.0007121501257643104,
+              "local_mean_signed_change": -0.0005180536536499858,
+              "remote_mean_absolute_change": 7.190480459939863e-07,
+              "local_fraction_above_blank_p99": 0.030275778844952583,
+              "blank_fraction_above_blank_p99": 0.010416666977107525,
+              "per_cell_signed_change_p10": -0.0023974720388650894,
+              "per_cell_signed_change_p50": 0.0,
+              "per_cell_signed_change_p90": 0.0,
+              "finite": true,
+              "peak_positive_tick": 143
+            },
+            "positive_fast_current": {
+              "local_mean_absolute_change": 0.005165769252926111,
+              "local_mean_signed_change": 0.004607122857123613,
+              "remote_mean_absolute_change": 1.921984676300781e-06,
+              "local_fraction_above_blank_p99": 0.029376499354839325,
+              "blank_fraction_above_blank_p99": 0.010416666977107525,
+              "per_cell_signed_change_p10": 0.0,
+              "per_cell_signed_change_p50": 0.0,
+              "per_cell_signed_change_p90": 0.023756707087159157,
+              "finite": true,
+              "peak_positive_tick": 27
+            },
+            "negative_fast_current": {
+              "local_mean_absolute_change": 0.0009434490348212421,
+              "local_mean_signed_change": 0.0007464331574738026,
+              "remote_mean_absolute_change": 9.724532219479443e-07,
+              "local_fraction_above_blank_p99": 0.09419964253902435,
+              "blank_fraction_above_blank_p99": 0.010416666977107525,
+              "per_cell_signed_change_p10": 0.0,
+              "per_cell_signed_change_p50": 0.0,
+              "per_cell_signed_change_p90": 0.004042306449264288,
+              "finite": true,
+              "peak_positive_tick": 135
+            }
+          }
+        }
+      }
+    }
+  },
+  "candidate_screens": {
+    "Mi4/positive_fast_voltage": false,
+    "Mi4/negative_fast_voltage": true,
+    "Mi4/positive_fast_current": false,
+    "Mi4/negative_fast_current": false,
+    "Tm4/positive_fast_voltage": true,
+    "Tm4/negative_fast_voltage": true,
+    "Tm4/positive_fast_current": true,
+    "Tm4/negative_fast_current": true,
+    "Tm9/positive_fast_voltage": true,
+    "Tm9/negative_fast_voltage": true,
+    "Tm9/positive_fast_current": true,
+    "Tm9/negative_fast_current": true
+  }
+}

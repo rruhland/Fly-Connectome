@@ -70,3 +70,14 @@
 - [ ] Run T4/T5 impulse-response and ON/OFF E/I timing tests with static/bar controls; stop without promotion if direction preference does not transfer.
 - [ ] If feature expression passes, run the controlled repeated-motion local-plasticity test at withheld position/tempo; require better anticipation than frozen and persistence.
 - [ ] Only if both pass, implement the smallest versioned in-place hybrid profile and verify CPU/reference parity, full regression, M1A Pong acceptance, and speed before claiming Milestone 1A success.
+
+### Task 3a: Frozen motion-source current screen
+
+**Files:** Create `scripts/motion_source_current_audit.py` and the versioned protocol/result/findings in `docs/experiments`.
+
+**Interfaces:** Consume the unchanged M1A checkpoint and directly annotated Mi4/Tm4/Tm9 columns; reuse the tested causal source-summary function from Task 1. Produce local/opposite-location ON/OFF moving/static bar source information at x=18/x=46. No new neural dynamics or graded motion output.
+
+- [x] Preregister the local blank/source screen and controls before probing.
+- [x] Run the frozen per-tick source audit, verify input identities and finite state, and evaluate the fixed screen.
+- [x] Record that Mi4 current fails, its voltage cue is late, and Tm4/Tm9 carry OFF source state without demonstrating transferable T5 direction preference.
+- [x] Run the full regression suite and commit the verified result.
