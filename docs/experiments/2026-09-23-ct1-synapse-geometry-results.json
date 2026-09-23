@@ -1,0 +1,174 @@
+{
+  "dataset": "male-cns:v1.0",
+  "source_url": "https://neuprint.janelia.org/api/custom/custom",
+  "source_sha256": "8c4af80ff3904881bac9313b618dd9989bb51174b47606f28eca88865296005c",
+  "annotations_sha256": "2177e246113e4cfbf1e7772ec37c6da1955ff22e8063d0b1f833101f99a9a3b2",
+  "cache_sha256": "cb3a1c5e9c66366b9c20c2b77a32eeb369875a63ab3a0a2042d1094d25de2ff8",
+  "ct1_body": 10009,
+  "counts": {
+    "input": 32728,
+    "output": 37186
+  },
+  "coordinate_units": "8 nm voxels",
+  "nearest_site_k": 1,
+  "shuffle_seed": 20260923,
+  "shuffle_count": 100,
+  "groups": {
+    "T5c": {
+      "all": {
+        "contacts": 19289,
+        "nearest_input_distance_voxels": {
+          "p05": 42.708313008125245,
+          "median": 79.61155694998057,
+          "p95": 122.79983698763525
+        },
+        "within_5um_fraction": 1.0,
+        "nearest_same_or_neighbor_fraction": 0.4483902742495723,
+        "shuffled_fraction": {
+          "mean": 0.007960495619264867,
+          "p95": 0.011732075276064078,
+          "maximum": 0.014204987298460262
+        },
+        "nearest_source_class": {
+          "Tm1": 2531,
+          "Tm9": 16758
+        }
+      },
+      "y10": {
+        "contacts": 4411,
+        "nearest_input_distance_voxels": {
+          "p05": 41.21892055134726,
+          "median": 80.65977932030313,
+          "p95": 125.32357711652256
+        },
+        "within_5um_fraction": 1.0,
+        "nearest_same_or_neighbor_fraction": 0.461119927454092,
+        "shuffled_fraction": {
+          "mean": 0.00750170029471775,
+          "p95": 0.0172636590342326,
+          "maximum": 0.02040353661301292
+        },
+        "nearest_source_class": {
+          "Tm1": 570,
+          "Tm9": 3841
+        }
+      },
+      "y22": {
+        "contacts": 4299,
+        "nearest_input_distance_voxels": {
+          "p05": 42.69658959512209,
+          "median": 79.17701686727027,
+          "p95": 122.29881438509533
+        },
+        "within_5um_fraction": 1.0,
+        "nearest_same_or_neighbor_fraction": 0.40497790183763666,
+        "shuffled_fraction": {
+          "mean": 0.00861363107699465,
+          "p95": 0.019806931844615024,
+          "maximum": 0.023261223540358224
+        },
+        "nearest_source_class": {
+          "Tm1": 602,
+          "Tm9": 3697
+        }
+      },
+      "y16": {
+        "contacts": 5364,
+        "nearest_input_distance_voxels": {
+          "p05": 41.916583830269374,
+          "median": 80.1373820385967,
+          "p95": 125.38739968593336
+        },
+        "within_5um_fraction": 1.0,
+        "nearest_same_or_neighbor_fraction": 0.45320656226696493,
+        "shuffled_fraction": {
+          "mean": 0.008003355704697986,
+          "p95": 0.015622669649515279,
+          "maximum": 0.02162565249813572
+        },
+        "nearest_source_class": {
+          "Tm1": 685,
+          "Tm9": 4679
+        }
+      }
+    },
+    "T5d": {
+      "all": {
+        "contacts": 17897,
+        "nearest_input_distance_voxels": {
+          "p05": 42.731721238442994,
+          "median": 79.52986860293433,
+          "p95": 123.19334387977575
+        },
+        "within_5um_fraction": 1.0,
+        "nearest_same_or_neighbor_fraction": 0.3690003911270045,
+        "shuffled_fraction": {
+          "mean": 0.007843772699335083,
+          "p95": 0.011957311281220316,
+          "maximum": 0.014527574453819076
+        },
+        "nearest_source_class": {
+          "Tm1": 2425,
+          "Tm9": 15472
+        }
+      },
+      "y10": {
+        "contacts": 4094,
+        "nearest_input_distance_voxels": {
+          "p05": 42.79249947042806,
+          "median": 81.317279313402,
+          "p95": 125.45337536054528
+        },
+        "within_5um_fraction": 1.0,
+        "nearest_same_or_neighbor_fraction": 0.3522227650219834,
+        "shuffled_fraction": {
+          "mean": 0.006949193942354664,
+          "p95": 0.015156326331216413,
+          "maximum": 0.021739130434782608
+        },
+        "nearest_source_class": {
+          "Tm1": 533,
+          "Tm9": 3561
+        }
+      },
+      "y22": {
+        "contacts": 3903,
+        "nearest_input_distance_voxels": {
+          "p05": 42.80186911806539,
+          "median": 78.86063656856949,
+          "p95": 122.00409829181969
+        },
+        "within_5um_fraction": 1.0,
+        "nearest_same_or_neighbor_fraction": 0.32615936459134,
+        "shuffled_fraction": {
+          "mean": 0.008052779912887522,
+          "p95": 0.0161670509864207,
+          "maximum": 0.0207532667179093
+        },
+        "nearest_source_class": {
+          "Tm1": 525,
+          "Tm9": 3378
+        }
+      },
+      "y16": {
+        "contacts": 4812,
+        "nearest_input_distance_voxels": {
+          "p05": 42.03389446245421,
+          "median": 80.40522154668898,
+          "p95": 123.67982800110619
+        },
+        "within_5um_fraction": 1.0,
+        "nearest_same_or_neighbor_fraction": 0.3549459684123026,
+        "shuffled_fraction": {
+          "mean": 0.007597672485453034,
+          "p95": 0.016240648379052366,
+          "maximum": 0.024314214463840397
+        },
+        "nearest_source_class": {
+          "Tm1": 616,
+          "Tm9": 4196
+        }
+      }
+    }
+  }
+}
