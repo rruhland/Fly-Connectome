@@ -19,12 +19,13 @@ from motion_graded_propagation import GRADED_STATE
 from motion_stage_audit import SOURCE
 from motion_stage_locality import ANNOTATIONS, infer_columns
 from motion_t5_axis_aligned import moving_bar
-from t5_local_learning import T5FramePrediction
+from t5_local_learning import T5BalancedFramePrediction, T5FramePrediction
 from t5_local_order_current import ORDER_STATE, T5LocalOrderNetwork
 
 
 OUT = Path('docs/experiments/2026-09-23-t5-local-learning-results.json')
 AUDIT_OUT = Path('docs/experiments/2026-09-23-t5-credit-conflict-results.json')
+BALANCED_OUT = Path('docs/experiments/2026-09-23-t5-balanced-credit-results.json')
 STATE = NETWORK_STATE+GRADED_STATE+ORDER_STATE
 EPISODES = 40
 EVENT_THRESHOLD = .01
@@ -55,6 +56,7 @@ def metrics(target, prediction, persistence):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--credit-audit-only', action='store_true')
+    parser.add_argument('--balanced', action='store_true')
     args = parser.parse_args()
     torch.set_num_threads(4)
     started = time.perf_counter()
@@ -88,7 +90,8 @@ def main():
     settled_tick = net.step_index
 
     t5_mask = torch.tensor(np.isin(types, ('T5c', 'T5d')))
-    rule = T5FramePrediction(net, config, target_mask=t5_mask,
+    rule_class = T5BalancedFramePrediction if args.balanced else T5FramePrediction
+    rule = rule_class(net, config, target_mask=t5_mask,
         sensory_mask=retina.injected,
         sensory_gain=metadata['config']['sensory_gain'])
     learnable = rule.learnable_edges
@@ -261,6 +264,11 @@ def main():
     report = dict(source_sha256=source_sha, graph_sha256=graph.identity(),
         episodes=EPISODES, ticks_per_frame=8, target_event_threshold=EVENT_THRESHOLD,
         gate_gain=8000., source_release_cap=.10,
+        local_event_balance=dict(enabled=args.balanced, decay_per_frame=.98,
+            maximum_event_gain=4. if args.balanced else 1.,
+            mean_applied_event_gain=(rule.event_gain_sum/max(rule.event_gain_samples, 1))
+                if args.balanced else 1.,
+            event_gain_samples=rule.event_gain_samples if args.balanced else 0),
         learnable_edges=int(learnable.sum()),
         training=dict(updates=updates, distinct_updated_edges=len(updated_edges),
             target_events=target_events, target_samples=target_samples,
@@ -314,8 +322,9 @@ def main():
     report['elapsed_seconds'] = time.perf_counter()-started
     if checksum(SOURCE) != source_sha:
         raise AssertionError('source checkpoint changed')
-    OUT.write_text(json.dumps(report, indent=2, allow_nan=False)+'\n')
-    print(json.dumps(dict(output=str(OUT),
+    output = BALANCED_OUT if args.balanced else OUT
+    output.write_text(json.dumps(report, indent=2, allow_nan=False)+'\n')
+    print(json.dumps(dict(output=str(output),
         updated_edges=len(updated_edges),
         passes_pilot=report['passes_pilot'],
         elapsed_seconds=round(report['elapsed_seconds'], 1))), flush=True)
