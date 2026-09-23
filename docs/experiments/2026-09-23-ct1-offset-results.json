@@ -1,0 +1,374 @@
+{
+  "source_sha256": "8c4af80ff3904881bac9313b618dd9989bb51174b47606f28eca88865296005c",
+  "annotations_sha256": "2177e246113e4cfbf1e7772ec37c6da1955ff22e8063d0b1f833101f99a9a3b2",
+  "cache_sha256": "cb3a1c5e9c66366b9c20c2b77a32eeb369875a63ab3a0a2042d1094d25de2ff8",
+  "nearest_site_k": 1,
+  "near_radius_voxels": 125,
+  "retina_pixel_y_per_hex_q": -0.03902704110378511,
+  "retina_pixel_y_per_hex_r": 1.1524018792286428,
+  "bootstrap_seed": 20260923,
+  "bootstrap_samples": 1000,
+  "conditions": {
+    "y10": {
+      "all": {
+        "T5c": {
+          "contacts": 4411,
+          "cells": 183,
+          "contact_mean_dr": 0.7127635456812514,
+          "contact_median_dr": 1.0,
+          "contact_mean_dq": 0.7853094536386307,
+          "cell_mean_dr": 0.7173491732064188,
+          "cell_median_dr": 0.7142857142857143,
+          "cell_positive_fraction": 0.9781420765027322,
+          "dr_histogram": {
+            "-5": 0,
+            "-4": 0,
+            "-3": 0,
+            "-2": 0,
+            "-1": 58,
+            "0": 1356,
+            "1": 2794,
+            "2": 201,
+            "3": 2,
+            "4": 0,
+            "5": 0
+          },
+          "dr_below_minus5": 0,
+          "dr_above_plus5": 0
+        },
+        "T5d": {
+          "contacts": 4094,
+          "cells": 170,
+          "contact_mean_dr": -0.824132877381534,
+          "contact_median_dr": -1.0,
+          "contact_mean_dq": -0.7967757694186615,
+          "cell_mean_dr": -0.8185627323070316,
+          "cell_median_dr": -0.8136574074074074,
+          "cell_positive_fraction": 0.0,
+          "dr_histogram": {
+            "-5": 0,
+            "-4": 0,
+            "-3": 0,
+            "-2": 240,
+            "-1": 2961,
+            "0": 829,
+            "1": 61,
+            "2": 3,
+            "3": 0,
+            "4": 0,
+            "5": 0
+          },
+          "dr_below_minus5": 0,
+          "dr_above_plus5": 0
+        },
+        "subtype_difference": {
+          "t5c_minus_t5d_cell_mean_dr": 1.5359119055134505,
+          "bootstrap_p025": 1.479381624897876,
+          "bootstrap_p975": 1.5928478809969537,
+          "opposed": true,
+          "nonzero_interval": true
+        }
+      },
+      "within_125_voxels": {
+        "T5c": {
+          "contacts": 4184,
+          "cells": 183,
+          "contact_mean_dr": 0.7119980879541109,
+          "contact_median_dr": 1.0,
+          "contact_mean_dq": 0.7858508604206501,
+          "cell_mean_dr": 0.7166122592399339,
+          "cell_median_dr": 0.71875,
+          "cell_positive_fraction": 0.9781420765027322,
+          "dr_histogram": {
+            "-5": 0,
+            "-4": 0,
+            "-3": 0,
+            "-2": 0,
+            "-1": 54,
+            "0": 1291,
+            "1": 2647,
+            "2": 190,
+            "3": 2,
+            "4": 0,
+            "5": 0
+          },
+          "dr_below_minus5": 0,
+          "dr_above_plus5": 0
+        },
+        "T5d": {
+          "contacts": 3880,
+          "cells": 170,
+          "contact_mean_dr": -0.8239690721649484,
+          "contact_median_dr": -1.0,
+          "contact_mean_dq": -0.795360824742268,
+          "cell_mean_dr": -0.8180236293365706,
+          "cell_median_dr": -0.8125,
+          "cell_positive_fraction": 0.0,
+          "dr_histogram": {
+            "-5": 0,
+            "-4": 0,
+            "-3": 0,
+            "-2": 231,
+            "-1": 2802,
+            "0": 783,
+            "1": 61,
+            "2": 3,
+            "3": 0,
+            "4": 0,
+            "5": 0
+          },
+          "dr_below_minus5": 0,
+          "dr_above_plus5": 0
+        },
+        "subtype_difference": {
+          "t5c_minus_t5d_cell_mean_dr": 1.5346358885765046,
+          "bootstrap_p025": 1.474009061305616,
+          "bootstrap_p975": 1.5940853043868932,
+          "opposed": true,
+          "nonzero_interval": true
+        }
+      }
+    },
+    "y22": {
+      "all": {
+        "T5c": {
+          "contacts": 4299,
+          "cells": 184,
+          "contact_mean_dr": 0.6615491974877878,
+          "contact_median_dr": 1.0,
+          "contact_mean_dq": 0.8795068620609444,
+          "cell_mean_dr": 0.6612535295986253,
+          "cell_median_dr": 0.7204861111111112,
+          "cell_positive_fraction": 0.9456521739130435,
+          "dr_histogram": {
+            "-5": 0,
+            "-4": 0,
+            "-3": 0,
+            "-2": 7,
+            "-1": 76,
+            "0": 1366,
+            "1": 2766,
+            "2": 84,
+            "3": 0,
+            "4": 0,
+            "5": 0
+          },
+          "dr_below_minus5": 0,
+          "dr_above_plus5": 0
+        },
+        "T5d": {
+          "contacts": 3903,
+          "cells": 176,
+          "contact_mean_dr": -0.8232129131437356,
+          "contact_median_dr": -1.0,
+          "contact_mean_dq": -0.8613886753779144,
+          "cell_mean_dr": -0.8355546908728703,
+          "cell_median_dr": -0.7916666666666666,
+          "cell_positive_fraction": 0.0,
+          "dr_histogram": {
+            "-5": 0,
+            "-4": 0,
+            "-3": 2,
+            "-2": 326,
+            "-1": 2634,
+            "0": 871,
+            "1": 61,
+            "2": 9,
+            "3": 0,
+            "4": 0,
+            "5": 0
+          },
+          "dr_below_minus5": 0,
+          "dr_above_plus5": 0
+        },
+        "subtype_difference": {
+          "t5c_minus_t5d_cell_mean_dr": 1.4968082204714954,
+          "bootstrap_p025": 1.431577475660843,
+          "bootstrap_p975": 1.5595170336600068,
+          "opposed": true,
+          "nonzero_interval": true
+        }
+      },
+      "within_125_voxels": {
+        "T5c": {
+          "contacts": 4121,
+          "cells": 184,
+          "contact_mean_dr": 0.6612472700800777,
+          "contact_median_dr": 1.0,
+          "contact_mean_dq": 0.8791555447706867,
+          "cell_mean_dr": 0.6602789448273289,
+          "cell_median_dr": 0.7165178571428572,
+          "cell_positive_fraction": 0.9456521739130435,
+          "dr_histogram": {
+            "-5": 0,
+            "-4": 0,
+            "-3": 0,
+            "-2": 6,
+            "-1": 72,
+            "0": 1315,
+            "1": 2647,
+            "2": 81,
+            "3": 0,
+            "4": 0,
+            "5": 0
+          },
+          "dr_below_minus5": 0,
+          "dr_above_plus5": 0
+        },
+        "T5d": {
+          "contacts": 3741,
+          "cells": 176,
+          "contact_mean_dr": -0.8219727345629511,
+          "contact_median_dr": -1.0,
+          "contact_mean_dq": -0.8580593424218124,
+          "cell_mean_dr": -0.8337965487586646,
+          "cell_median_dr": -0.7875939849624061,
+          "cell_positive_fraction": 0.0,
+          "dr_histogram": {
+            "-5": 0,
+            "-4": 0,
+            "-3": 2,
+            "-2": 317,
+            "-1": 2514,
+            "0": 838,
+            "1": 61,
+            "2": 9,
+            "3": 0,
+            "4": 0,
+            "5": 0
+          },
+          "dr_below_minus5": 0,
+          "dr_above_plus5": 0
+        },
+        "subtype_difference": {
+          "t5c_minus_t5d_cell_mean_dr": 1.4940754935859935,
+          "bootstrap_p025": 1.4277748875894354,
+          "bootstrap_p975": 1.5567540250780312,
+          "opposed": true,
+          "nonzero_interval": true
+        }
+      }
+    },
+    "y16": {
+      "all": {
+        "T5c": {
+          "contacts": 5364,
+          "cells": 224,
+          "contact_mean_dr": 0.6840044742729307,
+          "contact_median_dr": 1.0,
+          "contact_mean_dq": 0.7943698732289336,
+          "cell_mean_dr": 0.683647935397082,
+          "cell_median_dr": 0.7041666666666666,
+          "cell_positive_fraction": 0.9732142857142857,
+          "dr_histogram": {
+            "-5": 0,
+            "-4": 0,
+            "-3": 0,
+            "-2": 3,
+            "-1": 65,
+            "0": 1692,
+            "1": 3470,
+            "2": 132,
+            "3": 2,
+            "4": 0,
+            "5": 0
+          },
+          "dr_below_minus5": 0,
+          "dr_above_plus5": 0
+        },
+        "T5d": {
+          "contacts": 4812,
+          "cells": 207,
+          "contact_mean_dr": -0.8221113881961762,
+          "contact_median_dr": -1.0,
+          "contact_mean_dq": -0.7703657522859518,
+          "cell_mean_dr": -0.8323178772066447,
+          "cell_median_dr": -0.8076923076923077,
+          "cell_positive_fraction": 0.0,
+          "dr_histogram": {
+            "-5": 0,
+            "-4": 0,
+            "-3": 2,
+            "-2": 330,
+            "-1": 3373,
+            "0": 1026,
+            "1": 79,
+            "2": 2,
+            "3": 0,
+            "4": 0,
+            "5": 0
+          },
+          "dr_below_minus5": 0,
+          "dr_above_plus5": 0
+        },
+        "subtype_difference": {
+          "t5c_minus_t5d_cell_mean_dr": 1.5159658126037268,
+          "bootstrap_p025": 1.4640159094472818,
+          "bootstrap_p975": 1.568277391701288,
+          "opposed": true,
+          "nonzero_interval": true
+        }
+      },
+      "within_125_voxels": {
+        "T5c": {
+          "contacts": 5086,
+          "cells": 224,
+          "contact_mean_dr": 0.6826582776248525,
+          "contact_median_dr": 1.0,
+          "contact_mean_dq": 0.7925678332677939,
+          "cell_mean_dr": 0.6822518518820342,
+          "cell_median_dr": 0.7083333333333334,
+          "cell_positive_fraction": 0.9732142857142857,
+          "dr_histogram": {
+            "-5": 0,
+            "-4": 0,
+            "-3": 0,
+            "-2": 3,
+            "-1": 60,
+            "0": 1613,
+            "1": 3284,
+            "2": 124,
+            "3": 2,
+            "4": 0,
+            "5": 0
+          },
+          "dr_below_minus5": 0,
+          "dr_above_plus5": 0
+        },
+        "T5d": {
+          "contacts": 4593,
+          "cells": 207,
+          "contact_mean_dr": -0.8212497278467232,
+          "contact_median_dr": -1.0,
+          "contact_mean_dq": -0.7672545177443937,
+          "cell_mean_dr": -0.830729075373077,
+          "cell_median_dr": -0.8,
+          "cell_positive_fraction": 0.0,
+          "dr_histogram": {
+            "-5": 0,
+            "-4": 0,
+            "-3": 2,
+            "-2": 319,
+            "-1": 3211,
+            "0": 980,
+            "1": 79,
+            "2": 2,
+            "3": 0,
+            "4": 0,
+            "5": 0
+          },
+          "dr_below_minus5": 0,
+          "dr_above_plus5": 0
+        },
+        "subtype_difference": {
+          "t5c_minus_t5d_cell_mean_dr": 1.5129809272551111,
+          "bootstrap_p025": 1.459772263741442,
+          "bootstrap_p975": 1.565401891110997,
+          "opposed": true,
+          "nonzero_interval": true
+        }
+      }
+    }
+  },
+  "passes_subtype_opposed_offset": true
+}
