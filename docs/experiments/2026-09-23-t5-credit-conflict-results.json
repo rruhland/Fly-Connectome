@@ -1,0 +1,34 @@
+{
+  "source_sha256": "8c4af80ff3904881bac9313b618dd9989bb51174b47606f28eca88865296005c",
+  "graph_sha256": "c941a5c912dd03e2ab0868260c637c2b1d21525196d4bce93c7d5e7f618e34a8",
+  "episodes": 40,
+  "learnable_edges": 2315,
+  "updated_edges": 1050,
+  "maximum_absolute_weight_change": 0.0028740204870700836,
+  "target_event_fraction": 0.0452906162464986,
+  "categories": {
+    "event": {
+      "nonzero_proposals": 12322,
+      "positive_proposals": 11327,
+      "negative_proposals": 995,
+      "edges": 999,
+      "signed_proposal_mass": 0.12117662776852141,
+      "absolute_proposal_mass": 0.21588469317350706
+    },
+    "quiet": {
+      "nonzero_proposals": 138938,
+      "positive_proposals": 6992,
+      "negative_proposals": 131946,
+      "edges": 1050,
+      "signed_proposal_mass": -0.6975394714067386,
+      "absolute_proposal_mass": 0.7065902791670026
+    }
+  },
+  "both_category_edges": 999,
+  "conflict_edges": 740,
+  "event_positive_quiet_negative": 740,
+  "event_negative_quiet_positive": 0,
+  "mean_conflict_cancellation": 0.40267233738338715,
+  "aggregate_conflict_cancellation": 0.5087740132004954,
+  "elapsed_seconds": 217.46881120000035
+}

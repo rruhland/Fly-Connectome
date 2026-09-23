@@ -1,5 +1,6 @@
 """Bounded opt-in local next-frame learning on vertical T5 predictive edges."""
 
+import argparse
 import json
 import time
 from pathlib import Path
@@ -23,6 +24,7 @@ from t5_local_order_current import ORDER_STATE, T5LocalOrderNetwork
 
 
 OUT = Path('docs/experiments/2026-09-23-t5-local-learning-results.json')
+AUDIT_OUT = Path('docs/experiments/2026-09-23-t5-credit-conflict-results.json')
 STATE = NETWORK_STATE+GRADED_STATE+ORDER_STATE
 EPISODES = 40
 EVENT_THRESHOLD = .01
@@ -51,6 +53,9 @@ def metrics(target, prediction, persistence):
 
 @torch.no_grad()
 def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--credit-audit-only', action='store_true')
+    args = parser.parse_args()
     torch.set_num_threads(4)
     started = time.perf_counter()
     source_sha = checksum(SOURCE)
@@ -94,6 +99,13 @@ def main():
     updates = dict(forecast_confirmations=0, nonzero_updates=0,
         positive_updates=0, negative_updates=0, total_absolute_delta=0.)
     updated_edges = set()
+    edge_lookup = torch.full((net.e,), -1, dtype=torch.long)
+    edge_lookup[learnable] = torch.arange(int(learnable.sum()))
+    credit = {category: dict(sum=torch.zeros(int(learnable.sum()), dtype=torch.float64),
+                             absolute=torch.zeros(int(learnable.sum()), dtype=torch.float64),
+                             count=torch.zeros(int(learnable.sum()), dtype=torch.long),
+                             positive=0, negative=0)
+              for category in ('event', 'quiet')}
     target_events = target_samples = target_sum = 0
     train_spikes = 0
     for episode in range(EPISODES):
@@ -115,7 +127,7 @@ def main():
                 train_spikes += int(activity.spikes[0, t5_mask].sum())
                 rule.observe(activity, torch.zeros(1))
                 if rule.last_visual_update is not None:
-                    edges, _, delta = rule.last_visual_update
+                    edges, target, delta = rule.last_visual_update
                     updates['forecast_confirmations'] += len(edges)
                     changed = delta.abs() > 1e-10
                     updated_edges.update(edges[changed].tolist())
@@ -123,6 +135,20 @@ def main():
                     updates['positive_updates'] += int((delta > 1e-10).sum())
                     updates['negative_updates'] += int((delta < -1e-10).sum())
                     updates['total_absolute_delta'] += float(delta.abs().sum())
+                    positions = edge_lookup[edges]
+                    if (positions < 0).any():
+                        raise AssertionError('non-T5 forecast received credit')
+                    for category, mask in (('event', target.abs() > EVENT_THRESHOLD),
+                                           ('quiet', target.abs() <= EVENT_THRESHOLD)):
+                        selected = mask & changed
+                        row = credit[category]
+                        row['sum'].index_add_(0, positions[selected], delta[selected].double())
+                        row['absolute'].index_add_(0, positions[selected],
+                                                   delta[selected].abs().double())
+                        row['count'].index_add_(0, positions[selected],
+                                                torch.ones_like(positions[selected]))
+                        row['positive'] += int((delta[selected] > 0).sum())
+                        row['negative'] += int((delta[selected] < 0).sum())
             rule.proposals[~learnable] = 0
             rule.homeostatic_exponent[~learnable] = 0
             rule.synchronize()
@@ -137,6 +163,46 @@ def main():
             and (trained_weights >= 0).all()
             and (trained_weights <= config.maximum_weight).all()):
         raise AssertionError('training changed non-T5 edges or violated bounds')
+
+    if args.credit_audit_only:
+        event, quiet = credit['event'], credit['quiet']
+        both = (event['count'] > 0) & (quiet['count'] > 0)
+        conflict = both & (event['sum']*quiet['sum'] < 0)
+        denominator = event['sum'].abs()+quiet['sum'].abs()
+        cancellation = (1-(event['sum']+quiet['sum']).abs()
+                        /denominator.clamp(min=1e-20))
+        categories = {category: dict(
+            nonzero_proposals=int(row['count'].sum()),
+            positive_proposals=row['positive'],
+            negative_proposals=row['negative'],
+            edges=int((row['count'] > 0).sum()),
+            signed_proposal_mass=float(row['sum'].sum()),
+            absolute_proposal_mass=float(row['absolute'].sum()))
+            for category, row in credit.items()}
+        audit = dict(source_sha256=source_sha, graph_sha256=graph.identity(),
+            episodes=EPISODES, learnable_edges=int(learnable.sum()),
+            updated_edges=len(updated_edges),
+            maximum_absolute_weight_change=float(change.abs().max()),
+            target_event_fraction=target_events/max(target_samples, 1),
+            categories=categories,
+            both_category_edges=int(both.sum()),
+            conflict_edges=int(conflict.sum()),
+            event_positive_quiet_negative=int((conflict & (event['sum'] > 0)).sum()),
+            event_negative_quiet_positive=int((conflict & (event['sum'] < 0)).sum()),
+            mean_conflict_cancellation=float(cancellation[conflict].mean())
+                if conflict.any() else None,
+            aggregate_conflict_cancellation=float(1-(
+                (event['sum'][conflict]+quiet['sum'][conflict]).abs().sum()
+                /denominator[conflict].sum())) if conflict.any() else None,
+            elapsed_seconds=time.perf_counter()-started)
+        if checksum(SOURCE) != source_sha:
+            raise AssertionError('source checkpoint changed')
+        AUDIT_OUT.write_text(json.dumps(audit, indent=2, allow_nan=False)+'\n')
+        print(json.dumps(dict(output=str(AUDIT_OUT),
+            both_category_edges=audit['both_category_edges'],
+            conflict_edges=audit['conflict_edges'],
+            categories=categories)), flush=True)
+        return
 
     annotations = feather.read_table(
         ANNOTATIONS, columns=['bodyId', 'assignedOlHex1', 'assignedOlHex2'])
