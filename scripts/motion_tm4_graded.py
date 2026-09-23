@@ -23,12 +23,34 @@ from tm4_supplemented_t5 import TM4_STATE, Tm4SupplementedT5Network
 
 OUT = Path('docs/experiments/2026-09-23-tm4-graded-results.json')
 FAST_OUT = Path('docs/experiments/2026-09-23-tm4-fast-release-results.json')
+FORECAST_OUT = Path('docs/experiments/2026-09-23-t5-future-afferent-results.json')
 STATE = NETWORK_STATE+GRADED_STATE+ORDER_STATE+TM4_STATE
 CASES = ((10, 1), (22, 1), (16, 1), (16, 2))
 FAST_CASES = CASES+((14, 1), (18, 2))
 SUBTYPES = ('T5c', 'T5d')
 CAPS = (.01, .03, .10)
 ISSUE = torch.arange(3, 14)*8
+
+
+def roc_auc(scores, events):
+    scores, events = np.asarray(scores).ravel(), np.asarray(events).ravel()
+    positives = int(events.sum())
+    negatives = len(events)-positives
+    if not positives or not negatives:
+        return None
+    order = np.argsort(scores, kind='mergesort')
+    scores, events = scores[order], events[order]
+    wins = 0.
+    lower_negatives = 0
+    start = 0
+    while start < len(scores):
+        end = np.searchsorted(scores, scores[start], side='right')
+        tied_positive = int(events[start:end].sum())
+        tied_negative = end-start-tied_positive
+        wins += tied_positive*(lower_negatives+.5*tied_negative)
+        lower_negatives += tied_negative
+        start = end
+    return wins/(positives*negatives)
 
 
 def future_events(gate):
@@ -43,10 +65,12 @@ def arm_support(now, delayed, events):
 
 
 @torch.no_grad()
-def main(*, fast_release=False):
+def main(*, fast_release=False, forecast_audit=False):
     torch.set_num_threads(4)
+    fast_release |= forecast_audit
     tau = .050 if fast_release else .250
-    output = FAST_OUT if fast_release else OUT
+    output = (FORECAST_OUT if forecast_audit else
+              FAST_OUT if fast_release else OUT)
     cases = FAST_CASES if fast_release else CASES
     source_sha = checksum(SOURCE)
     payload = torch.load(SOURCE, weights_only=True)
@@ -167,6 +191,9 @@ def main(*, fast_release=False):
         index = net.t5_lookup[joined]
         traces = {name: torch.zeros((144, len(joined))) for name in
                   ('gate', 'tm4_now', 'tm4_delayed', 'spikes', 'tm4_impulse')}
+        if forecast_audit:
+            traces['afferent'] = torch.zeros_like(traces['gate'])
+            traces['pending_order'] = torch.zeros_like(traces['gate'])
         pixel_events = 0
         for frame_index, frame in enumerate(images):
             events = camera.observe(frame)
@@ -175,7 +202,8 @@ def main(*, fast_release=False):
             sensory = retina.project(events)*metadata['config']['sensory_gain']
             for step in range(8):
                 t = frame_index*8+step
-                activity = net.step(sensory if step == 0 else zero)
+                activity = net.step(sensory if step == 0 else zero,
+                                    capture_increments=forecast_audit)
                 absolute_tick = net.step_index-1
                 now = net.residual_history[absolute_tick % (LAG+1)]
                 delayed = net.residual_history[(absolute_tick-LAG) % (LAG+1)]
@@ -184,6 +212,9 @@ def main(*, fast_release=False):
                 traces['tm4_delayed'][t] = delayed[0, index]
                 traces['spikes'][t] = activity.spikes[0, joined].float()
                 traces['tm4_impulse'][t] = net.last_tm4_impulse[0, joined]
+                if forecast_audit:
+                    traces['afferent'][t] = activity.feedforward_arrivals[0, joined]
+                    traces['pending_order'][t] = net.pending_gate[index]
         if not (torch.isfinite(net.voltage).all()
                 and torch.isfinite(net.last_tm4_impulse).all()
                 and torch.equal(net.magnitudes, weights)):
@@ -218,13 +249,35 @@ def main(*, fast_release=False):
             if captures[mode]['blank'][0] != 0:
                 raise AssertionError('bright blank generated camera events')
         condition = report['conditions'][f'{center}-s{speed}'] = {}
+        if forecast_audit:
+            audit = report.setdefault('forecast_audit', {})[f'{center}-s{speed}'] = {}
         for name in SUBTYPES:
             local = spans[name]
             baseline_event = {direction: future_events(
                 captures['baseline'][direction][1]['gate'][:, local])
                 for direction in ('up', 'down')}
             rows = condition[name] = {}
+            if forecast_audit:
+                audit[name] = {}
             for mode in ('baseline', 'supplement'):
+                if forecast_audit:
+                    audit[name][mode] = {}
+                    for direction in ('up', 'down', 'static', 'blank'):
+                        trace = captures[mode][direction][1]
+                        event = torch.stack([trace['afferent'][t+8:t+16,
+                            local].max(0).values for t in ISSUE]) > .01
+                        order = trace['pending_order'][ISSUE, local]
+                        audit[name][mode][direction] = dict(
+                            future_afferent_events=int(event.sum()),
+                            samples=event.numel(),
+                            event_fraction=float(event.float().mean()),
+                            order_event_mean=float(order[event].mean())
+                                if event.any() else None,
+                            order_quiet_mean=float(order[~event].mean())
+                                if (~event).any() else None,
+                            order_auc=roc_auc(order.numpy(), event.numpy()),
+                            order_active_fraction=float((order > .05)
+                                                        .float().mean()))
                 count = {direction: captures[mode][direction][1]['spikes'][
                     24:120, local].sum(0) for direction in ('up', 'down', 'static')}
                 contrast = count['down']-count['up']
@@ -277,16 +330,41 @@ def main(*, fast_release=False):
         passes=bool(trial_support >= .55 and trial_support-base_support >= .08))
     report['passes_frozen_feature_gate'] = bool(
         report['fast_tm4_support']['passes'] and all(checks))
+    if forecast_audit:
+        forecast_checks = []
+        for center, speed in cases:
+            rows = report['forecast_audit'][f'{center}-s{speed}']
+            for name, preferred in (('T5c', 'up'), ('T5d', 'down')):
+                entry = rows[name]['supplement']
+                moving = entry[preferred]
+                static = entry['static']
+                blank = entry['blank']
+                forecast_checks.append(
+                    moving['future_afferent_events'] >= 10
+                    and moving['order_event_mean'] is not None
+                    and moving['order_quiet_mean'] is not None
+                    and moving['order_event_mean']
+                        >= 2*moving['order_quiet_mean']
+                    and moving['order_auc'] is not None
+                    and moving['order_auc'] >= .70
+                    and static['order_active_fraction']
+                        <= .5*moving['order_active_fraction']
+                    and blank['event_fraction'] < .001)
+        report['passes_future_afferent_preflight'] = bool(all(forecast_checks))
     if checksum(SOURCE) != source_sha:
         raise AssertionError('source checkpoint changed')
     output.write_text(json.dumps(report, indent=2, allow_nan=False)+'\n')
     print(json.dumps(dict(output=str(output), selected_cap=selected_cap,
         fast_tm4_support=report['fast_tm4_support'],
-        passes_frozen_feature_gate=report['passes_frozen_feature_gate'])),
+        passes_frozen_feature_gate=report['passes_frozen_feature_gate'],
+        passes_future_afferent_preflight=report.get(
+            'passes_future_afferent_preflight'))),
         flush=True)
 
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--fast-release', action='store_true')
-    main(fast_release=parser.parse_args().fast_release)
+    parser.add_argument('--forecast-audit', action='store_true')
+    args = parser.parse_args()
+    main(fast_release=args.fast_release, forecast_audit=args.forecast_audit)
