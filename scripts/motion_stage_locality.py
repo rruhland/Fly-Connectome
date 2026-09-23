@@ -54,10 +54,14 @@ def infer_columns(metadata, retina, annotations):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--stimulus', choices=('dot', 'bar'), default='dot')
+    parser.add_argument('--recovery', action='store_true',
+                        help='read the approved opt-in recovery response instead of baseline')
     args = parser.parse_args()
-    responses_path = (RESPONSES if args.stimulus == 'dot' else
-                      RESPONSES.with_name('bar-per-neuron-responses.pt'))
-    output_path = (OUT if args.stimulus == 'dot' else OUT.with_name('bar-locality.json'))
+    directory = (Path('runs/motion-stage-recovery-v1') if args.recovery else RESPONSES.parent)
+    responses_path = directory/('per-neuron-responses.pt' if args.stimulus == 'dot'
+                                else 'bar-per-neuron-responses.pt')
+    output_path = directory/('locality.json' if args.stimulus == 'dot'
+                             else 'bar-locality.json')
     source_sha = checksum(SOURCE)
     payload = torch.load(SOURCE, weights_only=True)
     metadata = payload['metadata']

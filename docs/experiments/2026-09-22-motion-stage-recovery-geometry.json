@@ -1,0 +1,440 @@
+{
+  "source_sha256": "8c4af80ff3904881bac9313b618dd9989bb51174b47606f28eca88865296005c",
+  "annotations_sha256": "2177e246113e4cfbf1e7772ec37c6da1955ff22e8063d0b1f833101f99a9a3b2",
+  "reference": "contact-weighted direct Mi1 center for T4 or Tm1/Tm2 center for T5",
+  "offsets": "presynaptic assignedOlHex1/2 minus inferred postsynaptic center",
+  "groups": {
+    "T4a": {
+      "neurons": 849,
+      "sources": {
+        "Mi1": {
+          "anatomical_edges": 3171,
+          "located_edges": 3171,
+          "contacts": 55273,
+          "mean_axial_offset": [
+            -6.453285570741054e-17,
+            -2.3942717879492457e-17
+          ],
+          "mean_xy_offset": [
+            -7.650421464715677e-17,
+            -2.073500191928435e-17
+          ]
+        },
+        "Tm3": {
+          "anatomical_edges": 2394,
+          "located_edges": 0,
+          "contacts": 0,
+          "mean_axial_offset": null,
+          "mean_xy_offset": null
+        },
+        "Mi9": {
+          "anatomical_edges": 1904,
+          "located_edges": 1904,
+          "contacts": 17746,
+          "mean_axial_offset": [
+            0.4913761777843787,
+            -0.6094809182672825
+          ],
+          "mean_xy_offset": [
+            0.18663571865073747,
+            -0.5278259583413337
+          ]
+        },
+        "Mi4": {
+          "anatomical_edges": 1120,
+          "located_edges": 1120,
+          "contacts": 8562,
+          "mean_axial_offset": [
+            -0.3958798409726634,
+            0.5639821697492114
+          ],
+          "mean_xy_offset": [
+            -0.11388875609805765,
+            0.48842288628428465
+          ]
+        }
+      }
+    },
+    "T4b": {
+      "neurons": 846,
+      "sources": {
+        "Mi1": {
+          "anatomical_edges": 3294,
+          "located_edges": 3294,
+          "contacts": 47966,
+          "mean_axial_offset": [
+            -3.8144676324526916e-18,
+            -3.4515377023746686e-17
+          ],
+          "mean_xy_offset": [
+            -2.1072156144326036e-17,
+            -2.989119332376236e-17
+          ]
+        },
+        "Tm3": {
+          "anatomical_edges": 2503,
+          "located_edges": 0,
+          "contacts": 0,
+          "mean_axial_offset": null,
+          "mean_xy_offset": null
+        },
+        "Mi9": {
+          "anatomical_edges": 1972,
+          "located_edges": 1972,
+          "contacts": 20925,
+          "mean_axial_offset": [
+            -0.4574459980976196,
+            0.647311229665583
+          ],
+          "mean_xy_offset": [
+            -0.13379038326482812,
+            0.5605879690453379
+          ]
+        },
+        "Mi4": {
+          "anatomical_edges": 1259,
+          "located_edges": 1259,
+          "contacts": 10384,
+          "mean_axial_offset": [
+            0.4129638352537304,
+            -0.6688529771147514
+          ],
+          "mean_xy_offset": [
+            0.0785373466963547,
+            -0.5792436695782265
+          ]
+        }
+      }
+    },
+    "T4c": {
+      "neurons": 883,
+      "sources": {
+        "Mi1": {
+          "anatomical_edges": 3516,
+          "located_edges": 3516,
+          "contacts": 53659,
+          "mean_axial_offset": [
+            7.011542864849755e-17,
+            -2.6119486876140024e-17
+          ],
+          "mean_xy_offset": [
+            5.705568521042755e-17,
+            -2.262013916855151e-17
+          ]
+        },
+        "Tm3": {
+          "anatomical_edges": 2328,
+          "located_edges": 0,
+          "contacts": 0,
+          "mean_axial_offset": null,
+          "mean_xy_offset": null
+        },
+        "Mi9": {
+          "anatomical_edges": 2171,
+          "located_edges": 2171,
+          "contacts": 21605,
+          "mean_axial_offset": [
+            -0.9368696807817255,
+            -0.7438581334096609
+          ],
+          "mean_xy_offset": [
+            -1.308798747486556,
+            -0.6442000403444403
+          ]
+        },
+        "Mi4": {
+          "anatomical_edges": 1035,
+          "located_edges": 1035,
+          "contacts": 7968,
+          "mean_axial_offset": [
+            0.8637914085926179,
+            0.664470812492295
+          ],
+          "mean_xy_offset": [
+            1.1960268148387654,
+            0.5754486036916138
+          ]
+        }
+      }
+    },
+    "T4d": {
+      "neurons": 859,
+      "sources": {
+        "Mi1": {
+          "anatomical_edges": 3157,
+          "located_edges": 3157,
+          "contacts": 47685,
+          "mean_axial_offset": [
+            9.387478736056687e-18,
+            3.021129069421418e-17
+          ],
+          "mean_xy_offset": [
+            2.4493124083163777e-17,
+            2.6163745222305887e-17
+          ]
+        },
+        "Tm3": {
+          "anatomical_edges": 2147,
+          "located_edges": 0,
+          "contacts": 0,
+          "mean_axial_offset": null,
+          "mean_xy_offset": null
+        },
+        "Mi9": {
+          "anatomical_edges": 1964,
+          "located_edges": 1964,
+          "contacts": 18894,
+          "mean_axial_offset": [
+            0.7538585150262533,
+            0.9247624569295525
+          ],
+          "mean_xy_offset": [
+            1.2162397434910295,
+            0.8008677801671052
+          ]
+        },
+        "Mi4": {
+          "anatomical_edges": 814,
+          "located_edges": 814,
+          "contacts": 6183,
+          "mean_axial_offset": [
+            -0.9604532185099891,
+            -0.9821139961098484
+          ],
+          "mean_xy_offset": [
+            -1.4515102165649134,
+            -0.85053567004338
+          ]
+        }
+      }
+    },
+    "T5a": {
+      "neurons": 838,
+      "sources": {
+        "Tm1": {
+          "anatomical_edges": 1785,
+          "located_edges": 1785,
+          "contacts": 17679,
+          "mean_axial_offset": [
+            -0.034613259953306635,
+            -0.06523788136540978
+          ],
+          "mean_xy_offset": [
+            -0.06723220063601153,
+            -0.05649766255152031
+          ]
+        },
+        "Tm2": {
+          "anatomical_edges": 2039,
+          "located_edges": 2039,
+          "contacts": 28245,
+          "mean_axial_offset": [
+            0.02166499637863359,
+            0.040833439711774694
+          ],
+          "mean_xy_offset": [
+            0.042081716234520936,
+            0.03536279611429721
+          ]
+        },
+        "Tm4": {
+          "anatomical_edges": 1577,
+          "located_edges": 1577,
+          "contacts": 13134,
+          "mean_axial_offset": [
+            -0.4538986981967778,
+            -0.40293754813691474
+          ],
+          "mean_xy_offset": [
+            -0.6553674722652352,
+            -0.3489541528251833
+          ]
+        },
+        "Tm9": {
+          "anatomical_edges": 2562,
+          "located_edges": 2562,
+          "contacts": 26752,
+          "mean_axial_offset": [
+            0.40127267067679484,
+            -0.5308829169985236
+          ],
+          "mean_xy_offset": [
+            0.13583121217753302,
+            -0.45975809255590705
+          ]
+        }
+      }
+    },
+    "T5b": {
+      "neurons": 852,
+      "sources": {
+        "Tm1": {
+          "anatomical_edges": 1670,
+          "located_edges": 1670,
+          "contacts": 15607,
+          "mean_axial_offset": [
+            -0.007297085410678449,
+            0.00803460804395821
+          ],
+          "mean_xy_offset": [
+            -0.0032797813886993434,
+            0.006958174675518608
+          ]
+        },
+        "Tm2": {
+          "anatomical_edges": 2354,
+          "located_edges": 2354,
+          "contacts": 28744,
+          "mean_axial_offset": [
+            0.003962065544268749,
+            -0.004362514881090109
+          ],
+          "mean_xy_offset": [
+            0.0017808081037236942,
+            -0.003778048711411684
+          ]
+        },
+        "Tm4": {
+          "anatomical_edges": 1590,
+          "located_edges": 1590,
+          "contacts": 12235,
+          "mean_axial_offset": [
+            -0.6128170560725212,
+            -0.3988384856311568
+          ],
+          "mean_xy_offset": [
+            -0.8122362988880997,
+            -0.3454042605634966
+          ]
+        },
+        "Tm9": {
+          "anatomical_edges": 2834,
+          "located_edges": 2834,
+          "contacts": 31549,
+          "mean_axial_offset": [
+            -0.3630958949369797,
+            0.5505140092833534
+          ],
+          "mean_xy_offset": [
+            -0.08783889029530301,
+            0.47675911717860625
+          ]
+        }
+      }
+    },
+    "T5c": {
+      "neurons": 858,
+      "sources": {
+        "Tm1": {
+          "anatomical_edges": 1964,
+          "located_edges": 1964,
+          "contacts": 18077,
+          "mean_axial_offset": [
+            -0.06073283301815361,
+            -0.08103691388215126
+          ],
+          "mean_xy_offset": [
+            -0.10125128995922925,
+            -0.07018002606623482
+          ]
+        },
+        "Tm2": {
+          "anatomical_edges": 2407,
+          "located_edges": 2407,
+          "contacts": 29512,
+          "mean_axial_offset": [
+            0.0372007123363094,
+            0.04963758106016697
+          ],
+          "mean_xy_offset": [
+            0.062019502866392885,
+            0.0429874061805139
+          ]
+        },
+        "Tm4": {
+          "anatomical_edges": 1889,
+          "located_edges": 1889,
+          "contacts": 15007,
+          "mean_axial_offset": [
+            -0.7087946628368447,
+            -0.5274770266550733
+          ],
+          "mean_xy_offset": [
+            -0.9725331761643814,
+            -0.456808504995975
+          ]
+        },
+        "Tm9": {
+          "anatomical_edges": 3315,
+          "located_edges": 3315,
+          "contacts": 38274,
+          "mean_axial_offset": [
+            -0.7972176445386626,
+            -0.5979479908291215
+          ],
+          "mean_xy_offset": [
+            -1.0961916399532234,
+            -0.5178381501998838
+          ]
+        }
+      }
+    },
+    "T5d": {
+      "neurons": 808,
+      "sources": {
+        "Tm1": {
+          "anatomical_edges": 1834,
+          "located_edges": 1834,
+          "contacts": 17337,
+          "mean_axial_offset": [
+            0.03768441988052469,
+            0.011839340801304539
+          ],
+          "mean_xy_offset": [
+            0.04360409028117696,
+            0.010253169897991342
+          ]
+        },
+        "Tm2": {
+          "anatomical_edges": 1973,
+          "located_edges": 1973,
+          "contacts": 24195,
+          "mean_axial_offset": [
+            -0.027002884375641863,
+            -0.008483515249936624
+          ],
+          "mean_xy_offset": [
+            -0.031244642000610175,
+            -0.007346939719837808
+          ]
+        },
+        "Tm4": {
+          "anatomical_edges": 1516,
+          "located_edges": 1516,
+          "contacts": 12271,
+          "mean_axial_offset": [
+            -0.3326560890677858,
+            -0.19468081675694787
+          ],
+          "mean_xy_offset": [
+            -0.4299964974462598,
+            -0.1685985329410201
+          ]
+        },
+        "Tm9": {
+          "anatomical_edges": 2861,
+          "located_edges": 2861,
+          "contacts": 32444,
+          "mean_axial_offset": [
+            0.6430092959384919,
+            0.7706994972941816
+          ],
+          "mean_xy_offset": [
+            1.0283590445855828,
+            0.6674453433406575
+          ]
+        }
+      }
+    }
+  }
+}

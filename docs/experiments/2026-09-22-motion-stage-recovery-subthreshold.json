@@ -1,0 +1,113 @@
+{
+  "source_sha256": "8c4af80ff3904881bac9313b618dd9989bb51174b47606f28eca88865296005c",
+  "annotations_sha256": "2177e246113e4cfbf1e7772ec37c6da1955ff22e8063d0b1f833101f99a9a3b2",
+  "quantity": "mean membrane voltage over 96 transit ticks, stimulus minus matched blank",
+  "groups": {
+    "18": {
+      "Mi4": {
+        "neurons": 132,
+        "on": {
+          "mean": -0.0014439424267038703,
+          "mean_absolute": 0.0015577049925923347,
+          "cells_above_001": 57,
+          "positive_cells": 20,
+          "negative_cells": 85
+        },
+        "off": {
+          "mean": -0.005426543764770031,
+          "mean_absolute": 0.005471200216561556,
+          "cells_above_001": 101,
+          "positive_cells": 5,
+          "negative_cells": 121
+        }
+      },
+      "Tm4": {
+        "neurons": 132,
+        "on": {
+          "mean": 0.034988366067409515,
+          "mean_absolute": 0.04085375741124153,
+          "cells_above_001": 118,
+          "positive_cells": 63,
+          "negative_cells": 68
+        },
+        "off": {
+          "mean": 0.08559209853410721,
+          "mean_absolute": 0.08729872852563858,
+          "cells_above_001": 128,
+          "positive_cells": 113,
+          "negative_cells": 18
+        }
+      },
+      "Tm9": {
+        "neurons": 133,
+        "on": {
+          "mean": 0.005073837004601955,
+          "mean_absolute": 0.005098999943584204,
+          "cells_above_001": 53,
+          "positive_cells": 61,
+          "negative_cells": 3
+        },
+        "off": {
+          "mean": 0.01809791848063469,
+          "mean_absolute": 0.01810079626739025,
+          "cells_above_001": 109,
+          "positive_cells": 111,
+          "negative_cells": 2
+        }
+      }
+    },
+    "46": {
+      "Mi4": {
+        "neurons": 139,
+        "on": {
+          "mean": -0.0026485139969736338,
+          "mean_absolute": 0.0032426854595541954,
+          "cells_above_001": 105,
+          "positive_cells": 19,
+          "negative_cells": 108
+        },
+        "off": {
+          "mean": -0.005314914509654045,
+          "mean_absolute": 0.005808818154036999,
+          "cells_above_001": 112,
+          "positive_cells": 18,
+          "negative_cells": 115
+        }
+      },
+      "Tm4": {
+        "neurons": 128,
+        "on": {
+          "mean": 0.05184796452522278,
+          "mean_absolute": 0.05549343675374985,
+          "cells_above_001": 125,
+          "positive_cells": 92,
+          "negative_cells": 36
+        },
+        "off": {
+          "mean": 0.08000638335943222,
+          "mean_absolute": 0.08121997117996216,
+          "cells_above_001": 127,
+          "positive_cells": 112,
+          "negative_cells": 16
+        }
+      },
+      "Tm9": {
+        "neurons": 139,
+        "on": {
+          "mean": 0.00607209512963891,
+          "mean_absolute": 0.0060749840922653675,
+          "cells_above_001": 79,
+          "positive_cells": 85,
+          "negative_cells": 4
+        },
+        "off": {
+          "mean": 0.014688110910356045,
+          "mean_absolute": 0.01469233725219965,
+          "cells_above_001": 108,
+          "positive_cells": 109,
+          "negative_cells": 3
+        }
+      }
+    }
+  }
+}

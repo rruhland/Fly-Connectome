@@ -48,6 +48,8 @@ def local_columns(retina, center):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--stimulus', choices=('dot', 'bar'), default='dot')
+    parser.add_argument('--recovery', action='store_true',
+                        help='use the selected opt-in rest currents from the recovery calibration')
     args = parser.parse_args()
     torch.set_num_threads(4)
     source_sha = checksum(SOURCE)
@@ -60,6 +62,18 @@ def main():
         target_mask=retina.injected)
     original = payload['state']['network']['magnitudes']
     net.set_weights(original.clamp(0, m['learning']['maximum_weight']))
+    out = OUT
+    rest_overrides = {}
+    if args.recovery:
+        out = Path('runs/motion-stage-recovery-v1')
+        calibration = json.loads((out/'calibration.json').read_text())
+        if calibration['source_sha256'] != source_sha:
+            raise AssertionError('recovery calibration used a different checkpoint')
+        for label, current in calibration['selected'].items():
+            if current is not None:
+                mask = torch.tensor([t == label for t in m['retina']['cell_types']])
+                net.rest_current[mask] = current
+                rest_overrides[label] = current
     zero = torch.zeros_like(net.voltage)
     for _ in range(m['config']['warmup_steps']):
         net.step(zero)
@@ -101,6 +115,7 @@ def main():
     report = dict(source_sha256=source_sha, graph_sha256=graph.identity(),
                   warmup_ticks=m['config']['warmup_steps'], ticks_per_frame=8,
                   frames_per_condition=18, source='initial', stimulus=args.stimulus,
+                  rest_overrides=rest_overrides,
                   groups={})
     for center in (18, 46):
         for polarity in ('on', 'off'):
@@ -151,13 +166,13 @@ def main():
                         sign_consistent=values[0]*values[1] > 0)
     if checksum(SOURCE) != source_sha:
         raise AssertionError('source checkpoint changed')
-    OUT.mkdir(parents=True, exist_ok=True)
+    out.mkdir(parents=True, exist_ok=True)
     raw_name = ('per-neuron-responses.pt' if args.stimulus == 'dot'
                 else 'bar-per-neuron-responses.pt')
     torch.save(dict(responses=responses, baselines=baselines,
                     retina_columns=retina.neuron_columns, cell_types=types),
-               OUT/raw_name)
-    path = OUT/('initial-results.json' if args.stimulus == 'dot' else 'bar-results.json')
+               out/raw_name)
+    path = out/('initial-results.json' if args.stimulus == 'dot' else 'bar-results.json')
     path.write_text(json.dumps(report, indent=2, allow_nan=False)+'\n')
     print(json.dumps(dict(output=str(path),
         t4_t5_contrasts={key: value for key, value in report['direction_contrasts'].items()

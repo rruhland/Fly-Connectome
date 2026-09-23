@@ -1108,3 +1108,18 @@ are in docs/experiments/2026-09-22-motion-stage-audit-findings.md and
 docs/experiments/2026-09-22-motion-stage-recovery-proposal.md. Full suite:
 322 passed, 4 skipped. M1A remains unmet; resume with the approved recovery
 proposal if authorized, not another full-Pong learning sweep.
+
+## 2026-09-22: approved bounded motion-stage rest-current recovery
+
+Opt-in frozen class calibration tested Mi4, Tm4, Tm9 separately at 0, .85,
+.95, 1.05, 1.15. Mi4 failed the preregistered local response criterion;
+Tm4 and Tm9 selected .85 with visual responses and no blank firing.
+Their partial combined setting raised T5 spikes but did not yield location-
+stable OFF direction tuning; T4 remained locally silent. Stop criterion met:
+no dot, static, held-out or Pong training extension. Read-only graph geometry
+confirmed opposite Mi9/Mi4 spatial offsets around T4; Mi4 voltage carries
+small stimulus modulation despite zero spikes. Results in docs/experiments/
+2026-09-22-motion-stage-recovery-findings.md and linked JSON. Production
+dynamics and learning unchanged. Next opt-in graded/conductance experiment is
+proposed in docs/experiments/2026-09-22-motion-stage-signal-integration-
+proposal.md and requires review before implementation. M1A remains unmet.
