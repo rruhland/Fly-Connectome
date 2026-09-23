@@ -17,6 +17,14 @@ def test_shadow_readout_uses_measured_weight_and_one_tick_delay():
     assert abs(float(bank.current[0])-100) < 1e-5
 
 
+def test_shadow_readout_preserves_inhibitory_contact_sign():
+    bank = ShadowLC11([0, 1], [0, 0], [100., -100.], 2, 1,
+                      NeuronConfig())
+    bank.step(torch.tensor([1., 1.]))
+    assert not bank.step(torch.tensor([0., 0.]))[0]
+    assert abs(float(bank.current[0])) < 1e-5
+
+
 def test_release_is_nonnegative_local_and_bounded():
     voltage = torch.tensor([.001, .004, .010])
     rest = torch.tensor([.002, .001, .001])

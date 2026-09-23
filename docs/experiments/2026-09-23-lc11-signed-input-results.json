@@ -1,0 +1,1967 @@
+{
+  "source_sha256": "8c4af80ff3904881bac9313b618dd9989bb51174b47606f28eca88865296005c",
+  "annotations_sha256": "2177e246113e4cfbf1e7772ec37c6da1955ff22e8063d0b1f833101f99a9a3b2",
+  "weights_sha256": "e35da783d1c686b2b58b3b87cd6a403ae43bfcfba8bff28e08ef752c1a56afc1",
+  "graph_sha256": "c941a5c912dd03e2ab0868260c637c2b1d21525196d4bce93c7d5e7f618e34a8",
+  "lc11_neurons": 75,
+  "source_neurons": 10181,
+  "measured_edges": 38172,
+  "measured_contacts": 176715,
+  "excitatory_contacts": 121656,
+  "inhibitory_contacts": 55059,
+  "voltage_scale": 0.003,
+  "fractions": [
+    0.05,
+    0.1,
+    0.25
+  ],
+  "baseline_mode": "adaptive-250ms",
+  "input_scope": "all-selected",
+  "calibration": [
+    {
+      "fraction": 0.05,
+      "on_excess": 0,
+      "off_excess": 0,
+      "blank_rate": 0.0006944444444444445,
+      "peak_fraction": 0.013333333656191826,
+      "blank_release_mean": 0.004172777757048607,
+      "finite": true,
+      "on": {
+        "excess_spikes": 0,
+        "spikes": 5,
+        "blank_spikes": 5,
+        "cells_with_excess": 0,
+        "mean_absolute_current_change": 0.0030790437012910843,
+        "peak_fraction": 0.013333333656191826,
+        "finite": true,
+        "pixel_events": 72
+      },
+      "off": {
+        "excess_spikes": 0,
+        "spikes": 5,
+        "blank_spikes": 5,
+        "cells_with_excess": 0,
+        "mean_absolute_current_change": 0.008421114645898342,
+        "peak_fraction": 0.013333333656191826,
+        "finite": true,
+        "pixel_events": 72
+      }
+    },
+    {
+      "fraction": 0.1,
+      "on_excess": 0,
+      "off_excess": 1,
+      "blank_rate": 0.010972222222222222,
+      "peak_fraction": 0.07999999821186066,
+      "blank_release_mean": 0.008273934945464134,
+      "finite": true,
+      "on": {
+        "excess_spikes": 0,
+        "spikes": 79,
+        "blank_spikes": 79,
+        "cells_with_excess": 0,
+        "mean_absolute_current_change": 0.006154394242912531,
+        "peak_fraction": 0.07999999821186066,
+        "finite": true,
+        "pixel_events": 72
+      },
+      "off": {
+        "excess_spikes": 1,
+        "spikes": 80,
+        "blank_spikes": 79,
+        "cells_with_excess": 1,
+        "mean_absolute_current_change": 0.016836553812026978,
+        "peak_fraction": 0.07999999821186066,
+        "finite": true,
+        "pixel_events": 72
+      }
+    },
+    {
+      "fraction": 0.25,
+      "on_excess": -1,
+      "off_excess": 3,
+      "blank_rate": 0.041805555555555554,
+      "peak_fraction": 0.1733333319425583,
+      "blank_release_mean": 0.020577408373355865,
+      "finite": true,
+      "on": {
+        "excess_spikes": -1,
+        "spikes": 300,
+        "blank_spikes": 301,
+        "cells_with_excess": 1,
+        "mean_absolute_current_change": 0.015380442142486572,
+        "peak_fraction": 0.1733333319425583,
+        "finite": true,
+        "pixel_events": 72
+      },
+      "off": {
+        "excess_spikes": 3,
+        "spikes": 304,
+        "blank_spikes": 301,
+        "cells_with_excess": 4,
+        "mean_absolute_current_change": 0.0420842245221138,
+        "peak_fraction": 0.1733333319425583,
+        "finite": true,
+        "pixel_events": 72
+      }
+    }
+  ],
+  "selected_fraction": null,
+  "spike_only": {
+    "on": {
+      "excess_spikes": 0,
+      "spikes": 0,
+      "blank_spikes": 0,
+      "cells_with_excess": 0,
+      "mean_absolute_current_change": 3.6925437143509043e-06,
+      "peak_fraction": 0.0,
+      "finite": true,
+      "pixel_events": 72
+    },
+    "off": {
+      "excess_spikes": 0,
+      "spikes": 0,
+      "blank_spikes": 0,
+      "cells_with_excess": 0,
+      "mean_absolute_current_change": 7.5979946814186405e-06,
+      "peak_fraction": 0.0,
+      "finite": true,
+      "pixel_events": 72
+    }
+  },
+  "frozen": {},
+  "source_class_activity": {
+    "LC10a": {
+      "neurons": 46,
+      "contacts": 61,
+      "signed_contacts": 61,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "LC10b": {
+      "neurons": 9,
+      "contacts": 11,
+      "signed_contacts": 11,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "LC10c-1": {
+      "neurons": 2,
+      "contacts": 3,
+      "signed_contacts": 3,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "LC10d": {
+      "neurons": 14,
+      "contacts": 15,
+      "signed_contacts": 15,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "LC10e": {
+      "neurons": 1,
+      "contacts": 2,
+      "signed_contacts": 2,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "LC12": {
+      "neurons": 4,
+      "contacts": 6,
+      "signed_contacts": 6,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "LC13": {
+      "neurons": 57,
+      "contacts": 108,
+      "signed_contacts": 108,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "LC14a-1": {
+      "neurons": 1,
+      "contacts": 1,
+      "signed_contacts": 1,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "LC14a-2": {
+      "neurons": 1,
+      "contacts": 1,
+      "signed_contacts": 1,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "LC15": {
+      "neurons": 64,
+      "contacts": 342,
+      "signed_contacts": 342,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "LC16": {
+      "neurons": 62,
+      "contacts": 127,
+      "signed_contacts": 127,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "LC17": {
+      "neurons": 15,
+      "contacts": 58,
+      "signed_contacts": 58,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "LC18": {
+      "neurons": 101,
+      "contacts": 409,
+      "signed_contacts": 409,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "LC20a": {
+      "neurons": 14,
+      "contacts": 20,
+      "signed_contacts": 20,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "LC20b": {
+      "neurons": 14,
+      "contacts": 33,
+      "signed_contacts": -33,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "LC21": {
+      "neurons": 77,
+      "contacts": 525,
+      "signed_contacts": 525,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "LC22": {
+      "neurons": 27,
+      "contacts": 65,
+      "signed_contacts": 65,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "LC23": {
+      "neurons": 2,
+      "contacts": 3,
+      "signed_contacts": 3,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "LC24": {
+      "neurons": 3,
+      "contacts": 3,
+      "signed_contacts": 3,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "LC25": {
+      "neurons": 27,
+      "contacts": 1033,
+      "signed_contacts": -1033,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "LC26": {
+      "neurons": 1,
+      "contacts": 2,
+      "signed_contacts": 2,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "LC27": {
+      "neurons": 2,
+      "contacts": 2,
+      "signed_contacts": 2,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "LC28": {
+      "neurons": 13,
+      "contacts": 40,
+      "signed_contacts": 40,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "LC29": {
+      "neurons": 7,
+      "contacts": 15,
+      "signed_contacts": 15,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "LC30": {
+      "neurons": 1,
+      "contacts": 1,
+      "signed_contacts": -1,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "LC31a": {
+      "neurons": 8,
+      "contacts": 16,
+      "signed_contacts": 16,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "LC31b": {
+      "neurons": 1,
+      "contacts": 1,
+      "signed_contacts": 1,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "LC33": {
+      "neurons": 1,
+      "contacts": 1,
+      "signed_contacts": -1,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "LC35a": {
+      "neurons": 4,
+      "contacts": 15,
+      "signed_contacts": 15,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "LC36": {
+      "neurons": 2,
+      "contacts": 2,
+      "signed_contacts": 2,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "LC37": {
+      "neurons": 2,
+      "contacts": 3,
+      "signed_contacts": -3,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "LC39a": {
+      "neurons": 2,
+      "contacts": 4,
+      "signed_contacts": -4,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "LC39b": {
+      "neurons": 1,
+      "contacts": 2,
+      "signed_contacts": -2,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "LC4": {
+      "neurons": 35,
+      "contacts": 49,
+      "signed_contacts": 49,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "LC40": {
+      "neurons": 3,
+      "contacts": 4,
+      "signed_contacts": 4,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "LC41": {
+      "neurons": 1,
+      "contacts": 1,
+      "signed_contacts": 1,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "LC43": {
+      "neurons": 2,
+      "contacts": 9,
+      "signed_contacts": 9,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "LC6": {
+      "neurons": 18,
+      "contacts": 21,
+      "signed_contacts": 21,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "LC9": {
+      "neurons": 74,
+      "contacts": 139,
+      "signed_contacts": 139,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "LLPC1": {
+      "neurons": 77,
+      "contacts": 209,
+      "signed_contacts": 209,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "LLPC2": {
+      "neurons": 13,
+      "contacts": 17,
+      "signed_contacts": 17,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "LLPC3": {
+      "neurons": 14,
+      "contacts": 17,
+      "signed_contacts": 17,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "LLPC4": {
+      "neurons": 2,
+      "contacts": 5,
+      "signed_contacts": 5,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "LOLP1": {
+      "neurons": 27,
+      "contacts": 79,
+      "signed_contacts": -79,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "LOP_LO_unclear": {
+      "neurons": 1,
+      "contacts": 20,
+      "signed_contacts": -20,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "LO_unclear": {
+      "neurons": 1,
+      "contacts": 3,
+      "signed_contacts": -3,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "LPC2": {
+      "neurons": 1,
+      "contacts": 1,
+      "signed_contacts": 1,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "LPLC1": {
+      "neurons": 66,
+      "contacts": 501,
+      "signed_contacts": 501,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "LPLC2": {
+      "neurons": 22,
+      "contacts": 26,
+      "signed_contacts": 26,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "LPLC4": {
+      "neurons": 31,
+      "contacts": 54,
+      "signed_contacts": 54,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "LPLC_unclear": {
+      "neurons": 1,
+      "contacts": 5,
+      "signed_contacts": 5,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "LT11": {
+      "neurons": 1,
+      "contacts": 18,
+      "signed_contacts": -18,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "LT1a": {
+      "neurons": 1,
+      "contacts": 5,
+      "signed_contacts": 5,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "LT1b": {
+      "neurons": 1,
+      "contacts": 16,
+      "signed_contacts": 16,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "LT1c": {
+      "neurons": 1,
+      "contacts": 7,
+      "signed_contacts": 7,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "LT1d": {
+      "neurons": 1,
+      "contacts": 15,
+      "signed_contacts": 15,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "LT51": {
+      "neurons": 1,
+      "contacts": 1,
+      "signed_contacts": -1,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "LT52": {
+      "neurons": 4,
+      "contacts": 7,
+      "signed_contacts": -7,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "LT58": {
+      "neurons": 1,
+      "contacts": 17,
+      "signed_contacts": -17,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "LT60": {
+      "neurons": 1,
+      "contacts": 10,
+      "signed_contacts": 10,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "LT61a": {
+      "neurons": 1,
+      "contacts": 12,
+      "signed_contacts": 12,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "LT61b": {
+      "neurons": 1,
+      "contacts": 74,
+      "signed_contacts": 74,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "LT62": {
+      "neurons": 1,
+      "contacts": 2,
+      "signed_contacts": 2,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "LT63": {
+      "neurons": 2,
+      "contacts": 5,
+      "signed_contacts": 5,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "LT64": {
+      "neurons": 1,
+      "contacts": 1,
+      "signed_contacts": 1,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "LT65": {
+      "neurons": 1,
+      "contacts": 3,
+      "signed_contacts": 3,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "LT66": {
+      "neurons": 1,
+      "contacts": 2,
+      "signed_contacts": 2,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "LT73": {
+      "neurons": 2,
+      "contacts": 5,
+      "signed_contacts": -5,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "LT74": {
+      "neurons": 3,
+      "contacts": 10,
+      "signed_contacts": -10,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "LT77": {
+      "neurons": 3,
+      "contacts": 5,
+      "signed_contacts": -5,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "LT78": {
+      "neurons": 3,
+      "contacts": 8,
+      "signed_contacts": -8,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "LT79": {
+      "neurons": 1,
+      "contacts": 2,
+      "signed_contacts": 2,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "LT80": {
+      "neurons": 2,
+      "contacts": 5,
+      "signed_contacts": 5,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "LT82a": {
+      "neurons": 1,
+      "contacts": 3,
+      "signed_contacts": 3,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "LT83": {
+      "neurons": 1,
+      "contacts": 6,
+      "signed_contacts": 6,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "LT85": {
+      "neurons": 1,
+      "contacts": 1,
+      "signed_contacts": 1,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "LT87": {
+      "neurons": 1,
+      "contacts": 4,
+      "signed_contacts": 4,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "Li11a": {
+      "neurons": 2,
+      "contacts": 1392,
+      "signed_contacts": -1392,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "Li11b": {
+      "neurons": 2,
+      "contacts": 766,
+      "signed_contacts": -766,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "Li12": {
+      "neurons": 2,
+      "contacts": 27,
+      "signed_contacts": -27,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "Li13": {
+      "neurons": 15,
+      "contacts": 25,
+      "signed_contacts": -25,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "Li14": {
+      "neurons": 110,
+      "contacts": 864,
+      "signed_contacts": -864,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "Li15": {
+      "neurons": 21,
+      "contacts": 8175,
+      "signed_contacts": -8175,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "Li16": {
+      "neurons": 2,
+      "contacts": 2275,
+      "signed_contacts": -2275,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "Li17": {
+      "neurons": 10,
+      "contacts": 158,
+      "signed_contacts": -158,
+      "blank_spikes": 1,
+      "on_dot_spikes": 1,
+      "off_dot_spikes": 1
+    },
+    "Li18a": {
+      "neurons": 1,
+      "contacts": 1,
+      "signed_contacts": -1,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "Li18b": {
+      "neurons": 2,
+      "contacts": 2,
+      "signed_contacts": -2,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "Li19": {
+      "neurons": 26,
+      "contacts": 146,
+      "signed_contacts": -146,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "Li20": {
+      "neurons": 20,
+      "contacts": 213,
+      "signed_contacts": -213,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "Li21": {
+      "neurons": 35,
+      "contacts": 62,
+      "signed_contacts": 62,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "Li22": {
+      "neurons": 95,
+      "contacts": 302,
+      "signed_contacts": -302,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "Li23": {
+      "neurons": 19,
+      "contacts": 53,
+      "signed_contacts": 53,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "Li25": {
+      "neurons": 60,
+      "contacts": 3116,
+      "signed_contacts": -3116,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "Li26": {
+      "neurons": 18,
+      "contacts": 4191,
+      "signed_contacts": -4191,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "Li27": {
+      "neurons": 26,
+      "contacts": 40,
+      "signed_contacts": -40,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "Li28": {
+      "neurons": 5,
+      "contacts": 23,
+      "signed_contacts": -23,
+      "blank_spikes": 1,
+      "on_dot_spikes": 1,
+      "off_dot_spikes": 1
+    },
+    "Li29": {
+      "neurons": 3,
+      "contacts": 20,
+      "signed_contacts": -20,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "Li30": {
+      "neurons": 6,
+      "contacts": 1613,
+      "signed_contacts": -1613,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "Li31": {
+      "neurons": 1,
+      "contacts": 74,
+      "signed_contacts": -74,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "Li32": {
+      "neurons": 1,
+      "contacts": 86,
+      "signed_contacts": -86,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "Li33": {
+      "neurons": 1,
+      "contacts": 33,
+      "signed_contacts": 33,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "Li34a": {
+      "neurons": 34,
+      "contacts": 330,
+      "signed_contacts": -330,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "Li34b": {
+      "neurons": 30,
+      "contacts": 268,
+      "signed_contacts": -268,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "Li35": {
+      "neurons": 1,
+      "contacts": 1,
+      "signed_contacts": -1,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "Li37": {
+      "neurons": 1,
+      "contacts": 97,
+      "signed_contacts": -97,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "LoVP1": {
+      "neurons": 18,
+      "contacts": 39,
+      "signed_contacts": -39,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "LoVP10": {
+      "neurons": 1,
+      "contacts": 1,
+      "signed_contacts": 1,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "LoVP107": {
+      "neurons": 1,
+      "contacts": 2,
+      "signed_contacts": 2,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "LoVP108": {
+      "neurons": 2,
+      "contacts": 423,
+      "signed_contacts": -423,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "LoVP13": {
+      "neurons": 1,
+      "contacts": 1,
+      "signed_contacts": -1,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "LoVP14": {
+      "neurons": 2,
+      "contacts": 4,
+      "signed_contacts": 4,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "LoVP18": {
+      "neurons": 1,
+      "contacts": 1,
+      "signed_contacts": 1,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "LoVP2": {
+      "neurons": 16,
+      "contacts": 40,
+      "signed_contacts": -40,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "LoVP25": {
+      "neurons": 1,
+      "contacts": 2,
+      "signed_contacts": 2,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "LoVP3": {
+      "neurons": 1,
+      "contacts": 1,
+      "signed_contacts": -1,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "LoVP32": {
+      "neurons": 1,
+      "contacts": 1,
+      "signed_contacts": 1,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "LoVP35": {
+      "neurons": 1,
+      "contacts": 1,
+      "signed_contacts": 1,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "LoVP36": {
+      "neurons": 1,
+      "contacts": 2,
+      "signed_contacts": -2,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "LoVP46": {
+      "neurons": 1,
+      "contacts": 1,
+      "signed_contacts": -1,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "LoVP47": {
+      "neurons": 1,
+      "contacts": 1,
+      "signed_contacts": -1,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "LoVP48": {
+      "neurons": 1,
+      "contacts": 1,
+      "signed_contacts": 1,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "LoVP49": {
+      "neurons": 1,
+      "contacts": 3,
+      "signed_contacts": 3,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "LoVP5": {
+      "neurons": 1,
+      "contacts": 1,
+      "signed_contacts": 1,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "LoVP50": {
+      "neurons": 1,
+      "contacts": 1,
+      "signed_contacts": 1,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "LoVP51": {
+      "neurons": 1,
+      "contacts": 2,
+      "signed_contacts": 2,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "LoVP53": {
+      "neurons": 1,
+      "contacts": 8,
+      "signed_contacts": 8,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "LoVP54": {
+      "neurons": 1,
+      "contacts": 12,
+      "signed_contacts": 12,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "LoVP56": {
+      "neurons": 1,
+      "contacts": 4,
+      "signed_contacts": -4,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "LoVP6": {
+      "neurons": 2,
+      "contacts": 3,
+      "signed_contacts": 3,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "LoVP61": {
+      "neurons": 1,
+      "contacts": 1,
+      "signed_contacts": -1,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "LoVP62": {
+      "neurons": 1,
+      "contacts": 6,
+      "signed_contacts": 6,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "LoVP63": {
+      "neurons": 1,
+      "contacts": 1,
+      "signed_contacts": 1,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "LoVP68": {
+      "neurons": 1,
+      "contacts": 1,
+      "signed_contacts": 1,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "LoVP69": {
+      "neurons": 1,
+      "contacts": 5,
+      "signed_contacts": 5,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "LoVP7": {
+      "neurons": 1,
+      "contacts": 1,
+      "signed_contacts": -1,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "LoVP78": {
+      "neurons": 1,
+      "contacts": 2,
+      "signed_contacts": 2,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "LoVP79": {
+      "neurons": 1,
+      "contacts": 2,
+      "signed_contacts": 2,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "LoVP83": {
+      "neurons": 1,
+      "contacts": 1,
+      "signed_contacts": 1,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "LoVP84": {
+      "neurons": 1,
+      "contacts": 1,
+      "signed_contacts": 1,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "LoVP89": {
+      "neurons": 1,
+      "contacts": 1,
+      "signed_contacts": 1,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "LoVP92": {
+      "neurons": 1,
+      "contacts": 5,
+      "signed_contacts": 5,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "LoVP95": {
+      "neurons": 1,
+      "contacts": 1,
+      "signed_contacts": -1,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "LoVP99": {
+      "neurons": 1,
+      "contacts": 3,
+      "signed_contacts": -3,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "LoVP_unclear": {
+      "neurons": 2,
+      "contacts": 2,
+      "signed_contacts": 2,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "MeLo1": {
+      "neurons": 29,
+      "contacts": 158,
+      "signed_contacts": 158,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "MeLo10": {
+      "neurons": 30,
+      "contacts": 7044,
+      "signed_contacts": -7044,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "MeLo11": {
+      "neurons": 18,
+      "contacts": 117,
+      "signed_contacts": -117,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "MeLo12": {
+      "neurons": 25,
+      "contacts": 3713,
+      "signed_contacts": -3713,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "MeLo13": {
+      "neurons": 31,
+      "contacts": 108,
+      "signed_contacts": -108,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "MeLo14": {
+      "neurons": 16,
+      "contacts": 43,
+      "signed_contacts": -43,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "MeLo2": {
+      "neurons": 69,
+      "contacts": 592,
+      "signed_contacts": 592,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "MeLo3a": {
+      "neurons": 4,
+      "contacts": 5,
+      "signed_contacts": 5,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "MeLo3b": {
+      "neurons": 31,
+      "contacts": 92,
+      "signed_contacts": 92,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "MeLo6": {
+      "neurons": 7,
+      "contacts": 8,
+      "signed_contacts": 8,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "MeLo7": {
+      "neurons": 19,
+      "contacts": 69,
+      "signed_contacts": 69,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "MeLo8": {
+      "neurons": 23,
+      "contacts": 3029,
+      "signed_contacts": -3029,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "MeLo9": {
+      "neurons": 32,
+      "contacts": 80,
+      "signed_contacts": -80,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "MeTu1": {
+      "neurons": 2,
+      "contacts": 2,
+      "signed_contacts": 2,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "MeTu3a": {
+      "neurons": 1,
+      "contacts": 1,
+      "signed_contacts": 1,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "MeTu3b": {
+      "neurons": 1,
+      "contacts": 1,
+      "signed_contacts": 1,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "MeTu3c": {
+      "neurons": 5,
+      "contacts": 5,
+      "signed_contacts": 5,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "MeTu4a": {
+      "neurons": 1,
+      "contacts": 1,
+      "signed_contacts": 1,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "MeTu4c": {
+      "neurons": 3,
+      "contacts": 4,
+      "signed_contacts": 4,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "MeTu4f": {
+      "neurons": 3,
+      "contacts": 3,
+      "signed_contacts": 3,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "MeVP14": {
+      "neurons": 3,
+      "contacts": 5,
+      "signed_contacts": 5,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "MeVPLo1": {
+      "neurons": 1,
+      "contacts": 2,
+      "signed_contacts": -2,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "T2": {
+      "neurons": 821,
+      "contacts": 22314,
+      "signed_contacts": 22314,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "T2a": {
+      "neurons": 933,
+      "contacts": 14549,
+      "signed_contacts": 14549,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "T3": {
+      "neurons": 976,
+      "contacts": 39187,
+      "signed_contacts": 39187,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "T5a": {
+      "neurons": 1,
+      "contacts": 1,
+      "signed_contacts": 1,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "T5b": {
+      "neurons": 1,
+      "contacts": 3,
+      "signed_contacts": 3,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "T5c": {
+      "neurons": 2,
+      "contacts": 7,
+      "signed_contacts": 7,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "Tlp11": {
+      "neurons": 10,
+      "contacts": 14,
+      "signed_contacts": -14,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "Tlp12": {
+      "neurons": 23,
+      "contacts": 58,
+      "signed_contacts": -58,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "Tlp13": {
+      "neurons": 37,
+      "contacts": 135,
+      "signed_contacts": -135,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "Tlp14": {
+      "neurons": 3,
+      "contacts": 3,
+      "signed_contacts": -3,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "Tm12": {
+      "neurons": 494,
+      "contacts": 11836,
+      "signed_contacts": 11836,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "Tm16": {
+      "neurons": 103,
+      "contacts": 199,
+      "signed_contacts": 199,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "Tm2": {
+      "neurons": 15,
+      "contacts": 19,
+      "signed_contacts": 19,
+      "blank_spikes": 21,
+      "on_dot_spikes": 21,
+      "off_dot_spikes": 21
+    },
+    "Tm20": {
+      "neurons": 152,
+      "contacts": 212,
+      "signed_contacts": 212,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "Tm23": {
+      "neurons": 3,
+      "contacts": 7,
+      "signed_contacts": -7,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "Tm24": {
+      "neurons": 87,
+      "contacts": 222,
+      "signed_contacts": 222,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "Tm26": {
+      "neurons": 15,
+      "contacts": 34,
+      "signed_contacts": 34,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "Tm29": {
+      "neurons": 34,
+      "contacts": 51,
+      "signed_contacts": -51,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "Tm3": {
+      "neurons": 118,
+      "contacts": 189,
+      "signed_contacts": 189,
+      "blank_spikes": 82,
+      "on_dot_spikes": 79,
+      "off_dot_spikes": 81
+    },
+    "Tm30": {
+      "neurons": 5,
+      "contacts": 5,
+      "signed_contacts": -5,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "Tm31": {
+      "neurons": 24,
+      "contacts": 43,
+      "signed_contacts": -43,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "Tm32": {
+      "neurons": 16,
+      "contacts": 24,
+      "signed_contacts": -24,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "Tm33": {
+      "neurons": 44,
+      "contacts": 63,
+      "signed_contacts": 63,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "Tm34": {
+      "neurons": 1,
+      "contacts": 1,
+      "signed_contacts": -1,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "Tm35": {
+      "neurons": 41,
+      "contacts": 190,
+      "signed_contacts": -190,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "Tm36": {
+      "neurons": 35,
+      "contacts": 55,
+      "signed_contacts": 55,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "Tm37": {
+      "neurons": 92,
+      "contacts": 139,
+      "signed_contacts": -139,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "Tm38": {
+      "neurons": 10,
+      "contacts": 13,
+      "signed_contacts": 13,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "Tm39": {
+      "neurons": 16,
+      "contacts": 19,
+      "signed_contacts": 19,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "Tm4": {
+      "neurons": 546,
+      "contacts": 1393,
+      "signed_contacts": 1393,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "Tm40": {
+      "neurons": 18,
+      "contacts": 30,
+      "signed_contacts": 30,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "Tm5Y": {
+      "neurons": 348,
+      "contacts": 865,
+      "signed_contacts": 865,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "Tm5a": {
+      "neurons": 40,
+      "contacts": 47,
+      "signed_contacts": 47,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "Tm5b": {
+      "neurons": 72,
+      "contacts": 111,
+      "signed_contacts": 111,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "Tm5c": {
+      "neurons": 37,
+      "contacts": 46,
+      "signed_contacts": -46,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "Tm6": {
+      "neurons": 770,
+      "contacts": 14978,
+      "signed_contacts": 14978,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "Tm9": {
+      "neurons": 1,
+      "contacts": 1,
+      "signed_contacts": 1,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "TmY10": {
+      "neurons": 17,
+      "contacts": 21,
+      "signed_contacts": 21,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "TmY13": {
+      "neurons": 68,
+      "contacts": 92,
+      "signed_contacts": 92,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "TmY14": {
+      "neurons": 4,
+      "contacts": 4,
+      "signed_contacts": -2,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "TmY15": {
+      "neurons": 110,
+      "contacts": 2723,
+      "signed_contacts": -2723,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "TmY16": {
+      "neurons": 17,
+      "contacts": 25,
+      "signed_contacts": -25,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "TmY17": {
+      "neurons": 13,
+      "contacts": 18,
+      "signed_contacts": 18,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "TmY18": {
+      "neurons": 694,
+      "contacts": 9589,
+      "signed_contacts": 9589,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "TmY19a": {
+      "neurons": 43,
+      "contacts": 3868,
+      "signed_contacts": -3868,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "TmY19b": {
+      "neurons": 17,
+      "contacts": 3846,
+      "signed_contacts": -3846,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "TmY20": {
+      "neurons": 13,
+      "contacts": 17,
+      "signed_contacts": 17,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "TmY21": {
+      "neurons": 108,
+      "contacts": 242,
+      "signed_contacts": 242,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "TmY3": {
+      "neurons": 301,
+      "contacts": 827,
+      "signed_contacts": 827,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "TmY4": {
+      "neurons": 46,
+      "contacts": 72,
+      "signed_contacts": 72,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "TmY5a": {
+      "neurons": 486,
+      "contacts": 1114,
+      "signed_contacts": -1114,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "TmY9a": {
+      "neurons": 21,
+      "contacts": 30,
+      "signed_contacts": 30,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "TmY9b": {
+      "neurons": 31,
+      "contacts": 45,
+      "signed_contacts": 45,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "TmY_unclear": {
+      "neurons": 1,
+      "contacts": 1,
+      "signed_contacts": 1,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "Tm_unclear": {
+      "neurons": 1,
+      "contacts": 2,
+      "signed_contacts": -2,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "Y11": {
+      "neurons": 19,
+      "contacts": 43,
+      "signed_contacts": -43,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "Y12": {
+      "neurons": 36,
+      "contacts": 59,
+      "signed_contacts": -59,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "Y13": {
+      "neurons": 21,
+      "contacts": 32,
+      "signed_contacts": -32,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "Y14": {
+      "neurons": 104,
+      "contacts": 2513,
+      "signed_contacts": -2513,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "Y3": {
+      "neurons": 74,
+      "contacts": 106,
+      "signed_contacts": 106,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    },
+    "dCal1": {
+      "neurons": 1,
+      "contacts": 6,
+      "signed_contacts": -6,
+      "blank_spikes": 0,
+      "on_dot_spikes": 0,
+      "off_dot_spikes": 0
+    }
+  },
+  "blank_voltage_drift": {
+    "on": {
+      "mean_positive": 0.0062797642312943935,
+      "p99_positive": 0.054246727377176285,
+      "source_cells_above_scale": 6802,
+      "source_spikes": 105
+    },
+    "off": {
+      "mean_positive": 0.0062797642312943935,
+      "p99_positive": 0.054246727377176285,
+      "source_cells_above_scale": 6802,
+      "source_spikes": 105
+    }
+  },
+  "per_tick_file": "runs\\motion-lc11-signed-input-v1\\per-tick.npz",
+  "per_tick_sha256": "9fdce807a7fc85fce79dc8c6ae6e41fffcd2e4146740c37016a0446102b65b0c"
+}

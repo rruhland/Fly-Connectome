@@ -24,6 +24,8 @@ OUT = Path('docs/experiments/2026-09-23-lc11-shadow-results.json')
 RAW = Path('runs/motion-lc11-shadow-v1/per-tick.npz')
 ADAPTIVE_OUT = Path('docs/experiments/2026-09-23-lc11-adaptive-results.json')
 ADAPTIVE_RAW = Path('runs/motion-lc11-adaptive-v1/per-tick.npz')
+SIGNED_OUT = Path('docs/experiments/2026-09-23-lc11-signed-input-results.json')
+SIGNED_RAW = Path('runs/motion-lc11-signed-input-v1/per-tick.npz')
 FRACTIONS = (.05, .10, .25)
 VOLTAGE_SCALE = .003
 BASELINE_TAU = .250
@@ -100,9 +102,15 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--adaptive', action='store_true',
                         help='use a local 250 ms moving voltage baseline')
+    parser.add_argument('--all-inputs', action='store_true',
+                        help='include every measured selected-source LC11 input')
     args = parser.parse_args()
-    output_path = ADAPTIVE_OUT if args.adaptive else OUT
-    raw_path = ADAPTIVE_RAW if args.adaptive else RAW
+    if args.all_inputs and not args.adaptive:
+        parser.error('--all-inputs requires --adaptive')
+    output_path = (SIGNED_OUT if args.all_inputs else
+                   ADAPTIVE_OUT if args.adaptive else OUT)
+    raw_path = (SIGNED_RAW if args.all_inputs else
+                ADAPTIVE_RAW if args.adaptive else RAW)
     torch.set_num_threads(4)
     source_sha = checksum(SOURCE)
     payload = torch.load(SOURCE, weights_only=True)
@@ -117,18 +125,23 @@ def main():
                               if row['type'] == 'LC11' and row['somaSide'] == 'R'
                               and row['status'] == 'Traced'), dtype=np.int64)
     pre, post, contacts = collect_target_edges(WEIGHTS, targets)
-    object_ids = ids[np.isin(types, SOURCE_TYPES)]
-    retain = np.isin(pre, object_ids) & np.isin(post, targets)
+    source_ids = ids if args.all_inputs else ids[np.isin(types, SOURCE_TYPES)]
+    retain = np.isin(pre, source_ids) & np.isin(post, targets)
     pre, post, contacts = pre[retain], post[retain], contacts[retain]
     sources = np.unique(pre)
     source_nodes = np.searchsorted(ids, sources)
-    if len(targets) != 75 or len(sources) < 2000 or not np.all(
-            graph.signs[source_nodes] == 1):
+    source_signs = graph.signs[source_nodes]
+    object_sources = np.isin(types[source_nodes], SOURCE_TYPES)
+    object_mask = torch.tensor(object_sources)
+    if (len(targets) != 75 or object_sources.sum() < 2000
+            or not np.all(source_signs[object_sources] == 1)):
         raise AssertionError('unexpected object-pathway anatomy or signs')
+    edge_source = np.searchsorted(sources, pre)
+    edge_signs = source_signs[edge_source]
     config = NeuronConfig(**metadata['neurons'])
-    shadow = ShadowLC11(np.searchsorted(sources, pre),
+    shadow = ShadowLC11(edge_source,
                         np.searchsorted(targets, post),
-                        contacts.astype(np.float32)*metadata['gain'],
+                        contacts.astype(np.float32)*metadata['gain']*edge_signs,
                         len(sources), len(targets), config)
     net = MultiContextEfficacyNetwork(
         graph, metadata['delays'], metadata['pathways'], config=config,
@@ -190,6 +203,8 @@ def main():
             else:
                 release = release_from_voltage(captured['voltage'][tick],
                                                rest_voltage, fraction)
+            if fraction is not None and args.all_inputs:
+                release[~object_mask] = captured['spikes'][tick, ~object_mask]
             spikes[tick] = shadow.step(release)
             currents[tick] = shadow.current
             releases[tick] = release
@@ -224,9 +239,27 @@ def main():
                   graph_sha256=graph.identity(),
                   lc11_neurons=len(targets), source_neurons=len(sources),
                   measured_edges=len(pre), measured_contacts=int(contacts.sum()),
+                  excitatory_contacts=int(contacts[edge_signs > 0].sum()),
+                  inhibitory_contacts=int(contacts[edge_signs < 0].sum()),
                   voltage_scale=VOLTAGE_SCALE, fractions=FRACTIONS,
                   baseline_mode='adaptive-250ms' if args.adaptive else 'fixed-warm',
+                  input_scope='all-selected' if args.all_inputs else 'T2-T2a-T3',
                   calibration=[], selected_fraction=None, spike_only={}, frozen={})
+    if args.all_inputs:
+        report['source_class_activity'] = {}
+        for label in np.unique(types[source_nodes]):
+            source_mask = torch.tensor(types[source_nodes] == label)
+            edge_mask = types[source_nodes[edge_source]] == label
+            report['source_class_activity'][str(label)] = dict(
+                neurons=int(source_mask.sum()),
+                contacts=int(contacts[edge_mask].sum()),
+                signed_contacts=int((contacts[edge_mask]*edge_signs[edge_mask]).sum()),
+                blank_spikes=int(calibration_inputs['on']['blank']['spikes']
+                                 [:, source_mask].sum()),
+                on_dot_spikes=int(calibration_inputs['on']['dot']['spikes']
+                                  [:, source_mask].sum()),
+                off_dot_spikes=int(calibration_inputs['off']['dot']['spikes']
+                                   [:, source_mask].sum()))
     report['blank_voltage_drift'] = {}
     for polarity, pair in calibration_inputs.items():
         drift = pair['blank']['voltage']-rest_voltage
