@@ -24,6 +24,7 @@ from tm4_supplemented_t5 import TM4_STATE, Tm4SupplementedT5Network
 OUT = Path('docs/experiments/2026-09-23-tm4-graded-results.json')
 FAST_OUT = Path('docs/experiments/2026-09-23-tm4-fast-release-results.json')
 FORECAST_OUT = Path('docs/experiments/2026-09-23-t5-future-afferent-results.json')
+PAIRED_OUT = Path('docs/experiments/2026-09-23-t5-paired-afferent-results.json')
 STATE = NETWORK_STATE+GRADED_STATE+ORDER_STATE+TM4_STATE
 CASES = ((10, 1), (22, 1), (16, 1), (16, 2))
 FAST_CASES = CASES+((14, 1), (18, 2))
@@ -57,6 +58,12 @@ def future_events(gate):
     return torch.stack([gate[t+8:t+16].max(0).values for t in ISSUE]) > .05
 
 
+def future_deviation_events(stimulus, blank, *, threshold):
+    deviation = stimulus-blank
+    return torch.stack([deviation[t+8:t+16].max(0).values
+                        for t in ISSUE]) > threshold
+
+
 def arm_support(now, delayed, events):
     if not events.any():
         return None
@@ -65,11 +72,13 @@ def arm_support(now, delayed, events):
 
 
 @torch.no_grad()
-def main(*, fast_release=False, forecast_audit=False):
+def main(*, fast_release=False, forecast_audit=False, paired_audit=False):
     torch.set_num_threads(4)
+    forecast_audit |= paired_audit
     fast_release |= forecast_audit
     tau = .050 if fast_release else .250
-    output = (FORECAST_OUT if forecast_audit else
+    output = (PAIRED_OUT if paired_audit else
+              FORECAST_OUT if forecast_audit else
               FAST_OUT if fast_release else OUT)
     cases = FAST_CASES if fast_release else CASES
     source_sha = checksum(SOURCE)
@@ -251,6 +260,9 @@ def main(*, fast_release=False, forecast_audit=False):
         condition = report['conditions'][f'{center}-s{speed}'] = {}
         if forecast_audit:
             audit = report.setdefault('forecast_audit', {})[f'{center}-s{speed}'] = {}
+        if paired_audit:
+            paired = report.setdefault('paired_forecast_audit', {})[
+                f'{center}-s{speed}'] = {}
         for name in SUBTYPES:
             local = spans[name]
             baseline_event = {direction: future_events(
@@ -259,6 +271,8 @@ def main(*, fast_release=False, forecast_audit=False):
             rows = condition[name] = {}
             if forecast_audit:
                 audit[name] = {}
+            if paired_audit:
+                paired[name] = {}
             for mode in ('baseline', 'supplement'):
                 if forecast_audit:
                     audit[name][mode] = {}
@@ -278,6 +292,24 @@ def main(*, fast_release=False, forecast_audit=False):
                             order_auc=roc_auc(order.numpy(), event.numpy()),
                             order_active_fraction=float((order > .05)
                                                         .float().mean()))
+                if paired_audit:
+                    paired[name][mode] = {}
+                    blank_trace = captures[mode]['blank'][1]['afferent'][:, local]
+                    for direction in ('up', 'down', 'static'):
+                        trace = captures[mode][direction][1]
+                        event = future_deviation_events(
+                            trace['afferent'][:, local], blank_trace,
+                            threshold=.01)
+                        order = trace['pending_order'][ISSUE, local]
+                        paired[name][mode][direction] = dict(
+                            future_deviation_events=int(event.sum()),
+                            samples=event.numel(),
+                            event_fraction=float(event.float().mean()),
+                            order_event_mean=float(order[event].mean())
+                                if event.any() else None,
+                            order_quiet_mean=float(order[~event].mean())
+                                if (~event).any() else None,
+                            order_auc=roc_auc(order.numpy(), event.numpy()))
                 count = {direction: captures[mode][direction][1]['spikes'][
                     24:120, local].sum(0) for direction in ('up', 'down', 'static')}
                 contrast = count['down']-count['up']
@@ -351,6 +383,25 @@ def main(*, fast_release=False, forecast_audit=False):
                         <= .5*moving['order_active_fraction']
                     and blank['event_fraction'] < .001)
         report['passes_future_afferent_preflight'] = bool(all(forecast_checks))
+    if paired_audit:
+        paired_checks = []
+        for center, speed in cases:
+            rows = report['paired_forecast_audit'][f'{center}-s{speed}']
+            for name, preferred in (('T5c', 'up'), ('T5d', 'down')):
+                entry = rows[name]['supplement']
+                moving, static = entry[preferred], entry['static']
+                paired_checks.append(
+                    moving['future_deviation_events'] >= 10
+                    and moving['order_event_mean'] is not None
+                    and moving['order_quiet_mean'] is not None
+                    and moving['order_event_mean']
+                        >= 2*moving['order_quiet_mean']
+                    and moving['order_auc'] is not None
+                    and moving['order_auc'] >= .70
+                    and static['event_fraction']
+                        <= .5*moving['event_fraction'])
+        report['passes_paired_future_afferent_preflight'] = bool(
+            all(paired_checks))
     if checksum(SOURCE) != source_sha:
         raise AssertionError('source checkpoint changed')
     output.write_text(json.dumps(report, indent=2, allow_nan=False)+'\n')
@@ -358,7 +409,9 @@ def main(*, fast_release=False, forecast_audit=False):
         fast_tm4_support=report['fast_tm4_support'],
         passes_frozen_feature_gate=report['passes_frozen_feature_gate'],
         passes_future_afferent_preflight=report.get(
-            'passes_future_afferent_preflight'))),
+            'passes_future_afferent_preflight'),
+        passes_paired_future_afferent_preflight=report.get(
+            'passes_paired_future_afferent_preflight'))),
         flush=True)
 
 
@@ -366,5 +419,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--fast-release', action='store_true')
     parser.add_argument('--forecast-audit', action='store_true')
+    parser.add_argument('--paired-audit', action='store_true')
     args = parser.parse_args()
-    main(fast_release=args.fast_release, forecast_audit=args.forecast_audit)
+    main(fast_release=args.fast_release, forecast_audit=args.forecast_audit,
+         paired_audit=args.paired_audit)
