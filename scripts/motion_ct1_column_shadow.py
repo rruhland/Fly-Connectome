@@ -1,5 +1,6 @@
 """Frozen off/on test of measured CT1 contacts in inferred local compartments."""
 
+import argparse
 import json
 from pathlib import Path
 
@@ -11,12 +12,14 @@ import pyarrow.ipc as ipc
 import torch
 
 from ct1_column_shadow import CT1ColumnShadow, SHADOW_STATE
+from ct1_geometry_routing import route_output_contacts
 from fly_connectome.data import checksum
 from fly_connectome.dynamics import NeuronConfig
 from fly_connectome.graph import Graph
 from fly_connectome.sensor import EventCamera, Retina
 from full_context_pong import NETWORK_STATE
 from motion_ct1_wiring import TRANSMITTERS, WEIGHTS
+from motion_ct1_synapse_geometry import CACHE
 from motion_graded_propagation import GRADED_STATE
 from motion_stage_audit import SOURCE
 from motion_stage_locality import ANNOTATIONS, infer_columns
@@ -26,6 +29,8 @@ from t5_local_order_current import ORDER_STATE, T5LocalOrderNetwork
 
 
 OUT = Path('docs/experiments/2026-09-23-ct1-column-shadow-results.json')
+GEOMETRY_OUT = Path('docs/experiments/2026-09-23-ct1-geometry-shadow-results.json')
+COLUMN_RESULT = OUT
 CT1 = 10009
 CASES = ((10, 1), (22, 1), (16, 1), (16, 2))
 PREFERRED = {'T5c': 'up', 'T5d': 'down'}
@@ -95,8 +100,41 @@ def measured_ct1_shadow(net, metadata, retina, annotations):
     return shadow, counts
 
 
+def route_shadow_by_synapse_geometry(shadow, net, metadata):
+    if not CACHE.exists():
+        raise FileNotFoundError('run motion_ct1_synapse_geometry.py first')
+    ids = np.asarray(metadata['graph']['body_ids'])
+    types = np.asarray(metadata['retina']['cell_types'])
+    source_columns = {
+        int(ids[node]): int(column)
+        for node, column in zip(shadow.tm1_nodes.tolist(),
+                                shadow.tm1_columns.tolist())}
+    source_columns.update({
+        int(ids[net.graded_nodes[index]]): int(column)
+        for index, column in zip(shadow.tm9_indices.tolist(),
+                                 shadow.tm9_columns.tolist())})
+    target_nodes = {int(ids[i]): int(i)
+                    for i in np.flatnonzero(np.isin(types, ('T5c', 'T5d')))}
+    with np.load(CACHE) as saved:
+        posts, columns, contacts = route_output_contacts(
+            saved['input_body'], saved['input_xyz'],
+            saved['output_body'], saved['output_xyz'],
+            source_columns, target_nodes)
+    if int(contacts.sum()) != 37186:
+        raise AssertionError('geometry route changed measured T5c/d contact mass')
+    shadow.output_posts = torch.tensor(posts, dtype=torch.long)
+    shadow.output_columns = torch.tensor(columns, dtype=torch.long)
+    shadow.output_weights = torch.tensor(contacts*metadata['gain'],
+                                         dtype=torch.float32)
+    return dict(output_edges=len(posts), output_contacts=int(contacts.sum()),
+                cached_sites_sha256=checksum(CACHE))
+
+
 @torch.no_grad()
 def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--geometry-routed', action='store_true')
+    args = parser.parse_args()
     torch.set_num_threads(4)
     source_sha = checksum(SOURCE)
     payload = torch.load(SOURCE, weights_only=True)
@@ -125,6 +163,9 @@ def main():
         net.step(zero)
     net.enable_order()
     shadow, contact_counts = measured_ct1_shadow(net, metadata, retina, annotations)
+    if args.geometry_routed:
+        contact_counts['geometry_route'] = route_shadow_by_synapse_geometry(
+            shadow, net, metadata)
     for _ in range(256):
         shadow.begin_tick(net, output_enabled=False)
         net.step(zero)
@@ -174,7 +215,9 @@ def main():
     report = dict(source_sha256=source_sha, graph_sha256=graph.identity(),
         annotations_sha256=checksum(ANNOTATIONS), weights_sha256=checksum(WEIGHTS),
         ct1_body=CT1, contacts=contact_counts, ticks_per_frame=8,
+        output_route='nearest_input_site' if args.geometry_routed else 'same_target_column',
         release_scale=.02, release_cap=.10, conditions={}, passes_rescue=False)
+    reference = json.loads(COLUMN_RESULT.read_text()) if args.geometry_routed else None
     for center, speed in CASES:
         field = ((y >= center-8) & (y <= center+8)
                  & (x >= 24) & (x <= 40))
@@ -198,6 +241,12 @@ def main():
         if any(arms[arm]['up']['pixel_events'] != arms[arm]['down']['pixel_events']
                for arm in arms):
             raise AssertionError('opposite motions have unequal events')
+        key = f'{center}-s{speed}'
+        if reference is not None:
+            for case in ('blank', 'down', 'up', 'static'):
+                if (arms['off'][case]['spikes'] != reference['conditions'][key]
+                        ['arms']['off'][case]['spikes']):
+                    raise AssertionError('geometry off arm differs from fixed comparator')
         screen = {}
         for name, preferred in PREFERRED.items():
             null = 'up' if preferred == 'down' else 'down'
@@ -218,15 +267,15 @@ def main():
                 and row['preferred_retention'] >= .90
                 and pref_on > null_on and row['null_greater_ct1_current']
                 and row['blank_safe'])
-        key = f'{center}-s{speed}'
         report['conditions'][key] = dict(arms=arms, screen=screen)
         print(json.dumps(dict(condition=key, screen=screen)), flush=True)
     report['passes_rescue'] = all(row['screen'][name]['passes']
         for row in report['conditions'].values() for name in PREFERRED)
     if checksum(SOURCE) != source_sha:
         raise AssertionError('source checkpoint changed')
-    OUT.write_text(json.dumps(report, indent=2, allow_nan=False)+'\n')
-    print(json.dumps(dict(output=str(OUT), passes_rescue=report['passes_rescue'])),
+    output = GEOMETRY_OUT if args.geometry_routed else OUT
+    output.write_text(json.dumps(report, indent=2, allow_nan=False)+'\n')
+    print(json.dumps(dict(output=str(output), passes_rescue=report['passes_rescue'])),
         flush=True)
 
 
