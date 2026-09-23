@@ -113,3 +113,25 @@
 - [x] Write a failing test for the doubled-speed bar geometry before implementing it.
 - [x] Run both withheld conditions without recalibration and report per-cell subtype contrasts and static controls.
 - [x] Apply the fixed cross-position/speed screen, run the full suite, and commit the result. The order components passed; the predeclared source-occupancy component failed at doubled-speed leftward motion.
+
+### Task 3e: Physical T5 current and axis-aligned feature gate
+
+- [x] Audit CT1 cross-side contacts: measured left-soma CT1 supplies the selected right-side T5 circuit but is absent from the soma-side roster. Keep production graph unchanged.
+- [x] Implement and test an opt-in causal Tm4/Tm9 order current at each T5 cell; record the failed original horizontal T5c/d/static screen without changing its gate.
+- [x] Freeze the same current rule and test anatomically aligned motion axes. Vertical T5c/d passes both calibration and withheld position/speed with a gate-off control; horizontal T5a/b fails.
+- [x] Run the full suite and commit/push each verified chunk.
+
+### Task 3f: Local T5 prediction and credit conflict
+
+- [x] Include graded feedforward increments in the opt-in local learning observation; verify both transmitter signs and pathway isolation.
+- [x] Train the existing frame-horizon local rule for 40 continuous vertical episodes on measured predictive edges entering T5c/d. Credit occurs but held-out next-frame event prediction does not improve meaningfully.
+- [x] Audit same-edge event-versus-quiet proposals. Most edges receiving both categories have opposing cumulative signs.
+- [x] Test one capped, postsynaptically local event balance. It increases event anticipation consistently but remains far below the 10% event-MSE gate; do not promote it.
+- [x] Run the full suite and commit/push each verified chunk.
+
+### Task 3g: Locate a motion-bearing downstream learning target
+
+- [x] Audit measured T5c/d outputs into LPi34/LPi43 and their predictive afferents.
+- [x] Probe frozen LPi transmission at both calibration locations and withheld position/speeds; the T5 signal propagates, but LPi somata stay silent and predictive arrivals vanish in some conditions.
+- [x] Extend once to LLPC2/LLPC3/VS. Their local feedforward targets carry the motion cue, but actually arriving predictive inputs are almost exclusively inhibitory; current positive-arrival prediction is sign-mismatched.
+- [ ] Next: audit preferred/null inhibitory-current timing at T5 and downstream motion cells, including the measured CT1 omission, before proposing a separate local inhibitory plasticity objective. Keep the in-place architecture unchanged until the user approves a concrete revision.

@@ -1,0 +1,87 @@
+{
+  "source_sha256": "8c4af80ff3904881bac9313b618dd9989bb51174b47606f28eca88865296005c",
+  "graph_sha256": "c941a5c912dd03e2ab0868260c637c2b1d21525196d4bce93c7d5e7f618e34a8",
+  "targets": {
+    "LPi34": {
+      "cells": 58,
+      "t5": {
+        "T5c": {
+          "edges": 2442,
+          "contacts": 47281,
+          "fixed_positive_signs": true
+        },
+        "T5d": {
+          "edges": 17,
+          "contacts": 108,
+          "fixed_positive_signs": true
+        }
+      },
+      "predictive_incoming_edges": 290,
+      "predictive_incoming_contacts": 3978,
+      "top_predictive_sources": {
+        "LPi43": 150,
+        "LPi3a": 80,
+        "LPi4b": 19,
+        "LPi2c": 16,
+        "LPC2": 7,
+        "VST1": 4,
+        "LPT49": 3,
+        "LPT54": 3
+      }
+    },
+    "LPi43": {
+      "cells": 33,
+      "t5": {
+        "T5c": {
+          "edges": 21,
+          "contacts": 212,
+          "fixed_positive_signs": true
+        },
+        "T5d": {
+          "edges": 1352,
+          "contacts": 20628,
+          "fixed_positive_signs": true
+        }
+      },
+      "predictive_incoming_edges": 508,
+      "predictive_incoming_contacts": 7519,
+      "top_predictive_sources": {
+        "LLPC3": 156,
+        "LPi34": 118,
+        "LPi2c": 52,
+        "LPi3a": 47,
+        "LPC2": 36,
+        "LPi4b": 33,
+        "LPi2b": 22,
+        "LLPC2": 19
+      }
+    },
+    "LPi3412": {
+      "cells": 57,
+      "t5": {
+        "T5c": {
+          "edges": 1479,
+          "contacts": 15750,
+          "fixed_positive_signs": true
+        },
+        "T5d": {
+          "edges": 1285,
+          "contacts": 12757,
+          "fixed_positive_signs": true
+        }
+      },
+      "predictive_incoming_edges": 447,
+      "predictive_incoming_contacts": 8232,
+      "top_predictive_sources": {
+        "LPi2c": 166,
+        "LPi12": 95,
+        "LPi21": 57,
+        "LPi4b": 54,
+        "LPi2b": 50,
+        "LPi43": 6,
+        "LPT100": 4,
+        "LPC2": 4
+      }
+    }
+  }
+}
