@@ -1,0 +1,7 @@
+# Read-only LC11 wiring audit
+
+The M1 roster excludes LC11, but the raw MaleCNS tables include traced LC11 cells. Before an opt-in graph expansion, measure whether their recorded inputs would connect to the *pinned* right optic-lobe neurons. This is an anatomical accounting exercise, not a response or learning experiment.
+
+Use the pinned checkpoint's body IDs, the exact versioned MaleCNS annotation and weight tables, and the existing right-side selection. For every traced right LC11 cell, report: total incoming edge/contact counts; incoming counts and contact mass from the selected M1 graph; and the portion specifically from T2, T2a, and T3. Also report each source class's fraction of LC11 cells reached, median contacts per reached target, neurotransmitter sign evidence available from the raw transmitter table, and the largest source classes by contact mass. Repeat the main counts for traced left LC11 as a same-dataset comparison, without treating left cells as part of M1.
+
+Use all measured contacts for mass and additionally count edges meeting the M1 extraction's three-contact path threshold. No edge or cell is added to the running graph; no weights, neuron dynamics, sensor, or learning rule changes. A strong existing-to-LC11 connection would establish that exclusion removes a measured downstream route, but it cannot establish simulated responsiveness while T2/T3 remain quiet.
