@@ -1,0 +1,378 @@
+{
+  "source_sha256": "8c4af80ff3904881bac9313b618dd9989bb51174b47606f28eca88865296005c",
+  "annotations_sha256": "2177e246113e4cfbf1e7772ec37c6da1955ff22e8063d0b1f833101f99a9a3b2",
+  "weights_sha256": "e35da783d1c686b2b58b3b87cd6a403ae43bfcfba8bff28e08ef752c1a56afc1",
+  "ct1_body": 10009,
+  "source_classes": [
+    "Tm1",
+    "Tm9"
+  ],
+  "target_classes": [
+    "T5c",
+    "T5d"
+  ],
+  "inferred_t5_columns": true,
+  "totals": {
+    "input_edges": 1765,
+    "input_contacts": 32728,
+    "input_edges_ge3": 1715,
+    "input_contacts_ge3": 32645,
+    "output_edges": 1666,
+    "output_contacts": 37186,
+    "output_edges_ge3": 1666,
+    "output_contacts_ge3": 37186,
+    "unmapped_input_contacts": 0,
+    "unmapped_output_contacts": 0
+  },
+  "screens": {
+    "all_edges": {
+      "T5c": {
+        "all": {
+          "Tm1": {
+            "contacts": 19289,
+            "columns": 746,
+            "same_column_fraction": 0.9989631396132511,
+            "same_or_neighbor_fraction": 1.0
+          },
+          "Tm9": {
+            "contacts": 19289,
+            "columns": 746,
+            "same_column_fraction": 0.9950749131629426,
+            "same_or_neighbor_fraction": 1.0
+          },
+          "either": {
+            "contacts": 19289,
+            "columns": 746,
+            "same_column_fraction": 1.0,
+            "same_or_neighbor_fraction": 1.0
+          }
+        },
+        "y10": {
+          "Tm1": {
+            "contacts": 4411,
+            "columns": 156,
+            "same_column_fraction": 1.0,
+            "same_or_neighbor_fraction": 1.0
+          },
+          "Tm9": {
+            "contacts": 4411,
+            "columns": 156,
+            "same_column_fraction": 1.0,
+            "same_or_neighbor_fraction": 1.0
+          },
+          "either": {
+            "contacts": 4411,
+            "columns": 156,
+            "same_column_fraction": 1.0,
+            "same_or_neighbor_fraction": 1.0
+          }
+        },
+        "y22": {
+          "Tm1": {
+            "contacts": 4299,
+            "columns": 166,
+            "same_column_fraction": 1.0,
+            "same_or_neighbor_fraction": 1.0
+          },
+          "Tm9": {
+            "contacts": 4299,
+            "columns": 166,
+            "same_column_fraction": 1.0,
+            "same_or_neighbor_fraction": 1.0
+          },
+          "either": {
+            "contacts": 4299,
+            "columns": 166,
+            "same_column_fraction": 1.0,
+            "same_or_neighbor_fraction": 1.0
+          }
+        },
+        "y16": {
+          "Tm1": {
+            "contacts": 5364,
+            "columns": 197,
+            "same_column_fraction": 1.0,
+            "same_or_neighbor_fraction": 1.0
+          },
+          "Tm9": {
+            "contacts": 5364,
+            "columns": 197,
+            "same_column_fraction": 1.0,
+            "same_or_neighbor_fraction": 1.0
+          },
+          "either": {
+            "contacts": 5364,
+            "columns": 197,
+            "same_column_fraction": 1.0,
+            "same_or_neighbor_fraction": 1.0
+          }
+        }
+      },
+      "T5d": {
+        "all": {
+          "Tm1": {
+            "contacts": 17897,
+            "columns": 713,
+            "same_column_fraction": 0.9977091132592054,
+            "same_or_neighbor_fraction": 1.0
+          },
+          "Tm9": {
+            "contacts": 17897,
+            "columns": 713,
+            "same_column_fraction": 0.9940213443593898,
+            "same_or_neighbor_fraction": 1.0
+          },
+          "either": {
+            "contacts": 17897,
+            "columns": 713,
+            "same_column_fraction": 0.9983237414091747,
+            "same_or_neighbor_fraction": 1.0
+          }
+        },
+        "y10": {
+          "Tm1": {
+            "contacts": 4094,
+            "columns": 150,
+            "same_column_fraction": 1.0,
+            "same_or_neighbor_fraction": 1.0
+          },
+          "Tm9": {
+            "contacts": 4094,
+            "columns": 150,
+            "same_column_fraction": 1.0,
+            "same_or_neighbor_fraction": 1.0
+          },
+          "either": {
+            "contacts": 4094,
+            "columns": 150,
+            "same_column_fraction": 1.0,
+            "same_or_neighbor_fraction": 1.0
+          }
+        },
+        "y22": {
+          "Tm1": {
+            "contacts": 3903,
+            "columns": 153,
+            "same_column_fraction": 1.0,
+            "same_or_neighbor_fraction": 1.0
+          },
+          "Tm9": {
+            "contacts": 3903,
+            "columns": 153,
+            "same_column_fraction": 1.0,
+            "same_or_neighbor_fraction": 1.0
+          },
+          "either": {
+            "contacts": 3903,
+            "columns": 153,
+            "same_column_fraction": 1.0,
+            "same_or_neighbor_fraction": 1.0
+          }
+        },
+        "y16": {
+          "Tm1": {
+            "contacts": 4812,
+            "columns": 189,
+            "same_column_fraction": 1.0,
+            "same_or_neighbor_fraction": 1.0
+          },
+          "Tm9": {
+            "contacts": 4812,
+            "columns": 189,
+            "same_column_fraction": 1.0,
+            "same_or_neighbor_fraction": 1.0
+          },
+          "either": {
+            "contacts": 4812,
+            "columns": 189,
+            "same_column_fraction": 1.0,
+            "same_or_neighbor_fraction": 1.0
+          }
+        }
+      },
+      "source_contacts": {
+        "Tm1": 5463,
+        "Tm9": 27265
+      },
+      "target_contacts": {
+        "T5c": 19289,
+        "T5d": 17897
+      }
+    },
+    "edges_ge3": {
+      "T5c": {
+        "all": {
+          "Tm1": {
+            "contacts": 19289,
+            "columns": 746,
+            "same_column_fraction": 0.9701384208616309,
+            "same_or_neighbor_fraction": 1.0
+          },
+          "Tm9": {
+            "contacts": 19289,
+            "columns": 746,
+            "same_column_fraction": 0.9940380527761937,
+            "same_or_neighbor_fraction": 1.0
+          },
+          "either": {
+            "contacts": 19289,
+            "columns": 746,
+            "same_column_fraction": 0.9964228316657162,
+            "same_or_neighbor_fraction": 1.0
+          }
+        },
+        "y10": {
+          "Tm1": {
+            "contacts": 4411,
+            "columns": 156,
+            "same_column_fraction": 0.9802765812740875,
+            "same_or_neighbor_fraction": 1.0
+          },
+          "Tm9": {
+            "contacts": 4411,
+            "columns": 156,
+            "same_column_fraction": 1.0,
+            "same_or_neighbor_fraction": 1.0
+          },
+          "either": {
+            "contacts": 4411,
+            "columns": 156,
+            "same_column_fraction": 1.0,
+            "same_or_neighbor_fraction": 1.0
+          }
+        },
+        "y22": {
+          "Tm1": {
+            "contacts": 4299,
+            "columns": 166,
+            "same_column_fraction": 0.9818562456385206,
+            "same_or_neighbor_fraction": 1.0
+          },
+          "Tm9": {
+            "contacts": 4299,
+            "columns": 166,
+            "same_column_fraction": 1.0,
+            "same_or_neighbor_fraction": 1.0
+          },
+          "either": {
+            "contacts": 4299,
+            "columns": 166,
+            "same_column_fraction": 1.0,
+            "same_or_neighbor_fraction": 1.0
+          }
+        },
+        "y16": {
+          "Tm1": {
+            "contacts": 5364,
+            "columns": 197,
+            "same_column_fraction": 0.9815436241610739,
+            "same_or_neighbor_fraction": 1.0
+          },
+          "Tm9": {
+            "contacts": 5364,
+            "columns": 197,
+            "same_column_fraction": 1.0,
+            "same_or_neighbor_fraction": 1.0
+          },
+          "either": {
+            "contacts": 5364,
+            "columns": 197,
+            "same_column_fraction": 1.0,
+            "same_or_neighbor_fraction": 1.0
+          }
+        }
+      },
+      "T5d": {
+        "all": {
+          "Tm1": {
+            "contacts": 17897,
+            "columns": 713,
+            "same_column_fraction": 0.963792814438174,
+            "same_or_neighbor_fraction": 1.0
+          },
+          "Tm9": {
+            "contacts": 17897,
+            "columns": 713,
+            "same_column_fraction": 0.9919539587640387,
+            "same_or_neighbor_fraction": 1.0
+          },
+          "either": {
+            "contacts": 17897,
+            "columns": 713,
+            "same_column_fraction": 0.9942448455048332,
+            "same_or_neighbor_fraction": 1.0
+          }
+        },
+        "y10": {
+          "Tm1": {
+            "contacts": 4094,
+            "columns": 150,
+            "same_column_fraction": 0.9836345872007817,
+            "same_or_neighbor_fraction": 1.0
+          },
+          "Tm9": {
+            "contacts": 4094,
+            "columns": 150,
+            "same_column_fraction": 1.0,
+            "same_or_neighbor_fraction": 1.0
+          },
+          "either": {
+            "contacts": 4094,
+            "columns": 150,
+            "same_column_fraction": 1.0,
+            "same_or_neighbor_fraction": 1.0
+          }
+        },
+        "y22": {
+          "Tm1": {
+            "contacts": 3903,
+            "columns": 153,
+            "same_column_fraction": 0.9754035357417371,
+            "same_or_neighbor_fraction": 1.0
+          },
+          "Tm9": {
+            "contacts": 3903,
+            "columns": 153,
+            "same_column_fraction": 1.0,
+            "same_or_neighbor_fraction": 1.0
+          },
+          "either": {
+            "contacts": 3903,
+            "columns": 153,
+            "same_column_fraction": 1.0,
+            "same_or_neighbor_fraction": 1.0
+          }
+        },
+        "y16": {
+          "Tm1": {
+            "contacts": 4812,
+            "columns": 189,
+            "same_column_fraction": 0.9800498753117207,
+            "same_or_neighbor_fraction": 1.0
+          },
+          "Tm9": {
+            "contacts": 4812,
+            "columns": 189,
+            "same_column_fraction": 1.0,
+            "same_or_neighbor_fraction": 1.0
+          },
+          "either": {
+            "contacts": 4812,
+            "columns": 189,
+            "same_column_fraction": 1.0,
+            "same_or_neighbor_fraction": 1.0
+          }
+        }
+      },
+      "source_contacts": {
+        "Tm1": 5383,
+        "Tm9": 27262
+      },
+      "target_contacts": {
+        "T5c": 19289,
+        "T5d": 17897
+      }
+    }
+  },
+  "passes_body_level_coverage_screen": true
+}
