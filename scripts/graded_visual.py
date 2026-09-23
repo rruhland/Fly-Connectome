@@ -1,5 +1,6 @@
 """Opt-in graded release on selected visual neurons' measured outgoing edges."""
 
+from dataclasses import replace
 import math
 
 import torch
@@ -71,6 +72,8 @@ class GradedVisualNetwork(MultiContextEfficacyNetwork):
     def step(self, sensory_current, *, capture_increments=False):
         tick = self.step_index
         self.last_graded_impulse.zero_()
+        graded_feedforward = (torch.zeros_like(self.voltage)
+                              if capture_increments else None)
         if self.graded_enabled:
             edges, posts = self.graded_edges, self.graded_posts
             due = self.release_history[(tick-self.graded_delays).remainder(
@@ -85,6 +88,10 @@ class GradedVisualNetwork(MultiContextEfficacyNetwork):
                 chosen = pathways == path
                 current[0].index_add_(0, posts[chosen],
                                       impulse[chosen]/leak[chosen])
+            if capture_increments:
+                feedforward = pathways == 0
+                graded_feedforward[0].index_add_(
+                    0, posts[feedforward], impulse[feedforward])
             predictive = pathways == 1
             positions = self.incoming_lookup[edges]
             ordinary = predictive & (positions < 0)
@@ -119,6 +126,9 @@ class GradedVisualNetwork(MultiContextEfficacyNetwork):
             self.last_graded_impulse[0].index_add_(0, posts, impulse)
         activity = super().step(sensory_current,
                                 capture_increments=capture_increments)
+        if capture_increments:
+            activity = replace(activity, feedforward_arrivals=(
+                activity.feedforward_arrivals+graded_feedforward))
         source_value = (self.voltage[0, self.graded_nodes]
                         if self.source_state == 'voltage' else
                         self.feedforward_current[0, self.graded_nodes]

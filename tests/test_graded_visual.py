@@ -35,9 +35,12 @@ def test_existing_t2_edges_keep_pathway_sign_delay_and_weight(transmitter_sign):
         net.step(zero)
     net.enable_graded()
     net.release_history[(net.step_index-1) % net.history_length, 0] = .1
-    net.step(zero)
+    activity = net.step(zero, capture_increments=True)
     assert torch.isclose(net.last_graded_impulse[0, 2],
                          torch.tensor(.1*transmitter_sign))
+    assert torch.isclose(activity.feedforward_arrivals[0, 2],
+                         torch.tensor(.1*transmitter_sign))
+    assert activity.feedforward_arrivals[0, 4] == 0
     assert net.last_graded_impulse[0, 3] == 0
     predictive_impulse = (.1*net.excitatory_gain if transmitter_sign > 0
                           else -.1)
@@ -68,5 +71,6 @@ def test_tm9_current_residual_releases_on_its_existing_edge():
     net.feedforward_current[0, 1] = 1.
     net.step(zero)
     assert net.release_history[(net.step_index-1) % net.history_length, 0] == .1
-    net.step(zero)
+    activity = net.step(zero, capture_increments=True)
     assert torch.isclose(net.last_graded_impulse[0, 2], torch.tensor(.1))
+    assert torch.isclose(activity.feedforward_arrivals[0, 2], torch.tensor(.1))
