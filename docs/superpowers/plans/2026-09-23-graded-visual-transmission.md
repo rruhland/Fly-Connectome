@@ -92,3 +92,24 @@
 - [x] Preregister the fixed lag, local groups, and subtype-transfer screen; run the frozen probe.
 - [x] Record the failed order screen and sparse local Tm9 arrival as the next concrete bottleneck.
 - [x] Run the full regression suite and commit the verified result.
+
+### Task 3c: Opt-in Tm9 current release and fixed T5 order recheck
+
+**Files:** Extend `scripts/graded_visual.py` and `tests/test_graded_visual.py`; create `scripts/motion_tm9_graded.py` and its versioned protocol/result/findings.
+
+**Interfaces:** Reuse the opt-in graded edge integrator with Tm9's own signed synaptic current as its source state. Calibrate caps from blank alone, then rerun the fixed eight-tick Tm4/Tm9 order score without fitting direction labels or weights.
+
+- [x] Write failing small-graph current-release test; implement and verify the opt-in source-state extension with the full suite.
+- [x] Preregister blank cap and T5 transmission gates before running the frozen experiment.
+- [x] Record passing partial Tm9 transmission and calibration-position order score, with original spiking model retained as comparator.
+- [x] Run the full regression suite and commit the verified result.
+
+### Task 3d: Held-out T5 order transfer
+
+**Files:** Extend only `scripts/motion_tm9_graded.py`, its test file, and a separately versioned holdout protocol/result/findings.
+
+**Interfaces:** Preserve the selected Tm9 cap and eight-tick order rule; evaluate x=32 at one and two pixels/frame with the same bright blank and static controls.
+
+- [ ] Write a failing test for the doubled-speed bar geometry before implementing it.
+- [ ] Run both withheld conditions without recalibration and report per-cell subtype contrasts and static controls.
+- [ ] Apply the fixed cross-position/speed screen, run the full suite, and commit the result.
