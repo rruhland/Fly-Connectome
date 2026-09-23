@@ -153,6 +153,13 @@ def main():
                 positive_cells=int((per_cell > 0).sum()),
                 negative_cells=int((per_cell < 0).sum()),
                 static_excess=int(groups['static']['spikes']-groups['blank']['spikes']))
+        for case in cases.values():
+            for group in case['groups'].values():
+                counts = np.asarray(group.pop('per_cell_spikes'))
+                values, frequencies = np.unique(counts, return_counts=True)
+                group['per_cell_spike_histogram'] = {
+                    str(int(value)): int(frequency)
+                    for value, frequency in zip(values, frequencies)}
         row = dict(gain=gain, center=center, speed=speed,
             blank_safe=cases['blank']['blank_all_t5_rate'] < .001,
             cases=cases, contrast=contrast)
@@ -184,11 +191,19 @@ def main():
         gate_off_calibration={}, calibration=[], selected_gain=None, holdout=[],
         passes_calibration=False, passes_holdout=False)
     for center in (18, 46):
-        report['gate_off_calibration'][str(center)] = dict(
+        gate_off = dict(
             blank=capture(BLANK, center, with_gate=False),
             right=capture(stimulus(center, 1, 1), center, with_gate=False),
             left=capture(stimulus(center, -1, 1), center, with_gate=False),
             static=capture(static_bar(center), center, with_gate=False))
+        for case in gate_off.values():
+            for group in case['groups'].values():
+                counts = np.asarray(group.pop('per_cell_spikes'))
+                values, frequencies = np.unique(counts, return_counts=True)
+                group['per_cell_spike_histogram'] = {
+                    str(int(value)): int(frequency)
+                    for value, frequency in zip(values, frequencies)}
+        report['gate_off_calibration'][str(center)] = gate_off
     for gain in GAINS:
         rows = [evaluate(gain, center, 1) for center in (18, 46)]
         report['calibration'].append(dict(gain=gain, rows=rows,
