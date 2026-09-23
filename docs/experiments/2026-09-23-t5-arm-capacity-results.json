@@ -1,0 +1,610 @@
+{
+  "source_sha256": "8c4af80ff3904881bac9313b618dd9989bb51174b47606f28eca88865296005c",
+  "graph_sha256": "c941a5c912dd03e2ab0868260c637c2b1d21525196d4bce93c7d5e7f618e34a8",
+  "annotations_sha256": "2177e246113e4cfbf1e7772ec37c6da1955ff22e8063d0b1f833101f99a9a3b2",
+  "ticks_per_frame": 8,
+  "future_gate_threshold": 0.05,
+  "arm_support_threshold": 0.001,
+  "recurrent_support_threshold": 1e-06,
+  "conditions": {
+    "10-s1": {
+      "down": {
+        "pixel_events": 312,
+        "groups": {
+          "T5c": {
+            "cells": 183,
+            "frame_samples": 2013,
+            "future_gate_events": 418,
+            "future_spikes": 150,
+            "event_support": {
+              "arm_history": 0.9928229451179504,
+              "tm4": 0.6866028904914856,
+              "tm9": 0.9904305934906006,
+              "local_order": 0.3349282443523407,
+              "recurrent": 0.5119616985321045
+            },
+            "event_quiet_means": {
+              "arm_history": [
+                0.06695400923490524,
+                0.011094870045781136
+              ],
+              "local_order": [
+                0.23584292829036713,
+                0.027340736240148544
+              ],
+              "recurrent_absolute": [
+                0.00434085913002491,
+                0.0012097996659576893
+              ]
+            }
+          },
+          "T5d": {
+            "cells": 170,
+            "frame_samples": 1870,
+            "future_gate_events": 475,
+            "future_spikes": 181,
+            "event_support": {
+              "arm_history": 0.9831578731536865,
+              "tm4": 0.6842105388641357,
+              "tm9": 0.9599999785423279,
+              "local_order": 0.503157913684845,
+              "recurrent": 0.46105262637138367
+            },
+            "event_quiet_means": {
+              "arm_history": [
+                0.0542011633515358,
+                0.008491185493767262
+              ],
+              "local_order": [
+                0.3553296625614166,
+                0.01878335513174534
+              ],
+              "recurrent_absolute": [
+                0.003572729416191578,
+                0.0014492030022665858
+              ]
+            }
+          }
+        }
+      },
+      "up": {
+        "pixel_events": 312,
+        "groups": {
+          "T5c": {
+            "cells": 183,
+            "frame_samples": 2013,
+            "future_gate_events": 551,
+            "future_spikes": 190,
+            "event_support": {
+              "arm_history": 0.9818511605262756,
+              "tm4": 0.6896551847457886,
+              "tm9": 0.9727767705917358,
+              "local_order": 0.48457351326942444,
+              "recurrent": 0.4137931168079376
+            },
+            "event_quiet_means": {
+              "arm_history": [
+                0.0538901649415493,
+                0.009940171614289284
+              ],
+              "local_order": [
+                0.33330222964286804,
+                0.027248768135905266
+              ],
+              "recurrent_absolute": [
+                0.0035906697157770395,
+                0.0014454280026257038
+              ]
+            }
+          },
+          "T5d": {
+            "cells": 170,
+            "frame_samples": 1870,
+            "future_gate_events": 333,
+            "future_spikes": 118,
+            "event_support": {
+              "arm_history": 0.9969969987869263,
+              "tm4": 0.7267267107963562,
+              "tm9": 0.9819819927215576,
+              "local_order": 0.36936935782432556,
+              "recurrent": 0.4534534513950348
+            },
+            "event_quiet_means": {
+              "arm_history": [
+                0.0625319629907608,
+                0.010174025781452656
+              ],
+              "local_order": [
+                0.24605312943458557,
+                0.020708903670310974
+              ],
+              "recurrent_absolute": [
+                0.0034383954480290413,
+                0.0008824407705105841
+              ]
+            }
+          }
+        }
+      }
+    },
+    "22-s1": {
+      "down": {
+        "pixel_events": 312,
+        "groups": {
+          "T5c": {
+            "cells": 184,
+            "frame_samples": 2024,
+            "future_gate_events": 410,
+            "future_spikes": 130,
+            "event_support": {
+              "arm_history": 0.9878048896789551,
+              "tm4": 0.7317073345184326,
+              "tm9": 0.9853658676147461,
+              "local_order": 0.3048780560493469,
+              "recurrent": 0.34634146094322205
+            },
+            "event_quiet_means": {
+              "arm_history": [
+                0.06593147665262222,
+                0.010313966311514378
+              ],
+              "local_order": [
+                0.20123609900474548,
+                0.026532046496868134
+              ],
+              "recurrent_absolute": [
+                0.0022308689076453447,
+                0.0007151710451580584
+              ]
+            }
+          },
+          "T5d": {
+            "cells": 176,
+            "frame_samples": 1936,
+            "future_gate_events": 507,
+            "future_spikes": 179,
+            "event_support": {
+              "arm_history": 0.9704142212867737,
+              "tm4": 0.7041420340538025,
+              "tm9": 0.9447731971740723,
+              "local_order": 0.48915186524391174,
+              "recurrent": 0.29783037304878235
+            },
+            "event_quiet_means": {
+              "arm_history": [
+                0.0473022535443306,
+                0.006494441535323858
+              ],
+              "local_order": [
+                0.3364953100681305,
+                0.015357478521764278
+              ],
+              "recurrent_absolute": [
+                0.0023044932167977095,
+                0.0009623871301300824
+              ]
+            }
+          }
+        }
+      },
+      "up": {
+        "pixel_events": 312,
+        "groups": {
+          "T5c": {
+            "cells": 184,
+            "frame_samples": 2024,
+            "future_gate_events": 617,
+            "future_spikes": 221,
+            "event_support": {
+              "arm_history": 0.9886547923088074,
+              "tm4": 0.7066450715065002,
+              "tm9": 0.9821717739105225,
+              "local_order": 0.5526742339134216,
+              "recurrent": 0.265802264213562
+            },
+            "event_quiet_means": {
+              "arm_history": [
+                0.056042056530714035,
+                0.007293508853763342
+              ],
+              "local_order": [
+                0.39006510376930237,
+                0.01503686048090458
+              ],
+              "recurrent_absolute": [
+                0.0020215969998389482,
+                0.000631525821518153
+              ]
+            }
+          },
+          "T5d": {
+            "cells": 176,
+            "frame_samples": 1936,
+            "future_gate_events": 399,
+            "future_spikes": 133,
+            "event_support": {
+              "arm_history": 0.9649122953414917,
+              "tm4": 0.719298243522644,
+              "tm9": 0.9548872113227844,
+              "local_order": 0.41102758049964905,
+              "recurrent": 0.3358395993709564
+            },
+            "event_quiet_means": {
+              "arm_history": [
+                0.05742121487855911,
+                0.006869089789688587
+              ],
+              "local_order": [
+                0.2858368158340454,
+                0.01542652864009142
+              ],
+              "recurrent_absolute": [
+                0.0024013330694288015,
+                0.0003931316314265132
+              ]
+            }
+          }
+        }
+      }
+    },
+    "16-s1": {
+      "down": {
+        "pixel_events": 312,
+        "groups": {
+          "T5c": {
+            "cells": 224,
+            "frame_samples": 2464,
+            "future_gate_events": 424,
+            "future_spikes": 144,
+            "event_support": {
+              "arm_history": 0.9882075190544128,
+              "tm4": 0.6863207817077637,
+              "tm9": 0.9834905862808228,
+              "local_order": 0.30188679695129395,
+              "recurrent": 0.4646226465702057
+            },
+            "event_quiet_means": {
+              "arm_history": [
+                0.06811199337244034,
+                0.010083694010972977
+              ],
+              "local_order": [
+                0.20766077935695648,
+                0.020829500630497932
+              ],
+              "recurrent_absolute": [
+                0.0033908728510141373,
+                0.0008522854768671095
+              ]
+            }
+          },
+          "T5d": {
+            "cells": 207,
+            "frame_samples": 2277,
+            "future_gate_events": 503,
+            "future_spikes": 179,
+            "event_support": {
+              "arm_history": 0.9681908488273621,
+              "tm4": 0.679920494556427,
+              "tm9": 0.9522863030433655,
+              "local_order": 0.49701789021492004,
+              "recurrent": 0.46123260259628296
+            },
+            "event_quiet_means": {
+              "arm_history": [
+                0.05022710934281349,
+                0.007975755259394646
+              ],
+              "local_order": [
+                0.3364013433456421,
+                0.01698996312916279
+              ],
+              "recurrent_absolute": [
+                0.002742776181548834,
+                0.0013972400920465589
+              ]
+            }
+          }
+        }
+      },
+      "up": {
+        "pixel_events": 312,
+        "groups": {
+          "T5c": {
+            "cells": 224,
+            "frame_samples": 2464,
+            "future_gate_events": 607,
+            "future_spikes": 210,
+            "event_support": {
+              "arm_history": 0.9835255146026611,
+              "tm4": 0.6919274926185608,
+              "tm9": 0.9769357442855835,
+              "local_order": 0.5403624176979065,
+              "recurrent": 0.36079078912734985
+            },
+            "event_quiet_means": {
+              "arm_history": [
+                0.05514015257358551,
+                0.008207022212445736
+              ],
+              "local_order": [
+                0.36669135093688965,
+                0.023383142426609993
+              ],
+              "recurrent_absolute": [
+                0.0028445261996239424,
+                0.0008934481302276254
+              ]
+            }
+          },
+          "T5d": {
+            "cells": 207,
+            "frame_samples": 2277,
+            "future_gate_events": 375,
+            "future_spikes": 138,
+            "event_support": {
+              "arm_history": 0.9786666631698608,
+              "tm4": 0.7093333601951599,
+              "tm9": 0.9706666469573975,
+              "local_order": 0.3946666717529297,
+              "recurrent": 0.4026666581630707
+            },
+            "event_quiet_means": {
+              "arm_history": [
+                0.05991971492767334,
+                0.008195018395781517
+              ],
+              "local_order": [
+                0.26531246304512024,
+                0.020698050037026405
+              ],
+              "recurrent_absolute": [
+                0.0030890435446053743,
+                0.0005425452836789191
+              ]
+            }
+          }
+        }
+      },
+      "blank": {
+        "pixel_events": 0,
+        "groups": {
+          "T5c": {
+            "cells": 224,
+            "frame_samples": 2464,
+            "future_gate_events": 0,
+            "future_spikes": 0,
+            "event_support": {
+              "arm_history": null,
+              "tm4": null,
+              "tm9": null,
+              "local_order": null,
+              "recurrent": null
+            },
+            "event_quiet_means": {
+              "arm_history": [
+                null,
+                0.0025944241788238287
+              ],
+              "local_order": [
+                null,
+                0.0
+              ],
+              "recurrent_absolute": [
+                null,
+                6.809968908783048e-07
+              ]
+            }
+          },
+          "T5d": {
+            "cells": 207,
+            "frame_samples": 2277,
+            "future_gate_events": 0,
+            "future_spikes": 0,
+            "event_support": {
+              "arm_history": null,
+              "tm4": null,
+              "tm9": null,
+              "local_order": null,
+              "recurrent": null
+            },
+            "event_quiet_means": {
+              "arm_history": [
+                null,
+                0.0022143926471471786
+              ],
+              "local_order": [
+                null,
+                0.0
+              ],
+              "recurrent_absolute": [
+                null,
+                2.803406812246223e-11
+              ]
+            }
+          }
+        }
+      },
+      "static": {
+        "pixel_events": 0,
+        "groups": {
+          "T5c": {
+            "cells": 224,
+            "frame_samples": 2464,
+            "future_gate_events": 176,
+            "future_spikes": 32,
+            "event_support": {
+              "arm_history": 1.0,
+              "tm4": 0.875,
+              "tm9": 0.9943181872367859,
+              "local_order": 0.5340909361839294,
+              "recurrent": 0.5340909361839294
+            },
+            "event_quiet_means": {
+              "arm_history": [
+                0.05216454342007637,
+                0.004044369328767061
+              ],
+              "local_order": [
+                0.3055950403213501,
+                0.003632468404248357
+              ],
+              "recurrent_absolute": [
+                0.003981009125709534,
+                0.0003305301652289927
+              ]
+            }
+          },
+          "T5d": {
+            "cells": 207,
+            "frame_samples": 2277,
+            "future_gate_events": 149,
+            "future_spikes": 29,
+            "event_support": {
+              "arm_history": 1.0,
+              "tm4": 0.8456375598907471,
+              "tm9": 0.9664429426193237,
+              "local_order": 0.47651007771492004,
+              "recurrent": 0.46979865431785583
+            },
+            "event_quiet_means": {
+              "arm_history": [
+                0.044598937034606934,
+                0.0037064007483422756
+              ],
+              "local_order": [
+                0.2681604027748108,
+                0.005431399680674076
+              ],
+              "recurrent_absolute": [
+                0.0034471687395125628,
+                0.00032020415528677404
+              ]
+            }
+          }
+        }
+      }
+    },
+    "16-s2": {
+      "down": {
+        "pixel_events": 624,
+        "groups": {
+          "T5c": {
+            "cells": 224,
+            "frame_samples": 2464,
+            "future_gate_events": 364,
+            "future_spikes": 168,
+            "event_support": {
+              "arm_history": 0.9697802066802979,
+              "tm4": 0.5247252583503723,
+              "tm9": 0.9560439586639404,
+              "local_order": 0.25824177265167236,
+              "recurrent": 0.23351648449897766
+            },
+            "event_quiet_means": {
+              "arm_history": [
+                0.058192551136016846,
+                0.015317224897444248
+              ],
+              "local_order": [
+                0.13035324215888977,
+                0.019269393756985664
+              ],
+              "recurrent_absolute": [
+                0.0016788303619250655,
+                0.0011269827373325825
+              ]
+            }
+          },
+          "T5d": {
+            "cells": 207,
+            "frame_samples": 2277,
+            "future_gate_events": 472,
+            "future_spikes": 171,
+            "event_support": {
+              "arm_history": 0.9470338821411133,
+              "tm4": 0.569915235042572,
+              "tm9": 0.9216101765632629,
+              "local_order": 0.4343220293521881,
+              "recurrent": 0.3432203531265259
+            },
+            "event_quiet_means": {
+              "arm_history": [
+                0.05002421513199806,
+                0.00828420277684927
+              ],
+              "local_order": [
+                0.2697969675064087,
+                0.01865183562040329
+              ],
+              "recurrent_absolute": [
+                0.0018813293427228928,
+                0.0015383124118670821
+              ]
+            }
+          }
+        }
+      },
+      "up": {
+        "pixel_events": 624,
+        "groups": {
+          "T5c": {
+            "cells": 224,
+            "frame_samples": 2464,
+            "future_gate_events": 582,
+            "future_spikes": 193,
+            "event_support": {
+              "arm_history": 0.9776632189750671,
+              "tm4": 0.5721649527549744,
+              "tm9": 0.969072163105011,
+              "local_order": 0.4518900215625763,
+              "recurrent": 0.22164948284626007
+            },
+            "event_quiet_means": {
+              "arm_history": [
+                0.053820930421352386,
+                0.009532843716442585
+              ],
+              "local_order": [
+                0.3029080331325531,
+                0.01916196383535862
+              ],
+              "recurrent_absolute": [
+                0.0017812491860240698,
+                0.0008379861828871071
+              ]
+            }
+          },
+          "T5d": {
+            "cells": 207,
+            "frame_samples": 2277,
+            "future_gate_events": 309,
+            "future_spikes": 158,
+            "event_support": {
+              "arm_history": 0.9579287767410278,
+              "tm4": 0.469255656003952,
+              "tm9": 0.9449838399887085,
+              "local_order": 0.24271844327449799,
+              "recurrent": 0.20711974799633026
+            },
+            "event_quiet_means": {
+              "arm_history": [
+                0.04602206498384476,
+                0.012874159030616283
+              ],
+              "local_order": [
+                0.12313675135374069,
+                0.020691292360424995
+              ],
+              "recurrent_absolute": [
+                0.0012762465048581362,
+                0.0010810588719323277
+              ]
+            }
+          }
+        }
+      }
+    }
+  },
+  "passes_upstream_capacity": false
+}
