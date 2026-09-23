@@ -26,6 +26,7 @@ FAST_OUT = Path('docs/experiments/2026-09-23-tm4-fast-release-results.json')
 FORECAST_OUT = Path('docs/experiments/2026-09-23-t5-future-afferent-results.json')
 PAIRED_OUT = Path('docs/experiments/2026-09-23-t5-paired-afferent-results.json')
 SPIKE_OUT = Path('docs/experiments/2026-09-23-t5-future-spike-results.json')
+HORIZON_OUT = Path('docs/experiments/2026-09-23-t5-spike-horizon-results.json')
 STATE = NETWORK_STATE+GRADED_STATE+ORDER_STATE+TM4_STATE
 CASES = ((10, 1), (22, 1), (16, 1), (16, 2))
 FAST_CASES = CASES+((14, 1), (18, 2))
@@ -56,7 +57,12 @@ def roc_auc(scores, events):
 
 
 def future_events(gate):
-    return torch.stack([gate[t+8:t+16].max(0).values for t in ISSUE]) > .05
+    return future_events_at(gate, horizon=8)
+
+
+def future_events_at(spikes, *, horizon):
+    return torch.stack([spikes[t+horizon:t+horizon+8].max(0).values
+                        for t in ISSUE]) > .05
 
 
 def future_deviation_events(stimulus, blank, *, threshold):
@@ -74,12 +80,14 @@ def arm_support(now, delayed, events):
 
 @torch.no_grad()
 def main(*, fast_release=False, forecast_audit=False, paired_audit=False,
-         spike_audit=False):
+         spike_audit=False, horizon_audit=False):
     torch.set_num_threads(4)
+    spike_audit |= horizon_audit
     forecast_audit |= paired_audit or spike_audit
     fast_release |= forecast_audit
     tau = .050 if fast_release else .250
-    output = (SPIKE_OUT if spike_audit else
+    output = (HORIZON_OUT if horizon_audit else
+              SPIKE_OUT if spike_audit else
               PAIRED_OUT if paired_audit else
               FORECAST_OUT if forecast_audit else
               FAST_OUT if fast_release else OUT)
@@ -269,6 +277,9 @@ def main(*, fast_release=False, forecast_audit=False, paired_audit=False,
         if spike_audit:
             spike = report.setdefault('spike_forecast_audit', {})[
                 f'{center}-s{speed}'] = {}
+        if horizon_audit:
+            horizon = report.setdefault('spike_horizon_audit', {})[
+                f'{center}-s{speed}'] = {}
         for name in SUBTYPES:
             local = spans[name]
             baseline_event = {direction: future_events(
@@ -281,6 +292,8 @@ def main(*, fast_release=False, forecast_audit=False, paired_audit=False,
                 paired[name] = {}
             if spike_audit:
                 spike[name] = {}
+            if horizon_audit:
+                horizon[name] = {}
             for mode in ('baseline', 'supplement'):
                 if forecast_audit:
                     audit[name][mode] = {}
@@ -337,6 +350,28 @@ def main(*, fast_release=False, forecast_audit=False, paired_audit=False,
                             order_auc=roc_auc(order.numpy(), events.numpy()),
                             recent_spike_auc=roc_auc(recent.numpy(),
                                                      events.numpy()))
+                if horizon_audit:
+                    horizon[name][mode] = {}
+                    for direction in ('up', 'down', 'static', 'blank'):
+                        trace = captures[mode][direction][1]
+                        order = trace['pending_order'][ISSUE, local]
+                        recent = torch.stack([trace['spikes'][t-7:t+1,
+                            local].sum(0) for t in ISSUE])
+                        horizon[name][mode][direction] = {}
+                        for offset in (8, 16, 32):
+                            events = future_events_at(
+                                trace['spikes'][:, local], horizon=offset)
+                            horizon[name][mode][direction][str(offset)] = dict(
+                                future_spike_events=int(events.sum()),
+                                samples=events.numel(),
+                                event_fraction=float(events.float().mean()),
+                                order_event_mean=float(order[events].mean())
+                                    if events.any() else None,
+                                order_quiet_mean=float(order[~events].mean())
+                                    if (~events).any() else None,
+                                order_auc=roc_auc(order.numpy(), events.numpy()),
+                                recent_spike_auc=roc_auc(recent.numpy(),
+                                                         events.numpy()))
                 count = {direction: captures[mode][direction][1]['spikes'][
                     24:120, local].sum(0) for direction in ('up', 'down', 'static')}
                 contrast = count['down']-count['up']
@@ -452,6 +487,32 @@ def main(*, fast_release=False, forecast_audit=False, paired_audit=False,
                         < .5*moving['event_fraction']
                     and blank['event_fraction'] < .001)
         report['passes_future_spike_preflight'] = bool(all(spike_checks))
+    if horizon_audit:
+        horizons = {}
+        for offset in (8, 16, 32):
+            checks = []
+            for center, speed in cases:
+                rows = report['spike_horizon_audit'][f'{center}-s{speed}']
+                for name, preferred in (('T5c', 'up'), ('T5d', 'down')):
+                    entry = rows[name]['supplement']
+                    moving, static, blank = (entry[preferred][str(offset)],
+                        entry['static'][str(offset)], entry['blank'][str(offset)])
+                    checks.append(
+                        moving['future_spike_events'] >= 10
+                        and moving['order_event_mean'] is not None
+                        and moving['order_quiet_mean'] is not None
+                        and moving['order_event_mean']
+                            >= 2*moving['order_quiet_mean']
+                        and moving['order_auc'] is not None
+                        and moving['recent_spike_auc'] is not None
+                        and moving['order_auc'] >= .70
+                        and moving['order_auc']
+                            >= moving['recent_spike_auc']+.05
+                        and static['event_fraction']
+                            < .5*moving['event_fraction']
+                        and blank['event_fraction'] < .001)
+            horizons[str(offset)] = bool(all(checks))
+        report['qualifying_spike_horizons'] = horizons
     if checksum(SOURCE) != source_sha:
         raise AssertionError('source checkpoint changed')
     output.write_text(json.dumps(report, indent=2, allow_nan=False)+'\n')
@@ -463,7 +524,8 @@ def main(*, fast_release=False, forecast_audit=False, paired_audit=False,
         passes_paired_future_afferent_preflight=report.get(
             'passes_paired_future_afferent_preflight'),
         passes_future_spike_preflight=report.get(
-            'passes_future_spike_preflight'))),
+            'passes_future_spike_preflight'),
+        qualifying_spike_horizons=report.get('qualifying_spike_horizons'))),
         flush=True)
 
 
@@ -473,6 +535,8 @@ if __name__ == '__main__':
     parser.add_argument('--forecast-audit', action='store_true')
     parser.add_argument('--paired-audit', action='store_true')
     parser.add_argument('--spike-audit', action='store_true')
+    parser.add_argument('--horizon-audit', action='store_true')
     args = parser.parse_args()
     main(fast_release=args.fast_release, forecast_audit=args.forecast_audit,
-         paired_audit=args.paired_audit, spike_audit=args.spike_audit)
+         paired_audit=args.paired_audit, spike_audit=args.spike_audit,
+         horizon_audit=args.horizon_audit)
