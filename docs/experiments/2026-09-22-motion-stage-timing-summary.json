@@ -1,0 +1,97 @@
+{
+  "source_sha256": "8c4af80ff3904881bac9313b618dd9989bb51174b47606f28eca88865296005c",
+  "detailed_trace_sha256": "c35bdedb44152f62930886a6dc8e72e9ad8a914e201a8299fefab91f16e052e8",
+  "tm3_column_inference": {
+    "total": 1037,
+    "inferred": 1037,
+    "median_l1_contacts": 76.0,
+    "median_l1_axial_spread": 0.7551476239016431,
+    "p90_l1_axial_spread": 0.8924816590860963
+  },
+  "probes": {
+    "18-flash": {
+      "local_neurons": {
+        "Mi4": 87,
+        "Mi9": 87,
+        "Mi1": 87,
+        "Tm3": 105,
+        "T4": 334
+      },
+      "minimum_mi4_voltage_difference": -0.00420578895136714,
+      "minimum_tick": 57,
+      "maximum_mi4_voltage_difference": 0.00019541732035577297,
+      "maximum_tick": 37,
+      "t4_excess_spikes": 0
+    },
+    "18-right": {
+      "local_neurons": {
+        "Mi4": 87,
+        "Mi9": 87,
+        "Mi1": 87,
+        "Tm3": 105,
+        "T4": 334
+      },
+      "minimum_mi4_voltage_difference": -0.00397504260763526,
+      "minimum_tick": 63,
+      "maximum_mi4_voltage_difference": 8.640484884381294e-05,
+      "maximum_tick": 52,
+      "t4_excess_spikes": 0
+    },
+    "18-left": {
+      "local_neurons": {
+        "Mi4": 87,
+        "Mi9": 87,
+        "Mi1": 87,
+        "Tm3": 105,
+        "T4": 334
+      },
+      "minimum_mi4_voltage_difference": -0.004161139950156212,
+      "minimum_tick": 59,
+      "maximum_mi4_voltage_difference": 3.358791582286358e-05,
+      "maximum_tick": 36,
+      "t4_excess_spikes": 0
+    },
+    "46-flash": {
+      "local_neurons": {
+        "Mi4": 90,
+        "Mi9": 90,
+        "Mi1": 90,
+        "Tm3": 101,
+        "T4": 354
+      },
+      "minimum_mi4_voltage_difference": -0.0016436432488262653,
+      "minimum_tick": 48,
+      "maximum_mi4_voltage_difference": 0.0008169491775333881,
+      "maximum_tick": 41,
+      "t4_excess_spikes": 0
+    },
+    "46-right": {
+      "local_neurons": {
+        "Mi4": 90,
+        "Mi9": 90,
+        "Mi1": 90,
+        "Tm3": 101,
+        "T4": 354
+      },
+      "minimum_mi4_voltage_difference": -0.0005334694869816303,
+      "minimum_tick": 63,
+      "maximum_mi4_voltage_difference": 0.0023183287121355534,
+      "maximum_tick": 43,
+      "t4_excess_spikes": 0
+    },
+    "46-left": {
+      "local_neurons": {
+        "Mi4": 90,
+        "Mi9": 90,
+        "Mi1": 90,
+        "Tm3": 101,
+        "T4": 354
+      },
+      "minimum_mi4_voltage_difference": -0.0010559526272118092,
+      "minimum_tick": 50,
+      "maximum_mi4_voltage_difference": 0.0017282918561249971,
+      "maximum_tick": 43,
+      "t4_excess_spikes": 0
+    }
+  }
+}
