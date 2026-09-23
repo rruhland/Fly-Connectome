@@ -1,0 +1,1436 @@
+{
+  "source_sha256": "8c4af80ff3904881bac9313b618dd9989bb51174b47606f28eca88865296005c",
+  "graph_sha256": "c941a5c912dd03e2ab0868260c637c2b1d21525196d4bce93c7d5e7f618e34a8",
+  "annotations_sha256": "2177e246113e4cfbf1e7772ec37c6da1955ff22e8063d0b1f833101f99a9a3b2",
+  "ticks_per_frame": 8,
+  "lag_ticks": 8,
+  "gate_gain": 8000.0,
+  "gate_cap": 1.0,
+  "source_release_cap": 0.1,
+  "current_scale": 0.02,
+  "rest_overrides": {
+    "Tm4": 0.85,
+    "Tm9": 0.85
+  },
+  "axes": {
+    "horizontal": {
+      "calibration": [
+        {
+          "axis": "horizontal",
+          "center": 18,
+          "speed": 1,
+          "with_gate": true,
+          "cases": {
+            "blank": {
+              "pixel_events": 0,
+              "targets": {
+                "T5a": {
+                  "spikes": 0,
+                  "gate_fraction": 0.0,
+                  "gate_mean": 0.0,
+                  "gate_p95": 0.0,
+                  "per_cell_spike_histogram": {
+                    "0": 118
+                  }
+                },
+                "T5b": {
+                  "spikes": 0,
+                  "gate_fraction": 0.0,
+                  "gate_mean": 0.0,
+                  "gate_p95": 0.0,
+                  "per_cell_spike_histogram": {
+                    "0": 131
+                  }
+                }
+              },
+              "blank_t5_rate": 2.3279201286641182e-06,
+              "mean_source_release": 0.001017536036670208
+            },
+            "positive": {
+              "pixel_events": 312,
+              "targets": {
+                "T5a": {
+                  "spikes": 124,
+                  "gate_fraction": 0.2577683627605438,
+                  "gate_mean": 0.0950302705168724,
+                  "gate_p95": 1.0,
+                  "per_cell_spike_histogram": {
+                    "0": 29,
+                    "1": 55,
+                    "2": 33,
+                    "3": 1
+                  }
+                },
+                "T5b": {
+                  "spikes": 151,
+                  "gate_fraction": 0.2562817931175232,
+                  "gate_mean": 0.10265635699033737,
+                  "gate_p95": 1.0,
+                  "per_cell_spike_histogram": {
+                    "0": 26,
+                    "1": 60,
+                    "2": 44,
+                    "3": 1
+                  }
+                }
+              },
+              "blank_t5_rate": 0.0013758008135482669,
+              "mean_source_release": 0.007030011620372534
+            },
+            "negative": {
+              "pixel_events": 312,
+              "targets": {
+                "T5a": {
+                  "spikes": 132,
+                  "gate_fraction": 0.29396185278892517,
+                  "gate_mean": 0.10967175662517548,
+                  "gate_p95": 1.0,
+                  "per_cell_spike_histogram": {
+                    "0": 25,
+                    "1": 56,
+                    "2": 35,
+                    "3": 2
+                  }
+                },
+                "T5b": {
+                  "spikes": 149,
+                  "gate_fraction": 0.2861800193786621,
+                  "gate_mean": 0.10990531742572784,
+                  "gate_p95": 1.0,
+                  "per_cell_spike_histogram": {
+                    "0": 21,
+                    "1": 73,
+                    "2": 35,
+                    "3": 2
+                  }
+                }
+              },
+              "blank_t5_rate": 0.0014921968104317784,
+              "mean_source_release": 0.0068082963116467
+            },
+            "static": {
+              "pixel_events": 0,
+              "targets": {
+                "T5a": {
+                  "spikes": 45,
+                  "gate_fraction": 0.14945268630981445,
+                  "gate_mean": 0.03535264730453491,
+                  "gate_p95": 0.15061548352241516,
+                  "per_cell_spike_histogram": {
+                    "0": 84,
+                    "1": 23,
+                    "2": 11
+                  }
+                },
+                "T5b": {
+                  "spikes": 49,
+                  "gate_fraction": 0.1499681919813156,
+                  "gate_mean": 0.034401148557662964,
+                  "gate_p95": 0.13887113332748413,
+                  "per_cell_spike_histogram": {
+                    "0": 91,
+                    "1": 31,
+                    "2": 9
+                  }
+                }
+              },
+              "blank_t5_rate": 0.00047722362796775997,
+              "mean_source_release": 0.0020229786168783903
+            }
+          },
+          "contrasts": {
+            "T5a": {
+              "positive_minus_negative": -8,
+              "per_cell_median": 0.0,
+              "positive_cells": 15,
+              "negative_cells": 24,
+              "preferred_spikes": 132,
+              "static_spikes": 45,
+              "moving_over_static": 2.933333333333333
+            },
+            "T5b": {
+              "positive_minus_negative": 2,
+              "per_cell_median": 0.0,
+              "positive_cells": 31,
+              "negative_cells": 29,
+              "preferred_spikes": 151,
+              "static_spikes": 49,
+              "moving_over_static": 3.0816326530612246
+            }
+          },
+          "blank_safe": true
+        },
+        {
+          "axis": "horizontal",
+          "center": 46,
+          "speed": 1,
+          "with_gate": true,
+          "cases": {
+            "blank": {
+              "pixel_events": 0,
+              "targets": {
+                "T5a": {
+                  "spikes": 0,
+                  "gate_fraction": 0.0,
+                  "gate_mean": 0.0,
+                  "gate_p95": 0.0,
+                  "per_cell_spike_histogram": {
+                    "0": 137
+                  }
+                },
+                "T5b": {
+                  "spikes": 0,
+                  "gate_fraction": 0.0,
+                  "gate_mean": 0.0,
+                  "gate_p95": 0.0,
+                  "per_cell_spike_histogram": {
+                    "0": 130
+                  }
+                }
+              },
+              "blank_t5_rate": 2.3279201286641182e-06,
+              "mean_source_release": 0.001034000189974904
+            },
+            "positive": {
+              "pixel_events": 312,
+              "targets": {
+                "T5a": {
+                  "spikes": 155,
+                  "gate_fraction": 0.35477495193481445,
+                  "gate_mean": 0.11454878747463226,
+                  "gate_p95": 1.0,
+                  "per_cell_spike_histogram": {
+                    "0": 31,
+                    "1": 57,
+                    "2": 49
+                  }
+                },
+                "T5b": {
+                  "spikes": 130,
+                  "gate_fraction": 0.36866986751556396,
+                  "gate_mean": 0.09255941212177277,
+                  "gate_p95": 1.0,
+                  "per_cell_spike_histogram": {
+                    "0": 34,
+                    "1": 62,
+                    "2": 34
+                  }
+                }
+              },
+              "blank_t5_rate": 0.0014642617898061872,
+              "mean_source_release": 0.006566938012838364
+            },
+            "negative": {
+              "pixel_events": 312,
+              "targets": {
+                "T5a": {
+                  "spikes": 140,
+                  "gate_fraction": 0.24741484224796295,
+                  "gate_mean": 0.08699609339237213,
+                  "gate_p95": 1.0,
+                  "per_cell_spike_histogram": {
+                    "0": 36,
+                    "1": 62,
+                    "2": 39
+                  }
+                },
+                "T5b": {
+                  "spikes": 133,
+                  "gate_fraction": 0.24823717772960663,
+                  "gate_mean": 0.08931966125965118,
+                  "gate_p95": 1.0,
+                  "per_cell_spike_histogram": {
+                    "0": 33,
+                    "1": 61,
+                    "2": 36
+                  }
+                }
+              },
+              "blank_t5_rate": 0.0014363267691805959,
+              "mean_source_release": 0.007169684395194054
+            },
+            "static": {
+              "pixel_events": 0,
+              "targets": {
+                "T5a": {
+                  "spikes": 49,
+                  "gate_fraction": 0.15138381719589233,
+                  "gate_mean": 0.030490703880786896,
+                  "gate_p95": 0.10038880258798599,
+                  "per_cell_spike_histogram": {
+                    "0": 98,
+                    "1": 29,
+                    "2": 10
+                  }
+                },
+                "T5b": {
+                  "spikes": 43,
+                  "gate_fraction": 0.14262820780277252,
+                  "gate_mean": 0.026055820286273956,
+                  "gate_p95": 0.07397636026144028,
+                  "per_cell_spike_histogram": {
+                    "0": 97,
+                    "1": 23,
+                    "2": 10
+                  }
+                }
+              },
+              "blank_t5_rate": 0.00046325611765496433,
+              "mean_source_release": 0.002022241009399295
+            }
+          },
+          "contrasts": {
+            "T5a": {
+              "positive_minus_negative": 15,
+              "per_cell_median": 0.0,
+              "positive_cells": 29,
+              "negative_cells": 14,
+              "preferred_spikes": 155,
+              "static_spikes": 49,
+              "moving_over_static": 3.163265306122449
+            },
+            "T5b": {
+              "positive_minus_negative": -3,
+              "per_cell_median": 0.0,
+              "positive_cells": 18,
+              "negative_cells": 21,
+              "preferred_spikes": 133,
+              "static_spikes": 43,
+              "moving_over_static": 3.0930232558139537
+            }
+          },
+          "blank_safe": true
+        }
+      ],
+      "calibration_signs": {
+        "T5a": -1,
+        "T5b": 1
+      },
+      "passes_calibration": false,
+      "holdout": [],
+      "passes_holdout": false
+    },
+    "vertical": {
+      "calibration": [
+        {
+          "axis": "vertical",
+          "center": 10,
+          "speed": 1,
+          "with_gate": true,
+          "cases": {
+            "blank": {
+              "pixel_events": 0,
+              "targets": {
+                "T5c": {
+                  "spikes": 0,
+                  "gate_fraction": 0.0,
+                  "gate_mean": 0.0,
+                  "gate_p95": 0.0,
+                  "per_cell_spike_histogram": {
+                    "0": 183
+                  }
+                },
+                "T5d": {
+                  "spikes": 0,
+                  "gate_fraction": 0.0,
+                  "gate_mean": 0.0,
+                  "gate_p95": 0.0,
+                  "per_cell_spike_histogram": {
+                    "0": 170
+                  }
+                }
+              },
+              "blank_t5_rate": 2.3279201286641182e-06,
+              "mean_source_release": 0.0010477228788658977
+            },
+            "positive": {
+              "pixel_events": 312,
+              "targets": {
+                "T5c": {
+                  "spikes": 166,
+                  "gate_fraction": 0.16740664839744568,
+                  "gate_mean": 0.0774727389216423,
+                  "gate_p95": 1.0,
+                  "per_cell_spike_histogram": {
+                    "0": 46,
+                    "1": 108,
+                    "2": 29
+                  }
+                },
+                "T5d": {
+                  "spikes": 194,
+                  "gate_fraction": 0.23541666567325592,
+                  "gate_mean": 0.11158335208892822,
+                  "gate_p95": 1.0,
+                  "per_cell_spike_histogram": {
+                    "0": 45,
+                    "1": 57,
+                    "2": 67,
+                    "3": 1
+                  }
+                }
+              },
+              "blank_t5_rate": 0.0018320732051506639,
+              "mean_source_release": 0.006310732569545507
+            },
+            "negative": {
+              "pixel_events": 312,
+              "targets": {
+                "T5c": {
+                  "spikes": 214,
+                  "gate_fraction": 0.23554189503192902,
+                  "gate_mean": 0.12143422663211823,
+                  "gate_p95": 1.0,
+                  "per_cell_spike_histogram": {
+                    "0": 47,
+                    "1": 61,
+                    "2": 72,
+                    "3": 3
+                  }
+                },
+                "T5d": {
+                  "spikes": 136,
+                  "gate_fraction": 0.1663602888584137,
+                  "gate_mean": 0.06669037789106369,
+                  "gate_p95": 0.9889622926712036,
+                  "per_cell_spike_histogram": {
+                    "0": 56,
+                    "1": 92,
+                    "2": 22
+                  }
+                }
+              },
+              "blank_t5_rate": 0.0017086933366954327,
+              "mean_source_release": 0.005773565266281366
+            },
+            "static": {
+              "pixel_events": 0,
+              "targets": {
+                "T5c": {
+                  "spikes": 75,
+                  "gate_fraction": 0.13484744727611542,
+                  "gate_mean": 0.04521625116467476,
+                  "gate_p95": 0.24824291467666626,
+                  "per_cell_spike_histogram": {
+                    "0": 132,
+                    "1": 27,
+                    "2": 24
+                  }
+                },
+                "T5d": {
+                  "spikes": 61,
+                  "gate_fraction": 0.12175244837999344,
+                  "gate_mean": 0.03723287209868431,
+                  "gate_p95": 0.1593398153781891,
+                  "per_cell_spike_histogram": {
+                    "0": 127,
+                    "1": 25,
+                    "2": 18
+                  }
+                }
+              },
+              "blank_t5_rate": 0.0006960481405258179,
+              "mean_source_release": 0.002029949566349387
+            }
+          },
+          "contrasts": {
+            "T5c": {
+              "positive_minus_negative": -48,
+              "per_cell_median": 0.0,
+              "positive_cells": 14,
+              "negative_cells": 62,
+              "preferred_spikes": 214,
+              "static_spikes": 75,
+              "moving_over_static": 2.8533333333333335
+            },
+            "T5d": {
+              "positive_minus_negative": 58,
+              "per_cell_median": 0.0,
+              "positive_cells": 65,
+              "negative_cells": 8,
+              "preferred_spikes": 194,
+              "static_spikes": 61,
+              "moving_over_static": 3.180327868852459
+            }
+          },
+          "blank_safe": true
+        },
+        {
+          "axis": "vertical",
+          "center": 22,
+          "speed": 1,
+          "with_gate": true,
+          "cases": {
+            "blank": {
+              "pixel_events": 0,
+              "targets": {
+                "T5c": {
+                  "spikes": 0,
+                  "gate_fraction": 0.0,
+                  "gate_mean": 0.0,
+                  "gate_p95": 0.0,
+                  "per_cell_spike_histogram": {
+                    "0": 184
+                  }
+                },
+                "T5d": {
+                  "spikes": 0,
+                  "gate_fraction": 0.0,
+                  "gate_mean": 0.0,
+                  "gate_p95": 0.0,
+                  "per_cell_spike_histogram": {
+                    "0": 176
+                  }
+                }
+              },
+              "blank_t5_rate": 2.3279201286641182e-06,
+              "mean_source_release": 0.0010416132863610983
+            },
+            "positive": {
+              "pixel_events": 312,
+              "targets": {
+                "T5c": {
+                  "spikes": 153,
+                  "gate_fraction": 0.19027400016784668,
+                  "gate_mean": 0.06765022873878479,
+                  "gate_p95": 0.9759144186973572,
+                  "per_cell_spike_histogram": {
+                    "0": 50,
+                    "1": 115,
+                    "2": 19
+                  }
+                },
+                "T5d": {
+                  "spikes": 198,
+                  "gate_fraction": 0.28065815567970276,
+                  "gate_mean": 0.10520731657743454,
+                  "gate_p95": 1.0,
+                  "per_cell_spike_histogram": {
+                    "0": 42,
+                    "1": 71,
+                    "2": 62,
+                    "3": 1
+                  }
+                }
+              },
+              "blank_t5_rate": 0.0016877420712262392,
+              "mean_source_release": 0.005795296747237444
+            },
+            "negative": {
+              "pixel_events": 312,
+              "targets": {
+                "T5c": {
+                  "spikes": 242,
+                  "gate_fraction": 0.2762681245803833,
+                  "gate_mean": 0.13845978677272797,
+                  "gate_p95": 1.0,
+                  "per_cell_spike_histogram": {
+                    "0": 39,
+                    "1": 53,
+                    "2": 87,
+                    "3": 5
+                  }
+                },
+                "T5d": {
+                  "spikes": 149,
+                  "gate_fraction": 0.2141927033662796,
+                  "gate_mean": 0.07674600929021835,
+                  "gate_p95": 1.0,
+                  "per_cell_spike_histogram": {
+                    "0": 49,
+                    "1": 105,
+                    "2": 22
+                  }
+                }
+              },
+              "blank_t5_rate": 0.0018809594912454486,
+              "mean_source_release": 0.006274982821196318
+            },
+            "static": {
+              "pixel_events": 0,
+              "targets": {
+                "T5c": {
+                  "spikes": 64,
+                  "gate_fraction": 0.13903985917568207,
+                  "gate_mean": 0.04336130619049072,
+                  "gate_p95": 0.22114704549312592,
+                  "per_cell_spike_histogram": {
+                    "0": 130,
+                    "1": 44,
+                    "2": 10
+                  }
+                },
+                "T5d": {
+                  "spikes": 56,
+                  "gate_fraction": 0.14151278138160706,
+                  "gate_mean": 0.036848872900009155,
+                  "gate_p95": 0.13493913412094116,
+                  "per_cell_spike_histogram": {
+                    "0": 130,
+                    "1": 36,
+                    "2": 10
+                  }
+                }
+              },
+              "blank_t5_rate": 0.0006634572637267411,
+              "mean_source_release": 0.002024012850597501
+            }
+          },
+          "contrasts": {
+            "T5c": {
+              "positive_minus_negative": -89,
+              "per_cell_median": -1.0,
+              "positive_cells": 11,
+              "negative_cells": 95,
+              "preferred_spikes": 242,
+              "static_spikes": 64,
+              "moving_over_static": 3.78125
+            },
+            "T5d": {
+              "positive_minus_negative": 49,
+              "per_cell_median": 0.0,
+              "positive_cells": 55,
+              "negative_cells": 7,
+              "preferred_spikes": 198,
+              "static_spikes": 56,
+              "moving_over_static": 3.5357142857142856
+            }
+          },
+          "blank_safe": true
+        }
+      ],
+      "calibration_signs": {
+        "T5c": -1,
+        "T5d": 1
+      },
+      "passes_calibration": true,
+      "holdout": [
+        {
+          "axis": "vertical",
+          "center": 16,
+          "speed": 1,
+          "with_gate": true,
+          "cases": {
+            "blank": {
+              "pixel_events": 0,
+              "targets": {
+                "T5c": {
+                  "spikes": 0,
+                  "gate_fraction": 0.0,
+                  "gate_mean": 0.0,
+                  "gate_p95": 0.0,
+                  "per_cell_spike_histogram": {
+                    "0": 224
+                  }
+                },
+                "T5d": {
+                  "spikes": 0,
+                  "gate_fraction": 0.0,
+                  "gate_mean": 0.0,
+                  "gate_p95": 0.0,
+                  "per_cell_spike_histogram": {
+                    "0": 207
+                  }
+                }
+              },
+              "blank_t5_rate": 2.3279201286641182e-06,
+              "mean_source_release": 0.0010416214354336262
+            },
+            "positive": {
+              "pixel_events": 312,
+              "targets": {
+                "T5c": {
+                  "spikes": 175,
+                  "gate_fraction": 0.1421595960855484,
+                  "gate_mean": 0.059071529656648636,
+                  "gate_p95": 0.6679812073707581,
+                  "per_cell_spike_histogram": {
+                    "0": 71,
+                    "1": 131,
+                    "2": 22
+                  }
+                },
+                "T5d": {
+                  "spikes": 204,
+                  "gate_fraction": 0.21563003957271576,
+                  "gate_mean": 0.09454035758972168,
+                  "gate_p95": 1.0,
+                  "per_cell_spike_histogram": {
+                    "0": 61,
+                    "1": 88,
+                    "2": 58
+                  }
+                }
+              },
+              "blank_t5_rate": 0.001927517936564982,
+              "mean_source_release": 0.005218783859163523
+            },
+            "negative": {
+              "pixel_events": 312,
+              "targets": {
+                "T5c": {
+                  "spikes": 231,
+                  "gate_fraction": 0.2514415979385376,
+                  "gate_mean": 0.1104799211025238,
+                  "gate_p95": 1.0,
+                  "per_cell_spike_histogram": {
+                    "0": 71,
+                    "1": 79,
+                    "2": 70,
+                    "3": 4
+                  }
+                },
+                "T5d": {
+                  "spikes": 155,
+                  "gate_fraction": 0.1916264146566391,
+                  "gate_mean": 0.06279314309358597,
+                  "gate_p95": 0.8312826752662659,
+                  "per_cell_spike_histogram": {
+                    "0": 71,
+                    "1": 117,
+                    "2": 19
+                  }
+                }
+              },
+              "blank_t5_rate": 0.0019903716165572405,
+              "mean_source_release": 0.0051712957210838795
+            },
+            "static": {
+              "pixel_events": 0,
+              "targets": {
+                "T5c": {
+                  "spikes": 57,
+                  "gate_fraction": 0.0757533460855484,
+                  "gate_mean": 0.025517556816339493,
+                  "gate_p95": 0.04204409942030907,
+                  "per_cell_spike_histogram": {
+                    "0": 182,
+                    "1": 27,
+                    "2": 15
+                  }
+                },
+                "T5d": {
+                  "spikes": 48,
+                  "gate_fraction": 0.0859500840306282,
+                  "gate_mean": 0.022820889949798584,
+                  "gate_p95": 0.03187599033117294,
+                  "per_cell_spike_histogram": {
+                    "0": 170,
+                    "1": 26,
+                    "2": 11
+                  }
+                }
+              },
+              "blank_t5_rate": 0.0005354216555133462,
+              "mean_source_release": 0.0016606916906312108
+            }
+          },
+          "contrasts": {
+            "T5c": {
+              "positive_minus_negative": -56,
+              "per_cell_median": 0.0,
+              "positive_cells": 20,
+              "negative_cells": 73,
+              "preferred_spikes": 231,
+              "static_spikes": 57,
+              "moving_over_static": 4.052631578947368
+            },
+            "T5d": {
+              "positive_minus_negative": 49,
+              "per_cell_median": 0.0,
+              "positive_cells": 65,
+              "negative_cells": 16,
+              "preferred_spikes": 204,
+              "static_spikes": 48,
+              "moving_over_static": 4.25
+            }
+          },
+          "blank_safe": true
+        },
+        {
+          "axis": "vertical",
+          "center": 16,
+          "speed": 2,
+          "with_gate": true,
+          "cases": {
+            "blank": {
+              "pixel_events": 0,
+              "targets": {
+                "T5c": {
+                  "spikes": 0,
+                  "gate_fraction": 0.0,
+                  "gate_mean": 0.0,
+                  "gate_p95": 0.0,
+                  "per_cell_spike_histogram": {
+                    "0": 224
+                  }
+                },
+                "T5d": {
+                  "spikes": 0,
+                  "gate_fraction": 0.0,
+                  "gate_mean": 0.0,
+                  "gate_p95": 0.0,
+                  "per_cell_spike_histogram": {
+                    "0": 207
+                  }
+                }
+              },
+              "blank_t5_rate": 2.3279201286641182e-06,
+              "mean_source_release": 0.0010416214354336262
+            },
+            "positive": {
+              "pixel_events": 624,
+              "targets": {
+                "T5c": {
+                  "spikes": 169,
+                  "gate_fraction": 0.0804501473903656,
+                  "gate_mean": 0.032085120677948,
+                  "gate_p95": 0.08692468702793121,
+                  "per_cell_spike_histogram": {
+                    "0": 56,
+                    "1": 167,
+                    "2": 1
+                  }
+                },
+                "T5d": {
+                  "spikes": 171,
+                  "gate_fraction": 0.18216586112976074,
+                  "gate_mean": 0.06503280252218246,
+                  "gate_p95": 0.8117013573646545,
+                  "per_cell_spike_histogram": {
+                    "0": 48,
+                    "1": 147,
+                    "2": 12
+                  }
+                }
+              },
+              "blank_t5_rate": 0.002157981973141432,
+              "mean_source_release": 0.004300571978092194
+            },
+            "negative": {
+              "pixel_events": 624,
+              "targets": {
+                "T5c": {
+                  "spikes": 194,
+                  "gate_fraction": 0.2114025354385376,
+                  "gate_mean": 0.08137296140193939,
+                  "gate_p95": 1.0,
+                  "per_cell_spike_histogram": {
+                    "0": 47,
+                    "1": 160,
+                    "2": 17
+                  }
+                },
+                "T5d": {
+                  "spikes": 159,
+                  "gate_fraction": 0.11765298247337341,
+                  "gate_mean": 0.0330265611410141,
+                  "gate_p95": 0.08708400279283524,
+                  "per_cell_spike_histogram": {
+                    "0": 48,
+                    "1": 159
+                  }
+                }
+              },
+              "blank_t5_rate": 0.0022068682592362165,
+              "mean_source_release": 0.004170527681708336
+            },
+            "static": {
+              "pixel_events": 0,
+              "targets": {
+                "T5c": {
+                  "spikes": 57,
+                  "gate_fraction": 0.0757533460855484,
+                  "gate_mean": 0.025517556816339493,
+                  "gate_p95": 0.04204409942030907,
+                  "per_cell_spike_histogram": {
+                    "0": 182,
+                    "1": 27,
+                    "2": 15
+                  }
+                },
+                "T5d": {
+                  "spikes": 48,
+                  "gate_fraction": 0.0859500840306282,
+                  "gate_mean": 0.022820889949798584,
+                  "gate_p95": 0.03187599033117294,
+                  "per_cell_spike_histogram": {
+                    "0": 170,
+                    "1": 26,
+                    "2": 11
+                  }
+                }
+              },
+              "blank_t5_rate": 0.0005354216555133462,
+              "mean_source_release": 0.0016606916906312108
+            }
+          },
+          "contrasts": {
+            "T5c": {
+              "positive_minus_negative": -25,
+              "per_cell_median": 0.0,
+              "positive_cells": 6,
+              "negative_cells": 31,
+              "preferred_spikes": 194,
+              "static_spikes": 57,
+              "moving_over_static": 3.4035087719298245
+            },
+            "T5d": {
+              "positive_minus_negative": 12,
+              "per_cell_median": 0.0,
+              "positive_cells": 21,
+              "negative_cells": 9,
+              "preferred_spikes": 171,
+              "static_spikes": 48,
+              "moving_over_static": 3.5625
+            }
+          },
+          "blank_safe": true
+        }
+      ],
+      "passes_holdout": true
+    }
+  },
+  "gate_off_vertical_control": [
+    {
+      "axis": "vertical",
+      "center": 10,
+      "speed": 1,
+      "with_gate": false,
+      "cases": {
+        "blank": {
+          "pixel_events": 0,
+          "targets": {
+            "T5c": {
+              "spikes": 0,
+              "gate_fraction": 0.0,
+              "gate_mean": 0.0,
+              "gate_p95": 0.0,
+              "per_cell_spike_histogram": {
+                "0": 183
+              }
+            },
+            "T5d": {
+              "spikes": 0,
+              "gate_fraction": 0.0,
+              "gate_mean": 0.0,
+              "gate_p95": 0.0,
+              "per_cell_spike_histogram": {
+                "0": 170
+              }
+            }
+          },
+          "blank_t5_rate": 2.3279201286641182e-06,
+          "mean_source_release": 0.0010477228788658977
+        },
+        "positive": {
+          "pixel_events": 312,
+          "targets": {
+            "T5c": {
+              "spikes": 108,
+              "gate_fraction": 0.0,
+              "gate_mean": 0.0,
+              "gate_p95": 0.0,
+              "per_cell_spike_histogram": {
+                "0": 75,
+                "1": 108
+              }
+            },
+            "T5d": {
+              "spikes": 102,
+              "gate_fraction": 0.0,
+              "gate_mean": 0.0,
+              "gate_p95": 0.0,
+              "per_cell_spike_histogram": {
+                "0": 68,
+                "1": 102
+              }
+            }
+          },
+          "blank_t5_rate": 0.0010103173553943634,
+          "mean_source_release": 0.006310732569545507
+        },
+        "negative": {
+          "pixel_events": 312,
+          "targets": {
+            "T5c": {
+              "spikes": 109,
+              "gate_fraction": 0.0,
+              "gate_mean": 0.0,
+              "gate_p95": 0.0,
+              "per_cell_spike_histogram": {
+                "0": 74,
+                "1": 109
+              }
+            },
+            "T5d": {
+              "spikes": 95,
+              "gate_fraction": 0.0,
+              "gate_mean": 0.0,
+              "gate_p95": 0.0,
+              "per_cell_spike_histogram": {
+                "0": 75,
+                "1": 95
+              }
+            }
+          },
+          "blank_t5_rate": 0.0009521193569526076,
+          "mean_source_release": 0.005773565266281366
+        },
+        "static": {
+          "pixel_events": 0,
+          "targets": {
+            "T5c": {
+              "spikes": 32,
+              "gate_fraction": 0.0,
+              "gate_mean": 0.0,
+              "gate_p95": 0.0,
+              "per_cell_spike_histogram": {
+                "0": 151,
+                "1": 32
+              }
+            },
+            "T5d": {
+              "spikes": 27,
+              "gate_fraction": 0.0,
+              "gate_mean": 0.0,
+              "gate_p95": 0.0,
+              "per_cell_spike_histogram": {
+                "0": 143,
+                "1": 27
+              }
+            }
+          },
+          "blank_t5_rate": 0.00027236665482632816,
+          "mean_source_release": 0.002029949566349387
+        }
+      },
+      "contrasts": {
+        "T5c": {
+          "positive_minus_negative": -1,
+          "per_cell_median": 0.0,
+          "positive_cells": 4,
+          "negative_cells": 5,
+          "preferred_spikes": 109,
+          "static_spikes": 32,
+          "moving_over_static": 3.40625
+        },
+        "T5d": {
+          "positive_minus_negative": 7,
+          "per_cell_median": 0.0,
+          "positive_cells": 11,
+          "negative_cells": 4,
+          "preferred_spikes": 102,
+          "static_spikes": 27,
+          "moving_over_static": 3.7777777777777777
+        }
+      },
+      "blank_safe": true
+    },
+    {
+      "axis": "vertical",
+      "center": 22,
+      "speed": 1,
+      "with_gate": false,
+      "cases": {
+        "blank": {
+          "pixel_events": 0,
+          "targets": {
+            "T5c": {
+              "spikes": 0,
+              "gate_fraction": 0.0,
+              "gate_mean": 0.0,
+              "gate_p95": 0.0,
+              "per_cell_spike_histogram": {
+                "0": 184
+              }
+            },
+            "T5d": {
+              "spikes": 0,
+              "gate_fraction": 0.0,
+              "gate_mean": 0.0,
+              "gate_p95": 0.0,
+              "per_cell_spike_histogram": {
+                "0": 176
+              }
+            }
+          },
+          "blank_t5_rate": 2.3279201286641182e-06,
+          "mean_source_release": 0.0010416132863610983
+        },
+        "positive": {
+          "pixel_events": 312,
+          "targets": {
+            "T5c": {
+              "spikes": 107,
+              "gate_fraction": 0.0,
+              "gate_mean": 0.0,
+              "gate_p95": 0.0,
+              "per_cell_spike_histogram": {
+                "0": 77,
+                "1": 107
+              }
+            },
+            "T5d": {
+              "spikes": 99,
+              "gate_fraction": 0.0,
+              "gate_mean": 0.0,
+              "gate_p95": 0.0,
+              "per_cell_spike_histogram": {
+                "0": 77,
+                "1": 99
+              }
+            }
+          },
+          "blank_t5_rate": 0.0009684147662483156,
+          "mean_source_release": 0.005795296747237444
+        },
+        "negative": {
+          "pixel_events": 312,
+          "targets": {
+            "T5c": {
+              "spikes": 115,
+              "gate_fraction": 0.0,
+              "gate_mean": 0.0,
+              "gate_p95": 0.0,
+              "per_cell_spike_histogram": {
+                "0": 69,
+                "1": 115
+              }
+            },
+            "T5d": {
+              "spikes": 105,
+              "gate_fraction": 0.0,
+              "gate_mean": 0.0,
+              "gate_p95": 0.0,
+              "per_cell_spike_histogram": {
+                "0": 71,
+                "1": 105
+              }
+            }
+          },
+          "blank_t5_rate": 0.001024284865707159,
+          "mean_source_release": 0.006274982821196318
+        },
+        "static": {
+          "pixel_events": 0,
+          "targets": {
+            "T5c": {
+              "spikes": 29,
+              "gate_fraction": 0.0,
+              "gate_mean": 0.0,
+              "gate_p95": 0.0,
+              "per_cell_spike_histogram": {
+                "0": 155,
+                "1": 29
+              }
+            },
+            "T5d": {
+              "spikes": 26,
+              "gate_fraction": 0.0,
+              "gate_mean": 0.0,
+              "gate_p95": 0.0,
+              "per_cell_spike_histogram": {
+                "0": 150,
+                "1": 26
+              }
+            }
+          },
+          "blank_t5_rate": 0.00025607121642678976,
+          "mean_source_release": 0.002024012850597501
+        }
+      },
+      "contrasts": {
+        "T5c": {
+          "positive_minus_negative": -8,
+          "per_cell_median": 0.0,
+          "positive_cells": 1,
+          "negative_cells": 9,
+          "preferred_spikes": 115,
+          "static_spikes": 29,
+          "moving_over_static": 3.9655172413793105
+        },
+        "T5d": {
+          "positive_minus_negative": -6,
+          "per_cell_median": 0.0,
+          "positive_cells": 5,
+          "negative_cells": 11,
+          "preferred_spikes": 105,
+          "static_spikes": 26,
+          "moving_over_static": 4.038461538461538
+        }
+      },
+      "blank_safe": true
+    },
+    {
+      "axis": "vertical",
+      "center": 16,
+      "speed": 1,
+      "with_gate": false,
+      "cases": {
+        "blank": {
+          "pixel_events": 0,
+          "targets": {
+            "T5c": {
+              "spikes": 0,
+              "gate_fraction": 0.0,
+              "gate_mean": 0.0,
+              "gate_p95": 0.0,
+              "per_cell_spike_histogram": {
+                "0": 224
+              }
+            },
+            "T5d": {
+              "spikes": 0,
+              "gate_fraction": 0.0,
+              "gate_mean": 0.0,
+              "gate_p95": 0.0,
+              "per_cell_spike_histogram": {
+                "0": 207
+              }
+            }
+          },
+          "blank_t5_rate": 2.3279201286641182e-06,
+          "mean_source_release": 0.0010416214354336262
+        },
+        "positive": {
+          "pixel_events": 312,
+          "targets": {
+            "T5c": {
+              "spikes": 122,
+              "gate_fraction": 0.0,
+              "gate_mean": 0.0,
+              "gate_p95": 0.0,
+              "per_cell_spike_histogram": {
+                "0": 102,
+                "1": 122
+              }
+            },
+            "T5d": {
+              "spikes": 116,
+              "gate_fraction": 0.0,
+              "gate_mean": 0.0,
+              "gate_p95": 0.0,
+              "per_cell_spike_histogram": {
+                "0": 91,
+                "1": 116
+              }
+            }
+          },
+          "blank_t5_rate": 0.0010987783316522837,
+          "mean_source_release": 0.005218783859163523
+        },
+        "negative": {
+          "pixel_events": 312,
+          "targets": {
+            "T5c": {
+              "spikes": 119,
+              "gate_fraction": 0.0,
+              "gate_mean": 0.0,
+              "gate_p95": 0.0,
+              "per_cell_spike_histogram": {
+                "0": 105,
+                "1": 119
+              }
+            },
+            "T5d": {
+              "spikes": 113,
+              "gate_fraction": 0.0,
+              "gate_mean": 0.0,
+              "gate_p95": 0.0,
+              "per_cell_spike_histogram": {
+                "0": 94,
+                "1": 113
+              }
+            }
+          },
+          "blank_t5_rate": 0.001101106172427535,
+          "mean_source_release": 0.0051712957210838795
+        },
+        "static": {
+          "pixel_events": 0,
+          "targets": {
+            "T5c": {
+              "spikes": 20,
+              "gate_fraction": 0.0,
+              "gate_mean": 0.0,
+              "gate_p95": 0.0,
+              "per_cell_spike_histogram": {
+                "0": 204,
+                "1": 20
+              }
+            },
+            "T5d": {
+              "spikes": 21,
+              "gate_fraction": 0.0,
+              "gate_mean": 0.0,
+              "gate_p95": 0.0,
+              "per_cell_spike_histogram": {
+                "0": 186,
+                "1": 21
+              }
+            }
+          },
+          "blank_t5_rate": 0.00018390569312032312,
+          "mean_source_release": 0.0016606916906312108
+        }
+      },
+      "contrasts": {
+        "T5c": {
+          "positive_minus_negative": 3,
+          "per_cell_median": 0.0,
+          "positive_cells": 9,
+          "negative_cells": 6,
+          "preferred_spikes": 122,
+          "static_spikes": 20,
+          "moving_over_static": 6.1
+        },
+        "T5d": {
+          "positive_minus_negative": 3,
+          "per_cell_median": 0.0,
+          "positive_cells": 11,
+          "negative_cells": 8,
+          "preferred_spikes": 116,
+          "static_spikes": 21,
+          "moving_over_static": 5.523809523809524
+        }
+      },
+      "blank_safe": true
+    },
+    {
+      "axis": "vertical",
+      "center": 16,
+      "speed": 2,
+      "with_gate": false,
+      "cases": {
+        "blank": {
+          "pixel_events": 0,
+          "targets": {
+            "T5c": {
+              "spikes": 0,
+              "gate_fraction": 0.0,
+              "gate_mean": 0.0,
+              "gate_p95": 0.0,
+              "per_cell_spike_histogram": {
+                "0": 224
+              }
+            },
+            "T5d": {
+              "spikes": 0,
+              "gate_fraction": 0.0,
+              "gate_mean": 0.0,
+              "gate_p95": 0.0,
+              "per_cell_spike_histogram": {
+                "0": 207
+              }
+            }
+          },
+          "blank_t5_rate": 2.3279201286641182e-06,
+          "mean_source_release": 0.0010416214354336262
+        },
+        "positive": {
+          "pixel_events": 624,
+          "targets": {
+            "T5c": {
+              "spikes": 126,
+              "gate_fraction": 0.0,
+              "gate_mean": 0.0,
+              "gate_p95": 0.0,
+              "per_cell_spike_histogram": {
+                "0": 98,
+                "1": 126
+              }
+            },
+            "T5d": {
+              "spikes": 109,
+              "gate_fraction": 0.0,
+              "gate_mean": 0.0,
+              "gate_p95": 0.0,
+              "per_cell_spike_histogram": {
+                "0": 98,
+                "1": 109
+              }
+            }
+          },
+          "blank_t5_rate": 0.0013827845687046647,
+          "mean_source_release": 0.004300571978092194
+        },
+        "negative": {
+          "pixel_events": 624,
+          "targets": {
+            "T5c": {
+              "spikes": 123,
+              "gate_fraction": 0.0,
+              "gate_mean": 0.0,
+              "gate_p95": 0.0,
+              "per_cell_spike_histogram": {
+                "0": 101,
+                "1": 123
+              }
+            },
+            "T5d": {
+              "spikes": 106,
+              "gate_fraction": 0.0,
+              "gate_mean": 0.0,
+              "gate_p95": 0.0,
+              "per_cell_spike_histogram": {
+                "0": 101,
+                "1": 106
+              }
+            }
+          },
+          "blank_t5_rate": 0.0013641612604260445,
+          "mean_source_release": 0.004170527681708336
+        },
+        "static": {
+          "pixel_events": 0,
+          "targets": {
+            "T5c": {
+              "spikes": 20,
+              "gate_fraction": 0.0,
+              "gate_mean": 0.0,
+              "gate_p95": 0.0,
+              "per_cell_spike_histogram": {
+                "0": 204,
+                "1": 20
+              }
+            },
+            "T5d": {
+              "spikes": 21,
+              "gate_fraction": 0.0,
+              "gate_mean": 0.0,
+              "gate_p95": 0.0,
+              "per_cell_spike_histogram": {
+                "0": 186,
+                "1": 21
+              }
+            }
+          },
+          "blank_t5_rate": 0.00018390569312032312,
+          "mean_source_release": 0.0016606916906312108
+        }
+      },
+      "contrasts": {
+        "T5c": {
+          "positive_minus_negative": 3,
+          "per_cell_median": 0.0,
+          "positive_cells": 16,
+          "negative_cells": 13,
+          "preferred_spikes": 126,
+          "static_spikes": 20,
+          "moving_over_static": 6.3
+        },
+        "T5d": {
+          "positive_minus_negative": 3,
+          "per_cell_median": 0.0,
+          "positive_cells": 15,
+          "negative_cells": 12,
+          "preferred_spikes": 109,
+          "static_spikes": 21,
+          "moving_over_static": 5.190476190476191
+        }
+      },
+      "blank_safe": true
+    }
+  ]
+}
