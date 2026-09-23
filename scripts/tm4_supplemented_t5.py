@@ -22,10 +22,11 @@ class Tm4SupplementedT5Network(T5LocalOrderNetwork):
     """Experimental graded supplement; ordinary Tm4 spikes still propagate."""
 
     def __init__(self, *args, cell_types, tm4_release_cap,
-                 tm4_current_scale, **kwargs):
+                 tm4_current_scale, tm4_release_tau=.250, **kwargs):
         super().__init__(*args, cell_types=cell_types, **kwargs)
-        if tm4_current_scale <= 0 or not 0 < tm4_release_cap <= 1:
-            raise ValueError('positive Tm4 current scale and bounded cap required')
+        if (tm4_current_scale <= 0 or tm4_release_tau <= 0
+                or not 0 < tm4_release_cap <= 1):
+            raise ValueError('positive Tm4 scale/timescale and bounded cap required')
         tm4 = torch.tensor([name == 'Tm4' for name in cell_types],
                            device=self.device)
         self.tm4_nodes = tm4.nonzero().flatten()
@@ -48,7 +49,7 @@ class Tm4SupplementedT5Network(T5LocalOrderNetwork):
         self.tm4_enabled = False
         self.tm4_release_cap = float(tm4_release_cap)
         self.tm4_current_scale = float(tm4_current_scale)
-        self.tm4_baseline_decay = math.exp(-self.config.dt/.250)
+        self.tm4_baseline_decay = math.exp(-self.config.dt/tm4_release_tau)
 
     def enable_tm4(self):
         if not self.graded_enabled or self.tm4_blank_count < 128:

@@ -1,5 +1,6 @@
 """Frozen T5 motion check for the bounded opt-in Tm4 current supplement."""
 
+import argparse
 import json
 from pathlib import Path
 
@@ -21,8 +22,10 @@ from tm4_supplemented_t5 import TM4_STATE, Tm4SupplementedT5Network
 
 
 OUT = Path('docs/experiments/2026-09-23-tm4-graded-results.json')
+FAST_OUT = Path('docs/experiments/2026-09-23-tm4-fast-release-results.json')
 STATE = NETWORK_STATE+GRADED_STATE+ORDER_STATE+TM4_STATE
 CASES = ((10, 1), (22, 1), (16, 1), (16, 2))
+FAST_CASES = CASES+((14, 1), (18, 2))
 SUBTYPES = ('T5c', 'T5d')
 CAPS = (.01, .03, .10)
 ISSUE = torch.arange(3, 14)*8
@@ -40,8 +43,11 @@ def arm_support(now, delayed, events):
 
 
 @torch.no_grad()
-def main():
+def main(*, fast_release=False):
     torch.set_num_threads(4)
+    tau = .050 if fast_release else .250
+    output = FAST_OUT if fast_release else OUT
+    cases = FAST_CASES if fast_release else CASES
     source_sha = checksum(SOURCE)
     payload = torch.load(SOURCE, weights_only=True)
     metadata = payload['metadata']
@@ -53,7 +59,8 @@ def main():
         cell_types=metadata['retina']['cell_types'], target_mask=retina.injected,
         release_cap=.10, voltage_scale=.02, source_type='Tm9',
         source_state='current', gate_gain=8000., gate_cap=1.,
-        tm4_release_cap=CAPS[0], tm4_current_scale=.02)
+        tm4_release_cap=CAPS[0], tm4_current_scale=.02,
+        tm4_release_tau=tau)
     net.set_weights(payload['state']['network']['magnitudes'].clamp(
         0, metadata['learning']['maximum_weight']))
     weights = net.magnitudes.clone()
@@ -115,14 +122,15 @@ def main():
                         == sign).sum()) for sign in (-1, 1)},
         tm4_delay_ticks=dict(min=int(net.tm4_delays.min()),
                              max=int(net.tm4_delays.max())),
-        current_scale=.02, tm9_release_cap=.10,
+        current_scale=.02, tm4_release_tau_ms=int(tau*1000),
+        tm9_release_cap=.10,
         tm4_rest_current=.85, tm9_rest_current=.85,
         ticks_per_frame=8, calibration=calibration,
         selected_cap=selected_cap, conditions={},
         passes_frozen_feature_gate=False)
     if selected_cap is None:
-        OUT.write_text(json.dumps(report, indent=2, allow_nan=False)+'\n')
-        print(json.dumps(dict(output=str(OUT), selected_cap=None)), flush=True)
+        output.write_text(json.dumps(report, indent=2, allow_nan=False)+'\n')
+        print(json.dumps(dict(output=str(output), selected_cap=None)), flush=True)
         return
 
     settled = {}
@@ -184,7 +192,7 @@ def main():
 
     bright = [torch.ones((1, 32, 64), dtype=torch.bool)]*18
     checks = []
-    for center, speed in CASES:
+    for center, speed in cases:
         field = ((y >= center-8) & (y <= center+8)
                  & (x >= 24) & (x <= 40))
         bins = retina.pixel_bins[field.flatten()].unique().numpy()
@@ -271,12 +279,14 @@ def main():
         report['fast_tm4_support']['passes'] and all(checks))
     if checksum(SOURCE) != source_sha:
         raise AssertionError('source checkpoint changed')
-    OUT.write_text(json.dumps(report, indent=2, allow_nan=False)+'\n')
-    print(json.dumps(dict(output=str(OUT), selected_cap=selected_cap,
+    output.write_text(json.dumps(report, indent=2, allow_nan=False)+'\n')
+    print(json.dumps(dict(output=str(output), selected_cap=selected_cap,
         fast_tm4_support=report['fast_tm4_support'],
         passes_frozen_feature_gate=report['passes_frozen_feature_gate'])),
         flush=True)
 
 
 if __name__ == '__main__':
-    main()
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--fast-release', action='store_true')
+    main(fast_release=parser.parse_args().fast_release)

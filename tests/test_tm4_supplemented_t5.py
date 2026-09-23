@@ -11,7 +11,7 @@ from fly_connectome.graph import Graph
 from tm4_supplemented_t5 import Tm4SupplementedT5Network, silent_source_release
 
 
-def network(sign):
+def network(sign, *, tm4_tau=.250, tm4_cap=.1, tm4_scale=.02):
     graph = Graph(np.arange(1, 6), np.array([0, 1, 2]),
                   np.array([3, 4, 4]), np.ones(3, dtype=np.int64),
                   np.array([1, sign, 1, 1, 1]), 1.)
@@ -22,8 +22,8 @@ def network(sign):
         target_mask=torch.tensor([False, False, False, True, False]),
         release_cap=.1, voltage_scale=.02,
         source_type='Tm9', source_state='current',
-        gate_gain=1., gate_cap=1., tm4_release_cap=.1,
-        tm4_current_scale=.02)
+        gate_gain=1., gate_cap=1., tm4_release_cap=tm4_cap,
+        tm4_current_scale=tm4_scale, tm4_release_tau=tm4_tau)
     zero = torch.zeros(1, 5)
     for _ in range(128):
         net.step(zero)
@@ -54,3 +54,20 @@ def test_tm4_supplement_respects_measured_sign_delay_and_local_arm(sign):
     assert torch.isclose(net.last_tm4_impulse[0, 4], torch.tensor(.1*sign))
     assert net.feedforward_current[0, 4]*sign > 0
     assert net.arm_traces[0, 0]*sign > 0
+
+
+def test_shorter_tm4_release_baseline_suppresses_repeated_tonic_current():
+    slow, zero = network(1, tm4_tau=.250, tm4_cap=1., tm4_scale=1.)
+    fast, _ = network(1, tm4_tau=.050, tm4_cap=1., tm4_scale=1.)
+    for net in (slow, fast):
+        net.tm4_baseline.zero_()
+        net.tm4_floor.zero_()
+        net.feedforward_current[0, 1] = .1
+        net.step(zero)
+        net.feedforward_current[0, 1] = .1
+        net.step(zero)
+    slow_release = slow.tm4_release_history[
+        (slow.step_index-1) % slow.history_length, 0]
+    fast_release = fast.tm4_release_history[
+        (fast.step_index-1) % fast.history_length, 0]
+    assert fast_release < slow_release
