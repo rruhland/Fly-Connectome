@@ -1123,3 +1123,15 @@ small stimulus modulation despite zero spikes. Results in docs/experiments/
 dynamics and learning unchanged. Next opt-in graded/conductance experiment is
 proposed in docs/experiments/2026-09-22-motion-stage-signal-integration-
 proposal.md and requires review before implementation. M1A remains unmet.
+
+## 2026-09-23: opt-in graded Mi4 flash calibration stopped
+
+Approved experimental Mi4->T4 graded inhibitory release kept 4,228 measured
+feedforward edges, delays, weights and fixed signs; production dynamics and
+learning unchanged. Flash voltage scale .0042 was set before motion probes.
+No-event settling recalibrated release to respect p99 added T4 current <=.05.
+Fractions .25/.5/1 yielded x18 flash current changes .00187/.00313/.00425,
+all below preregistered .005 at both locations. No fraction selected; no
+moving-bar or Pong run. Finite state; 328 tests passed, 4 skipped. See
+docs/experiments/2026-09-23-graded-mi4-findings.md. Next isolate active
+Mi9/Mi1/Tm3 compartmental information without relaxing this gate.

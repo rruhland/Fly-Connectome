@@ -1,0 +1,44 @@
+{
+  "source_sha256": "8c4af80ff3904881bac9313b618dd9989bb51174b47606f28eca88865296005c",
+  "annotations_sha256": "2177e246113e4cfbf1e7772ec37c6da1955ff22e8063d0b1f833101f99a9a3b2",
+  "graph_sha256": "c941a5c912dd03e2ab0868260c637c2b1d21525196d4bce93c7d5e7f618e34a8",
+  "voltage_scale": 0.0042,
+  "blank_cap": 0.05,
+  "flash_minimum": 0.005,
+  "analytic_base_release": 0.07052388042211533,
+  "graded_edges": 4228,
+  "calibration": [
+    {
+      "release_fraction": 0.25,
+      "base_release": 0.059201945359777096,
+      "blank_p99_current": 0.04500000178813934,
+      "flash_modulation": {
+        "18": 0.0018709743162617087,
+        "46": 0.0030181300826370716
+      },
+      "finite": true
+    },
+    {
+      "release_fraction": 0.5,
+      "base_release": 0.05015507214465197,
+      "blank_p99_current": 0.04500000178813934,
+      "flash_modulation": {
+        "18": 0.0031261479016393423,
+        "46": 0.004475535824894905
+      },
+      "finite": true
+    },
+    {
+      "release_fraction": 1.0,
+      "base_release": 0.04382443054472963,
+      "blank_p99_current": 0.04500000178813934,
+      "flash_modulation": {
+        "18": 0.004249070305377245,
+        "46": 0.005221884232014418
+      },
+      "finite": true
+    }
+  ],
+  "selected_fraction": null,
+  "motion": {}
+}
