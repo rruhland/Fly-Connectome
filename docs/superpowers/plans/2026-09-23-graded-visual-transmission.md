@@ -134,4 +134,12 @@
 - [x] Audit measured T5c/d outputs into LPi34/LPi43 and their predictive afferents.
 - [x] Probe frozen LPi transmission at both calibration locations and withheld position/speeds; the T5 signal propagates, but LPi somata stay silent and predictive arrivals vanish in some conditions.
 - [x] Extend once to LLPC2/LLPC3/VS. Their local feedforward targets carry the motion cue, but actually arriving predictive inputs are almost exclusively inhibitory; current positive-arrival prediction is sign-mismatched.
-- [ ] Next: audit preferred/null inhibitory-current timing at T5 and downstream motion cells, including the measured CT1 omission, before proposing a separate local inhibitory plasticity objective. Keep the in-place architecture unchanged until the user approves a concrete revision.
+- [x] Audit preferred/null inhibitory-current timing at T5 and downstream motion cells. Existing T5 inhibition lacks transferable null bias; downstream inhibitory arrivals are sparse or predominantly preferred. Keep the in-place architecture unchanged.
+
+### Task 3h: Test the omitted measured CT1 route without production changes
+
+- [x] Confirm CT1 partner-column coverage, then test a fixed column-local shadow on measured Tm1/Tm9→CT1→T5 contacts. It modestly suppresses both directions but fails null selectivity.
+- [x] Query deduplicated synapse coordinates from the primary MaleCNS graph. Nearest CT1 input/output sites are spatially close, with a robust opposed T5c/d vertical offset across calibration and holdout fields.
+- [x] Test one geometry-routed shadow with the same signs, delays, contact counts, and release rule. It fails the frozen null-suppression gate.
+- [x] Align CT1 current to each T5 cell's local feedforward event. Nearest-site inhibition precedes preferred motion and trails null motion, explaining the failed rescue; correct the earlier geometric interpretation.
+- [ ] Next: identify an electrically defensible CT1 input/output branch assignment, or an alternative measured motion-stage inhibitory route, before testing a separate local inhibitory plasticity objective. No gain/lag/nearest-neighbor sweep and no production promotion from the failed shadows. Return to M1A online learning only after frozen timing and motion screens pass.
