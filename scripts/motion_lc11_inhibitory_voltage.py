@@ -132,7 +132,14 @@ def main():
                   weights_sha256=checksum(WEIGHTS),
                   graph_sha256=graph.identity(),
                   source_neurons=len(sources), contacts=int(contacts.sum()),
-                  conditions={}, candidate=None)
+                  upstream_contacts={}, conditions={}, candidate=None)
+    for target_type in ('Li15', 'MeLo10'):
+        incoming = types[graph.post] == target_type
+        input_types = types[graph.pre[incoming]]
+        input_contacts = graph.contacts[incoming]
+        report['upstream_contacts'][target_type] = {
+            str(label): int(input_contacts[input_types == label].sum())
+            for label in np.unique(input_types)}
     blanks = {polarity: capture(
         [torch.full((1, 32, 64), polarity == 'off', dtype=torch.bool)]*18,
         polarity) for polarity in ('on', 'off')}
