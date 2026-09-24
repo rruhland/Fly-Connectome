@@ -1,0 +1,201 @@
+{
+  "seeds": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15
+  ],
+  "frames_per_seed": 800,
+  "height": 32,
+  "width": 64,
+  "observation": {
+    "visible": 11435,
+    "total": 12800,
+    "coverage": 0.893359363079071,
+    "mean_error": 0.008321322500705719,
+    "p90_error": 0.014111039228737354
+  },
+  "horizons": {
+    "8": {
+      "persistence": {
+        "all": {
+          "samples": 10583,
+          "mean_error": 0.03759429231286049
+        },
+        "free_flight": {
+          "samples": 10248,
+          "mean_error": 0.03768354654312134
+        },
+        "wall_reversal": {
+          "samples": 277,
+          "mean_error": 0.03430215269327164
+        },
+        "paddle_reversal": {
+          "samples": 58,
+          "mean_error": 0.03754720464348793
+        }
+      },
+      "observed_velocity": {
+        "all": {
+          "samples": 10583,
+          "mean_error": 0.019265560433268547
+        },
+        "free_flight": {
+          "samples": 10248,
+          "mean_error": 0.01897531747817993
+        },
+        "wall_reversal": {
+          "samples": 277,
+          "mean_error": 0.030477695167064667
+        },
+        "paddle_reversal": {
+          "samples": 58,
+          "mean_error": 0.017000572755932808
+        }
+      },
+      "privileged_velocity": {
+        "all": {
+          "samples": 10583,
+          "mean_error": 0.0004604113637469709
+        },
+        "free_flight": {
+          "samples": 10248,
+          "mean_error": 1.0928850713298743e-07
+        },
+        "wall_reversal": {
+          "samples": 277,
+          "mean_error": 0.015953684225678444
+        },
+        "paddle_reversal": {
+          "samples": 58,
+          "mean_error": 0.007797292899340391
+        }
+      }
+    },
+    "16": {
+      "persistence": {
+        "all": {
+          "samples": 10466,
+          "mean_error": 0.07241648435592651
+        },
+        "free_flight": {
+          "samples": 9547,
+          "mean_error": 0.07384776324033737
+        },
+        "wall_reversal": {
+          "samples": 581,
+          "mean_error": 0.06868685036897659
+        },
+        "paddle_reversal": {
+          "samples": 338,
+          "mean_error": 0.038400035351514816
+        }
+      },
+      "observed_velocity": {
+        "all": {
+          "samples": 10466,
+          "mean_error": 0.03213965892791748
+        },
+        "free_flight": {
+          "samples": 9547,
+          "mean_error": 0.030711909756064415
+        },
+        "wall_reversal": {
+          "samples": 581,
+          "mean_error": 0.044395700097084045
+        },
+        "paddle_reversal": {
+          "samples": 338,
+          "mean_error": 0.051400016993284225
+        }
+      },
+      "privileged_velocity": {
+        "all": {
+          "samples": 10466,
+          "mean_error": 0.0030932368244975805
+        },
+        "free_flight": {
+          "samples": 9547,
+          "mean_error": 2.1604088829008106e-07
+        },
+        "wall_reversal": {
+          "samples": 581,
+          "mean_error": 0.031041858717799187
+        },
+        "paddle_reversal": {
+          "samples": 338,
+          "mean_error": 0.04241548478603363
+        }
+      }
+    },
+    "32": {
+      "persistence": {
+        "all": {
+          "samples": 9792,
+          "mean_error": 0.13899962604045868
+        },
+        "free_flight": {
+          "samples": 7874,
+          "mean_error": 0.14693541824817657
+        },
+        "wall_reversal": {
+          "samples": 1034,
+          "mean_error": 0.13426484167575836
+        },
+        "paddle_reversal": {
+          "samples": 884,
+          "mean_error": 0.07385184615850449
+        }
+      },
+      "observed_velocity": {
+        "all": {
+          "samples": 9792,
+          "mean_error": 0.06430032849311829
+        },
+        "free_flight": {
+          "samples": 7874,
+          "mean_error": 0.0534650944173336
+        },
+        "wall_reversal": {
+          "samples": 1034,
+          "mean_error": 0.09400583058595657
+        },
+        "paddle_reversal": {
+          "samples": 884,
+          "mean_error": 0.12606635689735413
+        }
+      },
+      "privileged_velocity": {
+        "all": {
+          "samples": 9792,
+          "mean_error": 0.01679001748561859
+        },
+        "free_flight": {
+          "samples": 7874,
+          "mean_error": 4.230485046718968e-07
+        },
+        "wall_reversal": {
+          "samples": 1034,
+          "mean_error": 0.06379126757383347
+        },
+        "paddle_reversal": {
+          "samples": 884,
+          "mean_error": 0.11136239767074585
+        }
+      }
+    }
+  },
+  "elapsed_seconds": 1.4549508000491187
+}

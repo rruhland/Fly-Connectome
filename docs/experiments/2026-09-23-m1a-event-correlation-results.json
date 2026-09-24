@@ -1,0 +1,349 @@
+{
+  "trace_decay_frames": 8,
+  "offsets_pixels": [
+    1,
+    2
+  ],
+  "square_trials": [
+    {
+      "axis": "vertical",
+      "center": 10,
+      "speed": 1,
+      "polarity": "off",
+      "expected": "up",
+      "predicted": "up",
+      "x_score": 0.0,
+      "y_score": -127.5973129272461,
+      "static_x_score": 0.0,
+      "static_y_score": 0.0
+    },
+    {
+      "axis": "vertical",
+      "center": 10,
+      "speed": 1,
+      "polarity": "off",
+      "expected": "down",
+      "predicted": "down",
+      "x_score": 0.0,
+      "y_score": 127.5973129272461,
+      "static_x_score": 0.0,
+      "static_y_score": 0.0
+    },
+    {
+      "axis": "vertical",
+      "center": 22,
+      "speed": 1,
+      "polarity": "off",
+      "expected": "up",
+      "predicted": "up",
+      "x_score": 0.0,
+      "y_score": -127.5973129272461,
+      "static_x_score": 0.0,
+      "static_y_score": 0.0
+    },
+    {
+      "axis": "vertical",
+      "center": 22,
+      "speed": 1,
+      "polarity": "off",
+      "expected": "down",
+      "predicted": "down",
+      "x_score": 0.0,
+      "y_score": 127.5973129272461,
+      "static_x_score": 0.0,
+      "static_y_score": 0.0
+    },
+    {
+      "axis": "vertical",
+      "center": 14,
+      "speed": 1,
+      "polarity": "off",
+      "expected": "up",
+      "predicted": "up",
+      "x_score": 0.0,
+      "y_score": -127.5973129272461,
+      "static_x_score": 0.0,
+      "static_y_score": 0.0
+    },
+    {
+      "axis": "vertical",
+      "center": 14,
+      "speed": 1,
+      "polarity": "off",
+      "expected": "down",
+      "predicted": "down",
+      "x_score": 0.0,
+      "y_score": 127.5973129272461,
+      "static_x_score": 0.0,
+      "static_y_score": 0.0
+    },
+    {
+      "axis": "vertical",
+      "center": 14,
+      "speed": 2,
+      "polarity": "off",
+      "expected": "up",
+      "predicted": "up",
+      "x_score": 0.0,
+      "y_score": -207.0,
+      "static_x_score": 0.0,
+      "static_y_score": 0.0
+    },
+    {
+      "axis": "vertical",
+      "center": 14,
+      "speed": 2,
+      "polarity": "off",
+      "expected": "down",
+      "predicted": "down",
+      "x_score": 0.0,
+      "y_score": 207.0,
+      "static_x_score": 0.0,
+      "static_y_score": 0.0
+    },
+    {
+      "axis": "vertical",
+      "center": 18,
+      "speed": 1,
+      "polarity": "off",
+      "expected": "up",
+      "predicted": "up",
+      "x_score": 0.0,
+      "y_score": -127.5973129272461,
+      "static_x_score": 0.0,
+      "static_y_score": 0.0
+    },
+    {
+      "axis": "vertical",
+      "center": 18,
+      "speed": 1,
+      "polarity": "off",
+      "expected": "down",
+      "predicted": "down",
+      "x_score": 0.0,
+      "y_score": 127.5973129272461,
+      "static_x_score": 0.0,
+      "static_y_score": 0.0
+    },
+    {
+      "axis": "vertical",
+      "center": 18,
+      "speed": 2,
+      "polarity": "off",
+      "expected": "up",
+      "predicted": "up",
+      "x_score": 0.0,
+      "y_score": -207.0,
+      "static_x_score": 0.0,
+      "static_y_score": 0.0
+    },
+    {
+      "axis": "vertical",
+      "center": 18,
+      "speed": 2,
+      "polarity": "off",
+      "expected": "down",
+      "predicted": "down",
+      "x_score": 0.0,
+      "y_score": 207.0,
+      "static_x_score": 0.0,
+      "static_y_score": 0.0
+    },
+    {
+      "axis": "horizontal",
+      "center": 18,
+      "speed": 1,
+      "polarity": "off",
+      "expected": "left",
+      "predicted": "left",
+      "x_score": -127.5973129272461,
+      "y_score": 0.0,
+      "static_x_score": 0.0,
+      "static_y_score": 0.0
+    },
+    {
+      "axis": "horizontal",
+      "center": 18,
+      "speed": 1,
+      "polarity": "off",
+      "expected": "right",
+      "predicted": "right",
+      "x_score": 127.5973129272461,
+      "y_score": 0.0,
+      "static_x_score": 0.0,
+      "static_y_score": 0.0
+    },
+    {
+      "axis": "horizontal",
+      "center": 46,
+      "speed": 1,
+      "polarity": "off",
+      "expected": "left",
+      "predicted": "left",
+      "x_score": -127.5973129272461,
+      "y_score": 0.0,
+      "static_x_score": 0.0,
+      "static_y_score": 0.0
+    },
+    {
+      "axis": "horizontal",
+      "center": 46,
+      "speed": 1,
+      "polarity": "off",
+      "expected": "right",
+      "predicted": "right",
+      "x_score": 127.5973129272461,
+      "y_score": 0.0,
+      "static_x_score": 0.0,
+      "static_y_score": 0.0
+    },
+    {
+      "axis": "horizontal",
+      "center": 32,
+      "speed": 1,
+      "polarity": "off",
+      "expected": "left",
+      "predicted": "left",
+      "x_score": -127.5973129272461,
+      "y_score": 0.0,
+      "static_x_score": 0.0,
+      "static_y_score": 0.0
+    },
+    {
+      "axis": "horizontal",
+      "center": 32,
+      "speed": 1,
+      "polarity": "off",
+      "expected": "right",
+      "predicted": "right",
+      "x_score": 127.5973129272461,
+      "y_score": 0.0,
+      "static_x_score": 0.0,
+      "static_y_score": 0.0
+    },
+    {
+      "axis": "horizontal",
+      "center": 32,
+      "speed": 2,
+      "polarity": "off",
+      "expected": "left",
+      "predicted": "left",
+      "x_score": -207.0,
+      "y_score": 0.0,
+      "static_x_score": 0.0,
+      "static_y_score": 0.0
+    },
+    {
+      "axis": "horizontal",
+      "center": 32,
+      "speed": 2,
+      "polarity": "off",
+      "expected": "right",
+      "predicted": "right",
+      "x_score": 207.0,
+      "y_score": 0.0,
+      "static_x_score": 0.0,
+      "static_y_score": 0.0
+    },
+    {
+      "axis": "vertical",
+      "center": 16,
+      "speed": 1,
+      "polarity": "on",
+      "expected": "up",
+      "predicted": "up",
+      "x_score": 0.0,
+      "y_score": -127.5973129272461,
+      "static_x_score": 0.0,
+      "static_y_score": 0.0
+    },
+    {
+      "axis": "vertical",
+      "center": 16,
+      "speed": 1,
+      "polarity": "on",
+      "expected": "down",
+      "predicted": "down",
+      "x_score": 0.0,
+      "y_score": 127.5973129272461,
+      "static_x_score": 0.0,
+      "static_y_score": 0.0
+    },
+    {
+      "axis": "horizontal",
+      "center": 32,
+      "speed": 1,
+      "polarity": "on",
+      "expected": "left",
+      "predicted": "left",
+      "x_score": -127.5973129272461,
+      "y_score": 0.0,
+      "static_x_score": 0.0,
+      "static_y_score": 0.0
+    },
+    {
+      "axis": "horizontal",
+      "center": 32,
+      "speed": 1,
+      "polarity": "on",
+      "expected": "right",
+      "predicted": "right",
+      "x_score": 127.5973129272461,
+      "y_score": 0.0,
+      "static_x_score": 0.0,
+      "static_y_score": 0.0
+    }
+  ],
+  "square_off_accuracy": {
+    "correct": 20,
+    "total": 20,
+    "abstentions": 0
+  },
+  "static_false_alarms": 0,
+  "blank_scores": {
+    "off": [
+      0.0,
+      0.0
+    ],
+    "on": [
+      0.0,
+      0.0
+    ]
+  },
+  "pong_axes": {
+    "x": {
+      "nonzero": 5780,
+      "correct": 5692,
+      "total": 12800,
+      "coverage": 0.4515625,
+      "accuracy_when_active": 0.9847750865051903
+    },
+    "y": {
+      "nonzero": 2666,
+      "correct": 2086,
+      "total": 12800,
+      "coverage": 0.20828125,
+      "accuracy_when_active": 0.7824456114028507
+    }
+  },
+  "pong_frames_per_seed": 800,
+  "pong_seeds": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15
+  ],
+  "elapsed_seconds": 2.5937183999922127
+}

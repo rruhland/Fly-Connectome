@@ -1,0 +1,173 @@
+{
+  "training_seeds": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+  ],
+  "test_seeds": [
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15
+  ],
+  "frames_per_seed": 800,
+  "learning_rate": 0.05,
+  "horizons": {
+    "16": {
+      "learned_gain": 0.8008678555488586,
+      "update_batches": 110,
+      "update_examples": 275,
+      "methods": {
+        "constant_velocity": {
+          "all": {
+            "samples": 5194,
+            "mean_error": 0.032188739627599716,
+            "mean_y_error": 0.02969534322619438
+          },
+          "free_flight": {
+            "samples": 4759,
+            "mean_error": 0.03068554401397705,
+            "mean_y_error": 0.028703728690743446
+          },
+          "wall_reversal": {
+            "samples": 291,
+            "mean_error": 0.046387411653995514,
+            "mean_y_error": 0.04385245963931084
+          },
+          "paddle_reversal": {
+            "samples": 144,
+            "mean_error": 0.05317408964037895,
+            "mean_y_error": 0.03385768458247185
+          }
+        },
+        "learned_reflection": {
+          "all": {
+            "samples": 5194,
+            "mean_error": 0.02942053973674774,
+            "mean_y_error": 0.026819992810487747
+          },
+          "free_flight": {
+            "samples": 4759,
+            "mean_error": 0.02961011417210102,
+            "mean_y_error": 0.027565373107790947
+          },
+          "wall_reversal": {
+            "samples": 291,
+            "mean_error": 0.015529598109424114,
+            "mean_y_error": 0.012290596030652523
+          },
+          "paddle_reversal": {
+            "samples": 144,
+            "mean_error": 0.05122656375169754,
+            "mean_y_error": 0.0315476693212986
+          }
+        },
+        "unit_reflection": {
+          "all": {
+            "samples": 5194,
+            "mean_error": 0.030348753556609154,
+            "mean_y_error": 0.027799030765891075
+          },
+          "free_flight": {
+            "samples": 4759,
+            "mean_error": 0.029937531799077988,
+            "mean_y_error": 0.027906103059649467
+          },
+          "wall_reversal": {
+            "samples": 291,
+            "mean_error": 0.026329172775149345,
+            "mean_y_error": 0.023636892437934875
+          },
+          "paddle_reversal": {
+            "samples": 144,
+            "mean_error": 0.05206194892525673,
+            "mean_y_error": 0.0326712466776371
+          }
+        }
+      }
+    },
+    "32": {
+      "learned_gain": 1.001059651374817,
+      "update_batches": 223,
+      "update_examples": 502,
+      "methods": {
+        "constant_velocity": {
+          "all": {
+            "samples": 4827,
+            "mean_error": 0.06335899233818054,
+            "mean_y_error": 0.055021099746227264
+          },
+          "free_flight": {
+            "samples": 3928,
+            "mean_error": 0.05343547835946083,
+            "mean_y_error": 0.049932803958654404
+          },
+          "wall_reversal": {
+            "samples": 529,
+            "mean_error": 0.09411441534757614,
+            "mean_y_error": 0.09199090301990509
+          },
+          "paddle_reversal": {
+            "samples": 370,
+            "mean_error": 0.12473723292350769,
+            "mean_y_error": 0.05618275701999664
+          }
+        },
+        "learned_reflection": {
+          "all": {
+            "samples": 4827,
+            "mean_error": 0.055898360908031464,
+            "mean_y_error": 0.04718145728111267
+          },
+          "free_flight": {
+            "samples": 3928,
+            "mean_error": 0.050030000507831573,
+            "mean_y_error": 0.04626234993338585
+          },
+          "wall_reversal": {
+            "samples": 529,
+            "mean_error": 0.052926622331142426,
+            "mean_y_error": 0.05049888789653778
+          },
+          "paddle_reversal": {
+            "samples": 370,
+            "mean_error": 0.12244689464569092,
+            "mean_y_error": 0.052195753902196884
+          }
+        },
+        "unit_reflection": {
+          "all": {
+            "samples": 4827,
+            "mean_error": 0.05587959662079811,
+            "mean_y_error": 0.04716114699840546
+          },
+          "free_flight": {
+            "samples": 3928,
+            "mean_error": 0.050024695694446564,
+            "mean_y_error": 0.04625603184103966
+          },
+          "wall_reversal": {
+            "samples": 529,
+            "mean_error": 0.05280192196369171,
+            "mean_y_error": 0.050372060388326645
+          },
+          "paddle_reversal": {
+            "samples": 370,
+            "mean_error": 0.12243663519620895,
+            "mean_y_error": 0.05217929184436798
+          }
+        }
+      }
+    }
+  },
+  "elapsed_seconds": 1.8107419000007212
+}
