@@ -33,6 +33,8 @@ The [frozen robustness suite](../experiments/2026-09-24-correlation-latent-robus
 
 The [closed-loop rollout diagnostic](../experiments/2026-09-24-visual-rollout-findings.md) showed useful four-frame learned predictions on clean translation but substantial drift through crossings and rate changes; the fixed sensory forecaster remained ahead. A persistent local latent state must improve these interaction/missing-evidence cases while retaining the current one-step gains over random and shuffled-credit controls.
 
+The [ungated predictive-feedback test](../experiments/2026-09-24-predictive-feedback-findings.md) made latent activity persist through blank input but degraded every forecast family and quadrupled quiet-target false alarms. Do not reuse the emitted event prediction directly as latent input. Next test a **separate locally persistent state transition and observation-emission readout**, both updated by local delayed error, so hidden continuity need not imply a visible event. Keep the successful no-feedback learned code and fixed primitive as matched baselines.
+
 ## Shortest evidence path before promotion
 
 1. **Generic scene suite.** Extend the opt-in event-camera tests to varied shapes, polarities, scales, positions, speeds, two independent movers, crossings, partial occlusion, stationary visual context, trajectory changes, and sensor noise. The generator may know hidden trajectories only for scoring. Establish performance and throughput of the full proposed front end, not just the isolated kernel.
