@@ -31,6 +31,8 @@ The [correlation-input latent experiment](../experiments/2026-09-24-correlation-
 
 The [frozen robustness suite](../experiments/2026-09-24-correlation-latent-robustness-findings.md) preserved learned prediction on two independent movers and rate changes, with weaker but still positive transfer through crossings, disappearance, and noise. The fixed sensory control wins each family. The next candidate should add local state persistence and predictive feedback so the learned code can use recent history when event evidence is missing or corrupted, then check for regressions on clean translation. This remains an experiment until a concrete production integration is reviewed and approved.
 
+The [closed-loop rollout diagnostic](../experiments/2026-09-24-visual-rollout-findings.md) showed useful four-frame learned predictions on clean translation but substantial drift through crossings and rate changes; the fixed sensory forecaster remained ahead. A persistent local latent state must improve these interaction/missing-evidence cases while retaining the current one-step gains over random and shuffled-credit controls.
+
 ## Shortest evidence path before promotion
 
 1. **Generic scene suite.** Extend the opt-in event-camera tests to varied shapes, polarities, scales, positions, speeds, two independent movers, crossings, partial occlusion, stationary visual context, trajectory changes, and sensor noise. The generator may know hidden trajectories only for scoring. Establish performance and throughput of the full proposed front end, not just the isolated kernel.
