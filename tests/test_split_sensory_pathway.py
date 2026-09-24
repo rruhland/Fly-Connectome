@@ -22,6 +22,8 @@ def test_raw_event_activates_only_its_own_branch_after_blank():
     assert len(split.raw.previous_sources) == 1
     assert split.previous_sources == [(10, 12, split.raw.previous_sources[0][2]+2)]
     assert split.correlation.latent.sum() == 0
+    assert split.latent[:2].sum() == 0
+    assert split.latent[2:].sum() == 1
 
 
 def test_coincidence_winner_is_unchanged_by_raw_branch_activity():

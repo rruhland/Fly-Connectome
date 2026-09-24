@@ -35,11 +35,13 @@ class SplitPopulation:
         self.correlation.reset_state()
         self.raw.reset_state()
         self.previous_sources = []
+        self.latent = torch.zeros((self.units, 32, 64))
 
     @torch.no_grad()
     def step(self, code):
         self.correlation.step(code[2:])
         self.raw.step(code[:2])
+        self.latent = torch.cat((self.correlation.latent, self.raw.latent))
         self.previous_sources = self.correlation.previous_sources + [
             (y, x, unit+self.correlation.units)
             for y, x, unit in self.raw.previous_sources]
