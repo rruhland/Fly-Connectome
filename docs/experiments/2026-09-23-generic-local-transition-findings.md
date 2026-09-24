@@ -1,0 +1,9 @@
+# Generic local event-transition result
+
+This opt-in experiment trained a shared, causal same-polarity event-triplet efficacy from visual events alone. The learner received no object identity, position, direction, speed, or future-state labels. The protocol and reproducible results are in the adjacent files. It is **not** a production M1A component.
+
+The learned rule reached 0.699 next-frame event F1 over the held-out set, above event persistence (0.000). That aggregate result fails the intended transfer test: every one-pixel/frame shape had **0.000 F1**, while two-pixel/frame shapes ranged from 0.840 to 0.977. The separated two-object case, with one-pixel/frame motion, also scored 0.000. The fixed unit-efficacy control reached 0.847 overall and 0.955–0.968 on one-pixel/frame shapes. No repeated prediction occurred on the static interior frames.
+
+The learned one-pixel efficacies converged to approximately zero, while two-pixel efficacies converged near 0.696. This is a concrete credit-assignment conflict rather than missing local motion evidence. For a translating 3×3 square, a one-pixel/frame event edge produced six one-pixel coincidences and no two-pixel coincidences per frame. A two-pixel/frame edge produced six one-pixel **and twelve two-pixel** coincidences. The one-pixel feature thus appears in both tempos, but its continuation one pixel later is wrong at the faster tempo. A shared scalar efficacy is driven down by incompatible local targets.
+
+The next decisive test is local competition between nearby displacement hypotheses before applying credit and emitting a forecast. It should be evaluated across shapes, polarity, both speeds, and separated movers with distinct speeds. This is a generic local spatiotemporal mechanism, not a Pong-specific state rule. A successful result would still need a separate coherent-entity and longer-horizon test before M1A can be called working.
