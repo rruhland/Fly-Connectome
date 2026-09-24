@@ -8,6 +8,23 @@ sys.path.insert(0, str(Path(__file__).parents[1]/'scripts'))
 from generic_local_transition import LocalTripletLearner
 
 
+def test_local_competition_learns_both_tempos_from_unlabeled_events():
+    from generic_local_transition import event_sequence, item, evaluate
+
+    learner = LocalTripletLearner(eta=.3, local_competition=True)
+    slow = event_sequence([item('square', (16, 32), 'right', 1)], background=True)
+    fast = event_sequence([item('square', (16, 32), 'right', 2)], background=True)
+    for _ in range(4):
+        for sequence in (slow, fast):
+            learner.reset_state()
+            for event in sequence:
+                learner.step(event)
+    outcome = evaluate(learner, [('slow', slow), ('fast', fast)])['groups']
+    assert outcome['slow']['learned']['f1'] > .8
+    assert outcome['fast']['learned']['f1'] > .8
+    assert 'unit_competitive' in outcome['slow']
+
+
 def event(x):
     value = torch.zeros((2, 32, 64))
     value[0, 16, x] = 1

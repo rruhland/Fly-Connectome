@@ -6,6 +6,7 @@ import time
 from pathlib import Path
 
 import torch
+import torch.nn.functional as F
 
 from fly_connectome.sensor import EventCamera
 from generic_motion_probe import SHAPES, object_mask, item, events_map
@@ -30,10 +31,11 @@ def shift(value, dy, dx):
 class LocalTripletLearner:
     """Shared retinotopic efficacy, updated by delayed local visual error."""
 
-    def __init__(self, *, eta):
+    def __init__(self, *, eta, local_competition=False):
         if not 0 < eta <= 1:
             raise ValueError('local learning rate must be in (0,1]')
         self.eta = eta
+        self.local_competition = local_competition
         self.weights = torch.zeros((2, len(OFFSETS)))
         self.reset_state()
         self.confirmed_updates = 0
@@ -61,6 +63,13 @@ class LocalTripletLearner:
             shift(self.previous, dy, dx)*current
             for dy, dx in OFFSETS]) if self.previous is not None else torch.zeros(
                 (len(OFFSETS), 2, 32, 64))
+        if self.local_competition:
+            support = F.avg_pool2d(features.reshape(16, 1, 32, 64),
+                                   kernel_size=7, stride=1, padding=3).reshape(
+                                       len(OFFSETS), 2, 32, 64)
+            winner = support.argmax(dim=0, keepdim=True)
+            features = features * (winner == torch.arange(len(OFFSETS))[
+                :, None, None, None])
         prediction = torch.zeros_like(current)
         for index, (dy, dx) in enumerate(OFFSETS):
             prediction += shift(features[index], dy, dx)*self.weights[:, index, None, None]
@@ -115,21 +124,35 @@ def finish(score):
 
 
 def evaluate(learner, cases):
-    scores = {name: empty_score() for name in ('learned', 'persistence', 'unit', 'zero')}
+    names = ('learned', 'persistence', 'unit', 'zero')
+    if learner.local_competition:
+        names += ('unit_competitive',)
+    scores = {name: empty_score() for name in names}
     groups = {}
     unit = LocalTripletLearner(eta=learner.eta)
     unit.weights.fill_(1)
+    unit_competitive = None
+    if learner.local_competition:
+        unit_competitive = LocalTripletLearner(eta=learner.eta,
+                                             local_competition=True)
+        unit_competitive.weights.fill_(1)
     for label, sequence in cases:
         learner.reset_state()
         unit.reset_state()
+        if unit_competitive is not None:
+            unit_competitive.reset_state()
         group = groups.setdefault(label, {name: empty_score() for name in scores})
         for t, current in enumerate(sequence):
             prediction = learner.step(current, learn=False)
             unit_prediction = unit.step(current, learn=False)
+            competitive_prediction = (unit_competitive.step(current, learn=False)
+                                      if unit_competitive is not None else None)
             if 3 <= t < 14:
                 target = sequence[t+1]
                 candidates = dict(learned=prediction, persistence=current,
                                   unit=unit_prediction, zero=torch.zeros_like(current))
+                if competitive_prediction is not None:
+                    candidates['unit_competitive'] = competitive_prediction
                 for name, value in candidates.items():
                     accumulate(scores[name], value, target)
                     accumulate(group[name], value, target)
