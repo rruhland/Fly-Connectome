@@ -4,6 +4,17 @@ import torch
 import torch.nn.functional as F
 
 
+def sparse_local_patches(current, previous, sites):
+    if not len(sites):
+        return current.new_zeros((2*current.shape[0]*25, 0))
+    padded = F.pad(torch.cat((current, previous)), (2, 2, 2, 2))
+    width = current.shape[-1]
+    return torch.stack([
+        padded[:, int(site//width):int(site//width)+5,
+               int(site%width):int(site%width)+5].reshape(-1)
+        for site in sites], dim=1)
+
+
 class TransitionPopulation:
     def __init__(self, *, channels=12, units=24, seed=0, homeostasis=True,
                  dictionary_eta=.08, prediction_eta=.5):
@@ -39,13 +50,11 @@ class TransitionPopulation:
              learn_prediction=False, credit_target=None):
         if current.shape != (self.channels, 32, 64):
             raise ValueError('local sensory latent has wrong shape')
-        patches = F.unfold(torch.cat((current, self.previous))[None],
-                           kernel_size=5, padding=2)[0]
         sites = current.sum(0).flatten().nonzero().flatten()
         latent = torch.zeros((self.units, 32*64))
         sources = []
         if len(sites):
-            selected = patches[:, sites]
+            selected = sparse_local_patches(current, self.previous, sites)
             scores = self.dictionary @ selected
             if self.homeostasis:
                 scores /= (self.dictionary.norm(dim=1)[:, None]

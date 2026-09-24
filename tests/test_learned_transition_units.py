@@ -6,7 +6,7 @@ from pathlib import Path
 import torch
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'scripts'))
-from learned_transition_units import TransitionPopulation
+from learned_transition_units import TransitionPopulation, sparse_local_patches
 
 
 def test_current_code_assignment_depends_on_local_previous_code():
@@ -63,3 +63,15 @@ def test_shuffled_credit_target_does_not_change_inferred_code():
                   credit_target=torch.zeros_like(second))
     assert torch.equal(ordered.latent, shuffled.latent)
     assert ordered.predictive.sum() > shuffled.predictive.sum()
+
+
+def test_sparse_local_patches_match_dense_unfold_at_borders():
+    import torch.nn.functional as F
+
+    current = torch.arange(2*32*64).float().view(2, 32, 64)
+    previous = current.flip(-1)
+    sites = torch.tensor([0, 31*64+63, 16*64+16])
+    expected = F.unfold(torch.cat((current, previous))[None],
+                        kernel_size=5, padding=2)[0][:, sites]
+    actual = sparse_local_patches(current, previous, sites)
+    assert torch.equal(actual, expected)
