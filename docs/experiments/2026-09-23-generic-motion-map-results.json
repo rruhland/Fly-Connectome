@@ -1,0 +1,2373 @@
+{
+  "trace_decay_frames": 8,
+  "offsets_pixels": [
+    1,
+    2
+  ],
+  "trials": [
+    {
+      "shape": "square",
+      "direction": "up",
+      "center": [
+        16,
+        20
+      ],
+      "speed": 1,
+      "polarity": "dark",
+      "predicted": "up",
+      "vector": [
+        0.0,
+        -127.5973129272461
+      ],
+      "wrong_axis_ratio": 0.0,
+      "localization": 1.000000097163232
+    },
+    {
+      "shape": "square",
+      "direction": "up",
+      "center": [
+        16,
+        20
+      ],
+      "speed": 1,
+      "polarity": "bright",
+      "predicted": "up",
+      "vector": [
+        0.0,
+        -127.5973129272461
+      ],
+      "wrong_axis_ratio": 0.0,
+      "localization": 1.000000097163232
+    },
+    {
+      "shape": "square",
+      "direction": "up",
+      "center": [
+        16,
+        20
+      ],
+      "speed": 2,
+      "polarity": "dark",
+      "predicted": "up",
+      "vector": [
+        0.0,
+        -207.0
+      ],
+      "wrong_axis_ratio": 0.0,
+      "localization": 1.0
+    },
+    {
+      "shape": "square",
+      "direction": "up",
+      "center": [
+        16,
+        20
+      ],
+      "speed": 2,
+      "polarity": "bright",
+      "predicted": "up",
+      "vector": [
+        0.0,
+        -207.0
+      ],
+      "wrong_axis_ratio": 0.0,
+      "localization": 1.0
+    },
+    {
+      "shape": "square",
+      "direction": "up",
+      "center": [
+        16,
+        44
+      ],
+      "speed": 1,
+      "polarity": "dark",
+      "predicted": "up",
+      "vector": [
+        0.0,
+        -127.5973129272461
+      ],
+      "wrong_axis_ratio": 0.0,
+      "localization": 1.000000097163232
+    },
+    {
+      "shape": "square",
+      "direction": "up",
+      "center": [
+        16,
+        44
+      ],
+      "speed": 1,
+      "polarity": "bright",
+      "predicted": "up",
+      "vector": [
+        0.0,
+        -127.5973129272461
+      ],
+      "wrong_axis_ratio": 0.0,
+      "localization": 1.000000097163232
+    },
+    {
+      "shape": "square",
+      "direction": "up",
+      "center": [
+        16,
+        44
+      ],
+      "speed": 2,
+      "polarity": "dark",
+      "predicted": "up",
+      "vector": [
+        0.0,
+        -207.0
+      ],
+      "wrong_axis_ratio": 0.0,
+      "localization": 1.0
+    },
+    {
+      "shape": "square",
+      "direction": "up",
+      "center": [
+        16,
+        44
+      ],
+      "speed": 2,
+      "polarity": "bright",
+      "predicted": "up",
+      "vector": [
+        0.0,
+        -207.0
+      ],
+      "wrong_axis_ratio": 0.0,
+      "localization": 1.0
+    },
+    {
+      "shape": "square",
+      "direction": "down",
+      "center": [
+        16,
+        20
+      ],
+      "speed": 1,
+      "polarity": "dark",
+      "predicted": "down",
+      "vector": [
+        0.0,
+        127.5973129272461
+      ],
+      "wrong_axis_ratio": 0.0,
+      "localization": 1.000000097163232
+    },
+    {
+      "shape": "square",
+      "direction": "down",
+      "center": [
+        16,
+        20
+      ],
+      "speed": 1,
+      "polarity": "bright",
+      "predicted": "down",
+      "vector": [
+        0.0,
+        127.5973129272461
+      ],
+      "wrong_axis_ratio": 0.0,
+      "localization": 1.000000097163232
+    },
+    {
+      "shape": "square",
+      "direction": "down",
+      "center": [
+        16,
+        20
+      ],
+      "speed": 2,
+      "polarity": "dark",
+      "predicted": "down",
+      "vector": [
+        0.0,
+        207.0
+      ],
+      "wrong_axis_ratio": 0.0,
+      "localization": 1.0
+    },
+    {
+      "shape": "square",
+      "direction": "down",
+      "center": [
+        16,
+        20
+      ],
+      "speed": 2,
+      "polarity": "bright",
+      "predicted": "down",
+      "vector": [
+        0.0,
+        207.0
+      ],
+      "wrong_axis_ratio": 0.0,
+      "localization": 1.0
+    },
+    {
+      "shape": "square",
+      "direction": "down",
+      "center": [
+        16,
+        44
+      ],
+      "speed": 1,
+      "polarity": "dark",
+      "predicted": "down",
+      "vector": [
+        0.0,
+        127.5973129272461
+      ],
+      "wrong_axis_ratio": 0.0,
+      "localization": 1.000000097163232
+    },
+    {
+      "shape": "square",
+      "direction": "down",
+      "center": [
+        16,
+        44
+      ],
+      "speed": 1,
+      "polarity": "bright",
+      "predicted": "down",
+      "vector": [
+        0.0,
+        127.5973129272461
+      ],
+      "wrong_axis_ratio": 0.0,
+      "localization": 1.000000097163232
+    },
+    {
+      "shape": "square",
+      "direction": "down",
+      "center": [
+        16,
+        44
+      ],
+      "speed": 2,
+      "polarity": "dark",
+      "predicted": "down",
+      "vector": [
+        0.0,
+        207.0
+      ],
+      "wrong_axis_ratio": 0.0,
+      "localization": 1.0
+    },
+    {
+      "shape": "square",
+      "direction": "down",
+      "center": [
+        16,
+        44
+      ],
+      "speed": 2,
+      "polarity": "bright",
+      "predicted": "down",
+      "vector": [
+        0.0,
+        207.0
+      ],
+      "wrong_axis_ratio": 0.0,
+      "localization": 1.0
+    },
+    {
+      "shape": "square",
+      "direction": "left",
+      "center": [
+        10,
+        32
+      ],
+      "speed": 1,
+      "polarity": "dark",
+      "predicted": "left",
+      "vector": [
+        -127.5973129272461,
+        0.0
+      ],
+      "wrong_axis_ratio": 0.0,
+      "localization": 1.000000097163232
+    },
+    {
+      "shape": "square",
+      "direction": "left",
+      "center": [
+        10,
+        32
+      ],
+      "speed": 1,
+      "polarity": "bright",
+      "predicted": "left",
+      "vector": [
+        -127.5973129272461,
+        0.0
+      ],
+      "wrong_axis_ratio": 0.0,
+      "localization": 1.000000097163232
+    },
+    {
+      "shape": "square",
+      "direction": "left",
+      "center": [
+        10,
+        32
+      ],
+      "speed": 2,
+      "polarity": "dark",
+      "predicted": "left",
+      "vector": [
+        -207.0,
+        0.0
+      ],
+      "wrong_axis_ratio": 0.0,
+      "localization": 1.0
+    },
+    {
+      "shape": "square",
+      "direction": "left",
+      "center": [
+        10,
+        32
+      ],
+      "speed": 2,
+      "polarity": "bright",
+      "predicted": "left",
+      "vector": [
+        -207.0,
+        0.0
+      ],
+      "wrong_axis_ratio": 0.0,
+      "localization": 1.0
+    },
+    {
+      "shape": "square",
+      "direction": "left",
+      "center": [
+        22,
+        32
+      ],
+      "speed": 1,
+      "polarity": "dark",
+      "predicted": "left",
+      "vector": [
+        -127.5973129272461,
+        0.0
+      ],
+      "wrong_axis_ratio": 0.0,
+      "localization": 1.000000097163232
+    },
+    {
+      "shape": "square",
+      "direction": "left",
+      "center": [
+        22,
+        32
+      ],
+      "speed": 1,
+      "polarity": "bright",
+      "predicted": "left",
+      "vector": [
+        -127.5973129272461,
+        0.0
+      ],
+      "wrong_axis_ratio": 0.0,
+      "localization": 1.000000097163232
+    },
+    {
+      "shape": "square",
+      "direction": "left",
+      "center": [
+        22,
+        32
+      ],
+      "speed": 2,
+      "polarity": "dark",
+      "predicted": "left",
+      "vector": [
+        -207.0,
+        0.0
+      ],
+      "wrong_axis_ratio": 0.0,
+      "localization": 1.0
+    },
+    {
+      "shape": "square",
+      "direction": "left",
+      "center": [
+        22,
+        32
+      ],
+      "speed": 2,
+      "polarity": "bright",
+      "predicted": "left",
+      "vector": [
+        -207.0,
+        0.0
+      ],
+      "wrong_axis_ratio": 0.0,
+      "localization": 1.0
+    },
+    {
+      "shape": "square",
+      "direction": "right",
+      "center": [
+        10,
+        32
+      ],
+      "speed": 1,
+      "polarity": "dark",
+      "predicted": "right",
+      "vector": [
+        127.5973129272461,
+        0.0
+      ],
+      "wrong_axis_ratio": 0.0,
+      "localization": 1.000000097163232
+    },
+    {
+      "shape": "square",
+      "direction": "right",
+      "center": [
+        10,
+        32
+      ],
+      "speed": 1,
+      "polarity": "bright",
+      "predicted": "right",
+      "vector": [
+        127.5973129272461,
+        0.0
+      ],
+      "wrong_axis_ratio": 0.0,
+      "localization": 1.000000097163232
+    },
+    {
+      "shape": "square",
+      "direction": "right",
+      "center": [
+        10,
+        32
+      ],
+      "speed": 2,
+      "polarity": "dark",
+      "predicted": "right",
+      "vector": [
+        207.0,
+        0.0
+      ],
+      "wrong_axis_ratio": 0.0,
+      "localization": 1.0
+    },
+    {
+      "shape": "square",
+      "direction": "right",
+      "center": [
+        10,
+        32
+      ],
+      "speed": 2,
+      "polarity": "bright",
+      "predicted": "right",
+      "vector": [
+        207.0,
+        0.0
+      ],
+      "wrong_axis_ratio": 0.0,
+      "localization": 1.0
+    },
+    {
+      "shape": "square",
+      "direction": "right",
+      "center": [
+        22,
+        32
+      ],
+      "speed": 1,
+      "polarity": "dark",
+      "predicted": "right",
+      "vector": [
+        127.5973129272461,
+        0.0
+      ],
+      "wrong_axis_ratio": 0.0,
+      "localization": 1.000000097163232
+    },
+    {
+      "shape": "square",
+      "direction": "right",
+      "center": [
+        22,
+        32
+      ],
+      "speed": 1,
+      "polarity": "bright",
+      "predicted": "right",
+      "vector": [
+        127.5973129272461,
+        0.0
+      ],
+      "wrong_axis_ratio": 0.0,
+      "localization": 1.000000097163232
+    },
+    {
+      "shape": "square",
+      "direction": "right",
+      "center": [
+        22,
+        32
+      ],
+      "speed": 2,
+      "polarity": "dark",
+      "predicted": "right",
+      "vector": [
+        207.0,
+        0.0
+      ],
+      "wrong_axis_ratio": 0.0,
+      "localization": 1.0
+    },
+    {
+      "shape": "square",
+      "direction": "right",
+      "center": [
+        22,
+        32
+      ],
+      "speed": 2,
+      "polarity": "bright",
+      "predicted": "right",
+      "vector": [
+        207.0,
+        0.0
+      ],
+      "wrong_axis_ratio": 0.0,
+      "localization": 1.0
+    },
+    {
+      "shape": "plus",
+      "direction": "up",
+      "center": [
+        16,
+        20
+      ],
+      "speed": 1,
+      "polarity": "dark",
+      "predicted": "up",
+      "vector": [
+        0.0,
+        -208.6621551513672
+      ],
+      "wrong_axis_ratio": 0.0,
+      "localization": 0.9999998331491173
+    },
+    {
+      "shape": "plus",
+      "direction": "up",
+      "center": [
+        16,
+        20
+      ],
+      "speed": 1,
+      "polarity": "bright",
+      "predicted": "up",
+      "vector": [
+        0.0,
+        -208.6621551513672
+      ],
+      "wrong_axis_ratio": 0.0,
+      "localization": 0.9999998331491173
+    },
+    {
+      "shape": "plus",
+      "direction": "up",
+      "center": [
+        16,
+        20
+      ],
+      "speed": 2,
+      "polarity": "dark",
+      "predicted": "up",
+      "vector": [
+        0.0,
+        -161.0
+      ],
+      "wrong_axis_ratio": 0.0,
+      "localization": 1.0
+    },
+    {
+      "shape": "plus",
+      "direction": "up",
+      "center": [
+        16,
+        20
+      ],
+      "speed": 2,
+      "polarity": "bright",
+      "predicted": "up",
+      "vector": [
+        0.0,
+        -161.0
+      ],
+      "wrong_axis_ratio": 0.0,
+      "localization": 1.0
+    },
+    {
+      "shape": "plus",
+      "direction": "up",
+      "center": [
+        16,
+        44
+      ],
+      "speed": 1,
+      "polarity": "dark",
+      "predicted": "up",
+      "vector": [
+        0.0,
+        -208.6621551513672
+      ],
+      "wrong_axis_ratio": 0.0,
+      "localization": 0.9999998331491173
+    },
+    {
+      "shape": "plus",
+      "direction": "up",
+      "center": [
+        16,
+        44
+      ],
+      "speed": 1,
+      "polarity": "bright",
+      "predicted": "up",
+      "vector": [
+        0.0,
+        -208.6621551513672
+      ],
+      "wrong_axis_ratio": 0.0,
+      "localization": 0.9999998331491173
+    },
+    {
+      "shape": "plus",
+      "direction": "up",
+      "center": [
+        16,
+        44
+      ],
+      "speed": 2,
+      "polarity": "dark",
+      "predicted": "up",
+      "vector": [
+        0.0,
+        -161.0
+      ],
+      "wrong_axis_ratio": 0.0,
+      "localization": 1.0
+    },
+    {
+      "shape": "plus",
+      "direction": "up",
+      "center": [
+        16,
+        44
+      ],
+      "speed": 2,
+      "polarity": "bright",
+      "predicted": "up",
+      "vector": [
+        0.0,
+        -161.0
+      ],
+      "wrong_axis_ratio": 0.0,
+      "localization": 1.0
+    },
+    {
+      "shape": "plus",
+      "direction": "down",
+      "center": [
+        16,
+        20
+      ],
+      "speed": 1,
+      "polarity": "dark",
+      "predicted": "down",
+      "vector": [
+        0.0,
+        208.6621551513672
+      ],
+      "wrong_axis_ratio": 0.0,
+      "localization": 0.9999998331491173
+    },
+    {
+      "shape": "plus",
+      "direction": "down",
+      "center": [
+        16,
+        20
+      ],
+      "speed": 1,
+      "polarity": "bright",
+      "predicted": "down",
+      "vector": [
+        0.0,
+        208.6621551513672
+      ],
+      "wrong_axis_ratio": 0.0,
+      "localization": 0.9999998331491173
+    },
+    {
+      "shape": "plus",
+      "direction": "down",
+      "center": [
+        16,
+        20
+      ],
+      "speed": 2,
+      "polarity": "dark",
+      "predicted": "down",
+      "vector": [
+        0.0,
+        161.0
+      ],
+      "wrong_axis_ratio": 0.0,
+      "localization": 1.0
+    },
+    {
+      "shape": "plus",
+      "direction": "down",
+      "center": [
+        16,
+        20
+      ],
+      "speed": 2,
+      "polarity": "bright",
+      "predicted": "down",
+      "vector": [
+        0.0,
+        161.0
+      ],
+      "wrong_axis_ratio": 0.0,
+      "localization": 1.0
+    },
+    {
+      "shape": "plus",
+      "direction": "down",
+      "center": [
+        16,
+        44
+      ],
+      "speed": 1,
+      "polarity": "dark",
+      "predicted": "down",
+      "vector": [
+        0.0,
+        208.6621551513672
+      ],
+      "wrong_axis_ratio": 0.0,
+      "localization": 0.9999998331491173
+    },
+    {
+      "shape": "plus",
+      "direction": "down",
+      "center": [
+        16,
+        44
+      ],
+      "speed": 1,
+      "polarity": "bright",
+      "predicted": "down",
+      "vector": [
+        0.0,
+        208.6621551513672
+      ],
+      "wrong_axis_ratio": 0.0,
+      "localization": 0.9999998331491173
+    },
+    {
+      "shape": "plus",
+      "direction": "down",
+      "center": [
+        16,
+        44
+      ],
+      "speed": 2,
+      "polarity": "dark",
+      "predicted": "down",
+      "vector": [
+        0.0,
+        161.0
+      ],
+      "wrong_axis_ratio": 0.0,
+      "localization": 1.0
+    },
+    {
+      "shape": "plus",
+      "direction": "down",
+      "center": [
+        16,
+        44
+      ],
+      "speed": 2,
+      "polarity": "bright",
+      "predicted": "down",
+      "vector": [
+        0.0,
+        161.0
+      ],
+      "wrong_axis_ratio": 0.0,
+      "localization": 1.0
+    },
+    {
+      "shape": "plus",
+      "direction": "left",
+      "center": [
+        10,
+        32
+      ],
+      "speed": 1,
+      "polarity": "dark",
+      "predicted": "left",
+      "vector": [
+        -208.6621551513672,
+        0.0
+      ],
+      "wrong_axis_ratio": 0.0,
+      "localization": 0.9999999620793399
+    },
+    {
+      "shape": "plus",
+      "direction": "left",
+      "center": [
+        10,
+        32
+      ],
+      "speed": 1,
+      "polarity": "bright",
+      "predicted": "left",
+      "vector": [
+        -208.6621551513672,
+        0.0
+      ],
+      "wrong_axis_ratio": 0.0,
+      "localization": 0.9999999620793399
+    },
+    {
+      "shape": "plus",
+      "direction": "left",
+      "center": [
+        10,
+        32
+      ],
+      "speed": 2,
+      "polarity": "dark",
+      "predicted": "left",
+      "vector": [
+        -161.0,
+        0.0
+      ],
+      "wrong_axis_ratio": 0.0,
+      "localization": 1.0
+    },
+    {
+      "shape": "plus",
+      "direction": "left",
+      "center": [
+        10,
+        32
+      ],
+      "speed": 2,
+      "polarity": "bright",
+      "predicted": "left",
+      "vector": [
+        -161.0,
+        0.0
+      ],
+      "wrong_axis_ratio": 0.0,
+      "localization": 1.0
+    },
+    {
+      "shape": "plus",
+      "direction": "left",
+      "center": [
+        22,
+        32
+      ],
+      "speed": 1,
+      "polarity": "dark",
+      "predicted": "left",
+      "vector": [
+        -208.6621551513672,
+        0.0
+      ],
+      "wrong_axis_ratio": 0.0,
+      "localization": 0.9999999620793399
+    },
+    {
+      "shape": "plus",
+      "direction": "left",
+      "center": [
+        22,
+        32
+      ],
+      "speed": 1,
+      "polarity": "bright",
+      "predicted": "left",
+      "vector": [
+        -208.6621551513672,
+        0.0
+      ],
+      "wrong_axis_ratio": 0.0,
+      "localization": 0.9999999620793399
+    },
+    {
+      "shape": "plus",
+      "direction": "left",
+      "center": [
+        22,
+        32
+      ],
+      "speed": 2,
+      "polarity": "dark",
+      "predicted": "left",
+      "vector": [
+        -161.0,
+        0.0
+      ],
+      "wrong_axis_ratio": 0.0,
+      "localization": 1.0
+    },
+    {
+      "shape": "plus",
+      "direction": "left",
+      "center": [
+        22,
+        32
+      ],
+      "speed": 2,
+      "polarity": "bright",
+      "predicted": "left",
+      "vector": [
+        -161.0,
+        0.0
+      ],
+      "wrong_axis_ratio": 0.0,
+      "localization": 1.0
+    },
+    {
+      "shape": "plus",
+      "direction": "right",
+      "center": [
+        10,
+        32
+      ],
+      "speed": 1,
+      "polarity": "dark",
+      "predicted": "right",
+      "vector": [
+        208.66213989257812,
+        0.0
+      ],
+      "wrong_axis_ratio": 0.0,
+      "localization": 0.9999999544952083
+    },
+    {
+      "shape": "plus",
+      "direction": "right",
+      "center": [
+        10,
+        32
+      ],
+      "speed": 1,
+      "polarity": "bright",
+      "predicted": "right",
+      "vector": [
+        208.66213989257812,
+        0.0
+      ],
+      "wrong_axis_ratio": 0.0,
+      "localization": 0.9999999544952083
+    },
+    {
+      "shape": "plus",
+      "direction": "right",
+      "center": [
+        10,
+        32
+      ],
+      "speed": 2,
+      "polarity": "dark",
+      "predicted": "right",
+      "vector": [
+        161.0,
+        0.0
+      ],
+      "wrong_axis_ratio": 0.0,
+      "localization": 1.0
+    },
+    {
+      "shape": "plus",
+      "direction": "right",
+      "center": [
+        10,
+        32
+      ],
+      "speed": 2,
+      "polarity": "bright",
+      "predicted": "right",
+      "vector": [
+        161.0,
+        0.0
+      ],
+      "wrong_axis_ratio": 0.0,
+      "localization": 1.0
+    },
+    {
+      "shape": "plus",
+      "direction": "right",
+      "center": [
+        22,
+        32
+      ],
+      "speed": 1,
+      "polarity": "dark",
+      "predicted": "right",
+      "vector": [
+        208.66213989257812,
+        0.0
+      ],
+      "wrong_axis_ratio": 0.0,
+      "localization": 0.9999999544952083
+    },
+    {
+      "shape": "plus",
+      "direction": "right",
+      "center": [
+        22,
+        32
+      ],
+      "speed": 1,
+      "polarity": "bright",
+      "predicted": "right",
+      "vector": [
+        208.66213989257812,
+        0.0
+      ],
+      "wrong_axis_ratio": 0.0,
+      "localization": 0.9999999544952083
+    },
+    {
+      "shape": "plus",
+      "direction": "right",
+      "center": [
+        22,
+        32
+      ],
+      "speed": 2,
+      "polarity": "dark",
+      "predicted": "right",
+      "vector": [
+        161.0,
+        0.0
+      ],
+      "wrong_axis_ratio": 0.0,
+      "localization": 1.0
+    },
+    {
+      "shape": "plus",
+      "direction": "right",
+      "center": [
+        22,
+        32
+      ],
+      "speed": 2,
+      "polarity": "bright",
+      "predicted": "right",
+      "vector": [
+        161.0,
+        0.0
+      ],
+      "wrong_axis_ratio": 0.0,
+      "localization": 1.0
+    },
+    {
+      "shape": "ell",
+      "direction": "up",
+      "center": [
+        16,
+        20
+      ],
+      "speed": 1,
+      "polarity": "dark",
+      "predicted": "up",
+      "vector": [
+        17.693801879882812,
+        -208.66213989257812
+      ],
+      "wrong_axis_ratio": 0.08479641725610503,
+      "localization": 1.0000000758369114
+    },
+    {
+      "shape": "ell",
+      "direction": "up",
+      "center": [
+        16,
+        20
+      ],
+      "speed": 1,
+      "polarity": "bright",
+      "predicted": "up",
+      "vector": [
+        17.693801879882812,
+        -208.66213989257812
+      ],
+      "wrong_axis_ratio": 0.08479641725610503,
+      "localization": 1.0000000758369114
+    },
+    {
+      "shape": "ell",
+      "direction": "up",
+      "center": [
+        16,
+        20
+      ],
+      "speed": 2,
+      "polarity": "dark",
+      "predicted": "up",
+      "vector": [
+        21.41493034362793,
+        -161.0
+      ],
+      "wrong_axis_ratio": 0.13301198971197473,
+      "localization": 1.000000094104894
+    },
+    {
+      "shape": "ell",
+      "direction": "up",
+      "center": [
+        16,
+        20
+      ],
+      "speed": 2,
+      "polarity": "bright",
+      "predicted": "up",
+      "vector": [
+        21.41493034362793,
+        -161.0
+      ],
+      "wrong_axis_ratio": 0.13301198971197473,
+      "localization": 1.000000094104894
+    },
+    {
+      "shape": "ell",
+      "direction": "up",
+      "center": [
+        16,
+        44
+      ],
+      "speed": 1,
+      "polarity": "dark",
+      "predicted": "up",
+      "vector": [
+        17.693801879882812,
+        -208.66213989257812
+      ],
+      "wrong_axis_ratio": 0.08479641725610503,
+      "localization": 1.0000000758369114
+    },
+    {
+      "shape": "ell",
+      "direction": "up",
+      "center": [
+        16,
+        44
+      ],
+      "speed": 1,
+      "polarity": "bright",
+      "predicted": "up",
+      "vector": [
+        17.693801879882812,
+        -208.66213989257812
+      ],
+      "wrong_axis_ratio": 0.08479641725610503,
+      "localization": 1.0000000758369114
+    },
+    {
+      "shape": "ell",
+      "direction": "up",
+      "center": [
+        16,
+        44
+      ],
+      "speed": 2,
+      "polarity": "dark",
+      "predicted": "up",
+      "vector": [
+        21.41493034362793,
+        -161.0
+      ],
+      "wrong_axis_ratio": 0.13301198971197473,
+      "localization": 1.000000094104894
+    },
+    {
+      "shape": "ell",
+      "direction": "up",
+      "center": [
+        16,
+        44
+      ],
+      "speed": 2,
+      "polarity": "bright",
+      "predicted": "up",
+      "vector": [
+        21.41493034362793,
+        -161.0
+      ],
+      "wrong_axis_ratio": 0.13301198971197473,
+      "localization": 1.000000094104894
+    },
+    {
+      "shape": "ell",
+      "direction": "down",
+      "center": [
+        16,
+        20
+      ],
+      "speed": 1,
+      "polarity": "dark",
+      "predicted": "down",
+      "vector": [
+        -10.996628761291504,
+        208.66213989257812
+      ],
+      "wrong_axis_ratio": 0.052700642133511645,
+      "localization": 1.0000000824907191
+    },
+    {
+      "shape": "ell",
+      "direction": "down",
+      "center": [
+        16,
+        20
+      ],
+      "speed": 1,
+      "polarity": "bright",
+      "predicted": "down",
+      "vector": [
+        -10.996628761291504,
+        208.66213989257812
+      ],
+      "wrong_axis_ratio": 0.052700642133511645,
+      "localization": 1.0000000824907191
+    },
+    {
+      "shape": "ell",
+      "direction": "down",
+      "center": [
+        16,
+        20
+      ],
+      "speed": 2,
+      "polarity": "dark",
+      "predicted": "down",
+      "vector": [
+        -17.649938583374023,
+        161.0
+      ],
+      "wrong_axis_ratio": 0.10962694772282001,
+      "localization": 1.000000064058751
+    },
+    {
+      "shape": "ell",
+      "direction": "down",
+      "center": [
+        16,
+        20
+      ],
+      "speed": 2,
+      "polarity": "bright",
+      "predicted": "down",
+      "vector": [
+        -17.649938583374023,
+        161.0
+      ],
+      "wrong_axis_ratio": 0.10962694772282001,
+      "localization": 1.000000064058751
+    },
+    {
+      "shape": "ell",
+      "direction": "down",
+      "center": [
+        16,
+        44
+      ],
+      "speed": 1,
+      "polarity": "dark",
+      "predicted": "down",
+      "vector": [
+        -10.996628761291504,
+        208.66213989257812
+      ],
+      "wrong_axis_ratio": 0.052700642133511645,
+      "localization": 1.0000000824907191
+    },
+    {
+      "shape": "ell",
+      "direction": "down",
+      "center": [
+        16,
+        44
+      ],
+      "speed": 1,
+      "polarity": "bright",
+      "predicted": "down",
+      "vector": [
+        -10.996628761291504,
+        208.66213989257812
+      ],
+      "wrong_axis_ratio": 0.052700642133511645,
+      "localization": 1.0000000824907191
+    },
+    {
+      "shape": "ell",
+      "direction": "down",
+      "center": [
+        16,
+        44
+      ],
+      "speed": 2,
+      "polarity": "dark",
+      "predicted": "down",
+      "vector": [
+        -17.649938583374023,
+        161.0
+      ],
+      "wrong_axis_ratio": 0.10962694772282001,
+      "localization": 1.000000064058751
+    },
+    {
+      "shape": "ell",
+      "direction": "down",
+      "center": [
+        16,
+        44
+      ],
+      "speed": 2,
+      "polarity": "bright",
+      "predicted": "down",
+      "vector": [
+        -17.649938583374023,
+        161.0
+      ],
+      "wrong_axis_ratio": 0.10962694772282001,
+      "localization": 1.000000064058751
+    },
+    {
+      "shape": "ell",
+      "direction": "left",
+      "center": [
+        10,
+        32
+      ],
+      "speed": 1,
+      "polarity": "dark",
+      "predicted": "left",
+      "vector": [
+        -208.6621551513672,
+        10.996628761291504
+      ],
+      "wrong_axis_ratio": 0.052700638279684,
+      "localization": 1.000000099857188
+    },
+    {
+      "shape": "ell",
+      "direction": "left",
+      "center": [
+        10,
+        32
+      ],
+      "speed": 1,
+      "polarity": "bright",
+      "predicted": "left",
+      "vector": [
+        -208.6621551513672,
+        10.996628761291504
+      ],
+      "wrong_axis_ratio": 0.052700638279684,
+      "localization": 1.000000099857188
+    },
+    {
+      "shape": "ell",
+      "direction": "left",
+      "center": [
+        10,
+        32
+      ],
+      "speed": 2,
+      "polarity": "dark",
+      "predicted": "left",
+      "vector": [
+        -161.0,
+        17.649938583374023
+      ],
+      "wrong_axis_ratio": 0.10962694772282001,
+      "localization": 1.000000064058751
+    },
+    {
+      "shape": "ell",
+      "direction": "left",
+      "center": [
+        10,
+        32
+      ],
+      "speed": 2,
+      "polarity": "bright",
+      "predicted": "left",
+      "vector": [
+        -161.0,
+        17.649938583374023
+      ],
+      "wrong_axis_ratio": 0.10962694772282001,
+      "localization": 1.000000064058751
+    },
+    {
+      "shape": "ell",
+      "direction": "left",
+      "center": [
+        22,
+        32
+      ],
+      "speed": 1,
+      "polarity": "dark",
+      "predicted": "left",
+      "vector": [
+        -208.6621551513672,
+        10.996628761291504
+      ],
+      "wrong_axis_ratio": 0.052700638279684,
+      "localization": 1.000000099857188
+    },
+    {
+      "shape": "ell",
+      "direction": "left",
+      "center": [
+        22,
+        32
+      ],
+      "speed": 1,
+      "polarity": "bright",
+      "predicted": "left",
+      "vector": [
+        -208.6621551513672,
+        10.996628761291504
+      ],
+      "wrong_axis_ratio": 0.052700638279684,
+      "localization": 1.000000099857188
+    },
+    {
+      "shape": "ell",
+      "direction": "left",
+      "center": [
+        22,
+        32
+      ],
+      "speed": 2,
+      "polarity": "dark",
+      "predicted": "left",
+      "vector": [
+        -161.0,
+        17.649938583374023
+      ],
+      "wrong_axis_ratio": 0.10962694772282001,
+      "localization": 1.000000064058751
+    },
+    {
+      "shape": "ell",
+      "direction": "left",
+      "center": [
+        22,
+        32
+      ],
+      "speed": 2,
+      "polarity": "bright",
+      "predicted": "left",
+      "vector": [
+        -161.0,
+        17.649938583374023
+      ],
+      "wrong_axis_ratio": 0.10962694772282001,
+      "localization": 1.000000064058751
+    },
+    {
+      "shape": "ell",
+      "direction": "right",
+      "center": [
+        10,
+        32
+      ],
+      "speed": 1,
+      "polarity": "dark",
+      "predicted": "right",
+      "vector": [
+        208.6621551513672,
+        -17.693801879882812
+      ],
+      "wrong_axis_ratio": 0.08479641105521707,
+      "localization": 1.0000000842632357
+    },
+    {
+      "shape": "ell",
+      "direction": "right",
+      "center": [
+        10,
+        32
+      ],
+      "speed": 1,
+      "polarity": "bright",
+      "predicted": "right",
+      "vector": [
+        208.6621551513672,
+        -17.693801879882812
+      ],
+      "wrong_axis_ratio": 0.08479641105521707,
+      "localization": 1.0000000842632357
+    },
+    {
+      "shape": "ell",
+      "direction": "right",
+      "center": [
+        10,
+        32
+      ],
+      "speed": 2,
+      "polarity": "dark",
+      "predicted": "right",
+      "vector": [
+        161.0,
+        -21.41493034362793
+      ],
+      "wrong_axis_ratio": 0.13301198971197473,
+      "localization": 1.000000094104894
+    },
+    {
+      "shape": "ell",
+      "direction": "right",
+      "center": [
+        10,
+        32
+      ],
+      "speed": 2,
+      "polarity": "bright",
+      "predicted": "right",
+      "vector": [
+        161.0,
+        -21.41493034362793
+      ],
+      "wrong_axis_ratio": 0.13301198971197473,
+      "localization": 1.000000094104894
+    },
+    {
+      "shape": "ell",
+      "direction": "right",
+      "center": [
+        22,
+        32
+      ],
+      "speed": 1,
+      "polarity": "dark",
+      "predicted": "right",
+      "vector": [
+        208.6621551513672,
+        -17.693801879882812
+      ],
+      "wrong_axis_ratio": 0.08479641105521707,
+      "localization": 1.0000000842632357
+    },
+    {
+      "shape": "ell",
+      "direction": "right",
+      "center": [
+        22,
+        32
+      ],
+      "speed": 1,
+      "polarity": "bright",
+      "predicted": "right",
+      "vector": [
+        208.6621551513672,
+        -17.693801879882812
+      ],
+      "wrong_axis_ratio": 0.08479641105521707,
+      "localization": 1.0000000842632357
+    },
+    {
+      "shape": "ell",
+      "direction": "right",
+      "center": [
+        22,
+        32
+      ],
+      "speed": 2,
+      "polarity": "dark",
+      "predicted": "right",
+      "vector": [
+        161.0,
+        -21.41493034362793
+      ],
+      "wrong_axis_ratio": 0.13301198971197473,
+      "localization": 1.000000094104894
+    },
+    {
+      "shape": "ell",
+      "direction": "right",
+      "center": [
+        22,
+        32
+      ],
+      "speed": 2,
+      "polarity": "bright",
+      "predicted": "right",
+      "vector": [
+        161.0,
+        -21.41493034362793
+      ],
+      "wrong_axis_ratio": 0.13301198971197473,
+      "localization": 1.000000094104894
+    },
+    {
+      "shape": "bar",
+      "direction": "up",
+      "center": [
+        16,
+        20
+      ],
+      "speed": 1,
+      "polarity": "dark",
+      "predicted": "up",
+      "vector": [
+        0.0,
+        -85.06486511230469
+      ],
+      "wrong_axis_ratio": 0.0,
+      "localization": 0.9999999775777157
+    },
+    {
+      "shape": "bar",
+      "direction": "up",
+      "center": [
+        16,
+        20
+      ],
+      "speed": 1,
+      "polarity": "bright",
+      "predicted": "up",
+      "vector": [
+        0.0,
+        -85.06486511230469
+      ],
+      "wrong_axis_ratio": 0.0,
+      "localization": 0.9999999775777157
+    },
+    {
+      "shape": "bar",
+      "direction": "up",
+      "center": [
+        16,
+        20
+      ],
+      "speed": 2,
+      "polarity": "dark",
+      "predicted": "up",
+      "vector": [
+        0.0,
+        -138.0
+      ],
+      "wrong_axis_ratio": 0.0,
+      "localization": 1.0
+    },
+    {
+      "shape": "bar",
+      "direction": "up",
+      "center": [
+        16,
+        20
+      ],
+      "speed": 2,
+      "polarity": "bright",
+      "predicted": "up",
+      "vector": [
+        0.0,
+        -138.0
+      ],
+      "wrong_axis_ratio": 0.0,
+      "localization": 1.0
+    },
+    {
+      "shape": "bar",
+      "direction": "up",
+      "center": [
+        16,
+        44
+      ],
+      "speed": 1,
+      "polarity": "dark",
+      "predicted": "up",
+      "vector": [
+        0.0,
+        -85.06486511230469
+      ],
+      "wrong_axis_ratio": 0.0,
+      "localization": 0.9999999775777157
+    },
+    {
+      "shape": "bar",
+      "direction": "up",
+      "center": [
+        16,
+        44
+      ],
+      "speed": 1,
+      "polarity": "bright",
+      "predicted": "up",
+      "vector": [
+        0.0,
+        -85.06486511230469
+      ],
+      "wrong_axis_ratio": 0.0,
+      "localization": 0.9999999775777157
+    },
+    {
+      "shape": "bar",
+      "direction": "up",
+      "center": [
+        16,
+        44
+      ],
+      "speed": 2,
+      "polarity": "dark",
+      "predicted": "up",
+      "vector": [
+        0.0,
+        -138.0
+      ],
+      "wrong_axis_ratio": 0.0,
+      "localization": 1.0
+    },
+    {
+      "shape": "bar",
+      "direction": "up",
+      "center": [
+        16,
+        44
+      ],
+      "speed": 2,
+      "polarity": "bright",
+      "predicted": "up",
+      "vector": [
+        0.0,
+        -138.0
+      ],
+      "wrong_axis_ratio": 0.0,
+      "localization": 1.0
+    },
+    {
+      "shape": "bar",
+      "direction": "down",
+      "center": [
+        16,
+        20
+      ],
+      "speed": 1,
+      "polarity": "dark",
+      "predicted": "down",
+      "vector": [
+        0.0,
+        85.06486511230469
+      ],
+      "wrong_axis_ratio": 0.0,
+      "localization": 0.9999999775777157
+    },
+    {
+      "shape": "bar",
+      "direction": "down",
+      "center": [
+        16,
+        20
+      ],
+      "speed": 1,
+      "polarity": "bright",
+      "predicted": "down",
+      "vector": [
+        0.0,
+        85.06486511230469
+      ],
+      "wrong_axis_ratio": 0.0,
+      "localization": 0.9999999775777157
+    },
+    {
+      "shape": "bar",
+      "direction": "down",
+      "center": [
+        16,
+        20
+      ],
+      "speed": 2,
+      "polarity": "dark",
+      "predicted": "down",
+      "vector": [
+        0.0,
+        138.0
+      ],
+      "wrong_axis_ratio": 0.0,
+      "localization": 1.0
+    },
+    {
+      "shape": "bar",
+      "direction": "down",
+      "center": [
+        16,
+        20
+      ],
+      "speed": 2,
+      "polarity": "bright",
+      "predicted": "down",
+      "vector": [
+        0.0,
+        138.0
+      ],
+      "wrong_axis_ratio": 0.0,
+      "localization": 1.0
+    },
+    {
+      "shape": "bar",
+      "direction": "down",
+      "center": [
+        16,
+        44
+      ],
+      "speed": 1,
+      "polarity": "dark",
+      "predicted": "down",
+      "vector": [
+        0.0,
+        85.06486511230469
+      ],
+      "wrong_axis_ratio": 0.0,
+      "localization": 0.9999999775777157
+    },
+    {
+      "shape": "bar",
+      "direction": "down",
+      "center": [
+        16,
+        44
+      ],
+      "speed": 1,
+      "polarity": "bright",
+      "predicted": "down",
+      "vector": [
+        0.0,
+        85.06486511230469
+      ],
+      "wrong_axis_ratio": 0.0,
+      "localization": 0.9999999775777157
+    },
+    {
+      "shape": "bar",
+      "direction": "down",
+      "center": [
+        16,
+        44
+      ],
+      "speed": 2,
+      "polarity": "dark",
+      "predicted": "down",
+      "vector": [
+        0.0,
+        138.0
+      ],
+      "wrong_axis_ratio": 0.0,
+      "localization": 1.0
+    },
+    {
+      "shape": "bar",
+      "direction": "down",
+      "center": [
+        16,
+        44
+      ],
+      "speed": 2,
+      "polarity": "bright",
+      "predicted": "down",
+      "vector": [
+        0.0,
+        138.0
+      ],
+      "wrong_axis_ratio": 0.0,
+      "localization": 1.0
+    },
+    {
+      "shape": "bar",
+      "direction": "left",
+      "center": [
+        10,
+        32
+      ],
+      "speed": 1,
+      "polarity": "dark",
+      "predicted": "left",
+      "vector": [
+        -297.7270202636719,
+        0.0
+      ],
+      "wrong_axis_ratio": 0.0,
+      "localization": 0.9999999487490646
+    },
+    {
+      "shape": "bar",
+      "direction": "left",
+      "center": [
+        10,
+        32
+      ],
+      "speed": 1,
+      "polarity": "bright",
+      "predicted": "left",
+      "vector": [
+        -297.7270202636719,
+        0.0
+      ],
+      "wrong_axis_ratio": 0.0,
+      "localization": 0.9999999487490646
+    },
+    {
+      "shape": "bar",
+      "direction": "left",
+      "center": [
+        10,
+        32
+      ],
+      "speed": 2,
+      "polarity": "dark",
+      "predicted": "left",
+      "vector": [
+        -483.0,
+        0.0
+      ],
+      "wrong_axis_ratio": 0.0,
+      "localization": 1.0
+    },
+    {
+      "shape": "bar",
+      "direction": "left",
+      "center": [
+        10,
+        32
+      ],
+      "speed": 2,
+      "polarity": "bright",
+      "predicted": "left",
+      "vector": [
+        -483.0,
+        0.0
+      ],
+      "wrong_axis_ratio": 0.0,
+      "localization": 1.0
+    },
+    {
+      "shape": "bar",
+      "direction": "left",
+      "center": [
+        22,
+        32
+      ],
+      "speed": 1,
+      "polarity": "dark",
+      "predicted": "left",
+      "vector": [
+        -297.7270202636719,
+        0.0
+      ],
+      "wrong_axis_ratio": 0.0,
+      "localization": 0.9999999487490646
+    },
+    {
+      "shape": "bar",
+      "direction": "left",
+      "center": [
+        22,
+        32
+      ],
+      "speed": 1,
+      "polarity": "bright",
+      "predicted": "left",
+      "vector": [
+        -297.7270202636719,
+        0.0
+      ],
+      "wrong_axis_ratio": 0.0,
+      "localization": 0.9999999487490646
+    },
+    {
+      "shape": "bar",
+      "direction": "left",
+      "center": [
+        22,
+        32
+      ],
+      "speed": 2,
+      "polarity": "dark",
+      "predicted": "left",
+      "vector": [
+        -483.0,
+        0.0
+      ],
+      "wrong_axis_ratio": 0.0,
+      "localization": 1.0
+    },
+    {
+      "shape": "bar",
+      "direction": "left",
+      "center": [
+        22,
+        32
+      ],
+      "speed": 2,
+      "polarity": "bright",
+      "predicted": "left",
+      "vector": [
+        -483.0,
+        0.0
+      ],
+      "wrong_axis_ratio": 0.0,
+      "localization": 1.0
+    },
+    {
+      "shape": "bar",
+      "direction": "right",
+      "center": [
+        10,
+        32
+      ],
+      "speed": 1,
+      "polarity": "dark",
+      "predicted": "right",
+      "vector": [
+        297.7270202636719,
+        0.0
+      ],
+      "wrong_axis_ratio": 0.0,
+      "localization": 0.9999999487490646
+    },
+    {
+      "shape": "bar",
+      "direction": "right",
+      "center": [
+        10,
+        32
+      ],
+      "speed": 1,
+      "polarity": "bright",
+      "predicted": "right",
+      "vector": [
+        297.7270202636719,
+        0.0
+      ],
+      "wrong_axis_ratio": 0.0,
+      "localization": 0.9999999487490646
+    },
+    {
+      "shape": "bar",
+      "direction": "right",
+      "center": [
+        10,
+        32
+      ],
+      "speed": 2,
+      "polarity": "dark",
+      "predicted": "right",
+      "vector": [
+        483.0,
+        0.0
+      ],
+      "wrong_axis_ratio": 0.0,
+      "localization": 1.0
+    },
+    {
+      "shape": "bar",
+      "direction": "right",
+      "center": [
+        10,
+        32
+      ],
+      "speed": 2,
+      "polarity": "bright",
+      "predicted": "right",
+      "vector": [
+        483.0,
+        0.0
+      ],
+      "wrong_axis_ratio": 0.0,
+      "localization": 1.0
+    },
+    {
+      "shape": "bar",
+      "direction": "right",
+      "center": [
+        22,
+        32
+      ],
+      "speed": 1,
+      "polarity": "dark",
+      "predicted": "right",
+      "vector": [
+        297.7270202636719,
+        0.0
+      ],
+      "wrong_axis_ratio": 0.0,
+      "localization": 0.9999999487490646
+    },
+    {
+      "shape": "bar",
+      "direction": "right",
+      "center": [
+        22,
+        32
+      ],
+      "speed": 1,
+      "polarity": "bright",
+      "predicted": "right",
+      "vector": [
+        297.7270202636719,
+        0.0
+      ],
+      "wrong_axis_ratio": 0.0,
+      "localization": 0.9999999487490646
+    },
+    {
+      "shape": "bar",
+      "direction": "right",
+      "center": [
+        22,
+        32
+      ],
+      "speed": 2,
+      "polarity": "dark",
+      "predicted": "right",
+      "vector": [
+        483.0,
+        0.0
+      ],
+      "wrong_axis_ratio": 0.0,
+      "localization": 1.0
+    },
+    {
+      "shape": "bar",
+      "direction": "right",
+      "center": [
+        22,
+        32
+      ],
+      "speed": 2,
+      "polarity": "bright",
+      "predicted": "right",
+      "vector": [
+        483.0,
+        0.0
+      ],
+      "wrong_axis_ratio": 0.0,
+      "localization": 1.0
+    }
+  ],
+  "single_accuracy": {
+    "correct": 128,
+    "total": 128
+  },
+  "static": [
+    {
+      "shape": "square",
+      "polarity": "dark",
+      "vector": [
+        0.0,
+        0.0
+      ],
+      "energy": 0.0
+    },
+    {
+      "shape": "square",
+      "polarity": "bright",
+      "vector": [
+        0.0,
+        0.0
+      ],
+      "energy": 0.0
+    },
+    {
+      "shape": "plus",
+      "polarity": "dark",
+      "vector": [
+        0.0,
+        0.0
+      ],
+      "energy": 0.0
+    },
+    {
+      "shape": "plus",
+      "polarity": "bright",
+      "vector": [
+        0.0,
+        0.0
+      ],
+      "energy": 0.0
+    },
+    {
+      "shape": "ell",
+      "polarity": "dark",
+      "vector": [
+        0.0,
+        0.0
+      ],
+      "energy": 0.0
+    },
+    {
+      "shape": "ell",
+      "polarity": "bright",
+      "vector": [
+        0.0,
+        0.0
+      ],
+      "energy": 0.0
+    },
+    {
+      "shape": "bar",
+      "polarity": "dark",
+      "vector": [
+        0.0,
+        0.0
+      ],
+      "energy": 0.0
+    },
+    {
+      "shape": "bar",
+      "polarity": "bright",
+      "vector": [
+        0.0,
+        0.0
+      ],
+      "energy": 0.0
+    }
+  ],
+  "separated": [
+    {
+      "axis": "vertical",
+      "expected": [
+        "up",
+        "down"
+      ],
+      "predicted": [
+        "up",
+        "down",
+        null
+      ],
+      "vectors": [
+        [
+          0.0,
+          -127.5973129272461
+        ],
+        [
+          0.0,
+          208.6621551513672
+        ],
+        [
+          0.0,
+          0.0
+        ]
+      ],
+      "local_energy": [
+        127.5973129272461,
+        251.49200439453125,
+        0.0
+      ],
+      "total_energy": 379.0893306732178
+    },
+    {
+      "axis": "horizontal",
+      "expected": [
+        "left",
+        "right"
+      ],
+      "predicted": [
+        "left",
+        "right",
+        null
+      ],
+      "vectors": [
+        [
+          -127.5973129272461,
+          0.0
+        ],
+        [
+          208.66213989257812,
+          0.0
+        ],
+        [
+          0.0,
+          0.0
+        ]
+      ],
+      "local_energy": [
+        127.5973129272461,
+        251.49200439453125,
+        0.0
+      ],
+      "total_energy": 379.08932876586914
+    }
+  ],
+  "crossing": {
+    "pre": {
+      "vectors": [
+        [
+          14.647490501403809,
+          0.0
+        ],
+        [
+          -20.41248321533203,
+          0.0
+        ]
+      ],
+      "predictions": [
+        "right",
+        "left"
+      ],
+      "local_energy": [
+        14.647490501403809,
+        27.94247055053711
+      ],
+      "total_energy": 42.589962005615234
+    },
+    "post": {
+      "vectors": [
+        [
+          33.382415771484375,
+          0.0
+        ],
+        [
+          -57.561546325683594,
+          0.0
+        ]
+      ],
+      "predictions": [
+        "right",
+        "left"
+      ],
+      "local_energy": [
+        37.26820373535156,
+        86.98351287841797
+      ],
+      "total_energy": 124.25171661376953
+    }
+  }
+}

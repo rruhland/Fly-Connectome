@@ -1,6 +1,6 @@
 # Proposed M1A motion and world-state revision
 
-**Status:** Proposed for user review; no production architecture has changed.
+**Status:** Withdrawn after user review. No production architecture changed. The object-state and transition sections below encoded Pong-specific ball, paddle, wall, and intercept assumptions, contrary to the generic M1A objective. Keep this document only as a record of the rejected direction; do not implement it. The event-only Pong scripts remain diagnostic ceilings, not M1A components.
 
 ## Decision
 
