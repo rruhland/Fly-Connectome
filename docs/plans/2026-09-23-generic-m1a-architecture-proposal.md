@@ -41,6 +41,8 @@ The [separate-credit follow-up](../experiments/2026-09-24-separated-emission-cre
 
 The [raw-event re-anchoring test](../experiments/2026-09-24-raw-event-reanchoring-findings.md) found a more basic partial-observation failure: the coincidence-only latent cannot see first appearance or reappearance after a blank frame. Appending raw events restored latent activity at those sites, but greatly worsened prediction, even compared with a random augmented dictionary on disappearance and noise. Freeze that augmented code for one capacity check before deciding whether to change its local predictive target or separate first-sighting input from ordinary motion coding. Do not promote the naive raw-channel augmentation.
 
+The [frozen augmented-code capacity check](../experiments/2026-09-24-raw-reanchoring-capacity-findings.md) found both code interference and a local readout gap. The augmented code still supported 0.644 offline F1 on unseen patterns versus 0.320 for a random dictionary, but this is well below the original coincidence-only code's 0.918; its online local readout also fit training episodes poorly. Test a separate raw first-sighting pathway alongside the intact learned motion code, then local state continuity through missing input. Keep this opt-in until it beats appropriate frozen and fixed controls.
+
 ## Shortest evidence path before promotion
 
 1. **Generic scene suite.** Extend the opt-in event-camera tests to varied shapes, polarities, scales, positions, speeds, two independent movers, crossings, partial occlusion, stationary visual context, trajectory changes, and sensor noise. The generator may know hidden trajectories only for scoring. Establish performance and throughput of the full proposed front end, not just the isolated kernel.
