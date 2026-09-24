@@ -48,3 +48,24 @@ def test_unseen_sequences_have_new_shapes_and_both_event_polarities():
                for *_, events in cases)
     assert all(sum(int(frame.sum()) for frame in events) > 0
                for *_, events in cases)
+
+
+def test_expanded_exposure_preserves_first_three_passes_and_adds_variants():
+    baseline = diverse_training_sequences()
+    expanded = diverse_training_sequences(epochs=12)
+    assert len(expanded) == 12
+    assert all(len(episodes) == 32 for episodes in expanded)
+    for old, new in zip(baseline, expanded):
+        for old_case, new_case in zip(old, new):
+            assert old_case[:4] == new_case[:4]
+            assert all(torch.equal(a, b) for a, b in zip(old_case[4],
+                                                          new_case[4]))
+    variants = [next(events for shape, direction, speed, _, events in episodes
+                     if (shape, direction, speed) == ('square', 'up', 1))
+                for episodes in expanded]
+    distinct = []
+    for events in variants:
+        if not any(all(torch.equal(a, b) for a, b in zip(events, previous))
+                   for previous in distinct):
+            distinct.append(events)
+    assert len(distinct) == 4

@@ -63,9 +63,9 @@ def square_training_sequences():
     return [episodes.copy() for _ in range(3)]
 
 
-def diverse_training_sequences():
+def diverse_training_sequences(epochs=3):
     passes = []
-    for epoch in range(3):
+    for epoch in range(epochs):
         episodes = []
         for shape_index, shape in enumerate(TRAIN_SHAPES):
             for direction_index, direction in enumerate(DIRECTIONS):
@@ -73,7 +73,8 @@ def diverse_training_sequences():
                     (10, 32), (22, 32))
                 for speed in (1, 2):
                     center = centers[(shape_index+direction_index+speed+epoch) % 2]
-                    background = (shape_index+direction_index+epoch) % 2 == 0
+                    contrast_epoch = epoch if epoch < 3 else epoch+epoch//3
+                    background = (shape_index+direction_index+contrast_epoch) % 2 == 0
                     episodes.append((shape, direction, speed, background,
                                      event_sequence_for(shape, center, direction,
                                                         speed, background)))

@@ -25,6 +25,8 @@ The [frozen-code capacity test](../experiments/2026-09-24-frozen-code-capacity-f
 
 The [equal-budget diverse-experience test](../experiments/2026-09-24-diverse-visual-experience-findings.md) raised held-out decoder F1 only from 0.296 to 0.324 at the registered threshold and hurt slow-motion transfer. The varied arm also underfit its own training scenes, so check one larger exposure budget with the same circuit and held-out set. If that fails, stop tuning this narrow code and test a different local temporal-state mechanism.
 
+The [fourfold-exposure check](../experiments/2026-09-24-expanded-visual-exposure-findings.md) failed to improve prediction despite better post-hoc direction readability. Stop scaling the event-site transition code. The next opt-in candidate should give learned latent units a different local temporal state, then require improved future-event prediction across shape and speed before any production revision.
+
 ## Shortest evidence path before promotion
 
 1. **Generic scene suite.** Extend the opt-in event-camera tests to varied shapes, polarities, scales, positions, speeds, two independent movers, crossings, partial occlusion, stationary visual context, trajectory changes, and sensor noise. The generator may know hidden trajectories only for scoring. Establish performance and throughput of the full proposed front end, not just the isolated kernel.
