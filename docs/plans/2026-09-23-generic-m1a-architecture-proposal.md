@@ -27,6 +27,8 @@ The [equal-budget diverse-experience test](../experiments/2026-09-24-diverse-vis
 
 The [fourfold-exposure check](../experiments/2026-09-24-expanded-visual-exposure-findings.md) failed to improve prediction despite better post-hoc direction readability. Stop scaling the event-site transition code. The next opt-in candidate should give learned latent units a different local temporal state, then require improved future-event prediction across shape and speed before any production revision.
 
+The [correlation-input latent experiment](../experiments/2026-09-24-correlation-input-latent-findings.md) is the first strong transfer result: an unlabeled learned code over fixed low-level event coincidences achieved 47/48 post-hoc direction readability and 0.669 held-out next-event F1, far above matched random and shuffled-credit controls at both speeds. Its frozen-code offline decoder reached 0.918 F1. Preserve this candidate and test interrupted and multi-pattern motion next. The predictor does not yet feed back into latent inference, and the fixed sensory control still wins on simple constant translation, so do not promote it as working generic M1A yet.
+
 ## Shortest evidence path before promotion
 
 1. **Generic scene suite.** Extend the opt-in event-camera tests to varied shapes, polarities, scales, positions, speeds, two independent movers, crossings, partial occlusion, stationary visual context, trajectory changes, and sensor noise. The generator may know hidden trajectories only for scoring. Establish performance and throughput of the full proposed front end, not just the isolated kernel.
