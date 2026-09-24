@@ -35,6 +35,8 @@ The [closed-loop rollout diagnostic](../experiments/2026-09-24-visual-rollout-fi
 
 The [ungated predictive-feedback test](../experiments/2026-09-24-predictive-feedback-findings.md) made latent activity persist through blank input but degraded every forecast family and quadrupled quiet-target false alarms. Do not reuse the emitted event prediction directly as latent input. Next test a **separate locally persistent state transition and observation-emission readout**, both updated by local delayed error, so hidden continuity need not imply a visible event. Keep the successful no-feedback learned code and fixed primitive as matched baselines.
 
+The [first separated-state test and frozen ablation](../experiments/2026-09-24-separated-visual-state-findings.md) sustained latent state and reduced quiet false alarms, but shared event error across observed and imagined emission banks underfit even training scenes. Removing imagined emission worsened clean prediction, so the mechanism needs a different local credit assignment rather than a simple output cutoff. Test one bounded locally separated-credit variant, then pivot if it does not improve both training fit and held-out interruption performance.
+
 ## Shortest evidence path before promotion
 
 1. **Generic scene suite.** Extend the opt-in event-camera tests to varied shapes, polarities, scales, positions, speeds, two independent movers, crossings, partial occlusion, stationary visual context, trajectory changes, and sensor noise. The generator may know hidden trajectories only for scoring. Establish performance and throughput of the full proposed front end, not just the isolated kernel.
