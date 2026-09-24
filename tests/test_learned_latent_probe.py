@@ -41,3 +41,19 @@ def test_homeostatic_competition_recruits_multiple_channels():
         model.reset_state()
         model.step(event, learn=True)
     assert int((model.usage > 0).sum()) > 1
+
+
+def test_causal_recurrent_prediction_can_change_current_assignment():
+    model = LocalVisualLatent(channels=2, seed=0, prediction_gain=.5)
+    model.sensory.zero_()
+    model.sensory[0, 12] = 1
+    model.sensory[1, 12] = .9
+    model.recurrent[1, 0, 2, 3] = 1
+    first = torch.zeros((2, 32, 64))
+    second = torch.zeros_like(first)
+    first[0, 16, 15] = 1
+    second[0, 16, 16] = 1
+    model.step(first, learn=False)
+    model.step(second, learn=False)
+    assert model.latent[1, 16, 16] == 1
+    assert model.latent[0, 16, 16] == 0

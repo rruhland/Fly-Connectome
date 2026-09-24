@@ -1,0 +1,1440 @@
+{
+  "training_episodes": 96,
+  "prediction_gain": 0.5,
+  "sensory_updates": 8227,
+  "recurrent_updates": 12096,
+  "sensory_change": 0.17668068408966064,
+  "channel_usage": {
+    "learned": {
+      "fractions": [
+        0.04465429112315178,
+        0.07442381232976913,
+        0.07554417103528976,
+        0.09186939895153046,
+        0.04113316163420677,
+        0.12115877121686935,
+        0.0733034536242485,
+        0.07506401836872101,
+        0.18661971390247345,
+        0.09987195581197739,
+        0.04817541688680649,
+        0.06818182021379471
+      ],
+      "effective_channels": 10.936676979064941
+    },
+    "random": {
+      "fractions": [
+        0.09539052844047546,
+        0.05793853849172592,
+        0.09843149781227112,
+        0.1837387979030609,
+        0.09330985695123672,
+        0.05249679833650589,
+        0.0853073000907898,
+        0.032010242342948914,
+        0.09026888757944107,
+        0.045294493436813354,
+        0.09779129177331924,
+        0.06802176684141159
+      ],
+      "effective_channels": 10.938721656799316
+    }
+  },
+  "probe": {
+    "learned_state": {
+      "correct": 39,
+      "total": 48,
+      "accuracy": 0.8125,
+      "cases": {
+        "plus:up:s1:dark": {
+          "predicted": "up",
+          "correct": true
+        },
+        "plus:up:s1:bright": {
+          "predicted": "up",
+          "correct": true
+        },
+        "plus:up:s2:dark": {
+          "predicted": "down",
+          "correct": false
+        },
+        "plus:up:s2:bright": {
+          "predicted": "up",
+          "correct": true
+        },
+        "plus:down:s1:dark": {
+          "predicted": "down",
+          "correct": true
+        },
+        "plus:down:s1:bright": {
+          "predicted": "down",
+          "correct": true
+        },
+        "plus:down:s2:dark": {
+          "predicted": "down",
+          "correct": true
+        },
+        "plus:down:s2:bright": {
+          "predicted": "right",
+          "correct": false
+        },
+        "plus:left:s1:dark": {
+          "predicted": "left",
+          "correct": true
+        },
+        "plus:left:s1:bright": {
+          "predicted": "left",
+          "correct": true
+        },
+        "plus:left:s2:dark": {
+          "predicted": "down",
+          "correct": false
+        },
+        "plus:left:s2:bright": {
+          "predicted": "left",
+          "correct": true
+        },
+        "plus:right:s1:dark": {
+          "predicted": "right",
+          "correct": true
+        },
+        "plus:right:s1:bright": {
+          "predicted": "right",
+          "correct": true
+        },
+        "plus:right:s2:dark": {
+          "predicted": "right",
+          "correct": true
+        },
+        "plus:right:s2:bright": {
+          "predicted": "right",
+          "correct": true
+        },
+        "ell:up:s1:dark": {
+          "predicted": "up",
+          "correct": true
+        },
+        "ell:up:s1:bright": {
+          "predicted": "down",
+          "correct": false
+        },
+        "ell:up:s2:dark": {
+          "predicted": "up",
+          "correct": true
+        },
+        "ell:up:s2:bright": {
+          "predicted": "up",
+          "correct": true
+        },
+        "ell:down:s1:dark": {
+          "predicted": "down",
+          "correct": true
+        },
+        "ell:down:s1:bright": {
+          "predicted": "down",
+          "correct": true
+        },
+        "ell:down:s2:dark": {
+          "predicted": "up",
+          "correct": false
+        },
+        "ell:down:s2:bright": {
+          "predicted": "up",
+          "correct": false
+        },
+        "ell:left:s1:dark": {
+          "predicted": "left",
+          "correct": true
+        },
+        "ell:left:s1:bright": {
+          "predicted": "left",
+          "correct": true
+        },
+        "ell:left:s2:dark": {
+          "predicted": "down",
+          "correct": false
+        },
+        "ell:left:s2:bright": {
+          "predicted": "left",
+          "correct": true
+        },
+        "ell:right:s1:dark": {
+          "predicted": "right",
+          "correct": true
+        },
+        "ell:right:s1:bright": {
+          "predicted": "right",
+          "correct": true
+        },
+        "ell:right:s2:dark": {
+          "predicted": "right",
+          "correct": true
+        },
+        "ell:right:s2:bright": {
+          "predicted": "right",
+          "correct": true
+        },
+        "bar:up:s1:dark": {
+          "predicted": "up",
+          "correct": true
+        },
+        "bar:up:s1:bright": {
+          "predicted": "up",
+          "correct": true
+        },
+        "bar:up:s2:dark": {
+          "predicted": "down",
+          "correct": false
+        },
+        "bar:up:s2:bright": {
+          "predicted": "up",
+          "correct": true
+        },
+        "bar:down:s1:dark": {
+          "predicted": "down",
+          "correct": true
+        },
+        "bar:down:s1:bright": {
+          "predicted": "down",
+          "correct": true
+        },
+        "bar:down:s2:dark": {
+          "predicted": "down",
+          "correct": true
+        },
+        "bar:down:s2:bright": {
+          "predicted": "down",
+          "correct": true
+        },
+        "bar:left:s1:dark": {
+          "predicted": "left",
+          "correct": true
+        },
+        "bar:left:s1:bright": {
+          "predicted": "left",
+          "correct": true
+        },
+        "bar:left:s2:dark": {
+          "predicted": "down",
+          "correct": false
+        },
+        "bar:left:s2:bright": {
+          "predicted": "left",
+          "correct": true
+        },
+        "bar:right:s1:dark": {
+          "predicted": "right",
+          "correct": true
+        },
+        "bar:right:s1:bright": {
+          "predicted": "right",
+          "correct": true
+        },
+        "bar:right:s2:dark": {
+          "predicted": "right",
+          "correct": true
+        },
+        "bar:right:s2:bright": {
+          "predicted": "right",
+          "correct": true
+        }
+      }
+    },
+    "shuffled_state": {
+      "correct": 41,
+      "total": 48,
+      "accuracy": 0.8541666666666666,
+      "cases": {
+        "plus:up:s1:dark": {
+          "predicted": "up",
+          "correct": true
+        },
+        "plus:up:s1:bright": {
+          "predicted": "down",
+          "correct": false
+        },
+        "plus:up:s2:dark": {
+          "predicted": "up",
+          "correct": true
+        },
+        "plus:up:s2:bright": {
+          "predicted": "up",
+          "correct": true
+        },
+        "plus:down:s1:dark": {
+          "predicted": "down",
+          "correct": true
+        },
+        "plus:down:s1:bright": {
+          "predicted": "down",
+          "correct": true
+        },
+        "plus:down:s2:dark": {
+          "predicted": "up",
+          "correct": false
+        },
+        "plus:down:s2:bright": {
+          "predicted": "down",
+          "correct": true
+        },
+        "plus:left:s1:dark": {
+          "predicted": "left",
+          "correct": true
+        },
+        "plus:left:s1:bright": {
+          "predicted": "right",
+          "correct": false
+        },
+        "plus:left:s2:dark": {
+          "predicted": "left",
+          "correct": true
+        },
+        "plus:left:s2:bright": {
+          "predicted": "left",
+          "correct": true
+        },
+        "plus:right:s1:dark": {
+          "predicted": "right",
+          "correct": true
+        },
+        "plus:right:s1:bright": {
+          "predicted": "right",
+          "correct": true
+        },
+        "plus:right:s2:dark": {
+          "predicted": "right",
+          "correct": true
+        },
+        "plus:right:s2:bright": {
+          "predicted": "right",
+          "correct": true
+        },
+        "ell:up:s1:dark": {
+          "predicted": "up",
+          "correct": true
+        },
+        "ell:up:s1:bright": {
+          "predicted": "down",
+          "correct": false
+        },
+        "ell:up:s2:dark": {
+          "predicted": "up",
+          "correct": true
+        },
+        "ell:up:s2:bright": {
+          "predicted": "up",
+          "correct": true
+        },
+        "ell:down:s1:dark": {
+          "predicted": "down",
+          "correct": true
+        },
+        "ell:down:s1:bright": {
+          "predicted": "down",
+          "correct": true
+        },
+        "ell:down:s2:dark": {
+          "predicted": "up",
+          "correct": false
+        },
+        "ell:down:s2:bright": {
+          "predicted": "down",
+          "correct": true
+        },
+        "ell:left:s1:dark": {
+          "predicted": "down",
+          "correct": false
+        },
+        "ell:left:s1:bright": {
+          "predicted": "down",
+          "correct": false
+        },
+        "ell:left:s2:dark": {
+          "predicted": "left",
+          "correct": true
+        },
+        "ell:left:s2:bright": {
+          "predicted": "left",
+          "correct": true
+        },
+        "ell:right:s1:dark": {
+          "predicted": "right",
+          "correct": true
+        },
+        "ell:right:s1:bright": {
+          "predicted": "right",
+          "correct": true
+        },
+        "ell:right:s2:dark": {
+          "predicted": "right",
+          "correct": true
+        },
+        "ell:right:s2:bright": {
+          "predicted": "right",
+          "correct": true
+        },
+        "bar:up:s1:dark": {
+          "predicted": "up",
+          "correct": true
+        },
+        "bar:up:s1:bright": {
+          "predicted": "up",
+          "correct": true
+        },
+        "bar:up:s2:dark": {
+          "predicted": "up",
+          "correct": true
+        },
+        "bar:up:s2:bright": {
+          "predicted": "up",
+          "correct": true
+        },
+        "bar:down:s1:dark": {
+          "predicted": "down",
+          "correct": true
+        },
+        "bar:down:s1:bright": {
+          "predicted": "down",
+          "correct": true
+        },
+        "bar:down:s2:dark": {
+          "predicted": "down",
+          "correct": true
+        },
+        "bar:down:s2:bright": {
+          "predicted": "down",
+          "correct": true
+        },
+        "bar:left:s1:dark": {
+          "predicted": "left",
+          "correct": true
+        },
+        "bar:left:s1:bright": {
+          "predicted": "left",
+          "correct": true
+        },
+        "bar:left:s2:dark": {
+          "predicted": "left",
+          "correct": true
+        },
+        "bar:left:s2:bright": {
+          "predicted": "left",
+          "correct": true
+        },
+        "bar:right:s1:dark": {
+          "predicted": "right",
+          "correct": true
+        },
+        "bar:right:s1:bright": {
+          "predicted": "right",
+          "correct": true
+        },
+        "bar:right:s2:dark": {
+          "predicted": "right",
+          "correct": true
+        },
+        "bar:right:s2:bright": {
+          "predicted": "right",
+          "correct": true
+        }
+      }
+    },
+    "learned_sensory": {
+      "correct": 39,
+      "total": 48,
+      "accuracy": 0.8125,
+      "cases": {
+        "plus:up:s1:dark": {
+          "predicted": "up",
+          "correct": true
+        },
+        "plus:up:s1:bright": {
+          "predicted": "up",
+          "correct": true
+        },
+        "plus:up:s2:dark": {
+          "predicted": "down",
+          "correct": false
+        },
+        "plus:up:s2:bright": {
+          "predicted": "up",
+          "correct": true
+        },
+        "plus:down:s1:dark": {
+          "predicted": "down",
+          "correct": true
+        },
+        "plus:down:s1:bright": {
+          "predicted": "down",
+          "correct": true
+        },
+        "plus:down:s2:dark": {
+          "predicted": "down",
+          "correct": true
+        },
+        "plus:down:s2:bright": {
+          "predicted": "right",
+          "correct": false
+        },
+        "plus:left:s1:dark": {
+          "predicted": "left",
+          "correct": true
+        },
+        "plus:left:s1:bright": {
+          "predicted": "up",
+          "correct": false
+        },
+        "plus:left:s2:dark": {
+          "predicted": "down",
+          "correct": false
+        },
+        "plus:left:s2:bright": {
+          "predicted": "left",
+          "correct": true
+        },
+        "plus:right:s1:dark": {
+          "predicted": "right",
+          "correct": true
+        },
+        "plus:right:s1:bright": {
+          "predicted": "right",
+          "correct": true
+        },
+        "plus:right:s2:dark": {
+          "predicted": "right",
+          "correct": true
+        },
+        "plus:right:s2:bright": {
+          "predicted": "right",
+          "correct": true
+        },
+        "ell:up:s1:dark": {
+          "predicted": "up",
+          "correct": true
+        },
+        "ell:up:s1:bright": {
+          "predicted": "down",
+          "correct": false
+        },
+        "ell:up:s2:dark": {
+          "predicted": "up",
+          "correct": true
+        },
+        "ell:up:s2:bright": {
+          "predicted": "up",
+          "correct": true
+        },
+        "ell:down:s1:dark": {
+          "predicted": "down",
+          "correct": true
+        },
+        "ell:down:s1:bright": {
+          "predicted": "down",
+          "correct": true
+        },
+        "ell:down:s2:dark": {
+          "predicted": "up",
+          "correct": false
+        },
+        "ell:down:s2:bright": {
+          "predicted": "up",
+          "correct": false
+        },
+        "ell:left:s1:dark": {
+          "predicted": "left",
+          "correct": true
+        },
+        "ell:left:s1:bright": {
+          "predicted": "left",
+          "correct": true
+        },
+        "ell:left:s2:dark": {
+          "predicted": "down",
+          "correct": false
+        },
+        "ell:left:s2:bright": {
+          "predicted": "left",
+          "correct": true
+        },
+        "ell:right:s1:dark": {
+          "predicted": "right",
+          "correct": true
+        },
+        "ell:right:s1:bright": {
+          "predicted": "right",
+          "correct": true
+        },
+        "ell:right:s2:dark": {
+          "predicted": "right",
+          "correct": true
+        },
+        "ell:right:s2:bright": {
+          "predicted": "right",
+          "correct": true
+        },
+        "bar:up:s1:dark": {
+          "predicted": "up",
+          "correct": true
+        },
+        "bar:up:s1:bright": {
+          "predicted": "up",
+          "correct": true
+        },
+        "bar:up:s2:dark": {
+          "predicted": "down",
+          "correct": false
+        },
+        "bar:up:s2:bright": {
+          "predicted": "up",
+          "correct": true
+        },
+        "bar:down:s1:dark": {
+          "predicted": "down",
+          "correct": true
+        },
+        "bar:down:s1:bright": {
+          "predicted": "down",
+          "correct": true
+        },
+        "bar:down:s2:dark": {
+          "predicted": "down",
+          "correct": true
+        },
+        "bar:down:s2:bright": {
+          "predicted": "down",
+          "correct": true
+        },
+        "bar:left:s1:dark": {
+          "predicted": "left",
+          "correct": true
+        },
+        "bar:left:s1:bright": {
+          "predicted": "left",
+          "correct": true
+        },
+        "bar:left:s2:dark": {
+          "predicted": "left",
+          "correct": true
+        },
+        "bar:left:s2:bright": {
+          "predicted": "left",
+          "correct": true
+        },
+        "bar:right:s1:dark": {
+          "predicted": "right",
+          "correct": true
+        },
+        "bar:right:s1:bright": {
+          "predicted": "right",
+          "correct": true
+        },
+        "bar:right:s2:dark": {
+          "predicted": "right",
+          "correct": true
+        },
+        "bar:right:s2:bright": {
+          "predicted": "right",
+          "correct": true
+        }
+      }
+    },
+    "random_sensory": {
+      "correct": 23,
+      "total": 48,
+      "accuracy": 0.4791666666666667,
+      "cases": {
+        "plus:up:s1:dark": {
+          "predicted": "up",
+          "correct": true
+        },
+        "plus:up:s1:bright": {
+          "predicted": "up",
+          "correct": true
+        },
+        "plus:up:s2:dark": {
+          "predicted": "up",
+          "correct": true
+        },
+        "plus:up:s2:bright": {
+          "predicted": "left",
+          "correct": false
+        },
+        "plus:down:s1:dark": {
+          "predicted": "up",
+          "correct": false
+        },
+        "plus:down:s1:bright": {
+          "predicted": "right",
+          "correct": false
+        },
+        "plus:down:s2:dark": {
+          "predicted": "down",
+          "correct": true
+        },
+        "plus:down:s2:bright": {
+          "predicted": "right",
+          "correct": false
+        },
+        "plus:left:s1:dark": {
+          "predicted": "down",
+          "correct": false
+        },
+        "plus:left:s1:bright": {
+          "predicted": "left",
+          "correct": true
+        },
+        "plus:left:s2:dark": {
+          "predicted": "right",
+          "correct": false
+        },
+        "plus:left:s2:bright": {
+          "predicted": "left",
+          "correct": true
+        },
+        "plus:right:s1:dark": {
+          "predicted": "right",
+          "correct": true
+        },
+        "plus:right:s1:bright": {
+          "predicted": "right",
+          "correct": true
+        },
+        "plus:right:s2:dark": {
+          "predicted": "up",
+          "correct": false
+        },
+        "plus:right:s2:bright": {
+          "predicted": "right",
+          "correct": true
+        },
+        "ell:up:s1:dark": {
+          "predicted": "up",
+          "correct": true
+        },
+        "ell:up:s1:bright": {
+          "predicted": "up",
+          "correct": true
+        },
+        "ell:up:s2:dark": {
+          "predicted": "up",
+          "correct": true
+        },
+        "ell:up:s2:bright": {
+          "predicted": "up",
+          "correct": true
+        },
+        "ell:down:s1:dark": {
+          "predicted": "up",
+          "correct": false
+        },
+        "ell:down:s1:bright": {
+          "predicted": "down",
+          "correct": true
+        },
+        "ell:down:s2:dark": {
+          "predicted": "right",
+          "correct": false
+        },
+        "ell:down:s2:bright": {
+          "predicted": "right",
+          "correct": false
+        },
+        "ell:left:s1:dark": {
+          "predicted": "up",
+          "correct": false
+        },
+        "ell:left:s1:bright": {
+          "predicted": "up",
+          "correct": false
+        },
+        "ell:left:s2:dark": {
+          "predicted": "up",
+          "correct": false
+        },
+        "ell:left:s2:bright": {
+          "predicted": "right",
+          "correct": false
+        },
+        "ell:right:s1:dark": {
+          "predicted": "down",
+          "correct": false
+        },
+        "ell:right:s1:bright": {
+          "predicted": "up",
+          "correct": false
+        },
+        "ell:right:s2:dark": {
+          "predicted": "right",
+          "correct": true
+        },
+        "ell:right:s2:bright": {
+          "predicted": "right",
+          "correct": true
+        },
+        "bar:up:s1:dark": {
+          "predicted": "up",
+          "correct": true
+        },
+        "bar:up:s1:bright": {
+          "predicted": "up",
+          "correct": true
+        },
+        "bar:up:s2:dark": {
+          "predicted": "left",
+          "correct": false
+        },
+        "bar:up:s2:bright": {
+          "predicted": "left",
+          "correct": false
+        },
+        "bar:down:s1:dark": {
+          "predicted": "left",
+          "correct": false
+        },
+        "bar:down:s1:bright": {
+          "predicted": "left",
+          "correct": false
+        },
+        "bar:down:s2:dark": {
+          "predicted": "right",
+          "correct": false
+        },
+        "bar:down:s2:bright": {
+          "predicted": "right",
+          "correct": false
+        },
+        "bar:left:s1:dark": {
+          "predicted": "down",
+          "correct": false
+        },
+        "bar:left:s1:bright": {
+          "predicted": "right",
+          "correct": false
+        },
+        "bar:left:s2:dark": {
+          "predicted": "left",
+          "correct": true
+        },
+        "bar:left:s2:bright": {
+          "predicted": "left",
+          "correct": true
+        },
+        "bar:right:s1:dark": {
+          "predicted": "right",
+          "correct": true
+        },
+        "bar:right:s1:bright": {
+          "predicted": "down",
+          "correct": false
+        },
+        "bar:right:s2:dark": {
+          "predicted": "right",
+          "correct": true
+        },
+        "bar:right:s2:bright": {
+          "predicted": "right",
+          "correct": true
+        }
+      }
+    }
+  },
+  "forecast": {
+    "overall": {
+      "learned": {
+        "tp": 1069,
+        "fp": 2486,
+        "fn": 5179,
+        "squared_error": 6504.263089895248,
+        "candidate_samples": 36345,
+        "precision": 0.3007032348804501,
+        "recall": 0.17109475032010243,
+        "f1": 0.2180965010711007,
+        "candidate_mse": 0.17895895143472962
+      },
+      "shuffled_time": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 6248,
+        "squared_error": 5894.181338787079,
+        "candidate_samples": 17615,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "candidate_mse": 0.33461148673216456
+      },
+      "fixed_correlation": {
+        "tp": 5964,
+        "fp": 0,
+        "fn": 284,
+        "squared_error": 284.0,
+        "candidate_samples": 6248,
+        "precision": 1.0,
+        "recall": 0.9545454545454546,
+        "f1": 0.9767441860465117,
+        "candidate_mse": 0.045454545454545456
+      }
+    },
+    "threshold_f1": {
+      "learned": {
+        "0.05": 0.21977860501567398,
+        "0.1": 0.23737004419292276,
+        "0.2": 0.25728272987252193,
+        "0.3": 0.2556948375791886,
+        "0.5": 0.21809650107110068
+      },
+      "shuffled_time": {
+        "0.05": 0.1825216673545192,
+        "0.1": 0.12455483517486987,
+        "0.2": 0.03764705882352941,
+        "0.3": 0.010141023609570591,
+        "0.5": 0.0
+      },
+      "fixed_correlation": {
+        "0.05": 0.9767441860465116,
+        "0.1": 0.9767441860465116,
+        "0.2": 0.9767441860465116,
+        "0.3": 0.9767441860465116,
+        "0.5": 0.9767441860465116
+      }
+    },
+    "groups": {
+      "plus:s1:dark": {
+        "learned": {
+          "tp": 1,
+          "fp": 211,
+          "fn": 439,
+          "squared_error": 523.6757259368896,
+          "candidate_samples": 2371,
+          "precision": 0.0047169811320754715,
+          "recall": 0.0022727272727272726,
+          "f1": 0.003067484662576687,
+          "candidate_mse": 0.22086702907502725
+        },
+        "shuffled_time": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 440,
+          "squared_error": 424.2476406097412,
+          "candidate_samples": 1507,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "candidate_mse": 0.28151800969458607
+        },
+        "fixed_correlation": {
+          "tp": 420,
+          "fp": 0,
+          "fn": 20,
+          "squared_error": 20.0,
+          "candidate_samples": 440,
+          "precision": 1.0,
+          "recall": 0.9545454545454546,
+          "f1": 0.9767441860465117,
+          "candidate_mse": 0.045454545454545456
+        }
+      },
+      "plus:s1:bright": {
+        "learned": {
+          "tp": 18,
+          "fp": 52,
+          "fn": 422,
+          "squared_error": 416.0357389450073,
+          "candidate_samples": 2416,
+          "precision": 0.2571428571428571,
+          "recall": 0.04090909090909091,
+          "f1": 0.07058823529411765,
+          "candidate_mse": 0.17220022307326463
+        },
+        "shuffled_time": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 440,
+          "squared_error": 405.35982513427734,
+          "candidate_samples": 1446,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "candidate_mse": 0.280331829276817
+        },
+        "fixed_correlation": {
+          "tp": 420,
+          "fp": 0,
+          "fn": 20,
+          "squared_error": 20.0,
+          "candidate_samples": 440,
+          "precision": 1.0,
+          "recall": 0.9545454545454546,
+          "f1": 0.9767441860465117,
+          "candidate_mse": 0.045454545454545456
+        }
+      },
+      "plus:s2:dark": {
+        "learned": {
+          "tp": 128,
+          "fp": 224,
+          "fn": 400,
+          "squared_error": 520.509877204895,
+          "candidate_samples": 3786,
+          "precision": 0.36363636363636365,
+          "recall": 0.24242424242424243,
+          "f1": 0.2909090909090909,
+          "candidate_mse": 0.1374827990504213
+        },
+        "shuffled_time": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 528,
+          "squared_error": 500.42290115356445,
+          "candidate_samples": 1505,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "candidate_mse": 0.33250691106549135
+        },
+        "fixed_correlation": {
+          "tp": 504,
+          "fp": 0,
+          "fn": 24,
+          "squared_error": 24.0,
+          "candidate_samples": 528,
+          "precision": 1.0,
+          "recall": 0.9545454545454546,
+          "f1": 0.9767441860465117,
+          "candidate_mse": 0.045454545454545456
+        }
+      },
+      "plus:s2:bright": {
+        "learned": {
+          "tp": 134,
+          "fp": 127,
+          "fn": 394,
+          "squared_error": 438.02461767196655,
+          "candidate_samples": 2926,
+          "precision": 0.5134099616858238,
+          "recall": 0.2537878787878788,
+          "f1": 0.33967046894803543,
+          "candidate_mse": 0.14970082627203232
+        },
+        "shuffled_time": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 528,
+          "squared_error": 491.18042850494385,
+          "candidate_samples": 1449,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "candidate_mse": 0.3389789016597266
+        },
+        "fixed_correlation": {
+          "tp": 504,
+          "fp": 0,
+          "fn": 24,
+          "squared_error": 24.0,
+          "candidate_samples": 528,
+          "precision": 1.0,
+          "recall": 0.9545454545454546,
+          "f1": 0.9767441860465117,
+          "candidate_mse": 0.045454545454545456
+        }
+      },
+      "ell:s1:dark": {
+        "learned": {
+          "tp": 12,
+          "fp": 254,
+          "fn": 428,
+          "squared_error": 569.5215339660645,
+          "candidate_samples": 2409,
+          "precision": 0.045112781954887216,
+          "recall": 0.02727272727272727,
+          "f1": 0.0339943342776204,
+          "candidate_mse": 0.23641408632879388
+        },
+        "shuffled_time": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 440,
+          "squared_error": 421.0362014770508,
+          "candidate_samples": 1233,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "candidate_mse": 0.3414729938986624
+        },
+        "fixed_correlation": {
+          "tp": 420,
+          "fp": 0,
+          "fn": 20,
+          "squared_error": 20.0,
+          "candidate_samples": 440,
+          "precision": 1.0,
+          "recall": 0.9545454545454546,
+          "f1": 0.9767441860465117,
+          "candidate_mse": 0.045454545454545456
+        }
+      },
+      "ell:s1:bright": {
+        "learned": {
+          "tp": 35,
+          "fp": 40,
+          "fn": 405,
+          "squared_error": 414.90720415115356,
+          "candidate_samples": 2327,
+          "precision": 0.4666666666666667,
+          "recall": 0.07954545454545454,
+          "f1": 0.13592233009708737,
+          "candidate_mse": 0.17830133397127357
+        },
+        "shuffled_time": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 440,
+          "squared_error": 401.5149869918823,
+          "candidate_samples": 1518,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "candidate_mse": 0.26450262647686584
+        },
+        "fixed_correlation": {
+          "tp": 420,
+          "fp": 0,
+          "fn": 20,
+          "squared_error": 20.0,
+          "candidate_samples": 440,
+          "precision": 1.0,
+          "recall": 0.9545454545454546,
+          "f1": 0.9767441860465117,
+          "candidate_mse": 0.045454545454545456
+        }
+      },
+      "ell:s2:dark": {
+        "learned": {
+          "tp": 99,
+          "fp": 271,
+          "fn": 429,
+          "squared_error": 588.3502817153931,
+          "candidate_samples": 3712,
+          "precision": 0.26756756756756755,
+          "recall": 0.1875,
+          "f1": 0.2204899777282851,
+          "candidate_mse": 0.15849953710005202
+        },
+        "shuffled_time": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 528,
+          "squared_error": 500.28466033935547,
+          "candidate_samples": 1295,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "candidate_mse": 0.38632020103425135
+        },
+        "fixed_correlation": {
+          "tp": 504,
+          "fp": 0,
+          "fn": 24,
+          "squared_error": 24.0,
+          "candidate_samples": 528,
+          "precision": 1.0,
+          "recall": 0.9545454545454546,
+          "f1": 0.9767441860465117,
+          "candidate_mse": 0.045454545454545456
+        }
+      },
+      "ell:s2:bright": {
+        "learned": {
+          "tp": 128,
+          "fp": 70,
+          "fn": 400,
+          "squared_error": 449.7170252799988,
+          "candidate_samples": 3488,
+          "precision": 0.6464646464646465,
+          "recall": 0.24242424242424243,
+          "f1": 0.3526170798898072,
+          "candidate_mse": 0.12893263339449507
+        },
+        "shuffled_time": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 528,
+          "squared_error": 494.0480680465698,
+          "candidate_samples": 1533,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "candidate_mse": 0.3222753216220286
+        },
+        "fixed_correlation": {
+          "tp": 504,
+          "fp": 0,
+          "fn": 24,
+          "squared_error": 24.0,
+          "candidate_samples": 528,
+          "precision": 1.0,
+          "recall": 0.9545454545454546,
+          "f1": 0.9767441860465117,
+          "candidate_mse": 0.045454545454545456
+        }
+      },
+      "bar:s1:dark": {
+        "learned": {
+          "tp": 0,
+          "fp": 84,
+          "fn": 396,
+          "squared_error": 488.71918869018555,
+          "candidate_samples": 2587,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "candidate_mse": 0.18891348615778336
+        },
+        "shuffled_time": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 396,
+          "squared_error": 379.50031423568726,
+          "candidate_samples": 910,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "candidate_mse": 0.41703331234690905
+        },
+        "fixed_correlation": {
+          "tp": 378,
+          "fp": 0,
+          "fn": 18,
+          "squared_error": 18.0,
+          "candidate_samples": 396,
+          "precision": 1.0,
+          "recall": 0.9545454545454546,
+          "f1": 0.9767441860465117,
+          "candidate_mse": 0.045454545454545456
+        }
+      },
+      "bar:s1:bright": {
+        "learned": {
+          "tp": 2,
+          "fp": 62,
+          "fn": 394,
+          "squared_error": 432.3147943019867,
+          "candidate_samples": 2517,
+          "precision": 0.03125,
+          "recall": 0.005050505050505051,
+          "f1": 0.008695652173913045,
+          "candidate_mse": 0.17175796356852868
+        },
+        "shuffled_time": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 396,
+          "squared_error": 386.90587759017944,
+          "candidate_samples": 1229,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "candidate_mse": 0.3148135700489662
+        },
+        "fixed_correlation": {
+          "tp": 378,
+          "fp": 0,
+          "fn": 18,
+          "squared_error": 18.0,
+          "candidate_samples": 396,
+          "precision": 1.0,
+          "recall": 0.9545454545454546,
+          "f1": 0.9767441860465117,
+          "candidate_mse": 0.045454545454545456
+        }
+      },
+      "bar:s2:dark": {
+        "learned": {
+          "tp": 258,
+          "fp": 708,
+          "fn": 534,
+          "squared_error": 943.1059355735779,
+          "candidate_samples": 4098,
+          "precision": 0.2670807453416149,
+          "recall": 0.32575757575757575,
+          "f1": 0.2935153583617747,
+          "candidate_mse": 0.2301381004327911
+        },
+        "shuffled_time": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 792,
+          "squared_error": 761.0903205871582,
+          "candidate_samples": 1816,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "candidate_mse": 0.41910259944226774
+        },
+        "fixed_correlation": {
+          "tp": 756,
+          "fp": 0,
+          "fn": 36,
+          "squared_error": 36.0,
+          "candidate_samples": 792,
+          "precision": 1.0,
+          "recall": 0.9545454545454546,
+          "f1": 0.9767441860465117,
+          "candidate_mse": 0.045454545454545456
+        }
+      },
+      "bar:s2:bright": {
+        "learned": {
+          "tp": 254,
+          "fp": 383,
+          "fn": 538,
+          "squared_error": 719.3811664581299,
+          "candidate_samples": 3708,
+          "precision": 0.3987441130298273,
+          "recall": 0.3207070707070707,
+          "f1": 0.35549335199440174,
+          "candidate_mse": 0.19400786581934462
+        },
+        "shuffled_time": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 792,
+          "squared_error": 728.5901141166687,
+          "candidate_samples": 2174,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "candidate_mse": 0.33513804697178873
+        },
+        "fixed_correlation": {
+          "tp": 756,
+          "fp": 0,
+          "fn": 36,
+          "squared_error": 36.0,
+          "candidate_samples": 792,
+          "precision": 1.0,
+          "recall": 0.9545454545454546,
+          "f1": 0.9767441860465117,
+          "candidate_mse": 0.045454545454545456
+        }
+      }
+    }
+  },
+  "latent_forecast": {
+    "overall": {
+      "learned": {
+        "tp": 595,
+        "fp": 722,
+        "fn": 5653,
+        "squared_error": 5927.893377780914,
+        "candidate_samples": 48630,
+        "precision": 0.4517843583902809,
+        "recall": 0.09523047375160051,
+        "f1": 0.15730337078651685,
+        "candidate_mse": 0.12189786917090097
+      },
+      "shuffled_time": {
+        "tp": 0,
+        "fp": 0,
+        "fn": 6248,
+        "squared_error": 6110.878879070282,
+        "candidate_samples": 15478,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "candidate_mse": 0.3948106266358885
+      }
+    },
+    "threshold_f1": {
+      "learned": {
+        "0.05": 0.1584079677352167,
+        "0.1": 0.18631469639831666,
+        "0.2": 0.25679596003008487,
+        "0.3": 0.25718378697227606,
+        "0.5": 0.15730337078651685
+      },
+      "shuffled_time": {
+        "0.05": 0.07953346981822694,
+        "0.1": 0.056045416113057134,
+        "0.2": 0.003774178329926089,
+        "0.3": 0.0,
+        "0.5": 0.0
+      }
+    },
+    "by_speed": {
+      "1": {
+        "learned": {
+          "tp": 43,
+          "fp": 248,
+          "fn": 2509,
+          "squared_error": 2651.1627235412598,
+          "candidate_samples": 17810,
+          "precision": 0.14776632302405499,
+          "recall": 0.016849529780564265,
+          "f1": 0.030249736194161103,
+          "candidate_mse": 0.148858097896758
+        },
+        "shuffled_time": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 2552,
+          "squared_error": 2489.510768890381,
+          "candidate_samples": 7241,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "candidate_mse": 0.34380759133964656
+        }
+      },
+      "2": {
+        "learned": {
+          "tp": 552,
+          "fp": 474,
+          "fn": 3144,
+          "squared_error": 3276.7306542396545,
+          "candidate_samples": 30820,
+          "precision": 0.5380116959064327,
+          "recall": 0.14935064935064934,
+          "f1": 0.23379923761118168,
+          "candidate_mse": 0.10631832103308418
+        },
+        "shuffled_time": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 3696,
+          "squared_error": 3621.368110179901,
+          "candidate_samples": 8237,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "candidate_mse": 0.4396464866067623
+        }
+      }
+    }
+  },
+  "training_fit": {
+    "event": {
+      "tp": 782,
+      "fp": 1042,
+      "fn": 2386,
+      "squared_error": 2928.559918165207,
+      "candidate_samples": 18264,
+      "precision": 0.42872807017543857,
+      "recall": 0.24684343434343434,
+      "f1": 0.31330128205128205,
+      "candidate_mse": 0.1603460314369912
+    },
+    "latent": {
+      "tp": 578,
+      "fp": 354,
+      "fn": 2590,
+      "squared_error": 2713.185420513153,
+      "candidate_samples": 22950,
+      "precision": 0.6201716738197425,
+      "recall": 0.18244949494949494,
+      "f1": 0.28195121951219515,
+      "candidate_mse": 0.11822158695046418
+    }
+  },
+  "elapsed_seconds": 56.107357100001536
+}

@@ -23,11 +23,12 @@ class LocalVisualLatent:
     """Unlabeled event dictionary and local latent-prediction synapses."""
 
     def __init__(self, *, channels=12, seed=0, sensory_eta=.08,
-                 recurrent_eta=.5, homeostasis=False):
+                 recurrent_eta=.5, homeostasis=False, prediction_gain=0.):
         self.channels = channels
         self.sensory_eta = sensory_eta
         self.recurrent_eta = recurrent_eta
         self.homeostasis = homeostasis
+        self.prediction_gain = prediction_gain
         rng = torch.Generator().manual_seed(seed)
         self.sensory = torch.rand((channels, 4*25), generator=rng)*.2
         self.recurrent = torch.zeros((channels, channels, 5, 5))
@@ -66,6 +67,9 @@ class LocalVisualLatent:
                            * selected.norm(dim=0)[None, :]).clamp(min=1e-6)
                 scores -= .75*(self.usage/self.total_assignments
                                 if self.total_assignments else self.usage)[:, None]
+            if self.prediction_gain and self.pending_latent_prediction is not None:
+                scores += self.prediction_gain * self.pending_latent_prediction.reshape(
+                    self.channels, -1)[:, sites]
             winners = scores.argmax(0)
             latent[winners, sites] = 1
             sources = [(int(site//64), int(site%64), int(code))
@@ -276,13 +280,16 @@ def training_fit(model, train):
 
 
 @torch.no_grad()
-def main(*, homeostasis=False):
+def main(*, homeostasis=False, recurrent_inference=False):
     torch.set_num_threads(1)
     started = time.perf_counter()
     train = training_sequences()
     heldout = heldout_sequences()
-    learned = LocalVisualLatent(seed=0, homeostasis=homeostasis)
-    random_sensory = LocalVisualLatent(seed=0, homeostasis=homeostasis)
+    gain = .5 if recurrent_inference else 0.
+    learned = LocalVisualLatent(seed=0, homeostasis=homeostasis,
+                                prediction_gain=gain)
+    random_sensory = LocalVisualLatent(seed=0, homeostasis=homeostasis,
+                                       prediction_gain=gain)
     initial_sensory = learned.sensory.clone()
     rng = random.Random(0)
     for _ in range(3):
@@ -292,7 +299,8 @@ def main(*, homeostasis=False):
             for event in sequence:
                 learned.step(event)
 
-    shuffled = LocalVisualLatent(seed=0, homeostasis=homeostasis)
+    shuffled = LocalVisualLatent(seed=0, homeostasis=homeostasis,
+                                 prediction_gain=gain)
     shuffled.sensory.copy_(learned.sensory)
     shuffled.usage.copy_(learned.usage)
     shuffled.total_assignments = learned.total_assignments
@@ -319,7 +327,7 @@ def main(*, homeostasis=False):
                                     fixed_correlation=fixed), heldout)
     latent_forecast = latent_forecast_scores(dict(learned=learned,
                                                   shuffled_time=shuffled), heldout)
-    result = dict(training_episodes=3*len(train),
+    result = dict(training_episodes=3*len(train), prediction_gain=gain,
                   sensory_updates=learned.sensory_updates,
                   recurrent_updates=learned.recurrent_updates,
                   sensory_change=float((learned.sensory-initial_sensory).abs().mean()),
@@ -329,8 +337,12 @@ def main(*, homeostasis=False):
                   latent_forecast=latent_forecast,
                   training_fit=training_fit(learned, train),
                   elapsed_seconds=time.perf_counter()-started)
-    output = OUT if not homeostasis else OUT.with_name(
-        '2026-09-23-learned-latent-homeostasis-results.json')
+    if recurrent_inference:
+        output = OUT.with_name('2026-09-24-recurrent-inference-results.json')
+    elif homeostasis:
+        output = OUT.with_name('2026-09-23-learned-latent-homeostasis-results.json')
+    else:
+        output = OUT
     output.write_text(json.dumps(result, indent=2, allow_nan=False)+'\n')
     print(json.dumps(dict(training_episodes=result['training_episodes'],
                           sensory_change=result['sensory_change'],
@@ -351,4 +363,5 @@ def main(*, homeostasis=False):
 
 
 if __name__ == '__main__':
-    main(homeostasis='--homeostasis' in sys.argv[1:])
+    main(homeostasis='--homeostasis' in sys.argv[1:],
+         recurrent_inference='--recurrent-inference' in sys.argv[1:])
