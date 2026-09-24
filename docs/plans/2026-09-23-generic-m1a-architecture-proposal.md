@@ -43,6 +43,8 @@ The [raw-event re-anchoring test](../experiments/2026-09-24-raw-event-reanchorin
 
 The [frozen augmented-code capacity check](../experiments/2026-09-24-raw-reanchoring-capacity-findings.md) found both code interference and a local readout gap. The augmented code still supported 0.644 offline F1 on unseen patterns versus 0.320 for a random dictionary, but this is well below the original coincidence-only code's 0.918; its online local readout also fit training episodes poorly. Test a separate raw first-sighting pathway alongside the intact learned motion code, then local state continuity through missing input. Keep this opt-in until it beats appropriate frozen and fixed controls.
 
+The [split sensory-pathway test](../experiments/2026-09-24-split-sensory-pathway-findings.md) preserved the original 0.918 held-out offline capacity and activated at reappearance, but exact reappearance prediction was only 0.016 F1. A matched opposite-motion pair proves that current reappearance input is identical while the next event differs. The next experiment therefore needs **hidden temporal context**, with a local learned transition and a separate event emission mechanism. Require a state-reset ablation and quiet-frame false-alarm check; sensory separation alone is not enough.
+
 ## Shortest evidence path before promotion
 
 1. **Generic scene suite.** Extend the opt-in event-camera tests to varied shapes, polarities, scales, positions, speeds, two independent movers, crossings, partial occlusion, stationary visual context, trajectory changes, and sensor noise. The generator may know hidden trajectories only for scoring. Establish performance and throughput of the full proposed front end, not just the isolated kernel.
