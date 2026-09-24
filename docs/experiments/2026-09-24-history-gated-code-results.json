@@ -1,0 +1,65 @@
+{
+  "training_cases": 64,
+  "heldout_cases": 48,
+  "pair": {
+    "learned": {
+      "same_raw_input": true,
+      "left_sources": 13,
+      "right_sources": 13,
+      "common_sites": 13,
+      "different_units": 13,
+      "different_fraction": 1.0
+    },
+    "random": {
+      "same_raw_input": true,
+      "left_sources": 13,
+      "right_sources": 13,
+      "common_sites": 13,
+      "different_units": 12,
+      "different_fraction": 0.9230769230769231
+    }
+  },
+  "probe": {
+    "learned": {
+      "correct": 47,
+      "total": 48,
+      "accuracy": 0.9791666666666666,
+      "active_sites": 608,
+      "by_shape": {
+        "diamond": {
+          "correct": 16,
+          "total": 16
+        },
+        "ring": {
+          "correct": 16,
+          "total": 16
+        },
+        "zigzag": {
+          "correct": 15,
+          "total": 16
+        }
+      }
+    },
+    "random": {
+      "correct": 36,
+      "total": 48,
+      "accuracy": 0.75,
+      "active_sites": 608,
+      "by_shape": {
+        "diamond": {
+          "correct": 13,
+          "total": 16
+        },
+        "ring": {
+          "correct": 12,
+          "total": 16
+        },
+        "zigzag": {
+          "correct": 11,
+          "total": 16
+        }
+      }
+    }
+  },
+  "elapsed_seconds": 61.964362699887715
+}

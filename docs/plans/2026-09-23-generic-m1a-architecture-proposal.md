@@ -51,6 +51,8 @@ The [local context-trace test](../experiments/2026-09-24-local-context-trace-fin
 
 The [targeted frozen-code capacity check](../experiments/2026-09-24-context-trace-capacity-findings.md) found that the concatenated raw+trace dictionary selected identical latent sources for matched opposite histories and did not outperform a zero-trace dictionary on unseen-shape reappearance. Thus history is lost **at competitive coding**, before predictive credit. Test one different opt-in temporal representation in which raw onset gates locally learned history-selective units; require distinct latent selections for the matched pair before training another predictor. Keep this as an experiment until effective online forecasting transfers.
 
+The [history-gated code test](../experiments/2026-09-24-history-gated-code-findings.md) passed that representation gate: opposite histories with identical current input selected different units at all 13 matched sites, and a frozen post-hoc direction probe transferred on 47/48 unseen-shape cases versus 36/48 for a random dictionary. This is the first causal temporal-context code to survive both onset and shape transfer. Train a separate local delayed-event readout from it next; the code alone is not a forecast or a working M1A architecture.
+
 ## Shortest evidence path before promotion
 
 1. **Generic scene suite.** Extend the opt-in event-camera tests to varied shapes, polarities, scales, positions, speeds, two independent movers, crossings, partial occlusion, stationary visual context, trajectory changes, and sensor noise. The generator may know hidden trajectories only for scoring. Establish performance and throughput of the full proposed front end, not just the isolated kernel.
