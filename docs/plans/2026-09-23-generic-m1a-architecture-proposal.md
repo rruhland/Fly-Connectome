@@ -23,6 +23,8 @@ The [learned transition-unit probe](../experiments/2026-09-24-learned-transition
 
 The [frozen-code capacity test](../experiments/2026-09-24-frozen-code-capacity-findings.md) found that a local linear readout can fit square training events while failing to transfer across shapes; every target event is spatially reachable. The next experiment should broaden **unlabeled experience** rather than assign motion channels or game objects. Train the same local plastic circuit on varied connected moving patterns and hold new patterns out, then remeasure both learned prediction and the frozen-code decoder ceiling. This will show whether data diversity can yield reusable state before redesigning the local predictive update.
 
+The [equal-budget diverse-experience test](../experiments/2026-09-24-diverse-visual-experience-findings.md) raised held-out decoder F1 only from 0.296 to 0.324 at the registered threshold and hurt slow-motion transfer. The varied arm also underfit its own training scenes, so check one larger exposure budget with the same circuit and held-out set. If that fails, stop tuning this narrow code and test a different local temporal-state mechanism.
+
 ## Shortest evidence path before promotion
 
 1. **Generic scene suite.** Extend the opt-in event-camera tests to varied shapes, polarities, scales, positions, speeds, two independent movers, crossings, partial occlusion, stationary visual context, trajectory changes, and sensor noise. The generator may know hidden trajectories only for scoring. Establish performance and throughput of the full proposed front end, not just the isolated kernel.
