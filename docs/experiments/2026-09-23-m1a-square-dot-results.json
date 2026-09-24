@@ -1,0 +1,1147 @@
+{
+  "source_sha256": "8c4af80ff3904881bac9313b618dd9989bb51174b47606f28eca88865296005c",
+  "graph_sha256": "c941a5c912dd03e2ab0868260c637c2b1d21525196d4bce93c7d5e7f618e34a8",
+  "annotations_sha256": "2177e246113e4cfbf1e7772ec37c6da1955ff22e8063d0b1f833101f99a9a3b2",
+  "ticks_per_frame": 8,
+  "frozen_weights": true,
+  "shape": "square",
+  "calibration": [
+    {
+      "axis": "vertical",
+      "center": 10,
+      "speed": 1,
+      "polarity": "off",
+      "calibration": true,
+      "pixel_events": 72,
+      "event_tracker": {
+        "positive_displacement": 1.0,
+        "negative_displacement": -1.0,
+        "static_displacement": 0.0
+      },
+      "t5_opponent": {
+        "positive": 0.09357119897139182,
+        "negative": -0.14429443908711026
+      },
+      "subtypes": {
+        "T4a": {
+          "cells": 176,
+          "positive_spikes": 0,
+          "negative_spikes": 0,
+          "static_spikes": 0,
+          "positive_minus_negative": 0,
+          "positive_cells": 0,
+          "negative_cells": 0
+        },
+        "T4b": {
+          "cells": 167,
+          "positive_spikes": 0,
+          "negative_spikes": 0,
+          "static_spikes": 0,
+          "positive_minus_negative": 0,
+          "positive_cells": 0,
+          "negative_cells": 0
+        },
+        "T4c": {
+          "cells": 174,
+          "positive_spikes": 0,
+          "negative_spikes": 0,
+          "static_spikes": 0,
+          "positive_minus_negative": 0,
+          "positive_cells": 0,
+          "negative_cells": 0
+        },
+        "T4d": {
+          "cells": 184,
+          "positive_spikes": 0,
+          "negative_spikes": 0,
+          "static_spikes": 0,
+          "positive_minus_negative": 0,
+          "positive_cells": 0,
+          "negative_cells": 0
+        },
+        "T5a": {
+          "cells": 175,
+          "positive_spikes": 48,
+          "negative_spikes": 78,
+          "static_spikes": 17,
+          "positive_minus_negative": -30,
+          "positive_cells": 4,
+          "negative_cells": 34
+        },
+        "T5b": {
+          "cells": 167,
+          "positive_spikes": 71,
+          "negative_spikes": 53,
+          "static_spikes": 19,
+          "positive_minus_negative": 18,
+          "positive_cells": 27,
+          "negative_cells": 9
+        },
+        "T5c": {
+          "cells": 183,
+          "positive_spikes": 55,
+          "negative_spikes": 77,
+          "static_spikes": 21,
+          "positive_minus_negative": -22,
+          "positive_cells": 8,
+          "negative_cells": 26
+        },
+        "T5d": {
+          "cells": 170,
+          "positive_spikes": 67,
+          "negative_spikes": 47,
+          "static_spikes": 15,
+          "positive_minus_negative": 20,
+          "positive_cells": 23,
+          "negative_cells": 7
+        }
+      }
+    },
+    {
+      "axis": "vertical",
+      "center": 22,
+      "speed": 1,
+      "polarity": "off",
+      "calibration": true,
+      "pixel_events": 72,
+      "event_tracker": {
+        "positive_displacement": 1.0,
+        "negative_displacement": -1.0,
+        "static_displacement": 0.0
+      },
+      "t5_opponent": {
+        "positive": 0.016057312252964417,
+        "negative": -0.1432806324110672
+      },
+      "subtypes": {
+        "T4a": {
+          "cells": 167,
+          "positive_spikes": 0,
+          "negative_spikes": 0,
+          "static_spikes": 0,
+          "positive_minus_negative": 0,
+          "positive_cells": 0,
+          "negative_cells": 0
+        },
+        "T4b": {
+          "cells": 176,
+          "positive_spikes": 0,
+          "negative_spikes": 0,
+          "static_spikes": 0,
+          "positive_minus_negative": 0,
+          "positive_cells": 0,
+          "negative_cells": 0
+        },
+        "T4c": {
+          "cells": 166,
+          "positive_spikes": 0,
+          "negative_spikes": 0,
+          "static_spikes": 0,
+          "positive_minus_negative": 0,
+          "positive_cells": 0,
+          "negative_cells": 0
+        },
+        "T4d": {
+          "cells": 178,
+          "positive_spikes": 0,
+          "negative_spikes": 0,
+          "static_spikes": 0,
+          "positive_minus_negative": 0,
+          "positive_cells": 0,
+          "negative_cells": 0
+        },
+        "T5a": {
+          "cells": 170,
+          "positive_spikes": 44,
+          "negative_spikes": 76,
+          "static_spikes": 20,
+          "positive_minus_negative": -32,
+          "positive_cells": 4,
+          "negative_cells": 33
+        },
+        "T5b": {
+          "cells": 178,
+          "positive_spikes": 75,
+          "negative_spikes": 58,
+          "static_spikes": 21,
+          "positive_minus_negative": 17,
+          "positive_cells": 24,
+          "negative_cells": 7
+        },
+        "T5c": {
+          "cells": 184,
+          "positive_spikes": 65,
+          "negative_spikes": 87,
+          "static_spikes": 26,
+          "positive_minus_negative": -22,
+          "positive_cells": 7,
+          "negative_cells": 26
+        },
+        "T5d": {
+          "cells": 176,
+          "positive_spikes": 65,
+          "negative_spikes": 58,
+          "static_spikes": 18,
+          "positive_minus_negative": 7,
+          "positive_cells": 18,
+          "negative_cells": 10
+        }
+      }
+    },
+    {
+      "axis": "horizontal",
+      "center": 18,
+      "speed": 1,
+      "polarity": "off",
+      "calibration": true,
+      "pixel_events": 72,
+      "event_tracker": {
+        "positive_displacement": 1.0,
+        "negative_displacement": -1.0,
+        "static_displacement": 0.0
+      },
+      "t5_opponent": {
+        "positive": 0.02495718130658181,
+        "negative": -0.16895033031563494
+      },
+      "subtypes": {
+        "T4a": {
+          "cells": 122,
+          "positive_spikes": 0,
+          "negative_spikes": 0,
+          "static_spikes": 0,
+          "positive_minus_negative": 0,
+          "positive_cells": 0,
+          "negative_cells": 0
+        },
+        "T4b": {
+          "cells": 135,
+          "positive_spikes": 0,
+          "negative_spikes": 0,
+          "static_spikes": 0,
+          "positive_minus_negative": 0,
+          "positive_cells": 0,
+          "negative_cells": 0
+        },
+        "T4c": {
+          "cells": 133,
+          "positive_spikes": 0,
+          "negative_spikes": 0,
+          "static_spikes": 0,
+          "positive_minus_negative": 0,
+          "positive_cells": 0,
+          "negative_cells": 0
+        },
+        "T4d": {
+          "cells": 119,
+          "positive_spikes": 0,
+          "negative_spikes": 0,
+          "static_spikes": 0,
+          "positive_minus_negative": 0,
+          "positive_cells": 0,
+          "negative_cells": 0
+        },
+        "T5a": {
+          "cells": 118,
+          "positive_spikes": 39,
+          "negative_spikes": 31,
+          "static_spikes": 16,
+          "positive_minus_negative": 8,
+          "positive_cells": 14,
+          "negative_cells": 7
+        },
+        "T5b": {
+          "cells": 131,
+          "positive_spikes": 35,
+          "negative_spikes": 36,
+          "static_spikes": 17,
+          "positive_minus_negative": -1,
+          "positive_cells": 8,
+          "negative_cells": 9
+        },
+        "T5c": {
+          "cells": 134,
+          "positive_spikes": 34,
+          "negative_spikes": 49,
+          "static_spikes": 14,
+          "positive_minus_negative": -15,
+          "positive_cells": 3,
+          "negative_cells": 17
+        },
+        "T5d": {
+          "cells": 122,
+          "positive_spikes": 34,
+          "negative_spikes": 24,
+          "static_spikes": 13,
+          "positive_minus_negative": 10,
+          "positive_cells": 12,
+          "negative_cells": 3
+        }
+      }
+    },
+    {
+      "axis": "horizontal",
+      "center": 46,
+      "speed": 1,
+      "polarity": "off",
+      "calibration": true,
+      "pixel_events": 72,
+      "event_tracker": {
+        "positive_displacement": 1.0,
+        "negative_displacement": -1.0,
+        "static_displacement": 0.0
+      },
+      "t5_opponent": {
+        "positive": 0.15688729874776383,
+        "negative": -0.1289206917113894
+      },
+      "subtypes": {
+        "T4a": {
+          "cells": 134,
+          "positive_spikes": 1,
+          "negative_spikes": 0,
+          "static_spikes": 1,
+          "positive_minus_negative": 1,
+          "positive_cells": 1,
+          "negative_cells": 0
+        },
+        "T4b": {
+          "cells": 132,
+          "positive_spikes": 0,
+          "negative_spikes": 0,
+          "static_spikes": 0,
+          "positive_minus_negative": 0,
+          "positive_cells": 0,
+          "negative_cells": 0
+        },
+        "T4c": {
+          "cells": 135,
+          "positive_spikes": 0,
+          "negative_spikes": 0,
+          "static_spikes": 0,
+          "positive_minus_negative": 0,
+          "positive_cells": 0,
+          "negative_cells": 0
+        },
+        "T4d": {
+          "cells": 136,
+          "positive_spikes": 0,
+          "negative_spikes": 0,
+          "static_spikes": 0,
+          "positive_minus_negative": 0,
+          "positive_cells": 0,
+          "negative_cells": 0
+        },
+        "T5a": {
+          "cells": 137,
+          "positive_spikes": 48,
+          "negative_spikes": 34,
+          "static_spikes": 13,
+          "positive_minus_negative": 14,
+          "positive_cells": 15,
+          "negative_cells": 3
+        },
+        "T5b": {
+          "cells": 130,
+          "positive_spikes": 26,
+          "negative_spikes": 34,
+          "static_spikes": 8,
+          "positive_minus_negative": -8,
+          "positive_cells": 5,
+          "negative_cells": 13
+        },
+        "T5c": {
+          "cells": 130,
+          "positive_spikes": 31,
+          "negative_spikes": 48,
+          "static_spikes": 16,
+          "positive_minus_negative": -17,
+          "positive_cells": 4,
+          "negative_cells": 18
+        },
+        "T5d": {
+          "cells": 129,
+          "positive_spikes": 51,
+          "negative_spikes": 31,
+          "static_spikes": 10,
+          "positive_minus_negative": 20,
+          "positive_cells": 20,
+          "negative_cells": 5
+        }
+      }
+    }
+  ],
+  "conditions": [
+    {
+      "axis": "vertical",
+      "center": 14,
+      "speed": 1,
+      "polarity": "off",
+      "calibration": false,
+      "pixel_events": 72,
+      "event_tracker": {
+        "positive_displacement": 1.0,
+        "negative_displacement": -1.0,
+        "static_displacement": 0.0
+      },
+      "t5_opponent": {
+        "positive": 0.05562668942950638,
+        "negative": -0.10542040119504908,
+        "positive_correct": true,
+        "negative_correct": true
+      },
+      "subtypes": {
+        "T4a": {
+          "cells": 200,
+          "positive_spikes": 0,
+          "negative_spikes": 0,
+          "static_spikes": 1,
+          "positive_minus_negative": 0,
+          "positive_cells": 0,
+          "negative_cells": 0
+        },
+        "T4b": {
+          "cells": 195,
+          "positive_spikes": 0,
+          "negative_spikes": 0,
+          "static_spikes": 1,
+          "positive_minus_negative": 0,
+          "positive_cells": 0,
+          "negative_cells": 0
+        },
+        "T4c": {
+          "cells": 195,
+          "positive_spikes": 0,
+          "negative_spikes": 0,
+          "static_spikes": 1,
+          "positive_minus_negative": 0,
+          "positive_cells": 0,
+          "negative_cells": 0
+        },
+        "T4d": {
+          "cells": 211,
+          "positive_spikes": 0,
+          "negative_spikes": 0,
+          "static_spikes": 0,
+          "positive_minus_negative": 0,
+          "positive_cells": 0,
+          "negative_cells": 0
+        },
+        "T5a": {
+          "cells": 198,
+          "positive_spikes": 56,
+          "negative_spikes": 90,
+          "static_spikes": 29,
+          "positive_minus_negative": -34,
+          "positive_cells": 9,
+          "negative_cells": 41
+        },
+        "T5b": {
+          "cells": 192,
+          "positive_spikes": 76,
+          "negative_spikes": 57,
+          "static_spikes": 27,
+          "positive_minus_negative": 19,
+          "positive_cells": 25,
+          "negative_cells": 8
+        },
+        "T5c": {
+          "cells": 213,
+          "positive_spikes": 57,
+          "negative_spikes": 87,
+          "static_spikes": 27,
+          "positive_minus_negative": -30,
+          "positive_cells": 12,
+          "negative_cells": 39
+        },
+        "T5d": {
+          "cells": 198,
+          "positive_spikes": 64,
+          "negative_spikes": 60,
+          "static_spikes": 15,
+          "positive_minus_negative": 4,
+          "positive_cells": 17,
+          "negative_cells": 15
+        }
+      }
+    },
+    {
+      "axis": "vertical",
+      "center": 14,
+      "speed": 2,
+      "polarity": "off",
+      "calibration": false,
+      "pixel_events": 144,
+      "event_tracker": {
+        "positive_displacement": 2.0,
+        "negative_displacement": -2.0,
+        "static_displacement": 0.0
+      },
+      "t5_opponent": {
+        "positive": -0.021269028311281857,
+        "negative": -0.06167306871532224,
+        "positive_correct": true,
+        "negative_correct": false
+      },
+      "subtypes": {
+        "T4a": {
+          "cells": 200,
+          "positive_spikes": 0,
+          "negative_spikes": 0,
+          "static_spikes": 1,
+          "positive_minus_negative": 0,
+          "positive_cells": 0,
+          "negative_cells": 0
+        },
+        "T4b": {
+          "cells": 195,
+          "positive_spikes": 0,
+          "negative_spikes": 0,
+          "static_spikes": 1,
+          "positive_minus_negative": 0,
+          "positive_cells": 0,
+          "negative_cells": 0
+        },
+        "T4c": {
+          "cells": 195,
+          "positive_spikes": 0,
+          "negative_spikes": 0,
+          "static_spikes": 1,
+          "positive_minus_negative": 0,
+          "positive_cells": 0,
+          "negative_cells": 0
+        },
+        "T4d": {
+          "cells": 211,
+          "positive_spikes": 0,
+          "negative_spikes": 0,
+          "static_spikes": 0,
+          "positive_minus_negative": 0,
+          "positive_cells": 0,
+          "negative_cells": 0
+        },
+        "T5a": {
+          "cells": 198,
+          "positive_spikes": 49,
+          "negative_spikes": 63,
+          "static_spikes": 29,
+          "positive_minus_negative": -14,
+          "positive_cells": 7,
+          "negative_cells": 21
+        },
+        "T5b": {
+          "cells": 192,
+          "positive_spikes": 65,
+          "negative_spikes": 45,
+          "static_spikes": 27,
+          "positive_minus_negative": 20,
+          "positive_cells": 24,
+          "negative_cells": 7
+        },
+        "T5c": {
+          "cells": 213,
+          "positive_spikes": 68,
+          "negative_spikes": 68,
+          "static_spikes": 27,
+          "positive_minus_negative": 0,
+          "positive_cells": 19,
+          "negative_cells": 19
+        },
+        "T5d": {
+          "cells": 198,
+          "positive_spikes": 59,
+          "negative_spikes": 51,
+          "static_spikes": 15,
+          "positive_minus_negative": 8,
+          "positive_cells": 17,
+          "negative_cells": 9
+        }
+      }
+    },
+    {
+      "axis": "vertical",
+      "center": 18,
+      "speed": 1,
+      "polarity": "off",
+      "calibration": false,
+      "pixel_events": 72,
+      "event_tracker": {
+        "positive_displacement": 1.0,
+        "negative_displacement": -1.0,
+        "static_displacement": 0.0
+      },
+      "t5_opponent": {
+        "positive": 0.0361698615925114,
+        "negative": -0.11096177878380609,
+        "positive_correct": true,
+        "negative_correct": true
+      },
+      "subtypes": {
+        "T4a": {
+          "cells": 191,
+          "positive_spikes": 0,
+          "negative_spikes": 0,
+          "static_spikes": 1,
+          "positive_minus_negative": 0,
+          "positive_cells": 0,
+          "negative_cells": 0
+        },
+        "T4b": {
+          "cells": 199,
+          "positive_spikes": 0,
+          "negative_spikes": 0,
+          "static_spikes": 1,
+          "positive_minus_negative": 0,
+          "positive_cells": 0,
+          "negative_cells": 0
+        },
+        "T4c": {
+          "cells": 189,
+          "positive_spikes": 1,
+          "negative_spikes": 0,
+          "static_spikes": 1,
+          "positive_minus_negative": 1,
+          "positive_cells": 1,
+          "negative_cells": 0
+        },
+        "T4d": {
+          "cells": 204,
+          "positive_spikes": 0,
+          "negative_spikes": 0,
+          "static_spikes": 0,
+          "positive_minus_negative": 0,
+          "positive_cells": 0,
+          "negative_cells": 0
+        },
+        "T5a": {
+          "cells": 193,
+          "positive_spikes": 55,
+          "negative_spikes": 74,
+          "static_spikes": 22,
+          "positive_minus_negative": -19,
+          "positive_cells": 10,
+          "negative_cells": 29
+        },
+        "T5b": {
+          "cells": 201,
+          "positive_spikes": 78,
+          "negative_spikes": 45,
+          "static_spikes": 19,
+          "positive_minus_negative": 33,
+          "positive_cells": 32,
+          "negative_cells": 2
+        },
+        "T5c": {
+          "cells": 211,
+          "positive_spikes": 69,
+          "negative_spikes": 78,
+          "static_spikes": 22,
+          "positive_minus_negative": -9,
+          "positive_cells": 14,
+          "negative_cells": 21
+        },
+        "T5d": {
+          "cells": 201,
+          "positive_spikes": 73,
+          "negative_spikes": 52,
+          "static_spikes": 22,
+          "positive_minus_negative": 21,
+          "positive_cells": 24,
+          "negative_cells": 5
+        }
+      }
+    },
+    {
+      "axis": "vertical",
+      "center": 18,
+      "speed": 2,
+      "polarity": "off",
+      "calibration": false,
+      "pixel_events": 144,
+      "event_tracker": {
+        "positive_displacement": 2.0,
+        "negative_displacement": -2.0,
+        "static_displacement": 0.0
+      },
+      "t5_opponent": {
+        "positive": -0.006224800169767286,
+        "negative": -0.015467685270330822,
+        "positive_correct": true,
+        "negative_correct": false
+      },
+      "subtypes": {
+        "T4a": {
+          "cells": 191,
+          "positive_spikes": 0,
+          "negative_spikes": 0,
+          "static_spikes": 1,
+          "positive_minus_negative": 0,
+          "positive_cells": 0,
+          "negative_cells": 0
+        },
+        "T4b": {
+          "cells": 199,
+          "positive_spikes": 0,
+          "negative_spikes": 0,
+          "static_spikes": 1,
+          "positive_minus_negative": 0,
+          "positive_cells": 0,
+          "negative_cells": 0
+        },
+        "T4c": {
+          "cells": 189,
+          "positive_spikes": 0,
+          "negative_spikes": 0,
+          "static_spikes": 1,
+          "positive_minus_negative": 0,
+          "positive_cells": 0,
+          "negative_cells": 0
+        },
+        "T4d": {
+          "cells": 204,
+          "positive_spikes": 0,
+          "negative_spikes": 0,
+          "static_spikes": 0,
+          "positive_minus_negative": 0,
+          "positive_cells": 0,
+          "negative_cells": 0
+        },
+        "T5a": {
+          "cells": 193,
+          "positive_spikes": 48,
+          "negative_spikes": 67,
+          "static_spikes": 22,
+          "positive_minus_negative": -19,
+          "positive_cells": 6,
+          "negative_cells": 23
+        },
+        "T5b": {
+          "cells": 201,
+          "positive_spikes": 64,
+          "negative_spikes": 51,
+          "static_spikes": 19,
+          "positive_minus_negative": 13,
+          "positive_cells": 20,
+          "negative_cells": 7
+        },
+        "T5c": {
+          "cells": 211,
+          "positive_spikes": 58,
+          "negative_spikes": 61,
+          "static_spikes": 22,
+          "positive_minus_negative": -3,
+          "positive_cells": 9,
+          "negative_cells": 12
+        },
+        "T5d": {
+          "cells": 201,
+          "positive_spikes": 54,
+          "negative_spikes": 55,
+          "static_spikes": 22,
+          "positive_minus_negative": -1,
+          "positive_cells": 12,
+          "negative_cells": 13
+        }
+      }
+    },
+    {
+      "axis": "horizontal",
+      "center": 32,
+      "speed": 1,
+      "polarity": "off",
+      "calibration": false,
+      "pixel_events": 72,
+      "event_tracker": {
+        "positive_displacement": 1.0,
+        "negative_displacement": -1.0,
+        "static_displacement": 0.0
+      },
+      "t5_opponent": {
+        "positive": 0.07759944912336456,
+        "negative": -0.11409502621960907
+      },
+      "subtypes": {
+        "T4a": {
+          "cells": 186,
+          "positive_spikes": 1,
+          "negative_spikes": 1,
+          "static_spikes": 1,
+          "positive_minus_negative": 0,
+          "positive_cells": 0,
+          "negative_cells": 0
+        },
+        "T4b": {
+          "cells": 188,
+          "positive_spikes": 1,
+          "negative_spikes": 1,
+          "static_spikes": 1,
+          "positive_minus_negative": 0,
+          "positive_cells": 0,
+          "negative_cells": 0
+        },
+        "T4c": {
+          "cells": 181,
+          "positive_spikes": 1,
+          "negative_spikes": 1,
+          "static_spikes": 1,
+          "positive_minus_negative": 0,
+          "positive_cells": 0,
+          "negative_cells": 0
+        },
+        "T4d": {
+          "cells": 201,
+          "positive_spikes": 0,
+          "negative_spikes": 0,
+          "static_spikes": 0,
+          "positive_minus_negative": 0,
+          "positive_cells": 0,
+          "negative_cells": 0
+        },
+        "T5a": {
+          "cells": 185,
+          "positive_spikes": 59,
+          "negative_spikes": 53,
+          "static_spikes": 24,
+          "positive_minus_negative": 6,
+          "positive_cells": 13,
+          "negative_cells": 8
+        },
+        "T5b": {
+          "cells": 186,
+          "positive_spikes": 42,
+          "negative_spikes": 53,
+          "static_spikes": 18,
+          "positive_minus_negative": -11,
+          "positive_cells": 9,
+          "negative_cells": 19
+        },
+        "T5c": {
+          "cells": 203,
+          "positive_spikes": 41,
+          "negative_spikes": 69,
+          "static_spikes": 23,
+          "positive_minus_negative": -28,
+          "positive_cells": 3,
+          "negative_cells": 27
+        },
+        "T5d": {
+          "cells": 186,
+          "positive_spikes": 52,
+          "negative_spikes": 42,
+          "static_spikes": 17,
+          "positive_minus_negative": 10,
+          "positive_cells": 17,
+          "negative_cells": 7
+        }
+      }
+    },
+    {
+      "axis": "horizontal",
+      "center": 32,
+      "speed": 2,
+      "polarity": "off",
+      "calibration": false,
+      "pixel_events": 144,
+      "event_tracker": {
+        "positive_displacement": 2.0,
+        "negative_displacement": -2.0,
+        "static_displacement": 0.0
+      },
+      "t5_opponent": {
+        "positive": 0.01981037131203983,
+        "negative": -0.03437682080618676
+      },
+      "subtypes": {
+        "T4a": {
+          "cells": 186,
+          "positive_spikes": 1,
+          "negative_spikes": 1,
+          "static_spikes": 1,
+          "positive_minus_negative": 0,
+          "positive_cells": 0,
+          "negative_cells": 0
+        },
+        "T4b": {
+          "cells": 188,
+          "positive_spikes": 1,
+          "negative_spikes": 1,
+          "static_spikes": 1,
+          "positive_minus_negative": 0,
+          "positive_cells": 0,
+          "negative_cells": 0
+        },
+        "T4c": {
+          "cells": 181,
+          "positive_spikes": 1,
+          "negative_spikes": 1,
+          "static_spikes": 1,
+          "positive_minus_negative": 0,
+          "positive_cells": 0,
+          "negative_cells": 0
+        },
+        "T4d": {
+          "cells": 201,
+          "positive_spikes": 0,
+          "negative_spikes": 0,
+          "static_spikes": 0,
+          "positive_minus_negative": 0,
+          "positive_cells": 0,
+          "negative_cells": 0
+        },
+        "T5a": {
+          "cells": 185,
+          "positive_spikes": 59,
+          "negative_spikes": 48,
+          "static_spikes": 24,
+          "positive_minus_negative": 11,
+          "positive_cells": 18,
+          "negative_cells": 8
+        },
+        "T5b": {
+          "cells": 186,
+          "positive_spikes": 45,
+          "negative_spikes": 47,
+          "static_spikes": 18,
+          "positive_minus_negative": -2,
+          "positive_cells": 10,
+          "negative_cells": 13
+        },
+        "T5c": {
+          "cells": 203,
+          "positive_spikes": 44,
+          "negative_spikes": 55,
+          "static_spikes": 23,
+          "positive_minus_negative": -11,
+          "positive_cells": 8,
+          "negative_cells": 19
+        },
+        "T5d": {
+          "cells": 186,
+          "positive_spikes": 44,
+          "negative_spikes": 44,
+          "static_spikes": 17,
+          "positive_minus_negative": 0,
+          "positive_cells": 8,
+          "negative_cells": 9
+        }
+      }
+    },
+    {
+      "axis": "vertical",
+      "center": 16,
+      "speed": 1,
+      "polarity": "on",
+      "calibration": false,
+      "pixel_events": 72,
+      "event_tracker": {
+        "positive_displacement": 1.0,
+        "negative_displacement": -1.0,
+        "static_displacement": 0.0
+      },
+      "t5_opponent": {
+        "positive": 0.014665286404416833,
+        "negative": -0.03890614216701174
+      },
+      "subtypes": {
+        "T4a": {
+          "cells": 204,
+          "positive_spikes": 0,
+          "negative_spikes": 1,
+          "static_spikes": 1,
+          "positive_minus_negative": -1,
+          "positive_cells": 0,
+          "negative_cells": 1
+        },
+        "T4b": {
+          "cells": 206,
+          "positive_spikes": 0,
+          "negative_spikes": 1,
+          "static_spikes": 1,
+          "positive_minus_negative": -1,
+          "positive_cells": 0,
+          "negative_cells": 1
+        },
+        "T4c": {
+          "cells": 201,
+          "positive_spikes": 0,
+          "negative_spikes": 1,
+          "static_spikes": 1,
+          "positive_minus_negative": -1,
+          "positive_cells": 0,
+          "negative_cells": 1
+        },
+        "T4d": {
+          "cells": 220,
+          "positive_spikes": 0,
+          "negative_spikes": 0,
+          "static_spikes": 0,
+          "positive_minus_negative": 0,
+          "positive_cells": 0,
+          "negative_cells": 0
+        },
+        "T5a": {
+          "cells": 206,
+          "positive_spikes": 37,
+          "negative_spikes": 48,
+          "static_spikes": 7,
+          "positive_minus_negative": -11,
+          "positive_cells": 20,
+          "negative_cells": 26
+        },
+        "T5b": {
+          "cells": 210,
+          "positive_spikes": 41,
+          "negative_spikes": 42,
+          "static_spikes": 3,
+          "positive_minus_negative": -1,
+          "positive_cells": 24,
+          "negative_cells": 27
+        },
+        "T5c": {
+          "cells": 224,
+          "positive_spikes": 40,
+          "negative_spikes": 52,
+          "static_spikes": 4,
+          "positive_minus_negative": -12,
+          "positive_cells": 21,
+          "negative_cells": 32
+        },
+        "T5d": {
+          "cells": 207,
+          "positive_spikes": 40,
+          "negative_spikes": 40,
+          "static_spikes": 0,
+          "positive_minus_negative": 0,
+          "positive_cells": 19,
+          "negative_cells": 22
+        }
+      }
+    },
+    {
+      "axis": "horizontal",
+      "center": 32,
+      "speed": 1,
+      "polarity": "on",
+      "calibration": false,
+      "pixel_events": 72,
+      "event_tracker": {
+        "positive_displacement": 1.0,
+        "negative_displacement": -1.0,
+        "static_displacement": 0.0
+      },
+      "t5_opponent": {
+        "positive": 0.020234122570051388,
+        "negative": -0.030827904020340052
+      },
+      "subtypes": {
+        "T4a": {
+          "cells": 186,
+          "positive_spikes": 1,
+          "negative_spikes": 1,
+          "static_spikes": 1,
+          "positive_minus_negative": 0,
+          "positive_cells": 0,
+          "negative_cells": 0
+        },
+        "T4b": {
+          "cells": 188,
+          "positive_spikes": 1,
+          "negative_spikes": 1,
+          "static_spikes": 1,
+          "positive_minus_negative": 0,
+          "positive_cells": 0,
+          "negative_cells": 0
+        },
+        "T4c": {
+          "cells": 181,
+          "positive_spikes": 1,
+          "negative_spikes": 1,
+          "static_spikes": 1,
+          "positive_minus_negative": 0,
+          "positive_cells": 0,
+          "negative_cells": 0
+        },
+        "T4d": {
+          "cells": 201,
+          "positive_spikes": 0,
+          "negative_spikes": 0,
+          "static_spikes": 0,
+          "positive_minus_negative": 0,
+          "positive_cells": 0,
+          "negative_cells": 0
+        },
+        "T5a": {
+          "cells": 185,
+          "positive_spikes": 36,
+          "negative_spikes": 36,
+          "static_spikes": 7,
+          "positive_minus_negative": 0,
+          "positive_cells": 16,
+          "negative_cells": 14
+        },
+        "T5b": {
+          "cells": 186,
+          "positive_spikes": 33,
+          "negative_spikes": 33,
+          "static_spikes": 1,
+          "positive_minus_negative": 0,
+          "positive_cells": 19,
+          "negative_cells": 17
+        },
+        "T5c": {
+          "cells": 203,
+          "positive_spikes": 33,
+          "negative_spikes": 39,
+          "static_spikes": 2,
+          "positive_minus_negative": -6,
+          "positive_cells": 15,
+          "negative_cells": 17
+        },
+        "T5d": {
+          "cells": 186,
+          "positive_spikes": 34,
+          "negative_spikes": 30,
+          "static_spikes": 0,
+          "positive_minus_negative": 4,
+          "positive_cells": 19,
+          "negative_cells": 14
+        }
+      }
+    }
+  ],
+  "blanks": {
+    "off": {
+      "pixel_events": 0,
+      "t5_spike_rate": 0.00011406809062464163,
+      "subtype_spikes": {
+        "T4a": 1,
+        "T4b": 1,
+        "T4c": 1,
+        "T4d": 0,
+        "T5a": 6,
+        "T5b": 3,
+        "T5c": 4,
+        "T5d": 0
+      }
+    },
+    "on": {
+      "pixel_events": 0,
+      "t5_spike_rate": 0.00011406809062464163,
+      "subtype_spikes": {
+        "T4a": 1,
+        "T4b": 1,
+        "T4c": 1,
+        "T4d": 0,
+        "T5a": 6,
+        "T5b": 3,
+        "T5c": 4,
+        "T5d": 0
+      }
+    }
+  },
+  "t5_decoder": {
+    "threshold": -0.06361166007905139,
+    "calibration_separated": true
+  },
+  "elapsed_seconds": 63.23093039996456
+}

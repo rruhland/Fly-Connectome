@@ -1,5 +1,6 @@
 """Opt-in frozen motion-front-end comparison on matched event streams."""
 
+import argparse
 import json
 import time
 from pathlib import Path
@@ -22,6 +23,8 @@ from tm4_supplemented_t5 import TM4_STATE, Tm4SupplementedT5Network
 
 
 OUT = Path('docs/experiments/2026-09-23-m1a-motion-front-end-results.json')
+EXTENDED_OUT = Path('docs/experiments/2026-09-23-m1a-motion-front-end-extension-results.json')
+DOT_OUT = Path('docs/experiments/2026-09-23-m1a-square-dot-results.json')
 STATE = NETWORK_STATE + GRADED_STATE + ORDER_STATE + TM4_STATE
 SUBTYPES = tuple(f'T{stage}{direction}' for stage in (4, 5)
                  for direction in 'abcd')
@@ -48,14 +51,40 @@ def opponent_score(spikes, cells):
     return spikes['T5d'] / max(cells['T5d'], 1) - spikes['T5c'] / max(cells['T5c'], 1)
 
 
-def images(axis, center, direction, speed, on):
-    frames = moving_bar(axis, center, direction, speed)
+def moving_square(axis, center, direction, speed):
+    if axis not in ('vertical', 'horizontal') or direction not in (-1, 1):
+        raise ValueError('axis and direction required')
+    y, x = torch.meshgrid(torch.arange(32), torch.arange(64), indexing='ij')
+    frames = []
+    for frame in range(18):
+        if 2 <= frame < 15:
+            position = center+direction*speed*(frame-8)
+            square = (((y-position).abs() <= 1) & ((x-32).abs() <= 1)
+                      if axis == 'vertical' else
+                      ((x-position).abs() <= 1) & ((y-16).abs() <= 1))
+            frames.append((~square).unsqueeze(0))
+        else:
+            frames.append(torch.ones((1, 32, 64), dtype=torch.bool))
+    return frames
+
+
+def static_square(axis, center):
+    frames = moving_square(axis, center, 1, 1)
+    for frame in range(2, 15):
+        frames[frame] = frames[8]
+    return frames
+
+
+def images(axis, center, direction, speed, on, *, dot=False):
+    frames = (moving_square(axis, center, direction, speed) if dot else
+              moving_bar(axis, center, direction, speed))
     return [~frame for frame in frames] if on else frames
 
 
 @torch.no_grad()
-def main():
+def main(*, horizontal_extension=False, dot_contest=False):
     torch.set_num_threads(4)
+    horizontal_extension |= dot_contest
     started = time.perf_counter()
     source_sha = checksum(SOURCE)
     payload = torch.load(SOURCE, weights_only=True)
@@ -151,14 +180,16 @@ def main():
     report = dict(source_sha256=source_sha, graph_sha256=graph.identity(),
                   annotations_sha256=checksum(ANNOTATIONS),
                   ticks_per_frame=8, frozen_weights=True,
+                  shape='square' if dot_contest else 'bar',
                   calibration=[], conditions=[], blanks={})
 
     def pair(axis, center, speed, on, *, calibration=False):
-        positive = capture(images(axis, center, 1, speed, on),
+        positive = capture(images(axis, center, 1, speed, on, dot=dot_contest),
                            axis=axis, center=center, on=on)
-        negative = capture(images(axis, center, -1, speed, on),
+        negative = capture(images(axis, center, -1, speed, on, dot=dot_contest),
                            axis=axis, center=center, on=on)
-        stationary = static_bar(axis, center)
+        stationary = (static_square(axis, center) if dot_contest else
+                      static_bar(axis, center))
         if on:
             stationary = [~frame for frame in stationary]
         static = capture(stationary, axis=axis, center=center, on=on)
@@ -194,8 +225,14 @@ def main():
     for center in (10, 22):
         report['calibration'].append(pair('vertical', center, 1, False,
                                           calibration=True))
-    up_scores = [row['t5_opponent']['negative'] for row in report['calibration']]
-    down_scores = [row['t5_opponent']['positive'] for row in report['calibration']]
+    if dot_contest:
+        for center in (18, 46):
+            report['calibration'].append(pair('horizontal', center, 1, False,
+                                              calibration=True))
+    vertical_calibration = [row for row in report['calibration']
+                            if row['axis'] == 'vertical']
+    up_scores = [row['t5_opponent']['negative'] for row in vertical_calibration]
+    down_scores = [row['t5_opponent']['positive'] for row in vertical_calibration]
     threshold = (max(up_scores)+min(down_scores))/2
     report['t5_decoder'] = dict(threshold=threshold,
         calibration_separated=bool(max(up_scores) < min(down_scores)))
@@ -204,6 +241,8 @@ def main():
               for center in (14, 18) for speed in (1, 2)]
              + [('horizontal', 32, speed, False) for speed in (1, 2)]
              + [('vertical', 16, 1, True), ('horizontal', 32, 1, True)])
+    if horizontal_extension and not dot_contest:
+        cases += [('horizontal', center, 1, False) for center in (18, 46)]
     for axis, center, speed, on in cases:
         row = pair(axis, center, speed, on)
         if axis == 'vertical' and not on:
@@ -212,6 +251,22 @@ def main():
             row['t5_opponent']['negative_correct'] = bool(
                 row['t5_opponent']['negative'] < threshold)
         report['conditions'].append(row)
+
+    if horizontal_extension and not dot_contest:
+        center = next(row for row in report['conditions']
+                      if row['axis'] == 'horizontal' and row['center'] == 32
+                      and row['speed'] == 1 and row['polarity'] == 'off')
+        right = center['t5_opponent']['positive']
+        left = center['t5_opponent']['negative']
+        threshold = (right+left)/2
+        report['horizontal_extension'] = dict(
+            center_threshold=threshold, center_separated=bool(right > left))
+        for row in report['conditions']:
+            if row['axis'] == 'horizontal' and row['center'] in (18, 46):
+                row['t5_opponent']['positive_correct'] = bool(
+                    row['t5_opponent']['positive'] > threshold)
+                row['t5_opponent']['negative_correct'] = bool(
+                    row['t5_opponent']['negative'] < threshold)
 
     for on in (False, True):
         background = torch.full((1, 32, 64), not on, dtype=torch.bool)
@@ -223,10 +278,16 @@ def main():
     report['elapsed_seconds'] = time.perf_counter()-started
     if checksum(SOURCE) != source_sha:
         raise AssertionError('source checkpoint changed')
-    OUT.write_text(json.dumps(report, indent=2, allow_nan=False)+'\n')
-    print(json.dumps(dict(output=str(OUT), elapsed_seconds=report['elapsed_seconds'],
+    output = DOT_OUT if dot_contest else EXTENDED_OUT if horizontal_extension else OUT
+    output.write_text(json.dumps(report, indent=2, allow_nan=False)+'\n')
+    print(json.dumps(dict(output=str(output), elapsed_seconds=report['elapsed_seconds'],
         t5_decoder=report['t5_decoder'])), flush=True)
 
 
 if __name__ == '__main__':
-    main()
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--horizontal-extension', action='store_true')
+    parser.add_argument('--dot-contest', action='store_true')
+    args = parser.parse_args()
+    main(horizontal_extension=args.horizontal_extension,
+         dot_contest=args.dot_contest)

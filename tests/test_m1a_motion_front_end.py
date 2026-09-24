@@ -6,7 +6,8 @@ import torch
 sys.path.insert(0, str(Path(__file__).parents[1]/'scripts'))
 
 from fly_connectome.sensor import EventCamera
-from m1a_motion_front_end import event_centroid, median_displacement, opponent_score
+from m1a_motion_front_end import (event_centroid, median_displacement,
+                                  moving_square, opponent_score, static_square)
 from motion_t5_axis_aligned import moving_bar, static_bar
 
 
@@ -39,3 +40,12 @@ def test_opponent_score_normalizes_for_local_cell_count():
                           {'T5c': 10, 'T5d': 10}) == .5
     assert opponent_score({'T5c': 10, 'T5d': 5},
                           {'T5c': 10, 'T5d': 10}) == -.5
+
+
+def test_square_motion_uses_same_shape_on_both_axes():
+    for axis in ('vertical', 'horizontal'):
+        frames = moving_square(axis, 16 if axis == 'vertical' else 32, 1, 2)
+        static = static_square(axis, 16 if axis == 'vertical' else 32)
+        assert len(frames) == len(static) == 18
+        assert all(int((~frame).sum()) == 9 for frame in frames[2:15])
+        assert all(torch.equal(frame, static[8]) for frame in static[2:15])

@@ -1,0 +1,535 @@
+{
+  "bar_sha256": "713ef24632e6db499d64197c2c71fc7e86629681504f6beb41e8f51f761dae6d",
+  "dot_sha256": "a5b17fb1381af009e264795aafa43ef7f6870934ac3770c9ced96b70ccf36ed3",
+  "bar_intensity": {
+    "moving_min": 3.9931950434834853,
+    "static_max": 1.5298617629629692,
+    "threshold": 2.7615284032232275,
+    "separated": true
+  },
+  "dot_intensity": {
+    "moving_min": 1.0999139779785778,
+    "static_max": 0.47920166201223124,
+    "threshold": 0.7895578199954045,
+    "separated": true
+  },
+  "bar_with_bar_decoder": {
+    "trials": [
+      {
+        "axis": "vertical",
+        "center": 14,
+        "speed": 1,
+        "truth": "down",
+        "prediction": "down",
+        "motion_energy": 3.6693497474747474,
+        "moving_detected": true,
+        "event_displacement": 1.0
+      },
+      {
+        "axis": "vertical",
+        "center": 14,
+        "speed": 1,
+        "truth": "up",
+        "prediction": "up",
+        "motion_energy": 4.1885314411722865,
+        "moving_detected": true,
+        "event_displacement": -1.0
+      },
+      {
+        "axis": "vertical",
+        "center": 14,
+        "speed": 2,
+        "truth": "down",
+        "prediction": "down",
+        "motion_energy": 3.574594981505193,
+        "moving_detected": true,
+        "event_displacement": 2.0
+      },
+      {
+        "axis": "vertical",
+        "center": 14,
+        "speed": 2,
+        "truth": "up",
+        "prediction": "up",
+        "motion_energy": 3.7270615485844356,
+        "moving_detected": true,
+        "event_displacement": -2.0
+      },
+      {
+        "axis": "vertical",
+        "center": 18,
+        "speed": 1,
+        "truth": "down",
+        "prediction": "down",
+        "motion_energy": 3.768796784195321,
+        "moving_detected": true,
+        "event_displacement": 1.0
+      },
+      {
+        "axis": "vertical",
+        "center": 18,
+        "speed": 1,
+        "truth": "up",
+        "prediction": "up",
+        "motion_energy": 3.9034052779590986,
+        "moving_detected": true,
+        "event_displacement": -1.0
+      },
+      {
+        "axis": "vertical",
+        "center": 18,
+        "speed": 2,
+        "truth": "down",
+        "prediction": "down",
+        "motion_energy": 3.469375002061617,
+        "moving_detected": true,
+        "event_displacement": 2.0
+      },
+      {
+        "axis": "vertical",
+        "center": 18,
+        "speed": 2,
+        "truth": "up",
+        "prediction": "up",
+        "motion_energy": 3.8488577665169714,
+        "moving_detected": true,
+        "event_displacement": -2.0
+      },
+      {
+        "axis": "horizontal",
+        "center": 32,
+        "speed": 1,
+        "truth": "right",
+        "prediction": "right",
+        "motion_energy": 4.453956133155243,
+        "moving_detected": true,
+        "event_displacement": 1.0
+      },
+      {
+        "axis": "horizontal",
+        "center": 32,
+        "speed": 1,
+        "truth": "left",
+        "prediction": "left",
+        "motion_energy": 4.729523866787493,
+        "moving_detected": true,
+        "event_displacement": -1.0
+      },
+      {
+        "axis": "horizontal",
+        "center": 32,
+        "speed": 2,
+        "truth": "right",
+        "prediction": "right",
+        "motion_energy": 4.317606005815127,
+        "moving_detected": true,
+        "event_displacement": 2.0
+      },
+      {
+        "axis": "horizontal",
+        "center": 32,
+        "speed": 2,
+        "truth": "left",
+        "prediction": "left",
+        "motion_energy": 4.058341529198036,
+        "moving_detected": true,
+        "event_displacement": -2.0
+      }
+    ],
+    "static": [
+      {
+        "axis": "vertical",
+        "center": 14,
+        "speed": 1,
+        "motion_energy": 1.4283037238583014,
+        "false_alarm": false
+      },
+      {
+        "axis": "vertical",
+        "center": 14,
+        "speed": 2,
+        "motion_energy": 1.4283037238583014,
+        "false_alarm": false
+      },
+      {
+        "axis": "vertical",
+        "center": 18,
+        "speed": 1,
+        "motion_energy": 1.32060616300664,
+        "false_alarm": false
+      },
+      {
+        "axis": "vertical",
+        "center": 18,
+        "speed": 2,
+        "motion_energy": 1.32060616300664,
+        "false_alarm": false
+      },
+      {
+        "axis": "horizontal",
+        "center": 32,
+        "speed": 1,
+        "motion_energy": 1.5392629877613193,
+        "false_alarm": false
+      },
+      {
+        "axis": "horizontal",
+        "center": 32,
+        "speed": 2,
+        "motion_energy": 1.5392629877613193,
+        "false_alarm": false
+      }
+    ],
+    "correct": 12,
+    "total": 12,
+    "moving_detected": 12,
+    "static_false_alarms": 0,
+    "event_tracker_correct": 12
+  },
+  "dot_with_dot_decoder": {
+    "trials": [
+      {
+        "axis": "vertical",
+        "center": 14,
+        "speed": 1,
+        "truth": "down",
+        "prediction": "down",
+        "motion_energy": 1.2694995731967562,
+        "moving_detected": true,
+        "event_displacement": 1.0
+      },
+      {
+        "axis": "vertical",
+        "center": 14,
+        "speed": 1,
+        "truth": "up",
+        "prediction": "up",
+        "motion_energy": 1.4629014618011096,
+        "moving_detected": true,
+        "event_displacement": -1.0
+      },
+      {
+        "axis": "vertical",
+        "center": 14,
+        "speed": 2,
+        "truth": "down",
+        "prediction": "left",
+        "motion_energy": 1.203245038412292,
+        "moving_detected": true,
+        "event_displacement": 2.0
+      },
+      {
+        "axis": "vertical",
+        "center": 14,
+        "speed": 2,
+        "truth": "up",
+        "prediction": "left",
+        "motion_energy": 1.1293814020486554,
+        "moving_detected": true,
+        "event_displacement": -2.0
+      },
+      {
+        "axis": "vertical",
+        "center": 18,
+        "speed": 1,
+        "truth": "down",
+        "prediction": "down",
+        "motion_energy": 1.3632320923682548,
+        "moving_detected": true,
+        "event_displacement": 1.0
+      },
+      {
+        "axis": "vertical",
+        "center": 18,
+        "speed": 1,
+        "truth": "up",
+        "prediction": "left",
+        "motion_energy": 1.2356750002412855,
+        "moving_detected": true,
+        "event_displacement": -1.0
+      },
+      {
+        "axis": "vertical",
+        "center": 18,
+        "speed": 2,
+        "truth": "down",
+        "prediction": "left",
+        "motion_energy": 1.1106508564170285,
+        "moving_detected": true,
+        "event_displacement": 2.0
+      },
+      {
+        "axis": "vertical",
+        "center": 18,
+        "speed": 2,
+        "truth": "up",
+        "prediction": "right",
+        "motion_energy": 1.1636129692133101,
+        "moving_detected": true,
+        "event_displacement": -2.0
+      },
+      {
+        "axis": "horizontal",
+        "center": 32,
+        "speed": 1,
+        "truth": "right",
+        "prediction": "right",
+        "motion_energy": 1.026265706354694,
+        "moving_detected": true,
+        "event_displacement": 1.0
+      },
+      {
+        "axis": "horizontal",
+        "center": 32,
+        "speed": 1,
+        "truth": "left",
+        "prediction": "left",
+        "motion_energy": 1.137140652491042,
+        "moving_detected": true,
+        "event_displacement": -1.0
+      },
+      {
+        "axis": "horizontal",
+        "center": 32,
+        "speed": 2,
+        "truth": "right",
+        "prediction": "right",
+        "motion_energy": 1.0141623110477394,
+        "moving_detected": true,
+        "event_displacement": 2.0
+      },
+      {
+        "axis": "horizontal",
+        "center": 32,
+        "speed": 2,
+        "truth": "left",
+        "prediction": "left",
+        "motion_energy": 1.0196427318785495,
+        "moving_detected": true,
+        "event_displacement": -2.0
+      }
+    ],
+    "static": [
+      {
+        "axis": "vertical",
+        "center": 14,
+        "speed": 1,
+        "motion_energy": 0.4896077856025039,
+        "false_alarm": false
+      },
+      {
+        "axis": "vertical",
+        "center": 14,
+        "speed": 2,
+        "motion_energy": 0.4896077856025039,
+        "false_alarm": false
+      },
+      {
+        "axis": "vertical",
+        "center": 18,
+        "speed": 1,
+        "motion_energy": 0.42223513965178894,
+        "false_alarm": false
+      },
+      {
+        "axis": "vertical",
+        "center": 18,
+        "speed": 2,
+        "motion_energy": 0.42223513965178894,
+        "false_alarm": false
+      },
+      {
+        "axis": "horizontal",
+        "center": 32,
+        "speed": 1,
+        "motion_energy": 0.4312022653513199,
+        "false_alarm": false
+      },
+      {
+        "axis": "horizontal",
+        "center": 32,
+        "speed": 2,
+        "motion_energy": 0.4312022653513199,
+        "false_alarm": false
+      }
+    ],
+    "correct": 7,
+    "total": 12,
+    "moving_detected": 12,
+    "static_false_alarms": 0,
+    "event_tracker_correct": 12
+  },
+  "dot_with_bar_decoder": {
+    "trials": [
+      {
+        "axis": "vertical",
+        "center": 14,
+        "speed": 1,
+        "truth": "down",
+        "prediction": "down",
+        "motion_energy": 1.2694995731967562,
+        "moving_detected": false,
+        "event_displacement": 1.0
+      },
+      {
+        "axis": "vertical",
+        "center": 14,
+        "speed": 1,
+        "truth": "up",
+        "prediction": "up",
+        "motion_energy": 1.4629014618011096,
+        "moving_detected": false,
+        "event_displacement": -1.0
+      },
+      {
+        "axis": "vertical",
+        "center": 14,
+        "speed": 2,
+        "truth": "down",
+        "prediction": "down",
+        "motion_energy": 1.203245038412292,
+        "moving_detected": false,
+        "event_displacement": 2.0
+      },
+      {
+        "axis": "vertical",
+        "center": 14,
+        "speed": 2,
+        "truth": "up",
+        "prediction": "up",
+        "motion_energy": 1.1293814020486554,
+        "moving_detected": false,
+        "event_displacement": -2.0
+      },
+      {
+        "axis": "vertical",
+        "center": 18,
+        "speed": 1,
+        "truth": "down",
+        "prediction": "down",
+        "motion_energy": 1.3632320923682548,
+        "moving_detected": false,
+        "event_displacement": 1.0
+      },
+      {
+        "axis": "vertical",
+        "center": 18,
+        "speed": 1,
+        "truth": "up",
+        "prediction": "up",
+        "motion_energy": 1.2356750002412855,
+        "moving_detected": false,
+        "event_displacement": -1.0
+      },
+      {
+        "axis": "vertical",
+        "center": 18,
+        "speed": 2,
+        "truth": "down",
+        "prediction": "down",
+        "motion_energy": 1.1106508564170285,
+        "moving_detected": false,
+        "event_displacement": 2.0
+      },
+      {
+        "axis": "vertical",
+        "center": 18,
+        "speed": 2,
+        "truth": "up",
+        "prediction": "up",
+        "motion_energy": 1.1636129692133101,
+        "moving_detected": false,
+        "event_displacement": -2.0
+      },
+      {
+        "axis": "horizontal",
+        "center": 32,
+        "speed": 1,
+        "truth": "right",
+        "prediction": "up",
+        "motion_energy": 1.026265706354694,
+        "moving_detected": false,
+        "event_displacement": 1.0
+      },
+      {
+        "axis": "horizontal",
+        "center": 32,
+        "speed": 1,
+        "truth": "left",
+        "prediction": "up",
+        "motion_energy": 1.137140652491042,
+        "moving_detected": false,
+        "event_displacement": -1.0
+      },
+      {
+        "axis": "horizontal",
+        "center": 32,
+        "speed": 2,
+        "truth": "right",
+        "prediction": "up",
+        "motion_energy": 1.0141623110477394,
+        "moving_detected": false,
+        "event_displacement": 2.0
+      },
+      {
+        "axis": "horizontal",
+        "center": 32,
+        "speed": 2,
+        "truth": "left",
+        "prediction": "up",
+        "motion_energy": 1.0196427318785495,
+        "moving_detected": false,
+        "event_displacement": -2.0
+      }
+    ],
+    "static": [
+      {
+        "axis": "vertical",
+        "center": 14,
+        "speed": 1,
+        "motion_energy": 0.4896077856025039,
+        "false_alarm": false
+      },
+      {
+        "axis": "vertical",
+        "center": 14,
+        "speed": 2,
+        "motion_energy": 0.4896077856025039,
+        "false_alarm": false
+      },
+      {
+        "axis": "vertical",
+        "center": 18,
+        "speed": 1,
+        "motion_energy": 0.42223513965178894,
+        "false_alarm": false
+      },
+      {
+        "axis": "vertical",
+        "center": 18,
+        "speed": 2,
+        "motion_energy": 0.42223513965178894,
+        "false_alarm": false
+      },
+      {
+        "axis": "horizontal",
+        "center": 32,
+        "speed": 1,
+        "motion_energy": 0.4312022653513199,
+        "false_alarm": false
+      },
+      {
+        "axis": "horizontal",
+        "center": 32,
+        "speed": 2,
+        "motion_energy": 0.4312022653513199,
+        "false_alarm": false
+      }
+    ],
+    "correct": 8,
+    "total": 12,
+    "moving_detected": 0,
+    "static_false_alarms": 0,
+    "event_tracker_correct": 12
+  }
+}
