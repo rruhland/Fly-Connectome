@@ -31,3 +31,13 @@ def test_sensory_dictionary_changes_from_unlabeled_local_events():
     event[1, 10:13, 20] = 1
     model.step(event, learn=True)
     assert not torch.equal(model.sensory, initial)
+
+
+def test_homeostatic_competition_recruits_multiple_channels():
+    model = LocalVisualLatent(channels=4, seed=0, homeostasis=True)
+    event = torch.zeros((2, 32, 64))
+    event[0, 16, 16] = 1
+    for _ in range(40):
+        model.reset_state()
+        model.step(event, learn=True)
+    assert int((model.usage > 0).sum()) > 1

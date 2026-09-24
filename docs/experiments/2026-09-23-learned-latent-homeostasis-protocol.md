@@ -1,0 +1,5 @@
+# Bounded homeostatic latent-code follow-up
+
+The [first learned-latent probe](2026-09-23-learned-latent-findings.md) left five of twelve sensory channels unused, failed cross-shape direction transfer, and forecast poorly at one-pixel/frame speed. Test one local change: score each initially unassigned sensory prototype by cosine similarity to the current local event patch and subtract a use-dependent excitability penalty (0.75 × the channel's running share of winner assignments). Keep the same competitive Hebbian update, recurrent topology, local predictive-error update, training episodes, held-out scenes, and controls. The mechanism receives no direction or object labels. It is opt-in and does not change production M1A.
+
+Require materially more occupied channels and both better held-out latent transfer and slow-tempo forecast than the first probe before considering this line promising. A higher F1 caused only by changed output amplitude, or a probe score no better than random/frozen, is insufficient. Run this single variant and then reassess the learning objective/state organization rather than sweeping penalties or learning rates.

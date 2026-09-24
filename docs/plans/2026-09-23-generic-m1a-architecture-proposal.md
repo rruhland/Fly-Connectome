@@ -17,6 +17,8 @@ Use no backpropagation. Preserve the measured connectome graph and transmitter s
 
 The learned recurrent population is the central M1A representation. Correlation filters and explicit trackers can help test what information the sensory stream contains, but cannot substitute for evidence that recurrent plasticity discovers reusable structure. This order avoids forcing early L1/L2/L3 cells to supervise their own future activation or assigning direction/velocity labels to latent channels.
 
+The [first learned-latent tests](../experiments/2026-09-23-learned-latent-homeostasis-findings.md) provide a narrow positive sensory-code result but expose a recurrent-learning failure. Homeostatic local Hebbian coding improved held-out direction readability, while a feedforward-selected code plus separate recurrent predictor failed to fit even training trajectories well. The next candidate must let recurrent activity influence the current inferred state and must distinguish conflicting local temporal contexts in its eligibility/credit; do not promote the current dictionary or recurrent rule as a working M1A representation.
+
 ## Shortest evidence path before promotion
 
 1. **Generic scene suite.** Extend the opt-in event-camera tests to varied shapes, polarities, scales, positions, speeds, two independent movers, crossings, partial occlusion, stationary visual context, trajectory changes, and sensor noise. The generator may know hidden trajectories only for scoring. Establish performance and throughput of the full proposed front end, not just the isolated kernel.
