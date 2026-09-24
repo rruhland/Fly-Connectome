@@ -37,6 +37,8 @@ The [ungated predictive-feedback test](../experiments/2026-09-24-predictive-feed
 
 The [first separated-state test and frozen ablation](../experiments/2026-09-24-separated-visual-state-findings.md) sustained latent state and reduced quiet false alarms, but shared event error across observed and imagined emission banks underfit even training scenes. Removing imagined emission worsened clean prediction, so the mechanism needs a different local credit assignment rather than a simple output cutoff. Test one bounded locally separated-credit variant, then pivot if it does not improve both training fit and held-out interruption performance.
 
+The [separate-credit follow-up](../experiments/2026-09-24-separated-emission-credit-findings.md) restored much of the local learner's clean forecast quality, confirming that the shared emission error caused credit interference. It did **not** produce a material advantage over a matched no-recurrence emitter on disappearance or noise. Stop tuning this two-bank variant. The next experiment must change the latent transition's learning target or partial-observation state representation so it can learn continuity through missing evidence, while preserving separate local credit and the strong correlation-input learned code as controls.
+
 ## Shortest evidence path before promotion
 
 1. **Generic scene suite.** Extend the opt-in event-camera tests to varied shapes, polarities, scales, positions, speeds, two independent movers, crossings, partial occlusion, stationary visual context, trajectory changes, and sensor noise. The generator may know hidden trajectories only for scoring. Establish performance and throughput of the full proposed front end, not just the isolated kernel.

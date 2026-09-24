@@ -29,11 +29,13 @@ def local_update(weights, sources, error, eta):
 
 class SeparatedVisualState:
     def __init__(self, encoder, *, recurrence=True,
-                 state_eta=.5, emission_eta=.5):
+                 state_eta=.5, emission_eta=.5,
+                 separate_credit=False):
         self.encoder = encoder
         self.recurrence = recurrence
         self.state_eta = state_eta
         self.emission_eta = emission_eta
+        self.separate_credit = separate_credit
         units = encoder.units
         self.state_weights = torch.zeros((units, units, 5, 5))
         self.emission_observed = torch.zeros((2, units, 5, 5))
@@ -44,6 +46,8 @@ class SeparatedVisualState:
         self.encoder.reset_state()
         self.pending_state = None
         self.pending_events = None
+        self.pending_observed_events = None
+        self.pending_imagined_events = None
         self.previous_state_sources = []
         self.previous_observed_sources = []
         self.previous_imagined_sources = []
@@ -56,12 +60,17 @@ class SeparatedVisualState:
         self.encoder.step(primitive)
         observed = self.encoder.latent.clone()
         if learn and self.pending_events is not None:
-            event_error = events-self.pending_events
+            observed_error = events-(
+                self.pending_observed_events if self.separate_credit
+                else self.pending_events)
+            imagined_error = events-(
+                self.pending_imagined_events if self.separate_credit
+                else self.pending_events)
             local_update(self.emission_observed,
-                         self.previous_observed_sources, event_error,
+                         self.previous_observed_sources, observed_error,
                          self.emission_eta)
             local_update(self.emission_imagined,
-                         self.previous_imagined_sources, event_error,
+                         self.previous_imagined_sources, imagined_error,
                          self.emission_eta)
             if self.recurrence:
                 evidence = F.max_pool2d((observed.sum(0) > 0).float()[
@@ -79,12 +88,16 @@ class SeparatedVisualState:
         state_sources = active_sources(state)
         state_prediction = (scatter_local(self.state_weights, state_sources)
                             if self.recurrence else torch.zeros_like(state))
-        event_prediction = (scatter_local(self.emission_observed,
-                                          observed_sources)
-                            + scatter_local(self.emission_imagined,
-                                            imagined_sources)).clamp_(0, 1)
+        observed_prediction = scatter_local(self.emission_observed,
+                                            observed_sources)
+        imagined_prediction = scatter_local(self.emission_imagined,
+                                            imagined_sources)
+        event_prediction = (observed_prediction
+                            + imagined_prediction).clamp_(0, 1)
         self.pending_state = state_prediction
         self.pending_events = event_prediction
+        self.pending_observed_events = observed_prediction
+        self.pending_imagined_events = imagined_prediction
         self.previous_state_sources = state_sources
         self.previous_observed_sources = observed_sources
         self.previous_imagined_sources = imagined_sources

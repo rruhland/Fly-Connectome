@@ -23,7 +23,8 @@ OUT = Path('docs/experiments/2026-09-24-separated-visual-state-results.json')
 VELOCITY = {'up': (-1, 0), 'down': (1, 0),
             'left': (0, -1), 'right': (0, 1)}
 NAMES = ('archived', 'matched_primitive', 'recurrent',
-         'recurrent_no_imagined', 'no_recurrence', 'fixed')
+         'recurrent_no_imagined', 'separate_credit',
+         'no_recurrence', 'fixed')
 
 
 def make_training_cases():
@@ -56,10 +57,15 @@ def train_candidates(cases):
     matched = copy.deepcopy(archived)
     matched.predictive.zero_()
     recurrent_encoder = copy.deepcopy(archived)
+    separate_encoder = copy.deepcopy(archived)
     no_recurrence_encoder = copy.deepcopy(archived)
     recurrent_encoder.predictive.zero_()
+    separate_encoder.predictive.zero_()
     no_recurrence_encoder.predictive.zero_()
     recurrent = SeparatedVisualState(recurrent_encoder, recurrence=True)
+    separate_credit = SeparatedVisualState(separate_encoder,
+                                            recurrence=True,
+                                            separate_credit=True)
     no_recurrence = SeparatedVisualState(no_recurrence_encoder,
                                           recurrence=False)
     encoded = [(kind, shape, events, correlation_sequence(events))
@@ -69,15 +75,18 @@ def train_candidates(cases):
     for _, _, events, codes in encoded:
         matched.reset_state()
         recurrent.reset_state()
+        separate_credit.reset_state()
         no_recurrence.reset_state()
         for event, code in zip(events, codes):
             matched.step(code, learn_prediction=True)
             recurrent.step(code, event, learn=True)
+            separate_credit.step(code, event, learn=True)
             no_recurrence.step(code, event, learn=True)
     no_imagined = copy.deepcopy(recurrent)
     no_imagined.emission_imagined.zero_()
     return dict(archived=archived, matched_primitive=matched,
                 recurrent=recurrent, recurrent_no_imagined=no_imagined,
+                separate_credit=separate_credit,
                 no_recurrence=no_recurrence)
 
 
@@ -88,6 +97,7 @@ def evaluate(models, cases):
     overall = {name: empty_score() for name in NAMES}
     quiet = {name: dict(frames=0, false_alarm_pixels=0) for name in NAMES}
     state = dict(blank_inputs=0, recurrent_active=0,
+                 separate_credit_active=0,
                  no_recurrence_active=0)
     fixed = LocalTripletLearner(eta=.3, local_competition=True)
     fixed.weights.fill_(1)
@@ -104,12 +114,15 @@ def evaluate(models, cases):
                 recurrent=models['recurrent'].step(code, event),
                 recurrent_no_imagined=models['recurrent_no_imagined'].step(
                     code, event),
+                separate_credit=models['separate_credit'].step(code, event),
                 no_recurrence=models['no_recurrence'].step(code, event),
                 fixed=fixed.step(event, learn=False))
             if code.sum() == 0:
                 state['blank_inputs'] += 1
                 state['recurrent_active'] += int(
                     models['recurrent'].imagined.sum() > 0)
+                state['separate_credit_active'] += int(
+                    models['separate_credit'].imagined.sum() > 0)
                 state['no_recurrence_active'] += int(
                     models['no_recurrence'].imagined.sum() > 0)
             if 3 <= t < 14:

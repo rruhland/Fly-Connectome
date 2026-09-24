@@ -38,3 +38,22 @@ def test_delayed_visible_event_credit_changes_only_local_emission_weight():
     assert model.emission_observed[0, :, 2, 3].sum() > 0
     assert model.emission_observed[1].sum() == 0
     assert model.emission_imagined.sum() == 0
+
+
+def test_separate_credit_uses_each_emission_bank_own_local_residual():
+    encoder = TransitionPopulation(channels=16, seed=0)
+    model = SeparatedVisualState(encoder, recurrence=True,
+                                 separate_credit=True, emission_eta=1.)
+    model.previous_observed_sources = [(16, 16, 0, 1.)]
+    model.previous_imagined_sources = [(16, 16, 0, 1.)]
+    model.pending_state = torch.zeros((24, 32, 64))
+    model.pending_events = torch.zeros((2, 32, 64))
+    model.pending_observed_events = torch.zeros((2, 32, 64))
+    model.pending_imagined_events = torch.zeros((2, 32, 64))
+    model.pending_observed_events[0, 16, 17] = 1
+    target = torch.zeros((2, 32, 64))
+    target[0, 16, 17] = 1
+    blank = torch.zeros((16, 32, 64))
+    model.step(blank, target, learn=True)
+    assert model.emission_observed.sum() == 0
+    assert model.emission_imagined[0, 0, 2, 3] > 0
