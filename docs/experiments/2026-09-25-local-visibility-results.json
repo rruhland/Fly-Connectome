@@ -1,0 +1,211 @@
+{
+  "training_episodes": 480,
+  "clean_heldout": 48,
+  "matched_configurations": 144,
+  "empirical_local_hazard": 0.6293082072898587,
+  "head_weights": {
+    "learned": [
+      -0.4512906074523926,
+      -0.04228607192635536,
+      -0.538743793964386,
+      2.1155896186828613
+    ],
+    "shuffled_time": [
+      -1.005396842956543,
+      -0.01925709657371044,
+      -0.5009686946868896,
+      -0.1202196329832077
+    ]
+  },
+  "evaluation": {
+    "global_scores": {
+      "overall": {
+        "learned": {
+          "brier_sum": 1036.5070228945096,
+          "predicted_sum": 3476.31921929121,
+          "target_sum": 4416.0,
+          "count": 5280,
+          "brier": 0.19630814827547532,
+          "mean_probability": 0.6583937915324262,
+          "event_rate": 0.8363636363636363
+        },
+        "shuffled_time": {
+          "brier_sum": 2962.1457616761336,
+          "predicted_sum": 995.6117673963308,
+          "target_sum": 4416.0,
+          "count": 5280,
+          "brier": 0.5610124548629041,
+          "mean_probability": 0.18856283473415356,
+          "event_rate": 0.8363636363636363
+        },
+        "fixed_hazard": {
+          "brier_sum": 1198.8884048918974,
+          "predicted_sum": 3101.8602347373962,
+          "target_sum": 4416.0,
+          "count": 5280,
+          "brier": 0.2270621978961927,
+          "mean_probability": 0.587473529306325,
+          "event_rate": 0.8363636363636363
+        }
+      },
+      "visible": {
+        "learned": {
+          "brier_sum": 722.917378305665,
+          "predicted_sum": 3011.2381866276264,
+          "target_sum": 4416.0,
+          "count": 4416,
+          "brier": 0.16370411646414515,
+          "mean_probability": 0.681892705305169,
+          "event_rate": 1.0
+        },
+        "shuffled_time": {
+          "brier_sum": 2927.7535964233452,
+          "predicted_sum": 827.4929446876049,
+          "target_sum": 4416.0,
+          "count": 4416,
+          "brier": 0.6629876803494894,
+          "mean_probability": 0.18738517769193952,
+          "event_rate": 1.0
+        },
+        "fixed_hazard": {
+          "brier_sum": 873.3526980443683,
+          "predicted_sum": 2584.568874835968,
+          "target_sum": 4416.0,
+          "count": 4416,
+          "brier": 0.19777008560787324,
+          "mean_probability": 0.5852737488306087,
+          "event_rate": 1.0
+        }
+      },
+      "quiet": {
+        "learned": {
+          "brier_sum": 313.5896445888334,
+          "predicted_sum": 465.08103266358376,
+          "target_sum": 0.0,
+          "count": 864,
+          "brier": 0.36295097753337197,
+          "mean_probability": 0.5382882322495183,
+          "event_rate": 0.0
+        },
+        "shuffled_time": {
+          "brier_sum": 34.39216525276591,
+          "predicted_sum": 168.11882270872593,
+          "target_sum": 0.0,
+          "count": 864,
+          "brier": 0.03980574682033092,
+          "mean_probability": 0.19458197072769204,
+          "event_rate": 0.0
+        },
+        "fixed_hazard": {
+          "brier_sum": 325.5357068475291,
+          "predicted_sum": 517.2913599014282,
+          "target_sum": 0.0,
+          "count": 864,
+          "brier": 0.3767774384809365,
+          "mean_probability": 0.5987168517377641,
+          "event_rate": 0.0
+        }
+      },
+      "gap_exit": {
+        "learned": {
+          "brier_sum": 267.86157854607166,
+          "predicted_sum": 96.6153236925602,
+          "target_sum": 432.0,
+          "count": 432,
+          "brier": 0.6200499503381288,
+          "mean_probability": 0.22364658262166712,
+          "event_rate": 1.0
+        },
+        "shuffled_time": {
+          "brier_sum": 314.9987790854494,
+          "predicted_sum": 65.10642197728157,
+          "target_sum": 432.0,
+          "count": 432,
+          "brier": 0.7291638404755774,
+          "mean_probability": 0.15070931013259622,
+          "event_rate": 1.0
+        },
+        "fixed_hazard": {
+          "brier_sum": 155.10937815248167,
+          "predicted_sum": 202.00793981552124,
+          "target_sum": 432.0,
+          "count": 432,
+          "brier": 0.3590494864640779,
+          "mean_probability": 0.46761097179518807,
+          "event_rate": 1.0
+        }
+      }
+    },
+    "local_scores": {
+      "learned": {
+        "brier_sum": 9297.416708603501,
+        "predicted_sum": 55450.935581713915,
+        "target_sum": 60716.0,
+        "count": 76952,
+        "brier": 0.12082098852016193,
+        "mean_probability": 0.7205912202634618,
+        "event_rate": 0.7890113317392661
+      },
+      "shuffled_time": {
+        "brier_sum": 39363.09677664563,
+        "predicted_sum": 15480.659713342786,
+        "target_sum": 60716.0,
+        "count": 76952,
+        "brier": 0.5115279235971206,
+        "mean_probability": 0.2011729352498023,
+        "event_rate": 0.7890113317392661
+      },
+      "fixed_hazard": {
+        "brier_sum": 14773.056211560965,
+        "predicted_sum": 48426.52612018585,
+        "target_sum": 60716.0,
+        "count": 76952,
+        "brier": 0.19197754719254814,
+        "mean_probability": 0.6293082196718195,
+        "event_rate": 0.7890113317392661
+      }
+    },
+    "matched_pairs": {
+      "learned": {
+        "brier_sum": 183.9841271619789,
+        "predicted_sum": 149.38252007961273,
+        "target_sum": 288.0,
+        "count": 576,
+        "brier": 0.31941688743399116,
+        "mean_probability": 0.25934465291599434,
+        "event_rate": 0.5
+      },
+      "shuffled_time": {
+        "brier_sum": 207.90657518492668,
+        "predicted_sum": 100.71633768081665,
+        "target_sum": 288.0,
+        "count": 576,
+        "brier": 0.3609489152516088,
+        "mean_probability": 0.17485475291808447,
+        "event_rate": 0.5
+      },
+      "fixed_hazard": {
+        "brier_sum": 173.22654342759324,
+        "predicted_sum": 309.6196460723877,
+        "target_sum": 288.0,
+        "count": 576,
+        "brier": 0.300740526784016,
+        "mean_probability": 0.537534107764562,
+        "event_rate": 0.5
+      }
+    },
+    "identical_prefix_probabilities": {
+      "two_vs_three": 144,
+      "three_vs_four": 144
+    },
+    "candidate": {
+      "frames": 5280,
+      "active_frames": 4929,
+      "event_pixels": 64092,
+      "covered_event_pixels": 56884,
+      "event_pixel_coverage": 0.8875366660425638
+    }
+  },
+  "training_seconds": 99.10511880007107,
+  "elapsed_seconds": 160.9347826000303
+}

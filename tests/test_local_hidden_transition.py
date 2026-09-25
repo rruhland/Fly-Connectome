@@ -26,6 +26,15 @@ def test_hidden_state_advances_without_visible_input():
     assert model.state[:, 16, 17].sum() > 0
 
 
+def test_elapsed_evidence_travels_with_hidden_state():
+    model = LocalHiddenTransition(TransitionPopulation(channels=16))
+    model.weights[:, :, 2, 3] = 1
+    model.step(impulse())
+    model.step(torch.zeros((16, 32, 64)))
+    assert model.age[:, 16, 17].max() == 1
+    assert model.pending_age[:, 16, 18].max() == 2
+
+
 def test_visible_next_state_supplies_delayed_local_credit():
     model = LocalHiddenTransition(TransitionPopulation(channels=16), eta=1)
     model.step(impulse(), learn=True)

@@ -1,0 +1,53 @@
+{
+  "groups": {
+    "clean_visible": {
+      "frames": 144,
+      "active_frames": 144,
+      "sites": 2816,
+      "local_positive": 2628,
+      "target_pixels": 2160,
+      "covered_pixels": 2160,
+      "age_sum": 1443.0264201164246,
+      "mass_sum": 107.58890408277512,
+      "evidence_sum": 2723.0,
+      "local_positive_fraction": 0.9332386363636364,
+      "pixel_coverage": 1.0,
+      "mean_age_feature": 0.512438359416344,
+      "mean_mass_feature": 0.038206286961212754,
+      "mean_recent_evidence": 0.9669744318181818
+    },
+    "two_vs_three": {
+      "frames": 144,
+      "active_frames": 144,
+      "sites": 1530,
+      "local_positive": 1164,
+      "target_pixels": 1824,
+      "covered_pixels": 1632,
+      "age_sum": 1044.3582669496536,
+      "mass_sum": 50.18066123127937,
+      "evidence_sum": 0.0,
+      "local_positive_fraction": 0.7607843137254902,
+      "pixel_coverage": 0.8947368421052632,
+      "mean_age_feature": 0.6825871025814729,
+      "mean_mass_feature": 0.032797817798221815,
+      "mean_recent_evidence": 0.0
+    },
+    "three_vs_four": {
+      "frames": 144,
+      "active_frames": 102,
+      "sites": 927,
+      "local_positive": 591,
+      "target_pixels": 1824,
+      "covered_pixels": 984,
+      "age_sum": 707.6214716434479,
+      "mass_sum": 32.99151264689863,
+      "evidence_sum": 0.0,
+      "local_positive_fraction": 0.6375404530744336,
+      "pixel_coverage": 0.5394736842105263,
+      "mean_age_feature": 0.763345708353234,
+      "mean_mass_feature": 0.035589549780904665,
+      "mean_recent_evidence": 0.0
+    }
+  },
+  "elapsed_seconds": 55.61971550004091
+}
