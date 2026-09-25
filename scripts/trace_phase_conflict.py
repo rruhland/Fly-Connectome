@@ -4,10 +4,12 @@ import json
 import time
 from pathlib import Path
 
+import numpy as np
 from scipy import sparse
+from scipy.stats import rankdata
 import torch
 
-from blank_trace_capacity import fit, local_matrix, score, trace_at_exit
+from blank_trace_capacity import fit, local_matrix, score
 from correlation_input_latent import correlation_sequence
 from gap_timing_transfer import MODEL_OUT, timing_cases
 from history_gated_prediction import expanded_interruption_cases
@@ -51,11 +53,21 @@ def collect_heldout(code):
     cases += [(f'{window}:{direction}', events, hidden)
               for window, _, direction, _, _, hidden, events in timing_cases()
               if window != 'familiar_3']
-    traces = [trace_at_exit(code, events, hidden)
-              for _, events, hidden in cases]
-    return dict(traces=traces,
+    exit_traces, quiet_traces = [], []
+    for _, events, hidden in cases:
+        code.reset_state()
+        correlations = correlation_sequence(events)
+        for t in range(hidden[-1]+1):
+            code.step(events[t], correlations[t])
+            if t == hidden[-1]-1:
+                quiet_traces.append(code.trace.clone())
+            if t == hidden[-1]:
+                exit_traces.append(code.trace.clone())
+    return dict(traces=exit_traces, quiet_traces=quiet_traces,
                 targets=[events[hidden[-1]+1]
                          for _, events, hidden in cases],
+                quiet_targets=[events[hidden[-1]]
+                               for _, events, hidden in cases],
                 labels=[family for family, _, _ in cases])
 
 
@@ -64,6 +76,23 @@ def summarize_phase(samples):
                         target_events=sum(int(target.sum())
                                           for target in row['targets']))
             for phase, row in samples.items()}
+
+
+def score_ranking(exit_matrix, exit_targets, quiet_matrix, weights):
+    """Descriptive threshold-free separation from quiet reachable pixels."""
+    labels = np.stack([target.reshape(2, -1).numpy().T
+                       for target in exit_targets]).reshape(-1, 2)
+    positive = np.clip(exit_matrix @ weights, 0, 1)[labels > 0]
+    reachable = np.asarray(quiet_matrix.getnnz(axis=1) > 0)
+    quiet = np.clip(quiet_matrix @ weights, 0, 1)[reachable].ravel()
+    ranks = rankdata(np.concatenate((positive, quiet)))[:len(positive)]
+    auc = (ranks.sum()-len(positive)*(len(positive)+1)/2)
+    auc /= len(positive)*len(quiet)
+    return dict(event_mean=float(positive.mean()),
+                event_median=float(np.median(positive)),
+                quiet_mean=float(quiet.mean()),
+                quiet_p99=float(np.quantile(quiet, .99)),
+                event_vs_quiet_auc=float(auc))
 
 
 @torch.no_grad()
@@ -79,6 +108,7 @@ def main():
     matrices = {phase: local_matrix(row['traces'])
                 for phase, row in samples.items()}
     heldout_matrix = local_matrix(heldout['traces'])
+    heldout_quiet_matrix = local_matrix(heldout['quiet_traces'])
     arms = {}
     definitions = dict(exit_only=('exit',),
                        exit_quiet=('exit', 'quiet'),
@@ -101,6 +131,12 @@ def main():
                                 samples['exit']['labels']),
             heldout_exit=score(heldout_matrix, weights,
                                heldout['targets'], heldout['labels']),
+            heldout_quiet=score(heldout_quiet_matrix, weights,
+                                heldout['quiet_targets'],
+                                heldout['labels']),
+            heldout_ranking=score_ranking(
+                heldout_matrix, heldout['targets'],
+                heldout_quiet_matrix, weights),
             training_quiet=score(matrices['quiet'], weights,
                                  samples['quiet']['targets'],
                                  samples['quiet']['labels']))
