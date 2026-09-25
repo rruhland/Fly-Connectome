@@ -26,6 +26,16 @@ def test_hidden_state_advances_without_visible_input():
     assert model.state[:, 16, 17].sum() > 0
 
 
+def test_opt_in_local_persistence_keeps_original_and_moving_sites():
+    model = LocalHiddenTransition(TransitionPopulation(channels=16),
+                                  persistence=.8)
+    model.weights[:, :, 2, 3] = 1
+    model.step(impulse())
+    model.step(torch.zeros((16, 32, 64)))
+    assert model.state[:, 16, 16].sum() > 0
+    assert model.state[:, 16, 17].sum() > 0
+
+
 def test_elapsed_evidence_travels_with_hidden_state():
     model = LocalHiddenTransition(TransitionPopulation(channels=16))
     model.weights[:, :, 2, 3] = 1

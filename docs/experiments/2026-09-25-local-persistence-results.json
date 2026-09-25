@@ -1,0 +1,206 @@
+{
+  "training_episodes": 96,
+  "seeds": [
+    1101,
+    1102,
+    1103,
+    1104
+  ],
+  "native": {
+    "fast": {
+      "tp": 22,
+      "fp": 709,
+      "fn": 487,
+      "predicted_sites": 731,
+      "target_sites": 509,
+      "frames": 287,
+      "f1": 0.035483870967741936,
+      "active_ratio": 1.4361493123772102
+    },
+    "local_hold": {
+      "tp": 26,
+      "fp": 1448,
+      "fn": 483,
+      "predicted_sites": 1474,
+      "target_sites": 509,
+      "frames": 287,
+      "f1": 0.026222894604135148,
+      "active_ratio": 2.895874263261297
+    },
+    "persistence": {
+      "tp": 28,
+      "fp": 227,
+      "fn": 481,
+      "predicted_sites": 255,
+      "target_sites": 509,
+      "frames": 287,
+      "f1": 0.07329842931937172,
+      "active_ratio": 0.5009823182711198
+    }
+  },
+  "generic": {
+    "independent": {
+      "fast": {
+        "tp": 2216,
+        "fp": 1221,
+        "fn": 264,
+        "predicted_sites": 3437,
+        "target_sites": 2480,
+        "frames": 80,
+        "f1": 0.7490282237620416,
+        "active_ratio": 1.3858870967741936
+      },
+      "local_hold": {
+        "tp": 2216,
+        "fp": 1383,
+        "fn": 264,
+        "predicted_sites": 3599,
+        "target_sites": 2480,
+        "frames": 80,
+        "f1": 0.7290672808027636,
+        "active_ratio": 1.4512096774193548
+      },
+      "persistence": {
+        "tp": 828,
+        "fp": 1528,
+        "fn": 1652,
+        "predicted_sites": 2356,
+        "target_sites": 2480,
+        "frames": 80,
+        "f1": 0.3424317617866005,
+        "active_ratio": 0.95
+      }
+    },
+    "crossing": {
+      "fast": {
+        "tp": 1404,
+        "fp": 843,
+        "fn": 458,
+        "predicted_sites": 2247,
+        "target_sites": 1862,
+        "frames": 80,
+        "f1": 0.6833779508396204,
+        "active_ratio": 1.2067669172932332
+      },
+      "local_hold": {
+        "tp": 1408,
+        "fp": 861,
+        "fn": 454,
+        "predicted_sites": 2269,
+        "target_sites": 1862,
+        "frames": 80,
+        "f1": 0.681675139191479,
+        "active_ratio": 1.2185821697099892
+      },
+      "persistence": {
+        "tp": 554,
+        "fp": 1200,
+        "fn": 1308,
+        "predicted_sites": 1754,
+        "target_sites": 1862,
+        "frames": 80,
+        "f1": 0.3064159292035398,
+        "active_ratio": 0.9419978517722879
+      }
+    }
+  },
+  "occlusion_hidden": {
+    "1": {
+      "fast": {
+        "tp": 70,
+        "fp": 65,
+        "fn": 54,
+        "predicted_sites": 135,
+        "target_sites": 124,
+        "frames": 8,
+        "f1": 0.5405405405405406,
+        "active_ratio": 1.0887096774193548
+      },
+      "local_hold": {
+        "tp": 70,
+        "fp": 87,
+        "fn": 54,
+        "predicted_sites": 157,
+        "target_sites": 124,
+        "frames": 8,
+        "f1": 0.498220640569395,
+        "active_ratio": 1.2661290322580645
+      },
+      "pre_gap_hold": {
+        "tp": 42,
+        "fp": 113,
+        "fn": 82,
+        "predicted_sites": 155,
+        "target_sites": 124,
+        "frames": 8,
+        "f1": 0.3010752688172043,
+        "active_ratio": 1.25
+      }
+    },
+    "2": {
+      "fast": {
+        "tp": 65,
+        "fp": 124,
+        "fn": 59,
+        "predicted_sites": 189,
+        "target_sites": 124,
+        "frames": 8,
+        "f1": 0.41533546325878595,
+        "active_ratio": 1.5241935483870968
+      },
+      "local_hold": {
+        "tp": 72,
+        "fp": 200,
+        "fn": 52,
+        "predicted_sites": 272,
+        "target_sites": 124,
+        "frames": 8,
+        "f1": 0.36363636363636365,
+        "active_ratio": 2.193548387096774
+      },
+      "pre_gap_hold": {
+        "tp": 22,
+        "fp": 133,
+        "fn": 102,
+        "predicted_sites": 155,
+        "target_sites": 124,
+        "frames": 8,
+        "f1": 0.15770609318996415,
+        "active_ratio": 1.25
+      }
+    },
+    "3": {
+      "fast": {
+        "tp": 44,
+        "fp": 128,
+        "fn": 80,
+        "predicted_sites": 172,
+        "target_sites": 124,
+        "frames": 8,
+        "f1": 0.2972972972972973,
+        "active_ratio": 1.3870967741935485
+      },
+      "local_hold": {
+        "tp": 59,
+        "fp": 271,
+        "fn": 65,
+        "predicted_sites": 330,
+        "target_sites": 124,
+        "frames": 8,
+        "f1": 0.2599118942731278,
+        "active_ratio": 2.661290322580645
+      },
+      "pre_gap_hold": {
+        "tp": 22,
+        "fp": 133,
+        "fn": 102,
+        "predicted_sites": 155,
+        "target_sites": 124,
+        "frames": 8,
+        "f1": 0.15770609318996415,
+        "active_ratio": 1.25
+      }
+    }
+  },
+  "elapsed_seconds": 36.46598300000187
+}

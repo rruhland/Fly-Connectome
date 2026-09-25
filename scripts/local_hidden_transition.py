@@ -14,9 +14,10 @@ def scatter_unclamped(weights, sources):
 
 
 class LocalHiddenTransition:
-    def __init__(self, encoder, *, eta=.5):
+    def __init__(self, encoder, *, eta=.5, persistence=0.):
         self.encoder = encoder
         self.eta = eta
+        self.persistence = persistence
         self.weights = torch.zeros((encoder.units, encoder.units, 5, 5))
         self.reset_state()
 
@@ -50,6 +51,11 @@ class LocalHiddenTransition:
                     else torch.zeros_like(observed))
         imagined_age = (self.pending_age if self.pending_age is not None
                         else torch.zeros_like(observed))
+        if self.persistence:
+            held = self.persistence*self.state
+            imagined_age = torch.where(imagined >= held,
+                                       imagined_age, self.age+1)
+            imagined = torch.maximum(imagined, held)
         self.observed = observed
         self.state = torch.where(evidence[None], observed, imagined)
         self.age = torch.where(evidence[None], 0., imagined_age)
