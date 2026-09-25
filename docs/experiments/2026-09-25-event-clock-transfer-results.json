@@ -1,0 +1,56 @@
+{
+  "training_episodes": 96,
+  "seeds": [
+    1101,
+    1102,
+    1103,
+    1104
+  ],
+  "frames_per_seed": 120,
+  "evaluation": {
+    "scores": {
+      "frame": {
+        "learned": {
+          "tp": 22,
+          "fp": 709,
+          "fn": 487,
+          "predicted_sites": 731,
+          "target_sites": 509,
+          "frames": 287,
+          "f1": 0.035483870967741936,
+          "active_ratio": 1.4361493123772102
+        },
+        "predicted_sites": 731
+      },
+      "persistence": {
+        "tp": 41,
+        "fp": 468,
+        "fn": 468,
+        "predicted_sites": 509,
+        "target_sites": 509,
+        "frames": 287,
+        "f1": 0.08055009823182711,
+        "active_ratio": 1.0
+      },
+      "event": {
+        "learned": {
+          "tp": 10,
+          "fp": 1021,
+          "fn": 499,
+          "predicted_sites": 1031,
+          "target_sites": 509,
+          "frames": 287,
+          "f1": 0.012987012987012988,
+          "active_ratio": 2.025540275049116
+        },
+        "predicted_sites": 1031
+      }
+    },
+    "physical_frame_intervals": {
+      "3": 24,
+      "1": 134,
+      "2": 129
+    }
+  },
+  "elapsed_seconds": 15.765986499958672
+}

@@ -1,0 +1,7 @@
+# Event-indexed hidden-state forecast at native camera timing
+
+**Status:** Opt-in timing experiment following the [native local trace result](2026-09-25-native-trace-support-findings.md). Production architecture and saved model weights remain unchanged.
+
+Use the same four native-rate Pong event-camera streams and four-frame local sensory trace. Compare two clocks for the frozen generic sensory dictionary and hidden transition: (1) advance on every camera frame, and (2) advance only when the local correlation code is nonempty, preserving the state during empty-code frames. The second arm predicts the next *code event* rather than the next physical camera frame. Both arms receive the same camera events and trace code; neither sees Pong objects, position, velocity, rewards, or simulator state. Score spatial occupancy F1 at each nonempty code event against the previous observed-code persistence baseline, and report the distribution of physical-frame intervals between scored events.
+
+The event-indexed result is useful only if it materially exceeds both persistence and the camera-frame-clock forecast on the same scored events. A gain would justify testing event-time dynamics on generic multi-pattern/variable-cadence scenes. If it fails, train local dictionary/transition dynamics on generic variable-cadence experience before considering any in-place architecture revision. F1 under this event-indexed target must not be compared directly with next-camera-frame F1 as though the horizons matched.

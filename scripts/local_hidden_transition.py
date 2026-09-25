@@ -33,9 +33,13 @@ class LocalHiddenTransition:
         self.previous_sources = []
 
     @torch.no_grad()
-    def step(self, primitive, *, learn=False, credit_target=None):
+    def step(self, primitive, *, learn=False, credit_target=None,
+             advance=True):
         self.encoder.step(primitive)
         observed = self.encoder.latent.clone()
+        if not advance:
+            self.observed = observed
+            return self.pending
         evidence = F.max_pool2d((observed.sum(0) > 0).float()[None, None],
                                 5, stride=1, padding=2)[0, 0].bool()
         if learn and self.pending is not None:
