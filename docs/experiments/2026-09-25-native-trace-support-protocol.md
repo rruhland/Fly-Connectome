@@ -1,0 +1,7 @@
+# Native-rate local event-trace support
+
+**Status:** Opt-in front-end diagnostic after the [Pong camera-rate audit](2026-09-25-pong-camera-transfer-findings.md). Production architecture unchanged.
+
+Keep the trained 24-unit sensory dictionary and recurrent hidden transition frozen. On the same four held-out native-rate Pong camera streams, replace only the immediate previous-event frame in the fixed local coincidence input with an exponentially decaying *local* event trace (four-frame time constant). Each current ON/OFF event is paired with prior same-polarity events at the existing one- and two-pixel offsets; the channel layout and graph-free low-level primitive remain the same. The model receives no simulator position, velocity, object, or game label. Compare the original adjacent-frame input and four-frame trace on code-active fraction, learned next-latent occupancy F1, persistence F1, and active hidden sites on camera-quiet frames. Score targets in each arm's own frozen sensory code; also report raw camera event counts to confirm identical input streams.
+
+If the trace raises code coverage but not predictive F1, the native timing problem also requires learning the transition on variable-cadence generic experience. If both improve materially, test that new temporal support on generic multi-pattern/noise scenes before proposing an in-place front-end change. No production promotion from this diagnostic alone.

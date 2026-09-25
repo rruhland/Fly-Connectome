@@ -1,0 +1,129 @@
+{
+  "training_episodes": 96,
+  "seeds": [
+    1101,
+    1102,
+    1103,
+    1104
+  ],
+  "frames_per_seed": 120,
+  "scores": {
+    "adjacent": {
+      "counts": {
+        "frames": 464,
+        "camera_active": 287,
+        "correlation_active": 33,
+        "latent_active": 33,
+        "event_pixels": 522,
+        "quiet_frames": 177,
+        "quiet_hidden_sites": 45,
+        "correlation_active_fraction": 0.07112068965517242,
+        "latent_active_fraction": 0.07112068965517242,
+        "hidden_sites_per_quiet_frame": 0.2542372881355932
+      },
+      "all": {
+        "learned": {
+          "tp": 0,
+          "fp": 94,
+          "fn": 33,
+          "predicted_sites": 94,
+          "target_sites": 33,
+          "frames": 464,
+          "f1": 0.0,
+          "active_ratio": 2.8484848484848486
+        },
+        "persistence": {
+          "tp": 0,
+          "fp": 33,
+          "fn": 33,
+          "predicted_sites": 33,
+          "target_sites": 33,
+          "frames": 464,
+          "f1": 0.0,
+          "active_ratio": 1.0
+        }
+      },
+      "active": {
+        "learned": {
+          "tp": 0,
+          "fp": 10,
+          "fn": 33,
+          "predicted_sites": 10,
+          "target_sites": 33,
+          "frames": 33,
+          "f1": 0.0,
+          "active_ratio": 0.30303030303030304
+        },
+        "persistence": {
+          "tp": 0,
+          "fp": 10,
+          "fn": 33,
+          "predicted_sites": 10,
+          "target_sites": 33,
+          "frames": 33,
+          "f1": 0.0,
+          "active_ratio": 0.30303030303030304
+        }
+      }
+    },
+    "trace_4": {
+      "counts": {
+        "frames": 464,
+        "camera_active": 287,
+        "correlation_active": 287,
+        "latent_active": 287,
+        "event_pixels": 522,
+        "quiet_frames": 177,
+        "quiet_hidden_sites": 463,
+        "correlation_active_fraction": 0.6185344827586207,
+        "latent_active_fraction": 0.6185344827586207,
+        "hidden_sites_per_quiet_frame": 2.615819209039548
+      },
+      "all": {
+        "learned": {
+          "tp": 22,
+          "fp": 1172,
+          "fn": 487,
+          "predicted_sites": 1194,
+          "target_sites": 509,
+          "frames": 464,
+          "f1": 0.025836758661186142,
+          "active_ratio": 2.345776031434185
+        },
+        "persistence": {
+          "tp": 28,
+          "fp": 481,
+          "fn": 481,
+          "predicted_sites": 509,
+          "target_sites": 509,
+          "frames": 464,
+          "f1": 0.0550098231827112,
+          "active_ratio": 1.0
+        }
+      },
+      "active": {
+        "learned": {
+          "tp": 22,
+          "fp": 709,
+          "fn": 487,
+          "predicted_sites": 731,
+          "target_sites": 509,
+          "frames": 287,
+          "f1": 0.035483870967741936,
+          "active_ratio": 1.4361493123772102
+        },
+        "persistence": {
+          "tp": 28,
+          "fp": 227,
+          "fn": 481,
+          "predicted_sites": 255,
+          "target_sites": 509,
+          "frames": 287,
+          "f1": 0.07329842931937172,
+          "active_ratio": 0.5009823182711198
+        }
+      }
+    }
+  },
+  "elapsed_seconds": 13.509918199968524
+}
