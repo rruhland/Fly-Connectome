@@ -63,7 +63,8 @@ class TransitionPopulation:
                 scores -= .75*(self.usage/self.total_assignments
                                 if self.total_assignments else self.usage)[:, None]
             winners = scores.argmax(0)
-            if self.spatial_radius:
+            radius = getattr(self, 'spatial_radius', 0)
+            if radius:
                 confidence = scores.gather(0, winners[None])[0]
                 order = torch.argsort(confidence, descending=True,
                                       stable=True)
@@ -74,10 +75,8 @@ class TransitionPopulation:
                     if blocked[y, x]:
                         continue
                     retained.append(index)
-                    blocked[max(0, y-self.spatial_radius):
-                            y+self.spatial_radius+1,
-                            max(0, x-self.spatial_radius):
-                            x+self.spatial_radius+1] = True
+                    blocked[max(0, y-radius):y+radius+1,
+                            max(0, x-radius):x+radius+1] = True
                 sites = sites[retained]
                 winners = winners[retained]
                 selected = selected[:, retained]

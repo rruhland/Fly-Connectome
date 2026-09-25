@@ -111,3 +111,12 @@ def test_opt_in_spatial_competition_translates_away_from_edges():
     b.step(torch.roll(current, (2, 3), (1, 2)))
     torch.testing.assert_close(torch.roll(a.latent, (2, 3), (1, 2)),
                                b.latent)
+
+
+def test_saved_encoder_without_new_optional_field_still_runs():
+    model = TransitionPopulation(channels=1, units=1)
+    del model.spatial_radius
+    current = torch.zeros((1, 32, 64))
+    current[0, 16, 16] = 1
+    model.step(current)
+    assert model.latent.sum() == 1
