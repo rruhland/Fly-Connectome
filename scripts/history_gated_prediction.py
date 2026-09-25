@@ -7,6 +7,7 @@ import time
 from pathlib import Path
 
 import torch
+import torch.nn.functional as F
 
 from correlation_input_latent import correlation_sequence, primitive_to_events
 from correlation_latent_robustness import make_robust_cases, scene_sequence
@@ -39,9 +40,10 @@ def expanded_interruption_cases():
 
 
 class LocalEventReadout:
-    def __init__(self, code, *, eta=.5):
+    def __init__(self, code, *, eta=.5, unit_normalized=False):
         self.code = code
         self.eta = eta
+        self.unit_normalized = unit_normalized
         self.weights = torch.zeros((2, code.history.units, 5, 5))
         self.reset_state()
 
@@ -53,14 +55,36 @@ class LocalEventReadout:
     @torch.no_grad()
     def step(self, events, coincidence, *, learn=False):
         if learn and self.pending_prediction is not None:
-            local_update(self.weights, self.previous_sources,
-                         events-self.pending_prediction, self.eta)
+            error = events-self.pending_prediction
+            if self.unit_normalized:
+                unit_local_update(self.weights, self.previous_sources,
+                                  error, self.eta)
+            else:
+                local_update(self.weights, self.previous_sources,
+                             error, self.eta)
         sources = [(y, x, unit, 1.)
                    for y, x, unit in self.code.step(events, coincidence)]
         prediction = scatter_local(self.weights, sources)
         self.previous_sources = sources
         self.pending_prediction = prediction
         return prediction
+
+
+def unit_local_update(weights, sources, error, eta):
+    """Average eligible error independently for each active presynaptic unit."""
+    if not sources:
+        return
+    padded = F.pad(error, (2, 2, 2, 2))
+    grouped = {}
+    for y, x, unit, amplitude in sources:
+        row = grouped.setdefault(unit, [])
+        row.append((y, x, amplitude))
+    for unit, sites in grouped.items():
+        denominator = max(sum(amplitude for _, _, amplitude in sites), 1.)
+        update = sum((amplitude*padded[:, y:y+5, x:x+5]
+                      for y, x, amplitude in sites))
+        weights[:, unit] += eta/denominator*update
+    weights.clamp_(0, 1)
 
 
 @torch.no_grad()
