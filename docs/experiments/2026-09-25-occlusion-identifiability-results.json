@@ -1,0 +1,20 @@
+{
+  "configurations": 144,
+  "two_vs_three": {
+    "cases": 144,
+    "identical_prefixes": 144,
+    "different_targets": 144,
+    "target_disagreement_pixels": 1824,
+    "visible_target_events": 1824,
+    "hidden_target_events": 0
+  },
+  "three_vs_four": {
+    "cases": 144,
+    "identical_prefixes": 144,
+    "different_targets": 144,
+    "target_disagreement_pixels": 1824,
+    "visible_target_events": 1824,
+    "hidden_target_events": 0
+  },
+  "elapsed_seconds": 0.7153476999374107
+}

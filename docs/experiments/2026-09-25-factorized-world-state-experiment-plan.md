@@ -1,0 +1,16 @@
+# Next opt-in M1A experiment: local hidden state and visible evidence
+
+**Status:** Experiment plan, not a production architecture revision. The user has authorized experiments without approval; promoting an in-place architecture change still requires approval. This plan responds to the [matched-prefix uncertainty](2026-09-25-occlusion-identifiability-findings.md), [failed wide trace emitter](2026-09-25-balanced-trace-credit-findings.md), and the learned motion/history code's established transfer across shapes.
+
+The experimental information flow should have two separately scored outputs:
+
+1. **Hidden visual state.** A small retinotopic recurrent population receives the existing locally learned motion code and its own previous state. Shared local transition synapses start uncommitted and learn from adjacent visible frames using presynaptic eligibility and local next-state mismatch, without backpropagation. On blank input it propagates its own predicted state; when evidence returns, local sensory activity reanchors it. No unit is assigned an object, direction, speed, or game role. This is internal state, not an emitted camera event.
+2. **Visible-evidence likelihood.** A separate local head learns whether a signed camera event is likely given hidden state, recent observed ON/OFF activity, and an elapsed-evidence trace. It may output uncertainty; it must not force a visible event merely because hidden state persists. Update it with delayed local event error, with quiet and event credit audited separately. The elapsed trace is a local timing cue, not a scripted occlusion schedule or collision label.
+
+Implement and verify in dependency order:
+
+- **Transition chunk:** On visible generic sequences, measure locally learned one-step latent-state prediction against frozen and shuffled-credit controls. Then free-run through two-, three-, and four-frame blank intervals and evaluate hidden-position/direction readability on unseen shapes and positions using post-hoc probes only. Require a causal reset ablation and no exploding state. Checkpoint this chunk before adding an event head.
+- **Visibility chunk:** Use the matched-prefix suite to test probability calibration and Brier score at indistinguishable histories. The model should express the empirical next-event likelihood rather than claim perfect deterministic timing. Compare a fixed hazard and shuffled-time control; no simulator state enters inference.
+- **Joint forecast chunk:** Locally learn signed event emission from hidden state and visibility likelihood. Evaluate full generic single, independent, crossing, speed-change, disappearance, and noise scenes; two-/three-/four-frame gap exits; quiet false alarms; and throughput. Require a meaningful full-sequence occlusion gain over the fixed raw control without regressions elsewhere, plus a gain over frozen/shuffled learned-state controls. Only then draft a concrete production revision for approval and test the graph/T4/T5 interface.
+
+Keep the synthetic generator's shape, trajectory, and visibility metadata restricted to scoring and counterfactual suite construction. The learned representation must emerge from local sensory evidence and plasticity, not a fixed motion feature bank or Pong-specific tracker.
