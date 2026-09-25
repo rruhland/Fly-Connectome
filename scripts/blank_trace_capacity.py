@@ -113,9 +113,18 @@ def main():
         traces = [trace_at_exit(code, events, hidden)
                   for _, events, hidden in cases]
         targets = [events[hidden[-1]+1] for _, events, hidden in cases]
+        labels = [label for label, _, _ in cases]
+        coverage_by_gap = {}
+        for gap in {label.split(':')[0] for label in labels}:
+            selected = [index for index, label in enumerate(labels)
+                        if label.split(':')[0] == gap]
+            coverage_by_gap[gap] = target_coverage(
+                [traces[index] for index in selected],
+                [targets[index] for index in selected])
         encoded[name] = dict(traces=traces, targets=targets,
-                             labels=[label for label, _, _ in cases],
-                             coverage=target_coverage(traces, targets))
+                             labels=labels,
+                             coverage=target_coverage(traces, targets),
+                             coverage_by_gap=coverage_by_gap)
     train_matrix = local_matrix(encoded['training']['traces'])
     weights = fit(train_matrix, encoded['training']['targets'])
     results = {}
@@ -125,6 +134,7 @@ def main():
         results[name] = dict(cases=len(row['targets']),
                              matrix_nonzeros=matrix.nnz,
                              coverage=row['coverage'],
+                             coverage_by_gap=row['coverage_by_gap'],
                              decoder=score(matrix, weights,
                                            row['targets'], row['labels']),
                              zero_trace=score(sparse.csr_matrix(matrix.shape),
