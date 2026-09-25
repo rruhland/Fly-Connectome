@@ -73,6 +73,8 @@ The [gap-exit audit](../experiments/2026-09-25-gap-exit-audit-findings.md) chang
 
 The [frozen blank-trace capacity test](../experiments/2026-09-25-blank-trace-capacity-findings.md) found that a 17×17 evaluation-only local readout can forecast **unseen three-frame gap exits at 0.516 F1** from trace alone, versus zero trace reset. This establishes useful pre-reappearance information, but its transfer drops to 0.262 for earlier two-frame gaps and 0.091 for later four-frame gaps; the latter also has only 0.809 geometric target coverage. Check one local trace-normalization control to distinguish amplitude decay from missing spatial state before building an online continuously active readout. Production M1A is unchanged.
 
+The [single local-normalization control](../experiments/2026-09-25-normalized-blank-trace-findings.md) raised late four-frame gap-exit capacity from 0.091 to 0.228 F1, but reduced familiar three-frame transfer from 0.516 to 0.391 and early two-frame transfer from 0.262 to 0.161. Its joint-transfer gate fails. Stop rescaling the same trace. Test a learned local state transition that can propagate through missing evidence, with online one-step credit, frozen/reset controls, and quiet/visible-motion gates. Do not claim the current onset-gated learner predicts unseen reappearance.
+
 ## Shortest evidence path before promotion
 
 1. **Generic scene suite.** Extend the opt-in event-camera tests to varied shapes, polarities, scales, positions, speeds, two independent movers, crossings, partial occlusion, stationary visual context, trajectory changes, and sensor noise. The generator may know hidden trajectories only for scoring. Establish performance and throughput of the full proposed front end, not just the isolated kernel.
