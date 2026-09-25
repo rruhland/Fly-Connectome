@@ -1,0 +1,832 @@
+{
+  "training_episodes": 96,
+  "visible_cases": 144,
+  "gap_cases": 432,
+  "visible": {
+    "learned": {
+      "tp": 19240,
+      "fp": 7792,
+      "fn": 2304,
+      "predicted_sites": 27032,
+      "target_sites": 21544,
+      "frames": 1440,
+      "f1": 0.7921607378129117,
+      "active_ratio": 1.2547344968436687
+    },
+    "shuffled_credit": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 21544,
+      "predicted_sites": 0,
+      "target_sites": 21544,
+      "frames": 1440,
+      "f1": 0.0,
+      "active_ratio": 0.0
+    },
+    "frozen": {
+      "tp": 0,
+      "fp": 0,
+      "fn": 21544,
+      "predicted_sites": 0,
+      "target_sites": 21544,
+      "frames": 1440,
+      "f1": 0.0,
+      "active_ratio": 0.0
+    }
+  },
+  "gaps": {
+    "occupancy": {
+      "early_2": {
+        "1": {
+          "learned": {
+            "tp": 1194,
+            "fp": 428,
+            "fn": 966,
+            "predicted_sites": 1622,
+            "target_sites": 2160,
+            "frames": 144,
+            "f1": 0.6314119513484928,
+            "active_ratio": 0.7509259259259259
+          },
+          "shuffled_credit": {
+            "tp": 1080,
+            "fp": 312,
+            "fn": 1080,
+            "predicted_sites": 1392,
+            "target_sites": 2160,
+            "frames": 144,
+            "f1": 0.6081081081081081,
+            "active_ratio": 0.6444444444444445
+          },
+          "frozen": {
+            "tp": 1080,
+            "fp": 312,
+            "fn": 1080,
+            "predicted_sites": 1392,
+            "target_sites": 2160,
+            "frames": 144,
+            "f1": 0.6081081081081081,
+            "active_ratio": 0.6444444444444445
+          },
+          "state_reset": {
+            "tp": 1080,
+            "fp": 312,
+            "fn": 1080,
+            "predicted_sites": 1392,
+            "target_sites": 2160,
+            "frames": 144,
+            "f1": 0.6081081081081081,
+            "active_ratio": 0.6444444444444445
+          },
+          "post_entry_reset": {
+            "tp": 1194,
+            "fp": 428,
+            "fn": 966,
+            "predicted_sites": 1622,
+            "target_sites": 2160,
+            "frames": 144,
+            "f1": 0.6314119513484928,
+            "active_ratio": 0.7509259259259259
+          },
+          "pre_gap_hold": {
+            "tp": 744,
+            "fp": 1497,
+            "fn": 1416,
+            "predicted_sites": 2241,
+            "target_sites": 2160,
+            "frames": 144,
+            "f1": 0.338104976141786,
+            "active_ratio": 1.0375
+          },
+          "first_blank_hold": {
+            "tp": 1194,
+            "fp": 428,
+            "fn": 966,
+            "predicted_sites": 1622,
+            "target_sites": 2160,
+            "frames": 144,
+            "f1": 0.6314119513484928,
+            "active_ratio": 0.7509259259259259
+          }
+        },
+        "2": {
+          "learned": {
+            "tp": 1211,
+            "fp": 770,
+            "fn": 949,
+            "predicted_sites": 1981,
+            "target_sites": 2160,
+            "frames": 144,
+            "f1": 0.5848828785317556,
+            "active_ratio": 0.9171296296296296
+          },
+          "shuffled_credit": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 2160,
+            "predicted_sites": 0,
+            "target_sites": 2160,
+            "frames": 144,
+            "f1": 0.0,
+            "active_ratio": 0.0
+          },
+          "frozen": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 2160,
+            "predicted_sites": 0,
+            "target_sites": 2160,
+            "frames": 144,
+            "f1": 0.0,
+            "active_ratio": 0.0
+          },
+          "state_reset": {
+            "tp": 1118,
+            "fp": 668,
+            "fn": 1042,
+            "predicted_sites": 1786,
+            "target_sites": 2160,
+            "frames": 144,
+            "f1": 0.5666497719209326,
+            "active_ratio": 0.8268518518518518
+          },
+          "post_entry_reset": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 2160,
+            "predicted_sites": 0,
+            "target_sites": 2160,
+            "frames": 144,
+            "f1": 0.0,
+            "active_ratio": 0.0
+          },
+          "pre_gap_hold": {
+            "tp": 360,
+            "fp": 1881,
+            "fn": 1800,
+            "predicted_sites": 2241,
+            "target_sites": 2160,
+            "frames": 144,
+            "f1": 0.16359918200409,
+            "active_ratio": 1.0375
+          },
+          "first_blank_hold": {
+            "tp": 336,
+            "fp": 1286,
+            "fn": 1824,
+            "predicted_sites": 1622,
+            "target_sites": 2160,
+            "frames": 144,
+            "f1": 0.177683765203596,
+            "active_ratio": 0.7509259259259259
+          }
+        }
+      },
+      "familiar_3": {
+        "1": {
+          "learned": {
+            "tp": 1194,
+            "fp": 474,
+            "fn": 966,
+            "predicted_sites": 1668,
+            "target_sites": 2160,
+            "frames": 144,
+            "f1": 0.6238244514106583,
+            "active_ratio": 0.7722222222222223
+          },
+          "shuffled_credit": {
+            "tp": 1080,
+            "fp": 312,
+            "fn": 1080,
+            "predicted_sites": 1392,
+            "target_sites": 2160,
+            "frames": 144,
+            "f1": 0.6081081081081081,
+            "active_ratio": 0.6444444444444445
+          },
+          "frozen": {
+            "tp": 1080,
+            "fp": 312,
+            "fn": 1080,
+            "predicted_sites": 1392,
+            "target_sites": 2160,
+            "frames": 144,
+            "f1": 0.6081081081081081,
+            "active_ratio": 0.6444444444444445
+          },
+          "state_reset": {
+            "tp": 1080,
+            "fp": 312,
+            "fn": 1080,
+            "predicted_sites": 1392,
+            "target_sites": 2160,
+            "frames": 144,
+            "f1": 0.6081081081081081,
+            "active_ratio": 0.6444444444444445
+          },
+          "post_entry_reset": {
+            "tp": 1194,
+            "fp": 474,
+            "fn": 966,
+            "predicted_sites": 1668,
+            "target_sites": 2160,
+            "frames": 144,
+            "f1": 0.6238244514106583,
+            "active_ratio": 0.7722222222222223
+          },
+          "pre_gap_hold": {
+            "tp": 744,
+            "fp": 1532,
+            "fn": 1416,
+            "predicted_sites": 2276,
+            "target_sites": 2160,
+            "frames": 144,
+            "f1": 0.33543733092876465,
+            "active_ratio": 1.0537037037037038
+          },
+          "first_blank_hold": {
+            "tp": 1194,
+            "fp": 474,
+            "fn": 966,
+            "predicted_sites": 1668,
+            "target_sites": 2160,
+            "frames": 144,
+            "f1": 0.6238244514106583,
+            "active_ratio": 0.7722222222222223
+          }
+        },
+        "2": {
+          "learned": {
+            "tp": 1212,
+            "fp": 825,
+            "fn": 948,
+            "predicted_sites": 2037,
+            "target_sites": 2160,
+            "frames": 144,
+            "f1": 0.5775553967119371,
+            "active_ratio": 0.9430555555555555
+          },
+          "shuffled_credit": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 2160,
+            "predicted_sites": 0,
+            "target_sites": 2160,
+            "frames": 144,
+            "f1": 0.0,
+            "active_ratio": 0.0
+          },
+          "frozen": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 2160,
+            "predicted_sites": 0,
+            "target_sites": 2160,
+            "frames": 144,
+            "f1": 0.0,
+            "active_ratio": 0.0
+          },
+          "state_reset": {
+            "tp": 1119,
+            "fp": 669,
+            "fn": 1041,
+            "predicted_sites": 1788,
+            "target_sites": 2160,
+            "frames": 144,
+            "f1": 0.5668693009118541,
+            "active_ratio": 0.8277777777777777
+          },
+          "post_entry_reset": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 2160,
+            "predicted_sites": 0,
+            "target_sites": 2160,
+            "frames": 144,
+            "f1": 0.0,
+            "active_ratio": 0.0
+          },
+          "pre_gap_hold": {
+            "tp": 360,
+            "fp": 1916,
+            "fn": 1800,
+            "predicted_sites": 2276,
+            "target_sites": 2160,
+            "frames": 144,
+            "f1": 0.1623083859332732,
+            "active_ratio": 1.0537037037037038
+          },
+          "first_blank_hold": {
+            "tp": 336,
+            "fp": 1332,
+            "fn": 1824,
+            "predicted_sites": 1668,
+            "target_sites": 2160,
+            "frames": 144,
+            "f1": 0.1755485893416928,
+            "active_ratio": 0.7722222222222223
+          }
+        },
+        "3": {
+          "learned": {
+            "tp": 930,
+            "fp": 600,
+            "fn": 1230,
+            "predicted_sites": 1530,
+            "target_sites": 2160,
+            "frames": 144,
+            "f1": 0.5040650406504065,
+            "active_ratio": 0.7083333333333334
+          },
+          "shuffled_credit": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 2160,
+            "predicted_sites": 0,
+            "target_sites": 2160,
+            "frames": 144,
+            "f1": 0.0,
+            "active_ratio": 0.0
+          },
+          "frozen": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 2160,
+            "predicted_sites": 0,
+            "target_sites": 2160,
+            "frames": 144,
+            "f1": 0.0,
+            "active_ratio": 0.0
+          },
+          "state_reset": {
+            "tp": 876,
+            "fp": 471,
+            "fn": 1284,
+            "predicted_sites": 1347,
+            "target_sites": 2160,
+            "frames": 144,
+            "f1": 0.49957228400342174,
+            "active_ratio": 0.6236111111111111
+          },
+          "post_entry_reset": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 2160,
+            "predicted_sites": 0,
+            "target_sites": 2160,
+            "frames": 144,
+            "f1": 0.0,
+            "active_ratio": 0.0
+          },
+          "pre_gap_hold": {
+            "tp": 264,
+            "fp": 2012,
+            "fn": 1896,
+            "predicted_sites": 2276,
+            "target_sites": 2160,
+            "frames": 144,
+            "f1": 0.11902614968440037,
+            "active_ratio": 1.0537037037037038
+          },
+          "first_blank_hold": {
+            "tp": 138,
+            "fp": 1530,
+            "fn": 2022,
+            "predicted_sites": 1668,
+            "target_sites": 2160,
+            "frames": 144,
+            "f1": 0.07210031347962383,
+            "active_ratio": 0.7722222222222223
+          }
+        }
+      },
+      "late_4": {
+        "1": {
+          "learned": {
+            "tp": 1194,
+            "fp": 528,
+            "fn": 966,
+            "predicted_sites": 1722,
+            "target_sites": 2160,
+            "frames": 144,
+            "f1": 0.615146831530139,
+            "active_ratio": 0.7972222222222223
+          },
+          "shuffled_credit": {
+            "tp": 1080,
+            "fp": 312,
+            "fn": 1080,
+            "predicted_sites": 1392,
+            "target_sites": 2160,
+            "frames": 144,
+            "f1": 0.6081081081081081,
+            "active_ratio": 0.6444444444444445
+          },
+          "frozen": {
+            "tp": 1080,
+            "fp": 312,
+            "fn": 1080,
+            "predicted_sites": 1392,
+            "target_sites": 2160,
+            "frames": 144,
+            "f1": 0.6081081081081081,
+            "active_ratio": 0.6444444444444445
+          },
+          "state_reset": {
+            "tp": 1080,
+            "fp": 312,
+            "fn": 1080,
+            "predicted_sites": 1392,
+            "target_sites": 2160,
+            "frames": 144,
+            "f1": 0.6081081081081081,
+            "active_ratio": 0.6444444444444445
+          },
+          "post_entry_reset": {
+            "tp": 1194,
+            "fp": 528,
+            "fn": 966,
+            "predicted_sites": 1722,
+            "target_sites": 2160,
+            "frames": 144,
+            "f1": 0.615146831530139,
+            "active_ratio": 0.7972222222222223
+          },
+          "pre_gap_hold": {
+            "tp": 744,
+            "fp": 1578,
+            "fn": 1416,
+            "predicted_sites": 2322,
+            "target_sites": 2160,
+            "frames": 144,
+            "f1": 0.3319946452476573,
+            "active_ratio": 1.075
+          },
+          "first_blank_hold": {
+            "tp": 1194,
+            "fp": 528,
+            "fn": 966,
+            "predicted_sites": 1722,
+            "target_sites": 2160,
+            "frames": 144,
+            "f1": 0.615146831530139,
+            "active_ratio": 0.7972222222222223
+          }
+        },
+        "2": {
+          "learned": {
+            "tp": 1212,
+            "fp": 855,
+            "fn": 948,
+            "predicted_sites": 2067,
+            "target_sites": 2160,
+            "frames": 144,
+            "f1": 0.5734563520227112,
+            "active_ratio": 0.9569444444444445
+          },
+          "shuffled_credit": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 2160,
+            "predicted_sites": 0,
+            "target_sites": 2160,
+            "frames": 144,
+            "f1": 0.0,
+            "active_ratio": 0.0
+          },
+          "frozen": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 2160,
+            "predicted_sites": 0,
+            "target_sites": 2160,
+            "frames": 144,
+            "f1": 0.0,
+            "active_ratio": 0.0
+          },
+          "state_reset": {
+            "tp": 1119,
+            "fp": 669,
+            "fn": 1041,
+            "predicted_sites": 1788,
+            "target_sites": 2160,
+            "frames": 144,
+            "f1": 0.5668693009118541,
+            "active_ratio": 0.8277777777777777
+          },
+          "post_entry_reset": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 2160,
+            "predicted_sites": 0,
+            "target_sites": 2160,
+            "frames": 144,
+            "f1": 0.0,
+            "active_ratio": 0.0
+          },
+          "pre_gap_hold": {
+            "tp": 360,
+            "fp": 1962,
+            "fn": 1800,
+            "predicted_sites": 2322,
+            "target_sites": 2160,
+            "frames": 144,
+            "f1": 0.1606425702811245,
+            "active_ratio": 1.075
+          },
+          "first_blank_hold": {
+            "tp": 336,
+            "fp": 1386,
+            "fn": 1824,
+            "predicted_sites": 1722,
+            "target_sites": 2160,
+            "frames": 144,
+            "f1": 0.1731066460587326,
+            "active_ratio": 0.7972222222222223
+          }
+        },
+        "3": {
+          "learned": {
+            "tp": 930,
+            "fp": 624,
+            "fn": 1230,
+            "predicted_sites": 1554,
+            "target_sites": 2160,
+            "frames": 144,
+            "f1": 0.5008077544426495,
+            "active_ratio": 0.7194444444444444
+          },
+          "shuffled_credit": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 2160,
+            "predicted_sites": 0,
+            "target_sites": 2160,
+            "frames": 144,
+            "f1": 0.0,
+            "active_ratio": 0.0
+          },
+          "frozen": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 2160,
+            "predicted_sites": 0,
+            "target_sites": 2160,
+            "frames": 144,
+            "f1": 0.0,
+            "active_ratio": 0.0
+          },
+          "state_reset": {
+            "tp": 876,
+            "fp": 471,
+            "fn": 1284,
+            "predicted_sites": 1347,
+            "target_sites": 2160,
+            "frames": 144,
+            "f1": 0.49957228400342174,
+            "active_ratio": 0.6236111111111111
+          },
+          "post_entry_reset": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 2160,
+            "predicted_sites": 0,
+            "target_sites": 2160,
+            "frames": 144,
+            "f1": 0.0,
+            "active_ratio": 0.0
+          },
+          "pre_gap_hold": {
+            "tp": 264,
+            "fp": 2058,
+            "fn": 1896,
+            "predicted_sites": 2322,
+            "target_sites": 2160,
+            "frames": 144,
+            "f1": 0.11780455153949129,
+            "active_ratio": 1.075
+          },
+          "first_blank_hold": {
+            "tp": 138,
+            "fp": 1584,
+            "fn": 2022,
+            "predicted_sites": 1722,
+            "target_sites": 2160,
+            "frames": 144,
+            "f1": 0.07109737248840804,
+            "active_ratio": 0.7972222222222223
+          }
+        },
+        "4": {
+          "learned": {
+            "tp": 489,
+            "fp": 456,
+            "fn": 1671,
+            "predicted_sites": 945,
+            "target_sites": 2160,
+            "frames": 144,
+            "f1": 0.314975845410628,
+            "active_ratio": 0.4375
+          },
+          "shuffled_credit": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 2160,
+            "predicted_sites": 0,
+            "target_sites": 2160,
+            "frames": 144,
+            "f1": 0.0,
+            "active_ratio": 0.0
+          },
+          "frozen": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 2160,
+            "predicted_sites": 0,
+            "target_sites": 2160,
+            "frames": 144,
+            "f1": 0.0,
+            "active_ratio": 0.0
+          },
+          "state_reset": {
+            "tp": 438,
+            "fp": 321,
+            "fn": 1722,
+            "predicted_sites": 759,
+            "target_sites": 2160,
+            "frames": 144,
+            "f1": 0.3001027749229188,
+            "active_ratio": 0.35138888888888886
+          },
+          "post_entry_reset": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 2160,
+            "predicted_sites": 0,
+            "target_sites": 2160,
+            "frames": 144,
+            "f1": 0.0,
+            "active_ratio": 0.0
+          },
+          "pre_gap_hold": {
+            "tp": 144,
+            "fp": 2178,
+            "fn": 2016,
+            "predicted_sites": 2322,
+            "target_sites": 2160,
+            "frames": 144,
+            "f1": 0.0642570281124498,
+            "active_ratio": 1.075
+          },
+          "first_blank_hold": {
+            "tp": 144,
+            "fp": 1578,
+            "fn": 2016,
+            "predicted_sites": 1722,
+            "target_sites": 2160,
+            "frames": 144,
+            "f1": 0.07418856259659969,
+            "active_ratio": 0.7972222222222223
+          }
+        }
+      }
+    },
+    "motion": {
+      "early_2": {
+        "learned": {
+          "correct": 132,
+          "valid": 144,
+          "cases": 144,
+          "axis_error_sum": 59.260594844818115,
+          "direction_accuracy": 0.9166666666666666,
+          "mean_axis_error": 0.41153190864457023
+        },
+        "shuffled_credit": {
+          "correct": 0,
+          "valid": 0,
+          "cases": 144,
+          "axis_error_sum": 0.0,
+          "direction_accuracy": 0.0,
+          "mean_axis_error": null
+        },
+        "frozen": {
+          "correct": 0,
+          "valid": 0,
+          "cases": 144,
+          "axis_error_sum": 0.0,
+          "direction_accuracy": 0.0,
+          "mean_axis_error": null
+        },
+        "state_reset": {
+          "correct": 129,
+          "valid": 144,
+          "cases": 144,
+          "axis_error_sum": 67.69762754440308,
+          "direction_accuracy": 0.8958333333333334,
+          "mean_axis_error": 0.47012241350279915
+        },
+        "post_entry_reset": {
+          "correct": 0,
+          "valid": 0,
+          "cases": 144,
+          "axis_error_sum": 0.0,
+          "direction_accuracy": 0.0,
+          "mean_axis_error": null
+        }
+      },
+      "familiar_3": {
+        "learned": {
+          "correct": 141,
+          "valid": 144,
+          "cases": 144,
+          "axis_error_sum": 106.01531410217285,
+          "direction_accuracy": 0.9791666666666666,
+          "mean_axis_error": 0.7362174590428671
+        },
+        "shuffled_credit": {
+          "correct": 0,
+          "valid": 0,
+          "cases": 144,
+          "axis_error_sum": 0.0,
+          "direction_accuracy": 0.0,
+          "mean_axis_error": null
+        },
+        "frozen": {
+          "correct": 0,
+          "valid": 0,
+          "cases": 144,
+          "axis_error_sum": 0.0,
+          "direction_accuracy": 0.0,
+          "mean_axis_error": null
+        },
+        "state_reset": {
+          "correct": 135,
+          "valid": 144,
+          "cases": 144,
+          "axis_error_sum": 106.46810626983643,
+          "direction_accuracy": 0.9375,
+          "mean_axis_error": 0.7393618490960863
+        },
+        "post_entry_reset": {
+          "correct": 0,
+          "valid": 0,
+          "cases": 144,
+          "axis_error_sum": 0.0,
+          "direction_accuracy": 0.0,
+          "mean_axis_error": null
+        }
+      },
+      "late_4": {
+        "learned": {
+          "correct": 99,
+          "valid": 102,
+          "cases": 144,
+          "axis_error_sum": 120.15755462646484,
+          "direction_accuracy": 0.6875,
+          "mean_axis_error": 1.17801524143593
+        },
+        "shuffled_credit": {
+          "correct": 0,
+          "valid": 0,
+          "cases": 144,
+          "axis_error_sum": 0.0,
+          "direction_accuracy": 0.0,
+          "mean_axis_error": null
+        },
+        "frozen": {
+          "correct": 0,
+          "valid": 0,
+          "cases": 144,
+          "axis_error_sum": 0.0,
+          "direction_accuracy": 0.0,
+          "mean_axis_error": null
+        },
+        "state_reset": {
+          "correct": 93,
+          "valid": 99,
+          "cases": 144,
+          "axis_error_sum": 126.36767673492432,
+          "direction_accuracy": 0.6458333333333334,
+          "mean_axis_error": 1.2764411791406496
+        },
+        "post_entry_reset": {
+          "correct": 0,
+          "valid": 0,
+          "cases": 144,
+          "axis_error_sum": 0.0,
+          "direction_accuracy": 0.0,
+          "mean_axis_error": null
+        }
+      }
+    }
+  },
+  "transition_weight_sum": {
+    "learned": 36.40201950073242,
+    "shuffled_credit": 0.6614843606948853,
+    "frozen": 0.0,
+    "state_reset": 36.40201950073242,
+    "post_entry_reset": 36.40201950073242
+  },
+  "training_seconds": 9.163510299986228,
+  "elapsed_seconds": 72.49198629998136
+}
