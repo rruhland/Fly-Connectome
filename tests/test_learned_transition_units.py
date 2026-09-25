@@ -75,3 +75,39 @@ def test_sparse_local_patches_match_dense_unfold_at_borders():
                         kernel_size=5, padding=2)[0][:, sites]
     actual = sparse_local_patches(current, previous, sites)
     assert torch.equal(actual, expected)
+
+
+def test_opt_in_spatial_winners_compete_before_dictionary_credit():
+    current = torch.zeros((1, 32, 64))
+    current[0, 16, 16] = .8
+    current[0, 16, 17] = 1
+    current[0, 22, 22] = 1
+    dense = TransitionPopulation(channels=1, units=1, homeostasis=False)
+    sparse = TransitionPopulation(channels=1, units=1,
+                                  homeostasis=False, spatial_radius=1)
+    for model in (dense, sparse):
+        model.dictionary.zero_()
+        model.dictionary[0, 12] = 1
+        model.step(current, learn_dictionary=True)
+    assert dense.total_assignments == 3
+    assert sparse.total_assignments == 2
+    assert sparse.latent[0, 16, 16] == 0
+    assert sparse.latent[0, 16, 17] == 1
+    assert sparse.latent[0, 22, 22] == 1
+
+
+def test_opt_in_spatial_competition_translates_away_from_edges():
+    current = torch.zeros((1, 32, 64))
+    current[0, 16, 16] = .8
+    current[0, 16, 17] = 1
+    a = TransitionPopulation(channels=1, units=1,
+                             homeostasis=False, spatial_radius=1)
+    b = TransitionPopulation(channels=1, units=1,
+                             homeostasis=False, spatial_radius=1)
+    for model in (a, b):
+        model.dictionary.zero_()
+        model.dictionary[0, 12] = 1
+    a.step(current)
+    b.step(torch.roll(current, (2, 3), (1, 2)))
+    torch.testing.assert_close(torch.roll(a.latent, (2, 3), (1, 2)),
+                               b.latent)

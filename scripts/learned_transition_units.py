@@ -17,12 +17,13 @@ def sparse_local_patches(current, previous, sites):
 
 class TransitionPopulation:
     def __init__(self, *, channels=12, units=24, seed=0, homeostasis=True,
-                 dictionary_eta=.08, prediction_eta=.5):
+                 dictionary_eta=.08, prediction_eta=.5, spatial_radius=0):
         self.channels = channels
         self.units = units
         self.homeostasis = homeostasis
         self.dictionary_eta = dictionary_eta
         self.prediction_eta = prediction_eta
+        self.spatial_radius = spatial_radius
         rng = torch.Generator().manual_seed(seed)
         self.dictionary = torch.rand((units, 2*channels*25),
                                      generator=rng)*.2
@@ -62,6 +63,24 @@ class TransitionPopulation:
                 scores -= .75*(self.usage/self.total_assignments
                                 if self.total_assignments else self.usage)[:, None]
             winners = scores.argmax(0)
+            if self.spatial_radius:
+                confidence = scores.gather(0, winners[None])[0]
+                order = torch.argsort(confidence, descending=True,
+                                      stable=True)
+                blocked = torch.zeros((32, 64), dtype=torch.bool)
+                retained = []
+                for index in order.tolist():
+                    y, x = divmod(int(sites[index]), 64)
+                    if blocked[y, x]:
+                        continue
+                    retained.append(index)
+                    blocked[max(0, y-self.spatial_radius):
+                            y+self.spatial_radius+1,
+                            max(0, x-self.spatial_radius):
+                            x+self.spatial_radius+1] = True
+                sites = sites[retained]
+                winners = winners[retained]
+                selected = selected[:, retained]
             latent[winners, sites] = 1
             sources = [(int(site//64), int(site%64), int(unit))
                        for site, unit in zip(sites, winners)]
