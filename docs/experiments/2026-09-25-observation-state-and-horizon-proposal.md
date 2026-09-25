@@ -11,7 +11,7 @@ Use two local states in the next **opt-in** experiment:
 
 Run three decisive checks in order:
 
-- Verify that the observation integrator tracks generic moving dots/shapes and native camera evidence through quiet frames using event maps only; report coverage and ambiguity, not object accuracy. Stop if it requires Pong-specific priors.
+- **Completed opt-in:** [The observation integrator](2026-09-25-local-observation-surface-findings.md) retained event-known state through every quiet frame and exactly matched audit values on known pixels; untouched background stayed unknown (only 1.86% generic / 2.93% Pong pixels known on average). It required no Pong-specific prior.
 - Train the learned hidden state on generic variable-cadence scenes with four-frame and next-code-event local targets. Require a gain over persistence on held-out generic patterns and zero-shot native Pong, with independent/crossing performance retained. If neither horizon works, reconsider the recurrent state and local eligibility rather than tuning the readout.
 - Only if the hidden forecast transfers, revisit a separately calibrated visible-evidence likelihood on matched-prefix uncertain histories. The prior site/field heads' aggregate Brier gains did not satisfy quiet-frame or 50/50 pair calibration, so they cannot simply be reattached.
 

@@ -1,0 +1,38 @@
+{
+  "generic_episodes": 128,
+  "pong_seeds": [
+    1101,
+    1102,
+    1103,
+    1104
+  ],
+  "generic": {
+    "frames": 1792,
+    "camera_active": 1088,
+    "quiet_frames": 704,
+    "quiet_with_known": 704,
+    "quiet_with_known_on": 560,
+    "known_pixels": 68232,
+    "correct_known_pixels": 68232,
+    "changed_pixels": 13728,
+    "known_changed_pixels": 13728,
+    "known_pixel_accuracy": 1.0,
+    "known_fraction": 0.018591744559151784,
+    "changed_pixel_coverage": 1.0
+  },
+  "pong": {
+    "frames": 464,
+    "camera_active": 287,
+    "quiet_frames": 177,
+    "quiet_with_known": 177,
+    "quiet_with_known_on": 177,
+    "known_pixels": 27871,
+    "correct_known_pixels": 27871,
+    "changed_pixels": 12238,
+    "known_changed_pixels": 12238,
+    "known_pixel_accuracy": 1.0,
+    "known_fraction": 0.029329497238685345,
+    "changed_pixel_coverage": 1.0
+  },
+  "elapsed_seconds": 3.101071299985051
+}
