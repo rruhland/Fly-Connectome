@@ -1,0 +1,213 @@
+{
+  "training_episodes": 96,
+  "seeds": [
+    1101,
+    1102,
+    1103,
+    1104
+  ],
+  "frames_per_seed": 120,
+  "scores": {
+    "1": {
+      "counts": {
+        "frames": 464,
+        "camera_active": 287,
+        "correlation_active": 33,
+        "latent_active": 33,
+        "event_pixels": 522,
+        "quiet_frames": 177,
+        "quiet_hidden_sites": 45,
+        "camera_active_fraction": 0.6185344827586207,
+        "correlation_active_fraction": 0.07112068965517242,
+        "latent_active_fraction": 0.07112068965517242,
+        "event_pixels_per_frame": 1.125,
+        "hidden_sites_per_quiet_frame": 0.2542372881355932
+      },
+      "all": {
+        "learned": {
+          "tp": 0,
+          "fp": 94,
+          "fn": 33,
+          "predicted_sites": 94,
+          "target_sites": 33,
+          "frames": 464,
+          "f1": 0.0,
+          "active_ratio": 2.8484848484848486
+        },
+        "shuffled_credit": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 33,
+          "predicted_sites": 0,
+          "target_sites": 33,
+          "frames": 464,
+          "f1": 0.0,
+          "active_ratio": 0.0
+        },
+        "frozen": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 33,
+          "predicted_sites": 0,
+          "target_sites": 33,
+          "frames": 464,
+          "f1": 0.0,
+          "active_ratio": 0.0
+        },
+        "persistence": {
+          "tp": 0,
+          "fp": 33,
+          "fn": 33,
+          "predicted_sites": 33,
+          "target_sites": 33,
+          "frames": 464,
+          "f1": 0.0,
+          "active_ratio": 1.0
+        }
+      },
+      "active": {
+        "learned": {
+          "tp": 0,
+          "fp": 10,
+          "fn": 33,
+          "predicted_sites": 10,
+          "target_sites": 33,
+          "frames": 33,
+          "f1": 0.0,
+          "active_ratio": 0.30303030303030304
+        },
+        "shuffled_credit": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 33,
+          "predicted_sites": 0,
+          "target_sites": 33,
+          "frames": 33,
+          "f1": 0.0,
+          "active_ratio": 0.0
+        },
+        "frozen": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 33,
+          "predicted_sites": 0,
+          "target_sites": 33,
+          "frames": 33,
+          "f1": 0.0,
+          "active_ratio": 0.0
+        },
+        "persistence": {
+          "tp": 0,
+          "fp": 10,
+          "fn": 33,
+          "predicted_sites": 10,
+          "target_sites": 33,
+          "frames": 33,
+          "f1": 0.0,
+          "active_ratio": 0.30303030303030304
+        }
+      }
+    },
+    "4": {
+      "counts": {
+        "frames": 464,
+        "camera_active": 464,
+        "correlation_active": 456,
+        "latent_active": 456,
+        "event_pixels": 1824,
+        "quiet_frames": 0,
+        "quiet_hidden_sites": 0,
+        "camera_active_fraction": 1.0,
+        "correlation_active_fraction": 0.9827586206896551,
+        "latent_active_fraction": 0.9827586206896551,
+        "event_pixels_per_frame": 3.9310344827586206,
+        "hidden_sites_per_quiet_frame": 0.0
+      },
+      "all": {
+        "learned": {
+          "tp": 365,
+          "fp": 533,
+          "fn": 552,
+          "predicted_sites": 898,
+          "target_sites": 917,
+          "frames": 464,
+          "f1": 0.4022038567493113,
+          "active_ratio": 0.9792802617230099
+        },
+        "shuffled_credit": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 917,
+          "predicted_sites": 0,
+          "target_sites": 917,
+          "frames": 464,
+          "f1": 0.0,
+          "active_ratio": 0.0
+        },
+        "frozen": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 917,
+          "predicted_sites": 0,
+          "target_sites": 917,
+          "frames": 464,
+          "f1": 0.0,
+          "active_ratio": 0.0
+        },
+        "persistence": {
+          "tp": 284,
+          "fp": 637,
+          "fn": 633,
+          "predicted_sites": 921,
+          "target_sites": 917,
+          "frames": 464,
+          "f1": 0.30903155603917304,
+          "active_ratio": 1.0043620501635768
+        }
+      },
+      "active": {
+        "learned": {
+          "tp": 365,
+          "fp": 519,
+          "fn": 552,
+          "predicted_sites": 884,
+          "target_sites": 917,
+          "frames": 456,
+          "f1": 0.4053303720155469,
+          "active_ratio": 0.9640130861504908
+        },
+        "shuffled_credit": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 917,
+          "predicted_sites": 0,
+          "target_sites": 917,
+          "frames": 456,
+          "f1": 0.0,
+          "active_ratio": 0.0
+        },
+        "frozen": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 917,
+          "predicted_sites": 0,
+          "target_sites": 917,
+          "frames": 456,
+          "f1": 0.0,
+          "active_ratio": 0.0
+        },
+        "persistence": {
+          "tp": 284,
+          "fp": 629,
+          "fn": 633,
+          "predicted_sites": 913,
+          "target_sites": 917,
+          "frames": 456,
+          "f1": 0.3103825136612022,
+          "active_ratio": 0.9956379498364231
+        }
+      }
+    }
+  },
+  "elapsed_seconds": 16.132172500016168
+}
