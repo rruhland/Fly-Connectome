@@ -1,0 +1,195 @@
+{
+  "generic_heldout": {
+    "targets": 2834,
+    "quiet_targets": 1051,
+    "frames": 1152,
+    "quiet_frames": 478,
+    "arms": {
+      "current": {
+        "reached": 1570,
+        "quiet_reached": 290,
+        "source_sites": 3642,
+        "quiet_source_sites": 461,
+        "support": 0.5539872971065631,
+        "quiet_support": 0.2759276879162702,
+        "sites_per_frame": 3.1614583333333335,
+        "quiet_sites_per_frame": 0.9644351464435147
+      },
+      "competition": {
+        "reached": 1541,
+        "quiet_reached": 278,
+        "source_sites": 1824,
+        "quiet_source_sites": 225,
+        "support": 0.5437544107268878,
+        "quiet_support": 0.26450999048525214,
+        "sites_per_frame": 1.5833333333333333,
+        "quiet_sites_per_frame": 0.4707112970711297
+      },
+      "continuity": {
+        "reached": 2806,
+        "quiet_reached": 1049,
+        "source_sites": 13918,
+        "quiet_source_sites": 4756,
+        "support": 0.9901199717713479,
+        "quiet_support": 0.9980970504281637,
+        "sites_per_frame": 12.081597222222221,
+        "quiet_sites_per_frame": 9.94979079497908
+      },
+      "coherent": {
+        "reached": 2732,
+        "quiet_reached": 1012,
+        "source_sites": 4139,
+        "quiet_source_sites": 1448,
+        "support": 0.9640084685956246,
+        "quiet_support": 0.9628924833491912,
+        "sites_per_frame": 3.5928819444444446,
+        "quiet_sites_per_frame": 3.0292887029288704
+      }
+    }
+  },
+  "native": {
+    "targets": 514,
+    "quiet_targets": 122,
+    "frames": 448,
+    "quiet_frames": 169,
+    "arms": {
+      "current": {
+        "reached": 256,
+        "quiet_reached": 14,
+        "source_sites": 664,
+        "quiet_source_sites": 105,
+        "support": 0.4980544747081712,
+        "quiet_support": 0.11475409836065574,
+        "sites_per_frame": 1.4821428571428572,
+        "quiet_sites_per_frame": 0.621301775147929
+      },
+      "competition": {
+        "reached": 256,
+        "quiet_reached": 14,
+        "source_sites": 414,
+        "quiet_source_sites": 51,
+        "support": 0.4980544747081712,
+        "quiet_support": 0.11475409836065574,
+        "sites_per_frame": 0.9241071428571429,
+        "quiet_sites_per_frame": 0.30177514792899407
+      },
+      "continuity": {
+        "reached": 474,
+        "quiet_reached": 106,
+        "source_sites": 3118,
+        "quiet_source_sites": 1044,
+        "support": 0.9221789883268483,
+        "quiet_support": 0.8688524590163934,
+        "sites_per_frame": 6.959821428571429,
+        "quiet_sites_per_frame": 6.177514792899408
+      },
+      "coherent": {
+        "reached": 474,
+        "quiet_reached": 106,
+        "source_sites": 1317,
+        "quiet_source_sites": 449,
+        "support": 0.9221789883268483,
+        "quiet_support": 0.8688524590163934,
+        "sites_per_frame": 2.939732142857143,
+        "quiet_sites_per_frame": 2.6568047337278107
+      }
+    }
+  },
+  "independent": {
+    "targets": 1968,
+    "quiet_targets": 0,
+    "frames": 80,
+    "quiet_frames": 0,
+    "arms": {
+      "current": {
+        "reached": 704,
+        "quiet_reached": 0,
+        "source_sites": 2480,
+        "quiet_source_sites": 0,
+        "support": 0.35772357723577236,
+        "quiet_support": 0.0,
+        "sites_per_frame": 31.0,
+        "quiet_sites_per_frame": 0.0
+      },
+      "competition": {
+        "reached": 700,
+        "quiet_reached": 0,
+        "source_sites": 1040,
+        "quiet_source_sites": 0,
+        "support": 0.3556910569105691,
+        "quiet_support": 0.0,
+        "sites_per_frame": 13.0,
+        "quiet_sites_per_frame": 0.0
+      },
+      "continuity": {
+        "reached": 704,
+        "quiet_reached": 0,
+        "source_sites": 7572,
+        "quiet_source_sites": 0,
+        "support": 0.35772357723577236,
+        "quiet_support": 0.0,
+        "sites_per_frame": 94.65,
+        "quiet_sites_per_frame": 0.0
+      },
+      "coherent": {
+        "reached": 700,
+        "quiet_reached": 0,
+        "source_sites": 1898,
+        "quiet_source_sites": 0,
+        "support": 0.3556910569105691,
+        "quiet_support": 0.0,
+        "sites_per_frame": 23.725,
+        "quiet_sites_per_frame": 0.0
+      }
+    }
+  },
+  "crossing": {
+    "targets": 1472,
+    "quiet_targets": 0,
+    "frames": 80,
+    "quiet_frames": 0,
+    "arms": {
+      "current": {
+        "reached": 875,
+        "quiet_reached": 0,
+        "source_sites": 1930,
+        "quiet_source_sites": 0,
+        "support": 0.5944293478260869,
+        "quiet_support": 0.0,
+        "sites_per_frame": 24.125,
+        "quiet_sites_per_frame": 0.0
+      },
+      "competition": {
+        "reached": 797,
+        "quiet_reached": 0,
+        "source_sites": 782,
+        "quiet_source_sites": 0,
+        "support": 0.5414402173913043,
+        "quiet_support": 0.0,
+        "sites_per_frame": 9.775,
+        "quiet_sites_per_frame": 0.0
+      },
+      "continuity": {
+        "reached": 1346,
+        "quiet_reached": 0,
+        "source_sites": 5361,
+        "quiet_source_sites": 0,
+        "support": 0.9144021739130435,
+        "quiet_support": 0.0,
+        "sites_per_frame": 67.0125,
+        "quiet_sites_per_frame": 0.0
+      },
+      "coherent": {
+        "reached": 1206,
+        "quiet_reached": 0,
+        "source_sites": 1164,
+        "quiet_source_sites": 0,
+        "support": 0.8192934782608695,
+        "quiet_support": 0.0,
+        "sites_per_frame": 14.55,
+        "quiet_sites_per_frame": 0.0
+      }
+    }
+  },
+  "elapsed_seconds": 21.85511420003604
+}
