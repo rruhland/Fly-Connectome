@@ -40,11 +40,14 @@ def expanded_interruption_cases():
 
 
 class LocalEventReadout:
-    def __init__(self, code, *, eta=.5, unit_normalized=False):
+    def __init__(self, code, *, eta=.5, unit_normalized=False,
+                 polarity_split=False):
         self.code = code
         self.eta = eta
         self.unit_normalized = unit_normalized
-        self.weights = torch.zeros((2, code.history.units, 5, 5))
+        self.polarity_split = polarity_split
+        units = code.history.units*(2 if polarity_split else 1)
+        self.weights = torch.zeros((2, units, 5, 5))
         self.reset_state()
 
     def reset_state(self):
@@ -62,7 +65,9 @@ class LocalEventReadout:
             else:
                 local_update(self.weights, self.previous_sources,
                              error, self.eta)
-        sources = [(y, x, unit, 1.)
+        sources = [(y, x, unit+(self.code.history.units
+                               *int(events[1, y, x] > 0)
+                               if self.polarity_split else 0), 1.)
                    for y, x, unit in self.code.step(events, coincidence)]
         prediction = scatter_local(self.weights, sources)
         self.previous_sources = sources

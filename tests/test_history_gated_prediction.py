@@ -2,6 +2,7 @@
 
 import sys
 from pathlib import Path
+from types import SimpleNamespace
 
 import torch
 
@@ -43,3 +44,27 @@ def test_unit_local_update_normalizes_each_units_own_sources():
     assert weights[0, 1, 2, 2] == .5
     assert weights[0, 2, 2, 2] == .5
     assert weights[0, 0].sum() == 0
+
+
+def test_polarity_split_allocates_separate_local_emission_banks():
+    class FixedSourceCode:
+        history = SimpleNamespace(units=8)
+
+        def reset_state(self):
+            pass
+
+        def step(self, events, coincidence):
+            return [(10, 11, 3)]
+
+    code = FixedSourceCode()
+    model = LocalEventReadout(code, polarity_split=True)
+    assert model.weights.shape == (2, 16, 5, 5)
+    events = torch.zeros((2, 32, 64))
+    coincidence = torch.zeros((16, 32, 64))
+    events[0, 10, 11] = 1
+    model.step(events, coincidence)
+    assert model.previous_sources == [(10, 11, 3, 1.)]
+    events[0, 10, 11] = 0
+    events[1, 10, 11] = 1
+    model.step(events, coincidence)
+    assert model.previous_sources == [(10, 11, 11, 1.)]
