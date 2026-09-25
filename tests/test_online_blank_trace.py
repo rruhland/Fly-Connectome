@@ -38,6 +38,28 @@ def test_trace_update_uses_delayed_local_error():
     assert weights.sum() == .5
 
 
+def test_readout_credits_previous_blank_frame_when_event_arrives():
+    class FixedCode:
+        class Motion:
+            units = 24
+        motion = Motion()
+
+        def reset_state(self):
+            self.trace = torch.zeros((24, 32, 64))
+
+        def step(self, events, coincidence):
+            self.trace[0, 16, 32] = 1
+
+    model = ContinuousTraceReadout(FixedCode())
+    blank = torch.zeros((2, 32, 64))
+    future = torch.zeros_like(blank)
+    future[0, 16, 33] = 1
+    coincidence = torch.zeros((16, 32, 64))
+    model.step(blank, coincidence, learn=True)
+    model.step(future, coincidence, learn=True)
+    assert model.weights[0, 0, 8, 9] == .5
+
+
 def test_training_exposes_three_gap_lengths_without_shape_labels():
     cases = training_cases()
     assert len(cases) == 288
