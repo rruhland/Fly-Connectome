@@ -1,0 +1,433 @@
+{
+  "training_episodes": 96,
+  "cases": 48,
+  "scores": {
+    "visible": {
+      "independent": {
+        "learned": {
+          "tp": 2216,
+          "fp": 1221,
+          "fn": 264,
+          "predicted_sites": 3437,
+          "target_sites": 2480,
+          "frames": 80,
+          "f1": 0.7490282237620416,
+          "active_ratio": 1.3858870967741936
+        },
+        "shuffled_credit": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 2480,
+          "predicted_sites": 0,
+          "target_sites": 2480,
+          "frames": 80,
+          "f1": 0.0,
+          "active_ratio": 0.0
+        },
+        "frozen": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 2480,
+          "predicted_sites": 0,
+          "target_sites": 2480,
+          "frames": 80,
+          "f1": 0.0,
+          "active_ratio": 0.0
+        },
+        "persistence": {
+          "tp": 828,
+          "fp": 1528,
+          "fn": 1652,
+          "predicted_sites": 2356,
+          "target_sites": 2480,
+          "frames": 80,
+          "f1": 0.3424317617866005,
+          "active_ratio": 0.95
+        }
+      },
+      "crossing": {
+        "learned": {
+          "tp": 1404,
+          "fp": 843,
+          "fn": 458,
+          "predicted_sites": 2247,
+          "target_sites": 1862,
+          "frames": 80,
+          "f1": 0.6833779508396204,
+          "active_ratio": 1.2067669172932332
+        },
+        "shuffled_credit": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 1862,
+          "predicted_sites": 0,
+          "target_sites": 1862,
+          "frames": 80,
+          "f1": 0.0,
+          "active_ratio": 0.0
+        },
+        "frozen": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 1862,
+          "predicted_sites": 0,
+          "target_sites": 1862,
+          "frames": 80,
+          "f1": 0.0,
+          "active_ratio": 0.0
+        },
+        "persistence": {
+          "tp": 554,
+          "fp": 1200,
+          "fn": 1308,
+          "predicted_sites": 1754,
+          "target_sites": 1862,
+          "frames": 80,
+          "f1": 0.3064159292035398,
+          "active_ratio": 0.9419978517722879
+        }
+      },
+      "speed_change": {
+        "learned": {
+          "tp": 1671,
+          "fp": 673,
+          "fn": 409,
+          "predicted_sites": 2344,
+          "target_sites": 2080,
+          "frames": 160,
+          "f1": 0.7554249547920434,
+          "active_ratio": 1.126923076923077
+        },
+        "shuffled_credit": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 2080,
+          "predicted_sites": 0,
+          "target_sites": 2080,
+          "frames": 160,
+          "f1": 0.0,
+          "active_ratio": 0.0
+        },
+        "frozen": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 2080,
+          "predicted_sites": 0,
+          "target_sites": 2080,
+          "frames": 160,
+          "f1": 0.0,
+          "active_ratio": 0.0
+        },
+        "persistence": {
+          "tp": 464,
+          "fp": 1512,
+          "fn": 1616,
+          "predicted_sites": 1976,
+          "target_sites": 2080,
+          "frames": 160,
+          "f1": 0.22879684418145957,
+          "active_ratio": 0.95
+        }
+      },
+      "noise": {
+        "learned": {
+          "tp": 1039,
+          "fp": 1392,
+          "fn": 191,
+          "predicted_sites": 2431,
+          "target_sites": 1230,
+          "frames": 80,
+          "f1": 0.5676044796503688,
+          "active_ratio": 1.9764227642276422
+        },
+        "shuffled_credit": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 1230,
+          "predicted_sites": 0,
+          "target_sites": 1230,
+          "frames": 80,
+          "f1": 0.0,
+          "active_ratio": 0.0
+        },
+        "frozen": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 1230,
+          "predicted_sites": 0,
+          "target_sites": 1230,
+          "frames": 80,
+          "f1": 0.0,
+          "active_ratio": 0.0
+        },
+        "persistence": {
+          "tp": 414,
+          "fp": 756,
+          "fn": 816,
+          "predicted_sites": 1170,
+          "target_sites": 1230,
+          "frames": 80,
+          "f1": 0.345,
+          "active_ratio": 0.9512195121951219
+        }
+      }
+    },
+    "speed_change": {
+      "at_change": {
+        "learned": {
+          "tp": 198,
+          "fp": 45,
+          "fn": 10,
+          "predicted_sites": 243,
+          "target_sites": 208,
+          "frames": 16,
+          "f1": 0.8780487804878049,
+          "active_ratio": 1.1682692307692308
+        },
+        "shuffled_credit": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 208,
+          "predicted_sites": 0,
+          "target_sites": 208,
+          "frames": 16,
+          "f1": 0.0,
+          "active_ratio": 0.0
+        },
+        "frozen": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 208,
+          "predicted_sites": 0,
+          "target_sites": 208,
+          "frames": 16,
+          "f1": 0.0,
+          "active_ratio": 0.0
+        },
+        "persistence": {
+          "tp": 48,
+          "fp": 160,
+          "fn": 160,
+          "predicted_sites": 208,
+          "target_sites": 208,
+          "frames": 16,
+          "f1": 0.23076923076923078,
+          "active_ratio": 1.0
+        }
+      },
+      "one_after": {
+        "learned": {
+          "tp": 125,
+          "fp": 118,
+          "fn": 83,
+          "predicted_sites": 243,
+          "target_sites": 208,
+          "frames": 16,
+          "f1": 0.5543237250554324,
+          "active_ratio": 1.1682692307692308
+        },
+        "shuffled_credit": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 208,
+          "predicted_sites": 0,
+          "target_sites": 208,
+          "frames": 16,
+          "f1": 0.0,
+          "active_ratio": 0.0
+        },
+        "frozen": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 208,
+          "predicted_sites": 0,
+          "target_sites": 208,
+          "frames": 16,
+          "f1": 0.0,
+          "active_ratio": 0.0
+        },
+        "persistence": {
+          "tp": 32,
+          "fp": 176,
+          "fn": 176,
+          "predicted_sites": 208,
+          "target_sites": 208,
+          "frames": 16,
+          "f1": 0.15384615384615385,
+          "active_ratio": 1.0
+        }
+      },
+      "two_after": {
+        "learned": {
+          "tp": 104,
+          "fp": 158,
+          "fn": 104,
+          "predicted_sites": 262,
+          "target_sites": 208,
+          "frames": 16,
+          "f1": 0.4425531914893617,
+          "active_ratio": 1.2596153846153846
+        },
+        "shuffled_credit": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 208,
+          "predicted_sites": 0,
+          "target_sites": 208,
+          "frames": 16,
+          "f1": 0.0,
+          "active_ratio": 0.0
+        },
+        "frozen": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 208,
+          "predicted_sites": 0,
+          "target_sites": 208,
+          "frames": 16,
+          "f1": 0.0,
+          "active_ratio": 0.0
+        },
+        "persistence": {
+          "tp": 48,
+          "fp": 160,
+          "fn": 160,
+          "predicted_sites": 208,
+          "target_sites": 208,
+          "frames": 16,
+          "f1": 0.23076923076923078,
+          "active_ratio": 1.0
+        }
+      }
+    },
+    "occlusion_hidden": {
+      "1": {
+        "learned": {
+          "tp": 70,
+          "fp": 65,
+          "fn": 54,
+          "predicted_sites": 135,
+          "target_sites": 124,
+          "frames": 8,
+          "f1": 0.5405405405405406,
+          "active_ratio": 1.0887096774193548
+        },
+        "shuffled_credit": {
+          "tp": 62,
+          "fp": 18,
+          "fn": 62,
+          "predicted_sites": 80,
+          "target_sites": 124,
+          "frames": 8,
+          "f1": 0.6078431372549019,
+          "active_ratio": 0.6451612903225806
+        },
+        "frozen": {
+          "tp": 62,
+          "fp": 18,
+          "fn": 62,
+          "predicted_sites": 80,
+          "target_sites": 124,
+          "frames": 8,
+          "f1": 0.6078431372549019,
+          "active_ratio": 0.6451612903225806
+        },
+        "pre_gap_hold": {
+          "tp": 42,
+          "fp": 113,
+          "fn": 82,
+          "predicted_sites": 155,
+          "target_sites": 124,
+          "frames": 8,
+          "f1": 0.3010752688172043,
+          "active_ratio": 1.25
+        }
+      },
+      "2": {
+        "learned": {
+          "tp": 65,
+          "fp": 124,
+          "fn": 59,
+          "predicted_sites": 189,
+          "target_sites": 124,
+          "frames": 8,
+          "f1": 0.41533546325878595,
+          "active_ratio": 1.5241935483870968
+        },
+        "shuffled_credit": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 124,
+          "predicted_sites": 0,
+          "target_sites": 124,
+          "frames": 8,
+          "f1": 0.0,
+          "active_ratio": 0.0
+        },
+        "frozen": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 124,
+          "predicted_sites": 0,
+          "target_sites": 124,
+          "frames": 8,
+          "f1": 0.0,
+          "active_ratio": 0.0
+        },
+        "pre_gap_hold": {
+          "tp": 22,
+          "fp": 133,
+          "fn": 102,
+          "predicted_sites": 155,
+          "target_sites": 124,
+          "frames": 8,
+          "f1": 0.15770609318996415,
+          "active_ratio": 1.25
+        }
+      },
+      "3": {
+        "learned": {
+          "tp": 44,
+          "fp": 128,
+          "fn": 80,
+          "predicted_sites": 172,
+          "target_sites": 124,
+          "frames": 8,
+          "f1": 0.2972972972972973,
+          "active_ratio": 1.3870967741935485
+        },
+        "shuffled_credit": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 124,
+          "predicted_sites": 0,
+          "target_sites": 124,
+          "frames": 8,
+          "f1": 0.0,
+          "active_ratio": 0.0
+        },
+        "frozen": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 124,
+          "predicted_sites": 0,
+          "target_sites": 124,
+          "frames": 8,
+          "f1": 0.0,
+          "active_ratio": 0.0
+        },
+        "pre_gap_hold": {
+          "tp": 22,
+          "fp": 133,
+          "fn": 102,
+          "predicted_sites": 155,
+          "target_sites": 124,
+          "frames": 8,
+          "f1": 0.15770609318996415,
+          "active_ratio": 1.25
+        }
+      }
+    }
+  },
+  "elapsed_seconds": 43.31159949989524
+}
