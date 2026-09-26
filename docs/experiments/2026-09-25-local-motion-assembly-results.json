@@ -1,0 +1,3316 @@
+{
+  "training_episodes": 64,
+  "aligned_local_pair_mass": 4404.5,
+  "shuffled_local_pair_mass": 1904.5,
+  "training_seconds": 19.719425899907947,
+  "scores": {
+    "calibration": {
+      "learned": {
+        "correct": 16,
+        "matched": 16,
+        "total": 16,
+        "coverage": 16.0,
+        "cases": [
+          {
+            "polarity": "dark",
+            "objects": [
+              {
+                "direction": "up",
+                "prediction": "up",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 4
+          },
+          {
+            "polarity": "dark",
+            "objects": [
+              {
+                "direction": "up",
+                "prediction": "up",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 4
+          },
+          {
+            "polarity": "bright",
+            "objects": [
+              {
+                "direction": "up",
+                "prediction": "up",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 4
+          },
+          {
+            "polarity": "bright",
+            "objects": [
+              {
+                "direction": "up",
+                "prediction": "up",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 4
+          },
+          {
+            "polarity": "dark",
+            "objects": [
+              {
+                "direction": "down",
+                "prediction": "down",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 4
+          },
+          {
+            "polarity": "dark",
+            "objects": [
+              {
+                "direction": "down",
+                "prediction": "down",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 4
+          },
+          {
+            "polarity": "bright",
+            "objects": [
+              {
+                "direction": "down",
+                "prediction": "down",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 4
+          },
+          {
+            "polarity": "bright",
+            "objects": [
+              {
+                "direction": "down",
+                "prediction": "down",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 4
+          },
+          {
+            "polarity": "dark",
+            "objects": [
+              {
+                "direction": "left",
+                "prediction": "left",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 4
+          },
+          {
+            "polarity": "dark",
+            "objects": [
+              {
+                "direction": "left",
+                "prediction": "left",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 4
+          },
+          {
+            "polarity": "bright",
+            "objects": [
+              {
+                "direction": "left",
+                "prediction": "left",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 4
+          },
+          {
+            "polarity": "bright",
+            "objects": [
+              {
+                "direction": "left",
+                "prediction": "left",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 4
+          },
+          {
+            "polarity": "dark",
+            "objects": [
+              {
+                "direction": "right",
+                "prediction": "right",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 4
+          },
+          {
+            "polarity": "dark",
+            "objects": [
+              {
+                "direction": "right",
+                "prediction": "right",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 4
+          },
+          {
+            "polarity": "bright",
+            "objects": [
+              {
+                "direction": "right",
+                "prediction": "right",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 4
+          },
+          {
+            "polarity": "bright",
+            "objects": [
+              {
+                "direction": "right",
+                "prediction": "right",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 4
+          }
+        ],
+        "accuracy": 1.0,
+        "matched_fraction": 1.0,
+        "mean_coverage": 1.0
+      },
+      "proximity": {
+        "correct": 16,
+        "matched": 16,
+        "total": 16,
+        "coverage": 16.0,
+        "cases": [
+          {
+            "polarity": "dark",
+            "objects": [
+              {
+                "direction": "up",
+                "prediction": "up",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 4
+          },
+          {
+            "polarity": "dark",
+            "objects": [
+              {
+                "direction": "up",
+                "prediction": "up",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 4
+          },
+          {
+            "polarity": "bright",
+            "objects": [
+              {
+                "direction": "up",
+                "prediction": "up",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 4
+          },
+          {
+            "polarity": "bright",
+            "objects": [
+              {
+                "direction": "up",
+                "prediction": "up",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 4
+          },
+          {
+            "polarity": "dark",
+            "objects": [
+              {
+                "direction": "down",
+                "prediction": "down",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 4
+          },
+          {
+            "polarity": "dark",
+            "objects": [
+              {
+                "direction": "down",
+                "prediction": "down",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 4
+          },
+          {
+            "polarity": "bright",
+            "objects": [
+              {
+                "direction": "down",
+                "prediction": "down",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 4
+          },
+          {
+            "polarity": "bright",
+            "objects": [
+              {
+                "direction": "down",
+                "prediction": "down",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 4
+          },
+          {
+            "polarity": "dark",
+            "objects": [
+              {
+                "direction": "left",
+                "prediction": "left",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 4
+          },
+          {
+            "polarity": "dark",
+            "objects": [
+              {
+                "direction": "left",
+                "prediction": "left",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 4
+          },
+          {
+            "polarity": "bright",
+            "objects": [
+              {
+                "direction": "left",
+                "prediction": "left",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 4
+          },
+          {
+            "polarity": "bright",
+            "objects": [
+              {
+                "direction": "left",
+                "prediction": "left",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 4
+          },
+          {
+            "polarity": "dark",
+            "objects": [
+              {
+                "direction": "right",
+                "prediction": "right",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 4
+          },
+          {
+            "polarity": "dark",
+            "objects": [
+              {
+                "direction": "right",
+                "prediction": "right",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 4
+          },
+          {
+            "polarity": "bright",
+            "objects": [
+              {
+                "direction": "right",
+                "prediction": "right",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 4
+          },
+          {
+            "polarity": "bright",
+            "objects": [
+              {
+                "direction": "right",
+                "prediction": "right",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 4
+          }
+        ],
+        "accuracy": 1.0,
+        "matched_fraction": 1.0,
+        "mean_coverage": 1.0
+      },
+      "shuffled_credit": {
+        "correct": 16,
+        "matched": 16,
+        "total": 16,
+        "coverage": 16.0,
+        "cases": [
+          {
+            "polarity": "dark",
+            "objects": [
+              {
+                "direction": "up",
+                "prediction": "up",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 4
+          },
+          {
+            "polarity": "dark",
+            "objects": [
+              {
+                "direction": "up",
+                "prediction": "up",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 4
+          },
+          {
+            "polarity": "bright",
+            "objects": [
+              {
+                "direction": "up",
+                "prediction": "up",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 4
+          },
+          {
+            "polarity": "bright",
+            "objects": [
+              {
+                "direction": "up",
+                "prediction": "up",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 4
+          },
+          {
+            "polarity": "dark",
+            "objects": [
+              {
+                "direction": "down",
+                "prediction": "down",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 4
+          },
+          {
+            "polarity": "dark",
+            "objects": [
+              {
+                "direction": "down",
+                "prediction": "down",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 4
+          },
+          {
+            "polarity": "bright",
+            "objects": [
+              {
+                "direction": "down",
+                "prediction": "down",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 4
+          },
+          {
+            "polarity": "bright",
+            "objects": [
+              {
+                "direction": "down",
+                "prediction": "down",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 4
+          },
+          {
+            "polarity": "dark",
+            "objects": [
+              {
+                "direction": "left",
+                "prediction": "left",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 4
+          },
+          {
+            "polarity": "dark",
+            "objects": [
+              {
+                "direction": "left",
+                "prediction": "left",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 4
+          },
+          {
+            "polarity": "bright",
+            "objects": [
+              {
+                "direction": "left",
+                "prediction": "left",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 4
+          },
+          {
+            "polarity": "bright",
+            "objects": [
+              {
+                "direction": "left",
+                "prediction": "left",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 4
+          },
+          {
+            "polarity": "dark",
+            "objects": [
+              {
+                "direction": "right",
+                "prediction": "right",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 4
+          },
+          {
+            "polarity": "dark",
+            "objects": [
+              {
+                "direction": "right",
+                "prediction": "right",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 4
+          },
+          {
+            "polarity": "bright",
+            "objects": [
+              {
+                "direction": "right",
+                "prediction": "right",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 4
+          },
+          {
+            "polarity": "bright",
+            "objects": [
+              {
+                "direction": "right",
+                "prediction": "right",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 4
+          }
+        ],
+        "accuracy": 1.0,
+        "matched_fraction": 1.0,
+        "mean_coverage": 1.0
+      }
+    },
+    "position": {
+      "learned": {
+        "correct": 16,
+        "matched": 16,
+        "total": 16,
+        "coverage": 16.0,
+        "cases": [
+          {
+            "polarity": "dark",
+            "objects": [
+              {
+                "direction": "up",
+                "prediction": "up",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 4
+          },
+          {
+            "polarity": "dark",
+            "objects": [
+              {
+                "direction": "up",
+                "prediction": "up",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 4
+          },
+          {
+            "polarity": "bright",
+            "objects": [
+              {
+                "direction": "up",
+                "prediction": "up",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 4
+          },
+          {
+            "polarity": "bright",
+            "objects": [
+              {
+                "direction": "up",
+                "prediction": "up",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 4
+          },
+          {
+            "polarity": "dark",
+            "objects": [
+              {
+                "direction": "down",
+                "prediction": "down",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 4
+          },
+          {
+            "polarity": "dark",
+            "objects": [
+              {
+                "direction": "down",
+                "prediction": "down",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 4
+          },
+          {
+            "polarity": "bright",
+            "objects": [
+              {
+                "direction": "down",
+                "prediction": "down",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 4
+          },
+          {
+            "polarity": "bright",
+            "objects": [
+              {
+                "direction": "down",
+                "prediction": "down",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 4
+          },
+          {
+            "polarity": "dark",
+            "objects": [
+              {
+                "direction": "left",
+                "prediction": "left",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 4
+          },
+          {
+            "polarity": "dark",
+            "objects": [
+              {
+                "direction": "left",
+                "prediction": "left",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 4
+          },
+          {
+            "polarity": "bright",
+            "objects": [
+              {
+                "direction": "left",
+                "prediction": "left",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 4
+          },
+          {
+            "polarity": "bright",
+            "objects": [
+              {
+                "direction": "left",
+                "prediction": "left",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 4
+          },
+          {
+            "polarity": "dark",
+            "objects": [
+              {
+                "direction": "right",
+                "prediction": "right",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 4
+          },
+          {
+            "polarity": "dark",
+            "objects": [
+              {
+                "direction": "right",
+                "prediction": "right",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 4
+          },
+          {
+            "polarity": "bright",
+            "objects": [
+              {
+                "direction": "right",
+                "prediction": "right",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 4
+          },
+          {
+            "polarity": "bright",
+            "objects": [
+              {
+                "direction": "right",
+                "prediction": "right",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 4
+          }
+        ],
+        "accuracy": 1.0,
+        "matched_fraction": 1.0,
+        "mean_coverage": 1.0
+      },
+      "proximity": {
+        "correct": 16,
+        "matched": 16,
+        "total": 16,
+        "coverage": 16.0,
+        "cases": [
+          {
+            "polarity": "dark",
+            "objects": [
+              {
+                "direction": "up",
+                "prediction": "up",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 4
+          },
+          {
+            "polarity": "dark",
+            "objects": [
+              {
+                "direction": "up",
+                "prediction": "up",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 4
+          },
+          {
+            "polarity": "bright",
+            "objects": [
+              {
+                "direction": "up",
+                "prediction": "up",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 4
+          },
+          {
+            "polarity": "bright",
+            "objects": [
+              {
+                "direction": "up",
+                "prediction": "up",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 4
+          },
+          {
+            "polarity": "dark",
+            "objects": [
+              {
+                "direction": "down",
+                "prediction": "down",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 4
+          },
+          {
+            "polarity": "dark",
+            "objects": [
+              {
+                "direction": "down",
+                "prediction": "down",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 4
+          },
+          {
+            "polarity": "bright",
+            "objects": [
+              {
+                "direction": "down",
+                "prediction": "down",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 4
+          },
+          {
+            "polarity": "bright",
+            "objects": [
+              {
+                "direction": "down",
+                "prediction": "down",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 4
+          },
+          {
+            "polarity": "dark",
+            "objects": [
+              {
+                "direction": "left",
+                "prediction": "left",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 4
+          },
+          {
+            "polarity": "dark",
+            "objects": [
+              {
+                "direction": "left",
+                "prediction": "left",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 4
+          },
+          {
+            "polarity": "bright",
+            "objects": [
+              {
+                "direction": "left",
+                "prediction": "left",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 4
+          },
+          {
+            "polarity": "bright",
+            "objects": [
+              {
+                "direction": "left",
+                "prediction": "left",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 4
+          },
+          {
+            "polarity": "dark",
+            "objects": [
+              {
+                "direction": "right",
+                "prediction": "right",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 4
+          },
+          {
+            "polarity": "dark",
+            "objects": [
+              {
+                "direction": "right",
+                "prediction": "right",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 4
+          },
+          {
+            "polarity": "bright",
+            "objects": [
+              {
+                "direction": "right",
+                "prediction": "right",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 4
+          },
+          {
+            "polarity": "bright",
+            "objects": [
+              {
+                "direction": "right",
+                "prediction": "right",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 4
+          }
+        ],
+        "accuracy": 1.0,
+        "matched_fraction": 1.0,
+        "mean_coverage": 1.0
+      },
+      "shuffled_credit": {
+        "correct": 16,
+        "matched": 16,
+        "total": 16,
+        "coverage": 16.0,
+        "cases": [
+          {
+            "polarity": "dark",
+            "objects": [
+              {
+                "direction": "up",
+                "prediction": "up",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 4
+          },
+          {
+            "polarity": "dark",
+            "objects": [
+              {
+                "direction": "up",
+                "prediction": "up",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 4
+          },
+          {
+            "polarity": "bright",
+            "objects": [
+              {
+                "direction": "up",
+                "prediction": "up",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 4
+          },
+          {
+            "polarity": "bright",
+            "objects": [
+              {
+                "direction": "up",
+                "prediction": "up",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 4
+          },
+          {
+            "polarity": "dark",
+            "objects": [
+              {
+                "direction": "down",
+                "prediction": "down",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 4
+          },
+          {
+            "polarity": "dark",
+            "objects": [
+              {
+                "direction": "down",
+                "prediction": "down",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 4
+          },
+          {
+            "polarity": "bright",
+            "objects": [
+              {
+                "direction": "down",
+                "prediction": "down",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 4
+          },
+          {
+            "polarity": "bright",
+            "objects": [
+              {
+                "direction": "down",
+                "prediction": "down",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 4
+          },
+          {
+            "polarity": "dark",
+            "objects": [
+              {
+                "direction": "left",
+                "prediction": "left",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 4
+          },
+          {
+            "polarity": "dark",
+            "objects": [
+              {
+                "direction": "left",
+                "prediction": "left",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 4
+          },
+          {
+            "polarity": "bright",
+            "objects": [
+              {
+                "direction": "left",
+                "prediction": "left",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 4
+          },
+          {
+            "polarity": "bright",
+            "objects": [
+              {
+                "direction": "left",
+                "prediction": "left",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 4
+          },
+          {
+            "polarity": "dark",
+            "objects": [
+              {
+                "direction": "right",
+                "prediction": "right",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 4
+          },
+          {
+            "polarity": "dark",
+            "objects": [
+              {
+                "direction": "right",
+                "prediction": "right",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 4
+          },
+          {
+            "polarity": "bright",
+            "objects": [
+              {
+                "direction": "right",
+                "prediction": "right",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 4
+          },
+          {
+            "polarity": "bright",
+            "objects": [
+              {
+                "direction": "right",
+                "prediction": "right",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 4
+          }
+        ],
+        "accuracy": 1.0,
+        "matched_fraction": 1.0,
+        "mean_coverage": 1.0
+      }
+    },
+    "speed": {
+      "learned": {
+        "correct": 0,
+        "matched": 10,
+        "total": 16,
+        "coverage": 4.666666666666666,
+        "cases": [
+          {
+            "polarity": "dark",
+            "objects": [
+              {
+                "direction": "up",
+                "prediction": null,
+                "matched": false,
+                "correct": false,
+                "coverage": 0.2222222222222222
+              }
+            ],
+            "tokens": 20
+          },
+          {
+            "polarity": "dark",
+            "objects": [
+              {
+                "direction": "up",
+                "prediction": null,
+                "matched": false,
+                "correct": false,
+                "coverage": 0.2222222222222222
+              }
+            ],
+            "tokens": 20
+          },
+          {
+            "polarity": "bright",
+            "objects": [
+              {
+                "direction": "up",
+                "prediction": null,
+                "matched": true,
+                "correct": false,
+                "coverage": 0.3333333333333333
+              }
+            ],
+            "tokens": 18
+          },
+          {
+            "polarity": "bright",
+            "objects": [
+              {
+                "direction": "up",
+                "prediction": null,
+                "matched": true,
+                "correct": false,
+                "coverage": 0.3333333333333333
+              }
+            ],
+            "tokens": 18
+          },
+          {
+            "polarity": "dark",
+            "objects": [
+              {
+                "direction": "down",
+                "prediction": null,
+                "matched": true,
+                "correct": false,
+                "coverage": 0.3333333333333333
+              }
+            ],
+            "tokens": 20
+          },
+          {
+            "polarity": "dark",
+            "objects": [
+              {
+                "direction": "down",
+                "prediction": null,
+                "matched": true,
+                "correct": false,
+                "coverage": 0.3333333333333333
+              }
+            ],
+            "tokens": 20
+          },
+          {
+            "polarity": "bright",
+            "objects": [
+              {
+                "direction": "down",
+                "prediction": null,
+                "matched": true,
+                "correct": false,
+                "coverage": 0.3333333333333333
+              }
+            ],
+            "tokens": 20
+          },
+          {
+            "polarity": "bright",
+            "objects": [
+              {
+                "direction": "down",
+                "prediction": null,
+                "matched": true,
+                "correct": false,
+                "coverage": 0.3333333333333333
+              }
+            ],
+            "tokens": 20
+          },
+          {
+            "polarity": "dark",
+            "objects": [
+              {
+                "direction": "left",
+                "prediction": null,
+                "matched": false,
+                "correct": false,
+                "coverage": 0.2222222222222222
+              }
+            ],
+            "tokens": 20
+          },
+          {
+            "polarity": "dark",
+            "objects": [
+              {
+                "direction": "left",
+                "prediction": null,
+                "matched": false,
+                "correct": false,
+                "coverage": 0.2222222222222222
+              }
+            ],
+            "tokens": 20
+          },
+          {
+            "polarity": "bright",
+            "objects": [
+              {
+                "direction": "left",
+                "prediction": null,
+                "matched": false,
+                "correct": false,
+                "coverage": 0.2222222222222222
+              }
+            ],
+            "tokens": 20
+          },
+          {
+            "polarity": "bright",
+            "objects": [
+              {
+                "direction": "left",
+                "prediction": null,
+                "matched": false,
+                "correct": false,
+                "coverage": 0.2222222222222222
+              }
+            ],
+            "tokens": 20
+          },
+          {
+            "polarity": "dark",
+            "objects": [
+              {
+                "direction": "right",
+                "prediction": null,
+                "matched": true,
+                "correct": false,
+                "coverage": 0.3333333333333333
+              }
+            ],
+            "tokens": 20
+          },
+          {
+            "polarity": "dark",
+            "objects": [
+              {
+                "direction": "right",
+                "prediction": null,
+                "matched": true,
+                "correct": false,
+                "coverage": 0.3333333333333333
+              }
+            ],
+            "tokens": 20
+          },
+          {
+            "polarity": "bright",
+            "objects": [
+              {
+                "direction": "right",
+                "prediction": null,
+                "matched": true,
+                "correct": false,
+                "coverage": 0.3333333333333333
+              }
+            ],
+            "tokens": 20
+          },
+          {
+            "polarity": "bright",
+            "objects": [
+              {
+                "direction": "right",
+                "prediction": null,
+                "matched": true,
+                "correct": false,
+                "coverage": 0.3333333333333333
+              }
+            ],
+            "tokens": 20
+          }
+        ],
+        "accuracy": 0.0,
+        "matched_fraction": 0.625,
+        "mean_coverage": 0.29166666666666663
+      },
+      "proximity": {
+        "correct": 0,
+        "matched": 16,
+        "total": 16,
+        "coverage": 5.333333333333332,
+        "cases": [
+          {
+            "polarity": "dark",
+            "objects": [
+              {
+                "direction": "up",
+                "prediction": null,
+                "matched": true,
+                "correct": false,
+                "coverage": 0.3333333333333333
+              }
+            ],
+            "tokens": 18
+          },
+          {
+            "polarity": "dark",
+            "objects": [
+              {
+                "direction": "up",
+                "prediction": null,
+                "matched": true,
+                "correct": false,
+                "coverage": 0.3333333333333333
+              }
+            ],
+            "tokens": 18
+          },
+          {
+            "polarity": "bright",
+            "objects": [
+              {
+                "direction": "up",
+                "prediction": null,
+                "matched": true,
+                "correct": false,
+                "coverage": 0.3333333333333333
+              }
+            ],
+            "tokens": 18
+          },
+          {
+            "polarity": "bright",
+            "objects": [
+              {
+                "direction": "up",
+                "prediction": null,
+                "matched": true,
+                "correct": false,
+                "coverage": 0.3333333333333333
+              }
+            ],
+            "tokens": 18
+          },
+          {
+            "polarity": "dark",
+            "objects": [
+              {
+                "direction": "down",
+                "prediction": null,
+                "matched": true,
+                "correct": false,
+                "coverage": 0.3333333333333333
+              }
+            ],
+            "tokens": 18
+          },
+          {
+            "polarity": "dark",
+            "objects": [
+              {
+                "direction": "down",
+                "prediction": null,
+                "matched": true,
+                "correct": false,
+                "coverage": 0.3333333333333333
+              }
+            ],
+            "tokens": 18
+          },
+          {
+            "polarity": "bright",
+            "objects": [
+              {
+                "direction": "down",
+                "prediction": null,
+                "matched": true,
+                "correct": false,
+                "coverage": 0.3333333333333333
+              }
+            ],
+            "tokens": 18
+          },
+          {
+            "polarity": "bright",
+            "objects": [
+              {
+                "direction": "down",
+                "prediction": null,
+                "matched": true,
+                "correct": false,
+                "coverage": 0.3333333333333333
+              }
+            ],
+            "tokens": 18
+          },
+          {
+            "polarity": "dark",
+            "objects": [
+              {
+                "direction": "left",
+                "prediction": null,
+                "matched": true,
+                "correct": false,
+                "coverage": 0.3333333333333333
+              }
+            ],
+            "tokens": 18
+          },
+          {
+            "polarity": "dark",
+            "objects": [
+              {
+                "direction": "left",
+                "prediction": null,
+                "matched": true,
+                "correct": false,
+                "coverage": 0.3333333333333333
+              }
+            ],
+            "tokens": 18
+          },
+          {
+            "polarity": "bright",
+            "objects": [
+              {
+                "direction": "left",
+                "prediction": null,
+                "matched": true,
+                "correct": false,
+                "coverage": 0.3333333333333333
+              }
+            ],
+            "tokens": 18
+          },
+          {
+            "polarity": "bright",
+            "objects": [
+              {
+                "direction": "left",
+                "prediction": null,
+                "matched": true,
+                "correct": false,
+                "coverage": 0.3333333333333333
+              }
+            ],
+            "tokens": 18
+          },
+          {
+            "polarity": "dark",
+            "objects": [
+              {
+                "direction": "right",
+                "prediction": null,
+                "matched": true,
+                "correct": false,
+                "coverage": 0.3333333333333333
+              }
+            ],
+            "tokens": 18
+          },
+          {
+            "polarity": "dark",
+            "objects": [
+              {
+                "direction": "right",
+                "prediction": null,
+                "matched": true,
+                "correct": false,
+                "coverage": 0.3333333333333333
+              }
+            ],
+            "tokens": 18
+          },
+          {
+            "polarity": "bright",
+            "objects": [
+              {
+                "direction": "right",
+                "prediction": null,
+                "matched": true,
+                "correct": false,
+                "coverage": 0.3333333333333333
+              }
+            ],
+            "tokens": 18
+          },
+          {
+            "polarity": "bright",
+            "objects": [
+              {
+                "direction": "right",
+                "prediction": null,
+                "matched": true,
+                "correct": false,
+                "coverage": 0.3333333333333333
+              }
+            ],
+            "tokens": 18
+          }
+        ],
+        "accuracy": 0.0,
+        "matched_fraction": 1.0,
+        "mean_coverage": 0.33333333333333326
+      },
+      "shuffled_credit": {
+        "correct": 0,
+        "matched": 14,
+        "total": 16,
+        "coverage": 5.111111111111111,
+        "cases": [
+          {
+            "polarity": "dark",
+            "objects": [
+              {
+                "direction": "up",
+                "prediction": null,
+                "matched": false,
+                "correct": false,
+                "coverage": 0.2222222222222222
+              }
+            ],
+            "tokens": 20
+          },
+          {
+            "polarity": "dark",
+            "objects": [
+              {
+                "direction": "up",
+                "prediction": null,
+                "matched": false,
+                "correct": false,
+                "coverage": 0.2222222222222222
+              }
+            ],
+            "tokens": 20
+          },
+          {
+            "polarity": "bright",
+            "objects": [
+              {
+                "direction": "up",
+                "prediction": "left",
+                "matched": true,
+                "correct": false,
+                "coverage": 0.3333333333333333
+              }
+            ],
+            "tokens": 18
+          },
+          {
+            "polarity": "bright",
+            "objects": [
+              {
+                "direction": "up",
+                "prediction": "left",
+                "matched": true,
+                "correct": false,
+                "coverage": 0.3333333333333333
+              }
+            ],
+            "tokens": 18
+          },
+          {
+            "polarity": "dark",
+            "objects": [
+              {
+                "direction": "down",
+                "prediction": null,
+                "matched": true,
+                "correct": false,
+                "coverage": 0.3333333333333333
+              }
+            ],
+            "tokens": 20
+          },
+          {
+            "polarity": "dark",
+            "objects": [
+              {
+                "direction": "down",
+                "prediction": null,
+                "matched": true,
+                "correct": false,
+                "coverage": 0.3333333333333333
+              }
+            ],
+            "tokens": 20
+          },
+          {
+            "polarity": "bright",
+            "objects": [
+              {
+                "direction": "down",
+                "prediction": null,
+                "matched": true,
+                "correct": false,
+                "coverage": 0.3333333333333333
+              }
+            ],
+            "tokens": 20
+          },
+          {
+            "polarity": "bright",
+            "objects": [
+              {
+                "direction": "down",
+                "prediction": null,
+                "matched": true,
+                "correct": false,
+                "coverage": 0.3333333333333333
+              }
+            ],
+            "tokens": 20
+          },
+          {
+            "polarity": "dark",
+            "objects": [
+              {
+                "direction": "left",
+                "prediction": null,
+                "matched": true,
+                "correct": false,
+                "coverage": 0.3333333333333333
+              }
+            ],
+            "tokens": 18
+          },
+          {
+            "polarity": "dark",
+            "objects": [
+              {
+                "direction": "left",
+                "prediction": null,
+                "matched": true,
+                "correct": false,
+                "coverage": 0.3333333333333333
+              }
+            ],
+            "tokens": 18
+          },
+          {
+            "polarity": "bright",
+            "objects": [
+              {
+                "direction": "left",
+                "prediction": null,
+                "matched": true,
+                "correct": false,
+                "coverage": 0.3333333333333333
+              }
+            ],
+            "tokens": 18
+          },
+          {
+            "polarity": "bright",
+            "objects": [
+              {
+                "direction": "left",
+                "prediction": null,
+                "matched": true,
+                "correct": false,
+                "coverage": 0.3333333333333333
+              }
+            ],
+            "tokens": 18
+          },
+          {
+            "polarity": "dark",
+            "objects": [
+              {
+                "direction": "right",
+                "prediction": null,
+                "matched": true,
+                "correct": false,
+                "coverage": 0.3333333333333333
+              }
+            ],
+            "tokens": 20
+          },
+          {
+            "polarity": "dark",
+            "objects": [
+              {
+                "direction": "right",
+                "prediction": null,
+                "matched": true,
+                "correct": false,
+                "coverage": 0.3333333333333333
+              }
+            ],
+            "tokens": 20
+          },
+          {
+            "polarity": "bright",
+            "objects": [
+              {
+                "direction": "right",
+                "prediction": null,
+                "matched": true,
+                "correct": false,
+                "coverage": 0.3333333333333333
+              }
+            ],
+            "tokens": 18
+          },
+          {
+            "polarity": "bright",
+            "objects": [
+              {
+                "direction": "right",
+                "prediction": null,
+                "matched": true,
+                "correct": false,
+                "coverage": 0.3333333333333333
+              }
+            ],
+            "tokens": 18
+          }
+        ],
+        "accuracy": 0.0,
+        "matched_fraction": 0.875,
+        "mean_coverage": 0.3194444444444444
+      }
+    },
+    "shape": {
+      "learned": {
+        "correct": 16,
+        "matched": 16,
+        "total": 16,
+        "coverage": 16.0,
+        "cases": [
+          {
+            "polarity": "dark",
+            "objects": [
+              {
+                "direction": "up",
+                "prediction": "up",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 5
+          },
+          {
+            "polarity": "dark",
+            "objects": [
+              {
+                "direction": "up",
+                "prediction": "up",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 5
+          },
+          {
+            "polarity": "bright",
+            "objects": [
+              {
+                "direction": "up",
+                "prediction": "up",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 5
+          },
+          {
+            "polarity": "bright",
+            "objects": [
+              {
+                "direction": "up",
+                "prediction": "up",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 5
+          },
+          {
+            "polarity": "dark",
+            "objects": [
+              {
+                "direction": "down",
+                "prediction": "down",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 5
+          },
+          {
+            "polarity": "dark",
+            "objects": [
+              {
+                "direction": "down",
+                "prediction": "down",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 5
+          },
+          {
+            "polarity": "bright",
+            "objects": [
+              {
+                "direction": "down",
+                "prediction": "down",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 5
+          },
+          {
+            "polarity": "bright",
+            "objects": [
+              {
+                "direction": "down",
+                "prediction": "down",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 5
+          },
+          {
+            "polarity": "dark",
+            "objects": [
+              {
+                "direction": "left",
+                "prediction": "left",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 5
+          },
+          {
+            "polarity": "dark",
+            "objects": [
+              {
+                "direction": "left",
+                "prediction": "left",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 5
+          },
+          {
+            "polarity": "bright",
+            "objects": [
+              {
+                "direction": "left",
+                "prediction": "left",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 5
+          },
+          {
+            "polarity": "bright",
+            "objects": [
+              {
+                "direction": "left",
+                "prediction": "left",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 5
+          },
+          {
+            "polarity": "dark",
+            "objects": [
+              {
+                "direction": "right",
+                "prediction": "right",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 5
+          },
+          {
+            "polarity": "dark",
+            "objects": [
+              {
+                "direction": "right",
+                "prediction": "right",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 5
+          },
+          {
+            "polarity": "bright",
+            "objects": [
+              {
+                "direction": "right",
+                "prediction": "right",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 5
+          },
+          {
+            "polarity": "bright",
+            "objects": [
+              {
+                "direction": "right",
+                "prediction": "right",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 5
+          }
+        ],
+        "accuracy": 1.0,
+        "matched_fraction": 1.0,
+        "mean_coverage": 1.0
+      },
+      "proximity": {
+        "correct": 16,
+        "matched": 16,
+        "total": 16,
+        "coverage": 16.0,
+        "cases": [
+          {
+            "polarity": "dark",
+            "objects": [
+              {
+                "direction": "up",
+                "prediction": "up",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 5
+          },
+          {
+            "polarity": "dark",
+            "objects": [
+              {
+                "direction": "up",
+                "prediction": "up",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 5
+          },
+          {
+            "polarity": "bright",
+            "objects": [
+              {
+                "direction": "up",
+                "prediction": "up",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 5
+          },
+          {
+            "polarity": "bright",
+            "objects": [
+              {
+                "direction": "up",
+                "prediction": "up",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 5
+          },
+          {
+            "polarity": "dark",
+            "objects": [
+              {
+                "direction": "down",
+                "prediction": "down",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 5
+          },
+          {
+            "polarity": "dark",
+            "objects": [
+              {
+                "direction": "down",
+                "prediction": "down",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 5
+          },
+          {
+            "polarity": "bright",
+            "objects": [
+              {
+                "direction": "down",
+                "prediction": "down",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 5
+          },
+          {
+            "polarity": "bright",
+            "objects": [
+              {
+                "direction": "down",
+                "prediction": "down",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 5
+          },
+          {
+            "polarity": "dark",
+            "objects": [
+              {
+                "direction": "left",
+                "prediction": "left",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 5
+          },
+          {
+            "polarity": "dark",
+            "objects": [
+              {
+                "direction": "left",
+                "prediction": "left",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 5
+          },
+          {
+            "polarity": "bright",
+            "objects": [
+              {
+                "direction": "left",
+                "prediction": "left",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 5
+          },
+          {
+            "polarity": "bright",
+            "objects": [
+              {
+                "direction": "left",
+                "prediction": "left",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 5
+          },
+          {
+            "polarity": "dark",
+            "objects": [
+              {
+                "direction": "right",
+                "prediction": "right",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 5
+          },
+          {
+            "polarity": "dark",
+            "objects": [
+              {
+                "direction": "right",
+                "prediction": "right",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 5
+          },
+          {
+            "polarity": "bright",
+            "objects": [
+              {
+                "direction": "right",
+                "prediction": "right",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 5
+          },
+          {
+            "polarity": "bright",
+            "objects": [
+              {
+                "direction": "right",
+                "prediction": "right",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 5
+          }
+        ],
+        "accuracy": 1.0,
+        "matched_fraction": 1.0,
+        "mean_coverage": 1.0
+      },
+      "shuffled_credit": {
+        "correct": 16,
+        "matched": 16,
+        "total": 16,
+        "coverage": 16.0,
+        "cases": [
+          {
+            "polarity": "dark",
+            "objects": [
+              {
+                "direction": "up",
+                "prediction": "up",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 5
+          },
+          {
+            "polarity": "dark",
+            "objects": [
+              {
+                "direction": "up",
+                "prediction": "up",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 5
+          },
+          {
+            "polarity": "bright",
+            "objects": [
+              {
+                "direction": "up",
+                "prediction": "up",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 5
+          },
+          {
+            "polarity": "bright",
+            "objects": [
+              {
+                "direction": "up",
+                "prediction": "up",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 5
+          },
+          {
+            "polarity": "dark",
+            "objects": [
+              {
+                "direction": "down",
+                "prediction": "down",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 5
+          },
+          {
+            "polarity": "dark",
+            "objects": [
+              {
+                "direction": "down",
+                "prediction": "down",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 5
+          },
+          {
+            "polarity": "bright",
+            "objects": [
+              {
+                "direction": "down",
+                "prediction": "down",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 5
+          },
+          {
+            "polarity": "bright",
+            "objects": [
+              {
+                "direction": "down",
+                "prediction": "down",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 5
+          },
+          {
+            "polarity": "dark",
+            "objects": [
+              {
+                "direction": "left",
+                "prediction": "left",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 5
+          },
+          {
+            "polarity": "dark",
+            "objects": [
+              {
+                "direction": "left",
+                "prediction": "left",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 5
+          },
+          {
+            "polarity": "bright",
+            "objects": [
+              {
+                "direction": "left",
+                "prediction": "left",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 5
+          },
+          {
+            "polarity": "bright",
+            "objects": [
+              {
+                "direction": "left",
+                "prediction": "left",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 5
+          },
+          {
+            "polarity": "dark",
+            "objects": [
+              {
+                "direction": "right",
+                "prediction": "right",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 5
+          },
+          {
+            "polarity": "dark",
+            "objects": [
+              {
+                "direction": "right",
+                "prediction": "right",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 5
+          },
+          {
+            "polarity": "bright",
+            "objects": [
+              {
+                "direction": "right",
+                "prediction": "right",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 5
+          },
+          {
+            "polarity": "bright",
+            "objects": [
+              {
+                "direction": "right",
+                "prediction": "right",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 5
+          }
+        ],
+        "accuracy": 1.0,
+        "matched_fraction": 1.0,
+        "mean_coverage": 1.0
+      }
+    },
+    "separated": {
+      "learned": {
+        "correct": 16,
+        "matched": 16,
+        "total": 16,
+        "coverage": 16.0,
+        "cases": [
+          {
+            "polarity": "dark",
+            "objects": [
+              {
+                "direction": "up",
+                "prediction": "up",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              },
+              {
+                "direction": "down",
+                "prediction": "down",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 8
+          },
+          {
+            "polarity": "bright",
+            "objects": [
+              {
+                "direction": "up",
+                "prediction": "up",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              },
+              {
+                "direction": "down",
+                "prediction": "down",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 8
+          },
+          {
+            "polarity": "dark",
+            "objects": [
+              {
+                "direction": "left",
+                "prediction": "left",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              },
+              {
+                "direction": "right",
+                "prediction": "right",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 8
+          },
+          {
+            "polarity": "bright",
+            "objects": [
+              {
+                "direction": "left",
+                "prediction": "left",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              },
+              {
+                "direction": "right",
+                "prediction": "right",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 8
+          },
+          {
+            "polarity": "dark",
+            "objects": [
+              {
+                "direction": "up",
+                "prediction": "up",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              },
+              {
+                "direction": "right",
+                "prediction": "right",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 8
+          },
+          {
+            "polarity": "bright",
+            "objects": [
+              {
+                "direction": "up",
+                "prediction": "up",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              },
+              {
+                "direction": "right",
+                "prediction": "right",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 8
+          },
+          {
+            "polarity": "dark",
+            "objects": [
+              {
+                "direction": "down",
+                "prediction": "down",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              },
+              {
+                "direction": "left",
+                "prediction": "left",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 8
+          },
+          {
+            "polarity": "bright",
+            "objects": [
+              {
+                "direction": "down",
+                "prediction": "down",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              },
+              {
+                "direction": "left",
+                "prediction": "left",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 8
+          }
+        ],
+        "accuracy": 1.0,
+        "matched_fraction": 1.0,
+        "mean_coverage": 1.0
+      },
+      "proximity": {
+        "correct": 16,
+        "matched": 16,
+        "total": 16,
+        "coverage": 16.0,
+        "cases": [
+          {
+            "polarity": "dark",
+            "objects": [
+              {
+                "direction": "up",
+                "prediction": "up",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              },
+              {
+                "direction": "down",
+                "prediction": "down",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 8
+          },
+          {
+            "polarity": "bright",
+            "objects": [
+              {
+                "direction": "up",
+                "prediction": "up",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              },
+              {
+                "direction": "down",
+                "prediction": "down",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 8
+          },
+          {
+            "polarity": "dark",
+            "objects": [
+              {
+                "direction": "left",
+                "prediction": "left",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              },
+              {
+                "direction": "right",
+                "prediction": "right",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 8
+          },
+          {
+            "polarity": "bright",
+            "objects": [
+              {
+                "direction": "left",
+                "prediction": "left",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              },
+              {
+                "direction": "right",
+                "prediction": "right",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 8
+          },
+          {
+            "polarity": "dark",
+            "objects": [
+              {
+                "direction": "up",
+                "prediction": "up",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              },
+              {
+                "direction": "right",
+                "prediction": "right",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 8
+          },
+          {
+            "polarity": "bright",
+            "objects": [
+              {
+                "direction": "up",
+                "prediction": "up",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              },
+              {
+                "direction": "right",
+                "prediction": "right",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 8
+          },
+          {
+            "polarity": "dark",
+            "objects": [
+              {
+                "direction": "down",
+                "prediction": "down",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              },
+              {
+                "direction": "left",
+                "prediction": "left",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 8
+          },
+          {
+            "polarity": "bright",
+            "objects": [
+              {
+                "direction": "down",
+                "prediction": "down",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              },
+              {
+                "direction": "left",
+                "prediction": "left",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 8
+          }
+        ],
+        "accuracy": 1.0,
+        "matched_fraction": 1.0,
+        "mean_coverage": 1.0
+      },
+      "shuffled_credit": {
+        "correct": 16,
+        "matched": 16,
+        "total": 16,
+        "coverage": 16.0,
+        "cases": [
+          {
+            "polarity": "dark",
+            "objects": [
+              {
+                "direction": "up",
+                "prediction": "up",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              },
+              {
+                "direction": "down",
+                "prediction": "down",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 8
+          },
+          {
+            "polarity": "bright",
+            "objects": [
+              {
+                "direction": "up",
+                "prediction": "up",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              },
+              {
+                "direction": "down",
+                "prediction": "down",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 8
+          },
+          {
+            "polarity": "dark",
+            "objects": [
+              {
+                "direction": "left",
+                "prediction": "left",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              },
+              {
+                "direction": "right",
+                "prediction": "right",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 8
+          },
+          {
+            "polarity": "bright",
+            "objects": [
+              {
+                "direction": "left",
+                "prediction": "left",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              },
+              {
+                "direction": "right",
+                "prediction": "right",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 8
+          },
+          {
+            "polarity": "dark",
+            "objects": [
+              {
+                "direction": "up",
+                "prediction": "up",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              },
+              {
+                "direction": "right",
+                "prediction": "right",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 8
+          },
+          {
+            "polarity": "bright",
+            "objects": [
+              {
+                "direction": "up",
+                "prediction": "up",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              },
+              {
+                "direction": "right",
+                "prediction": "right",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 8
+          },
+          {
+            "polarity": "dark",
+            "objects": [
+              {
+                "direction": "down",
+                "prediction": "down",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              },
+              {
+                "direction": "left",
+                "prediction": "left",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 8
+          },
+          {
+            "polarity": "bright",
+            "objects": [
+              {
+                "direction": "down",
+                "prediction": "down",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              },
+              {
+                "direction": "left",
+                "prediction": "left",
+                "matched": true,
+                "correct": true,
+                "coverage": 1.0
+              }
+            ],
+            "tokens": 8
+          }
+        ],
+        "accuracy": 1.0,
+        "matched_fraction": 1.0,
+        "mean_coverage": 1.0
+      }
+    },
+    "crossing": {
+      "learned": {
+        "correct": 4,
+        "matched": 4,
+        "total": 4,
+        "coverage": 3.5555555555555554,
+        "cases": [
+          {
+            "polarity": "dark",
+            "objects": [
+              {
+                "direction": "right",
+                "prediction": "right",
+                "matched": true,
+                "correct": true,
+                "coverage": 0.8888888888888888
+              },
+              {
+                "direction": "left",
+                "prediction": "left",
+                "matched": true,
+                "correct": true,
+                "coverage": 0.8888888888888888
+              }
+            ],
+            "tokens": 8
+          },
+          {
+            "polarity": "bright",
+            "objects": [
+              {
+                "direction": "right",
+                "prediction": "right",
+                "matched": true,
+                "correct": true,
+                "coverage": 0.8888888888888888
+              },
+              {
+                "direction": "left",
+                "prediction": "left",
+                "matched": true,
+                "correct": true,
+                "coverage": 0.8888888888888888
+              }
+            ],
+            "tokens": 8
+          }
+        ],
+        "accuracy": 1.0,
+        "matched_fraction": 1.0,
+        "mean_coverage": 0.8888888888888888
+      },
+      "proximity": {
+        "correct": 4,
+        "matched": 4,
+        "total": 4,
+        "coverage": 3.333333333333333,
+        "cases": [
+          {
+            "polarity": "dark",
+            "objects": [
+              {
+                "direction": "right",
+                "prediction": "right",
+                "matched": true,
+                "correct": true,
+                "coverage": 0.7777777777777778
+              },
+              {
+                "direction": "left",
+                "prediction": "left",
+                "matched": true,
+                "correct": true,
+                "coverage": 0.8888888888888888
+              }
+            ],
+            "tokens": 8
+          },
+          {
+            "polarity": "bright",
+            "objects": [
+              {
+                "direction": "right",
+                "prediction": "right",
+                "matched": true,
+                "correct": true,
+                "coverage": 0.7777777777777778
+              },
+              {
+                "direction": "left",
+                "prediction": "left",
+                "matched": true,
+                "correct": true,
+                "coverage": 0.8888888888888888
+              }
+            ],
+            "tokens": 8
+          }
+        ],
+        "accuracy": 1.0,
+        "matched_fraction": 1.0,
+        "mean_coverage": 0.8333333333333333
+      },
+      "shuffled_credit": {
+        "correct": 4,
+        "matched": 4,
+        "total": 4,
+        "coverage": 3.444444444444444,
+        "cases": [
+          {
+            "polarity": "dark",
+            "objects": [
+              {
+                "direction": "right",
+                "prediction": "right",
+                "matched": true,
+                "correct": true,
+                "coverage": 0.8888888888888888
+              },
+              {
+                "direction": "left",
+                "prediction": "left",
+                "matched": true,
+                "correct": true,
+                "coverage": 0.7777777777777778
+              }
+            ],
+            "tokens": 8
+          },
+          {
+            "polarity": "bright",
+            "objects": [
+              {
+                "direction": "right",
+                "prediction": "right",
+                "matched": true,
+                "correct": true,
+                "coverage": 0.8888888888888888
+              },
+              {
+                "direction": "left",
+                "prediction": "left",
+                "matched": true,
+                "correct": true,
+                "coverage": 0.8888888888888888
+              }
+            ],
+            "tokens": 8
+          }
+        ],
+        "accuracy": 1.0,
+        "matched_fraction": 1.0,
+        "mean_coverage": 0.861111111111111
+      }
+    }
+  },
+  "source_sites_per_frame": 2.4684684684684686,
+  "elapsed_seconds": 23.166002199985087
+}
