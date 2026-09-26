@@ -22,7 +22,8 @@ def reflect(position, low, high):
 
 
 @torch.no_grad()
-def scene_events(seed, *, frames=80, heldout=False):
+def scene_events(seed, *, frames=80, heldout=False,
+                 return_contrast=False):
     rng = random.Random(seed)
     background = bool(seed % 2)
     camera = EventCamera(1, 32, 64)
@@ -36,6 +37,7 @@ def scene_events(seed, *, frames=80, heldout=False):
                         rng.choice(shapes)))
     static = (rng.randrange(6, 26), rng.randrange(8, 56)) if seed % 3 == 0 else None
     result = []
+    intensity = []
     for t in range(frames):
         image = torch.full((1, 32, 64), background, dtype=torch.bool)
         if static is not None:
@@ -47,4 +49,6 @@ def scene_events(seed, *, frames=80, heldout=False):
             for oy, ox in shape:
                 image[0, y+oy, x+ox] = not background
         result.append(events_map(camera.observe(image)))
-    return result
+        if return_contrast:
+            intensity.append(image[0].float()-float(background))
+    return (result, intensity) if return_contrast else result
