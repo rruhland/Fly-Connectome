@@ -1,0 +1,9 @@
+# M1A.5 history benchmark: first control validity check
+
+The single-mover hidden-trajectory case is a sanity check, **not a qualifying M1A.5 benchmark**. A generic fixed constant-velocity tracker localizes the hidden entity in all 16 held-out cases in both event-only and sparse-frame inference. The frozen observer's complete state also retains appreciable approach history: the full-state direction probe reaches 14/16. Thus the current scene does not establish that the sensory system lacks the needed information, and it leaves no room to beat the tracker.
+
+The visible-only spatial readout of the complete sensory state and the matched 48-plane leaky memory both score 0/16 top-32 hidden-site hits. This means a purely local occupancy decoder cannot move an edge trace into the hidden region; it does **not** mean that motion history is absent. The complete sensory-state distance between opposite approaches is about .26–.35 after normalization. Sparse intensity refresh does not change these conclusions. The oracle ceiling is 16/16.
+
+These are deterministic clean cases. The probe was fitted on visible pixels in separate development trajectories; hidden sites were used only for held-out scoring. The frozen observer itself was previously fitted with exact every-frame rendered-intensity changes, so neither arm establishes teacher-free online learning. Reproduce with `.venv/Scripts/python scripts/run_visual_history_controls.py`; [raw measurements](2026-09-26-visual-history-control-results.json) include each pair distance and both sensor arms.
+
+The next validity step is multi-entity, longer-gap and contradictory-evidence scenes with a stronger generic multi-target tracking control. Disappearance before reveal is observationally unknowable and must be scored as uncertainty, not as a forced correct/incorrect hidden trajectory. Freeze those controls and the material acceptance margin before evaluating a new learned state. Production M1A remains unchanged.
