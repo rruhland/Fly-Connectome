@@ -74,6 +74,9 @@ class PersistentEntityFiles:
     def live_slots(self):
         return [slot for slot in self.slots if slot['confidence'] >= .5]
 
+    def association_slots(self):
+        return self.live_slots
+
     def predicted_center(self, slot, frame):
         elapsed = frame-slot['last_seen']
         return tuple(slot['center'][axis]+slot['velocity'][axis]*elapsed
@@ -136,7 +139,7 @@ class PersistentEntityFiles:
             self.surface.confident, self.surface.contrast, nearby_event,
             self.diagonal_links)
             if row['changed']]
-        live = self.live_slots
+        live = self.association_slots()
         merged = set()
         if len(proposals) < len(live):
             for index, proposal in enumerate(proposals):
