@@ -34,15 +34,16 @@ def training_cases(*, shuffled):
 
 
 @torch.no_grad()
-def train(model, observer, *, shuffled):
+def train(model, observer, *, shuffled, sequence=sensory_sequence):
     for case in training_cases(shuffled=shuffled):
         model.reset_state()
-        for state in sensory_sequence(observer, case, hybrid=False):
+        for state in sequence(observer, case, hybrid=False):
             model.step(state, learn=True)
 
 
 @torch.no_grad()
-def score(model, observer, episodes, *, hybrid, multi=False, noise=None):
+def score(model, observer, episodes, *, hybrid, multi=False, noise=None,
+          sequence=sensory_sequence):
     hits = {8: [], 32: [], 64: []}
     for index, original in enumerate(episodes):
         case = (original if noise is None else
@@ -50,7 +51,7 @@ def score(model, observer, episodes, *, hybrid, multi=False, noise=None):
                     original['events'], seed=5000+index,
                     dropout=noise[0], false_rate=noise[1])})
         model.reset_state()
-        states = sensory_sequence(observer, case, hybrid=hybrid)
+        states = sequence(observer, case, hybrid=hybrid)
         for state in states[:case['decision']+1]:
             field = model.step(state)
         masks = case['hidden_by_entity'] if multi else [case['hidden']]
@@ -64,7 +65,8 @@ def score(model, observer, episodes, *, hybrid, multi=False, noise=None):
 
 
 @torch.no_grad()
-def score_disappearance(model, observer, episodes, *, hybrid):
+def score_disappearance(model, observer, episodes, *, hybrid,
+                        sequence=sensory_sequence):
     predicted, continued, vanished = [], [], []
     for case in episodes:
         gone = render_context_case(direction=case['direction'],
@@ -77,7 +79,7 @@ def score_disappearance(model, observer, episodes, *, hybrid):
         for episode in (case, gone):
             model.reset_state()
             snapshots = {}
-            for frame, state in enumerate(sensory_sequence(
+            for frame, state in enumerate(sequence(
                     observer, episode, hybrid=hybrid)):
                 field = model.step(state)
                 if frame in (case['decision'], case['reveal']+2):

@@ -52,3 +52,28 @@ Before evaluating the local context candidate, freeze a minimum promising criter
 For that next candidate, retain event-only sensing and event-only observer teaching as the primary arm; sparse visible frames are a separately reported additional-sensor arm. Before training, require at least **14/16 clean context top-32**, **12/16 familiar-noise context top-32**, **8/16 heavy-noise context top-32**, **14/16 constant-motion top-32**, and **14/16 two-mover top-64**. After expected reveal, require at least **14/16 continued cases above .5** at the true location and at most **2/16 vanished cases above .5** at the counterfactual location, with identical pre-reveal predictions for observationally matched pairs. These thresholds are a bounded experimental screen. Full M1A.5 acceptance also requires broader rotated motion, unrelated contextual relations, camera-domain transfer, calibrated uncertainty, and throughput measurement before any production architecture revision is proposed.
 
 **Second candidate outcome:** [Causal event corroboration before tracklet formation](../experiments/2026-09-26-corroborated-context-memory-findings.md) retained 16/16 clean contextual hits but reached only 4/16 familiar-noise and 2/16 heavy-noise top-32 with event-only training/inference; sparse-frame inference gave 7/16 familiar-noise. It also reacquired only 10/16 continuing paths above .5. It fails the registered noisy and contradiction gates. Further threshold/decay variations of this family are out of scope; a genuinely confidence-weighted multi-hypothesis visual state is the next substantial architecture experiment.
+
+**Bounded evidence-state comparison:** [Weighted event and reconstructed-surface
+association beams](../experiments/2026-09-26-evidence-state-findings.md) both fail
+the noisy-state gate. Surface association preserves 16/16 clean context and both
+regressions, improves continued reacquisition to 16/16, and suppresses all 16
+vanished targets. Familiar/heavy noise remain 5/16 and 3/16. Preserve that clean
+improvement but stop association-parameter variants. The next registered broad
+experiment holds this state fixed and varies only declared visible-image access
+to locate the sensory reconstruction versus state-capacity bottleneck.
+
+**Sensor-budget outcome:** [Exact current visible-image anchors](../experiments/2026-09-26-sensor-budget-findings.md)
+rescue 16/16 contextual localization under both familiar and heavy event noise,
+with the same state and local credit rule. Sparse anchors every eight frames
+reach only 9/16 and 7/16. The state-capacity control is positive, but event-only
+acceptance remains unmet. Next investigate event-to-surface reliability with a
+different causal teaching signal; do not tune association thresholds again.
+
+**Sensory batch closed:** [Polarity-return teaching](../experiments/2026-09-26-polarity-return-findings.md)
+destroys clean state and learns no contextual effects. [Three-level contrast
+beliefs](../experiments/2026-09-26-contrast-belief-findings.md) preserve the clean
+result but improve none of the registered state scores. Neither is promoted.
+The [resumption record](2026-09-26-m1a5-resumption.md) preserves the successful
+clean surface state, rejected directions, remaining completion gates and two
+substantially different next observation-model hypotheses. This repeatedly used
+suite is development evidence; new acceptance must also use fresh held-out data.

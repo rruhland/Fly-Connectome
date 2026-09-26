@@ -1,0 +1,75 @@
+# M1A.5 restart point after the bounded sensory/state batch
+
+## Status and preserved result
+
+M1A.5 is **not complete** and nothing is promoted to production. The strongest
+opt-in state is `EvidenceContextMemory(representation='surface')` with the
+original causal event-only observer teacher. It learns the benchmark's context
+association, passes all clean localization/regression gates, and improves clean
+continuing reacquisition from 10/16 to 16/16 while suppressing all 16 vanished
+targets. Familiar/heavy-noise context localization remains 5/16 and 3/16, below
+the registered 12/16 and 8/16 minimum.
+
+Current visible-image anchors, computed without hidden/background metadata,
+rescue 16/16 under both noise levels. Sparse anchors every eight frames reach
+9/16 and 7/16. This is a useful causal intervention: accurate appearance makes
+the unchanged local association useful. It is not event-only acceptance and is
+not a generic learned representation result. The context comparator and
+position/velocity tracklets are still engineered and specialized.
+
+## Completed bounded hypotheses; do not repeat or tune
+
+1. Weighted event-density association beam: failed clean and noisy joint gate.
+2. Reconstructed-surface association beam: clean-state improvement; noise fails.
+3. Sensor-information intervention: dense visible appearance rescues the state;
+   sparse images remain insufficient at the registered cadence.
+4. Delayed polarity-return observer teacher: rejected; clean state collapses,
+   no context credit acquired. Do not sweep return windows.
+5. Three-level contrast-transition belief: no improvement on registered scores.
+   Do not sweep its priors or thresholds.
+
+Protocols, scripts, tests and result JSONs are under the corresponding
+`2026-09-26-evidence-state`, `sensor-budget`, `polarity-return`, and
+`contrast-belief` names. No hidden/future targets enter inference or training.
+The sensor-budget intervention explicitly supplies extra visible images.
+
+## Reassessment and next testable alternatives
+
+Stop treating this as a context-plasticity or forecast-head failure. The current
+benchmark local rule works when appearance is reliable. Before another state
+architecture, compare two substantially different **observation-model** routes:
+
+- **Joint temporal reconstruction:** infer a spatial visual surface from a
+  short event history plus an explicit corruption model, retaining uncertainty
+  about missed changes. Learn local patch statistics from observed data, with
+  no object templates, motion labels, hidden masks or backprop. Test against
+  both current event-only observation and its frozen/unlearned counterpart.
+  Unlike a scalar event gate, inference must use joint evidence across time.
+- **Declared hybrid sensing:** retain sparse visible images as real sensor
+  input and use them for online self-supervision of reconstruction between
+  arrivals. No every-frame renderer teacher. Compare under the same fixed
+  eight-frame sensor cadence and include corrupted images. This requires an
+  explicit sensor contract before production promotion; experiments are already
+  authorized. Do not confuse success here with event-only success.
+
+Register one decisive configuration per route. First score reconstruction and
+the unchanged state together: a prettier image or improved event precision is
+insufficient if clean/noisy state or onset/static-cue retention collapses. No
+post-result filter/window/cadence sweeps. Use fresh held-out noise seeds for any
+new acceptance claim; this small repeated suite is now development evidence.
+
+If one route clears the fixed screen, broaden **before promotion**: rotation,
+unrelated visual contextual relations, independently moving entities with actual
+identity scoring, continuous contrast/illumination changes, camera-domain
+transfer, uncertainty calibration and streaming throughput. Then freeze the
+accepted state and attach a separate local/no-backprop forecast learner against
+persistence/tracking/sensory controls. Run measured T4/T5 ablation to establish
+the connectome's contribution rather than presuming it. These acceptance items
+remain outstanding; the positive dense-image control does not waive them.
+
+## Verification and execution
+
+At the end of the implementation batch: 653 tests passed, 4 skipped. A separate
+read-only reviewer found no blocking code or target-leakage issue. The reviewer
+did not independently rerun experiments or establish broad generalization.
+All new mechanisms are in `scripts/`; production architecture is unchanged.
