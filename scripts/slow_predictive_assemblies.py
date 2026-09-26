@@ -48,6 +48,19 @@ class SlowPredictiveAssemblies:
             padding=2)[0].clamp(min=0., max=1.)
 
     @torch.no_grad()
+    def predict_fast(self, source=None):
+        return F.conv_transpose2d(
+            self.predict_field(source)[None],
+            self.dictionary[:, :self.fast_units], stride=4,
+            padding=3, output_padding=3)[0]
+
+    @torch.no_grad()
+    def residual_forecast(self, fast_dictionary, baseline_fast):
+        combined = (baseline_fast+self.predict_fast()).clamp(0., 1.)
+        return F.conv_transpose2d(combined[None], fast_dictionary,
+                                  padding=2)[0].clamp(0., 1.)
+
+    @torch.no_grad()
     def step(self, fast, *, learn_sensory=False):
         self.state.mul_(self.decay)
         self.winners.zero_()
@@ -96,5 +109,22 @@ class SlowPredictiveAssemblies:
                       (1, 1, 1, 1))
         for unit, y, x in previous.nonzero(as_tuple=False).tolist():
             self.transitions[:, unit] += self.recurrent_eta*error[
+                :, y:y+3, x:x+3].flip(-2, -1)
+        self.transitions.clamp_(min=0., max=1.)
+
+    @torch.no_grad()
+    def credit_sensory_residual(self, previous, target_fast,
+                               baseline_fast):
+        predicted = (baseline_fast+self.predict_fast(previous)).clamp(
+            0., 1.)
+        error = target_fast-predicted
+        decoder = self.dictionary[:, :self.fast_units]
+        credit = F.conv2d(error[None], decoder, stride=4,
+                          padding=3)[0]
+        norm = decoder.square().sum((1, 2, 3)).sqrt().clamp(min=1e-6)
+        credit = (credit/norm[:, None, None]).clamp(-1., 1.)
+        padded = F.pad(credit, (1, 1, 1, 1))
+        for unit, y, x in previous.nonzero(as_tuple=False).tolist():
+            self.transitions[:, unit] += self.recurrent_eta*padded[
                 :, y:y+3, x:x+3].flip(-2, -1)
         self.transitions.clamp_(min=0., max=1.)

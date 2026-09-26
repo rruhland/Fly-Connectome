@@ -59,3 +59,25 @@ def test_quiet_frame_preserves_decaying_assembly_context():
     before = model.state.clone()
     model.step(torch.zeros((2, 16, 16)))
     assert 0 < model.state[0, 1, 1] < before[0, 1, 1]
+
+
+def test_future_sensory_error_credits_confirmed_local_continuation():
+    model = centered_assembly()
+    previous = model.step(pulse(4, 4)).clone()
+    target = pulse(4, 8)
+    model.credit_sensory_residual(previous, target,
+                                 torch.zeros_like(target))
+    predicted = model.predict_field(previous)
+    assert predicted[0, 1, 2] > 0
+    assert predicted[0, 1, 2] > predicted[0, 1, 0]
+
+
+def test_future_sensory_error_suppresses_unsupported_continuation():
+    model = centered_assembly()
+    previous = model.step(pulse(4, 4)).clone()
+    target = pulse(4, 8)
+    blank = torch.zeros_like(target)
+    model.credit_sensory_residual(previous, target, blank)
+    before = model.transitions.clone()
+    model.credit_sensory_residual(previous, blank, blank)
+    assert model.transitions[0, 0, 1, 0] < before[0, 0, 1, 0]
