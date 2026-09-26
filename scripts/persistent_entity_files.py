@@ -8,7 +8,7 @@ import torch.nn.functional as F
 from confident_event_surface import ConfidentEventSurface
 
 
-def surface_components(mask, contrast, changed):
+def surface_components(mask, contrast, changed, diagonal_links=None):
     """Connected sensory proposals; identity is assigned by the recurrent files."""
     remaining = set(map(tuple, mask.nonzero(as_tuple=False).tolist()))
     groups = []
@@ -18,8 +18,17 @@ def surface_components(mask, contrast, changed):
         while stack:
             y, x = stack.pop()
             pixels.append((y, x))
-            for neighbor in ((y-1, x), (y+1, x), (y, x-1),
-                             (y, x+1)):
+            neighbors = [(y-1, x), (y+1, x), (y, x-1), (y, x+1)]
+            if diagonal_links:
+                sign = 1. if contrast[y, x] >= 0 else -1.
+                for dy, dx in ((-1, -1), (-1, 1), (1, -1), (1, 1)):
+                    ny, nx = y+dy, x+dx
+                    if (diagonal_links.get((sign, dy*dx), False) and
+                            0 <= ny < mask.shape[0] and
+                            0 <= nx < mask.shape[1] and
+                            sign*contrast[ny, nx] > 0):
+                        neighbors.append((ny, nx))
+            for neighbor in neighbors:
                 if neighbor in remaining:
                     remaining.remove(neighbor)
                     stack.append(neighbor)
@@ -42,13 +51,15 @@ def surface_components(mask, contrast, changed):
 class PersistentEntityFiles:
     """Compete online for visual proposals and learn local continuation."""
 
-    def __init__(self, *, height=32, width=64, credit='aligned', seed=0):
+    def __init__(self, *, height=32, width=64, credit='aligned', seed=0,
+                 diagonal_links=None):
         if credit not in ('aligned', 'shuffled', 'frozen'):
             raise ValueError('unknown local credit mode')
         self.height = height
         self.width = width
         self.credit = credit
         self.seed = seed
+        self.diagonal_links = diagonal_links
         self.surface = ConfidentEventSurface(height=height, width=width)
         self.reset_state()
 
@@ -122,7 +133,8 @@ class PersistentEntityFiles:
         nearby_event = F.max_pool2d(event.sum(0)[None, None], 3,
                                     stride=1, padding=1)[0, 0] > 0
         proposals = [row for row in surface_components(
-            self.surface.confident, self.surface.contrast, nearby_event)
+            self.surface.confident, self.surface.contrast, nearby_event,
+            self.diagonal_links)
             if row['changed']]
         live = self.live_slots
         merged = set()
