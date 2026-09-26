@@ -54,14 +54,15 @@ def fit_models(fast, episodes):
 
 @torch.no_grad()
 def evaluate_forecasts(fast, models, episodes):
-    rows = {name: empty_forecast() for name in ARMS}
+    arms = ('fast_only', *models)
+    rows = {name: empty_forecast() for name in arms}
     for row in rows.values():
         row['cases'] = []
     for events in episodes:
         fast.reset_state()
         for model in models.values():
             model.reset_state()
-        local = {name: empty_forecast() for name in ARMS}
+        local = {name: empty_forecast() for name in arms}
         pending = None
         for event in events:
             active = bool(event.any())
@@ -81,7 +82,7 @@ def evaluate_forecasts(fast, models, episodes):
                 pending.update({name: model.forecast(fast.dictionary,
                                                       baseline)
                                 for name, model in models.items()})
-        for name in ARMS:
+        for name in arms:
             rows[name]['cases'].append(local[name])
     for row in rows.values():
         row['top_8_recall'] = row['top_8_hits']/max(row['targets'], 1)
@@ -93,8 +94,9 @@ def evaluate_forecasts(fast, models, episodes):
 
 @torch.no_grad()
 def evaluate_state(fast, models, cases, event_cache):
-    rows = {name: {} for name in ARMS}
-    totals = {name: {} for name in SLOW_ARMS}
+    arms = ('fast_only', *models)
+    rows = {name: {} for name in arms}
+    totals = {name: {} for name in models}
     for case, events in zip(cases, event_cache):
         fast.reset_state()
         for model in models.values():
@@ -102,9 +104,9 @@ def evaluate_state(fast, models, cases, event_cache):
         features = {name: [torch.zeros((fast.units if name ==
                                         'fast_only' else models[name].units)*9)
                            for _ in case['objects']]
-                    for name in ARMS}
+                    for name in arms}
         split = case['split']
-        for name in SLOW_ARMS:
+        for name in models:
             totals[name].setdefault(split, [0.]*4)
         for frame, event in enumerate(events):
             incoming = step_fast(fast, event)
@@ -133,7 +135,7 @@ def evaluate_state(fast, models, cases, event_cache):
                 summary[1] += float(significant[:, ~union].sum())
                 summary[2] += count
                 summary[3] += max(count-len(case['objects']), 0)
-        for name in ARMS:
+        for name in arms:
             rows[name].setdefault(split, [])
             for item, feature in zip(case['objects'], features[name]):
                 rows[name][split].append(dict(direction=item['direction'],
