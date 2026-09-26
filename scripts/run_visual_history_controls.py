@@ -8,9 +8,10 @@ import torch
 
 from generic_native_cadence import scene_events
 from run_local_observation_model import fit_observers
-from visual_history_benchmark import render_case
-from visual_history_controls import (FixedLeakyMemory, GenericTracker,
-                                     sensory_sequence)
+from visual_history_benchmark import (periodic_steps, render_case,
+                                      render_two_mover_case)
+from visual_history_controls import (FixedLeakyMemory, GenericMultiTracker,
+                                     GenericTracker, sensory_sequence)
 from visual_history_scoring import (fit_visible_readout, hidden_rank,
                                     pair_separation)
 
@@ -32,22 +33,46 @@ def cases(*, heldout):
             for background in (False, True)]
 
 
+def two_mover_cases():
+    return [render_two_mover_case(speed=speed, y=y, shapes=shapes,
+                                  background=background)
+            for y, speed, shapes in ((7, 1, ('dot', 'plus')),
+                                     (13, 3, ('square', 'plus')),
+                                     (19, 1, ('plus', 'dot')),
+                                     (25, 3, ('plus', 'square')))
+            for background in (False, True)]
+
+
+def changing_motion_cases():
+    return [render_case(direction=direction, speed=1, y=y,
+                        shape=shape, background=background,
+                        steps=periodic_steps(64, cycle=(1, 2, 3),
+                                             phase=phase), decision_index=-2)
+            for y, shape, phase in ((7, 'plus', 0), (13, 'square', 1),
+                                    (19, 'plus', 2), (25, 'square', 0))
+            for direction in (-1, 1)
+            for background in (False, True)]
+
+
 @torch.no_grad()
-def capture(observer, case, *, hybrid, calibration):
+def capture(observer, case, *, hybrid, calibration, multi=False):
     sensory = sensory_sequence(observer, case, hybrid=hybrid)
     leaky = FixedLeakyMemory()
-    tracker = GenericTracker()
+    tracker = GenericMultiTracker() if multi else GenericTracker()
+    acceleration = None if multi else GenericTracker(acceleration=True)
     examples = {'sensory': [], 'leaky': []}
     decision = {}
     for frame, state in enumerate(sensory):
         memory = leaky.step(state)
         tracked = tracker.step(state)
+        accelerated = None if multi else acceleration.step(state)
         if calibration and frame < case['decision'] and frame % 3 == 0:
             visible = case['visible_objects'][frame]
             examples['sensory'].append((state, visible))
             examples['leaky'].append((memory, visible))
         if frame == case['decision']:
-            decision = dict(sensory=state, leaky=memory, tracker=tracked)
+            decision = dict(sensory=state, leaky=memory, tracker=tracked,
+                            acceleration=accelerated)
     return decision, examples
 
 
@@ -91,6 +116,41 @@ def summarize(calibration, heldout, examples):
                          for name in ('sensory', 'leaky')})
 
 
+def summarize_multi(heldout, examples):
+    readouts = {name: fit_visible_readout(examples[name])
+                for name in ('sensory', 'leaky')}
+    scores = {name: [] for name in ('sensory', 'leaky', 'tracker')}
+    for case, state in heldout:
+        frame = case['decision']
+        for name in scores:
+            field = (state[name] if name == 'tracker' else
+                     readouts[name](state[name]))
+            scores[name].extend(hidden_rank(field, masks[frame], k=64)
+                                for masks in case['hidden_by_entity'])
+    return dict(cases=len(heldout), hidden_entities=2*len(heldout),
+                top_64_per_entity={name: sum(values)/len(values)
+                                   for name, values in scores.items()},
+                oracle_top_64=1.)
+
+
+def summarize_changing(heldout, examples):
+    readouts = {name: fit_visible_readout(examples[name])
+                for name in ('sensory', 'leaky')}
+    scores = {name: {8: [], 32: []}
+              for name in ('sensory', 'leaky', 'tracker', 'acceleration')}
+    for case, state in heldout:
+        target = case['hidden'][case['decision']]
+        for name in scores:
+            field = (readouts[name](state[name]) if name in readouts
+                     else state[name])
+            for k in (8, 32):
+                scores[name][k].append(hidden_rank(field, target, k=k))
+    return dict(cases=len(heldout), top_k={
+        str(k): {name: sum(values[k])/len(values[k])
+                 for name, values in scores.items()} for k in (8, 32)},
+        oracle_top_k=1.)
+
+
 @torch.no_grad()
 def main():
     torch.set_num_threads(1)
@@ -115,6 +175,20 @@ def main():
             heldout.append((case, state))
         results['hybrid' if hybrid else 'event_only'] = summarize(
             calibration, heldout, examples)
+        multi = []
+        for case in two_mover_cases():
+            state, _ = capture(observer, case, hybrid=hybrid,
+                               calibration=False, multi=True)
+            multi.append((case, state))
+        results['hybrid' if hybrid else 'event_only']['two_movers'] = (
+            summarize_multi(multi, examples))
+        changing = []
+        for case in changing_motion_cases():
+            state, _ = capture(observer, case, hybrid=hybrid,
+                               calibration=False)
+            changing.append((case, state))
+        results['hybrid' if hybrid else 'event_only']['changing_motion'] = (
+            summarize_changing(changing, examples))
     results['seconds'] = round(time.perf_counter()-start, 2)
     OUT.write_text(json.dumps(results, indent=2)+'\n')
     print(json.dumps(results, indent=2))

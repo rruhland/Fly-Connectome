@@ -6,7 +6,8 @@ from pathlib import Path
 import torch
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'scripts'))
-from visual_history_benchmark import render_case
+from visual_history_benchmark import (periodic_steps, render_case,
+                                      render_two_mover_case)
 
 
 def test_opposite_histories_have_same_current_observation_but_different_state():
@@ -41,3 +42,40 @@ def test_sparse_intensity_contains_only_visible_scene():
     assert torch.equal(case['intensity'][frame],
                        render_case(direction=1, speed=1, y=20,
                                    shape='dot')['intensity'][frame])
+
+
+def test_two_movers_are_hidden_together_and_reappear():
+    case = render_two_mover_case(speed=1, y=16,
+                                 shapes=('dot', 'plus'))
+    frame = case['decision']
+    assert not bool(case['events'][frame].any())
+    assert all(bool(mask[frame].any())
+               for mask in case['hidden_by_entity'])
+    assert not bool(case['visible_objects'][frame].any())
+    assert all(reveal is not None and reveal > frame
+               for reveal in case['reveal_by_entity'])
+
+
+def test_two_mover_disappearance_has_same_pre_reveal_observation():
+    continuing = render_two_mover_case(speed=1, y=16,
+                                       shapes=('dot', 'plus'))
+    vanished = render_two_mover_case(speed=1, y=16,
+                                     shapes=('dot', 'plus'),
+                                     disappear=(True, False))
+    frame = continuing['decision']
+    assert all(torch.equal(a, b) for a, b in zip(
+        continuing['events'][:frame+1], vanished['events'][:frame+1]))
+    assert not bool(vanished['hidden_by_entity'][0][frame].any())
+    assert bool(vanished['hidden_by_entity'][1][frame].any())
+
+
+def test_periodic_motion_changes_displacement_and_preserves_occlusion():
+    steps = periodic_steps(64, cycle=(1, 2, 3))
+    assert steps[:5] == [0, 1, 3, 6, 7]
+    case = render_case(direction=1, speed=1, y=16, shape='dot',
+                       steps=steps)
+    assert bool(case['hidden'][case['decision']].any())
+    assert not bool(case['events'][case['decision']].any())
+    late = render_case(direction=1, speed=1, y=16, shape='dot',
+                       steps=steps, decision_index=-2)
+    assert late['decision'] > case['decision']

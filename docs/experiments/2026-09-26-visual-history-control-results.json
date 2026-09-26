@@ -16,6 +16,34 @@
     "direction_probe": {
       "sensory": 0.875,
       "leaky": 0.875
+    },
+    "two_movers": {
+      "cases": 8,
+      "hidden_entities": 16,
+      "top_64_per_entity": {
+        "sensory": 0.0,
+        "leaky": 0.0,
+        "tracker": 1.0
+      },
+      "oracle_top_64": 1.0
+    },
+    "changing_motion": {
+      "cases": 16,
+      "top_k": {
+        "8": {
+          "sensory": 0.0,
+          "leaky": 0.0,
+          "tracker": 0.75,
+          "acceleration": 0.0
+        },
+        "32": {
+          "sensory": 0.0,
+          "leaky": 0.0,
+          "tracker": 0.75,
+          "acceleration": 0.0
+        }
+      },
+      "oracle_top_k": 1.0
     }
   },
   "hybrid": {
@@ -35,7 +63,35 @@
     "direction_probe": {
       "sensory": 0.875,
       "leaky": 0.875
+    },
+    "two_movers": {
+      "cases": 8,
+      "hidden_entities": 16,
+      "top_64_per_entity": {
+        "sensory": 0.0,
+        "leaky": 0.0,
+        "tracker": 1.0
+      },
+      "oracle_top_64": 1.0
+    },
+    "changing_motion": {
+      "cases": 16,
+      "top_k": {
+        "8": {
+          "sensory": 0.0,
+          "leaky": 0.0,
+          "tracker": 0.75,
+          "acceleration": 0.0
+        },
+        "32": {
+          "sensory": 0.0,
+          "leaky": 0.0,
+          "tracker": 0.75,
+          "acceleration": 0.0
+        }
+      },
+      "oracle_top_k": 1.0
     }
   },
-  "seconds": 64.91
+  "seconds": 78.61
 }

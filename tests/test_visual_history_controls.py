@@ -7,9 +7,10 @@ import torch
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'scripts'))
 from local_observation_model import LocalObservationModel
-from visual_history_benchmark import render_case
-from visual_history_controls import (FixedLeakyMemory, GenericTracker,
-                                     sensory_sequence)
+from visual_history_benchmark import render_case, render_two_mover_case
+from visual_history_controls import (FixedLeakyMemory, GenericMultiTracker,
+                                     GenericTracker, sensory_sequence)
+from visual_history_scoring import hidden_rank
 
 
 def test_event_only_sensory_excludes_periodic_intensity_refresh():
@@ -41,3 +42,25 @@ def test_leaky_control_preserves_input_after_blank():
     memory.step(sample)
     later = memory.step(torch.zeros_like(sample))
     assert later[12:, 4, 5].sum() > 0
+
+
+def test_acceleration_control_projects_recent_change_in_speed():
+    tracker = GenericTracker(height=8, width=16, acceleration=True)
+    for x in (2, 4, 7):
+        sample = torch.zeros((12, 8, 16))
+        sample[0, 4, x] = 1.
+        tracker.step(sample)
+    field = tracker.step(torch.zeros((12, 8, 16)))
+    assert field[4, 11] > field[4, 10]
+
+
+def test_multi_tracker_retains_two_separate_hidden_movers():
+    case = render_two_mover_case(speed=1, y=16,
+                                 shapes=('dot', 'plus'))
+    sensory = sensory_sequence(LocalObservationModel(), case, hybrid=False)
+    tracker = GenericMultiTracker()
+    for frame, value in enumerate(sensory[:case['decision']+1]):
+        field = tracker.step(value)
+    assert len(tracker.slots) >= 2
+    for hidden in case['hidden_by_entity']:
+        assert hidden_rank(field, hidden[frame], k=64) == 1.
