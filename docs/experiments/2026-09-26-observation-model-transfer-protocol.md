@@ -1,0 +1,9 @@
+# Frozen observation-model transfer audit
+
+**Status:** Completed broad opt-in audit of the [locally learned event observer](2026-09-26-learned-observation-model-findings.md); see [findings](2026-09-26-observation-model-transfer-findings.md). Production M1A is unchanged.
+
+Train the observer and distributed future-event field exactly once using the original 64 unlabeled generic streams and the same training corruption/rates as the successful experiment. Freeze both. Evaluate generic changed-position, speed, shape, separated and crossing motion cases; raw Pong camera streams at one and four environment steps per frame; and held-out generic scenes with previously unseen lighter (5% dropout, .05% false events) and heavier (20% dropout, .2% false events) corruption. Repeat the original corruption as a reproducibility control. No Pong object identity, paddle, wall, or physics variable enters either model or scoring. Intensity at inference remains every eight camera frames; future clean events remain withheld until scoring.
+
+Compare learned aligned observation credit with raw input, shuffled observation credit, no intensity, and unrelated-scene intensity. Score full-frame next-meaningful-event top-8/top-32 recall, per-scene consistency, true/false event credibility where corruption is known, and false state/forecast mass. No fitting, calibration, threshold change, or new data-dependent rule occurs on transfer streams.
+
+**Decision:** Consider a concrete production M1A proposal only if gains over raw and shuffled-credit controls persist across the motion-change and unseen-noise groups, and native Pong does not show the severe loss previously seen with entity-file prediction. If transfer is mixed, keep the observer opt-in and identify the broad failed domain rather than sweep local rates.
