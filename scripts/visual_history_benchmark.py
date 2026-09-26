@@ -35,20 +35,36 @@ def _object_mask(y, x, shape):
 @torch.no_grad()
 def render_case(*, direction, speed, y, shape, disappear=False,
                 background=False, frames=64, steps=None,
-                decision_index=None):
+                decision_index=None, cue_sign=None, turn_sign=None):
     """One moving pattern; only visible pixels reach either sensor."""
     if direction not in (-1, 1) or speed not in (1, 2, 3):
         raise ValueError('direction and speed must be supported')
     if shape not in SHAPES or not 4 <= y <= 27:
         raise ValueError('shape or location outside the visual field')
+    if cue_sign is not None and (cue_sign not in (-1, 1)
+                                 or not 10 <= y <= 21):
+        raise ValueError('context cue is outside the visual field')
+    if turn_sign is not None and (cue_sign is None or turn_sign not in (-1, 1)):
+        raise ValueError('turn requires a visible context scene')
     occluder = torch.zeros((32, 64), dtype=torch.bool)
     occluder[:, 24:40] = True
+    cue_mask = torch.zeros_like(occluder)
+    if cue_sign is not None:
+        cue_x = 20 if direction == 1 else 43
+        cue_mask[y+8*cue_sign, cue_x] = True
+        cue_mask[y+8*cue_sign, cue_x+1] = True
     start = 8 if direction == 1 else 55
     if steps is not None and len(steps) != frames:
         raise ValueError('steps must cover every frame')
-    paths = [_object_mask(y, start+direction*(speed*frame if steps is None
-                                             else steps[frame]), shape)
-             for frame in range(frames)]
+    paths = []
+    for frame in range(frames):
+        x = start+direction*(speed*frame if steps is None
+                             else steps[frame])
+        progress = ((x-24)/15 if direction == 1 else (39-x)/15)
+        physical_turn = cue_sign if turn_sign is None else turn_sign
+        shift = (0 if physical_turn is None else
+                 round(8*physical_turn*max(0., min(1., progress))))
+        paths.append(_object_mask(y+shift, x, shape))
     invisible = [frame for frame, path in enumerate(paths)
                  if bool(path.any()) and not bool((path & ~occluder).any())]
     if not invisible:
@@ -72,17 +88,30 @@ def render_case(*, direction, speed, y, shape, disappear=False,
         concealed = path & occluder
         visible_object = path & ~occluder
         image = torch.full((1, 32, 64), background, dtype=torch.bool)
-        image[0, occluder | visible_object] = not background
+        image[0, occluder | cue_mask | visible_object] = not background
         visible.append(image[0].clone())
         visible_objects.append(visible_object)
         hidden.append(concealed)
         intensity.append(image[0].float()-float(background))
         events.append(events_map(camera.observe(image)))
     return dict(direction=direction, speed=speed, y=y, shape=shape,
+                background=background,
                 disappear=disappear, decision=decision,
                 reveal=None if disappear else reveal, visible=visible,
                 visible_objects=visible_objects, occluder=occluder,
+                cue_mask=cue_mask, cue_sign=cue_sign,
+                turn_sign=physical_turn,
                 hidden=hidden, intensity=intensity, events=events)
+
+
+def render_context_case(*, direction, speed, y, shape, cue_sign,
+                        disappear=False, background=False, frames=64,
+                        turn_sign=None):
+    return render_case(direction=direction, speed=speed, y=y, shape=shape,
+                       cue_sign=cue_sign, disappear=disappear,
+                       background=background, frames=frames,
+                       turn_sign=turn_sign,
+                       decision_index=-2)
 
 
 @torch.no_grad()

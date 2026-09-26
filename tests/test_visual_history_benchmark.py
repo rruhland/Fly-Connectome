@@ -7,6 +7,7 @@ import torch
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'scripts'))
 from visual_history_benchmark import (periodic_steps, render_case,
+                                      render_context_case,
                                       render_two_mover_case)
 
 
@@ -79,3 +80,46 @@ def test_periodic_motion_changes_displacement_and_preserves_occlusion():
     late = render_case(direction=1, speed=1, y=16, shape='dot',
                        steps=steps, decision_index=-2)
     assert late['decision'] > case['decision']
+
+
+def test_context_changes_hidden_path_without_exposing_hidden_pixels():
+    up = render_context_case(direction=1, speed=1, y=16,
+                             shape='dot', cue_sign=-1)
+    down = render_context_case(direction=1, speed=1, y=16,
+                               shape='dot', cue_sign=1)
+    frame = up['decision']
+    assert frame == down['decision']
+    assert torch.equal(up['visible_objects'][frame],
+                       down['visible_objects'][frame])
+    assert not torch.equal(up['hidden'][frame], down['hidden'][frame])
+    assert not bool(up['events'][frame].any())
+    assert not bool(down['events'][frame].any())
+    assert bool((up['cue_mask'] & up['visible'][frame]).any())
+
+
+def test_context_disappearance_is_unknown_before_reveal():
+    continuing = render_context_case(direction=-1, speed=1, y=16,
+                                     shape='plus', cue_sign=1)
+    vanished = render_context_case(direction=-1, speed=1, y=16,
+                                   shape='plus', cue_sign=1,
+                                   disappear=True)
+    frame = continuing['decision']
+    assert all(torch.equal(a, b) for a, b in zip(
+        continuing['events'][:frame+1], vanished['events'][:frame+1]))
+    assert not bool(vanished['hidden'][frame].any())
+    assert bool(continuing['hidden'][frame].any())
+
+
+def test_context_mark_can_be_shuffled_independently_of_outcome():
+    aligned = render_context_case(direction=1, speed=1, y=16,
+                                  shape='dot', cue_sign=1)
+    shuffled = render_context_case(direction=1, speed=1, y=16,
+                                   shape='dot', cue_sign=1,
+                                   turn_sign=-1)
+    first_hidden = next(frame for frame, mask in enumerate(aligned['hidden'])
+                        if bool(mask.any()))
+    assert all(torch.equal(a, b) for a, b in zip(
+        aligned['events'][:first_hidden],
+        shuffled['events'][:first_hidden]))
+    assert not torch.equal(aligned['hidden'][aligned['decision']],
+                           shuffled['hidden'][shuffled['decision']])

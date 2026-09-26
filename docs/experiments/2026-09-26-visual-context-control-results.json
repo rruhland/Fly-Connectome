@@ -1,0 +1,43 @@
+{
+  "event_only": {
+    "cases": 16,
+    "top_k": {
+      "8": {
+        "sensory": 0.0,
+        "leaky": 0.0,
+        "tracker": 0.0,
+        "acceleration": 0.0,
+        "multi_tracker": 0.0
+      },
+      "32": {
+        "sensory": 0.0,
+        "leaky": 0.0,
+        "tracker": 0.0,
+        "acceleration": 0.0,
+        "multi_tracker": 0.0
+      }
+    },
+    "oracle_top_k": 1.0
+  },
+  "hybrid": {
+    "cases": 16,
+    "top_k": {
+      "8": {
+        "sensory": 0.0,
+        "leaky": 0.0,
+        "tracker": 0.0,
+        "acceleration": 0.0,
+        "multi_tracker": 0.0
+      },
+      "32": {
+        "sensory": 0.0,
+        "leaky": 0.0,
+        "tracker": 0.0,
+        "acceleration": 0.0,
+        "multi_tracker": 0.0
+      }
+    },
+    "oracle_top_k": 1.0
+  },
+  "seconds": 33.04
+}

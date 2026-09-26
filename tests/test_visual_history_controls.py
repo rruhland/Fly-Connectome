@@ -64,3 +64,16 @@ def test_multi_tracker_retains_two_separate_hidden_movers():
     assert len(tracker.slots) >= 2
     for hidden in case['hidden_by_entity']:
         assert hidden_rank(field, hidden[frame], k=64) == 1.
+
+
+def test_multi_tracker_ignores_weak_filtered_event():
+    tracker = GenericMultiTracker(height=8, width=16,
+                                  minimum_strength=.4)
+    weak = torch.zeros((12, 8, 16))
+    weak[0, 4, 4] = .2
+    tracker.step(weak)
+    assert tracker.slots == []
+    strong = torch.zeros_like(weak)
+    strong[0, 4, 5] = .8
+    tracker.step(strong)
+    assert len(tracker.slots) == 1

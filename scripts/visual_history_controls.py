@@ -94,8 +94,9 @@ class GenericTracker:
 class GenericMultiTracker:
     """Fixed connected-event association and constant-velocity control."""
 
-    def __init__(self, *, height=32, width=64):
+    def __init__(self, *, height=32, width=64, minimum_strength=.05):
         self.height, self.width = height, width
+        self.minimum_strength = minimum_strength
         self.y, self.x = torch.meshgrid(torch.arange(height),
                                         torch.arange(width), indexing='ij')
         self.reset_state()
@@ -107,7 +108,7 @@ class GenericMultiTracker:
     @torch.no_grad()
     def step(self, sensory):
         self.frame += 1
-        active = sensory[:2].sum(0) > .05
+        active = sensory[:2].sum(0) > self.minimum_strength
         expanded = F.max_pool2d(active.float()[None, None], 5,
                                 stride=1, padding=2)[0, 0] > 0
         proposals = [(torch.tensor(group['center']), len(group['pixels']))
