@@ -1,0 +1,9 @@
+# Is transition transfer limited by unlabeled motion experience?
+
+**Status:** Completed opt-in experiment after the [transfer audit](2026-09-26-observation-model-transfer-findings.md); see [findings](2026-09-26-multicadence-experience-findings.md). Production M1A is unchanged.
+
+Freeze the successful locally trained event observer from the original 64 generic streams. Retrain only the distributed future-event transition field with the **same local rule and state** under two equal-budget conditions: 256 episodes consisting of four repetitions of the original 64 fractional-pixel scenes, or 256 episodes with each of those 64 seeds viewed at camera strides 1, 2, 4, and 8. Interleave repetitions/strides by seed. No motion direction/speed labels, feature bank, Pong data, backpropagation, or held-out scenes enter training. This isolates diverse visual tempo from more total experience, while retaining the same observer and prediction readout.
+
+Compare both fields with the original 64-episode field already measured. Score the same full-frame future top-8/top-32 outcomes on generic held-out clean/noisy scenes, changed position/speed/shape/separated/crossing, and both raw Pong cadences. Keep observer input and eight-frame intensity cadence identical. Record training wall time and do not change learning rates, local radius, trace decays, or training strides based on held-out results.
+
+**Decision:** If multi-cadence experience beats equal-budget repetition on changed-speed/position and multiple-entity motion, improves or preserves native Pong, and retains clean/noise performance, broaden experience in the opt-in M1A candidate. If repetition matches it, more examples are the explanation. If both still fail, the distributed transition state/rule needs a different temporal representation; do not sweep local parameters.

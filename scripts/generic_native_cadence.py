@@ -23,7 +23,7 @@ def reflect(position, low, high):
 
 @torch.no_grad()
 def scene_events(seed, *, frames=80, heldout=False,
-                 return_contrast=False):
+                 return_contrast=False, motion_stride=1):
     rng = random.Random(seed)
     background = bool(seed % 2)
     camera = EventCamera(1, 32, 64)
@@ -44,8 +44,8 @@ def scene_events(seed, *, frames=80, heldout=False,
             y, x = static
             image[0, y, x:x+3] = not background
         for y0, x0, dy, dx, shape in objects:
-            y = math.floor(reflect(y0+dy*t, 2, 29)+.5)
-            x = math.floor(reflect(x0+dx*t, 2, 61)+.5)
+            y = math.floor(reflect(y0+dy*t*motion_stride, 2, 29)+.5)
+            x = math.floor(reflect(x0+dx*t*motion_stride, 2, 61)+.5)
             for oy, ox in shape:
                 image[0, y+oy, x+ox] = not background
         result.append(events_map(camera.observe(image)))

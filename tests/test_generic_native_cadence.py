@@ -31,3 +31,10 @@ def test_optional_intensity_is_rendered_independently_of_camera_events():
     assert len(events) == len(intensity) == 24
     assert all(torch.equal(a, b) for a, b in zip(
         intensity, contrast_frames(events)))
+
+
+def test_camera_stride_changes_unlabeled_temporal_observations():
+    slow = scene_events(7, frames=24, motion_stride=1)
+    fast = scene_events(7, frames=24, motion_stride=4)
+    assert len(slow) == len(fast) == 24
+    assert any(not torch.equal(a, b) for a, b in zip(slow, fast))
