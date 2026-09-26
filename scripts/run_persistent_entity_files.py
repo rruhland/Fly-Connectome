@@ -202,6 +202,32 @@ def stress_counts(episodes):
 
 
 @torch.no_grad()
+def generic_count_audit():
+    rows = {}
+    for offset in range(16):
+        seed = 1000+offset
+        model = PersistentEntityFiles()
+        expected = 1+seed % 3+int(seed % 3 == 0)
+        row = rows.setdefault(expected, dict(active_frames=0,
+                                              wrong_count=0,
+                                              total_files=0,
+                                              zero_files=0))
+        for event in scene_events(seed, heldout=True):
+            model.step(event)
+            if not bool(event.any()):
+                continue
+            count = len(model.live_slots)
+            row['active_frames'] += 1
+            row['wrong_count'] += int(count != expected)
+            row['total_files'] += count
+            row['zero_files'] += int(count == 0)
+    for row in rows.values():
+        row['wrong_count_fraction'] = row['wrong_count']/row['active_frames']
+        row['mean_files'] = row['total_files']/row['active_frames']
+    return rows
+
+
+@torch.no_grad()
 def main():
     torch.set_num_threads(1)
     started = time.perf_counter()
@@ -222,9 +248,11 @@ def main():
     stress = stress_counts(dict(static_noisy=noise_case(),
                                 different_shape_crossing=
                                 different_shape_crossing()))
+    generic_state = generic_count_audit()
     result = dict(training_episodes=len(training),
                   fast_seconds=fast_seconds, forecasts=forecasts,
                   state=state, stress=stress,
+                  generic_state=generic_state,
                   elapsed_seconds=time.perf_counter()-started)
     OUT.write_text(json.dumps(result, indent=2, allow_nan=False)+'\n')
     print(json.dumps(dict(
@@ -239,6 +267,7 @@ def main():
             for name, row in arms.items()}
             for split, arms in state.items()},
         stress=stress,
+        generic_state=generic_state,
         elapsed_seconds=round(result['elapsed_seconds'], 1))), flush=True)
 
 
