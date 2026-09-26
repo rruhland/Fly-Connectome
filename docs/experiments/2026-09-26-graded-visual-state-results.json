@@ -1,0 +1,396 @@
+{
+  "training_episodes": 64,
+  "seeds": [
+    2000,
+    2001,
+    2002,
+    2003
+  ],
+  "results": {
+    "clean_generic": {
+      "graded_aligned": {
+        "events": 210,
+        "targets": 948,
+        "top_8_hits": 229,
+        "top_32_hits": 442,
+        "cases": [
+          {
+            "events": 53,
+            "targets": 246,
+            "top_8_hits": 70,
+            "top_32_hits": 121
+          },
+          {
+            "events": 41,
+            "targets": 166,
+            "top_8_hits": 52,
+            "top_32_hits": 64
+          },
+          {
+            "events": 46,
+            "targets": 218,
+            "top_8_hits": 61,
+            "top_32_hits": 102
+          },
+          {
+            "events": 70,
+            "targets": 318,
+            "top_8_hits": 46,
+            "top_32_hits": 155
+          }
+        ],
+        "top_8_recall": 0.24156118143459915,
+        "top_32_recall": 0.46624472573839665,
+        "top_32_precision": 0.06577380952380953
+      },
+      "graded_event_only": {
+        "events": 210,
+        "targets": 948,
+        "top_8_hits": 267,
+        "top_32_hits": 520,
+        "cases": [
+          {
+            "events": 53,
+            "targets": 246,
+            "top_8_hits": 93,
+            "top_32_hits": 160
+          },
+          {
+            "events": 41,
+            "targets": 166,
+            "top_8_hits": 56,
+            "top_32_hits": 64
+          },
+          {
+            "events": 46,
+            "targets": 218,
+            "top_8_hits": 72,
+            "top_32_hits": 111
+          },
+          {
+            "events": 70,
+            "targets": 318,
+            "top_8_hits": 46,
+            "top_32_hits": 185
+          }
+        ],
+        "top_8_recall": 0.28164556962025317,
+        "top_32_recall": 0.5485232067510548,
+        "top_32_precision": 0.07738095238095238
+      },
+      "graded_shuffled": {
+        "events": 210,
+        "targets": 948,
+        "top_8_hits": 91,
+        "top_32_hits": 332,
+        "cases": [
+          {
+            "events": 53,
+            "targets": 246,
+            "top_8_hits": 20,
+            "top_32_hits": 96
+          },
+          {
+            "events": 41,
+            "targets": 166,
+            "top_8_hits": 24,
+            "top_32_hits": 50
+          },
+          {
+            "events": 46,
+            "targets": 218,
+            "top_8_hits": 34,
+            "top_32_hits": 84
+          },
+          {
+            "events": 70,
+            "targets": 318,
+            "top_8_hits": 13,
+            "top_32_hits": 102
+          }
+        ],
+        "top_8_recall": 0.09599156118143459,
+        "top_32_recall": 0.350210970464135,
+        "top_32_precision": 0.0494047619047619
+      }
+    },
+    "corrupted_generic": {
+      "graded_aligned": {
+        "events": 210,
+        "targets": 948,
+        "top_8_hits": 155,
+        "top_32_hits": 314,
+        "cases": [
+          {
+            "events": 53,
+            "targets": 246,
+            "top_8_hits": 49,
+            "top_32_hits": 92
+          },
+          {
+            "events": 41,
+            "targets": 166,
+            "top_8_hits": 18,
+            "top_32_hits": 46
+          },
+          {
+            "events": 46,
+            "targets": 218,
+            "top_8_hits": 51,
+            "top_32_hits": 82
+          },
+          {
+            "events": 70,
+            "targets": 318,
+            "top_8_hits": 37,
+            "top_32_hits": 94
+          }
+        ],
+        "top_8_recall": 0.16350210970464135,
+        "top_32_recall": 0.33122362869198313,
+        "top_32_precision": 0.04672619047619048
+      },
+      "graded_event_only": {
+        "events": 210,
+        "targets": 948,
+        "top_8_hits": 97,
+        "top_32_hits": 225,
+        "cases": [
+          {
+            "events": 53,
+            "targets": 246,
+            "top_8_hits": 30,
+            "top_32_hits": 75
+          },
+          {
+            "events": 41,
+            "targets": 166,
+            "top_8_hits": 24,
+            "top_32_hits": 36
+          },
+          {
+            "events": 46,
+            "targets": 218,
+            "top_8_hits": 23,
+            "top_32_hits": 45
+          },
+          {
+            "events": 70,
+            "targets": 318,
+            "top_8_hits": 20,
+            "top_32_hits": 69
+          }
+        ],
+        "top_8_recall": 0.10232067510548523,
+        "top_32_recall": 0.23734177215189872,
+        "top_32_precision": 0.033482142857142856
+      },
+      "graded_shuffled": {
+        "events": 210,
+        "targets": 948,
+        "top_8_hits": 47,
+        "top_32_hits": 200,
+        "cases": [
+          {
+            "events": 53,
+            "targets": 246,
+            "top_8_hits": 15,
+            "top_32_hits": 57
+          },
+          {
+            "events": 41,
+            "targets": 166,
+            "top_8_hits": 7,
+            "top_32_hits": 36
+          },
+          {
+            "events": 46,
+            "targets": 218,
+            "top_8_hits": 14,
+            "top_32_hits": 58
+          },
+          {
+            "events": 70,
+            "targets": 318,
+            "top_8_hits": 11,
+            "top_32_hits": 49
+          }
+        ],
+        "top_8_recall": 0.049578059071729956,
+        "top_32_recall": 0.2109704641350211,
+        "top_32_precision": 0.02976190476190476
+      }
+    },
+    "stationary_noisy": {
+      "graded_aligned": {
+        "events": 2,
+        "targets": 18,
+        "top_8_hits": 1,
+        "top_32_hits": 9,
+        "cases": [
+          {
+            "events": 2,
+            "targets": 18,
+            "top_8_hits": 1,
+            "top_32_hits": 9
+          }
+        ],
+        "top_8_recall": 0.05555555555555555,
+        "top_32_recall": 0.5,
+        "top_32_precision": 0.140625
+      },
+      "graded_event_only": {
+        "events": 2,
+        "targets": 18,
+        "top_8_hits": 1,
+        "top_32_hits": 8,
+        "cases": [
+          {
+            "events": 2,
+            "targets": 18,
+            "top_8_hits": 1,
+            "top_32_hits": 8
+          }
+        ],
+        "top_8_recall": 0.05555555555555555,
+        "top_32_recall": 0.4444444444444444,
+        "top_32_precision": 0.125
+      },
+      "graded_shuffled": {
+        "events": 2,
+        "targets": 18,
+        "top_8_hits": 0,
+        "top_32_hits": 8,
+        "cases": [
+          {
+            "events": 2,
+            "targets": 18,
+            "top_8_hits": 0,
+            "top_32_hits": 8
+          }
+        ],
+        "top_8_recall": 0.0,
+        "top_32_recall": 0.4444444444444444,
+        "top_32_precision": 0.125
+      }
+    }
+  },
+  "state": {
+    "clean_generic": {
+      "graded_aligned": {
+        "active_frames": 214,
+        "total_live": 553,
+        "max_live_files": 3,
+        "wrong_count": 0,
+        "total_births": 10,
+        "total_confirmed_births": 10,
+        "mean_live_files": 2.5841121495327104,
+        "wrong_count_fraction": 0.0,
+        "mean_total_births": 2.5,
+        "mean_confirmed_births": 2.5
+      },
+      "graded_event_only": {
+        "active_frames": 214,
+        "total_live": 493,
+        "max_live_files": 3,
+        "wrong_count": 54,
+        "total_births": 10,
+        "total_confirmed_births": 9,
+        "mean_live_files": 2.303738317757009,
+        "wrong_count_fraction": 0.2523364485981308,
+        "mean_total_births": 2.5,
+        "mean_confirmed_births": 2.25
+      },
+      "graded_shuffled": {
+        "active_frames": 214,
+        "total_live": 994,
+        "max_live_files": 6,
+        "wrong_count": 202,
+        "total_births": 20,
+        "total_confirmed_births": 20,
+        "mean_live_files": 4.644859813084112,
+        "wrong_count_fraction": 0.9439252336448598,
+        "mean_total_births": 5.0,
+        "mean_confirmed_births": 5.0
+      }
+    },
+    "corrupted_generic": {
+      "graded_aligned": {
+        "active_frames": 319,
+        "total_live": 1950,
+        "max_live_files": 14,
+        "wrong_count": 276,
+        "total_births": 114,
+        "total_confirmed_births": 97,
+        "mean_live_files": 6.112852664576803,
+        "wrong_count_fraction": 0.8652037617554859,
+        "mean_total_births": 28.5,
+        "mean_confirmed_births": 24.25
+      },
+      "graded_event_only": {
+        "active_frames": 319,
+        "total_live": 4330,
+        "max_live_files": 27,
+        "wrong_count": 311,
+        "total_births": 116,
+        "total_confirmed_births": 115,
+        "mean_live_files": 13.573667711598747,
+        "wrong_count_fraction": 0.9749216300940439,
+        "mean_total_births": 29.0,
+        "mean_confirmed_births": 28.75
+      },
+      "graded_shuffled": {
+        "active_frames": 319,
+        "total_live": 2422,
+        "max_live_files": 16,
+        "wrong_count": 315,
+        "total_births": 119,
+        "total_confirmed_births": 104,
+        "mean_live_files": 7.592476489028213,
+        "wrong_count_fraction": 0.987460815047022,
+        "mean_total_births": 29.75,
+        "mean_confirmed_births": 26.0
+      }
+    },
+    "stationary_noisy": {
+      "graded_aligned": {
+        "active_frames": 16,
+        "total_live": 12,
+        "max_live_files": 2,
+        "wrong_count": 6,
+        "total_births": 12,
+        "total_confirmed_births": 2,
+        "mean_live_files": 0.75,
+        "wrong_count_fraction": 0.375,
+        "mean_total_births": 12.0,
+        "mean_confirmed_births": 2.0
+      },
+      "graded_event_only": {
+        "active_frames": 16,
+        "total_live": 22,
+        "max_live_files": 4,
+        "wrong_count": 9,
+        "total_births": 12,
+        "total_confirmed_births": 4,
+        "mean_live_files": 1.375,
+        "wrong_count_fraction": 0.5625,
+        "mean_total_births": 12.0,
+        "mean_confirmed_births": 4.0
+      },
+      "graded_shuffled": {
+        "active_frames": 16,
+        "total_live": 59,
+        "max_live_files": 6,
+        "wrong_count": 16,
+        "total_births": 15,
+        "total_confirmed_births": 8,
+        "mean_live_files": 3.6875,
+        "wrong_count_fraction": 1.0,
+        "mean_total_births": 15.0,
+        "mean_confirmed_births": 8.0
+      }
+    }
+  },
+  "control_path": "docs\\experiments\\2026-09-26-absolute-refresh-results.json",
+  "elapsed_seconds": 6.390161199960858
+}
