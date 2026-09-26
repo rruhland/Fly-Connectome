@@ -1,0 +1,831 @@
+{
+  "training_episodes": 64,
+  "training_seconds": 83.9252577999141,
+  "probe": {
+    "fast_only": {
+      "calibration": {
+        "correct": 14,
+        "total": 16,
+        "accuracy": 0.875,
+        "active": 16,
+        "per_direction": {
+          "up": {
+            "correct": 4,
+            "total": 4
+          },
+          "down": {
+            "correct": 4,
+            "total": 4
+          },
+          "left": {
+            "correct": 4,
+            "total": 4
+          },
+          "right": {
+            "correct": 2,
+            "total": 4
+          }
+        },
+        "per_polarity": {
+          "dark": {
+            "correct": 6,
+            "total": 8
+          },
+          "bright": {
+            "correct": 8,
+            "total": 8
+          }
+        }
+      },
+      "speed": {
+        "correct": 12,
+        "total": 16,
+        "accuracy": 0.75,
+        "active": 16,
+        "per_direction": {
+          "up": {
+            "correct": 0,
+            "total": 4
+          },
+          "down": {
+            "correct": 4,
+            "total": 4
+          },
+          "left": {
+            "correct": 4,
+            "total": 4
+          },
+          "right": {
+            "correct": 4,
+            "total": 4
+          }
+        },
+        "per_polarity": {
+          "dark": {
+            "correct": 6,
+            "total": 8
+          },
+          "bright": {
+            "correct": 6,
+            "total": 8
+          }
+        }
+      },
+      "position": {
+        "correct": 14,
+        "total": 16,
+        "accuracy": 0.875,
+        "active": 16,
+        "per_direction": {
+          "up": {
+            "correct": 4,
+            "total": 4
+          },
+          "down": {
+            "correct": 4,
+            "total": 4
+          },
+          "left": {
+            "correct": 4,
+            "total": 4
+          },
+          "right": {
+            "correct": 2,
+            "total": 4
+          }
+        },
+        "per_polarity": {
+          "dark": {
+            "correct": 6,
+            "total": 8
+          },
+          "bright": {
+            "correct": 8,
+            "total": 8
+          }
+        }
+      },
+      "shape": {
+        "correct": 10,
+        "total": 16,
+        "accuracy": 0.625,
+        "active": 16,
+        "per_direction": {
+          "up": {
+            "correct": 0,
+            "total": 4
+          },
+          "down": {
+            "correct": 4,
+            "total": 4
+          },
+          "left": {
+            "correct": 4,
+            "total": 4
+          },
+          "right": {
+            "correct": 2,
+            "total": 4
+          }
+        },
+        "per_polarity": {
+          "dark": {
+            "correct": 4,
+            "total": 8
+          },
+          "bright": {
+            "correct": 6,
+            "total": 8
+          }
+        }
+      },
+      "separated": {
+        "correct": 14,
+        "total": 16,
+        "accuracy": 0.875,
+        "active": 16,
+        "per_direction": {
+          "up": {
+            "correct": 4,
+            "total": 4
+          },
+          "down": {
+            "correct": 4,
+            "total": 4
+          },
+          "left": {
+            "correct": 4,
+            "total": 4
+          },
+          "right": {
+            "correct": 2,
+            "total": 4
+          }
+        },
+        "per_polarity": {
+          "dark": {
+            "correct": 6,
+            "total": 8
+          },
+          "bright": {
+            "correct": 8,
+            "total": 8
+          }
+        }
+      },
+      "crossing": {
+        "correct": 2,
+        "total": 4,
+        "accuracy": 0.5,
+        "active": 4,
+        "per_direction": {
+          "up": {
+            "correct": 0,
+            "total": 0
+          },
+          "down": {
+            "correct": 0,
+            "total": 0
+          },
+          "left": {
+            "correct": 1,
+            "total": 2
+          },
+          "right": {
+            "correct": 1,
+            "total": 2
+          }
+        },
+        "per_polarity": {
+          "dark": {
+            "correct": 1,
+            "total": 2
+          },
+          "bright": {
+            "correct": 1,
+            "total": 2
+          }
+        }
+      }
+    },
+    "aligned": {
+      "calibration": {
+        "correct": 16,
+        "total": 16,
+        "accuracy": 1.0,
+        "active": 16,
+        "per_direction": {
+          "up": {
+            "correct": 4,
+            "total": 4
+          },
+          "down": {
+            "correct": 4,
+            "total": 4
+          },
+          "left": {
+            "correct": 4,
+            "total": 4
+          },
+          "right": {
+            "correct": 4,
+            "total": 4
+          }
+        },
+        "per_polarity": {
+          "dark": {
+            "correct": 8,
+            "total": 8
+          },
+          "bright": {
+            "correct": 8,
+            "total": 8
+          }
+        }
+      },
+      "speed": {
+        "correct": 14,
+        "total": 16,
+        "accuracy": 0.875,
+        "active": 16,
+        "per_direction": {
+          "up": {
+            "correct": 4,
+            "total": 4
+          },
+          "down": {
+            "correct": 4,
+            "total": 4
+          },
+          "left": {
+            "correct": 2,
+            "total": 4
+          },
+          "right": {
+            "correct": 4,
+            "total": 4
+          }
+        },
+        "per_polarity": {
+          "dark": {
+            "correct": 6,
+            "total": 8
+          },
+          "bright": {
+            "correct": 8,
+            "total": 8
+          }
+        }
+      },
+      "position": {
+        "correct": 16,
+        "total": 16,
+        "accuracy": 1.0,
+        "active": 16,
+        "per_direction": {
+          "up": {
+            "correct": 4,
+            "total": 4
+          },
+          "down": {
+            "correct": 4,
+            "total": 4
+          },
+          "left": {
+            "correct": 4,
+            "total": 4
+          },
+          "right": {
+            "correct": 4,
+            "total": 4
+          }
+        },
+        "per_polarity": {
+          "dark": {
+            "correct": 8,
+            "total": 8
+          },
+          "bright": {
+            "correct": 8,
+            "total": 8
+          }
+        }
+      },
+      "shape": {
+        "correct": 6,
+        "total": 16,
+        "accuracy": 0.375,
+        "active": 16,
+        "per_direction": {
+          "up": {
+            "correct": 2,
+            "total": 4
+          },
+          "down": {
+            "correct": 0,
+            "total": 4
+          },
+          "left": {
+            "correct": 0,
+            "total": 4
+          },
+          "right": {
+            "correct": 4,
+            "total": 4
+          }
+        },
+        "per_polarity": {
+          "dark": {
+            "correct": 2,
+            "total": 8
+          },
+          "bright": {
+            "correct": 4,
+            "total": 8
+          }
+        }
+      },
+      "separated": {
+        "correct": 16,
+        "total": 16,
+        "accuracy": 1.0,
+        "active": 16,
+        "per_direction": {
+          "up": {
+            "correct": 4,
+            "total": 4
+          },
+          "down": {
+            "correct": 4,
+            "total": 4
+          },
+          "left": {
+            "correct": 4,
+            "total": 4
+          },
+          "right": {
+            "correct": 4,
+            "total": 4
+          }
+        },
+        "per_polarity": {
+          "dark": {
+            "correct": 8,
+            "total": 8
+          },
+          "bright": {
+            "correct": 8,
+            "total": 8
+          }
+        }
+      },
+      "crossing": {
+        "correct": 3,
+        "total": 4,
+        "accuracy": 0.75,
+        "active": 4,
+        "per_direction": {
+          "up": {
+            "correct": 0,
+            "total": 0
+          },
+          "down": {
+            "correct": 0,
+            "total": 0
+          },
+          "left": {
+            "correct": 1,
+            "total": 2
+          },
+          "right": {
+            "correct": 2,
+            "total": 2
+          }
+        },
+        "per_polarity": {
+          "dark": {
+            "correct": 1,
+            "total": 2
+          },
+          "bright": {
+            "correct": 2,
+            "total": 2
+          }
+        }
+      }
+    },
+    "frozen": {
+      "calibration": {
+        "correct": 16,
+        "total": 16,
+        "accuracy": 1.0,
+        "active": 16,
+        "per_direction": {
+          "up": {
+            "correct": 4,
+            "total": 4
+          },
+          "down": {
+            "correct": 4,
+            "total": 4
+          },
+          "left": {
+            "correct": 4,
+            "total": 4
+          },
+          "right": {
+            "correct": 4,
+            "total": 4
+          }
+        },
+        "per_polarity": {
+          "dark": {
+            "correct": 8,
+            "total": 8
+          },
+          "bright": {
+            "correct": 8,
+            "total": 8
+          }
+        }
+      },
+      "speed": {
+        "correct": 16,
+        "total": 16,
+        "accuracy": 1.0,
+        "active": 16,
+        "per_direction": {
+          "up": {
+            "correct": 4,
+            "total": 4
+          },
+          "down": {
+            "correct": 4,
+            "total": 4
+          },
+          "left": {
+            "correct": 4,
+            "total": 4
+          },
+          "right": {
+            "correct": 4,
+            "total": 4
+          }
+        },
+        "per_polarity": {
+          "dark": {
+            "correct": 8,
+            "total": 8
+          },
+          "bright": {
+            "correct": 8,
+            "total": 8
+          }
+        }
+      },
+      "position": {
+        "correct": 16,
+        "total": 16,
+        "accuracy": 1.0,
+        "active": 16,
+        "per_direction": {
+          "up": {
+            "correct": 4,
+            "total": 4
+          },
+          "down": {
+            "correct": 4,
+            "total": 4
+          },
+          "left": {
+            "correct": 4,
+            "total": 4
+          },
+          "right": {
+            "correct": 4,
+            "total": 4
+          }
+        },
+        "per_polarity": {
+          "dark": {
+            "correct": 8,
+            "total": 8
+          },
+          "bright": {
+            "correct": 8,
+            "total": 8
+          }
+        }
+      },
+      "shape": {
+        "correct": 8,
+        "total": 16,
+        "accuracy": 0.5,
+        "active": 16,
+        "per_direction": {
+          "up": {
+            "correct": 2,
+            "total": 4
+          },
+          "down": {
+            "correct": 0,
+            "total": 4
+          },
+          "left": {
+            "correct": 2,
+            "total": 4
+          },
+          "right": {
+            "correct": 4,
+            "total": 4
+          }
+        },
+        "per_polarity": {
+          "dark": {
+            "correct": 4,
+            "total": 8
+          },
+          "bright": {
+            "correct": 4,
+            "total": 8
+          }
+        }
+      },
+      "separated": {
+        "correct": 16,
+        "total": 16,
+        "accuracy": 1.0,
+        "active": 16,
+        "per_direction": {
+          "up": {
+            "correct": 4,
+            "total": 4
+          },
+          "down": {
+            "correct": 4,
+            "total": 4
+          },
+          "left": {
+            "correct": 4,
+            "total": 4
+          },
+          "right": {
+            "correct": 4,
+            "total": 4
+          }
+        },
+        "per_polarity": {
+          "dark": {
+            "correct": 8,
+            "total": 8
+          },
+          "bright": {
+            "correct": 8,
+            "total": 8
+          }
+        }
+      },
+      "crossing": {
+        "correct": 2,
+        "total": 4,
+        "accuracy": 0.5,
+        "active": 4,
+        "per_direction": {
+          "up": {
+            "correct": 0,
+            "total": 0
+          },
+          "down": {
+            "correct": 0,
+            "total": 0
+          },
+          "left": {
+            "correct": 0,
+            "total": 2
+          },
+          "right": {
+            "correct": 2,
+            "total": 2
+          }
+        },
+        "per_polarity": {
+          "dark": {
+            "correct": 1,
+            "total": 2
+          },
+          "bright": {
+            "correct": 1,
+            "total": 2
+          }
+        }
+      }
+    },
+    "shuffled": {
+      "calibration": {
+        "correct": 16,
+        "total": 16,
+        "accuracy": 1.0,
+        "active": 16,
+        "per_direction": {
+          "up": {
+            "correct": 4,
+            "total": 4
+          },
+          "down": {
+            "correct": 4,
+            "total": 4
+          },
+          "left": {
+            "correct": 4,
+            "total": 4
+          },
+          "right": {
+            "correct": 4,
+            "total": 4
+          }
+        },
+        "per_polarity": {
+          "dark": {
+            "correct": 8,
+            "total": 8
+          },
+          "bright": {
+            "correct": 8,
+            "total": 8
+          }
+        }
+      },
+      "speed": {
+        "correct": 14,
+        "total": 16,
+        "accuracy": 0.875,
+        "active": 16,
+        "per_direction": {
+          "up": {
+            "correct": 4,
+            "total": 4
+          },
+          "down": {
+            "correct": 4,
+            "total": 4
+          },
+          "left": {
+            "correct": 2,
+            "total": 4
+          },
+          "right": {
+            "correct": 4,
+            "total": 4
+          }
+        },
+        "per_polarity": {
+          "dark": {
+            "correct": 6,
+            "total": 8
+          },
+          "bright": {
+            "correct": 8,
+            "total": 8
+          }
+        }
+      },
+      "position": {
+        "correct": 16,
+        "total": 16,
+        "accuracy": 1.0,
+        "active": 16,
+        "per_direction": {
+          "up": {
+            "correct": 4,
+            "total": 4
+          },
+          "down": {
+            "correct": 4,
+            "total": 4
+          },
+          "left": {
+            "correct": 4,
+            "total": 4
+          },
+          "right": {
+            "correct": 4,
+            "total": 4
+          }
+        },
+        "per_polarity": {
+          "dark": {
+            "correct": 8,
+            "total": 8
+          },
+          "bright": {
+            "correct": 8,
+            "total": 8
+          }
+        }
+      },
+      "shape": {
+        "correct": 6,
+        "total": 16,
+        "accuracy": 0.375,
+        "active": 16,
+        "per_direction": {
+          "up": {
+            "correct": 2,
+            "total": 4
+          },
+          "down": {
+            "correct": 0,
+            "total": 4
+          },
+          "left": {
+            "correct": 0,
+            "total": 4
+          },
+          "right": {
+            "correct": 4,
+            "total": 4
+          }
+        },
+        "per_polarity": {
+          "dark": {
+            "correct": 2,
+            "total": 8
+          },
+          "bright": {
+            "correct": 4,
+            "total": 8
+          }
+        }
+      },
+      "separated": {
+        "correct": 16,
+        "total": 16,
+        "accuracy": 1.0,
+        "active": 16,
+        "per_direction": {
+          "up": {
+            "correct": 4,
+            "total": 4
+          },
+          "down": {
+            "correct": 4,
+            "total": 4
+          },
+          "left": {
+            "correct": 4,
+            "total": 4
+          },
+          "right": {
+            "correct": 4,
+            "total": 4
+          }
+        },
+        "per_polarity": {
+          "dark": {
+            "correct": 8,
+            "total": 8
+          },
+          "bright": {
+            "correct": 8,
+            "total": 8
+          }
+        }
+      },
+      "crossing": {
+        "correct": 3,
+        "total": 4,
+        "accuracy": 0.75,
+        "active": 4,
+        "per_direction": {
+          "up": {
+            "correct": 0,
+            "total": 0
+          },
+          "down": {
+            "correct": 0,
+            "total": 0
+          },
+          "left": {
+            "correct": 1,
+            "total": 2
+          },
+          "right": {
+            "correct": 2,
+            "total": 2
+          }
+        },
+        "per_polarity": {
+          "dark": {
+            "correct": 1,
+            "total": 2
+          },
+          "bright": {
+            "correct": 2,
+            "total": 2
+          }
+        }
+      }
+    }
+  },
+  "elapsed_seconds": 90.81373579998035
+}

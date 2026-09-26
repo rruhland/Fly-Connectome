@@ -1,0 +1,7 @@
+# Post hoc spatial-state capacity check for slow assemblies
+
+The registered two-timescale experiment has already failed its speed, shape, crossing, and forecasting gates. Its direction probe pooled each channel over an offline object neighborhood, which could erase an oriented trail in a spatially distributed state. This **post hoc** audit asks only whether that pooling choice hid decodable information; it cannot retroactively make the architecture pass the registered gate.
+
+Retrain the exact saved-configuration fast and slow circuits on the same 64 generic unlabeled scenes, with no parameter changes. After full-frame inference, use each synthetic object's per-frame center **only for offline evaluation** to extract a fixed 3×3 spatial array of retinotopic state samples at 4-pixel spacing. Apply the identical fixed extraction to the fast state after pooling it to the same grid. Fit the same nearest-centroid four-direction probe on the 16 calibration cases, then freeze it for position, doubled-speed, shape, separated, and crossing cases. No object positions, regions, directions, or center changes enter training or inference. Report paired control scores and whether spatially retaining state rescues transfer; do not try alternate crop sizes, alignment rules, classifiers, or training seeds after seeing results.
+
+If the structured probe still fails, reject this slow assembly state more firmly. If it succeeds, report representational *capacity* only and require a new autonomous binding test before considering production integration.
