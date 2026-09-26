@@ -1,0 +1,21 @@
+# Learned displacement did not consolidate motion hypotheses
+
+**Status:** One-shot opt-in M1A architecture experiment under the [registered protocol](2026-09-25-learned-consolidation-protocol.md). Production code, the measured graph, and motor learning are unchanged. The same frozen observed visual code and full event-camera candidates fed all arms. A local Hebbian source-feature to next-event-displacement trace was trained on 64 unlabeled generic scenes; the controls used fixed continuity alone or time-shuffled credit. There was no backpropagation, object label, direction label, or oracle object region in training or inference.
+
+The earlier path bank contained a correct trajectory but emitted about four explanations per mover. This experiment ranked and suppressed co-moving hypotheses without using ground truth. The table reports the model's *whole output* and, separately, the first one or two ranked tracks as a diagnostic. The latter uses the known object count **only in evaluation**, not inference. Direction scores still match emitted tracks to synthetic paths after inference; therefore the whole-output score is generous when extra tracks survive.
+
+| Held-out set | Learned correct, all tracks | Fixed correct, all tracks | Shuffled correct, all tracks | Learned tracks/case | Learned unmatched tracks/case |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| Position, 16 objects | 16/16 | 16/16 | 16/16 | 4.00 | 3.00 |
+| Speed ×2, 16 objects | 16/16 | 16/16 | 16/16 | 2.75 | 1.75 |
+| Plus shape, 16 objects | 16/16 | 16/16 | 16/16 | 4.00 | 3.00 |
+| Separated movers, 16 objects | 16/16 | 16/16 | 16/16 | 4.00 | 2.00 |
+| Crossing movers, 4 objects | **3/4** | **4/4** | 3/4 | 4.00 | 2.00 |
+
+Coverage was 1.00 in the first four sets; at crossings it was .778 learned, .944 fixed, and .861 shuffled. For the top-ranked one/two tracks, direction accuracy was 16/16 in each non-crossing set for all arms, while crossing fell to **2/4 learned**, versus **4/4 fixed** and 3/4 shuffled. Aligned learning reduced speed-two output by only .25 track per case relative to fixed and shuffled (2.75 versus 3.00), far short of one assembly per mover. The learned expectation was nonzero (mean feature-vector norm .48; shuffled .42), but it gave no useful direction or entity-selection advantage over fixed continuity. All sets are small, especially the two crossing scenes; these results rule out this bounded mechanism, not local learning in general.
+
+**Decision:** Reject this path-bank/consolidation family as the M1A world-state and do not tune beam width, path radius, suppression distance, or score scales. Fixed temporal smoothing preserves motion evidence, but path scoring and post-hoc duplicate suppression do not turn fragments into a single learned state. The event stream has leading and trailing signed contours; asking a path through individual same-polarity candidate sites to stand for the entire moving pattern is likely the wrong representation level.
+
+The next distinct experiment should move from path hypotheses to a **learned recurrent visual field**. Local sensory patches would drive sparse units; plastic lateral/recurrent connections would bind co-active and sequential nearby evidence, while local inhibitory competition discourages redundant explanations. A unit's continuation should be strengthened only when its own predicted future sensory support arrives. The output would be the field's active state, rather than a list of candidate paths. Compare aligned local plasticity with frozen and time-shuffled credit on held-out position, speed, direction, polarity, shape, separated and crossing motion. Evaluate both autonomous state coherence and future-event prediction; decode direction only with a frozen probe after representation learning. The measured T4/T5 stream can be paired as an additional sensory input once that architecture has a credible learned baseline. This is an opt-in experiment, not a production revision.
+
+Reproduction: `python scripts/run_learned_assembly_consolidation.py`; [raw results](2026-09-25-learned-assembly-consolidation-results.json) include per-case decisions, selected-track counts, top-ranked diagnostic, controls, and elapsed time.
