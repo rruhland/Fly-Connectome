@@ -1,0 +1,713 @@
+{
+  "training_episodes": 64,
+  "pong_seeds": [
+    1101,
+    1102,
+    1103,
+    1104
+  ],
+  "corrupted_seeds": [
+    2000,
+    2001,
+    2002,
+    2003
+  ],
+  "results": {
+    "pong_stride_1": {
+      "fast_only": {
+        "events": 295,
+        "targets": 530,
+        "top_8_hits": 77,
+        "top_32_hits": 213,
+        "cases": [
+          {
+            "events": 73,
+            "targets": 131,
+            "top_8_hits": 27,
+            "top_32_hits": 55
+          },
+          {
+            "events": 75,
+            "targets": 135,
+            "top_8_hits": 12,
+            "top_32_hits": 52
+          },
+          {
+            "events": 73,
+            "targets": 131,
+            "top_8_hits": 27,
+            "top_32_hits": 56
+          },
+          {
+            "events": 74,
+            "targets": 133,
+            "top_8_hits": 11,
+            "top_32_hits": 50
+          }
+        ],
+        "top_8_recall": 0.14528301886792452,
+        "top_32_recall": 0.4018867924528302,
+        "top_32_precision": 0.0225635593220339
+      },
+      "entity_files": {
+        "events": 295,
+        "targets": 530,
+        "top_8_hits": 34,
+        "top_32_hits": 34,
+        "cases": [
+          {
+            "events": 73,
+            "targets": 131,
+            "top_8_hits": 9,
+            "top_32_hits": 9
+          },
+          {
+            "events": 75,
+            "targets": 135,
+            "top_8_hits": 8,
+            "top_32_hits": 8
+          },
+          {
+            "events": 73,
+            "targets": 131,
+            "top_8_hits": 9,
+            "top_32_hits": 9
+          },
+          {
+            "events": 74,
+            "targets": 133,
+            "top_8_hits": 8,
+            "top_32_hits": 8
+          }
+        ],
+        "top_8_recall": 0.06415094339622641,
+        "top_32_recall": 0.06415094339622641,
+        "top_32_precision": 0.0036016949152542373
+      },
+      "equal_fusion": {
+        "events": 295,
+        "targets": 530,
+        "top_8_hits": 62,
+        "top_32_hits": 164,
+        "cases": [
+          {
+            "events": 73,
+            "targets": 131,
+            "top_8_hits": 18,
+            "top_32_hits": 48
+          },
+          {
+            "events": 75,
+            "targets": 135,
+            "top_8_hits": 12,
+            "top_32_hits": 35
+          },
+          {
+            "events": 73,
+            "targets": 131,
+            "top_8_hits": 20,
+            "top_32_hits": 48
+          },
+          {
+            "events": 74,
+            "targets": 133,
+            "top_8_hits": 12,
+            "top_32_hits": 33
+          }
+        ],
+        "source_overlap_top32": 365,
+        "top_8_recall": 0.1169811320754717,
+        "top_32_recall": 0.30943396226415093,
+        "top_32_precision": 0.017372881355932204
+      },
+      "shuffled_entity_fusion": {
+        "events": 295,
+        "targets": 530,
+        "top_8_hits": 26,
+        "top_32_hits": 137,
+        "cases": [
+          {
+            "events": 73,
+            "targets": 131,
+            "top_8_hits": 8,
+            "top_32_hits": 43
+          },
+          {
+            "events": 75,
+            "targets": 135,
+            "top_8_hits": 4,
+            "top_32_hits": 26
+          },
+          {
+            "events": 73,
+            "targets": 131,
+            "top_8_hits": 10,
+            "top_32_hits": 43
+          },
+          {
+            "events": 74,
+            "targets": 133,
+            "top_8_hits": 4,
+            "top_32_hits": 25
+          }
+        ],
+        "top_8_recall": 0.04905660377358491,
+        "top_32_recall": 0.25849056603773585,
+        "top_32_precision": 0.01451271186440678
+      },
+      "aligned": {
+        "events": 295,
+        "targets": 530,
+        "top_8_hits": 54,
+        "top_32_hits": 217,
+        "cases": [
+          {
+            "events": 73,
+            "targets": 131,
+            "top_8_hits": 12,
+            "top_32_hits": 55,
+            "positive_sites": 5134
+          },
+          {
+            "events": 75,
+            "targets": 135,
+            "top_8_hits": 15,
+            "top_32_hits": 54,
+            "positive_sites": 5006
+          },
+          {
+            "events": 73,
+            "targets": 131,
+            "top_8_hits": 12,
+            "top_32_hits": 55,
+            "positive_sites": 5134
+          },
+          {
+            "events": 74,
+            "targets": 133,
+            "top_8_hits": 15,
+            "top_32_hits": 53,
+            "positive_sites": 4938
+          }
+        ],
+        "positive_sites": 20212,
+        "top_8_recall": 0.1018867924528302,
+        "top_32_recall": 0.40943396226415096,
+        "top_32_precision": 0.02298728813559322,
+        "mean_positive_sites": 68.51525423728813
+      },
+      "shuffled": {
+        "events": 295,
+        "targets": 530,
+        "top_8_hits": 25,
+        "top_32_hits": 142,
+        "cases": [
+          {
+            "events": 73,
+            "targets": 131,
+            "top_8_hits": 7,
+            "top_32_hits": 33,
+            "positive_sites": 3772
+          },
+          {
+            "events": 75,
+            "targets": 135,
+            "top_8_hits": 6,
+            "top_32_hits": 38,
+            "positive_sites": 3847
+          },
+          {
+            "events": 73,
+            "targets": 131,
+            "top_8_hits": 6,
+            "top_32_hits": 33,
+            "positive_sites": 3790
+          },
+          {
+            "events": 74,
+            "targets": 133,
+            "top_8_hits": 6,
+            "top_32_hits": 38,
+            "positive_sites": 3800
+          }
+        ],
+        "positive_sites": 15209,
+        "top_8_recall": 0.04716981132075472,
+        "top_32_recall": 0.2679245283018868,
+        "top_32_precision": 0.015042372881355933,
+        "mean_positive_sites": 51.55593220338983
+      }
+    },
+    "pong_stride_4": {
+      "fast_only": {
+        "events": 476,
+        "targets": 1864,
+        "top_8_hits": 130,
+        "top_32_hits": 705,
+        "cases": [
+          {
+            "events": 119,
+            "targets": 421,
+            "top_8_hits": 48,
+            "top_32_hits": 210
+          },
+          {
+            "events": 119,
+            "targets": 462,
+            "top_8_hits": 34,
+            "top_32_hits": 165
+          },
+          {
+            "events": 119,
+            "targets": 447,
+            "top_8_hits": 44,
+            "top_32_hits": 192
+          },
+          {
+            "events": 119,
+            "targets": 534,
+            "top_8_hits": 4,
+            "top_32_hits": 138
+          }
+        ],
+        "top_8_recall": 0.06974248927038626,
+        "top_32_recall": 0.3782188841201717,
+        "top_32_precision": 0.04628413865546219
+      },
+      "entity_files": {
+        "events": 476,
+        "targets": 1864,
+        "top_8_hits": 190,
+        "top_32_hits": 208,
+        "cases": [
+          {
+            "events": 119,
+            "targets": 421,
+            "top_8_hits": 53,
+            "top_32_hits": 55
+          },
+          {
+            "events": 119,
+            "targets": 462,
+            "top_8_hits": 41,
+            "top_32_hits": 45
+          },
+          {
+            "events": 119,
+            "targets": 447,
+            "top_8_hits": 53,
+            "top_32_hits": 55
+          },
+          {
+            "events": 119,
+            "targets": 534,
+            "top_8_hits": 43,
+            "top_32_hits": 53
+          }
+        ],
+        "top_8_recall": 0.10193133047210301,
+        "top_32_recall": 0.11158798283261803,
+        "top_32_precision": 0.01365546218487395
+      },
+      "equal_fusion": {
+        "events": 476,
+        "targets": 1864,
+        "top_8_hits": 197,
+        "top_32_hits": 593,
+        "cases": [
+          {
+            "events": 119,
+            "targets": 421,
+            "top_8_hits": 57,
+            "top_32_hits": 175
+          },
+          {
+            "events": 119,
+            "targets": 462,
+            "top_8_hits": 50,
+            "top_32_hits": 146
+          },
+          {
+            "events": 119,
+            "targets": 447,
+            "top_8_hits": 52,
+            "top_32_hits": 159
+          },
+          {
+            "events": 119,
+            "targets": 534,
+            "top_8_hits": 38,
+            "top_32_hits": 113
+          }
+        ],
+        "source_overlap_top32": 319,
+        "top_8_recall": 0.10568669527896996,
+        "top_32_recall": 0.31813304721030045,
+        "top_32_precision": 0.0389311974789916
+      },
+      "shuffled_entity_fusion": {
+        "events": 476,
+        "targets": 1864,
+        "top_8_hits": 73,
+        "top_32_hits": 430,
+        "cases": [
+          {
+            "events": 119,
+            "targets": 421,
+            "top_8_hits": 27,
+            "top_32_hits": 133
+          },
+          {
+            "events": 119,
+            "targets": 462,
+            "top_8_hits": 20,
+            "top_32_hits": 110
+          },
+          {
+            "events": 119,
+            "targets": 447,
+            "top_8_hits": 20,
+            "top_32_hits": 116
+          },
+          {
+            "events": 119,
+            "targets": 534,
+            "top_8_hits": 6,
+            "top_32_hits": 71
+          }
+        ],
+        "top_8_recall": 0.039163090128755365,
+        "top_32_recall": 0.23068669527896996,
+        "top_32_precision": 0.028230042016806723
+      },
+      "aligned": {
+        "events": 476,
+        "targets": 1864,
+        "top_8_hits": 391,
+        "top_32_hits": 782,
+        "cases": [
+          {
+            "events": 119,
+            "targets": 421,
+            "top_8_hits": 110,
+            "top_32_hits": 226,
+            "positive_sites": 7816
+          },
+          {
+            "events": 119,
+            "targets": 462,
+            "top_8_hits": 103,
+            "top_32_hits": 187,
+            "positive_sites": 7758
+          },
+          {
+            "events": 119,
+            "targets": 447,
+            "top_8_hits": 98,
+            "top_32_hits": 208,
+            "positive_sites": 7814
+          },
+          {
+            "events": 119,
+            "targets": 534,
+            "top_8_hits": 80,
+            "top_32_hits": 161,
+            "positive_sites": 7852
+          }
+        ],
+        "positive_sites": 31240,
+        "top_8_recall": 0.20976394849785407,
+        "top_32_recall": 0.41952789699570814,
+        "top_32_precision": 0.05133928571428571,
+        "mean_positive_sites": 65.63025210084034
+      },
+      "shuffled": {
+        "events": 476,
+        "targets": 1864,
+        "top_8_hits": 173,
+        "top_32_hits": 531,
+        "cases": [
+          {
+            "events": 119,
+            "targets": 421,
+            "top_8_hits": 41,
+            "top_32_hits": 135,
+            "positive_sites": 5961
+          },
+          {
+            "events": 119,
+            "targets": 462,
+            "top_8_hits": 42,
+            "top_32_hits": 122,
+            "positive_sites": 5863
+          },
+          {
+            "events": 119,
+            "targets": 447,
+            "top_8_hits": 40,
+            "top_32_hits": 136,
+            "positive_sites": 5964
+          },
+          {
+            "events": 119,
+            "targets": 534,
+            "top_8_hits": 50,
+            "top_32_hits": 138,
+            "positive_sites": 5916
+          }
+        ],
+        "positive_sites": 23704,
+        "top_8_recall": 0.09281115879828326,
+        "top_32_recall": 0.28487124463519314,
+        "top_32_precision": 0.034860819327731093,
+        "mean_positive_sites": 49.79831932773109
+      }
+    },
+    "generic_corrupted": {
+      "fast_only": {
+        "events": 210,
+        "targets": 948,
+        "top_8_hits": 32,
+        "top_32_hits": 83,
+        "cases": [
+          {
+            "events": 53,
+            "targets": 246,
+            "top_8_hits": 5,
+            "top_32_hits": 15
+          },
+          {
+            "events": 41,
+            "targets": 166,
+            "top_8_hits": 5,
+            "top_32_hits": 12
+          },
+          {
+            "events": 46,
+            "targets": 218,
+            "top_8_hits": 6,
+            "top_32_hits": 31
+          },
+          {
+            "events": 70,
+            "targets": 318,
+            "top_8_hits": 16,
+            "top_32_hits": 25
+          }
+        ],
+        "top_8_recall": 0.03375527426160337,
+        "top_32_recall": 0.08755274261603375,
+        "top_32_precision": 0.012351190476190476
+      },
+      "entity_files": {
+        "events": 210,
+        "targets": 948,
+        "top_8_hits": 32,
+        "top_32_hits": 47,
+        "cases": [
+          {
+            "events": 53,
+            "targets": 246,
+            "top_8_hits": 6,
+            "top_32_hits": 8
+          },
+          {
+            "events": 41,
+            "targets": 166,
+            "top_8_hits": 13,
+            "top_32_hits": 18
+          },
+          {
+            "events": 46,
+            "targets": 218,
+            "top_8_hits": 4,
+            "top_32_hits": 4
+          },
+          {
+            "events": 70,
+            "targets": 318,
+            "top_8_hits": 9,
+            "top_32_hits": 17
+          }
+        ],
+        "top_8_recall": 0.03375527426160337,
+        "top_32_recall": 0.049578059071729956,
+        "top_32_precision": 0.006994047619047619
+      },
+      "equal_fusion": {
+        "events": 210,
+        "targets": 948,
+        "top_8_hits": 40,
+        "top_32_hits": 87,
+        "cases": [
+          {
+            "events": 53,
+            "targets": 246,
+            "top_8_hits": 7,
+            "top_32_hits": 17
+          },
+          {
+            "events": 41,
+            "targets": 166,
+            "top_8_hits": 12,
+            "top_32_hits": 24
+          },
+          {
+            "events": 46,
+            "targets": 218,
+            "top_8_hits": 6,
+            "top_32_hits": 14
+          },
+          {
+            "events": 70,
+            "targets": 318,
+            "top_8_hits": 15,
+            "top_32_hits": 32
+          }
+        ],
+        "source_overlap_top32": 81,
+        "top_8_recall": 0.04219409282700422,
+        "top_32_recall": 0.09177215189873418,
+        "top_32_precision": 0.012946428571428572
+      },
+      "shuffled_entity_fusion": {
+        "events": 210,
+        "targets": 948,
+        "top_8_hits": 21,
+        "top_32_hits": 45,
+        "cases": [
+          {
+            "events": 53,
+            "targets": 246,
+            "top_8_hits": 2,
+            "top_32_hits": 9
+          },
+          {
+            "events": 41,
+            "targets": 166,
+            "top_8_hits": 4,
+            "top_32_hits": 7
+          },
+          {
+            "events": 46,
+            "targets": 218,
+            "top_8_hits": 2,
+            "top_32_hits": 11
+          },
+          {
+            "events": 70,
+            "targets": 318,
+            "top_8_hits": 13,
+            "top_32_hits": 18
+          }
+        ],
+        "top_8_recall": 0.022151898734177215,
+        "top_32_recall": 0.04746835443037975,
+        "top_32_precision": 0.006696428571428571
+      },
+      "aligned": {
+        "events": 210,
+        "targets": 948,
+        "top_8_hits": 42,
+        "top_32_hits": 109,
+        "cases": [
+          {
+            "events": 53,
+            "targets": 246,
+            "top_8_hits": 7,
+            "top_32_hits": 19,
+            "positive_sites": 3782
+          },
+          {
+            "events": 41,
+            "targets": 166,
+            "top_8_hits": 13,
+            "top_32_hits": 27,
+            "positive_sites": 3051
+          },
+          {
+            "events": 46,
+            "targets": 218,
+            "top_8_hits": 2,
+            "top_32_hits": 27,
+            "positive_sites": 3240
+          },
+          {
+            "events": 70,
+            "targets": 318,
+            "top_8_hits": 20,
+            "top_32_hits": 36,
+            "positive_sites": 5107
+          }
+        ],
+        "positive_sites": 15180,
+        "top_8_recall": 0.04430379746835443,
+        "top_32_recall": 0.1149789029535865,
+        "top_32_precision": 0.016220238095238097,
+        "mean_positive_sites": 72.28571428571429
+      },
+      "shuffled": {
+        "events": 210,
+        "targets": 948,
+        "top_8_hits": 20,
+        "top_32_hits": 87,
+        "cases": [
+          {
+            "events": 53,
+            "targets": 246,
+            "top_8_hits": 4,
+            "top_32_hits": 18,
+            "positive_sites": 2758
+          },
+          {
+            "events": 41,
+            "targets": 166,
+            "top_8_hits": 3,
+            "top_32_hits": 17,
+            "positive_sites": 2215
+          },
+          {
+            "events": 46,
+            "targets": 218,
+            "top_8_hits": 5,
+            "top_32_hits": 26,
+            "positive_sites": 2367
+          },
+          {
+            "events": 70,
+            "targets": 318,
+            "top_8_hits": 8,
+            "top_32_hits": 26,
+            "positive_sites": 3740
+          }
+        ],
+        "positive_sites": 11080,
+        "top_8_recall": 0.02109704641350211,
+        "top_32_recall": 0.09177215189873418,
+        "top_32_precision": 0.012946428571428572,
+        "mean_positive_sites": 52.76190476190476
+      }
+    }
+  },
+  "file_activity": {
+    "pong_stride_1": {
+      "active_frames": 299,
+      "mean_live_files": 3.0,
+      "max_live_files": 3,
+      "mean_total_births": 3.0
+    },
+    "pong_stride_4": {
+      "active_frames": 480,
+      "mean_live_files": 3.0,
+      "max_live_files": 3,
+      "mean_total_births": 3.0
+    },
+    "generic_corrupted": {
+      "active_frames": 319,
+      "mean_live_files": 11.112852664576803,
+      "max_live_files": 16,
+      "mean_total_births": 12.75
+    }
+  },
+  "elapsed_seconds": 45.392654800089076
+}

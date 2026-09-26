@@ -1,0 +1,17 @@
+# Zero-shot Pong and corruption expose an entity-state transfer limit
+
+**Status:** Completed opt-in audit under the [registered protocol](2026-09-26-zero-shot-visual-transfer-protocol.md). All training remained on the original 64 unlabeled generic streams. The frozen fast field, signed affinity, and local rank-reliability readout saw neither Pong nor corrupted evaluation events during training. The entity files continued only their normal within-episode local motion update. [Raw results](2026-09-26-zero-shot-visual-transfer-results.json) preserve each seed's forecast counts and autonomous file activity.
+
+| Zero-shot stream | Fast-only top-32 / top-8 | Entity-only | Fixed equal fusion | Aligned local readout | Shuffled-credit readout |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| Pong, one environment step/camera frame | .402 / .145 | .064 / .064 | .309 / .117 | **.409 / .102** | .268 / .047 |
+| Pong, four environment steps/camera frame | .378 / .070 | .112 / .102 | .318 / .106 | **.420 / .210** | .285 / .093 |
+| Generic held-out with dropout/false events | .088 / .034 | .050 / .034 | .092 / .042 | **.115 / .044** | .092 / .021 |
+
+The learned readout still beat shuffled credit, but its generic clean-set advantage did **not** transfer strongly to a full Pong scene. At the native cadence, its top-32 margin over fast-only was only .007, and top-8 was worse by .043. At the coarser cadence, it improved top-32 by .042 and top-8 by .140, suggesting the current file forecast depends heavily on camera/event timing. The Pong camera produced 299 active frames at stride one and 480 at stride four across four seeds. The model maintained exactly three live files in these runs, but count alone cannot establish stable identity or useful motion: the file-only future events scored poorly. No Pong object or physics variable was used by the model.
+
+The corrupted generic test was more decisive. The evaluator fed 10% event dropout plus 0.1% independent false events into the unchanged models and scored against the uncorrupted next event, so chance injected noise was not rewarded. Entity files averaged **11.1** live hypotheses on active frames, reached **16**, and created **12.75** files per episode on average. This confirms the earlier static-noise failure in moving, multi-entity scenes. The learned readout's .115 top-32 was better than fast-only .088 and entity-only .050 but far below its clean generic .586. It cannot compensate for an unreliable autonomous state.
+
+**Decision:** Do not promote this architecture to production M1A yet. The two-stream local readout is a valid clean-scene learning result, but a rigid file translation forecast is weak at native Pong cadence and persistent files overbirth under noisy evidence. The next opt-in architectural experiment should couple file survival/continuation to *independent predictive support* from the fast field and learn an event-cadence-aware file forecast from local errors. That must be tested against fixed and time-shuffled support on both zero-shot Pong cadences and corrupted generic streams, while retaining the clean transfer gains. If it cannot repair both state reliability and prediction, reconsider persistent files as the M1A latent instead of extending them through more thresholds. No rank-weight, birth-radius, or decay sweep is justified by this audit.
+
+Reproduce with `.venv/Scripts/python scripts/run_zero_shot_visual_transfer.py` (about 45 seconds on this machine).
