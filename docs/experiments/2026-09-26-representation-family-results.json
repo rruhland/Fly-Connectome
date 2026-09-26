@@ -1,0 +1,1143 @@
+{
+  "protocol": "2026-09-26-representation-first-family-protocol",
+  "training_episodes": 64,
+  "training_frames": 5120,
+  "prepared_seconds": 60.28949240001384,
+  "sensory": {
+    "cases": {
+      "splits": {
+        "calibration": {
+          "tp": 1272,
+          "fp": 72,
+          "fn": 24,
+          "direction_correct": 16,
+          "direction_total": 16,
+          "occupancy_f1": 0.9636363636363636,
+          "direction_accuracy": 1.0
+        },
+        "speed": {
+          "tp": 1284,
+          "fp": 134,
+          "fn": 12,
+          "direction_correct": 16,
+          "direction_total": 16,
+          "occupancy_f1": 0.94620486366986,
+          "direction_accuracy": 1.0
+        },
+        "position": {
+          "tp": 1272,
+          "fp": 72,
+          "fn": 24,
+          "direction_correct": 16,
+          "direction_total": 16,
+          "occupancy_f1": 0.9636363636363636,
+          "direction_accuracy": 1.0
+        },
+        "shape": {
+          "tp": 672,
+          "fp": 280,
+          "fn": 624,
+          "direction_correct": 16,
+          "direction_total": 16,
+          "occupancy_f1": 0.597864768683274,
+          "direction_accuracy": 1.0
+        },
+        "separated": {
+          "tp": 1272,
+          "fp": 72,
+          "fn": 24,
+          "direction_correct": 16,
+          "direction_total": 16,
+          "occupancy_f1": 0.9636363636363636,
+          "direction_accuracy": 1.0
+        },
+        "crossing": {
+          "tp": 288,
+          "fp": 18,
+          "fn": 6,
+          "direction_correct": 4,
+          "direction_total": 4,
+          "occupancy_f1": 0.96,
+          "direction_accuracy": 1.0
+        }
+      },
+      "separated_two_components": 1.0,
+      "crossing_identity": 1.0,
+      "active_fraction": 0.00286077096633188
+    },
+    "perturbations": {
+      "noise_margin": 0.8406938135117343,
+      "missing_gap_similarity": 0.29267339035868645,
+      "missing_recovery_similarity": 0.5111703649163246,
+      "clean_corrupt_similarity": 0.8408401161432266,
+      "clean_unrelated_similarity": 0.00014630263149228995
+    }
+  },
+  "families": {
+    "slow_feature": {
+      "trained": {
+        "cases": {
+          "splits": {
+            "calibration": {
+              "tp": 1150,
+              "fp": 4350,
+              "fn": 146,
+              "direction_correct": 10,
+              "direction_total": 16,
+              "occupancy_f1": 0.33843437316068276,
+              "direction_accuracy": 0.625
+            },
+            "speed": {
+              "tp": 794,
+              "fp": 6832,
+              "fn": 502,
+              "direction_correct": 16,
+              "direction_total": 16,
+              "occupancy_f1": 0.1779869984308451,
+              "direction_accuracy": 1.0
+            },
+            "position": {
+              "tp": 1150,
+              "fp": 4350,
+              "fn": 146,
+              "direction_correct": 10,
+              "direction_total": 16,
+              "occupancy_f1": 0.33843437316068276,
+              "direction_accuracy": 0.625
+            },
+            "shape": {
+              "tp": 1180,
+              "fp": 6148,
+              "fn": 116,
+              "direction_correct": 14,
+              "direction_total": 16,
+              "occupancy_f1": 0.27365491651205937,
+              "direction_accuracy": 0.875
+            },
+            "separated": {
+              "tp": 1150,
+              "fp": 4350,
+              "fn": 146,
+              "direction_correct": 10,
+              "direction_total": 16,
+              "occupancy_f1": 0.33843437316068276,
+              "direction_accuracy": 0.625
+            },
+            "crossing": {
+              "tp": 271,
+              "fp": 964,
+              "fn": 23,
+              "direction_correct": 1,
+              "direction_total": 4,
+              "occupancy_f1": 0.3544800523217789,
+              "direction_accuracy": 0.25
+            }
+          },
+          "separated_two_components": 1.0,
+          "crossing_identity": 0.5,
+          "active_fraction": 0.16230210312851914
+        },
+        "perturbations": {
+          "noise_margin": -0.21028423309326172,
+          "missing_gap_similarity": 0.9972787946462631,
+          "missing_recovery_similarity": 0.9948166608810425,
+          "clean_corrupt_similarity": 0.6921018461386362,
+          "clean_unrelated_similarity": 0.902386079231898
+        }
+      },
+      "frozen": {
+        "cases": {
+          "splits": {
+            "calibration": {
+              "tp": 1058,
+              "fp": 2428,
+              "fn": 238,
+              "direction_correct": 16,
+              "direction_total": 16,
+              "occupancy_f1": 0.44249268088665833,
+              "direction_accuracy": 1.0
+            },
+            "speed": {
+              "tp": 888,
+              "fp": 3712,
+              "fn": 408,
+              "direction_correct": 16,
+              "direction_total": 16,
+              "occupancy_f1": 0.3012211668928087,
+              "direction_accuracy": 1.0
+            },
+            "position": {
+              "tp": 1058,
+              "fp": 2428,
+              "fn": 238,
+              "direction_correct": 16,
+              "direction_total": 16,
+              "occupancy_f1": 0.44249268088665833,
+              "direction_accuracy": 1.0
+            },
+            "shape": {
+              "tp": 710,
+              "fp": 3286,
+              "fn": 586,
+              "direction_correct": 16,
+              "direction_total": 16,
+              "occupancy_f1": 0.26832955404383974,
+              "direction_accuracy": 1.0
+            },
+            "separated": {
+              "tp": 1058,
+              "fp": 2428,
+              "fn": 238,
+              "direction_correct": 16,
+              "direction_total": 16,
+              "occupancy_f1": 0.44249268088665833,
+              "direction_accuracy": 1.0
+            },
+            "crossing": {
+              "tp": 253,
+              "fp": 522,
+              "fn": 41,
+              "direction_correct": 2,
+              "direction_total": 4,
+              "occupancy_f1": 0.47333956969130025,
+              "direction_accuracy": 0.5
+            }
+          },
+          "separated_two_components": 1.0,
+          "crossing_identity": 0.0,
+          "active_fraction": 0.0056480430625938435
+        },
+        "perturbations": {
+          "noise_margin": 0.7871585866032547,
+          "missing_gap_similarity": 0.7126735970377922,
+          "missing_recovery_similarity": 0.5916690081357956,
+          "clean_corrupt_similarity": 0.8063447376092275,
+          "clean_unrelated_similarity": 0.019186151005972835
+        }
+      },
+      "promising": false,
+      "hard_gains": {
+        "separated_two_components": 0.0,
+        "crossing_identity": -0.5,
+        "noise_margin": -1.050978046604996,
+        "missing_gap_similarity": 0.2846051976084709,
+        "missing_recovery_similarity": 0.4031476527452469
+      },
+      "training_seconds": 13.482615599990822,
+      "elapsed_seconds": 18.044445500010625
+    },
+    "common_fate": {
+      "trained": {
+        "cases": {
+          "splits": {
+            "calibration": {
+              "tp": 1280,
+              "fp": 872,
+              "fn": 16,
+              "direction_correct": 16,
+              "direction_total": 16,
+              "occupancy_f1": 0.7424593967517401,
+              "direction_accuracy": 1.0
+            },
+            "speed": {
+              "tp": 1280,
+              "fp": 1698,
+              "fn": 16,
+              "direction_correct": 16,
+              "direction_total": 16,
+              "occupancy_f1": 0.5989705194197473,
+              "direction_accuracy": 1.0
+            },
+            "position": {
+              "tp": 1280,
+              "fp": 872,
+              "fn": 16,
+              "direction_correct": 16,
+              "direction_total": 16,
+              "occupancy_f1": 0.7424593967517401,
+              "direction_accuracy": 1.0
+            },
+            "shape": {
+              "tp": 688,
+              "fp": 1162,
+              "fn": 608,
+              "direction_correct": 16,
+              "direction_total": 16,
+              "occupancy_f1": 0.43738080101716464,
+              "direction_accuracy": 1.0
+            },
+            "separated": {
+              "tp": 1280,
+              "fp": 872,
+              "fn": 16,
+              "direction_correct": 16,
+              "direction_total": 16,
+              "occupancy_f1": 0.7424593967517401,
+              "direction_accuracy": 1.0
+            },
+            "crossing": {
+              "tp": 290,
+              "fp": 175,
+              "fn": 4,
+              "direction_correct": 4,
+              "direction_total": 4,
+              "occupancy_f1": 0.764163372859025,
+              "direction_accuracy": 1.0
+            }
+          },
+          "separated_two_components": 1.0,
+          "crossing_identity": 1.0,
+          "active_fraction": 0.005601199659135741
+        },
+        "perturbations": {
+          "noise_margin": 0.7823650763596864,
+          "missing_gap_similarity": 0.4745703674852848,
+          "missing_recovery_similarity": 0.4742475152015686,
+          "clean_corrupt_similarity": 0.7840360552072525,
+          "clean_unrelated_similarity": 0.0016709788475660996
+        }
+      },
+      "frozen": {
+        "cases": {
+          "splits": {
+            "calibration": {
+              "tp": 1280,
+              "fp": 872,
+              "fn": 16,
+              "direction_correct": 16,
+              "direction_total": 16,
+              "occupancy_f1": 0.7424593967517401,
+              "direction_accuracy": 1.0
+            },
+            "speed": {
+              "tp": 1280,
+              "fp": 1696,
+              "fn": 16,
+              "direction_correct": 16,
+              "direction_total": 16,
+              "occupancy_f1": 0.599250936329588,
+              "direction_accuracy": 1.0
+            },
+            "position": {
+              "tp": 1280,
+              "fp": 872,
+              "fn": 16,
+              "direction_correct": 16,
+              "direction_total": 16,
+              "occupancy_f1": 0.7424593967517401,
+              "direction_accuracy": 1.0
+            },
+            "shape": {
+              "tp": 688,
+              "fp": 1162,
+              "fn": 608,
+              "direction_correct": 16,
+              "direction_total": 16,
+              "occupancy_f1": 0.43738080101716464,
+              "direction_accuracy": 1.0
+            },
+            "separated": {
+              "tp": 1280,
+              "fp": 872,
+              "fn": 16,
+              "direction_correct": 16,
+              "direction_total": 16,
+              "occupancy_f1": 0.7424593967517401,
+              "direction_accuracy": 1.0
+            },
+            "crossing": {
+              "tp": 290,
+              "fp": 175,
+              "fn": 4,
+              "direction_correct": 4,
+              "direction_total": 4,
+              "occupancy_f1": 0.764163372859025,
+              "direction_accuracy": 1.0
+            }
+          },
+          "separated_two_components": 1.0,
+          "crossing_identity": 1.0,
+          "active_fraction": 0.00560088545103577
+        },
+        "perturbations": {
+          "noise_margin": 0.7824192392896899,
+          "missing_gap_similarity": 0.47459692135453224,
+          "missing_recovery_similarity": 0.47425003349781036,
+          "clean_corrupt_similarity": 0.7840883980194727,
+          "clean_unrelated_similarity": 0.0016691587297827937
+        }
+      },
+      "promising": false,
+      "hard_gains": {
+        "separated_two_components": 0.0,
+        "crossing_identity": 0.0,
+        "noise_margin": -0.058328737152047894,
+        "missing_gap_similarity": -2.6553869247436523e-05,
+        "missing_recovery_similarity": -0.03692284971475601
+      },
+      "training_seconds": 14.693428800092079,
+      "elapsed_seconds": 28.956359300063923
+    },
+    "sparse_reconstruction": {
+      "trained": {
+        "cases": {
+          "splits": {
+            "calibration": {
+              "tp": 1158,
+              "fp": 1822,
+              "fn": 138,
+              "direction_correct": 16,
+              "direction_total": 16,
+              "occupancy_f1": 0.5416276894293732,
+              "direction_accuracy": 1.0
+            },
+            "speed": {
+              "tp": 1178,
+              "fp": 2216,
+              "fn": 118,
+              "direction_correct": 14,
+              "direction_total": 16,
+              "occupancy_f1": 0.5023454157782516,
+              "direction_accuracy": 0.875
+            },
+            "position": {
+              "tp": 1158,
+              "fp": 1822,
+              "fn": 138,
+              "direction_correct": 16,
+              "direction_total": 16,
+              "occupancy_f1": 0.5416276894293732,
+              "direction_accuracy": 1.0
+            },
+            "shape": {
+              "tp": 868,
+              "fp": 2038,
+              "fn": 428,
+              "direction_correct": 14,
+              "direction_total": 16,
+              "occupancy_f1": 0.41313660161827703,
+              "direction_accuracy": 0.875
+            },
+            "separated": {
+              "tp": 1158,
+              "fp": 1822,
+              "fn": 138,
+              "direction_correct": 16,
+              "direction_total": 16,
+              "occupancy_f1": 0.5416276894293732,
+              "direction_accuracy": 1.0
+            },
+            "crossing": {
+              "tp": 266,
+              "fp": 379,
+              "fn": 28,
+              "direction_correct": 2,
+              "direction_total": 4,
+              "occupancy_f1": 0.5665601703940362,
+              "direction_accuracy": 0.5
+            }
+          },
+          "separated_two_components": 0.75,
+          "crossing_identity": 1.0,
+          "active_fraction": 0.0028289703277496244
+        },
+        "perturbations": {
+          "noise_margin": 0.8395357577350192,
+          "missing_gap_similarity": 0.3096243152394891,
+          "missing_recovery_similarity": 0.5046684741973877,
+          "clean_corrupt_similarity": 0.840082511305809,
+          "clean_unrelated_similarity": 0.0005467535707898522
+        }
+      },
+      "frozen": {
+        "cases": {
+          "splits": {
+            "calibration": {
+              "tp": 792,
+              "fp": 996,
+              "fn": 504,
+              "direction_correct": 16,
+              "direction_total": 16,
+              "occupancy_f1": 0.5136186770428015,
+              "direction_accuracy": 1.0
+            },
+            "speed": {
+              "tp": 882,
+              "fp": 1234,
+              "fn": 414,
+              "direction_correct": 16,
+              "direction_total": 16,
+              "occupancy_f1": 0.5169988276670574,
+              "direction_accuracy": 1.0
+            },
+            "position": {
+              "tp": 792,
+              "fp": 996,
+              "fn": 504,
+              "direction_correct": 16,
+              "direction_total": 16,
+              "occupancy_f1": 0.5136186770428015,
+              "direction_accuracy": 1.0
+            },
+            "shape": {
+              "tp": 714,
+              "fp": 1264,
+              "fn": 582,
+              "direction_correct": 16,
+              "direction_total": 16,
+              "occupancy_f1": 0.436163714111179,
+              "direction_accuracy": 1.0
+            },
+            "separated": {
+              "tp": 792,
+              "fp": 996,
+              "fn": 504,
+              "direction_correct": 16,
+              "direction_total": 16,
+              "occupancy_f1": 0.5136186770428015,
+              "direction_accuracy": 1.0
+            },
+            "crossing": {
+              "tp": 171,
+              "fp": 221,
+              "fn": 123,
+              "direction_correct": 1,
+              "direction_total": 4,
+              "occupancy_f1": 0.49854227405247814,
+              "direction_accuracy": 0.25
+            }
+          },
+          "separated_two_components": 0.625,
+          "crossing_identity": 1.0,
+          "active_fraction": 0.0025220533033033033
+        },
+        "perturbations": {
+          "noise_margin": 0.7689292275246846,
+          "missing_gap_similarity": 0.29981681890785694,
+          "missing_recovery_similarity": 0.4063631072640419,
+          "clean_corrupt_similarity": 0.7698123703400294,
+          "clean_unrelated_similarity": 0.0008831428153447026
+        }
+      },
+      "promising": false,
+      "hard_gains": {
+        "separated_two_components": -0.25,
+        "crossing_identity": 0.0,
+        "noise_margin": -0.0011580557767151278,
+        "missing_gap_similarity": 0.009807496331632137,
+        "missing_recovery_similarity": -0.00650189071893692
+      },
+      "training_seconds": 12.047669799998403,
+      "elapsed_seconds": 16.34759939997457
+    },
+    "attractor": {
+      "trained": {
+        "cases": {
+          "splits": {
+            "calibration": {
+              "tp": 1296,
+              "fp": 8406,
+              "fn": 0,
+              "direction_correct": 10,
+              "direction_total": 16,
+              "occupancy_f1": 0.23567921440261866,
+              "direction_accuracy": 0.625
+            },
+            "speed": {
+              "tp": 1236,
+              "fp": 10881,
+              "fn": 60,
+              "direction_correct": 12,
+              "direction_total": 16,
+              "occupancy_f1": 0.18429881458286737,
+              "direction_accuracy": 0.75
+            },
+            "position": {
+              "tp": 1296,
+              "fp": 8406,
+              "fn": 0,
+              "direction_correct": 10,
+              "direction_total": 16,
+              "occupancy_f1": 0.23567921440261866,
+              "direction_accuracy": 0.625
+            },
+            "shape": {
+              "tp": 1128,
+              "fp": 8402,
+              "fn": 168,
+              "direction_correct": 10,
+              "direction_total": 16,
+              "occupancy_f1": 0.208387215961574,
+              "direction_accuracy": 0.625
+            },
+            "separated": {
+              "tp": 1296,
+              "fp": 8311,
+              "fn": 0,
+              "direction_correct": 10,
+              "direction_total": 16,
+              "occupancy_f1": 0.23773273410987802,
+              "direction_accuracy": 0.625
+            },
+            "crossing": {
+              "tp": 294,
+              "fp": 1576,
+              "fn": 0,
+              "direction_correct": 1,
+              "direction_total": 4,
+              "occupancy_f1": 0.27171903881700554,
+              "direction_accuracy": 0.25
+            }
+          },
+          "separated_two_components": 1.0,
+          "crossing_identity": 0.5,
+          "active_fraction": 0.028922965934684686
+        },
+        "perturbations": {
+          "noise_margin": -0.08414162198702502,
+          "missing_gap_similarity": 0.9956777989864349,
+          "missing_recovery_similarity": 0.9961080849170685,
+          "clean_corrupt_similarity": 0.5301677609483401,
+          "clean_unrelated_similarity": 0.6143093829353651
+        }
+      },
+      "frozen": {
+        "cases": {
+          "splits": {
+            "calibration": {
+              "tp": 1220,
+              "fp": 1598,
+              "fn": 76,
+              "direction_correct": 8,
+              "direction_total": 16,
+              "occupancy_f1": 0.5930967428293632,
+              "direction_accuracy": 0.5
+            },
+            "speed": {
+              "tp": 1202,
+              "fp": 2230,
+              "fn": 94,
+              "direction_correct": 14,
+              "direction_total": 16,
+              "occupancy_f1": 0.5084602368866328,
+              "direction_accuracy": 0.875
+            },
+            "position": {
+              "tp": 1220,
+              "fp": 1598,
+              "fn": 76,
+              "direction_correct": 8,
+              "direction_total": 16,
+              "occupancy_f1": 0.5930967428293632,
+              "direction_accuracy": 0.5
+            },
+            "shape": {
+              "tp": 940,
+              "fp": 2126,
+              "fn": 356,
+              "direction_correct": 16,
+              "direction_total": 16,
+              "occupancy_f1": 0.4309949564419991,
+              "direction_accuracy": 1.0
+            },
+            "separated": {
+              "tp": 1220,
+              "fp": 1598,
+              "fn": 76,
+              "direction_correct": 8,
+              "direction_total": 16,
+              "occupancy_f1": 0.5930967428293632,
+              "direction_accuracy": 0.5
+            },
+            "crossing": {
+              "tp": 274,
+              "fp": 345,
+              "fn": 20,
+              "direction_correct": 2,
+              "direction_total": 4,
+              "occupancy_f1": 0.6002190580503833,
+              "direction_accuracy": 0.5
+            }
+          },
+          "separated_two_components": 0.75,
+          "crossing_identity": 1.0,
+          "active_fraction": 0.006122944233295796
+        },
+        "perturbations": {
+          "noise_margin": 0.7742626464314526,
+          "missing_gap_similarity": 0.5083345547318459,
+          "missing_recovery_similarity": 0.5090013891458511,
+          "clean_corrupt_similarity": 0.7807342708110809,
+          "clean_unrelated_similarity": 0.006471624379628338
+        }
+      },
+      "promising": false,
+      "hard_gains": {
+        "separated_two_components": 0.0,
+        "crossing_identity": -0.5,
+        "noise_margin": -0.9248354354987594,
+        "missing_gap_similarity": 0.4873432442545891,
+        "missing_recovery_similarity": 0.48493772000074387
+      },
+      "training_seconds": 14.924499399960041,
+      "elapsed_seconds": 19.928347599925473
+    },
+    "synchrony": {
+      "trained": {
+        "cases": {
+          "splits": {
+            "calibration": {
+              "tp": 1106,
+              "fp": 1677,
+              "fn": 190,
+              "direction_correct": 12,
+              "direction_total": 16,
+              "occupancy_f1": 0.5422897769061045,
+              "direction_accuracy": 0.75
+            },
+            "speed": {
+              "tp": 967,
+              "fp": 3001,
+              "fn": 329,
+              "direction_correct": 12,
+              "direction_total": 16,
+              "occupancy_f1": 0.36740121580547114,
+              "direction_accuracy": 0.75
+            },
+            "position": {
+              "tp": 1096,
+              "fp": 1675,
+              "fn": 200,
+              "direction_correct": 4,
+              "direction_total": 16,
+              "occupancy_f1": 0.538972215392181,
+              "direction_accuracy": 0.25
+            },
+            "shape": {
+              "tp": 628,
+              "fp": 2366,
+              "fn": 668,
+              "direction_correct": 7,
+              "direction_total": 16,
+              "occupancy_f1": 0.29277389277389276,
+              "direction_accuracy": 0.4375
+            },
+            "separated": {
+              "tp": 1098,
+              "fp": 1673,
+              "fn": 198,
+              "direction_correct": 0,
+              "direction_total": 16,
+              "occupancy_f1": 0.5399557413326777,
+              "direction_accuracy": 0.0
+            },
+            "crossing": {
+              "tp": 258,
+              "fp": 353,
+              "fn": 36,
+              "direction_correct": 0,
+              "direction_total": 4,
+              "occupancy_f1": 0.5701657458563536,
+              "direction_accuracy": 0.0
+            }
+          },
+          "separated_two_components": 1.0,
+          "crossing_identity": 1.0,
+          "active_fraction": 0.0034072534086786815
+        },
+        "perturbations": {
+          "noise_margin": 0.8434769215952352,
+          "missing_gap_similarity": 0.4495321474969387,
+          "missing_recovery_similarity": 0.5777426064014435,
+          "clean_corrupt_similarity": 0.8481432894865671,
+          "clean_unrelated_similarity": 0.004666367891331902
+        }
+      },
+      "frozen": {
+        "cases": {
+          "splits": {
+            "calibration": {
+              "tp": 1106,
+              "fp": 1677,
+              "fn": 190,
+              "direction_correct": 12,
+              "direction_total": 16,
+              "occupancy_f1": 0.5422897769061045,
+              "direction_accuracy": 0.75
+            },
+            "speed": {
+              "tp": 967,
+              "fp": 3001,
+              "fn": 329,
+              "direction_correct": 12,
+              "direction_total": 16,
+              "occupancy_f1": 0.36740121580547114,
+              "direction_accuracy": 0.75
+            },
+            "position": {
+              "tp": 1096,
+              "fp": 1675,
+              "fn": 200,
+              "direction_correct": 4,
+              "direction_total": 16,
+              "occupancy_f1": 0.538972215392181,
+              "direction_accuracy": 0.25
+            },
+            "shape": {
+              "tp": 628,
+              "fp": 2366,
+              "fn": 668,
+              "direction_correct": 7,
+              "direction_total": 16,
+              "occupancy_f1": 0.29277389277389276,
+              "direction_accuracy": 0.4375
+            },
+            "separated": {
+              "tp": 1098,
+              "fp": 1673,
+              "fn": 198,
+              "direction_correct": 0,
+              "direction_total": 16,
+              "occupancy_f1": 0.5399557413326777,
+              "direction_accuracy": 0.0
+            },
+            "crossing": {
+              "tp": 258,
+              "fp": 353,
+              "fn": 36,
+              "direction_correct": 0,
+              "direction_total": 4,
+              "occupancy_f1": 0.5701657458563536,
+              "direction_accuracy": 0.0
+            }
+          },
+          "separated_two_components": 1.0,
+          "crossing_identity": 1.0,
+          "active_fraction": 0.0034073662027148894
+        },
+        "perturbations": {
+          "noise_margin": 0.8434769070045149,
+          "missing_gap_similarity": 0.4495321474969387,
+          "missing_recovery_similarity": 0.5777426064014435,
+          "clean_corrupt_similarity": 0.848143274585406,
+          "clean_unrelated_similarity": 0.004666367580891044
+        }
+      },
+      "promising": false,
+      "hard_gains": {
+        "separated_two_components": 0.0,
+        "crossing_identity": 0.0,
+        "noise_margin": 1.4590720298635063e-08,
+        "missing_gap_similarity": 0.0,
+        "missing_recovery_similarity": 0.0
+      },
+      "training_seconds": 9.388092399924062,
+      "elapsed_seconds": 19.537373499944806
+    },
+    "relational_graph": {
+      "trained": {
+        "cases": {
+          "splits": {
+            "calibration": {
+              "tp": 1030,
+              "fp": 5562,
+              "fn": 266,
+              "direction_correct": 16,
+              "direction_total": 16,
+              "occupancy_f1": 0.26115618661257606,
+              "direction_accuracy": 1.0
+            },
+            "speed": {
+              "tp": 1002,
+              "fp": 9494,
+              "fn": 294,
+              "direction_correct": 16,
+              "direction_total": 16,
+              "occupancy_f1": 0.16994572591587517,
+              "direction_accuracy": 1.0
+            },
+            "position": {
+              "tp": 1030,
+              "fp": 5562,
+              "fn": 266,
+              "direction_correct": 16,
+              "direction_total": 16,
+              "occupancy_f1": 0.26115618661257606,
+              "direction_accuracy": 1.0
+            },
+            "shape": {
+              "tp": 854,
+              "fp": 5674,
+              "fn": 442,
+              "direction_correct": 16,
+              "direction_total": 16,
+              "occupancy_f1": 0.21830265848670757,
+              "direction_accuracy": 1.0
+            },
+            "separated": {
+              "tp": 1030,
+              "fp": 5562,
+              "fn": 266,
+              "direction_correct": 16,
+              "direction_total": 16,
+              "occupancy_f1": 0.26115618661257606,
+              "direction_accuracy": 1.0
+            },
+            "crossing": {
+              "tp": 262,
+              "fp": 1370,
+              "fn": 32,
+              "direction_correct": 4,
+              "direction_total": 4,
+              "occupancy_f1": 0.2720664589823468,
+              "direction_accuracy": 1.0
+            }
+          },
+          "separated_two_components": 1.0,
+          "crossing_identity": 0.0,
+          "active_fraction": 0.013046249409566994
+        },
+        "perturbations": {
+          "noise_margin": 0.881626906817822,
+          "missing_gap_similarity": 0.7703456282615662,
+          "missing_recovery_similarity": 0.7281364798545837,
+          "clean_corrupt_similarity": 0.8997532178958257,
+          "clean_unrelated_similarity": 0.018126311078003738
+        }
+      },
+      "frozen": {
+        "cases": {
+          "splits": {
+            "calibration": {
+              "tp": 1030,
+              "fp": 5562,
+              "fn": 266,
+              "direction_correct": 16,
+              "direction_total": 16,
+              "occupancy_f1": 0.26115618661257606,
+              "direction_accuracy": 1.0
+            },
+            "speed": {
+              "tp": 1002,
+              "fp": 9494,
+              "fn": 294,
+              "direction_correct": 16,
+              "direction_total": 16,
+              "occupancy_f1": 0.16994572591587517,
+              "direction_accuracy": 1.0
+            },
+            "position": {
+              "tp": 1030,
+              "fp": 5562,
+              "fn": 266,
+              "direction_correct": 16,
+              "direction_total": 16,
+              "occupancy_f1": 0.26115618661257606,
+              "direction_accuracy": 1.0
+            },
+            "shape": {
+              "tp": 854,
+              "fp": 5674,
+              "fn": 442,
+              "direction_correct": 16,
+              "direction_total": 16,
+              "occupancy_f1": 0.21830265848670757,
+              "direction_accuracy": 1.0
+            },
+            "separated": {
+              "tp": 1030,
+              "fp": 5562,
+              "fn": 266,
+              "direction_correct": 16,
+              "direction_total": 16,
+              "occupancy_f1": 0.26115618661257606,
+              "direction_accuracy": 1.0
+            },
+            "crossing": {
+              "tp": 262,
+              "fp": 1370,
+              "fn": 32,
+              "direction_correct": 4,
+              "direction_total": 4,
+              "occupancy_f1": 0.2720664589823468,
+              "direction_accuracy": 1.0
+            }
+          },
+          "separated_two_components": 1.0,
+          "crossing_identity": 0.0,
+          "active_fraction": 0.013046249409566994
+        },
+        "perturbations": {
+          "noise_margin": 0.8816286571479093,
+          "missing_gap_similarity": 0.770320251584053,
+          "missing_recovery_similarity": 0.7281182557344437,
+          "clean_corrupt_similarity": 0.8997491051753362,
+          "clean_unrelated_similarity": 0.018120448027427
+        }
+      },
+      "promising": false,
+      "hard_gains": {
+        "separated_two_components": 0.0,
+        "crossing_identity": -1.0,
+        "noise_margin": -1.750330087313401e-06,
+        "missing_gap_similarity": 2.537667751312256e-05,
+        "missing_recovery_similarity": 1.8224120140075684e-05
+      },
+      "training_seconds": 11.85349510004744,
+      "elapsed_seconds": 23.28798840008676
+    },
+    "reservoir": {
+      "trained": {
+        "cases": {
+          "splits": {
+            "calibration": {
+              "tp": 1280,
+              "fp": 1544,
+              "fn": 16,
+              "direction_correct": 16,
+              "direction_total": 16,
+              "occupancy_f1": 0.6213592233009708,
+              "direction_accuracy": 1.0
+            },
+            "speed": {
+              "tp": 1280,
+              "fp": 2796,
+              "fn": 16,
+              "direction_correct": 16,
+              "direction_total": 16,
+              "occupancy_f1": 0.4765450483991065,
+              "direction_accuracy": 1.0
+            },
+            "position": {
+              "tp": 1280,
+              "fp": 1544,
+              "fn": 16,
+              "direction_correct": 16,
+              "direction_total": 16,
+              "occupancy_f1": 0.6213592233009708,
+              "direction_accuracy": 1.0
+            },
+            "shape": {
+              "tp": 744,
+              "fp": 2238,
+              "fn": 552,
+              "direction_correct": 16,
+              "direction_total": 16,
+              "occupancy_f1": 0.34782608695652173,
+              "direction_accuracy": 1.0
+            },
+            "separated": {
+              "tp": 1280,
+              "fp": 1540,
+              "fn": 16,
+              "direction_correct": 16,
+              "direction_total": 16,
+              "occupancy_f1": 0.6219630709426628,
+              "direction_accuracy": 1.0
+            },
+            "crossing": {
+              "tp": 290,
+              "fp": 319,
+              "fn": 4,
+              "direction_correct": 0,
+              "direction_total": 4,
+              "occupancy_f1": 0.6423034330011074,
+              "direction_accuracy": 0.0
+            }
+          },
+          "separated_two_components": 1.0,
+          "crossing_identity": 0.0,
+          "active_fraction": 0.011650566594792647
+        },
+        "perturbations": {
+          "noise_margin": 0.7922389623320972,
+          "missing_gap_similarity": 0.6605767235159874,
+          "missing_recovery_similarity": 0.6524798721075058,
+          "clean_corrupt_similarity": 0.7988332857688268,
+          "clean_unrelated_similarity": 0.00659432343672961
+        }
+      },
+      "frozen": {
+        "cases": {
+          "splits": {
+            "calibration": {
+              "tp": 1296,
+              "fp": 1564,
+              "fn": 0,
+              "direction_correct": 16,
+              "direction_total": 16,
+              "occupancy_f1": 0.6236766121270453,
+              "direction_accuracy": 1.0
+            },
+            "speed": {
+              "tp": 1296,
+              "fp": 2864,
+              "fn": 0,
+              "direction_correct": 16,
+              "direction_total": 16,
+              "occupancy_f1": 0.4750733137829912,
+              "direction_accuracy": 1.0
+            },
+            "position": {
+              "tp": 1296,
+              "fp": 1564,
+              "fn": 0,
+              "direction_correct": 16,
+              "direction_total": 16,
+              "occupancy_f1": 0.6236766121270453,
+              "direction_accuracy": 1.0
+            },
+            "shape": {
+              "tp": 760,
+              "fp": 2288,
+              "fn": 536,
+              "direction_correct": 16,
+              "direction_total": 16,
+              "occupancy_f1": 0.34990791896869244,
+              "direction_accuracy": 1.0
+            },
+            "separated": {
+              "tp": 1296,
+              "fp": 1564,
+              "fn": 0,
+              "direction_correct": 16,
+              "direction_total": 16,
+              "occupancy_f1": 0.6236766121270453,
+              "direction_accuracy": 1.0
+            },
+            "crossing": {
+              "tp": 294,
+              "fp": 326,
+              "fn": 0,
+              "direction_correct": 1,
+              "direction_total": 4,
+              "occupancy_f1": 0.6433260393873085,
+              "direction_accuracy": 0.25
+            }
+          },
+          "separated_two_components": 1.0,
+          "crossing_identity": 0.0,
+          "active_fraction": 0.007650682226511407
+        },
+        "perturbations": {
+          "noise_margin": 0.8025363352013907,
+          "missing_gap_similarity": 0.7038956880569458,
+          "missing_recovery_similarity": 0.6749143972992897,
+          "clean_corrupt_similarity": 0.8092740575472513,
+          "clean_unrelated_similarity": 0.006737722345860675
+        }
+      },
+      "promising": false,
+      "hard_gains": {
+        "separated_two_components": 0.0,
+        "crossing_identity": -1.0,
+        "noise_margin": -0.048454851179637104,
+        "missing_gap_similarity": -0.043318964540958405,
+        "missing_recovery_similarity": -0.022434525191783905
+      },
+      "training_seconds": 3.4544782999437302,
+      "elapsed_seconds": 7.93645039992407
+    }
+  },
+  "elapsed_seconds": 195.06572830001824
+}
