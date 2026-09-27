@@ -1,5 +1,10 @@
 # M1A.5 restart point after the bounded sensory/state batch
 
+**2026-09-27 superseding decision:** user approved production promotion and the
+hybrid probabilistic contract. Use `fly_connectome.vision` and the
+[current M1A.5/M1B roadmap](2026-09-27-m1a5-to-m1b-roadmap.md). Do not seek approval
+again for that promotion. Prior sensor/point failures remain historical evidence.
+
 ## Latest: bounded probabilistic candidate ready for production review
 
 See [the production-review report](2026-09-26-m1a5-production-review.md).

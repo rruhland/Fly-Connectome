@@ -19,6 +19,7 @@ where = ["src"]
 [tool.setuptools.package-data]
 "fly_connectome" = ["native_cpu.cpp"]
 "fly_connectome.ui" = ["*.html", "*.css", "*.js"]
+"fly_connectome.vision" = ["data/default.pt"]
 
 [tool.pytest.ini_options]
 pythonpath = ["src"]

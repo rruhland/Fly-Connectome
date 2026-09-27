@@ -1,5 +1,12 @@
 # M1A.5 probabilistic visual state: production review
 
+**Decision update, 2026-09-27:** the user accepted the revised hybrid/probabilistic
+contract and authorized production promotion. The implementation is now
+`fly_connectome.vision`, with a packaged default checkpoint and `vision-run` CLI.
+The [current roadmap](2026-09-27-m1a5-to-m1b-roadmap.md) governs further work.
+The report below is the preserved pre-promotion review and its limitations; its
+statements that production was unchanged describe that historical review point.
+
 The bounded **hybrid, probabilistic candidate is implemented and passes its
 registered experimental gates**. It is ready for concrete production review.
 It is not deployed. The older event-only and single-point requirements did not

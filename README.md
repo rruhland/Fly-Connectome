@@ -1,15 +1,17 @@
 # Fly-Connectome
 
-Milestone 1: event-camera Pong through a measured MaleCNS subgraph, adaptive spiking
-neurons, local predictive plasticity and reward-modulated STDP. No backpropagation,
-learned encoder/readout, or added internal connections.
+Milestone 1: efficient online visual learning and transferable reward-based control.
+The production M1A.5 baseline uses grayscale frames plus events, locally learned
+context and probabilistic motion forecasts. Measured MaleCNS circuitry remains a
+candidate central-learning prior for M1B. No backpropagation is used by this baseline.
 
 Repository: https://github.com/rruhland/Fly-Connectome
 
-**Status:** Implementation and verification in progress. Passing software tests are
-not evidence that the connectome has learned Pong. See the
-[approved architecture](docs/plans/2026-09-16-milestone-1-design.md) and
-[continuation ledger](docs/plans/2026-09-17-milestone-1-implementation.md).
+**Status:** The hybrid probabilistic visual candidate was approved for production
+on 2026-09-27. See the [current roadmap](docs/plans/2026-09-27-m1a5-to-m1b-roadmap.md)
+and [evidence/limits](docs/plans/2026-09-26-m1a5-production-review.md).
+The original connectome/SNN-only design is historical, not the current contract.
+Cross-game continual transfer and reward-learned control remain unproven.
 
 ## Setup
 
@@ -25,7 +27,43 @@ py -3.11 -m venv .venv
 CUDA tests skip explicitly if CUDA is unavailable. This development checkout currently
 uses CPU-only PyTorch; CUDA correctness and performance are not yet established.
 
-## Reproduce the measured graph
+## Production visual state
+
+```python
+from fly_connectome.vision import load_default
+
+vision = load_default()  # approved weights included in the installed package
+state = vision.step(events, frame, learn=True)
+vision.save("visual-learning.pt")
+```
+
+Inputs are dense CPU tensors: events `[2,64,64]` (OFF then ON), grayscale frame
+`[64,64]`, values in `[0,1]`. Inputs are evaluated in float32. Pass `None` for a
+known missing camera frame. Use a fixed, declared sample cadence. Output separates
+observations, carried hypotheses and mixture forecasts with horizons 1/4/8 camera
+samples. Mean forecasts may lie between plausible futures. Intervals are marginal,
+not joint confidence guarantees. `learn=True` updates context/dynamics/calibration
+from real endpoints; the pretrained sensory credibility filter stays fixed.
+
+`ProbabilisticVisualState.load(path)` restores learned parameters into a new scene;
+it does not restore active identities or pending deadlines. `reset_state()` starts
+a new scene while preserving learned experience. This CPU implementation is tested
+on compact synthetic patterns; general natural-camera understanding is not claimed.
+
+For recorded streams, save `events[T,2,H,W]`, `frames[T,H,W]`, and optionally a
+boolean `available[T]` in a tensor dictionary, then run:
+
+```powershell
+.venv/Scripts/python -m fly_connectome vision-run camera-stream.pt --learn --output visual-states.pt --save visual-learning.pt
+```
+
+This command records every returned state for offline inspection. For live training,
+call `step` directly and consume/discard each output instead of accumulating logs.
+The new vision entrypoint defaults to the approved checkpoint. The graph commands
+below preserve the earlier research path; they do not yet connect this state to a
+new M1B controller.
+
+## Legacy measured-graph experiments
 
 The pinned inputs are official [MaleCNS v1.0 downloads](https://male-cns.janelia.org/download/).
 The source manifest includes URLs, byte counts and SHA-256 checksums. Downloads total

@@ -10,6 +10,13 @@ import time
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     commands = parser.add_subparsers(dest='command', required=True)
+    vision = commands.add_parser('vision-run', help='production hybrid M1A.5 vision on a tensor camera stream')
+    vision.add_argument('input', help='tensor file with events[T,2,H,W], frames[T,H,W], optional available[T]')
+    vision.add_argument('--output', required=True, help='output visual states tensor file')
+    vision.add_argument('--checkpoint', help='learned vision checkpoint; omission uses the approved bundled baseline')
+    vision.add_argument('--save', help='save learned parameters for a fresh scene')
+    vision.add_argument('--learn', action='store_true', help='enable causal context/dynamics updates')
+    vision.add_argument('--threads', type=int, default=1)
     native = commands.add_parser('build-native', help='build optional strict-float B=1 CPU kernels with g++')
     native.add_argument('--output', required=True)
     native.add_argument('--compiler', default='g++')
@@ -51,6 +58,15 @@ def main():
     diagnose.add_argument('--output', required=True)
     diagnose.add_argument('--device', default='cpu')
     args = parser.parse_args()
+    if args.command == 'vision-run':
+        import torch
+        from .vision.runner import run_stream
+        if args.threads < 1:
+            parser.error('threads must be positive')
+        torch.set_num_threads(args.threads)
+        print(json.dumps(run_stream(args.input, args.output, checkpoint=args.checkpoint,
+                                    save=args.save, learn=args.learn)))
+        return
     if args.command == 'build-native':
         from .native_cpu import build_library
         build_library(args.output, args.compiler)

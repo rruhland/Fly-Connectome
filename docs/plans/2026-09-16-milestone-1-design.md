@@ -1,5 +1,12 @@
 # Fly-Connectome Milestone 1 Design
 
+**Historical starting hypothesis:** On 2026-09-27 the user explicitly relaxed this
+architecture and approved the hybrid probabilistic visual system for production.
+The governing priorities are efficient online learning, continual transfer and low
+compute. See [the current roadmap](2026-09-27-m1a5-to-m1b-roadmap.md). Preserve this
+document as rationale/history; its SNN-only and early visual prediction constraints
+are not requirements for new milestone work.
+
 **Status:** Approved through iterative design review on 2026-09-16  
 **Target repository:** `rruhland/Fly-Connectome`  
 **Dataset:** MaleCNS v1.0

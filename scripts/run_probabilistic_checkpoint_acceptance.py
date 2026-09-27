@@ -31,9 +31,10 @@ def parameter_fingerprint(model):
 
 
 @torch.no_grad()
-def main():
+def main(*, model=None, out=Path('docs/experiments/2026-09-26-probabilistic-checkpoint-results.json')):
     torch.set_num_threads(1)
-    model = ProbabilisticVisualState.load('checkpoints/m1a5/probabilistic-visual-candidate.pt')
+    if model is None:
+        model = ProbabilisticVisualState.load('checkpoints/m1a5/probabilistic-visual-candidate.pt')
     before = parameter_fingerprint(model)
     SHAPES.update(L=((0, 0), (1, 0), (2, 0), (2, 1), (2, 2)),
                   T=((-1, -1), (-1, 0), (-1, 1), (0, 0), (1, 0)),
@@ -90,8 +91,9 @@ def main():
         reference_max_difference=difference, replay_gate=difference < 1e-5,
         frozen_parameters=before == parameter_fingerprint(model), parameter_sha256=before,
         frames=frames, seconds=elapsed, fps=frames/elapsed,
-        production_promoted=False)
-    Path('docs/experiments/2026-09-26-probabilistic-checkpoint-results.json').write_text(json.dumps(result, indent=2)+'\n')
+        runtime_module=type(model).__module__,
+        production_promoted=type(model).__module__.startswith('fly_connectome.vision'))
+    out.write_text(json.dumps(result, indent=2)+'\n')
     print(json.dumps(result, indent=2))
 
 
