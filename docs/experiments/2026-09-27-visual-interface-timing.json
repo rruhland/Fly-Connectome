@@ -1,0 +1,47 @@
+{
+  "threads": 1,
+  "sensor": "64x64 every-sample frames plus events",
+  "online": true,
+  "arms": {
+    "2": {
+      "samples": 200,
+      "total_ms": {
+        "p50": 75.43939998140559,
+        "p95": 80.26072995271532
+      },
+      "encoder_ms": {
+        "p50": 5.89615001808852,
+        "p95": 6.625990016618743
+      },
+      "active_features": {
+        "p50": 94.0,
+        "p95": 99.0
+      },
+      "detected_entities": {
+        "p50": 2.0,
+        "p95": 2.0
+      },
+      "dimension": 4389
+    },
+    "8": {
+      "samples": 200,
+      "total_ms": {
+        "p50": 294.6186500485055,
+        "p95": 354.9816400918644
+      },
+      "encoder_ms": {
+        "p50": 24.781249987427145,
+        "p95": 28.695590066490684
+      },
+      "active_features": {
+        "p50": 167.0,
+        "p95": 174.04999999999998
+      },
+      "detected_entities": {
+        "p50": 8.0,
+        "p95": 8.0
+      },
+      "dimension": 4389
+    }
+  }
+}

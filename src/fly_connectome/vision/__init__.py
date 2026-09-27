@@ -3,8 +3,9 @@
 from importlib.resources import as_file, files
 
 from .state import ProbabilisticVisualState
+from .interface import VisualStateEncoder
 
-__all__ = ['ProbabilisticVisualState', 'load_default']
+__all__ = ['ProbabilisticVisualState', 'VisualStateEncoder', 'load_default']
 
 
 def load_default():

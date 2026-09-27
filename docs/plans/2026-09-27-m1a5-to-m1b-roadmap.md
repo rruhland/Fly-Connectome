@@ -6,6 +6,14 @@ fast online learning, transferable experience with continued plasticity, and low
 compute. Biology/connectome structure is a useful hypothesis, not a veto on a
 working engineered component. No backpropagation is introduced by this promotion.
 
+**Compute policy update, 2026-09-27:** the user clarified that compute/sparsity
+targets are measurements and optimization priorities, not hard vetoes on useful
+learning. Do not discard a stronger learner solely for exceeding a latency or
+memory target. Preserve its result, report its cost, and investigate equivalent
+lower-cost execution later. Finite experiment runs prevent aimless investigation;
+they are not architectural compute ceilings. This clarification supersedes any
+hard-budget wording below.
+
 ## Decision
 
 **Keep the promoted visual state and its existing predictive learner. Start the
@@ -42,6 +50,13 @@ acceptance requirements. Sparse central encoding does not make the dense image
 front end or exhaustive memory retrieval event-driven.
 
 ## Remaining M1A.5: two bounded deliverables
+
+**2026-09-27 execution status:** generic interface implemented; continual audit
+finished with useful shared-domain benefit but one failed changed-dynamics retention
+seed and censored shared-domain acquisition speed. See
+[handoff findings](../experiments/2026-09-27-m1a5-handoff-findings.md).
+The continual upgrade is not yet accepted; preserve the promoted baseline while
+the deeper predictive-memory question is reassessed.
 
 ### 1. Continual transfer/retention audit before adding architecture
 
@@ -102,7 +117,8 @@ handling, and missing-evidence semantics. Measure encoder cost and active featur
 counts. Initial end-to-end target: 50 decisions/s on the reference CPU at 64x64,
 including **online updates**; report p50/p95 latency, acquisition/I/O separately,
 and results for two versus eight visible entities. Treat 20 ms p95 as a target,
-not an achieved guarantee. Give the controller roughly 5 ms of that budget.
+not an achieved guarantee. Roughly 5 ms for the controller is an initial engineering
+allocation, not a reason to reject better learning.
 
 These two deliverables close the immediate M1A.5 handoff. They need not establish
 general vision or solve all new dynamics before useful M1B experiments begin.
@@ -161,7 +177,8 @@ buy no measurable advantage, graded dynamics are an allowed alternative.
 
 Adopt the connectome arm only if it produces a material reproducible gain: proposed
 screen is >=20% fewer observations to matched competence, or clear retention/delayed-
-credit improvement, while keeping the combined real-time budget. Compare both equal
+credit improvement. Report the combined runtime rather than rejecting a promising
+arm solely for exceeding the initial compute target. Compare both equal
 observation budgets and equal wall-clock budgets, with matched readout capacity and
 five seeds. If it fails, keep it optional and keep the successful direct controller.
 An anatomical prior is a hypothesis, not a guarantee of useful dynamics.

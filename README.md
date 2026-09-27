@@ -50,6 +50,22 @@ it does not restore active identities or pending deadlines. `reset_state()` star
 a new scene while preserving learned experience. This CPU implementation is tested
 on compact synthetic patterns; general natural-camera understanding is not claimed.
 
+For central learners, preserve the structured beliefs and optionally add sparse
+transport features (IDs route history but never become numeric features):
+
+```python
+from fly_connectome.vision import VisualStateEncoder
+
+encoder = VisualStateEncoder(64, 64, sample_period_seconds=0.02)
+central_input = encoder.encode(state, frame)
+# Reset both vision and encoder at actual scene boundaries.
+```
+
+The adapter retains every forecast mode and exposes measured motion, evidence age,
+coarse image context and sparse indices/values. Its pooled code is not a substitute
+for the full predictive distribution or a proven control representation. See the
+[interface contract](docs/plans/2026-09-27-central-visual-interface.md).
+
 For recorded streams, save `events[T,2,H,W]`, `frames[T,H,W]`, and optionally a
 boolean `available[T]` in a tensor dictionary, then run:
 
