@@ -6,7 +6,7 @@ from pathlib import Path
 
 import torch
 
-from fly_connectome.vision import ProbabilisticVisualState, load_default
+from fly_connectome.vision import ProbabilisticVisualState, load_legacy_default as load_default
 from fly_connectome.vision.observation import LocalObservationModel
 from appearance_relation import appearance_case
 from run_associative_patch_state import rotate_case

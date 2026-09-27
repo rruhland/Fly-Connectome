@@ -1,5 +1,6 @@
 """Local episodic spatial beliefs and observable marginal calibration."""
 import math
+import copy
 from collections import deque
 import torch
 
@@ -60,6 +61,47 @@ class SpatialBelief:
     def log_prob(self, history, target):
         centers, weights = self.distribution(history)
         return mixture_log_prob(centers, weights, target)
+
+
+class AppendSpatialBelief(SpatialBelief):
+    """Keep each observed endpoint; retrieval remains the nearest-32 mixture."""
+
+    @torch.no_grad()
+    def observe(self, history, displacement, *, credit=None):
+        if credit is not None:
+            self.calibration.observe(mixture_pit(*credit, displacement))
+        key, basis, scale = self.encode(history)
+        self.seen += 1
+        self.keys = torch.cat((self.keys, key[None]))
+        self.values = torch.cat((self.values, (basis @ displacement/scale)[None]))
+
+
+class ContextBelief(SpatialBelief):
+    """Eight actual displacements, with the approved four-step fallback."""
+    history_steps = 8
+
+    def __init__(self, source):
+        self.horizon = source.horizon
+        self.short = AppendSpatialBelief(horizon=source.horizon)
+        self.short.__dict__.update(copy.deepcopy(source.__dict__))
+        self.long = AppendSpatialBelief(horizon=source.horizon)
+        self.long.keys = torch.empty(0, 16)
+        self.calibration = copy.deepcopy(source.calibration)
+
+    def uses_context(self, history):
+        return len(history) == 8 and len(self.long.keys) >= 32
+
+    def distribution(self, history):
+        return (self.long.distribution(history) if self.uses_context(history)
+                else self.short.distribution(history[-4:]))
+
+    @torch.no_grad()
+    def observe(self, history, displacement, *, credit=None):
+        if credit is not None:
+            self.calibration.observe(mixture_pit(*credit, displacement))
+        self.short.observe(history[-4:], displacement)
+        if len(history) == 8:
+            self.long.observe(history, displacement)
 
 
 def mixture_log_prob(centers, weights, target):

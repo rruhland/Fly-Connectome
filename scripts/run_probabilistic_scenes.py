@@ -13,9 +13,10 @@ from spatial_belief import mixture_log_prob
 
 
 @torch.no_grad()
-def main():
+def main(*, model=None, out=Path('docs/experiments/2026-09-26-probabilistic-scenes-results.json')):
     torch.set_num_threads(1)
-    model = ProbabilisticVisualState.load('checkpoints/m1a5/probabilistic-visual-candidate.pt')
+    if model is None:
+        model = ProbabilisticVisualState.load('checkpoints/m1a5/probabilistic-visual-candidate.pt')
     results = {}
     for condition in ('image_noise', 'outage'):
         retained = extras = hits = targets = missing_forecasts = 0
@@ -69,7 +70,7 @@ def main():
             cached_marginal_coverage=sum(interval_hits)/len(interval_hits) if interval_hits else None,
             state_gate=retained >= 35 and extras == 0 and (not targets or hits/targets >= .95))
     # Resize only the sensor workspace, keeping the same learned local parameters.
-    compact = ProbabilisticVisualState(height=32, width=64, memory=model.state.memory, dynamics=model.dynamics)
+    compact = type(model)(height=32, width=64, memory=model.state.memory, dynamics=model.dynamics)
     compact.observer.weights.copy_(model.observer.weights)
     compact.observer.bias.copy_(model.observer.bias)
     pairs = [[episode(compact, continued=c, start=s, speed=v, learn=False) for c in (True, False)]
@@ -87,7 +88,7 @@ def main():
         vanished_confident_support=sum(b['counterfactual_support'] >= .5 for a, b in pairs),
         max_vanished_support=max(b['counterfactual_support'] for a, b in pairs),
         calibration_samples=len(compact.calibration[4].outcomes))
-    Path('docs/experiments/2026-09-26-probabilistic-scenes-results.json').write_text(json.dumps(results, indent=2)+'\n')
+    out.write_text(json.dumps(results, indent=2)+'\n')
     print(json.dumps(results, indent=2))
 
 

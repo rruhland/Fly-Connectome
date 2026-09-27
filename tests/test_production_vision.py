@@ -6,7 +6,7 @@ from pathlib import Path
 import pytest
 import torch
 
-from fly_connectome.vision import ProbabilisticVisualState, load_default
+from fly_connectome.vision import ProbabilisticVisualState, load_default, load_legacy_default
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'scripts'))
 from probabilistic_visual_state import ProbabilisticVisualState as Reference
@@ -35,7 +35,7 @@ def equal(a, b):
 @pytest.mark.parametrize('learn', [False, True])
 def test_production_matches_approved_runtime_and_checkpoint(tmp_path, learn):
     torch.set_num_threads(1)
-    model = load_default()
+    model = load_legacy_default()
     checkpoint = tmp_path/'vision.pt'
     model.save(checkpoint)
     reference = Reference.load(checkpoint)

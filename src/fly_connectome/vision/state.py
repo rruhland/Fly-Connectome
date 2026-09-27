@@ -5,7 +5,7 @@ import torch
 from .observation import LocalObservationModel, local_motion_map
 from .association import StatisticalObservationTracker
 from .memory import FrameObservationState, LocalMetricAssociation
-from .dynamics import SpatialBelief, mixture_quantile
+from .dynamics import SpatialBelief, ContextBelief, mixture_quantile
 
 class EndpointCalibration:
     """Observable reidentification, never a claim about hidden existence."""
@@ -59,6 +59,11 @@ class StreamingVisualState:
 
     def frame_contrast(self, visible):
         return visible-visible.median()
+
+    def observed_history(self, identity):
+        positions = list(self.histories[identity])
+        missing = [i for i, value in enumerate(positions) if value is None]
+        return positions[missing[-1]+1:] if missing else positions
 
     @torch.no_grad()
     def step(self, events, visible_frame, *, learn=False):
@@ -120,11 +125,13 @@ class StreamingVisualState:
                                if key[1] > tracker.frame}
         for entity in entities:
             identity = entity['id']
-            history = self.histories.setdefault(identity, deque(maxlen=5))
+            length = 1+max((getattr(m, 'history_steps', 4) for m in self.dynamics.values()), default=4)
+            history = self.histories.setdefault(identity, deque(maxlen=length))
             history.append(observed.get(identity))
-            if len(history) < 5 or any(p is None for p in history):
+            valid = self.observed_history(identity)
+            if len(valid) < 5:
                 continue
-            positions = torch.stack(list(history))
+            positions = torch.stack(valid)
             differences = positions[1:]-positions[:-1]
             for horizon, model in self.dynamics.items():
                 credit = None
@@ -176,7 +183,7 @@ class ProbabilisticVisualState(StreamingVisualState):
         for forecast in result['forecasts']:
             if forecast['evidence_age']:
                 continue
-            history = torch.stack(list(self.histories[forecast['id']]))
+            history = torch.stack(self.observed_history(forecast['id']))
             model = self.dynamics[forecast['horizon_samples']]
             centers, weights = model.distribution(history[1:]-history[:-1])
             low, high = model.calibration.bounds()
@@ -187,36 +194,63 @@ class ProbabilisticVisualState(StreamingVisualState):
                 interval_calibration_samples=len(model.calibration.ranks))
         return result
 
+    def upgrade_temporal_context(self):
+        """Upgrade learned priors in place and start a fresh scene."""
+        if any(type(m) is not SpatialBelief for m in self.dynamics.values()):
+            raise ValueError('upgrade requires version-1 spatial beliefs')
+        self.dynamics = {h: ContextBelief(m) for h, m in self.dynamics.items()}
+        self.reset_state()
+        return self
+
     def save(self, path):
         if type(self.state.memory) is not LocalMetricAssociation or any(
-                type(m) is not SpatialBelief for m in self.dynamics.values()):
+                type(m) not in (SpatialBelief, ContextBelief) for m in self.dynamics.values()):
             raise ValueError('unsupported probabilistic candidate component')
-        torch.save(dict(version=1, architecture='ProbabilisticVisualState',
+        contextual = any(type(m) is ContextBelief for m in self.dynamics.values())
+        if contextual and not all(type(m) is ContextBelief for m in self.dynamics.values()):
+            raise ValueError('mixed dynamics checkpoint is unsupported')
+        def bank(m):
+            return dict(capacity=m.capacity, keys=m.keys, values=m.values, seen=m.seen,
+                        generator=m.generator.get_state(), ranks=list(m.calibration.ranks))
+        dynamics = {h: (dict(short=bank(m.short), long=bank(m.long),
+                            ranks=list(m.calibration.ranks)) if contextual else bank(m))
+                    for h, m in self.dynamics.items()}
+        torch.save(dict(version=2 if contextual else 1, architecture='ProbabilisticVisualState',
             sensor='grayscale-every-sample-plus-events', height=self.observer.height,
             width=self.observer.width, observer=dict(weights=self.observer.weights, bias=self.observer.bias),
             memory={name: getattr(self.state.memory, name) for name in ('keys', 'values', 'metric')},
-            dynamics={h: dict(capacity=m.capacity, keys=m.keys, values=m.values, seen=m.seen,
-                generator=m.generator.get_state(), ranks=list(m.calibration.ranks)) for h, m in self.dynamics.items()},
+            dynamics=dynamics,
             calibration={h: dict(outcomes=list(c.outcomes), residuals=list(c.residuals))
                          for h, c in self.calibration.items()}), path)
 
     @classmethod
     def load(cls, path):
         data = torch.load(path, weights_only=True)
-        if data['version'] != 1 or data['architecture'] != 'ProbabilisticVisualState':
+        if data['version'] not in (1, 2) or data['architecture'] != 'ProbabilisticVisualState':
             raise ValueError('unsupported probabilistic candidate checkpoint')
-        dynamics = {h: SpatialBelief(capacity=d['capacity'], horizon=h) for h, d in data['dynamics'].items()}
+        def restore(bank, values):
+            for name in ('capacity', 'keys', 'values', 'seen'):
+                setattr(bank, name, values[name])
+            bank.generator.set_state(values['generator'])
+            bank.calibration.ranks.clear()
+            bank.calibration.ranks.extend(values['ranks'])
+        dynamics = {}
+        for h, values in data['dynamics'].items():
+            bank = SpatialBelief(horizon=h)
+            if data['version'] == 2:
+                bank = ContextBelief(bank)
+                restore(bank.short, values['short'])
+                restore(bank.long, values['long'])
+                bank.calibration.ranks.extend(values['ranks'])
+            else:
+                restore(bank, values)
+            dynamics[h] = bank
         model = cls(height=data['height'], width=data['width'], dynamics=dynamics,
                     memory=LocalMetricAssociation(dimensions=data['memory']['keys'].shape[1]))
         for name, value in data['observer'].items():
             setattr(model.observer, name, value)
         for name, value in data['memory'].items():
             setattr(model.state.memory, name, value)
-        for h, values in data['dynamics'].items():
-            for name in ('keys', 'values', 'seen'):
-                setattr(dynamics[h], name, values[name])
-            dynamics[h].generator.set_state(values['generator'])
-            dynamics[h].calibration.ranks.extend(values['ranks'])
         for h, values in data['calibration'].items():
             model.calibration[h].outcomes.extend(values['outcomes'])
             model.calibration[h].residuals.extend(values['residuals'])

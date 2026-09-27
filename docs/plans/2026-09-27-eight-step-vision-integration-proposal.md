@@ -1,6 +1,10 @@
 # Proposed production integration: eight-step motion memory
 
-Status: proposal only. The experiment is opt-in and production has not changed.
+Status: user approved integration and promotion on 2026-09-27, including the
+two-seed retention exception. Integration is implemented as an explicit upgrade,
+but default promotion is blocked by an unexpected online context-memory regression.
+See the [integration findings](../experiments/2026-09-27-context-integration-findings.md) and
+[execution ledger](../experiments/2026-09-27-context-integration-protocol.md).
 The user requires approval before production architecture promotion. The completed
 [five-seed findings](../experiments/2026-09-27-long-context-findings.md) support this
 as the next integration candidate. Implementation/promotion is contingent on review
@@ -28,7 +32,7 @@ bank learns only endpoints for which eight-step issue-time history existed.
 No backpropagation, game identities, collision labels, controller semantics, or
 neural replacement of the working observation system.
 
-## Integration work, subject to approval
+## Approved integration work
 
 1. Move the tested conditional predictor into the installed vision package without
    research-script imports. Retain the legacy predictor for old checkpoints.

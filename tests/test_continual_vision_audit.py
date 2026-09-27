@@ -5,7 +5,7 @@ import torch
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'scripts'))
 from continual_vision_audit import CausalDynamicsStream
-from fly_connectome.vision import load_default
+from fly_connectome.vision import load_legacy_default as load_default
 
 
 def test_cached_observed_credit_matches_production_learning():

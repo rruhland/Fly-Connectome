@@ -8,7 +8,7 @@ from pathlib import Path
 
 import torch
 
-from fly_connectome.vision import load_default
+from fly_connectome.vision import load_legacy_default as load_default
 from fly_connectome.vision.dynamics import SpatialBelief, mixture_pit
 from continual_vision_audit import observations, evaluate, segment
 

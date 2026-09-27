@@ -20,9 +20,13 @@ def parameter_fingerprint(model):
     tensors = [model.observer.weights, model.observer.bias,
                model.state.memory.keys, model.state.memory.values, model.state.memory.metric]
     for h, m in model.dynamics.items():
-        tensors.extend((m.keys, m.values, m.generator.get_state()))
+        banks = (m.short, m.long) if hasattr(m, 'long') else (m,)
+        for bank in banks:
+            tensors.extend((bank.keys, bank.values, bank.generator.get_state()))
+            tensors.extend(bank.calibration.ranks)
+            digest.update(str((bank.capacity, bank.seen)).encode())
         tensors.extend(m.calibration.ranks)
-        digest.update(str((h, m.capacity, m.seen, list(model.calibration[h].outcomes),
+        digest.update(str((h, list(model.calibration[h].outcomes),
                            list(model.calibration[h].residuals))).encode())
     for tensor in tensors:
         digest.update(str((tensor.dtype, tuple(tensor.shape))).encode())

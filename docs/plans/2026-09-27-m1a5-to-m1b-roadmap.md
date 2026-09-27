@@ -16,6 +16,15 @@ hard-budget wording below.
 
 ## Decision
 
+**Integration update:** the approved eight-step predictor is implemented, with
+version-2 checkpoints, but remains opt-in. Its active camera transfer gates pass.
+Online updates to the separate context-correction memory reduce outage support
+from 180/180 to 29/180; restoring only the old context memory restores 180/180
+with identical trained forecast scores. See the
+[findings](../experiments/2026-09-27-context-integration-findings.md).
+Preserve the successful predictor and repair this context-learning interaction
+before default promotion/M1B. Do not restart the latent architecture search.
+
 **Keep the promoted visual state and its existing predictive learner. Start the
 smallest M1B learning loop after a short continual-learning/interface gate.**
 Do not neuralize vision, add a second predictive head, or start another large

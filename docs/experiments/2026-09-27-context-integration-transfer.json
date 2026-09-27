@@ -1,0 +1,136 @@
+{
+  "scenes": 216,
+  "samples": 6264,
+  "missing": 0,
+  "means": {
+    "1": {
+      "nll": 2.1946959495544434,
+      "mean_point_error": 0.6200775504112244,
+      "calibrated_marginal_90_coverage": 0.8862179517745972
+    },
+    "4": {
+      "nll": 2.4845802783966064,
+      "mean_point_error": 0.9292502999305725,
+      "calibrated_marginal_90_coverage": 0.9354166388511658
+    },
+    "8": {
+      "nll": 3.0094008445739746,
+      "mean_point_error": 2.1551408767700195,
+      "calibrated_marginal_90_coverage": 0.8985339403152466
+    }
+  },
+  "families": {
+    "constant": {
+      "1": {
+        "nll": 2.212367534637451,
+        "mean_point_error": 0.6412362456321716,
+        "calibrated_marginal_90_coverage": 0.8589743375778198
+      },
+      "4": {
+        "nll": 2.5330960750579834,
+        "mean_point_error": 1.1141157150268555,
+        "calibrated_marginal_90_coverage": 0.949999988079071
+      },
+      "8": {
+        "nll": 3.12416410446167,
+        "mean_point_error": 3.1273977756500244,
+        "calibrated_marginal_90_coverage": 0.8842592835426331
+      }
+    },
+    "period2": {
+      "1": {
+        "nll": 2.2056963443756104,
+        "mean_point_error": 0.6044204831123352,
+        "calibrated_marginal_90_coverage": 0.8846153616905212
+      },
+      "4": {
+        "nll": 2.43172025680542,
+        "mean_point_error": 0.8179927468299866,
+        "calibrated_marginal_90_coverage": 0.949999988079071
+      },
+      "8": {
+        "nll": 3.1014912128448486,
+        "mean_point_error": 1.632581114768982,
+        "calibrated_marginal_90_coverage": 0.8888888955116272
+      }
+    },
+    "period3": {
+      "1": {
+        "nll": 2.2404751777648926,
+        "mean_point_error": 0.6529414653778076,
+        "calibrated_marginal_90_coverage": 0.8589743375778198
+      },
+      "4": {
+        "nll": 2.500983715057373,
+        "mean_point_error": 0.8665873408317566,
+        "calibrated_marginal_90_coverage": 0.9333333373069763
+      },
+      "8": {
+        "nll": 3.21797776222229,
+        "mean_point_error": 2.0038082599639893,
+        "calibrated_marginal_90_coverage": 0.8819444179534912
+      }
+    },
+    "period4": {
+      "1": {
+        "nll": 2.2080235481262207,
+        "mean_point_error": 0.6470277309417725,
+        "calibrated_marginal_90_coverage": 0.8814102411270142
+      },
+      "4": {
+        "nll": 2.5442776679992676,
+        "mean_point_error": 0.9108513593673706,
+        "calibrated_marginal_90_coverage": 0.9416666626930237
+      },
+      "8": {
+        "nll": 3.081746816635132,
+        "mean_point_error": 1.4563928842544556,
+        "calibrated_marginal_90_coverage": 0.9097222089767456
+      }
+    },
+    "arc_left": {
+      "1": {
+        "nll": 2.1532278060913086,
+        "mean_point_error": 0.5804494023323059,
+        "calibrated_marginal_90_coverage": 0.9358974099159241
+      },
+      "4": {
+        "nll": 2.499140501022339,
+        "mean_point_error": 0.9448913335800171,
+        "calibrated_marginal_90_coverage": 0.9083333611488342
+      },
+      "8": {
+        "nll": 2.7773115634918213,
+        "mean_point_error": 2.378735303878784,
+        "calibrated_marginal_90_coverage": 0.9166666865348816
+      }
+    },
+    "arc_right": {
+      "1": {
+        "nll": 2.148385524749756,
+        "mean_point_error": 0.5943899750709534,
+        "calibrated_marginal_90_coverage": 0.8974359035491943
+      },
+      "4": {
+        "nll": 2.3982648849487305,
+        "mean_point_error": 0.9210637211799622,
+        "calibrated_marginal_90_coverage": 0.9291666746139526
+      },
+      "8": {
+        "nll": 2.753713607788086,
+        "mean_point_error": 2.3319294452667236,
+        "calibrated_marginal_90_coverage": 0.9097222089767456
+      }
+    }
+  },
+  "reference_max_difference": 0.9810688495635986,
+  "replay_gate": false,
+  "frozen_parameters": true,
+  "parameter_sha256": "2f8cceda68ac4fbd952b6185465e7b3be34ccf01f069067059c99a9e3331afe8",
+  "frames": 4320,
+  "seconds": 158.09454880259,
+  "fps": 27.325420343204314,
+  "runtime_module": "fly_connectome.vision.state",
+  "production_promoted": false,
+  "stage": "active integration candidate; legacy replay equality is not a gate"
+}

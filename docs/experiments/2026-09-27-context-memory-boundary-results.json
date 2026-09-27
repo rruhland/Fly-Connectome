@@ -1,0 +1,13 @@
+{
+  "intervention": "restore only original context memory; keep trained dynamics",
+  "context": {
+    "spatial": {
+      "hits": 64.0,
+      "total": 64
+    },
+    "appearance": {
+      "hits": 64.0,
+      "total": 64
+    }
+  }
+}

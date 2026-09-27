@@ -1,0 +1,38 @@
+{
+  "image_noise": {
+    "identities": 36,
+    "retained": 36,
+    "final_extras": 0,
+    "outage_targets": 0,
+    "outage_support_hits": 0,
+    "missing_cached_forecasts": 0,
+    "cached_forecasts": 0,
+    "cached_mean_nll": null,
+    "cached_marginal_coverage": null,
+    "state_gate": true
+  },
+  "outage": {
+    "identities": 36,
+    "retained": 36,
+    "final_extras": 0,
+    "outage_targets": 180,
+    "outage_support_hits": 180,
+    "missing_cached_forecasts": 0,
+    "cached_forecasts": 900,
+    "cached_mean_nll": 1.9248708454767862,
+    "cached_marginal_coverage": 1.0,
+    "state_gate": true
+  },
+  "ambiguous_prefix": {
+    "pairs": 8,
+    "max_probability_difference": 0.0,
+    "max_mean_difference": 0.0,
+    "max_mixture_difference": 0.0,
+    "brier": 0.25,
+    "continued_reidentified": 8,
+    "vanished_reidentified": 0,
+    "vanished_confident_support": 0,
+    "max_vanished_support": 0.2861085832118988,
+    "calibration_samples": 0
+  }
+}
