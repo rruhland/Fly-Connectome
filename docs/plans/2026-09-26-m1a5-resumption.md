@@ -2,6 +2,24 @@
 
 ## Newer checkpoint: generic state and direct dynamics
 
+**Superseding streaming checkpoint:** see
+[streaming candidate findings](../experiments/2026-09-26-streaming-candidate-findings.md).
+The 2x2, competence and entity-local comparisons have now finished. Retain the
+statistical observation state; all point-forecast alternatives still fail at
+least one acceptance gate. Stop that chain. The next planned investigation is
+a learned **distribution of future spatial state**, with proper scoring and
+calibrated controls; do not silently replace the failed point gate with a pass.
+M1A.5 is not complete, and production remains unchanged.
+Joint context-dependent covariance now retains both relations at 16/16 in all
+rotations, and a causal streaming/checkpoint interface exists. However, the fresh
+transfer gate rejects the stored-displacement forecaster even after broader
+online experience. Do not call it complete. The next active run is
+`scripts/run_generative_state_factorial.py`: a registered 2x2 comparison of local
+linear temporal maps and statistical observation uncertainty. Preserve the
+successful contextual memory; do not tune the rejected prototype forecaster.
+Results, checkpoints and failed/provisional variants are retained. Production is
+unchanged; continue autonomously until a real acceptance candidate is ready.
+
 The older record below is preserved as experiment history. The current candidate
 is the opt-in `FrameObservationState` with learned `PatchAssociation`, plus
 separate horizon-specific `LocalMotionDynamics` readouts. It explicitly requires

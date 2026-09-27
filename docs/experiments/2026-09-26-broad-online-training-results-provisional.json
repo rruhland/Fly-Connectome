@@ -1,0 +1,12 @@
+{
+  "training_streams": 192,
+  "frames": 3840,
+  "seconds": 30.954248799942434,
+  "training_fps": 124.05405231501342,
+  "prototypes": {
+    "1": 128,
+    "4": 128,
+    "8": 128
+  },
+  "checkpoint": "checkpoints/m1a5/broad-experience-candidate.pt"
+}

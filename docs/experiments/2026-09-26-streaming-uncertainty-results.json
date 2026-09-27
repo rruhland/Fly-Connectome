@@ -1,0 +1,155 @@
+{
+  "target": "same identity visually reidentified at endpoint, not hidden existence",
+  "heldout_pairs": 8,
+  "brier": 0.25,
+  "observed_rate": 0.5,
+  "mean_probability": 0.5,
+  "max_prefix_probability_difference": 0.0,
+  "max_prefix_position_difference": 0.0,
+  "pairs": [
+    [
+      {
+        "predicted": 0.5,
+        "reidentified": true,
+        "position": [
+          16.0,
+          15.0
+        ]
+      },
+      {
+        "predicted": 0.5,
+        "reidentified": false,
+        "position": [
+          16.0,
+          15.0
+        ]
+      }
+    ],
+    [
+      {
+        "predicted": 0.5,
+        "reidentified": true,
+        "position": [
+          16.0,
+          26.0
+        ]
+      },
+      {
+        "predicted": 0.5,
+        "reidentified": false,
+        "position": [
+          16.0,
+          26.0
+        ]
+      }
+    ],
+    [
+      {
+        "predicted": 0.5,
+        "reidentified": true,
+        "position": [
+          16.0,
+          21.0
+        ]
+      },
+      {
+        "predicted": 0.5,
+        "reidentified": false,
+        "position": [
+          16.0,
+          21.0
+        ]
+      }
+    ],
+    [
+      {
+        "predicted": 0.5,
+        "reidentified": true,
+        "position": [
+          16.0,
+          32.0
+        ]
+      },
+      {
+        "predicted": 0.5,
+        "reidentified": false,
+        "position": [
+          16.0,
+          32.0
+        ]
+      }
+    ],
+    [
+      {
+        "predicted": 0.5,
+        "reidentified": true,
+        "position": [
+          16.0,
+          27.0
+        ]
+      },
+      {
+        "predicted": 0.5,
+        "reidentified": false,
+        "position": [
+          16.0,
+          27.0
+        ]
+      }
+    ],
+    [
+      {
+        "predicted": 0.5,
+        "reidentified": true,
+        "position": [
+          16.0,
+          38.0
+        ]
+      },
+      {
+        "predicted": 0.5,
+        "reidentified": false,
+        "position": [
+          16.0,
+          38.0
+        ]
+      }
+    ],
+    [
+      {
+        "predicted": 0.5,
+        "reidentified": true,
+        "position": [
+          16.0,
+          33.0
+        ]
+      },
+      {
+        "predicted": 0.5,
+        "reidentified": false,
+        "position": [
+          16.0,
+          33.0
+        ]
+      }
+    ],
+    [
+      {
+        "predicted": 0.5,
+        "reidentified": true,
+        "position": [
+          16.0,
+          44.0
+        ]
+      },
+      {
+        "predicted": 0.5,
+        "reidentified": false,
+        "position": [
+          16.0,
+          44.0
+        ]
+      }
+    ]
+  ]
+}

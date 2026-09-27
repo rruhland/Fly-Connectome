@@ -1,0 +1,35 @@
+{
+  "blank": {
+    "frames": 600,
+    "max_confirmed": 0,
+    "mean_confirmed": 0.0,
+    "max_slots": 0,
+    "fps": 325.19972683083085
+  },
+  "binding": {
+    "clean": {
+      "retained": 36,
+      "total": 36,
+      "mean_error": 0.0,
+      "mean_extra": 0.0,
+      "outage_hits": 0,
+      "outage_targets": 0
+    },
+    "image_noise": {
+      "retained": 36,
+      "total": 36,
+      "mean_error": 0.0,
+      "mean_extra": 0.0,
+      "outage_hits": 0,
+      "outage_targets": 0
+    },
+    "outage": {
+      "retained": 36,
+      "total": 36,
+      "mean_error": 0.0,
+      "mean_extra": 0.0,
+      "outage_hits": 180,
+      "outage_targets": 180
+    }
+  }
+}

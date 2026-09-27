@@ -1,0 +1,11 @@
+{
+  "frames": 600,
+  "seed": 151001,
+  "sigma": 0.02,
+  "false_events": 0.0005,
+  "max_confirmed": 1,
+  "mean_confirmed": 0.1,
+  "max_slots": 61,
+  "final_slots": 22,
+  "fps": 51.20699976461602
+}

@@ -1,0 +1,20 @@
+{
+  "0.0": {
+    "mean_confirmed": 0.0,
+    "max_confirmed": 0,
+    "final_slots": 0,
+    "seconds": 0.25345459999516606
+  },
+  "0.02": {
+    "mean_confirmed": 0.0,
+    "max_confirmed": 0,
+    "final_slots": 29,
+    "seconds": 2.0535631999373436
+  },
+  "0.1": {
+    "mean_confirmed": 0.0,
+    "max_confirmed": 0,
+    "final_slots": 29,
+    "seconds": 3.0982084999559447
+  }
+}

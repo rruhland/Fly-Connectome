@@ -1,0 +1,50 @@
+{
+  "source_sha": "8c4af80ff3904881bac9313b618dd9989bb51174b47606f28eca88865296005c",
+  "graph_sha": "c941a5c912dd03e2ab0868260c637c2b1d21525196d4bce93c7d5e7f618e34a8",
+  "scores": {
+    "spatial_0": {
+      "ablated": {
+        "hits": 16.0,
+        "total": 16
+      },
+      "measured": {
+        "hits": 16.0,
+        "total": 16
+      }
+    },
+    "spatial_90": {
+      "ablated": {
+        "hits": 0.0,
+        "total": 16
+      },
+      "measured": {
+        "hits": 0.0,
+        "total": 16
+      }
+    },
+    "appearance_0": {
+      "ablated": {
+        "hits": 16.0,
+        "total": 16
+      },
+      "measured": {
+        "hits": 16.0,
+        "total": 16
+      }
+    },
+    "appearance_90": {
+      "ablated": {
+        "hits": 0.0,
+        "total": 16
+      },
+      "measured": {
+        "hits": 0.0,
+        "total": 16
+      }
+    }
+  },
+  "active_samples": 4276,
+  "samples": 5504,
+  "seconds": 690.0252637999365,
+  "frozen_graph_verified": true
+}

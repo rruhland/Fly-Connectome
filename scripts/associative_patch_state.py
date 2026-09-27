@@ -7,9 +7,9 @@ from evidence_state import EvidenceTracker
 
 
 class PatchAssociation:
-    def __init__(self, *, dimensions=51):
+    def __init__(self, *, dimensions=51, outputs=2):
         self.keys = torch.empty(0, dimensions)
-        self.values = torch.empty(0, 2)
+        self.values = torch.empty(0, outputs)
         self.metric = torch.zeros(dimensions)
 
     @torch.no_grad()
@@ -26,7 +26,7 @@ class PatchAssociation:
     @torch.no_grad()
     def predict(self, key):
         if not len(self.keys):
-            return torch.zeros(2)
+            return torch.zeros(self.values.shape[1])
         distance = ((self.keys-key).square()*self.metric).sum(1)
         values, indices = distance.topk(min(4, len(distance)), largest=False)
         weights = torch.softmax(-values/.1, 0)

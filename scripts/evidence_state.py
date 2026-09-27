@@ -18,6 +18,15 @@ class EvidenceTracker(GenericMultiTracker):
     def motion_scale(self, history, age):
         return 1.5+.15*age
 
+    def accept_match(self, history, position, sensory):
+        return True
+
+    def association_radius(self, history, age):
+        return 3+age
+
+    def motion_metadata(self, history, velocity):
+        return {}
+
     def proposals(self, sensory):
         evidence = sensory[:2].sum(0)
         if self.representation == 'surface':
@@ -66,17 +75,21 @@ class EvidenceTracker(GenericMultiTracker):
                 for p, (position, mass) in enumerate(proposals):
                     if p in claimed or mass < .5*history['mass']:
                         continue
+                    if not self.accept_match(history, position, sensory):
+                        continue
                     distance = float((position-expected).norm())
-                    if distance > 3+age:
+                    if distance > self.association_radius(history, age):
                         continue
                     scale = self.motion_scale(history, age)
                     cost = (distance/scale)**2/2 + abs(math.log(
                         mass/history['mass']))
+                    velocity = (position-history['position'])/age
                     branches.append(dict(position=position.clone(),
-                        velocity=(position-history['position'])/age,
+                        velocity=velocity,
                         last_seen=self.frame, mass=mass,
                         hits=history['hits']+1,
-                        score=history['score']-cost, proposal=p))
+                        score=history['score']-cost, proposal=p,
+                        **self.motion_metadata(history, velocity)))
             if not branches:
                 slot['hypotheses'] = []
                 continue

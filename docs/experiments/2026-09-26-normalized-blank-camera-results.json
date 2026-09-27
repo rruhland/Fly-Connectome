@@ -1,0 +1,78 @@
+{
+  "bounded_rerun_frames": 12,
+  "long_run_stopped_after_cpu_seconds": 164,
+  "rows": [
+    {
+      "frame": 0,
+      "confirmed": 0,
+      "slots": 306,
+      "seconds": 0.05729110003449023
+    },
+    {
+      "frame": 1,
+      "confirmed": 0,
+      "slots": 420,
+      "seconds": 0.7024287000531331
+    },
+    {
+      "frame": 2,
+      "confirmed": 209,
+      "slots": 447,
+      "seconds": 1.8969627999467775
+    },
+    {
+      "frame": 3,
+      "confirmed": 273,
+      "slots": 470,
+      "seconds": 2.553876400110312
+    },
+    {
+      "frame": 4,
+      "confirmed": 293,
+      "slots": 477,
+      "seconds": 2.818333400064148
+    },
+    {
+      "frame": 5,
+      "confirmed": 310,
+      "slots": 504,
+      "seconds": 2.9595859999535605
+    },
+    {
+      "frame": 6,
+      "confirmed": 297,
+      "slots": 505,
+      "seconds": 3.0015525000635535
+    },
+    {
+      "frame": 7,
+      "confirmed": 269,
+      "slots": 494,
+      "seconds": 2.0557732998859137
+    },
+    {
+      "frame": 8,
+      "confirmed": 306,
+      "slots": 473,
+      "seconds": 2.6522510000504553
+    },
+    {
+      "frame": 9,
+      "confirmed": 297,
+      "slots": 492,
+      "seconds": 2.8760853999992833
+    },
+    {
+      "frame": 10,
+      "confirmed": 289,
+      "slots": 493,
+      "seconds": 2.5270913999993354
+    },
+    {
+      "frame": 11,
+      "confirmed": 311,
+      "slots": 510,
+      "seconds": 3.2326646000146866
+    }
+  ]
+}

@@ -48,7 +48,7 @@ def visual_episode(kind, phase, shape, *, angle=0., scale=1., background=False):
         event[arrival.on.long(), arrival.pixels] = 1.
         events.append(event.reshape(2, 64, 64))
         visible.append(image)
-        truth.append(center)
+        truth.append(center+torch.tensor(SHAPES[shape], dtype=torch.float32).mean(0))
     return dict(events=events, visible=visible), truth
 
 
@@ -74,6 +74,8 @@ def fixed_displacement(history, horizon, mode):
         return torch.zeros(2)
     if mode == 'velocity':
         return horizon*history[-1]
+    if mode == 'mean_velocity':
+        return horizon*history.mean(0)
     if mode == 'acceleration':
         return horizon*history[-1]+horizon*(horizon+1)/2*(history[-1]-history[-2])
     return sum((history[-2+(step % 2)] for step in range(horizon)), torch.zeros(2))

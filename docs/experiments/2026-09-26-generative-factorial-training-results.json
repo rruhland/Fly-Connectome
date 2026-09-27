@@ -1,0 +1,46 @@
+{
+  "LearnedVisualCandidate-ContextualMotionDynamics": {
+    "training_streams": 192,
+    "frames": 3840,
+    "seconds": 32.30169049999677,
+    "training_fps": 118.87922707947389,
+    "prototypes": {
+      "1": 128,
+      "4": 128,
+      "8": 128
+    }
+  },
+  "LearnedVisualCandidate-LocalGenerativeDynamics": {
+    "training_streams": 192,
+    "frames": 3840,
+    "seconds": 56.58414609997999,
+    "training_fps": 67.86353183124837,
+    "prototypes": {
+      "1": 128,
+      "4": 128,
+      "8": 128
+    }
+  },
+  "StatisticalVisualCandidate-ContextualMotionDynamics": {
+    "training_streams": 192,
+    "frames": 3840,
+    "seconds": 22.610870099975727,
+    "training_fps": 169.82982003881938,
+    "prototypes": {
+      "1": 128,
+      "4": 128,
+      "8": 128
+    }
+  },
+  "StatisticalVisualCandidate-LocalGenerativeDynamics": {
+    "training_streams": 192,
+    "frames": 3840,
+    "seconds": 25.394330300041474,
+    "training_fps": 151.21485601822422,
+    "prototypes": {
+      "1": 128,
+      "4": 128,
+      "8": 128
+    }
+  }
+}
