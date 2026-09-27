@@ -1,0 +1,23 @@
+{
+  "checkpoint": "checkpoints\\m1a5\\probabilistic-visual-candidate.pt",
+  "sha256": "a899338c94278854dc9a790c21e3cba746658abb7ac91fc3f85c84754f253173",
+  "bytes": 680428,
+  "sensor": "every-camera-sample grayscale plus events",
+  "examples": {
+    "1": 2483,
+    "4": 1907,
+    "8": 1139
+  },
+  "stored": {
+    "1": 2048,
+    "4": 1907,
+    "8": 1139
+  },
+  "rank_samples": {
+    "1": 512,
+    "4": 512,
+    "8": 379
+  },
+  "reidentification_calibration": "unfitted; .5 prior, zero observed calibration outcomes",
+  "production_promoted": false
+}

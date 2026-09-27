@@ -1,0 +1,134 @@
+{
+  "scenes": 216,
+  "samples": 6264,
+  "missing": 0,
+  "means": {
+    "1": {
+      "nll": 2.3253445625305176,
+      "mean_point_error": 0.6919834017753601,
+      "calibrated_marginal_90_coverage": 0.9086538553237915
+    },
+    "4": {
+      "nll": 2.8165178298950195,
+      "mean_point_error": 1.417436122894287,
+      "calibrated_marginal_90_coverage": 0.9268518686294556
+    },
+    "8": {
+      "nll": 3.4944534301757812,
+      "mean_point_error": 3.136209726333618,
+      "calibrated_marginal_90_coverage": 0.9112654328346252
+    }
+  },
+  "families": {
+    "constant": {
+      "1": {
+        "nll": 2.322868585586548,
+        "mean_point_error": 0.6576750874519348,
+        "calibrated_marginal_90_coverage": 0.9102563858032227
+      },
+      "4": {
+        "nll": 2.8639132976531982,
+        "mean_point_error": 1.6634514331817627,
+        "calibrated_marginal_90_coverage": 0.949999988079071
+      },
+      "8": {
+        "nll": 3.476829767227173,
+        "mean_point_error": 4.1693549156188965,
+        "calibrated_marginal_90_coverage": 0.9166666865348816
+      }
+    },
+    "period2": {
+      "1": {
+        "nll": 2.274596929550171,
+        "mean_point_error": 0.6174041628837585,
+        "calibrated_marginal_90_coverage": 0.9166666865348816
+      },
+      "4": {
+        "nll": 2.6091253757476807,
+        "mean_point_error": 1.0051501989364624,
+        "calibrated_marginal_90_coverage": 0.9916666746139526
+      },
+      "8": {
+        "nll": 3.1982462406158447,
+        "mean_point_error": 1.8042138814926147,
+        "calibrated_marginal_90_coverage": 0.9166666865348816
+      }
+    },
+    "period3": {
+      "1": {
+        "nll": 2.3862996101379395,
+        "mean_point_error": 0.7484973073005676,
+        "calibrated_marginal_90_coverage": 0.9102563858032227
+      },
+      "4": {
+        "nll": 2.74187970161438,
+        "mean_point_error": 1.1636728048324585,
+        "calibrated_marginal_90_coverage": 0.9458333253860474
+      },
+      "8": {
+        "nll": 3.41282320022583,
+        "mean_point_error": 2.5621817111968994,
+        "calibrated_marginal_90_coverage": 0.9236111044883728
+      }
+    },
+    "period4": {
+      "1": {
+        "nll": 2.3631811141967773,
+        "mean_point_error": 0.7649697661399841,
+        "calibrated_marginal_90_coverage": 0.8814102411270142
+      },
+      "4": {
+        "nll": 2.8210463523864746,
+        "mean_point_error": 1.22943913936615,
+        "calibrated_marginal_90_coverage": 0.9208333492279053
+      },
+      "8": {
+        "nll": 3.467597484588623,
+        "mean_point_error": 1.9395345449447632,
+        "calibrated_marginal_90_coverage": 0.8958333134651184
+      }
+    },
+    "arc_left": {
+      "1": {
+        "nll": 2.2990872859954834,
+        "mean_point_error": 0.6683228611946106,
+        "calibrated_marginal_90_coverage": 0.9102563858032227
+      },
+      "4": {
+        "nll": 3.0014865398406982,
+        "mean_point_error": 1.6819382905960083,
+        "calibrated_marginal_90_coverage": 0.8694444298744202
+      },
+      "8": {
+        "nll": 3.1015658378601074,
+        "mean_point_error": 4.189995765686035,
+        "calibrated_marginal_90_coverage": 0.8912037014961243
+      }
+    },
+    "arc_right": {
+      "1": {
+        "nll": 2.306034803390503,
+        "mean_point_error": 0.6950311064720154,
+        "calibrated_marginal_90_coverage": 0.9230769276618958
+      },
+      "4": {
+        "nll": 2.8616583347320557,
+        "mean_point_error": 1.7609655857086182,
+        "calibrated_marginal_90_coverage": 0.8833333253860474
+      },
+      "8": {
+        "nll": 4.309658050537109,
+        "mean_point_error": 4.151976585388184,
+        "calibrated_marginal_90_coverage": 0.9236111044883728
+      }
+    }
+  },
+  "reference_max_difference": 2.384185791015625e-07,
+  "replay_gate": true,
+  "frozen_parameters": true,
+  "parameter_sha256": "3440f1c4355d95adffd7e987dfacb5913e5c9fac80869eeedf1a91bf330dd322",
+  "frames": 4320,
+  "seconds": 56.6889041014947,
+  "fps": 76.20538919336943,
+  "production_promoted": false
+}

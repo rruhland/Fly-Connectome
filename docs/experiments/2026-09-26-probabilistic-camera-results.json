@@ -1,0 +1,46 @@
+{
+  "binary": {
+    "identities": 12,
+    "retained": 12,
+    "frames": 252,
+    "seconds": 3.791250900598243,
+    "frames_per_second": 66.46882694053181,
+    "max_slots": 2,
+    "max_pending": 26,
+    "reidentification_brier": 0.15528856377130315,
+    "conditional_radius_coverage": 1.0
+  },
+  "low_contrast": {
+    "identities": 12,
+    "retained": 12,
+    "frames": 252,
+    "seconds": 3.374293199973181,
+    "frames_per_second": 74.68230680191127,
+    "max_slots": 2,
+    "max_pending": 26,
+    "reidentification_brier": 0.15528856377130315,
+    "conditional_radius_coverage": 1.0
+  },
+  "illumination": {
+    "identities": 12,
+    "retained": 12,
+    "frames": 252,
+    "seconds": 4.344071700004861,
+    "frames_per_second": 58.01009223667234,
+    "max_slots": 2,
+    "max_pending": 26,
+    "reidentification_brier": 0.15528856377130315,
+    "conditional_radius_coverage": 1.0
+  },
+  "outage": {
+    "identities": 12,
+    "retained": 12,
+    "frames": 252,
+    "seconds": 3.6710029989480972,
+    "frames_per_second": 68.64608938543745,
+    "max_slots": 2,
+    "max_pending": 26,
+    "reidentification_brier": 0.18422189726085647,
+    "conditional_radius_coverage": 1.0
+  }
+}

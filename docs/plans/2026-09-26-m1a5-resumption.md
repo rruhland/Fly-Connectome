@@ -1,5 +1,20 @@
 # M1A.5 restart point after the bounded sensory/state batch
 
+## Latest: bounded probabilistic candidate ready for production review
+
+See [the production-review report](2026-09-26-m1a5-production-review.md).
+Spatial beliefs pass registered likelihood, marginal-calibration, family,
+observation-coverage, checkpoint and multi-entity state gates. The sensor is
+every-sample grayscale plus events; old event-only and point gates remain failed.
+Production is unchanged. Review must explicitly resolve that contract revision;
+do not silently call the old contract complete or restart narrow point sweeps.
+
+Runtime: `scripts/probabilistic_visual_state.py`; builder:
+`scripts/build_probabilistic_candidate.py`. Results: `spatial-belief`,
+`spatial-interval-calibration`, `probabilistic-checkpoint`, `probabilistic-scenes`
+and `statistical-context` JSONs dated 2026-09-26. Full suite: 694 passed, four skipped.
+The older records below are superseded by this checkpoint.
+
 ## Newer checkpoint: generic state and direct dynamics
 
 **Superseding streaming checkpoint:** see

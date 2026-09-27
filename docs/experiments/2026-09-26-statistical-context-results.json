@@ -1,0 +1,116 @@
+{
+  "learned": {
+    "spatial": {
+      "0": {
+        "hits": 16.0,
+        "total": 16
+      },
+      "90": {
+        "hits": 16.0,
+        "total": 16
+      },
+      "180": {
+        "hits": 16.0,
+        "total": 16
+      },
+      "270": {
+        "hits": 16.0,
+        "total": 16
+      }
+    },
+    "appearance": {
+      "0": {
+        "hits": 16.0,
+        "total": 16
+      },
+      "90": {
+        "hits": 16.0,
+        "total": 16
+      },
+      "180": {
+        "hits": 16.0,
+        "total": 16
+      },
+      "270": {
+        "hits": 16.0,
+        "total": 16
+      }
+    }
+  },
+  "shuffled": {
+    "spatial": {
+      "0": {
+        "hits": 3.0,
+        "total": 16
+      },
+      "90": {
+        "hits": 0.0,
+        "total": 16
+      },
+      "180": {
+        "hits": 3.0,
+        "total": 16
+      },
+      "270": {
+        "hits": 0.0,
+        "total": 16
+      }
+    },
+    "appearance": {
+      "0": {
+        "hits": 3.0,
+        "total": 16
+      },
+      "90": {
+        "hits": 3.0,
+        "total": 16
+      },
+      "180": {
+        "hits": 4.0,
+        "total": 16
+      },
+      "270": {
+        "hits": 0.0,
+        "total": 16
+      }
+    }
+  },
+  "frozen": {
+    "spatial": {
+      "0": {
+        "hits": 0.0,
+        "total": 16
+      },
+      "90": {
+        "hits": 0.0,
+        "total": 16
+      },
+      "180": {
+        "hits": 0.0,
+        "total": 16
+      },
+      "270": {
+        "hits": 0.0,
+        "total": 16
+      }
+    },
+    "appearance": {
+      "0": {
+        "hits": 1.0,
+        "total": 16
+      },
+      "90": {
+        "hits": 1.0,
+        "total": 16
+      },
+      "180": {
+        "hits": 1.0,
+        "total": 16
+      },
+      "270": {
+        "hits": 1.0,
+        "total": 16
+      }
+    }
+  }
+}

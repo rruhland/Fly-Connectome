@@ -26,8 +26,13 @@ def episode(model, *, continued, start, speed, learn):
         if t == 7:
             forecast = next(f for f in result['forecasts'] if f['horizon_samples'] == 4)
     seen = any(e['id'] == forecast['id'] and e['observed'] for e in result['entities'])
-    return dict(predicted=forecast['reidentification_probability'], reidentified=seen,
-                position=forecast['position'].tolist())
+    result_row = dict(predicted=forecast['reidentification_probability'], reidentified=seen,
+                position=forecast['position'].tolist(),
+                counterfactual_support=float(result['support_field'][16, start+speed*11+1]))
+    if 'mixture_centers' in forecast:
+        result_row.update(mixture_centers=forecast['mixture_centers'].tolist(),
+                          mixture_weights=forecast['mixture_weights'].tolist())
+    return result_row
 
 
 @torch.no_grad()

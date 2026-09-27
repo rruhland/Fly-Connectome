@@ -1,5 +1,11 @@
 # Streaming candidate: preserved strengths and acceptance failures
 
+**Latest:** the probabilistic successor passes its registered experimental gates
+and has a tested checkpoint and concrete [production-review report](../plans/2026-09-26-m1a5-production-review.md).
+This does not turn the older event-only/point failures below into passes.
+Production is unchanged; the dense-image and distributional contract revisions
+are explicit review decisions. See the report for scores, limitations and replay.
+
 Status: **experimental, not accepted or promoted**. Production `src/` remains
 unchanged. The frame+event sensor revision must be declared before promotion;
 event-only noisy sensing has not passed.
