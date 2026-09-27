@@ -43,12 +43,12 @@ def train(model, observer, *, shuffled, sequence=sensory_sequence):
 
 @torch.no_grad()
 def score(model, observer, episodes, *, hybrid, multi=False, noise=None,
-          sequence=sensory_sequence):
+          sequence=sensory_sequence, noise_seed=5000):
     hits = {8: [], 32: [], 64: []}
     for index, original in enumerate(episodes):
         case = (original if noise is None else
                 {**original, 'events': corrupt_events(
-                    original['events'], seed=5000+index,
+                    original['events'], seed=noise_seed+index,
                     dropout=noise[0], false_rate=noise[1])})
         model.reset_state()
         states = sequence(observer, case, hybrid=hybrid)

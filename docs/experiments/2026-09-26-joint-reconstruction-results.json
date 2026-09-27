@@ -1,0 +1,451 @@
+{
+  "noise_seed_base": 50000,
+  "arms": {
+    "joint_events": {
+      "learned": {
+        "effects": [
+          -0.2634172737598419,
+          0.2667463719844818
+        ],
+        "counts": [
+          1.0,
+          1.0
+        ],
+        "clean": {
+          "cases": 16,
+          "targets": 16,
+          "top_k": {
+            "8": 0.0,
+            "32": 0.0,
+            "64": 0.0625
+          }
+        },
+        "known_noise": {
+          "cases": 16,
+          "targets": 16,
+          "top_k": {
+            "8": 0.0625,
+            "32": 0.125,
+            "64": 0.125
+          }
+        },
+        "heavy_noise": {
+          "cases": 16,
+          "targets": 16,
+          "top_k": {
+            "8": 0.0,
+            "32": 0.125,
+            "64": 0.25
+          }
+        },
+        "constant_motion": {
+          "cases": 16,
+          "targets": 16,
+          "top_k": {
+            "8": 0.125,
+            "32": 0.4375,
+            "64": 0.5
+          }
+        },
+        "two_movers": {
+          "cases": 8,
+          "targets": 16,
+          "top_k": {
+            "8": 0.125,
+            "32": 0.375,
+            "64": 0.5
+          }
+        },
+        "disappearance": {
+          "cases": 16,
+          "maximum_pre_reveal_pair_difference": 0.0,
+          "continued_target_mean": 0.11530640445403324,
+          "vanished_false_target_mean": 0.0018487730560554183,
+          "continued_above_half": 2,
+          "vanished_above_half": 0
+        }
+      },
+      "frozen": {
+        "effects": [
+          -0.3325420320034027,
+          0.011757951229810715
+        ],
+        "counts": [
+          8.0,
+          13.0
+        ],
+        "clean": {
+          "cases": 16,
+          "targets": 16,
+          "top_k": {
+            "8": 0.25,
+            "32": 0.3125,
+            "64": 0.375
+          }
+        },
+        "known_noise": {
+          "cases": 16,
+          "targets": 16,
+          "top_k": {
+            "8": 0.0,
+            "32": 0.25,
+            "64": 0.4375
+          }
+        },
+        "heavy_noise": {
+          "cases": 16,
+          "targets": 16,
+          "top_k": {
+            "8": 0.0,
+            "32": 0.0,
+            "64": 0.0625
+          }
+        },
+        "constant_motion": {
+          "cases": 16,
+          "targets": 16,
+          "top_k": {
+            "8": 0.1875,
+            "32": 0.1875,
+            "64": 0.375
+          }
+        },
+        "two_movers": {
+          "cases": 8,
+          "targets": 16,
+          "top_k": {
+            "8": 0.1875,
+            "32": 0.25,
+            "64": 0.25
+          }
+        },
+        "disappearance": {
+          "cases": 16,
+          "maximum_pre_reveal_pair_difference": 0.0,
+          "continued_target_mean": 0.25680564055051036,
+          "vanished_false_target_mean": 0.12376910415309794,
+          "continued_above_half": 4,
+          "vanished_above_half": 1
+        }
+      },
+      "shuffled_context": {
+        "effects": [
+          -0.2634172737598419,
+          0.2667463719844818
+        ],
+        "counts": [
+          1.0,
+          1.0
+        ],
+        "clean": {
+          "cases": 16,
+          "targets": 16,
+          "top_k": {
+            "8": 0.0,
+            "32": 0.0,
+            "64": 0.0625
+          }
+        },
+        "known_noise": {
+          "cases": 16,
+          "targets": 16,
+          "top_k": {
+            "8": 0.0625,
+            "32": 0.125,
+            "64": 0.125
+          }
+        },
+        "heavy_noise": {
+          "cases": 16,
+          "targets": 16,
+          "top_k": {
+            "8": 0.0,
+            "32": 0.125,
+            "64": 0.25
+          }
+        },
+        "constant_motion": {
+          "cases": 16,
+          "targets": 16,
+          "top_k": {
+            "8": 0.125,
+            "32": 0.4375,
+            "64": 0.5
+          }
+        },
+        "two_movers": {
+          "cases": 8,
+          "targets": 16,
+          "top_k": {
+            "8": 0.125,
+            "32": 0.375,
+            "64": 0.5
+          }
+        },
+        "disappearance": {
+          "cases": 16,
+          "maximum_pre_reveal_pair_difference": 0.0,
+          "continued_target_mean": 0.11530640445403324,
+          "vanished_false_target_mean": 0.0018487730560554183,
+          "continued_above_half": 2,
+          "vanished_above_half": 0
+        }
+      }
+    },
+    "sparse_frames": {
+      "learned": {
+        "effects": [
+          -0.38231948018074036,
+          0.38231948018074036
+        ],
+        "counts": [
+          16.0,
+          16.0
+        ],
+        "clean": {
+          "cases": 16,
+          "targets": 16,
+          "top_k": {
+            "8": 1.0,
+            "32": 1.0,
+            "64": 1.0
+          }
+        },
+        "known_noise": {
+          "cases": 16,
+          "targets": 16,
+          "top_k": {
+            "8": 0.375,
+            "32": 0.5,
+            "64": 0.625
+          }
+        },
+        "heavy_noise": {
+          "cases": 16,
+          "targets": 16,
+          "top_k": {
+            "8": 0.0625,
+            "32": 0.0625,
+            "64": 0.3125
+          }
+        },
+        "constant_motion": {
+          "cases": 16,
+          "targets": 16,
+          "top_k": {
+            "8": 0.75,
+            "32": 1.0,
+            "64": 1.0
+          }
+        },
+        "two_movers": {
+          "cases": 8,
+          "targets": 16,
+          "top_k": {
+            "8": 0.5,
+            "32": 0.75,
+            "64": 1.0
+          }
+        },
+        "disappearance": {
+          "cases": 16,
+          "maximum_pre_reveal_pair_difference": 0.0,
+          "continued_target_mean": 0.8106406778097153,
+          "vanished_false_target_mean": 0.2768678213469684,
+          "continued_above_half": 14,
+          "vanished_above_half": 2
+        }
+      },
+      "frozen": {
+        "effects": [
+          -0.37474364042282104,
+          0.37474364042282104
+        ],
+        "counts": [
+          16.0,
+          16.0
+        ],
+        "clean": {
+          "cases": 16,
+          "targets": 16,
+          "top_k": {
+            "8": 1.0,
+            "32": 1.0,
+            "64": 1.0
+          }
+        },
+        "known_noise": {
+          "cases": 16,
+          "targets": 16,
+          "top_k": {
+            "8": 0.5,
+            "32": 0.6875,
+            "64": 0.8125
+          }
+        },
+        "heavy_noise": {
+          "cases": 16,
+          "targets": 16,
+          "top_k": {
+            "8": 0.0625,
+            "32": 0.125,
+            "64": 0.375
+          }
+        },
+        "constant_motion": {
+          "cases": 16,
+          "targets": 16,
+          "top_k": {
+            "8": 0.75,
+            "32": 1.0,
+            "64": 1.0
+          }
+        },
+        "two_movers": {
+          "cases": 8,
+          "targets": 16,
+          "top_k": {
+            "8": 0.5,
+            "32": 0.75,
+            "64": 1.0
+          }
+        },
+        "disappearance": {
+          "cases": 16,
+          "maximum_pre_reveal_pair_difference": 0.0,
+          "continued_target_mean": 0.9269897416234016,
+          "vanished_false_target_mean": 0.15855626203119755,
+          "continued_above_half": 16,
+          "vanished_above_half": 0
+        }
+      },
+      "shuffled_context": {
+        "effects": [
+          -0.018683061003684998,
+          0.018683061003684998
+        ],
+        "counts": [
+          16.0,
+          16.0
+        ],
+        "clean": {
+          "cases": 16,
+          "targets": 16,
+          "top_k": {
+            "8": 0.0,
+            "32": 0.25,
+            "64": 0.5
+          }
+        },
+        "known_noise": {
+          "cases": 16,
+          "targets": 16,
+          "top_k": {
+            "8": 0.0,
+            "32": 0.0625,
+            "64": 0.375
+          }
+        },
+        "heavy_noise": {
+          "cases": 16,
+          "targets": 16,
+          "top_k": {
+            "8": 0.0,
+            "32": 0.0,
+            "64": 0.1875
+          }
+        },
+        "constant_motion": {
+          "cases": 16,
+          "targets": 16,
+          "top_k": {
+            "8": 1.0,
+            "32": 1.0,
+            "64": 1.0
+          }
+        },
+        "two_movers": {
+          "cases": 8,
+          "targets": 16,
+          "top_k": {
+            "8": 1.0,
+            "32": 1.0,
+            "64": 1.0
+          }
+        },
+        "disappearance": {
+          "cases": 16,
+          "maximum_pre_reveal_pair_difference": 0.0,
+          "continued_target_mean": 0.24588891584426165,
+          "vanished_false_target_mean": 0.08298158226534724,
+          "continued_above_half": 4,
+          "vanished_above_half": 0
+        }
+      },
+      "noisy_images": {
+        "effects": [
+          -0.38231948018074036,
+          0.38231948018074036
+        ],
+        "counts": [
+          16.0,
+          16.0
+        ],
+        "clean": {
+          "cases": 16,
+          "targets": 16,
+          "top_k": {
+            "8": 0.9375,
+            "32": 1.0,
+            "64": 1.0
+          }
+        },
+        "known_noise": {
+          "cases": 16,
+          "targets": 16,
+          "top_k": {
+            "8": 0.5,
+            "32": 0.5625,
+            "64": 0.5625
+          }
+        },
+        "heavy_noise": {
+          "cases": 16,
+          "targets": 16,
+          "top_k": {
+            "8": 0.1875,
+            "32": 0.25,
+            "64": 0.4375
+          }
+        },
+        "constant_motion": {
+          "cases": 16,
+          "targets": 16,
+          "top_k": {
+            "8": 0.5,
+            "32": 1.0,
+            "64": 1.0
+          }
+        },
+        "two_movers": {
+          "cases": 8,
+          "targets": 16,
+          "top_k": {
+            "8": 0.125,
+            "32": 0.625,
+            "64": 0.875
+          }
+        },
+        "disappearance": {
+          "cases": 16,
+          "maximum_pre_reveal_pair_difference": 0.0,
+          "continued_target_mean": 0.782016159966588,
+          "vanished_false_target_mean": 0.21077948494348675,
+          "continued_above_half": 13,
+          "vanished_above_half": 1
+        }
+      }
+    }
+  },
+  "seconds": 301.85
+}
