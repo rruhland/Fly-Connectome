@@ -15,6 +15,9 @@ class EvidenceTracker(GenericMultiTracker):
         self.representation = representation
         super().__init__(height=height, width=width)
 
+    def motion_scale(self, history, age):
+        return 1.5+.15*age
+
     def proposals(self, sensory):
         evidence = sensory[:2].sum(0)
         if self.representation == 'surface':
@@ -43,9 +46,9 @@ class EvidenceTracker(GenericMultiTracker):
         return proposals
 
     @torch.no_grad()
-    def step(self, sensory):
+    def step(self, sensory, *, observation_available=True):
         self.frame += 1
-        proposals = self.proposals(sensory)
+        proposals = self.proposals(sensory) if observation_available else []
         claimed = set()
         # Confirmed histories compete before tentative births. Preserve slot IDs.
         order = sorted(range(len(self.slots)),
@@ -66,7 +69,7 @@ class EvidenceTracker(GenericMultiTracker):
                     distance = float((position-expected).norm())
                     if distance > 3+age:
                         continue
-                    scale = 1.5+.15*age
+                    scale = self.motion_scale(history, age)
                     cost = (distance/scale)**2/2 + abs(math.log(
                         mass/history['mass']))
                     branches.append(dict(position=position.clone(),

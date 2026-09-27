@@ -1,0 +1,1047 @@
+{
+  "sensor": "current visible frames plus events",
+  "conditions": {
+    "clean": {
+      "scenes": 18,
+      "identities": 36,
+      "retained": 34,
+      "mean_center_error": 2.111111111111111,
+      "mean_extra_moving_hypotheses": 0.0,
+      "outage_hits": 0,
+      "outage_targets": 0,
+      "rows": [
+        {
+          "axis": "horizontal",
+          "offset": -4,
+          "background": false,
+          "identity_retained": [
+            true,
+            false
+          ],
+          "center_errors": [
+            0.0,
+            38.0
+          ],
+          "extra_moving_hypotheses": 0,
+          "outage_hits": []
+        },
+        {
+          "axis": "horizontal",
+          "offset": -4,
+          "background": true,
+          "identity_retained": [
+            true,
+            false
+          ],
+          "center_errors": [
+            0.0,
+            38.0
+          ],
+          "extra_moving_hypotheses": 0,
+          "outage_hits": []
+        },
+        {
+          "axis": "horizontal",
+          "offset": 0,
+          "background": false,
+          "identity_retained": [
+            true,
+            true
+          ],
+          "center_errors": [
+            0.0,
+            0.0
+          ],
+          "extra_moving_hypotheses": 0,
+          "outage_hits": []
+        },
+        {
+          "axis": "horizontal",
+          "offset": 0,
+          "background": true,
+          "identity_retained": [
+            true,
+            true
+          ],
+          "center_errors": [
+            0.0,
+            0.0
+          ],
+          "extra_moving_hypotheses": 0,
+          "outage_hits": []
+        },
+        {
+          "axis": "horizontal",
+          "offset": 4,
+          "background": false,
+          "identity_retained": [
+            true,
+            true
+          ],
+          "center_errors": [
+            0.0,
+            0.0
+          ],
+          "extra_moving_hypotheses": 0,
+          "outage_hits": []
+        },
+        {
+          "axis": "horizontal",
+          "offset": 4,
+          "background": true,
+          "identity_retained": [
+            true,
+            true
+          ],
+          "center_errors": [
+            0.0,
+            0.0
+          ],
+          "extra_moving_hypotheses": 0,
+          "outage_hits": []
+        },
+        {
+          "axis": "vertical",
+          "offset": -4,
+          "background": false,
+          "identity_retained": [
+            true,
+            true
+          ],
+          "center_errors": [
+            0.0,
+            0.0
+          ],
+          "extra_moving_hypotheses": 0,
+          "outage_hits": []
+        },
+        {
+          "axis": "vertical",
+          "offset": -4,
+          "background": true,
+          "identity_retained": [
+            true,
+            true
+          ],
+          "center_errors": [
+            0.0,
+            0.0
+          ],
+          "extra_moving_hypotheses": 0,
+          "outage_hits": []
+        },
+        {
+          "axis": "vertical",
+          "offset": 0,
+          "background": false,
+          "identity_retained": [
+            true,
+            true
+          ],
+          "center_errors": [
+            0.0,
+            0.0
+          ],
+          "extra_moving_hypotheses": 0,
+          "outage_hits": []
+        },
+        {
+          "axis": "vertical",
+          "offset": 0,
+          "background": true,
+          "identity_retained": [
+            true,
+            true
+          ],
+          "center_errors": [
+            0.0,
+            0.0
+          ],
+          "extra_moving_hypotheses": 0,
+          "outage_hits": []
+        },
+        {
+          "axis": "vertical",
+          "offset": 4,
+          "background": false,
+          "identity_retained": [
+            true,
+            true
+          ],
+          "center_errors": [
+            0.0,
+            0.0
+          ],
+          "extra_moving_hypotheses": 0,
+          "outage_hits": []
+        },
+        {
+          "axis": "vertical",
+          "offset": 4,
+          "background": true,
+          "identity_retained": [
+            true,
+            true
+          ],
+          "center_errors": [
+            0.0,
+            0.0
+          ],
+          "extra_moving_hypotheses": 0,
+          "outage_hits": []
+        },
+        {
+          "axis": "diagonal",
+          "offset": -4,
+          "background": false,
+          "identity_retained": [
+            true,
+            true
+          ],
+          "center_errors": [
+            0.0,
+            0.0
+          ],
+          "extra_moving_hypotheses": 0,
+          "outage_hits": []
+        },
+        {
+          "axis": "diagonal",
+          "offset": -4,
+          "background": true,
+          "identity_retained": [
+            true,
+            true
+          ],
+          "center_errors": [
+            0.0,
+            0.0
+          ],
+          "extra_moving_hypotheses": 0,
+          "outage_hits": []
+        },
+        {
+          "axis": "diagonal",
+          "offset": 0,
+          "background": false,
+          "identity_retained": [
+            true,
+            true
+          ],
+          "center_errors": [
+            0.0,
+            0.0
+          ],
+          "extra_moving_hypotheses": 0,
+          "outage_hits": []
+        },
+        {
+          "axis": "diagonal",
+          "offset": 0,
+          "background": true,
+          "identity_retained": [
+            true,
+            true
+          ],
+          "center_errors": [
+            0.0,
+            0.0
+          ],
+          "extra_moving_hypotheses": 0,
+          "outage_hits": []
+        },
+        {
+          "axis": "diagonal",
+          "offset": 4,
+          "background": false,
+          "identity_retained": [
+            true,
+            true
+          ],
+          "center_errors": [
+            0.0,
+            0.0
+          ],
+          "extra_moving_hypotheses": 0,
+          "outage_hits": []
+        },
+        {
+          "axis": "diagonal",
+          "offset": 4,
+          "background": true,
+          "identity_retained": [
+            true,
+            true
+          ],
+          "center_errors": [
+            0.0,
+            0.0
+          ],
+          "extra_moving_hypotheses": 0,
+          "outage_hits": []
+        }
+      ]
+    },
+    "image_noise": {
+      "scenes": 18,
+      "identities": 36,
+      "retained": 32,
+      "mean_center_error": 2.4074073367648654,
+      "mean_extra_moving_hypotheses": 0.0,
+      "outage_hits": 0,
+      "outage_targets": 0,
+      "rows": [
+        {
+          "axis": "horizontal",
+          "offset": -4,
+          "background": false,
+          "identity_retained": [
+            false,
+            false
+          ],
+          "center_errors": [
+            5.333332061767578,
+            38.0
+          ],
+          "extra_moving_hypotheses": 0,
+          "outage_hits": []
+        },
+        {
+          "axis": "horizontal",
+          "offset": -4,
+          "background": true,
+          "identity_retained": [
+            false,
+            false
+          ],
+          "center_errors": [
+            5.333332061767578,
+            38.0
+          ],
+          "extra_moving_hypotheses": 0,
+          "outage_hits": []
+        },
+        {
+          "axis": "horizontal",
+          "offset": 0,
+          "background": false,
+          "identity_retained": [
+            true,
+            true
+          ],
+          "center_errors": [
+            0.0,
+            0.0
+          ],
+          "extra_moving_hypotheses": 0,
+          "outage_hits": []
+        },
+        {
+          "axis": "horizontal",
+          "offset": 0,
+          "background": true,
+          "identity_retained": [
+            true,
+            true
+          ],
+          "center_errors": [
+            0.0,
+            0.0
+          ],
+          "extra_moving_hypotheses": 0,
+          "outage_hits": []
+        },
+        {
+          "axis": "horizontal",
+          "offset": 4,
+          "background": false,
+          "identity_retained": [
+            true,
+            true
+          ],
+          "center_errors": [
+            0.0,
+            0.0
+          ],
+          "extra_moving_hypotheses": 0,
+          "outage_hits": []
+        },
+        {
+          "axis": "horizontal",
+          "offset": 4,
+          "background": true,
+          "identity_retained": [
+            true,
+            true
+          ],
+          "center_errors": [
+            0.0,
+            0.0
+          ],
+          "extra_moving_hypotheses": 0,
+          "outage_hits": []
+        },
+        {
+          "axis": "vertical",
+          "offset": -4,
+          "background": false,
+          "identity_retained": [
+            true,
+            true
+          ],
+          "center_errors": [
+            0.0,
+            0.0
+          ],
+          "extra_moving_hypotheses": 0,
+          "outage_hits": []
+        },
+        {
+          "axis": "vertical",
+          "offset": -4,
+          "background": true,
+          "identity_retained": [
+            true,
+            true
+          ],
+          "center_errors": [
+            0.0,
+            0.0
+          ],
+          "extra_moving_hypotheses": 0,
+          "outage_hits": []
+        },
+        {
+          "axis": "vertical",
+          "offset": 0,
+          "background": false,
+          "identity_retained": [
+            true,
+            true
+          ],
+          "center_errors": [
+            0.0,
+            0.0
+          ],
+          "extra_moving_hypotheses": 0,
+          "outage_hits": []
+        },
+        {
+          "axis": "vertical",
+          "offset": 0,
+          "background": true,
+          "identity_retained": [
+            true,
+            true
+          ],
+          "center_errors": [
+            0.0,
+            0.0
+          ],
+          "extra_moving_hypotheses": 0,
+          "outage_hits": []
+        },
+        {
+          "axis": "vertical",
+          "offset": 4,
+          "background": false,
+          "identity_retained": [
+            true,
+            true
+          ],
+          "center_errors": [
+            0.0,
+            0.0
+          ],
+          "extra_moving_hypotheses": 0,
+          "outage_hits": []
+        },
+        {
+          "axis": "vertical",
+          "offset": 4,
+          "background": true,
+          "identity_retained": [
+            true,
+            true
+          ],
+          "center_errors": [
+            0.0,
+            0.0
+          ],
+          "extra_moving_hypotheses": 0,
+          "outage_hits": []
+        },
+        {
+          "axis": "diagonal",
+          "offset": -4,
+          "background": false,
+          "identity_retained": [
+            true,
+            true
+          ],
+          "center_errors": [
+            0.0,
+            0.0
+          ],
+          "extra_moving_hypotheses": 0,
+          "outage_hits": []
+        },
+        {
+          "axis": "diagonal",
+          "offset": -4,
+          "background": true,
+          "identity_retained": [
+            true,
+            true
+          ],
+          "center_errors": [
+            0.0,
+            0.0
+          ],
+          "extra_moving_hypotheses": 0,
+          "outage_hits": []
+        },
+        {
+          "axis": "diagonal",
+          "offset": 0,
+          "background": false,
+          "identity_retained": [
+            true,
+            true
+          ],
+          "center_errors": [
+            0.0,
+            0.0
+          ],
+          "extra_moving_hypotheses": 0,
+          "outage_hits": []
+        },
+        {
+          "axis": "diagonal",
+          "offset": 0,
+          "background": true,
+          "identity_retained": [
+            true,
+            true
+          ],
+          "center_errors": [
+            0.0,
+            0.0
+          ],
+          "extra_moving_hypotheses": 0,
+          "outage_hits": []
+        },
+        {
+          "axis": "diagonal",
+          "offset": 4,
+          "background": false,
+          "identity_retained": [
+            true,
+            true
+          ],
+          "center_errors": [
+            0.0,
+            0.0
+          ],
+          "extra_moving_hypotheses": 0,
+          "outage_hits": []
+        },
+        {
+          "axis": "diagonal",
+          "offset": 4,
+          "background": true,
+          "identity_retained": [
+            true,
+            true
+          ],
+          "center_errors": [
+            0.0,
+            0.0
+          ],
+          "extra_moving_hypotheses": 0,
+          "outage_hits": []
+        }
+      ]
+    },
+    "outage": {
+      "scenes": 18,
+      "identities": 36,
+      "retained": 23,
+      "mean_center_error": 17.247803582085503,
+      "mean_extra_moving_hypotheses": 0.0,
+      "outage_hits": 180,
+      "outage_targets": 180,
+      "rows": [
+        {
+          "axis": "horizontal",
+          "offset": -4,
+          "background": false,
+          "identity_retained": [
+            false,
+            false
+          ],
+          "center_errors": [
+            38.0,
+            38.0
+          ],
+          "extra_moving_hypotheses": 0,
+          "outage_hits": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ]
+        },
+        {
+          "axis": "horizontal",
+          "offset": -4,
+          "background": true,
+          "identity_retained": [
+            false,
+            false
+          ],
+          "center_errors": [
+            38.0,
+            38.0
+          ],
+          "extra_moving_hypotheses": 0,
+          "outage_hits": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ]
+        },
+        {
+          "axis": "horizontal",
+          "offset": 0,
+          "background": false,
+          "identity_retained": [
+            true,
+            true
+          ],
+          "center_errors": [
+            0.0,
+            0.0
+          ],
+          "extra_moving_hypotheses": 0,
+          "outage_hits": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ]
+        },
+        {
+          "axis": "horizontal",
+          "offset": 0,
+          "background": true,
+          "identity_retained": [
+            true,
+            true
+          ],
+          "center_errors": [
+            0.0,
+            0.0
+          ],
+          "extra_moving_hypotheses": 0,
+          "outage_hits": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ]
+        },
+        {
+          "axis": "horizontal",
+          "offset": 4,
+          "background": false,
+          "identity_retained": [
+            true,
+            true
+          ],
+          "center_errors": [
+            0.0,
+            0.0
+          ],
+          "extra_moving_hypotheses": 0,
+          "outage_hits": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ]
+        },
+        {
+          "axis": "horizontal",
+          "offset": 4,
+          "background": true,
+          "identity_retained": [
+            true,
+            true
+          ],
+          "center_errors": [
+            0.0,
+            0.0
+          ],
+          "extra_moving_hypotheses": 0,
+          "outage_hits": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ]
+        },
+        {
+          "axis": "vertical",
+          "offset": -4,
+          "background": false,
+          "identity_retained": [
+            true,
+            true
+          ],
+          "center_errors": [
+            0.0,
+            0.0
+          ],
+          "extra_moving_hypotheses": 0,
+          "outage_hits": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ]
+        },
+        {
+          "axis": "vertical",
+          "offset": -4,
+          "background": true,
+          "identity_retained": [
+            true,
+            true
+          ],
+          "center_errors": [
+            0.0,
+            0.0
+          ],
+          "extra_moving_hypotheses": 0,
+          "outage_hits": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ]
+        },
+        {
+          "axis": "vertical",
+          "offset": 0,
+          "background": false,
+          "identity_retained": [
+            true,
+            true
+          ],
+          "center_errors": [
+            0.0,
+            0.0
+          ],
+          "extra_moving_hypotheses": 0,
+          "outage_hits": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ]
+        },
+        {
+          "axis": "vertical",
+          "offset": 0,
+          "background": true,
+          "identity_retained": [
+            true,
+            true
+          ],
+          "center_errors": [
+            0.0,
+            0.0
+          ],
+          "extra_moving_hypotheses": 0,
+          "outage_hits": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ]
+        },
+        {
+          "axis": "vertical",
+          "offset": 4,
+          "background": false,
+          "identity_retained": [
+            true,
+            true
+          ],
+          "center_errors": [
+            0.0,
+            0.0
+          ],
+          "extra_moving_hypotheses": 0,
+          "outage_hits": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ]
+        },
+        {
+          "axis": "vertical",
+          "offset": 4,
+          "background": true,
+          "identity_retained": [
+            false,
+            true
+          ],
+          "center_errors": [
+            38.0,
+            1.0
+          ],
+          "extra_moving_hypotheses": 0,
+          "outage_hits": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ]
+        },
+        {
+          "axis": "diagonal",
+          "offset": -4,
+          "background": false,
+          "identity_retained": [
+            true,
+            true
+          ],
+          "center_errors": [
+            0.0,
+            0.0
+          ],
+          "extra_moving_hypotheses": 0,
+          "outage_hits": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ]
+        },
+        {
+          "axis": "diagonal",
+          "offset": -4,
+          "background": true,
+          "identity_retained": [
+            true,
+            true
+          ],
+          "center_errors": [
+            0.0,
+            0.0
+          ],
+          "extra_moving_hypotheses": 0,
+          "outage_hits": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ]
+        },
+        {
+          "axis": "diagonal",
+          "offset": 0,
+          "background": false,
+          "identity_retained": [
+            false,
+            false
+          ],
+          "center_errors": [
+            53.740116119384766,
+            53.740116119384766
+          ],
+          "extra_moving_hypotheses": 0,
+          "outage_hits": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ]
+        },
+        {
+          "axis": "diagonal",
+          "offset": 0,
+          "background": true,
+          "identity_retained": [
+            false,
+            false
+          ],
+          "center_errors": [
+            53.740116119384766,
+            53.740116119384766
+          ],
+          "extra_moving_hypotheses": 0,
+          "outage_hits": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ]
+        },
+        {
+          "axis": "diagonal",
+          "offset": 4,
+          "background": false,
+          "identity_retained": [
+            false,
+            false
+          ],
+          "center_errors": [
+            53.740116119384766,
+            53.740116119384766
+          ],
+          "extra_moving_hypotheses": 0,
+          "outage_hits": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ]
+        },
+        {
+          "axis": "diagonal",
+          "offset": 4,
+          "background": true,
+          "identity_retained": [
+            false,
+            false
+          ],
+          "center_errors": [
+            53.740116119384766,
+            53.740116119384766
+          ],
+          "extra_moving_hypotheses": 0,
+          "outage_hits": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ]
+        }
+      ]
+    }
+  },
+  "seconds": 64.56
+}

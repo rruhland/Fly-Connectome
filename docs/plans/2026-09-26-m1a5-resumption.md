@@ -1,5 +1,26 @@
 # M1A.5 restart point after the bounded sensory/state batch
 
+## Newer checkpoint: generic state and direct dynamics
+
+The older record below is preserved as experiment history. The current candidate
+is the opt-in `FrameObservationState` with learned `PatchAssociation`, plus
+separate horizon-specific `LocalMotionDynamics` readouts. It explicitly requires
+current visible frames plus events. M1A.5 remains unaccepted and production is
+unchanged. See [the consolidated findings](../experiments/2026-09-26-generic-state-dynamics-findings.md).
+
+Verified: rotated spatial-context 16/16, unrelated appearance-context 14/16,
+camera crossing/noise/outage identities 36/36, and direct eight-frame mean
+forecast error 3.10 pixels versus 8.53 for the strongest fixed control. Constant
+motion remains worse than its fixed control. Event-only noisy sensing still fails.
+One-step diversity and linear-correlation branches are closed, not tuning targets.
+
+Next: streaming interface with explicit observation/hypothesis distinction,
+calibrated observable-outcome uncertainty, bounded state and timing, broader
+camera transfer, measured-connectome contribution/ablation, and final forecast
+regression assessment. No production promotion without the user's review.
+The latest full suite passed 671 tests with four skips; the subsequently added
+linear-dynamics test and both prefix-causality tests also passed.
+
 ## Status and preserved result
 
 M1A.5 is **not complete** and nothing is promoted to production. The strongest
