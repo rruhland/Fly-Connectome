@@ -18,6 +18,7 @@ class CausalDynamicsStream:
         self.dynamics = dynamics
         self.frame = -1
         self.histories, self.pending = {}, {}
+        self.history_positions = 1+max(getattr(m, 'history_steps', 4) for m in dynamics.values())
 
     def step(self, observed, *, available=True, learn=False):
         self.frame += 1
@@ -26,11 +27,14 @@ class CausalDynamicsStream:
                 self.dynamics[horizon].observe(history, observed[identity]-origin, credit=credit)
         forecasts = []
         for identity in sorted(set(self.histories) | set(observed)):
-            history = self.histories.setdefault(identity, deque(maxlen=5))
+            history = self.histories.setdefault(identity, deque(maxlen=self.history_positions))
             history.append(observed.get(identity))
-            if len(history) < 5 or any(p is None for p in history):
+            valid = list(history)
+            if any(p is None for p in valid):
+                valid = valid[1+max(i for i, p in enumerate(valid) if p is None):]
+            if len(valid) < 5:
                 continue
-            positions = torch.stack(list(history))
+            positions = torch.stack(valid)
             differences = positions[1:]-positions[:-1]
             for horizon, model in self.dynamics.items():
                 _, credit = model.predict_with_credit(differences)

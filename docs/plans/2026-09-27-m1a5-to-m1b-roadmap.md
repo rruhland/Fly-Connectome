@@ -66,6 +66,15 @@ histories have too little exact overlap to establish sufficiency from grouping
 alone. Next: one longer-history conditional-retrieval experiment with four-step
 fallback, preserving the observation model. No production memory policy changed.
 
+The [eight-step experiment](../experiments/2026-09-27-long-context-findings.md) is
+complete. It improves held-out prediction in every matched seed and reaches the
+shared-domain target before new-domain training in four of five seeds. Two seeds
+still miss the strict retention screen. Recommendation: use the
+[integration proposal](2026-09-27-eight-step-vision-integration-proposal.md) as the
+next production candidate, contingent on explicit acceptance of that limitation
+and integrated regression checks. Stop the context-length/mechanism search here;
+no default has been promoted by these experimental results alone.
+
 ### 1. Continual transfer/retention audit before adding architecture
 
 Implement a generic camera-stream A -> B -> A benchmark with three arms: the
