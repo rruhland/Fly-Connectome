@@ -58,6 +58,14 @@ seed and censored shared-domain acquisition speed. See
 The continual upgrade is not yet accepted; preserve the promoted baseline while
 the deeper predictive-memory question is reassessed.
 
+The [memory/context comparison](../experiments/2026-09-27-memory-context-comparison-findings.md)
+is now complete: recent+stable memory accelerates adaptation but increases
+interference; retaining every new example improves average retention but still
+fails one seed. Some four-step histories alias different outcomes, while longer
+histories have too little exact overlap to establish sufficiency from grouping
+alone. Next: one longer-history conditional-retrieval experiment with four-step
+fallback, preserving the observation model. No production memory policy changed.
+
 ### 1. Continual transfer/retention audit before adding architecture
 
 Implement a generic camera-stream A -> B -> A benchmark with three arms: the
