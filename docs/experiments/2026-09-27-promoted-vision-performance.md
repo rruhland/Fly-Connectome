@@ -13,7 +13,9 @@ rates, not game frame rates.
 On alternating same-host CPU runs, the optimized median is **14.52 ms/sample
 (68.9 samples/s)** for two visible entities and **39.86 ms/sample (25.1
 samples/s)** for eight. The two-entity median exceeds the 50 Hz target; the
-eight-entity case does not. Neither case demonstrates sustained 120 Hz.
+eight-entity case does not. Evaluation without learning measured **13.11 ms
+(76.3 samples/s)** for two entities and **36.90 ms (27.1 samples/s)** for eight.
+Neither mode demonstrates sustained 120 Hz.
 
 ## Measurement
 
@@ -41,6 +43,23 @@ varied substantially across the session, so the alternating comparison is the
 primary result. A separate shorter 1/2/4-thread sweep gave eight-entity p50s
 of 45.14/44.80/43.87 ms; this did not justify changing the single-thread
 reference setting.
+
+The same 64x64 workload was also run with `learn=False`, using two alternating
+original/optimized pairs. The benchmark entry point now accepts `learn=False`
+to repeat this mode. No forecast-bank examples were added. Evaluation timing
+varied more on the original checkout, especially for two entities:
+
+| Run | Two entities p50 / p95 ms | Eight entities p50 / p95 ms |
+|---|---:|---:|
+| Original 1 | 20.48 / 22.54 | 117.02 / 203.45 |
+| Optimized 1 | 13.37 / 20.04 | 36.91 / 44.33 |
+| Original 2 | 33.54 / 41.10 | 138.30 / 214.28 |
+| Optimized 2 | 12.86 / 14.24 | 36.90 / 43.92 |
+
+The means of these p50s improve **2.06x** and **3.46x** respectively. The
+original two-entity variation makes its evaluation ratio less precise than the
+online-learning comparison. Neither evaluation arm includes camera acquisition
+or display time.
 
 ## Changes and parity
 

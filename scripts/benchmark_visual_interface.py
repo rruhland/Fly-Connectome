@@ -10,9 +10,9 @@ from fly_connectome.vision import VisualStateEncoder, load_default
 
 
 @torch.no_grad()
-def main(*, out=Path('docs/experiments/2026-09-27-visual-interface-timing.json')):
+def main(*, out=Path('docs/experiments/2026-09-27-visual-interface-timing.json'), learn=True):
     torch.set_num_threads(1)
-    result = dict(threads=1, sensor='64x64 every-sample frames plus events', online=True, arms={})
+    result = dict(threads=1, sensor='64x64 every-sample frames plus events', online=learn, arms={})
     for count in (2, 8):
         model, encoder = load_default(), VisualStateEncoder(64, 64, .02)
         def memory():
@@ -33,7 +33,7 @@ def main(*, out=Path('docs/experiments/2026-09-27-visual-interface-timing.json')
             events = torch.stack(((previous-image).clamp(min=0), (image-previous).clamp(min=0)))
             previous = image
             start = time.perf_counter()
-            state = model.step(events, image, learn=True)
+            state = model.step(events, image, learn=learn)
             middle = time.perf_counter()
             output = encoder.encode(state, image)
             end = time.perf_counter()
