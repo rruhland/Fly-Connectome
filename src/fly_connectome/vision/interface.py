@@ -8,27 +8,6 @@ import torch
 import torch.nn.functional as F
 
 
-def _copy_records(records):
-    copied, memo = [], {}
-    memo[id(records)] = copied
-    for record in records:
-        item = memo.get(id(record))
-        if item is None:
-            item = {}
-            memo[id(record)] = item
-            for key, value in record.items():
-                if type(value) is torch.Tensor and not value.requires_grad and value._base is None:
-                    clone = memo.get(id(value))
-                    if clone is None:
-                        clone = value.clone()
-                        memo[id(value)] = clone
-                    item[copy.deepcopy(key, memo)] = clone
-                else:
-                    item[copy.deepcopy(key, memo)] = copy.deepcopy(value, memo)
-        copied.append(item)
-    return copied
-
-
 def _ordered_components(forecasts):
     rows = []
     for forecast in forecasts:
@@ -95,7 +74,7 @@ class VisualStateEncoder:
             raise ValueError('transport v1 supports horizons 1 through 8 samples')
         elapsed = self.period if self.sample is None else (sample-self.sample)*self.period
         self.sample = sample
-        entities, forecasts = _copy_records(state['entities']), _copy_records(state['forecasts'])
+        entities, forecasts = copy.deepcopy(state['entities']), copy.deepcopy(state['forecasts'])
         active = {e['id'] for e in entities}
         self.history = {k: v for k, v in self.history.items() if k in active}
         for entity in entities:

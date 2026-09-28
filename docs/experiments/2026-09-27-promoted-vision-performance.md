@@ -10,8 +10,8 @@ is outside the user-selected scope. The production visual service is not yet
 connected to Pong physics or motor control, so these are visual-service sample
 rates, not game frame rates.
 
-On alternating same-host CPU runs, the optimized median is **14.35 ms/sample
-(69.7 samples/s)** for two visible entities and **41.83 ms/sample (23.9
+On alternating same-host CPU runs, the optimized median is **14.52 ms/sample
+(68.9 samples/s)** for two visible entities and **39.86 ms/sample (25.1
 samples/s)** for eight. The two-entity median exceeds the 50 Hz target; the
 eight-entity case does not. Neither case demonstrates sustained 120 Hz.
 
@@ -21,21 +21,21 @@ Each process used the existing `scripts/benchmark_visual_interface.py` workload:
 64x64 every-sample frames plus events, one PyTorch CPU thread, online learning,
 full mixture and interval output, and sparse transport encoding. Each arm used
 40 warmup and 200 measured samples. Original and optimized source paths were
-verified separately, and process order was original, optimized, optimized,
+verified separately, and process order was optimized, original, optimized,
 original. Camera acquisition, rendering, and Pong simulation were excluded.
 Host background load was not controlled; paired runs limit its effect on the
 comparison but do not establish a hardware-independent latency guarantee.
 
 | Run | Two entities p50 / p95 ms | Eight entities p50 / p95 ms |
 |---|---:|---:|
-| Original 1 | 34.25 / 53.58 | 143.91 / 196.94 |
-| Optimized 1 | 13.64 / 19.44 | 41.75 / 68.05 |
-| Optimized 2 | 15.05 / 22.33 | 41.90 / 68.94 |
-| Original 2 | 34.64 / 49.71 | 142.03 / 207.05 |
+| Optimized 1 | 14.82 / 18.21 | 40.85 / 47.86 |
+| Original 1 | 34.14 / 39.62 | 137.40 / 155.79 |
+| Optimized 2 | 14.22 / 18.13 | 38.87 / 47.64 |
+| Original 2 | 35.01 / 68.14 | 139.24 / 162.70 |
 
-The mean of the paired p50 measurements improves **2.40x** for two entities
-and **3.42x** for eight. The eight-entity encoder portion measured 12.27/12.20
-ms in the original runs and 7.59/7.60 ms in the optimized runs. An earlier
+The mean of the paired p50 measurements improves **2.38x** for two entities
+and **3.47x** for eight. The eight-entity encoder portion measured 12.00/12.10
+ms in the original runs and 9.53/8.52 ms in the optimized runs. An earlier
 unpaired clean-worktree baseline was 21.62/85.64 ms; absolute CPU timings
 varied substantially across the session, so the alternating comparison is the
 primary result. A separate shorter 1/2/4-thread sweep gave eight-entity p50s
@@ -52,9 +52,9 @@ reference setting.
   context banks. Every original example, insertion order, PIT calibration rank,
   and `seen` count is preserved. Other dynamics retain sequential updates.
 - Context-key variance is cached until its key tensor changes or is modified
-  in place. The sparse transport encoder clones ordinary tensor fields without
-  generic tensor deep copy and orders all mixture components through a stable
-  lexicographic sort. Structured outputs remain independent of their inputs.
+  in place; inference-mode tensors recompute variance because they have no
+  version counter. The sparse transport encoder keeps its deep-copy behavior
+  and orders mixture components through a stable lexicographic sort.
 
 The original checkout and optimized worktree produced **identical SHA-256
 digests for every full state and encoder output** over 82 online samples,
@@ -66,9 +66,9 @@ same SHA-256:
 The learned-checkpoint content digest was
 `8262882a08163bae8141e8f3014e5d47d322f547bf4fcbb71410f723007a5c69`.
 Focused tests cover singleton and 32-component intervals, canonical component
-order, tensor aliasing, variance invalidation, sequential-versus-batched bank
-updates, online and frozen outputs, and checkpoint state. The full suite passed:
-**729 passed, 4 CUDA skips**.
+order, tensor aliasing, inference-mode keys, variance invalidation,
+sequential-versus-batched bank updates, online and frozen outputs, and checkpoint state. The full suite passed:
+**731 passed, 4 CUDA skips**.
 
 ## Remaining cost
 
@@ -77,7 +77,10 @@ association and context-state processing, followed by transport assembly and
 mixture retrieval. Those branches decide identity, matching, and future credit.
 The forecast banks still keep every new example, so exact retrieval and storage
 cost continue to grow with experience; the 240-sample benchmark does not prove
-long-run 50 Hz operation. A native tracker or a batched retrieval design would
+long-run 50 Hz operation. A separate synthetic bank-size probe with 2,000 versus
+20,000 random examples per bank measured eight-entity p50s of 43.28 versus
+68.75 ms. It isolates capacity pressure, not a representative trained-state
+trajectory. A native tracker or a batched retrieval design would
 need its own exact trajectory and checkpoint parity evidence before promotion.
 Approximate neighbors, fewer retained examples or mixture components, and fewer
 interval-search iterations would change the approved learning or outputs and

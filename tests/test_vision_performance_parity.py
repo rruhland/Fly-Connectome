@@ -137,7 +137,25 @@ def test_context_variance_is_reused_until_keys_change(monkeypatch):
     assert calls == 3
 
 
-def test_transport_clones_standard_tensors_without_generic_deepcopy(monkeypatch):
+def test_local_metric_prediction_accepts_inference_mode_keys():
+    examples = [(torch.tensor([float(i % 7), float(i // 7),
+                               float(i % 3), float(i % 5)]),
+                 torch.tensor([float(i % 3), float(i % 5)])) for i in range(48)]
+    reference = ConsensusLocalMetricAssociation(dimensions=4)
+    for key, value in examples:
+        reference.observe(key, value)
+    key = torch.tensor([1., 2., 0., 1.])
+    expected = reference.predict(key)
+
+    memory = ConsensusLocalMetricAssociation(dimensions=4)
+    with torch.inference_mode():
+        for example_key, value in examples:
+            memory.observe(example_key, value)
+        actual = memory.predict(key)
+    assert torch.equal(actual, expected)
+
+
+def test_transport_copies_forecast_and_entity_tensors():
     encoder = VisualStateEncoder(16, 32, .02)
     forecast = dict(id=4, horizon_samples=4, origin_sample=0, evidence_age=0,
                     position=torch.tensor([6., 9.]),
@@ -148,14 +166,28 @@ def test_transport_clones_standard_tensors_without_generic_deepcopy(monkeypatch)
     state = dict(sample=0, entities=[dict(id=4, position=torch.tensor([4., 8.]),
         observed=True, observation_age=0, association_strength=1.)],
         forecasts=[forecast, dict(forecast)])
-    def forbidden_deepcopy(tensor, memo):
-        raise AssertionError('generic tensor deepcopy used for standard records')
-    monkeypatch.setattr(torch.Tensor, '__deepcopy__', forbidden_deepcopy)
     output = encoder.encode(state, None)
     assert torch.equal(output['forecasts'][0]['mixture_centers'], forecast['mixture_centers'])
     assert output['forecasts'][0]['mixture_centers'] is not forecast['mixture_centers']
     assert output['forecasts'][0]['mixture_centers'] is output['forecasts'][1]['mixture_centers']
     assert output['entities'][0]['position'] is not state['entities'][0]['position']
+
+
+def test_transport_preserves_shared_storage_of_detached_forecast_tensors():
+    encoder = VisualStateEncoder(16, 32, .02)
+    centers = torch.tensor([[4., 12.], [8., 6.]])
+    forecast = dict(id=4, horizon_samples=4, origin_sample=0, evidence_age=0,
+                    position=torch.tensor([6., 9.]), mixture_centers=centers,
+                    mixture_weights=torch.tensor([.25, .75]),
+                    marginal_interval_90=torch.tensor([[2., 3.], [10., 15.]]),
+                    component_sigma_pixels=1.)
+    state = dict(sample=0, entities=[],
+                 forecasts=[forecast, dict(forecast, mixture_centers=centers.detach())])
+    output = encoder.encode(state, None)
+    first, second = (item['mixture_centers'] for item in output['forecasts'])
+    first[0, 0] = -2
+    assert second[0, 0] == -2
+    assert centers[0, 0] == 4
 
 
 def test_component_order_matches_scalar_canonical_sort():

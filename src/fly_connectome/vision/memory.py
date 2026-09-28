@@ -110,12 +110,15 @@ class LocalMetricAssociation(PatchAssociation):
         return (outcomes*weights[:, None]).sum(0)
 
     def local_outcomes(self, key):
-        if (getattr(self, '_variance_keys', None) is not self.keys or
-                getattr(self, '_variance_version', None) != self.keys._version):
-            self._variance = self.keys.var(0, unbiased=False).clamp(min=1e-4)
-            self._variance_keys = self.keys
-            self._variance_version = self.keys._version
-        variance = self._variance
+        if self.keys.is_inference():
+            variance = self.keys.var(0, unbiased=False).clamp(min=1e-4)
+        else:
+            if (getattr(self, '_variance_keys', None) is not self.keys or
+                    getattr(self, '_variance_version', None) != self.keys._version):
+                self._variance = self.keys.var(0, unbiased=False).clamp(min=1e-4)
+                self._variance_keys = self.keys
+                self._variance_version = self.keys._version
+            variance = self._variance
         sensory_distance = ((self.keys-key).square()/variance).mean(1)
         nearby = sensory_distance.topk(min(32, len(self.keys)), largest=False).indices
         pre, post = self.keys[nearby], self.values[nearby]
