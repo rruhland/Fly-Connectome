@@ -24,10 +24,12 @@ Pong's privileged state supplies only physics and scoring diagnostics.
 ## Measurement and preservation
 
 A runnable script will time 40 warmup plus 200 visual samples in each mode on
-one CPU thread. It will report total latency, render/event/vision/encoder/physics
-breakdown, p50/p95, simulated physics ticks, game outcomes, and bank size. The
-same script runs against the original source path and this worktree. A digest
-check compares every rendered frame, event tensor, complete vision output,
+one CPU thread. Frozen evaluation loads a checkpoint learned from Pong, so its
+long-context path is exercised. It will report total latency, render/event/vision/encoder/physics
+breakdown, p50/p95, 20 ms deadline misses, aggregate compute rate, simulated
+physics ticks, game outcomes, and bank size. Explicit source roots prevent an
+editable installation from silently selecting the wrong checkout. A tracked
+digest check compares every rendered frame, event tensor, complete vision output,
 encoded output, Pong state/outcomes, and the learned checkpoint across revisions.
 Focused tests check the event conversion against `EventCamera`, exact physics
 cadence, and render equivalence for any rendering optimization. Full pytest must

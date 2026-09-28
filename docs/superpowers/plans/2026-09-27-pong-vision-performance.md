@@ -14,9 +14,9 @@
 
 ## Task 1: Executable full-loop reference
 
-- [x] Add a reproducible script for 40 warmup and 200 measured visual samples in online and frozen modes, with phase timings and bank/outcome summaries.
+- [x] Add a reproducible script for 40 warmup and 200 measured visual samples in online and frozen learned-checkpoint modes, with phase timings, 20 ms deadline counts, source provenance, and bank/outcome summaries.
 - [x] Test dense event conversion against `EventCamera` and verify the 2/2/3/2/3 physics schedule.
-- [x] Run the script against original and optimized source paths; record baseline and current latency.
+- [x] Run the script against explicit original and optimized source paths; record paired baseline and current latency, including a 1,000-sample later online window.
 
 ## Task 2: Measured exact optimizations
 
@@ -26,6 +26,6 @@
 
 ## Task 3: Final evidence
 
-- [x] Compare full-loop trajectories and learned checkpoints across original and optimized revisions.
+- [x] Commit a parity runner and compare full-loop online and learned-checkpoint evaluation trajectories plus saved checkpoints across original and optimized revisions.
 - [x] Run the full suite and paired training/evaluation benchmarks with no competing test process.
 - [x] Record achieved visual sample rates, game/render costs, long-memory limits, and unachieved targets; commit the changes.

@@ -1,0 +1,619 @@
+{
+  "reference_commit": "57600a95af7d0c36e491e28cd87eb3395d624c9a",
+  "optimized_branch": "codex/m1a-performance",
+  "optimized_runtime_commit": "4f0150515636fdf8680955aa43f6be1fef4bbade",
+  "parity_json_sha256": "bc2bc53f10e0e9e4c25a52ef074c22cb4b0b0f6d2199b75b34d53250c4eb01e6",
+  "checkpoint_content_digest": "96461b68280c4cdd2e61c56dcf91570e2fb52c0ddba0a3b68f7ead2dbbc4051c",
+  "benchmarks": {
+    "online-original-1": {
+      "source_package": "C:\\Users\\rruhl\\OneDrive\\Documents\\Fly-Connectome\\src\\fly_connectome",
+      "seed": 1101,
+      "learning": true,
+      "samples": 240,
+      "timed_samples": 200,
+      "physics_ticks": 576,
+      "physics_hz": 120,
+      "vision_hz": 50,
+      "phases_ms": {
+        "render": {
+          "p50_ms": 0.18755003111436963,
+          "p95_ms": 0.24637001333758216
+        },
+        "events": {
+          "p50_ms": 0.040199956856667995,
+          "p95_ms": 0.05703507922589774
+        },
+        "vision": {
+          "p50_ms": 22.886699996888638,
+          "p95_ms": 32.630839984631166
+        },
+        "encoder": {
+          "p50_ms": 3.0550999799743295,
+          "p95_ms": 4.302205034764483
+        },
+        "physics": {
+          "p50_ms": 1.1071500484831631,
+          "p95_ms": 1.604594994569197
+        },
+        "total": {
+          "p50_ms": 27.580699999816716,
+          "p95_ms": 37.80425492441282
+        }
+      },
+      "mean_total_ms": 27.660137500497513,
+      "compute_samples_per_second": 36.153110228827074,
+      "deadline_misses_20ms": 158,
+      "mean_active_features": 115.815,
+      "mean_entities": 4.205,
+      "points": 0,
+      "misses": 2,
+      "hits": 0,
+      "long_context_forecasts": 1005,
+      "initial_bank_examples": {
+        "1/short": 2048,
+        "1/long": 0,
+        "4/short": 1907,
+        "4/long": 0,
+        "8/short": 1139,
+        "8/long": 0
+      },
+      "final_bank_examples": {
+        "1/short": 2534,
+        "1/long": 402,
+        "4/short": 2359,
+        "4/long": 378,
+        "8/short": 1568,
+        "8/long": 361
+      }
+    },
+    "online-optimized-1": {
+      "source_package": "C:\\Users\\rruhl\\.codex\\worktrees\\m1a-performance\\Fly-Connectome\\src\\fly_connectome",
+      "seed": 1101,
+      "learning": true,
+      "samples": 240,
+      "timed_samples": 200,
+      "physics_ticks": 576,
+      "physics_hz": 120,
+      "vision_hz": 50,
+      "phases_ms": {
+        "render": {
+          "p50_ms": 0.17625000327825546,
+          "p95_ms": 0.2306050097104162
+        },
+        "events": {
+          "p50_ms": 0.03840000135824084,
+          "p95_ms": 0.0559499603696167
+        },
+        "vision": {
+          "p50_ms": 9.448249998968095,
+          "p95_ms": 11.023135000141338
+        },
+        "encoder": {
+          "p50_ms": 2.597500046249479,
+          "p95_ms": 3.4067899629008016
+        },
+        "physics": {
+          "p50_ms": 1.1272000265307724,
+          "p95_ms": 1.6636049782391638
+        },
+        "total": {
+          "p50_ms": 13.400449941400439,
+          "p95_ms": 14.952044986421242
+        }
+      },
+      "mean_total_ms": 13.282866498921067,
+      "compute_samples_per_second": 75.28495449993625,
+      "deadline_misses_20ms": 0,
+      "mean_active_features": 115.815,
+      "mean_entities": 4.205,
+      "points": 0,
+      "misses": 2,
+      "hits": 0,
+      "long_context_forecasts": 1005,
+      "initial_bank_examples": {
+        "1/short": 2048,
+        "1/long": 0,
+        "4/short": 1907,
+        "4/long": 0,
+        "8/short": 1139,
+        "8/long": 0
+      },
+      "final_bank_examples": {
+        "1/short": 2534,
+        "1/long": 402,
+        "4/short": 2359,
+        "4/long": 378,
+        "8/short": 1568,
+        "8/long": 361
+      }
+    },
+    "online-optimized-2": {
+      "source_package": "C:\\Users\\rruhl\\.codex\\worktrees\\m1a-performance\\Fly-Connectome\\src\\fly_connectome",
+      "seed": 1101,
+      "learning": true,
+      "samples": 240,
+      "timed_samples": 200,
+      "physics_ticks": 576,
+      "physics_hz": 120,
+      "vision_hz": 50,
+      "phases_ms": {
+        "render": {
+          "p50_ms": 0.1711500226520002,
+          "p95_ms": 0.21401999983936545
+        },
+        "events": {
+          "p50_ms": 0.03760005347430706,
+          "p95_ms": 0.052514934213832014
+        },
+        "vision": {
+          "p50_ms": 9.260250080842525,
+          "p95_ms": 10.923695040401071
+        },
+        "encoder": {
+          "p50_ms": 2.4099500151351094,
+          "p95_ms": 3.445205034222454
+        },
+        "physics": {
+          "p50_ms": 1.1161500005982816,
+          "p95_ms": 1.6920500667765734
+        },
+        "total": {
+          "p50_ms": 13.065300008747727,
+          "p95_ms": 15.261709917103872
+        }
+      },
+      "mean_total_ms": 13.024880999000743,
+      "compute_samples_per_second": 76.77613331566862,
+      "deadline_misses_20ms": 0,
+      "mean_active_features": 115.815,
+      "mean_entities": 4.205,
+      "points": 0,
+      "misses": 2,
+      "hits": 0,
+      "long_context_forecasts": 1005,
+      "initial_bank_examples": {
+        "1/short": 2048,
+        "1/long": 0,
+        "4/short": 1907,
+        "4/long": 0,
+        "8/short": 1139,
+        "8/long": 0
+      },
+      "final_bank_examples": {
+        "1/short": 2534,
+        "1/long": 402,
+        "4/short": 2359,
+        "4/long": 378,
+        "8/short": 1568,
+        "8/long": 361
+      }
+    },
+    "online-original-2": {
+      "source_package": "C:\\Users\\rruhl\\OneDrive\\Documents\\Fly-Connectome\\src\\fly_connectome",
+      "seed": 1101,
+      "learning": true,
+      "samples": 240,
+      "timed_samples": 200,
+      "physics_ticks": 576,
+      "physics_hz": 120,
+      "vision_hz": 50,
+      "phases_ms": {
+        "render": {
+          "p50_ms": 0.1820499892346561,
+          "p95_ms": 0.26732505066320295
+        },
+        "events": {
+          "p50_ms": 0.03925006603822112,
+          "p95_ms": 0.05770497373305261
+        },
+        "vision": {
+          "p50_ms": 22.86185004049912,
+          "p95_ms": 35.934814997017384
+        },
+        "encoder": {
+          "p50_ms": 3.061999974306673,
+          "p95_ms": 4.449709987966343
+        },
+        "physics": {
+          "p50_ms": 1.1977499816566706,
+          "p95_ms": 1.7548199684824792
+        },
+        "total": {
+          "p50_ms": 27.58429996902123,
+          "p95_ms": 41.31559994420967
+        }
+      },
+      "mean_total_ms": 28.10225799854379,
+      "compute_samples_per_second": 35.58432920414503,
+      "deadline_misses_20ms": 161,
+      "mean_active_features": 115.815,
+      "mean_entities": 4.205,
+      "points": 0,
+      "misses": 2,
+      "hits": 0,
+      "long_context_forecasts": 1005,
+      "initial_bank_examples": {
+        "1/short": 2048,
+        "1/long": 0,
+        "4/short": 1907,
+        "4/long": 0,
+        "8/short": 1139,
+        "8/long": 0
+      },
+      "final_bank_examples": {
+        "1/short": 2534,
+        "1/long": 402,
+        "4/short": 2359,
+        "4/long": 378,
+        "8/short": 1568,
+        "8/long": 361
+      }
+    },
+    "learned-eval-original-1": {
+      "source_package": "C:\\Users\\rruhl\\OneDrive\\Documents\\Fly-Connectome\\src\\fly_connectome",
+      "seed": 1101,
+      "learning": false,
+      "samples": 240,
+      "timed_samples": 200,
+      "physics_ticks": 576,
+      "physics_hz": 120,
+      "vision_hz": 50,
+      "phases_ms": {
+        "render": {
+          "p50_ms": 0.2775000175461173,
+          "p95_ms": 0.42415508069097996
+        },
+        "events": {
+          "p50_ms": 0.06184994708746672,
+          "p95_ms": 0.09040498989634216
+        },
+        "vision": {
+          "p50_ms": 29.816500027664006,
+          "p95_ms": 49.46455493336543
+        },
+        "encoder": {
+          "p50_ms": 4.399049968924373,
+          "p95_ms": 6.863124953815712
+        },
+        "physics": {
+          "p50_ms": 1.6191000468097627,
+          "p95_ms": 2.9625150375068166
+        },
+        "total": {
+          "p50_ms": 36.653999995905906,
+          "p95_ms": 57.62977504055015
+        }
+      },
+      "mean_total_ms": 37.89795700169634,
+      "compute_samples_per_second": 26.38664664576086,
+      "deadline_misses_20ms": 184,
+      "mean_active_features": 117.93,
+      "mean_entities": 4.205,
+      "points": 0,
+      "misses": 2,
+      "hits": 0,
+      "long_context_forecasts": 1005,
+      "initial_bank_examples": {
+        "1/short": 2534,
+        "1/long": 402,
+        "4/short": 2359,
+        "4/long": 378,
+        "8/short": 1568,
+        "8/long": 361
+      },
+      "final_bank_examples": {
+        "1/short": 2534,
+        "1/long": 402,
+        "4/short": 2359,
+        "4/long": 378,
+        "8/short": 1568,
+        "8/long": 361
+      }
+    },
+    "learned-eval-optimized-1": {
+      "source_package": "C:\\Users\\rruhl\\.codex\\worktrees\\m1a-performance\\Fly-Connectome\\src\\fly_connectome",
+      "seed": 1101,
+      "learning": false,
+      "samples": 240,
+      "timed_samples": 200,
+      "physics_ticks": 576,
+      "physics_hz": 120,
+      "vision_hz": 50,
+      "phases_ms": {
+        "render": {
+          "p50_ms": 0.27989991940557957,
+          "p95_ms": 0.47735002590343356
+        },
+        "events": {
+          "p50_ms": 0.06220000796020031,
+          "p95_ms": 0.1047749770805236
+        },
+        "vision": {
+          "p50_ms": 12.940449989400804,
+          "p95_ms": 19.406285102013495
+        },
+        "encoder": {
+          "p50_ms": 3.7800500285811722,
+          "p95_ms": 6.366360047832131
+        },
+        "physics": {
+          "p50_ms": 1.7241999739781022,
+          "p95_ms": 3.0520650616381313
+        },
+        "total": {
+          "p50_ms": 19.200599985197186,
+          "p95_ms": 27.259685029275712
+        }
+      },
+      "mean_total_ms": 19.7340889996849,
+      "compute_samples_per_second": 50.673735180578504,
+      "deadline_misses_20ms": 71,
+      "mean_active_features": 117.93,
+      "mean_entities": 4.205,
+      "points": 0,
+      "misses": 2,
+      "hits": 0,
+      "long_context_forecasts": 1005,
+      "initial_bank_examples": {
+        "1/short": 2534,
+        "1/long": 402,
+        "4/short": 2359,
+        "4/long": 378,
+        "8/short": 1568,
+        "8/long": 361
+      },
+      "final_bank_examples": {
+        "1/short": 2534,
+        "1/long": 402,
+        "4/short": 2359,
+        "4/long": 378,
+        "8/short": 1568,
+        "8/long": 361
+      }
+    },
+    "learned-eval-optimized-2": {
+      "source_package": "C:\\Users\\rruhl\\.codex\\worktrees\\m1a-performance\\Fly-Connectome\\src\\fly_connectome",
+      "seed": 1101,
+      "learning": false,
+      "samples": 240,
+      "timed_samples": 200,
+      "physics_ticks": 576,
+      "physics_hz": 120,
+      "vision_hz": 50,
+      "phases_ms": {
+        "render": {
+          "p50_ms": 0.2795499749481678,
+          "p95_ms": 0.386915024137124
+        },
+        "events": {
+          "p50_ms": 0.062050006818026304,
+          "p95_ms": 0.08740996709093451
+        },
+        "vision": {
+          "p50_ms": 12.705600005574524,
+          "p95_ms": 16.01671496755442
+        },
+        "encoder": {
+          "p50_ms": 3.905949997715652,
+          "p95_ms": 5.5803699942771345
+        },
+        "physics": {
+          "p50_ms": 1.674650062341243,
+          "p95_ms": 3.09430003981106
+        },
+        "total": {
+          "p50_ms": 18.923249910585582,
+          "p95_ms": 23.155040037818253
+        }
+      },
+      "mean_total_ms": 18.938541505485773,
+      "compute_samples_per_second": 52.8023765563118,
+      "deadline_misses_20ms": 64,
+      "mean_active_features": 117.93,
+      "mean_entities": 4.205,
+      "points": 0,
+      "misses": 2,
+      "hits": 0,
+      "long_context_forecasts": 1005,
+      "initial_bank_examples": {
+        "1/short": 2534,
+        "1/long": 402,
+        "4/short": 2359,
+        "4/long": 378,
+        "8/short": 1568,
+        "8/long": 361
+      },
+      "final_bank_examples": {
+        "1/short": 2534,
+        "1/long": 402,
+        "4/short": 2359,
+        "4/long": 378,
+        "8/short": 1568,
+        "8/long": 361
+      }
+    },
+    "learned-eval-original-2": {
+      "source_package": "C:\\Users\\rruhl\\OneDrive\\Documents\\Fly-Connectome\\src\\fly_connectome",
+      "seed": 1101,
+      "learning": false,
+      "samples": 240,
+      "timed_samples": 200,
+      "physics_ticks": 576,
+      "physics_hz": 120,
+      "vision_hz": 50,
+      "phases_ms": {
+        "render": {
+          "p50_ms": 0.284650013782084,
+          "p95_ms": 0.41005997918546194
+        },
+        "events": {
+          "p50_ms": 0.06255001062527299,
+          "p95_ms": 0.0941050122492015
+        },
+        "vision": {
+          "p50_ms": 33.81039999658242,
+          "p95_ms": 49.85186498379334
+        },
+        "encoder": {
+          "p50_ms": 4.710549954324961,
+          "p95_ms": 6.583385029807685
+        },
+        "physics": {
+          "p50_ms": 1.7641499289311469,
+          "p95_ms": 2.9523250064812596
+        },
+        "total": {
+          "p50_ms": 41.3086999906227,
+          "p95_ms": 57.64735500561073
+        }
+      },
+      "mean_total_ms": 41.273535997606814,
+      "compute_samples_per_second": 24.228600138790714,
+      "deadline_misses_20ms": 193,
+      "mean_active_features": 117.93,
+      "mean_entities": 4.205,
+      "points": 0,
+      "misses": 2,
+      "hits": 0,
+      "long_context_forecasts": 1005,
+      "initial_bank_examples": {
+        "1/short": 2534,
+        "1/long": 402,
+        "4/short": 2359,
+        "4/long": 378,
+        "8/short": 1568,
+        "8/long": 361
+      },
+      "final_bank_examples": {
+        "1/short": 2534,
+        "1/long": 402,
+        "4/short": 2359,
+        "4/long": 378,
+        "8/short": 1568,
+        "8/long": 361
+      }
+    },
+    "late-original": {
+      "source_package": "C:\\Users\\rruhl\\OneDrive\\Documents\\Fly-Connectome\\src\\fly_connectome",
+      "seed": 1101,
+      "learning": true,
+      "samples": 1000,
+      "timed_samples": 200,
+      "physics_ticks": 2400,
+      "physics_hz": 120,
+      "vision_hz": 50,
+      "phases_ms": {
+        "render": {
+          "p50_ms": 0.29134994838386774,
+          "p95_ms": 0.46983507345430525
+        },
+        "events": {
+          "p50_ms": 0.06419996498152614,
+          "p95_ms": 0.10122495586983855
+        },
+        "vision": {
+          "p50_ms": 49.42684998968616,
+          "p95_ms": 61.88723500235937
+        },
+        "encoder": {
+          "p50_ms": 4.671600006986409,
+          "p95_ms": 7.368690066505222
+        },
+        "physics": {
+          "p50_ms": 1.7217000713571906,
+          "p95_ms": 2.97878501587547
+        },
+        "total": {
+          "p50_ms": 55.96504994900897,
+          "p95_ms": 70.0105250114575
+        }
+      },
+      "mean_total_ms": 54.69273849972524,
+      "compute_samples_per_second": 18.283962870226798,
+      "deadline_misses_20ms": 200,
+      "mean_active_features": 113.145,
+      "mean_entities": 4.085,
+      "points": 0,
+      "misses": 7,
+      "hits": 2,
+      "long_context_forecasts": 1344,
+      "initial_bank_examples": {
+        "1/short": 2048,
+        "1/long": 0,
+        "4/short": 1907,
+        "4/long": 0,
+        "8/short": 1139,
+        "8/long": 0
+      },
+      "final_bank_examples": {
+        "1/short": 4192,
+        "1/long": 1893,
+        "4/short": 3956,
+        "4/long": 1819,
+        "8/short": 3113,
+        "8/long": 1747
+      }
+    },
+    "late-optimized": {
+      "source_package": "C:\\Users\\rruhl\\.codex\\worktrees\\m1a-performance\\Fly-Connectome\\src\\fly_connectome",
+      "seed": 1101,
+      "learning": true,
+      "samples": 1000,
+      "timed_samples": 200,
+      "physics_ticks": 2400,
+      "physics_hz": 120,
+      "vision_hz": 50,
+      "phases_ms": {
+        "render": {
+          "p50_ms": 0.28315000236034393,
+          "p95_ms": 0.3991450124885885
+        },
+        "events": {
+          "p50_ms": 0.06340001709759235,
+          "p95_ms": 0.10721499565988768
+        },
+        "vision": {
+          "p50_ms": 18.18005001405254,
+          "p95_ms": 23.504729976411895
+        },
+        "encoder": {
+          "p50_ms": 3.7649499136023223,
+          "p95_ms": 5.858439911389723
+        },
+        "physics": {
+          "p50_ms": 1.6834999551065266,
+          "p95_ms": 2.830685011576861
+        },
+        "total": {
+          "p50_ms": 24.155599996447563,
+          "p95_ms": 31.584919983288273
+        }
+      },
+      "mean_total_ms": 24.686386503162794,
+      "compute_samples_per_second": 40.5081561804066,
+      "deadline_misses_20ms": 191,
+      "mean_active_features": 113.145,
+      "mean_entities": 4.085,
+      "points": 0,
+      "misses": 7,
+      "hits": 2,
+      "long_context_forecasts": 1344,
+      "initial_bank_examples": {
+        "1/short": 2048,
+        "1/long": 0,
+        "4/short": 1907,
+        "4/long": 0,
+        "8/short": 1139,
+        "8/long": 0
+      },
+      "final_bank_examples": {
+        "1/short": 4192,
+        "1/long": 1893,
+        "4/short": 3956,
+        "4/long": 1819,
+        "8/short": 3113,
+        "8/long": 1747
+      }
+    }
+  }
+}
