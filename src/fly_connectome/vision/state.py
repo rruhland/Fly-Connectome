@@ -109,6 +109,9 @@ class StreamingVisualState:
             if age == 0:
                 observed[identity] = row['position']
         # Current sensor endpoints settle only forecasts made in the past.
+        batchable = (all(type(model) is ContextBelief for model in self.dynamics.values()) and
+                     len({id(model) for model in self.dynamics.values()}) == len(self.dynamics))
+        updates = {}
         for item in self.pending.pop(tracker.frame, []):
             if not learn or not available:
                 continue
@@ -117,10 +120,15 @@ class StreamingVisualState:
             self.calibration[horizon].observe(endpoint is not None,
                 None if endpoint is None else float((endpoint-prediction).norm()))
             if endpoint is not None:
-                if credit is None:
-                    self.dynamics[horizon].observe(history, endpoint-origin)
+                displacement = endpoint-origin
+                if batchable:
+                    updates.setdefault(horizon, []).append((history, displacement, credit))
+                elif credit is None:
+                    self.dynamics[horizon].observe(history, displacement)
                 else:
-                    self.dynamics[horizon].observe(history, endpoint-origin, credit=credit)
+                    self.dynamics[horizon].observe(history, displacement, credit=credit)
+        for horizon, outcomes in updates.items():
+            self.dynamics[horizon].observe_many(outcomes)
         forecasts = []
         summaries = {}
         self._issued_distributions = {}

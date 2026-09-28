@@ -3,8 +3,47 @@
 import copy
 import math
 
+import numpy as np
 import torch
 import torch.nn.functional as F
+
+
+def _copy_records(records):
+    copied, memo = [], {}
+    memo[id(records)] = copied
+    for record in records:
+        item = memo.get(id(record))
+        if item is None:
+            item = {}
+            memo[id(record)] = item
+            for key, value in record.items():
+                if type(value) is torch.Tensor and not value.requires_grad and value._base is None:
+                    clone = memo.get(id(value))
+                    if clone is None:
+                        clone = value.clone()
+                        memo[id(value)] = clone
+                    item[copy.deepcopy(key, memo)] = clone
+                else:
+                    item[copy.deepcopy(key, memo)] = copy.deepcopy(value, memo)
+        copied.append(item)
+    return copied
+
+
+def _ordered_components(forecasts):
+    rows = []
+    for forecast in forecasts:
+        weights = forecast['mixture_weights'].detach().to(device='cpu', dtype=torch.float64)
+        if not len(weights):
+            continue
+        centers = forecast['normalized_centers'].detach().to(device='cpu', dtype=torch.float64)
+        horizon = torch.full((len(weights), 1), forecast['horizon_samples']-1,
+                             dtype=torch.float64)
+        rows.append(torch.cat((horizon, centers, weights[:, None]), 1))
+    if not rows:
+        return torch.empty(0, 4, dtype=torch.get_default_dtype())
+    values = torch.cat(rows).numpy()
+    order = np.lexsort((values[:, 3], values[:, 2], values[:, 1], values[:, 0]))
+    return torch.from_numpy(values[order]).to(torch.get_default_dtype())
 
 
 class VisualStateEncoder:
@@ -56,7 +95,7 @@ class VisualStateEncoder:
             raise ValueError('transport v1 supports horizons 1 through 8 samples')
         elapsed = self.period if self.sample is None else (sample-self.sample)*self.period
         self.sample = sample
-        entities, forecasts = copy.deepcopy(state['entities']), copy.deepcopy(state['forecasts'])
+        entities, forecasts = _copy_records(state['entities']), _copy_records(state['forecasts'])
         active = {e['id'] for e in entities}
         self.history = {k: v for k, v in self.history.items() if k in active}
         for entity in entities:
@@ -118,10 +157,8 @@ class VisualStateEncoder:
                     dv = other['observed_velocity']-v
                     relations[1:, y, x] += torch.stack((dv[0].clamp(min=0), (-dv[0]).clamp(min=0),
                                                        dv[1].clamp(min=0), (-dv[1]).clamp(min=0)))
-        components = sorted((f['horizon_samples']-1, *p.tolist(), float(w))
-                            for f in forecasts for p, w in zip(f['normalized_centers'], f['mixture_weights']))
-        if components:
-            component = torch.tensor(components)
+        component = _ordered_components(forecasts)
+        if len(component):
             horizon, position, weight = component[:, 0].long(), component[:, 1:3], component[:, 3]
             off_image = (position.abs() > self.half_extent).any(1)
             outside.index_add_(0, horizon[off_image], weight[off_image])

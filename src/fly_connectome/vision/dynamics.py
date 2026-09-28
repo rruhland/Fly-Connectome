@@ -75,6 +75,18 @@ class AppendSpatialBelief(SpatialBelief):
         self.keys = torch.cat((self.keys, key[None]))
         self.values = torch.cat((self.values, (basis @ displacement/scale)[None]))
 
+    @torch.no_grad()
+    def append_many(self, observations):
+        keys, values = [], []
+        for history, displacement in observations:
+            key, basis, scale = self.encode(history)
+            keys.append(key)
+            values.append(basis @ displacement/scale)
+        if keys:
+            self.seen += len(keys)
+            self.keys = torch.cat((self.keys, torch.stack(keys)))
+            self.values = torch.cat((self.values, torch.stack(values)))
+
 
 class ContextBelief(SpatialBelief):
     """Eight actual displacements, with the approved four-step fallback."""
@@ -102,6 +114,18 @@ class ContextBelief(SpatialBelief):
         self.short.observe(history[-4:], displacement)
         if len(history) == 8:
             self.long.observe(history, displacement)
+
+    @torch.no_grad()
+    def observe_many(self, updates):
+        short, long = [], []
+        for history, displacement, credit in updates:
+            if credit is not None:
+                self.calibration.observe(mixture_pit(*credit, displacement))
+            short.append((history[-4:], displacement))
+            if len(history) == 8:
+                long.append((history, displacement))
+        self.short.append_many(short)
+        self.long.append_many(long)
 
 
 def mixture_log_prob(centers, weights, target):
