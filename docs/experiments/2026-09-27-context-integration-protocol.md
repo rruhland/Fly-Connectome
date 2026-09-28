@@ -1,5 +1,8 @@
 # Approved context integration: execution ledger
 
+Historical ledger for the initially blocked run. The subsequent authorized fix
+passed and was promoted; see [the follow-up findings](2026-09-27-context-consensus-findings.md).
+
 The user approved integration and promotion, including the documented two-seed
 retention exception. No change to the tested mechanism is authorized by this run.
 

@@ -1,10 +1,12 @@
 # Proposed production integration: eight-step motion memory
 
-Status: user approved integration and promotion on 2026-09-27, including the
-two-seed retention exception. Integration is implemented as an explicit upgrade,
-but default promotion is blocked by an unexpected online context-memory regression.
-See the [integration findings](../experiments/2026-09-27-context-integration-findings.md) and
-[execution ledger](../experiments/2026-09-27-context-integration-protocol.md).
+Status: promoted after the user authorized the investigative fix and promotion.
+The two-seed retention exception remains accepted and tracked. The context-memory
+regression was repaired using local sign consensus, preserving online learning;
+all active integration gates pass. New checkpoints use version 3 to distinguish
+that rule from the original version-2 candidate. See the
+[promotion findings](../experiments/2026-09-27-context-consensus-findings.md).
+The proposal below preserves the original integration design.
 The user requires approval before production architecture promotion. The completed
 [five-seed findings](../experiments/2026-09-27-long-context-findings.md) support this
 as the next integration candidate. Implementation/promotion is contingent on review

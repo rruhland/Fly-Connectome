@@ -1,0 +1,46 @@
+{
+  "before": {
+    "spatial": {
+      "hits": 0.0,
+      "total": 64
+    },
+    "appearance": {
+      "hits": 4.0,
+      "total": 64
+    }
+  },
+  "stages": [
+    {
+      "domain": "appearance",
+      "samples": 8192,
+      "retained": {
+        "spatial": {
+          "hits": 36.0,
+          "total": 64
+        },
+        "appearance": {
+          "hits": 64.0,
+          "total": 64
+        }
+      },
+      "keys_changed": true,
+      "examples": 128
+    },
+    {
+      "domain": "spatial",
+      "samples": 8192,
+      "retained": {
+        "spatial": {
+          "hits": 64.0,
+          "total": 64
+        },
+        "appearance": {
+          "hits": 64.0,
+          "total": 64
+        }
+      },
+      "keys_changed": true,
+      "examples": 256
+    }
+  ]
+}

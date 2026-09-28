@@ -1,0 +1,106 @@
+{
+  "updates": 4,
+  "winner_anchor_mismatches": 0,
+  "rows": [
+    {
+      "scene": 27,
+      "kind": "period4",
+      "sample": 3,
+      "previous_winner_seen": 1,
+      "last_actual_seen": 1,
+      "previously_confirmed": false,
+      "previous_hits": 2,
+      "previous_position": [
+        42.0,
+        9.0
+      ],
+      "previous_velocity": [
+        0.0,
+        1.0
+      ],
+      "correction": [
+        -1.5,
+        2.5
+      ],
+      "current_position": [
+        39.0,
+        16.0
+      ]
+    },
+    {
+      "scene": 69,
+      "kind": "period4",
+      "sample": 4,
+      "previous_winner_seen": 2,
+      "last_actual_seen": 2,
+      "previously_confirmed": true,
+      "previous_hits": 3,
+      "previous_position": [
+        9.0,
+        36.0
+      ],
+      "previous_velocity": [
+        1.0,
+        0.0
+      ],
+      "correction": [
+        3.0,
+        -1.0
+      ],
+      "current_position": [
+        17.0,
+        34.0
+      ]
+    },
+    {
+      "scene": 99,
+      "kind": "period4",
+      "sample": 4,
+      "previous_winner_seen": 2,
+      "last_actual_seen": 2,
+      "previously_confirmed": true,
+      "previous_hits": 3,
+      "previous_position": [
+        44.0,
+        11.0
+      ],
+      "previous_velocity": [
+        0.0,
+        1.0
+      ],
+      "correction": [
+        -1.5,
+        2.0
+      ],
+      "current_position": [
+        41.0,
+        17.0
+      ]
+    },
+    {
+      "scene": 147,
+      "kind": "period4",
+      "sample": 5,
+      "previous_winner_seen": 3,
+      "last_actual_seen": 3,
+      "previously_confirmed": true,
+      "previous_hits": 4,
+      "previous_position": [
+        27.0,
+        12.0
+      ],
+      "previous_velocity": [
+        0.0,
+        1.0
+      ],
+      "correction": [
+        1.0,
+        2.5
+      ],
+      "current_position": [
+        29.0,
+        19.0
+      ]
+    }
+  ]
+}

@@ -41,9 +41,9 @@ def score(base, memory):
 
 
 @torch.no_grad()
-def main():
+def main(*, factory=load_default, out=Path('docs/experiments/2026-09-27-context-retention-results.json')):
     torch.set_num_threads(1)
-    base = load_default()
+    base = factory()
     memory = copy.deepcopy(base.state.memory)
     result = dict(before=score(base, memory), stages=[])
     # Whole scene training, through actual reappearance; no hidden target enters step.
@@ -60,7 +60,7 @@ def main():
                     samples += 1
         result['stages'].append(dict(domain=name, samples=samples, retained=score(base, memory),
             keys_changed=not torch.equal(original_keys, memory.keys), examples=len(memory.keys)))
-    Path('docs/experiments/2026-09-27-context-retention-results.json').write_text(json.dumps(result, indent=2)+'\n')
+    out.write_text(json.dumps(result, indent=2)+'\n')
     print(json.dumps(result), flush=True)
 
 

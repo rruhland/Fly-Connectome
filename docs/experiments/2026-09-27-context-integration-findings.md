@@ -1,5 +1,10 @@
 # Eight-step integration: useful predictor, blocked promotion
 
+Historical failure report. The subsequent user-authorized consensus repair and
+promotion are recorded in [these findings](2026-09-27-context-consensus-findings.md).
+The failed run and its data remain preserved here; reproduce its original code
+at commit `ca94064`. The current integration runner validates the repaired rule.
+
 The user approved integration and promotion, including the earlier two-seed
 retention exception. The installed implementation and version-2 checkpoints are
 complete. **The production default remains version 1:** the active online run

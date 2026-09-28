@@ -10,7 +10,7 @@ __all__ = ['ProbabilisticVisualState', 'VisualStateEncoder', 'load_default', 'lo
 
 def load_default():
     """Load the approved CPU baseline into a fresh 64x64 scene."""
-    return load_legacy_default()
+    return load_legacy_default().upgrade_temporal_context()
 
 
 def load_legacy_default():

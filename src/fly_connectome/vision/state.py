@@ -4,7 +4,7 @@ from collections import deque
 import torch
 from .observation import LocalObservationModel, local_motion_map
 from .association import StatisticalObservationTracker
-from .memory import FrameObservationState, LocalMetricAssociation
+from .memory import FrameObservationState, LocalMetricAssociation, ConsensusLocalMetricAssociation
 from .dynamics import SpatialBelief, ContextBelief, mixture_quantile
 
 class EndpointCalibration:
@@ -195,18 +195,27 @@ class ProbabilisticVisualState(StreamingVisualState):
         return result
 
     def upgrade_temporal_context(self):
-        """Upgrade learned priors in place and start a fresh scene."""
+        """Enable eight-step dynamics and consensus context; start a fresh scene."""
         if any(type(m) is not SpatialBelief for m in self.dynamics.values()):
             raise ValueError('upgrade requires version-1 spatial beliefs')
+        if type(self.state.memory) is not LocalMetricAssociation:
+            raise ValueError('upgrade requires the legacy context memory')
         self.dynamics = {h: ContextBelief(m) for h, m in self.dynamics.items()}
+        memory = ConsensusLocalMetricAssociation(dimensions=self.state.memory.keys.shape[1])
+        for name in ('keys', 'values', 'metric'):
+            setattr(memory, name, getattr(self.state.memory, name).clone())
+        self.state.memory = memory
         self.reset_state()
         return self
 
     def save(self, path):
-        if type(self.state.memory) is not LocalMetricAssociation or any(
+        if type(self.state.memory) not in (LocalMetricAssociation, ConsensusLocalMetricAssociation) or any(
                 type(m) not in (SpatialBelief, ContextBelief) for m in self.dynamics.values()):
             raise ValueError('unsupported probabilistic candidate component')
         contextual = any(type(m) is ContextBelief for m in self.dynamics.values())
+        consensus = type(self.state.memory) is ConsensusLocalMetricAssociation
+        if consensus and not contextual:
+            raise ValueError('consensus checkpoints require contextual dynamics')
         if contextual and not all(type(m) is ContextBelief for m in self.dynamics.values()):
             raise ValueError('mixed dynamics checkpoint is unsupported')
         def bank(m):
@@ -215,7 +224,8 @@ class ProbabilisticVisualState(StreamingVisualState):
         dynamics = {h: (dict(short=bank(m.short), long=bank(m.long),
                             ranks=list(m.calibration.ranks)) if contextual else bank(m))
                     for h, m in self.dynamics.items()}
-        torch.save(dict(version=2 if contextual else 1, architecture='ProbabilisticVisualState',
+        torch.save(dict(version=3 if consensus else (2 if contextual else 1), architecture='ProbabilisticVisualState',
+            **(dict(context_rule='local-sign-consensus') if consensus else {}),
             sensor='grayscale-every-sample-plus-events', height=self.observer.height,
             width=self.observer.width, observer=dict(weights=self.observer.weights, bias=self.observer.bias),
             memory={name: getattr(self.state.memory, name) for name in ('keys', 'values', 'metric')},
@@ -226,8 +236,10 @@ class ProbabilisticVisualState(StreamingVisualState):
     @classmethod
     def load(cls, path):
         data = torch.load(path, weights_only=True)
-        if data['version'] not in (1, 2) or data['architecture'] != 'ProbabilisticVisualState':
+        if data['version'] not in (1, 2, 3) or data['architecture'] != 'ProbabilisticVisualState':
             raise ValueError('unsupported probabilistic candidate checkpoint')
+        if data['version'] == 3 and data.get('context_rule') != 'local-sign-consensus':
+            raise ValueError('unsupported context rule')
         def restore(bank, values):
             for name in ('capacity', 'keys', 'values', 'seen'):
                 setattr(bank, name, values[name])
@@ -237,7 +249,7 @@ class ProbabilisticVisualState(StreamingVisualState):
         dynamics = {}
         for h, values in data['dynamics'].items():
             bank = SpatialBelief(horizon=h)
-            if data['version'] == 2:
+            if data['version'] >= 2:
                 bank = ContextBelief(bank)
                 restore(bank.short, values['short'])
                 restore(bank.long, values['long'])
@@ -245,8 +257,9 @@ class ProbabilisticVisualState(StreamingVisualState):
             else:
                 restore(bank, values)
             dynamics[h] = bank
+        memory_type = ConsensusLocalMetricAssociation if data['version'] == 3 else LocalMetricAssociation
         model = cls(height=data['height'], width=data['width'], dynamics=dynamics,
-                    memory=LocalMetricAssociation(dimensions=data['memory']['keys'].shape[1]))
+                    memory=memory_type(dimensions=data['memory']['keys'].shape[1]))
         for name, value in data['observer'].items():
             setattr(model.observer, name, value)
         for name, value in data['memory'].items():

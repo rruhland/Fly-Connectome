@@ -87,4 +87,5 @@ def test_production_cli_uses_bundled_baseline(tmp_path, monkeypatch, capsys):
     assert len(records['states']) == 3
     assert records['sensor'] == 'grayscale-every-sample-plus-events'
     assert checkpoint.exists()
+    assert torch.load(checkpoint, weights_only=True)['version'] == 3
     assert 'camera_samples' in capsys.readouterr().out

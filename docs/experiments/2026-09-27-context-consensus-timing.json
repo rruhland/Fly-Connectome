@@ -1,0 +1,91 @@
+{
+  "threads": 1,
+  "sensor": "64x64 every-sample frames plus events",
+  "online": true,
+  "arms": {
+    "2": {
+      "samples": 200,
+      "total_ms": {
+        "p50": 76.57719997223467,
+        "p95": 165.8472750161308
+      },
+      "encoder_ms": {
+        "p50": 5.931949999649078,
+        "p95": 14.800260023912411
+      },
+      "active_features": {
+        "p50": 83.0,
+        "p95": 88.0
+      },
+      "detected_entities": {
+        "p50": 2.0,
+        "p95": 2.0
+      },
+      "dimension": 4389,
+      "initial_memory": {
+        "examples": {
+          "1/short": 2048,
+          "1/long": 0,
+          "4/short": 1907,
+          "4/long": 0,
+          "8/short": 1139,
+          "8/long": 0
+        },
+        "bank_tensor_bytes": 203760
+      },
+      "final_memory": {
+        "examples": {
+          "1/short": 2514,
+          "1/long": 458,
+          "4/short": 2367,
+          "4/long": 452,
+          "8/short": 1591,
+          "8/long": 444
+        },
+        "bank_tensor_bytes": 356368
+      }
+    },
+    "8": {
+      "samples": 200,
+      "total_ms": {
+        "p50": 300.49829999916255,
+        "p95": 462.0054699655153
+      },
+      "encoder_ms": {
+        "p50": 25.19565005786717,
+        "p95": 39.805175043875316
+      },
+      "active_features": {
+        "p50": 136.0,
+        "p95": 141.0
+      },
+      "detected_entities": {
+        "p50": 8.0,
+        "p95": 8.0
+      },
+      "dimension": 4389,
+      "initial_memory": {
+        "examples": {
+          "1/short": 2048,
+          "1/long": 0,
+          "4/short": 1907,
+          "4/long": 0,
+          "8/short": 1139,
+          "8/long": 0
+        },
+        "bank_tensor_bytes": 203760
+      },
+      "final_memory": {
+        "examples": {
+          "1/short": 3912,
+          "1/long": 1832,
+          "4/short": 3747,
+          "4/long": 1808,
+          "8/short": 2947,
+          "8/long": 1776
+        },
+        "bank_tensor_bytes": 814192
+      }
+    }
+  }
+}

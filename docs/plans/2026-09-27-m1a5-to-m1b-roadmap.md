@@ -16,14 +16,14 @@ hard-budget wording below.
 
 ## Decision
 
-**Integration update:** the approved eight-step predictor is implemented, with
-version-2 checkpoints, but remains opt-in. Its active camera transfer gates pass.
-Online updates to the separate context-correction memory reduce outage support
-from 180/180 to 29/180; restoring only the old context memory restores 180/180
-with identical trained forecast scores. See the
-[findings](../experiments/2026-09-27-context-integration-findings.md).
-Preserve the successful predictor and repair this context-learning interaction
-before default promotion/M1B. Do not restart the latent architecture search.
+**Promotion update:** the eight-step predictor and consensus context correction
+are now the default, with version-3 checkpoints. The context regression is fixed:
+outage support is 172/180, meeting the registered >=95% gate. Fresh context
+learning reaches 64/64 on both tasks and retains the first after the second.
+All active integration gates pass; see the
+[promotion findings](../experiments/2026-09-27-context-consensus-findings.md).
+Proceed to the smallest M1B online reward learner. Keep the accepted two-seed
+retention limitation visible; do not restart the latent architecture search.
 
 **Keep the promoted visual state and its existing predictive learner. Start the
 smallest M1B learning loop after a short continual-learning/interface gate.**
@@ -40,16 +40,17 @@ neurons is not itself progress toward the user's priorities.
 
 The production baseline separates actual observations, carried entity hypotheses,
 learned contextual corrections and spatial future mixtures. It learns context and
-dynamics from observed endpoints online, with bounded memory and no backprop.
+dynamics from observed endpoints online, with bounded context memory, append-all
+forecast memory, and no backprop.
 Its local credibility observer has pretrained weights; `step(learn=True)` does
 not retrain that observer. Runtime inputs include every-sample grayscale images
 and events. Engineering supplies detection/association and coordinate transforms.
 
 Held-out synthetic transfer, calibrated marginal intervals and passing memory
 tests are real results. They are **not yet continual learning across games**.
-The 256-example context FIFO can forget; uniform dynamics reservoir sampling can
-adapt too slowly after a shift. Four observed displacements can alias physically
-different futures. Independent per-entity forecasts do not model interactions.
+The 256-example context FIFO can forget; append-all dynamics retrieval grows in
+cost with experience. Eight-step context improves aliasing but does not establish
+sufficient history for arbitrary futures. Independent per-entity forecasts do not model interactions.
 The model is not action-conditioned. A mixture mean is not a safe substitute for
 multiple possible futures. Unfitted reidentification remains a .5 prior, explicitly
 accompanied by zero calibration evidence.
@@ -58,31 +59,33 @@ The previous point/event-only failures remain documented limitations, not curren
 acceptance requirements. Sparse central encoding does not make the dense image
 front end or exhaustive memory retrieval event-driven.
 
-## Remaining M1A.5: two bounded deliverables
+## M1A.5 deliverables and evidence history
 
-**2026-09-27 execution status:** generic interface implemented; continual audit
+**2026-09-27 completion:** generic interface and approved continual upgrade are
+implemented and promoted. The following audits explain the decision and its
+accepted limits; their original task descriptions below are preserved for reference.
+
+The initial continual audit
 finished with useful shared-domain benefit but one failed changed-dynamics retention
 seed and censored shared-domain acquisition speed. See
 [handoff findings](../experiments/2026-09-27-m1a5-handoff-findings.md).
-The continual upgrade is not yet accepted; preserve the promoted baseline while
-the deeper predictive-memory question is reassessed.
+This motivated the predictive-memory comparison rather than a new latent model.
 
 The [memory/context comparison](../experiments/2026-09-27-memory-context-comparison-findings.md)
 is now complete: recent+stable memory accelerates adaptation but increases
 interference; retaining every new example improves average retention but still
 fails one seed. Some four-step histories alias different outcomes, while longer
 histories have too little exact overlap to establish sufficiency from grouping
-alone. Next: one longer-history conditional-retrieval experiment with four-step
-fallback, preserving the observation model. No production memory policy changed.
+alone. It led to the longer-history conditional-retrieval experiment with
+four-step fallback, preserving the observation model.
 
 The [eight-step experiment](../experiments/2026-09-27-long-context-findings.md) is
 complete. It improves held-out prediction in every matched seed and reaches the
 shared-domain target before new-domain training in four of five seeds. Two seeds
-still miss the strict retention screen. Recommendation: use the
-[integration proposal](2026-09-27-eight-step-vision-integration-proposal.md) as the
-next production candidate, contingent on explicit acceptance of that limitation
-and integrated regression checks. Stop the context-length/mechanism search here;
-no default has been promoted by these experimental results alone.
+still miss the strict retention screen; the user accepted those limitations.
+The [integration](2026-09-27-eight-step-vision-integration-proposal.md) passed after
+the context-consensus repair and is now promoted. Stop the context-length/mechanism
+search here and begin M1B using the resulting visual service.
 
 ### 1. Continual transfer/retention audit before adding architecture
 

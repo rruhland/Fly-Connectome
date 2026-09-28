@@ -106,6 +106,10 @@ class LocalMetricAssociation(PatchAssociation):
     def predict(self, key):
         if not len(self.keys):
             return torch.zeros(self.values.shape[1])
+        outcomes, weights = self.local_outcomes(key)
+        return (outcomes*weights[:, None]).sum(0)
+
+    def local_outcomes(self, key):
         variance = self.keys.var(0, unbiased=False).clamp(min=1e-4)
         sensory_distance = ((self.keys-key).square()/variance).mean(1)
         nearby = sensory_distance.topk(min(32, len(self.keys)), largest=False).indices
@@ -120,7 +124,19 @@ class LocalMetricAssociation(PatchAssociation):
             distance = sensory_distance[nearby]
         values, indices = distance.topk(min(4, len(distance)), largest=False)
         weights = torch.softmax(-values/.1, 0)
-        return (post[indices]*weights[:, None]).sum(0)
+        return post[indices], weights
+
+
+class ConsensusLocalMetricAssociation(LocalMetricAssociation):
+    """Abstain on axes whose retrieved correction examples contradict each other."""
+
+    @torch.no_grad()
+    def predict(self, key):
+        if not len(self.keys):
+            return torch.zeros(self.values.shape[1])
+        outcomes, weights = self.local_outcomes(key)
+        agreement = (outcomes.min(0).values >= 0) | (outcomes.max(0).values <= 0)
+        return (outcomes*weights[:, None]).sum(0)*agreement
 
 
 class FrameObservationState(AssociativePatchState):

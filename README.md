@@ -50,13 +50,15 @@ it does not restore active identities or pending deadlines. `reset_state()` star
 a new scene while preserving learned experience. This CPU implementation is tested
 on compact synthetic patterns; general natural-camera understanding is not claimed.
 
-An opt-in eight-step predictor is available through
-`vision.upgrade_temporal_context()`. This starts a fresh scene, retains the old
-four-step prior, initializes an empty long-history bank, and saves version-2
-checkpoints. Both outcome banks retain all new examples, so storage/retrieval cost
-grows with experience. Version-1 loads and `load_default()` retain the prior
-behavior: an active-camera context-memory regression currently blocks the default
-upgrade. See the [integration findings](docs/experiments/2026-09-27-context-integration-findings.md).
+`load_default()` uses the approved eight-step predictor with a four-step fallback.
+The long-history bank starts empty; both outcome banks retain new examples, so
+storage and retrieval cost grow with experience. Context corrections abstain on
+axes where retrieved outcomes conflict, while context learning stays enabled.
+Checkpoints save as version 3. Versions 1 and 2 retain their original rules when
+loaded; `load_legacy_default()` retains the original bundled baseline. Upgrade a
+version-1 model explicitly with `vision.upgrade_temporal_context()`; it preserves
+learned priors and starts a fresh scene. See the
+[promotion findings](docs/experiments/2026-09-27-context-consensus-findings.md).
 
 For central learners, preserve the structured beliefs and optionally add sparse
 transport features (IDs route history but never become numeric features):

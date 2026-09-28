@@ -10,13 +10,16 @@ from continual_vision_audit import CausalDynamicsStream
 from fly_connectome.vision import load_default, load_legacy_default
 from fly_connectome.vision.dynamics import ContextBelief, SpatialBelief
 from fly_connectome.vision.state import ProbabilisticVisualState
+from fly_connectome.vision.memory import ConsensusLocalMetricAssociation
 
 
-def test_default_remains_legacy_until_active_recovery_passes():
+def test_default_uses_approved_context_and_unchanged_prior():
     current, legacy = load_default(), load_legacy_default()
     for h, model in current.dynamics.items():
-        assert type(model) is SpatialBelief
-        assert torch.equal(model.keys, legacy.dynamics[h].keys)
+        assert type(model) is ContextBelief
+        assert torch.equal(model.short.keys, legacy.dynamics[h].keys)
+        assert len(model.long.keys) == 0
+    assert type(current.state.memory) is ConsensusLocalMetricAssociation
 
 
 def test_context_matches_approved_experiment():
@@ -51,7 +54,7 @@ def test_upgrade_and_checkpoint_preserve_banks_in_fresh_scene(tmp_path):
             bank.observe(history, torch.tensor([1., 2.]), credit=credit)
     path = tmp_path / 'context.pt'
     model.save(path)
-    assert torch.load(path, weights_only=True)['version'] == 2
+    assert torch.load(path, weights_only=True)['version'] == 3
     restored = ProbabilisticVisualState.load(path)
     assert restored.state.tracker.frame == -1
     assert not restored.pending

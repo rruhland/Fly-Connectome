@@ -15,7 +15,8 @@ from run_zero_shot_visual_transfer import corrupt_events
 
 
 @torch.no_grad()
-def main():
+def main(*, prefix='docs/experiments/2026-09-27-context-consensus-integration',
+         checkpoint=Path('checkpoints/m1a5/context-consensus-integration.pt')):
     torch.set_num_threads(1)
     model = load_legacy_default().upgrade_temporal_context()
     generator = torch.Generator().manual_seed(291027)
@@ -36,12 +37,10 @@ def main():
             model.step(event, image, learn=True)
         if index % 32 == 31:
             print(f'Trained {index+1}/192 scenes', flush=True)
-    checkpoint = Path('checkpoints/m1a5/context-integration.pt')
     model.save(checkpoint)
     model = ProbabilisticVisualState.load(checkpoint)
     counts = {h: dict(short=len(m.short.keys), long=len(m.long.keys)) for h, m in model.dynamics.items()}
     assert all(m['long'] >= 32 for m in counts.values())
-    prefix = 'docs/experiments/2026-09-27-context-integration'
     transfer(model=model, out=Path(prefix+'-transfer.json'))
     transfer_path = Path(prefix+'-transfer.json')
     replay = json.loads(transfer_path.read_text())

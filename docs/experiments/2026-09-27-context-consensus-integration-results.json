@@ -1,0 +1,41 @@
+{
+  "training_scenes": 192,
+  "training_seed": 291027,
+  "banks": {
+    "1": {
+      "short": 4528,
+      "long": 1712
+    },
+    "4": {
+      "short": 3811,
+      "long": 1136
+    },
+    "8": {
+      "short": 2275,
+      "long": 369
+    }
+  },
+  "context": {
+    "spatial": {
+      "hits": 64.0,
+      "total": 64
+    },
+    "appearance": {
+      "hits": 64.0,
+      "total": 64
+    }
+  },
+  "blank_confident_entities": 0,
+  "gates": {
+    "aggregate": true,
+    "family": true,
+    "calibration": true,
+    "observation_coverage": true,
+    "frozen": true,
+    "context": true,
+    "blank": true,
+    "recovery": true,
+    "cached_forecasts": true,
+    "ambiguity": true
+  }
+}
