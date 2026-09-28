@@ -5,7 +5,7 @@ import torch
 from .observation import LocalObservationModel, local_motion_map
 from .association import StatisticalObservationTracker
 from .memory import FrameObservationState, LocalMetricAssociation, ConsensusLocalMetricAssociation
-from .dynamics import SpatialBelief, ContextBelief, mixture_quantile
+from .dynamics import SpatialBelief, ContextBelief, batched_mixture_quantiles
 
 class EndpointCalibration:
     """Observable reidentification, never a claim about hidden existence."""
@@ -43,6 +43,7 @@ class StreamingVisualState:
         self.histories = {}
         self.pending = {}
         self.forecast_cache = {}
+        self._issued_distributions = {}
         self.next_id = 0
 
     def compact(self):
@@ -121,6 +122,8 @@ class StreamingVisualState:
                 else:
                     self.dynamics[horizon].observe(history, endpoint-origin, credit=credit)
         forecasts = []
+        summaries = {}
+        self._issued_distributions = {}
         self.forecast_cache = {key: value for key, value in self.forecast_cache.items()
                                if key[1] > tracker.frame}
         for entity in entities:
@@ -141,9 +144,12 @@ class StreamingVisualState:
                     displacement = (model.predict(differences) if len(model.keys)
                                     else horizon*differences[-1])
                 prediction = positions[-1]+displacement
+                self._issued_distributions[identity, horizon] = (credit, differences, positions[-1])
+                if horizon not in summaries:
+                    summaries[horizon] = self.calibration[horizon].summary()
                 forecast = dict(id=identity, horizon_samples=horizon,
                     origin_sample=tracker.frame, evidence_age=0,
-                    position=prediction, **self.calibration[horizon].summary())
+                    position=prediction, **summaries[horizon])
                 forecasts.append(forecast)
                 self.forecast_cache[identity, tracker.frame+horizon] = forecast
                 if learn:
@@ -180,18 +186,32 @@ class ProbabilisticVisualState(StreamingVisualState):
     @torch.no_grad()
     def step(self, events, visible_frame, *, learn=False):
         result = super().step(events, visible_frame, learn=learn)
-        for forecast in result['forecasts']:
-            if forecast['evidence_age']:
-                continue
-            history = torch.stack(self.observed_history(forecast['id']))
+        active = [forecast for forecast in result['forecasts'] if not forecast['evidence_age']]
+        groups, bounds, intervals = {}, {}, [None]*len(active)
+        issued = []
+        for index, forecast in enumerate(active):
+            horizon = forecast['horizon_samples']
+            credit, differences, origin = self._issued_distributions[forecast['id'], horizon]
+            centers, weights = (credit if credit is not None else
+                                self.dynamics[horizon].distribution(differences))
+            issued.append((centers, weights, origin))
+            if horizon not in bounds:
+                bounds[horizon] = torch.stack(self.dynamics[horizon].calibration.bounds())
+            groups.setdefault(len(weights), []).append(index)
+        for indices in groups.values():
+            quantiles = batched_mixture_quantiles(
+                torch.stack([issued[i][0] for i in indices]),
+                torch.stack([issued[i][1] for i in indices]),
+                torch.stack([bounds[active[i]['horizon_samples']] for i in indices]))
+            for index, interval in zip(indices, quantiles):
+                intervals[index] = interval
+        for forecast, (centers, weights, origin), interval in zip(active, issued, intervals):
             model = self.dynamics[forecast['horizon_samples']]
-            centers, weights = model.distribution(history[1:]-history[:-1])
-            low, high = model.calibration.bounds()
-            forecast.update(mixture_centers=centers+history[-1], mixture_weights=weights,
+            forecast.update(mixture_centers=centers+origin, mixture_weights=weights,
                 component_sigma_pixels=1., point_semantics='mixture_mean',
-                marginal_interval_90=torch.stack((mixture_quantile(centers, weights, low),
-                                                  mixture_quantile(centers, weights, high)))+history[-1],
+                marginal_interval_90=interval+origin,
                 interval_calibration_samples=len(model.calibration.ranks))
+        self._issued_distributions.clear()
         return result
 
     def upgrade_temporal_context(self):
