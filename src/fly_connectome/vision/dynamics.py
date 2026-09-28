@@ -124,6 +124,12 @@ def mixture_quantile(centers, weights, probability):
     return torch.where(probability >= 1, torch.inf, value)
 
 
+def batched_mixture_quantiles(centers, weights, probabilities):
+    """Run the unchanged scalar search over independent mixtures and bounds."""
+    return torch.vmap(torch.vmap(mixture_quantile, in_dims=(None, None, 0)),
+                      in_dims=(0, 0, 0))(centers, weights, probabilities)
+
+
 class MarginalCalibration:
     """Finite-sample marginal rank intervals from observed future endpoints."""
 
