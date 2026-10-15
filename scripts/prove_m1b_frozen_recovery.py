@@ -24,41 +24,7 @@ from fly_connectome.pong import Pong
 from fly_connectome.vision import VisualStateEncoder, load_default
 
 
-def fingerprint(value):
-    """Canonical graph digest including repeated-object aliases and RNG state."""
-    seen = {}
-    retained = []  # Keep temporary RNG state tensors alive while assigning alias IDs.
-    def visit(obj):
-        if obj is None or isinstance(obj, (str, bool, int, float)):
-            return obj
-        identity = id(obj)
-        if identity in seen:
-            return ['ref', seen[identity]]
-        seen[identity] = len(seen)
-        retained.append(obj)
-        if isinstance(obj, torch.Tensor):
-            return ['tensor', str(obj.dtype), list(obj.shape), obj.detach().contiguous().numpy().tobytes().hex()]
-        if isinstance(obj, np.random.Generator):
-            return ['numpy-generator', visit(obj.bit_generator.state)]
-        if isinstance(obj, np.ndarray):
-            return ['array', str(obj.dtype), list(obj.shape), obj.tobytes().hex()]
-        if isinstance(obj, bytes):
-            return ['bytes', obj.hex()]
-        if isinstance(obj, torch.Generator):
-            return ['torch-generator', visit(obj.get_state())]
-        if isinstance(obj, dict):
-            return ['dict', [[visit(k), visit(v)] for k, v in sorted(obj.items(), key=lambda kv: repr(kv[0]))]]
-        if isinstance(obj, (list, tuple, deque)):
-            return [type(obj).__name__, [visit(x) for x in obj]]
-        if hasattr(obj, '__dict__'):
-            fields = vars(obj)
-            if '_variance_version' in fields:
-                fields = dict(fields)
-                # Torch version counters are process-local cache invalidation hints.
-                fields['_variance_version'] = fields['_variance_version'] == fields['_variance_keys']._version
-            return [type(obj).__module__+'.'+type(obj).__qualname__, visit(fields)]
-        raise TypeError(type(obj))
-    return hashlib.sha256(json.dumps(visit(value), sort_keys=True).encode()).hexdigest()
+from fly_connectome.control.codec import fingerprint
 
 
 def fresh():

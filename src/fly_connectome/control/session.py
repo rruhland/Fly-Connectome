@@ -92,7 +92,10 @@ class LearningSession:
     @classmethod
     def restore(cls, payload):
         # Only trusted locally generated payloads: hashes are integrity, not authentication.
-        session = pickle.loads(payload)
+        return cls.validate_restored(pickle.loads(payload))
+
+    @classmethod
+    def validate_restored(cls, session):
         if (type(session) is not cls or session.source != source_signature()
                 or session.model_hash != MODEL_HASH or session.vision_configuration != VISION_CONFIGURATION):
             raise ValueError('incompatible source/model/configuration')

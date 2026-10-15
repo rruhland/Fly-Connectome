@@ -1,0 +1,54 @@
+{
+  "status": "passed",
+  "comparison": "16 uninterrupted vs 9 + crash + replay 2 + 7",
+  "advanced_transitions": 32,
+  "replayed_transitions": 2,
+  "wall_seconds": 7.843066756000098,
+  "full": {
+    "count": 16,
+    "hash": "b95624b9f47fc3175d26cf758ee3679ab3841c6efee3301b82a60a1e116c8800",
+    "replayed": 0,
+    "nonzero_weights": 259,
+    "active_traces": 134,
+    "pending_action": 0,
+    "artifacts": 1,
+    "bank_bytes": 520497,
+    "snapshot_bytes": 1227250,
+    "timing": [
+      {
+        "start_wall_ns": 1792097244584359535,
+        "accounted_process_ns": 1301068414,
+        "unobserved_gap_ns": null,
+        "clean_stop": false,
+        "last_committed_count": 16
+      }
+    ]
+  },
+  "resumed": {
+    "count": 16,
+    "hash": "b95624b9f47fc3175d26cf758ee3679ab3841c6efee3301b82a60a1e116c8800",
+    "replayed": 2,
+    "nonzero_weights": 259,
+    "active_traces": 134,
+    "pending_action": 0,
+    "artifacts": 1,
+    "bank_bytes": 520497,
+    "snapshot_bytes": 1227329,
+    "timing": [
+      {
+        "start_wall_ns": 1792097247623688588,
+        "accounted_process_ns": 1016440561,
+        "unobserved_gap_ns": null,
+        "clean_stop": false,
+        "last_committed_count": 9
+      },
+      {
+        "start_wall_ns": 1792097249663475305,
+        "accounted_process_ns": 1000754057,
+        "unobserved_gap_ns": 1023344985,
+        "clean_stop": false,
+        "last_committed_count": 16
+      }
+    ]
+  }
+}
