@@ -16,6 +16,7 @@ def vector_library(tmp_path_factory):
         pytest.skip('optional native experiment requires g++')
     output = tmp_path_factory.mktemp('vector')/'kernels.dll'
     subprocess.run(['g++','-O3','-fno-fast-math','-ffp-contract=off','-shared','-fopenmp',
+        *(['-fPIC'] if os.name != 'nt' else []),
         *(['-static'] if os.name=='nt' else []),'-static-libgcc','-static-libstdc++',
         str(source),'-o',str(output)],check=True)
     return output

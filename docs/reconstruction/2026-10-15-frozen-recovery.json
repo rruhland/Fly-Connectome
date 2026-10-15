@@ -1,0 +1,34 @@
+{
+  "status": "passed",
+  "proof": "48 uninterrupted vs 24 + 24 fresh-process resumed",
+  "total_executed_transitions": 96,
+  "full": {
+    "transitions": 48,
+    "state_hash": "cd7a6970317f8bf4f5157f8e2f236d147beca55c0aab8dabaf87442b56abe004",
+    "model_hash": "a899338c94278854dc9a790c21e3cba746658abb7ac91fc3f85c84754f253173",
+    "elapsed_seconds": 5.06515139399994,
+    "learned_updates": 0
+  },
+  "first_segment": {
+    "transitions": 24,
+    "state_hash": "cc7832e1f6de6bea7dadae435b1f2360c902a0c08de554620013ce5ed3d0f087",
+    "model_hash": "a899338c94278854dc9a790c21e3cba746658abb7ac91fc3f85c84754f253173",
+    "elapsed_seconds": 2.7727966770000876,
+    "learned_updates": 0
+  },
+  "resumed": {
+    "transitions": 48,
+    "state_hash": "cd7a6970317f8bf4f5157f8e2f236d147beca55c0aab8dabaf87442b56abe004",
+    "model_hash": "a899338c94278854dc9a790c21e3cba746658abb7ac91fc3f85c84754f253173",
+    "elapsed_seconds": 3.1299789419999797,
+    "learned_updates": 0
+  },
+  "wall_seconds": 15.292131389000133,
+  "development_observations": 0,
+  "limitations": [
+    "frozen evaluation only",
+    "trusted same-platform pickle",
+    "immutable vision banks still embedded in active snapshot",
+    "no delta replay or learning-state proof yet"
+  ]
+}

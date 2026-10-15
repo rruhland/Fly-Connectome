@@ -40,6 +40,7 @@ extern "C" EXPORT std::int64_t filter_learning_arrivals(std::int64_t count,
     generated=output.with_suffix('.cpp')
     generated.write_text(source,encoding='utf-8')
     subprocess.run(['g++','-O3','-fno-fast-math','-ffp-contract=off','-shared','-fopenmp',
+        *(['-fPIC'] if os.name != 'nt' else []),
         *(['-static'] if os.name=='nt' else []),'-static-libgcc','-static-libstdc++',
         str(generated),'-o',str(output)],check=True)
 
