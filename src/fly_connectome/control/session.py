@@ -34,6 +34,7 @@ def source_signature():
 
 
 class LearningSession:
+    durable_kind = 'pong-learning-v1'
     def __init__(self, seed=1101, *, max_episode_ticks=None, weights=None):
         model_bytes()
         self.model_hash, self.vision_configuration = MODEL_HASH, VISION_CONFIGURATION

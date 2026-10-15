@@ -102,12 +102,14 @@ Trained policies: 1080 evaluation transitions total; shared baselines: 1080.
 
 Report per seed/arm: episodes, correct scores, total reward, transitions, physical
 seconds, full process wall seconds, committed/replayed transitions, and snapshot/
-I/O costs. Report raw 20-episode counts with binomial uncertainty; do not infer
-strong generalization from this small sample.
+I/O costs. Report raw 20-episode counts separately for left and right. These repeat two
+fixed templates, so they are not independent visual-generalization trials. Do not
+report an IID binomial interval as evidence of visual generalization.
 
 Proposed screens: immediate >=16/20 correct on every seed; delayed >=14/20 on every
-seed. These are diagnostic competence screens, not proof of lifelong or Pong
-learning. The immediate paired arms should match exactly under this one-step task.
+seed. These are fixed-template acquisition screens, not proof of visual generalization, lifelong
+learning, or Pong learning. The immediate paired arms must have identical complete training trajectories
+and final weights, not merely equal scores, under this one-step task.
 For delayed credit, report per-seed lambda=.8 minus lambda=0 score differences.
 A proposed positive exploratory trace signal is mean paired improvement >=10
 percentage points and improvement in at least two seeds; uncertainty and failures
@@ -130,3 +132,23 @@ persistence across replacement tasks is not guaranteed by these local proofs.
 
 Before any toy run: independent review of this exact registration and fresh-eval
 implementation/lifecycle tests. No Pong competence experiment is included.
+
+
+## Review amendment before execution
+
+The parent authorized the exact 4560-transition pilot after the required gates
+pass and this amendment is committed. This is acquisition of TWO FIXED VISUAL
+TEMPLATES, not visual generalization. The target and selected consequence persist
+through the delay, so lambda=0 can learn through bootstrapping; the lambda comparison
+is exploratory. The countdown is hidden, so no fully Markov value representation
+is claimed. Left/right correctness will be reported separately. No target-seed,
+parameter, allocation, success-stopping, or evaluation-policy changes are allowed.
+
+Per chunk, reserve 20 seconds for saving within the 180-second subprocess deadline;
+use a shorter work limit near the aggregate deadline. The supervisor caps total
+wall time at 60 minutes including startup, evaluation, replay and persistence, and
+retains/report partial allocations if exhausted. It runs one writer per database,
+sequentially. Reset/initial-camera observations and transition-camera observations
+are counted separately from new learning/evaluation transitions. No Pong competence
+experiment is authorized. The user-selected model and two-thread arrangement are
+unchanged.

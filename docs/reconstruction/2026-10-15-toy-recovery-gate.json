@@ -1,0 +1,55 @@
+{
+  "status": "passed",
+  "new_transitions": 36,
+  "replayed_transitions": 3,
+  "wall_seconds": 7.799858931000017,
+  "full": {
+    "transitions": 18,
+    "hash": "f816b70f5c1bab929abe05c065a99a83b4502ea9d66329ca8c9928c29f0cd594",
+    "replayed": 0,
+    "episode": 2,
+    "delay_step": 2,
+    "latched_side": 0,
+    "schedule": [
+      0,
+      0,
+      1,
+      1
+    ],
+    "pending_action": 0,
+    "rng_hash": "14cb783f5c50e648d6cf4883a435a82a9540c98d253c0829b02f8736dbe59ca9"
+  },
+  "midpoint": {
+    "transitions": 10,
+    "hash": "a73451feaf656fa917161c07ab645164a21d88e84f20a2d958a2802c6d57ec5a",
+    "replayed": 0,
+    "episode": 1,
+    "delay_step": 2,
+    "latched_side": 0,
+    "schedule": [
+      0,
+      0,
+      1,
+      1
+    ],
+    "pending_action": 0,
+    "rng_hash": "bef3447c59c495bce8f43383001b2f1f3f167b71b9c14a4f98988b9137a1f405"
+  },
+  "resumed": {
+    "transitions": 18,
+    "hash": "f816b70f5c1bab929abe05c065a99a83b4502ea9d66329ca8c9928c29f0cd594",
+    "replayed": 3,
+    "episode": 2,
+    "delay_step": 2,
+    "latched_side": 0,
+    "schedule": [
+      0,
+      0,
+      1,
+      1
+    ],
+    "pending_action": 0,
+    "rng_hash": "14cb783f5c50e648d6cf4883a435a82a9540c98d253c0829b02f8736dbe59ca9"
+  },
+  "diagnostic_seed": 99031
+}

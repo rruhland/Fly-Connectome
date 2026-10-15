@@ -53,7 +53,8 @@ class DurableRun:
                 raise ValueError('initial session must precede first transition')
             self.session = session
             self.codec = FrozenCodec.from_session(session)
-            config = dict(schema='m1b-replay-v1',bank=self.codec.key,runtime=runtime_signature(),
+            config = dict(schema='m1b-replay-v2',bank=self.codec.key,runtime=runtime_signature(),
+                          session_kind=session.durable_kind,
                           snapshot_transitions=snapshot_transitions,snapshot_seconds=snapshot_seconds)
             self.db.execute('BEGIN IMMEDIATE')
             try:
@@ -71,13 +72,13 @@ class DurableRun:
                 self.db.close()
                 raise ValueError('existing journal must be resumed, not overwritten')
             config = json.loads(config[0])
-            if config['schema'] != 'm1b-replay-v1':
+            if config['schema'] != 'm1b-replay-v2':
                 self.db.close()
                 raise ValueError('unsupported replay schema')
             if config.get('runtime') != runtime_signature():
                 self.db.close()
                 raise ValueError('incompatible runtime; migration requires a separate proof')
-            self._recover(config['bank'])
+            self._recover(config['bank'],config['session_kind'])
         self.snapshot_transitions, self.snapshot_seconds = config['snapshot_transitions'],config['snapshot_seconds']
         self.last_snapshot_mono = self.clock.monotonic_ns()-max(0,self.clock.time_ns()-self.last_snapshot_wall)
         last = self.db.execute('SELECT wall_ns FROM replay_timing ORDER BY id DESC LIMIT 1').fetchone()
@@ -96,7 +97,7 @@ class DurableRun:
         self.db.execute('INSERT OR REPLACE INTO replay_active VALUES (1,?,?,?,?,?)',
                         (self.session.transitions,payload,digest(payload),fingerprint(self.session),self.last_snapshot_wall))
 
-    def _recover(self, bank_key):
+    def _recover(self, bank_key, session_kind):
         # One consistent read transaction. CAS on append rejects competing writers.
         self.db.execute('BEGIN')
         try:
@@ -117,7 +118,11 @@ class DurableRun:
             count,payload,_,state_hash,self.last_snapshot_wall = active
             if count and state_hash != records[count-1][1]:
                 raise ValueError('checkpoint/sample state mismatch')
-            self.session = LearningSession.validate_restored(self.codec.loads(payload))
+            from .toy_session import ToySession
+            classes = {'pong-learning-v1':LearningSession,'toy-session-v1':ToySession}
+            if session_kind not in classes:
+                raise ValueError('unsupported session kind')
+            self.session = classes[session_kind].validate_restored(self.codec.loads(payload))
             if self.session.transitions != count or fingerprint(self.session) != state_hash:
                 raise ValueError('restored state mismatch')
             self.last_snapshot_count = count
