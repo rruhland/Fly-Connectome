@@ -33,7 +33,7 @@ classes = False
                 if isinstance(value,torch.Tensor):
 >                   torch.testing.assert_close(value,getattr(other,name),rtol=0,atol=0,msg=lambda m:f'{name} tick {tick}: {m}')
 E                   AssertionError: voltage tick 1: Tensor-likes are not equal!
-E                   
+E
 E                   Mismatched elements: 2 / 4 (50.0%)
 E                   Greatest absolute difference: 1.1920928955078125e-07 at index (0, 0)
 E                   Greatest relative difference: 7.914653821217144e-08 at index (0, 1)

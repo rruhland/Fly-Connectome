@@ -71,6 +71,9 @@ The bounded proof is a continuation test, not a durable learning proof. Specific
   is empty at each checkpoint; resumption mid-action has not been demonstrated.
 - No scoring/reset event is guaranteed within this short natural trajectory.
   Termination/reset and truncation need dedicated tests before learner integration.
+  In particular, Pong auto-resets inside step: this diagnostic stops repetition at
+  the scoring tick but does not capture the pre-reset terminal image. It must not
+  be reused as the training adapter without adding terminal-observation capture.
 - Model bytes are stored once by hash, but the active pickle still embeds immutable
   visual banks. Deduplication of those banks is not yet implemented.
 - Audit samples are reconstructible from the journal; old full states are not.
@@ -112,3 +115,16 @@ PyArrow 26.0.0, pytest 9.1.1, matplotlib 3.11.2. Interpreter:
 `/workspace/venvs/fly-m1b-cpu/bin/python`. The runtime dependency freeze and raw
 validation logs are in `/workspace/m1b-verification/`. No actual assistant model
 identifier or reasoning setting is exposed by the execution runtime.
+
+## Architecture review requirements received at this checkpoint
+
+The next learner stage must pin both the bundled prior and load_default's upgraded
+configuration. The reference tests must use overlapping features, variable actual
+physics durations (the camera schedule alternates two/three ticks), correctly
+indexed incoming/outgoing discounts, one sampled next action reused on the next
+transition, zero bootstrap only on termination, and final-observation bootstrap
+on truncation. Frozen evaluation must use isolated scene state and preserve the
+training RNG and learned parameters. This stage's frozen policy consumes no RNG;
+the recovery diagnostic deliberately probes RNG continuation on its own state.
+The next toy-task results must be new evidence. Merely exposing forecasts to the
+controller does not demonstrate forecast benefit.
