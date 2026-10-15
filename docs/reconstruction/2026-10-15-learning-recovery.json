@@ -1,0 +1,41 @@
+{
+  "status": "passed",
+  "comparison": "32 vs 16+16 fresh-process resume",
+  "integration_transitions": 64,
+  "wall_seconds": 12.372393935000218,
+  "full": {
+    "transitions": 32,
+    "hash": "68d395ae34c9aaffd729fba7c8ac452ccea205c6ac78beccb3692783970e3efd",
+    "nonzero_weights": 446,
+    "active_traces": 152,
+    "pending_action": 0,
+    "q_old": 0.00020643245814117028,
+    "incoming_discount": 0.9991454770730508,
+    "episodes": 3,
+    "elapsed_seconds": 3.56324271099993
+  },
+  "split": {
+    "transitions": 16,
+    "hash": "f1b3797a8ca98444a032109e61afea7183a256bd38b306689c8418e105cd179d",
+    "nonzero_weights": 259,
+    "active_traces": 134,
+    "pending_action": 0,
+    "q_old": 0.00020774052793901609,
+    "incoming_discount": 0.9991454770730508,
+    "episodes": 2,
+    "elapsed_seconds": 2.3174300740001854
+  },
+  "resumed": {
+    "transitions": 32,
+    "hash": "68d395ae34c9aaffd729fba7c8ac452ccea205c6ac78beccb3692783970e3efd",
+    "nonzero_weights": 446,
+    "active_traces": 152,
+    "pending_action": 0,
+    "q_old": 0.00020643245814117028,
+    "incoming_discount": 0.9991454770730508,
+    "episodes": 3,
+    "elapsed_seconds": 2.277863317000083
+  },
+  "purpose": "controlled algebra/lifecycle/recovery diagnostic; no competence claim",
+  "vision_learning": false
+}

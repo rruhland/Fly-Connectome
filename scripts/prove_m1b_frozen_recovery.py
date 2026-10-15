@@ -38,6 +38,8 @@ def fingerprint(value):
         retained.append(obj)
         if isinstance(obj, torch.Tensor):
             return ['tensor', str(obj.dtype), list(obj.shape), obj.detach().contiguous().numpy().tobytes().hex()]
+        if isinstance(obj, np.random.Generator):
+            return ['numpy-generator', visit(obj.bit_generator.state)]
         if isinstance(obj, np.ndarray):
             return ['array', str(obj.dtype), list(obj.shape), obj.tobytes().hex()]
         if isinstance(obj, bytes):

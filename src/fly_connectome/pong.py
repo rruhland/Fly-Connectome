@@ -85,7 +85,7 @@ class Pong:
         self.rally_steps[mask] = 0
 
     @torch.no_grad()
-    def step(self, drive):
+    def step(self, drive, *, auto_reset=True):
         if drive.shape != (self.batch,) or not torch.isfinite(drive).all():
             raise ValueError("finite continuous motor drive required per environment")
         p = self.config
@@ -118,7 +118,8 @@ class Pong:
         scores = (self.ball[:, 0] > 1).float() - (self.ball[:, 0] < 0).float()
         self.rally_steps.add_(1)
         outcome = Outcome(scores, left.float(), self.rally_steps.clone())
-        self.reset(scores != 0)
+        if auto_reset:
+            self.reset(scores != 0)
         return outcome
 
     @torch.no_grad()

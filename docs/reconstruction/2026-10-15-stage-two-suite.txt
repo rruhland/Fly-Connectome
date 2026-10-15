@@ -1,0 +1,44 @@
+........................................................................ [  9%]
+......................................................s..s.............. [ 18%]
+..........................s............................................. [ 27%]
+........................................................................ [ 37%]
+........................................................................ [ 46%]
+........................................................................ [ 55%]
+..F.........................................................s........... [ 65%]
+........................................................................ [ 74%]
+........................................................................ [ 83%]
+........................................................................ [ 93%]
+......................................................                   [100%]
+=================================== FAILURES ===================================
+_______________ test_native_neural_step_matches_reference[False] _______________
+
+native_library = PosixPath('/tmp/pytest-of-agent/pytest-7/native1/kernels.dll')
+classes = False
+
+    @pytest.mark.parametrize('classes',[False,True])
+    def test_native_neural_step_matches_reference(native_library,classes):
+        from fly_connectome.dynamics import NeuronConfig
+        graph=Graph.from_contacts([10,20,30,40],[10,10,20,30],[20,30,40,10],[1]*4,[-1,1,1,1],.5)
+        config=NeuronConfig(tau_sensory=.02,class_parameters={'cell':{'rest_current':1.2}} if classes else {})
+        net=Network(graph,[1,2,3,1],['predictive','behavioral','feedforward','predictive'],
+                    config=config,cell_types=['cell']*4)
+        other=copy.deepcopy(net)
+        kernel=NativeCPU(native_library)
+        rng=torch.Generator().manual_seed(13)
+        for tick in range(100):
+            current=torch.rand((1,4),generator=rng)*30-15
+            a=net.step(current,capture_increments=True)
+            b=kernel.step(other,current,capture_increments=True)
+            for name,value in vars(net).items():
+                if isinstance(value,torch.Tensor):
+>                   torch.testing.assert_close(value,getattr(other,name),rtol=0,atol=0,msg=lambda m:f'{name} tick {tick}: {m}')
+E                   AssertionError: voltage tick 1: Tensor-likes are not equal!
+E
+E                   Mismatched elements: 2 / 4 (50.0%)
+E                   Greatest absolute difference: 1.1920928955078125e-07 at index (0, 0)
+E                   Greatest relative difference: 7.914653821217144e-08 at index (0, 1)
+
+tests/test_native_cpu.py:77: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_native_cpu.py::test_native_neural_step_matches_reference[False]
+1 failed, 769 passed, 4 skipped in 46.90s
