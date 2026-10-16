@@ -65,7 +65,7 @@ def endpoint_artifacts(directory,job):
             weight_hash=hashlib.sha256(weights.tobytes()).hexdigest())
         if (not np.array_equal(saved,weights) or json.loads(paths[1].read_text())!=metadata
                 or json.loads(paths[3].read_text())!=cap):raise ValueError('projected endpoint artifacts disagree')
-    else:paths=[directory/job['weights_from'],directory/job['scaling_from']]
+    else:paths=[directory/job[k] for k in ('weights_from','scaling_from') if job.get(k) is not None]
     return {p.name:sha(p) for p in [*paths,directory/'projection.json']}
 
 def completed_count(directory,job):

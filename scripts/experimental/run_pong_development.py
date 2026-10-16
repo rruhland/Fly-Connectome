@@ -158,7 +158,7 @@ def checkpoint_open_run(run):
     run.failed=False
 
 
-def worker(directory,job_id,max_work_seconds=160.,*,emit=True,_live_run=None,_keep_open=False):
+def worker(directory,job_id,max_work_seconds=160.,*,emit=True,_live_run=None,_keep_open=False,verify_only=False):
     if not 0 < max_work_seconds <= 160.:
         raise ValueError('worker work budget must be in (0,160] seconds')
     torch.set_num_threads(1)
@@ -219,6 +219,9 @@ def worker(directory,job_id,max_work_seconds=160.,*,emit=True,_live_run=None,_ke
     replayed=run.replayed if _live_run is None else 0;latencies=[]
     def complete():
         return session.transitions==job['transitions'] if job['kind'] in ('learn','calibration') else session.complete
+    if verify_only and not complete():
+        run.close_without_checkpoint()
+        raise ValueError('verification-only recovery requires an actually complete durable session')
     while not complete() and session.transitions-before<200 and time.monotonic()-started<max_work_seconds:
         step_started=time.monotonic();record=run.step();latencies.append(time.monotonic()-step_started)
         if job['kind']=='learn' and job.get('max_abs_q') is not None:
@@ -265,6 +268,8 @@ def worker(directory,job_id,max_work_seconds=160.,*,emit=True,_live_run=None,_ke
                 total_hit_reward=sum(row['hit_reward'] for row in rows),
                 total_survival_reward=sum(row['survival_reward'] for row in rows),
                 raw_score_reward=sum(row['reward'] for row in rows))
+            if 'score_coefficient' in session.reward_shaping:
+                report['total_score_reward']=sum(row['score_reward'] for row in rows)
         if getattr(session,'action_hold_frames',1)!=1:
             report.update(action_hold_frames=session.action_hold_frames,macro_choices=session.macro_choices,
                           macro_updates=session.learner.transitions,macro_lambda=session.learner.lam,

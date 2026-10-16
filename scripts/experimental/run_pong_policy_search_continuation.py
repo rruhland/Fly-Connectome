@@ -215,7 +215,7 @@ def rollout_task(directory,name,camera_grant,work_seconds):
         with redirect_stdout(io.StringIO()):
             if camera_grant==0:
                 if not (read_report(directory,name) or {}).get('complete'):raise ValueError('zero grant requires completed recovery verification')
-                report=base.worker(directory,name,work_seconds,emit=False)
+                report=base.worker(directory,name,work_seconds,emit=False,verify_only=True)
                 result={k:report[k] for k in ('transitions','new_transitions','replayed_transitions','worker_wall_seconds')}
             else:result=base.multiple_chunks(directory,name,work_seconds,min(5,camera_grant//200),warm_session=True)
         return dict(job=name,ok=True,result=result,wall_seconds=time.monotonic()-started)
