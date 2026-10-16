@@ -38,7 +38,7 @@ class LearningSession:
     durable_kind = 'pong-learning-v1'
     def __init__(self, seed=1101, *, max_episode_ticks=None, weights=None,
                  alpha=.0001, lam=.8, gamma_per_second=.95, epsilon=.2, policy_scaling=None,
-                 opponent_speed=None, action_hold_frames=1, policy_projection=None):
+                 opponent_speed=None, action_hold_frames=1, policy_projection=None,reward_shaping=None):
         if type(action_hold_frames) is not int or action_hold_frames<1 or not 0<=lam<=1:
             raise ValueError('positive integer camera frames per action required')
         if policy_projection is not None and policy_scaling is not None:
@@ -46,6 +46,11 @@ class LearningSession:
         model_bytes()
         self.config = dict(seed=seed,max_episode_ticks=max_episode_ticks,alpha=alpha,lam=lam,
                            gamma_per_second=gamma_per_second,epsilon=epsilon)
+        if reward_shaping is not None:
+            from .rewards import validate_reward
+            validate_reward(reward_shaping)
+            self.reward_shaping=copy.deepcopy(reward_shaping)
+            self.config['reward_shaping']=self.reward_shaping
         self.model_hash, self.vision_configuration = MODEL_HASH, VISION_CONFIGURATION
         self.source = source_signature()
         if opponent_speed is not None:self.config['opponent_speed']=opponent_speed
@@ -100,6 +105,12 @@ class LearningSession:
         if projection is not None:return projection.mapped_evaluation(self.learner.weights)
         return self.learner.weights.copy(),copy.deepcopy(getattr(self.scaler,'config',None))
 
+    def learning_reward(self,result):
+        config=getattr(self,'reward_shaping',None)
+        if config is None:return result.reward,None
+        from .rewards import learning_reward
+        return learning_reward(result,config)
+
     def step(self):
         if getattr(self,'action_hold_frames',1)!=1:return self._step_hold()
         action = self.learner.pending_action
@@ -108,7 +119,8 @@ class LearningSession:
         policy_norm2=float(self.learner.pending_features @ self.learner.pending_features)
         result = self.env.step(action)
         final = self.observe(result.frame)
-        _, info = self.learner.advance(result.reward,result.elapsed_seconds,
+        reward,components=self.learning_reward(result)
+        _, info = self.learner.advance(reward,result.elapsed_seconds,
                                       *self.policy_features(final),
                                       terminated=result.terminated,truncated=result.truncated)
         self.latest_encoded = final
@@ -122,6 +134,7 @@ class LearningSession:
                       active_features=len(active['indices']),entities=len(active['entities']),
                       forecasts=len(active['forecasts']),q_spread=float(np.ptp(q_values)),
                       terminated=result.terminated,truncated=result.truncated,hits=result.hits,**info)
+        if components is not None:record.update(components)
         if result.terminated or result.truncated:
             self.episodes += 1
             self.initial_cameras += 1
@@ -148,7 +161,8 @@ class LearningSession:
         policy_norm2=float(self.learner.pending_features@self.learner.pending_features)
         result=self.env.step(action)
         final=self.observe(result.frame)
-        self.hold_reward+=self.learner.gamma_per_second**self.hold_elapsed*result.reward
+        learning_reward,components=self.learning_reward(result)
+        self.hold_reward+=self.learner.gamma_per_second**self.hold_elapsed*learning_reward
         self.hold_elapsed+=result.elapsed_seconds
         self.hold_frames+=1
         frames,reward,elapsed=self.hold_frames,self.hold_reward,self.hold_elapsed
@@ -171,6 +185,7 @@ class LearningSession:
             q_spread=float(np.ptp(q_values)),terminated=result.terminated,truncated=result.truncated,hits=result.hits,
             macro_update=bool(update),hold_frame=frames,macro_reward=reward,macro_elapsed_seconds=elapsed,
             macro_choices=self.macro_choices,macro_updates=self.learner.transitions,**info)
+        if components is not None:record.update(components)
         if result.terminated or result.truncated:
             self.episodes+=1;self.initial_cameras+=1
             frame=self.env.reset()
@@ -195,6 +210,11 @@ class LearningSession:
                 or session.model_hash != MODEL_HASH or session.vision_configuration != VISION_CONFIGURATION):
             raise ValueError('incompatible source/model/configuration')
         model_bytes()
+        if hasattr(session,'reward_shaping'):
+            from .rewards import validate_reward
+            validate_reward(session.reward_shaping)
+            if session.config.get('reward_shaping')!=session.reward_shaping:
+                raise ValueError('diagnostic reward configuration differs')
         projection=getattr(session,'projection',None)
         if projection is not None:
             projection.validate_embedded()

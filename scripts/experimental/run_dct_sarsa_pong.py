@@ -75,7 +75,7 @@ def completed_count(directory,job):
     if not report['complete'] or report['transitions']!=count:
         raise ValueError('completed report differs from journal row count')
     if job['kind']=='learn' and count!=job['transitions']:
-        raise ValueError('completed training must have exactly30000 declared rows')
+        raise ValueError('completed training must have exactly the declared endpoint rows')
     if job['kind']=='evaluate' and report['episodes']!=job['config']['episodes']:
         raise ValueError('completed evaluation episode count differs')
     return report,count

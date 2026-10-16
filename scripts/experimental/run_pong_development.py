@@ -168,6 +168,8 @@ def worker(directory,job_id,max_work_seconds=160.,*,emit=True,_live_run=None,_ke
             or manifest['driver_hash'] != hashlib.sha256(Path(__file__).read_bytes()).hexdigest()):
         raise ValueError('source/runtime differs from declared experiment')
     job=next(row for row in manifest['jobs'] if row['id']==job_id)
+    if job['kind']!='learn' and job.get('reward_shaping') is not None:
+        raise ValueError('diagnostic reward transforms are training-only; evaluation is raw score-only')
     checkpoints=job.get('checkpoints',(2000,6000))
     scaling=None if job.get('scaling_from') is None else json.loads((directory/job['scaling_from']).read_text())
     projection=None if job.get('projection_from') is None else json.loads((directory/job['projection_from']).read_text())
@@ -190,7 +192,7 @@ def worker(directory,job_id,max_work_seconds=160.,*,emit=True,_live_run=None,_ke
             session=LearningSession(job['seed'],max_episode_ticks=2400,lam=job['lam'],
                                     alpha=job.get('alpha',.0001),policy_scaling=scaling,
                                     opponent_speed=job.get('opponent_speed'),action_hold_frames=job.get('action_hold_frames',1),
-                                    policy_projection=projection)
+                                    policy_projection=projection,reward_shaping=job.get('reward_shaping'))
         else:
             weights=None if job['weights_from'] is None else np.load(directory/job['weights_from'],allow_pickle=False)
             if weights is not None:
@@ -205,6 +207,7 @@ def worker(directory,job_id,max_work_seconds=160.,*,emit=True,_live_run=None,_ke
                              gamma_per_second=.95,epsilon=.2)
         if scaling is not None:expected_config['policy_scaling']=scaling
         if projection is not None:expected_config['policy_projection']=projection
+        if job.get('reward_shaping') is not None:expected_config['reward_shaping']=job['reward_shaping']
         if 'opponent_speed' in job:expected_config['opponent_speed']=job['opponent_speed']
         hold=job.get('action_hold_frames',1)
         if hold!=1:expected_config.update(action_hold_frames=hold,macro_lambda=job['lam']**hold)
@@ -256,6 +259,12 @@ def worker(directory,job_id,max_work_seconds=160.,*,emit=True,_live_run=None,_ke
         report['finite_weights']=bool(np.isfinite(session.learner.weights).all())
         report['max_absolute_weight']=float(np.max(np.abs(session.learner.weights)))
         report['max_policy_feature_norm2']=max((row['policy_feature_norm2'] for row in rows),default=0.)
+        if job.get('reward_shaping') is not None:
+            report.update(reward_shaping=session.reward_shaping,
+                total_learning_reward=sum(row['learning_reward'] for row in rows),
+                total_hit_reward=sum(row['hit_reward'] for row in rows),
+                total_survival_reward=sum(row['survival_reward'] for row in rows),
+                raw_score_reward=sum(row['reward'] for row in rows))
         if getattr(session,'action_hold_frames',1)!=1:
             report.update(action_hold_frames=session.action_hold_frames,macro_choices=session.macro_choices,
                           macro_updates=session.learner.transitions,macro_lambda=session.learner.lam,

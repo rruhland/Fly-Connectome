@@ -45,7 +45,7 @@ def test_completion_pin_rejects_stale_report_and_partial_training_journal(tmp_pa
     assert study.complete_report(tmp_path,job) is None
     with pytest.raises(ValueError,match='journal row count'):study.completed_count(tmp_path,job)
     path.write_text(json.dumps(dict(complete=True,transitions=1)))
-    with pytest.raises(ValueError,match='exactly30000'):study.completed_count(tmp_path,job)
+    with pytest.raises(ValueError,match='declared endpoint rows'):study.completed_count(tmp_path,job)
     with sqlite3.connect(tmp_path/'learn.db') as c:c.execute('INSERT INTO replay_samples VALUES (1)')
     path.write_text(json.dumps(dict(complete=True,transitions=2,wins=1)))
     # This unit fixture isolates pin/report integrity; artifact mapping and real
