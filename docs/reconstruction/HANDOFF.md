@@ -1,4 +1,79 @@
-# Fly-Connectome M1B handoff — active research continuation
+# Fly-Connectome M1B handoff — paused for the night
+
+## Night pause and exact resume point (2026-10-16)
+
+Ryan requested a good stopping point. **No experiments are running. Do not launch
+the prepared DCT study or start its actual manifest clock until continuation is
+requested and the final coordinator review below is complete.** No genuine Pong
+acquisition has been demonstrated; all untouched final seed streams remain unused.
+
+Latest completed curriculum:13/24wins(8natural+5own-hit),11loss/0timeout/15hits,
+versus original initial10/24(2own-hit), FAILED unchanged14total/6own-hit gate.
+Five stationary and seven .25 target updates used82,462 of89,712training cameras;
+7250partial cameras never updated weights. Fresh eval4201cameras,1294.47seconds
+shared wall, zero replay. Independent768-rollout reconstruction matched all
+terminal-score updates, directions/candidates/RNG, phase timestamps/skipped draws
+and actual frozen endpoint. Preserve the negative:
+`/workspace/m1b-experiments/pong-stationary-curriculum-20261016-r1/{summary.json,optimizer-lineage-audit.json}`.
+
+Main branch `reconstruction/m1b-continuation`: curriculum result/docs commit
+**85dbab4**, validated DCT implementation commit **ad81c975cba60a92ade08955c58c6167f406b568**.
+Its isolated preparation commit is9e79d50 on `reconstruction/m1b-dct-sarsa` at
+`/workspace/Fly-Connectome-dct-sarsa`. The new handoff commit is the latest local
+commit after ad81c97; read `git log -1` or the staged artifact's `base-commit.txt`.
+No push/PR occurred. Main source is integrated and locally committed; the isolated
+checkout is retained for provenance, not a separate live experiment.
+
+Prepared ONE frozen DCT-SARSA condition, all three fixed seeds
+172900127/736187003/1597334677 concurrently:30k cameras each/90k aggregate,
+alpha.001/lambda.995/gamma-per-second.95/epsilon.2/hold1/zero-Q/.25 opponent,
+exact prior214×4389score-free T and post-projection cap256. Fixed30shared training
+minutes/35overall, endpoint-only24DEV per completed seed,14/6 EACH; promote only
+if all three pass. No replacement, best-seed selection, wall extension, further
+policy-search allocation or final evaluation. Protocol and coordinator:
+[protocol](2026-10-16-dct-sarsa-pong-protocol.md),
+`scripts/experimental/run_dct_sarsa_pong.py`.
+
+Validation is complete:17unique narrow projection/worker/gate/default-regression
+tests passed, with repeats recorded separately. This includes pending-trace/RNG
+crash recovery, immutable/NumPy-alias mutation rejection, same-boundary export
+gaps, actual mapped fresh evaluator handoff, and completion-pin zero-new-work
+recovery. Real-T preflight640diagnostic camera executions+23existing replay took
+27.17s; raw mean128-step3.740s versus projected4.705s, so30k naive18.4min and
+historical-scaled25.5min (early-state timing, no guarantee). Transformed1024-row
+score-free norm² median14.87/max233.63,0cap activations. Full-T/nonzero-theta
+mapped greedy actions matched1024/1024; normalized score discrepancy≤2.61e−16.
+Four controls'11,551action/camera/physics/reset events matched exactly in10.72s.
+Evidence: `/workspace/m1b-experiments/dct-sarsa-preflight-20261016/` and its
+`report.json`, `full-matrix-mapping-check.json`, `baseline-projection-proof.json`.
+
+Staged candidate directory: `/workspace/m1b-experiments/pong-dct-sarsa-20261016-r1/`.
+It contains T/fit/descriptor, proofs/checks, prior negatives/ledger and the complete
+tracked source archive. **It has no manifest, journal or started training clock.**
+`source-snapshot.sha256` and `base-commit.txt` identify the final archived source.
+The separately named `dct-sarsa-preflight-20261016/prepare-smoke/manifest.json` is
+a disposable zero-observation validation fixture; NEVER use its clock/state for
+the candidate allocation. Cumulative13registered allocations:494,819training/
+learning+89,539evaluation cameras; named diagnostics/calibration separate in
+`/workspace/m1b-experiments/cumulative-research-ledger-20261016.json`.
+
+On continuation: verify clean tree/no live workers and source archive, then have
+the parent review the final coordinator completion-pin fix (report+all semantic
+journal tables+theta/W/cap hashes, exact30k rows before eligibility; unpinned
+complete JSON requires actual zero-new-work recovery). Tests cover stale reports,
+incomplete rows and tampering; no further benchmark/optimization is needed.
+After that review and the user's continuation, launch from main with the existing
+runtime, one Torch/BLAS thread per worker and explicit PYTHONPATH:
+
+```bash
+OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 \
+PYTHONPATH=/workspace/Fly-Connectome-m1b/src:/workspace/Fly-Connectome-m1b/scripts/experimental \
+/workspace/Fly-Connectome/.venv/bin/python /workspace/Fly-Connectome-m1b/scripts/experimental/run_dct_sarsa_pong.py \
+  --directory /workspace/m1b-experiments/pong-dct-sarsa-20261016-r1
+```
+
+That actual invocation creates the durable clock. Preserve its source freeze and
+every result/partial; no learning work is pending in a running process overnight.
 
 ## Current authority and state (2026-10-16)
 
