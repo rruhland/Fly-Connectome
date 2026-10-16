@@ -18,6 +18,8 @@ from fly_connectome.vision import VisualStateEncoder
 
 @pytest.fixture(scope='module')
 def fitted():
+    if not driver.CACHE.exists():
+        pytest.skip('historical transform integration requires the preserved score-free calibration cache')
     encoder=VisualStateEncoder(64,64,.02)
     raw=driver.read_calibration(driver.CACHE)
     transform,calibration=math.fit_transform(raw,encoder.layout,encoder.dimension)

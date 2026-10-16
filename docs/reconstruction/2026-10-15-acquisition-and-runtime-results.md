@@ -14,7 +14,8 @@ The step-size/control-cadence pair also failed: lower alpha9/24 and hold4 11/24,
 versus strongest control10/24. No arm qualified or received replication.
 Score-only smooth policy search also failed its fixed gate:12/24 wins (four
 own-hit wins), versus its initial10/24 (two own-hit wins), after seven updates.
-A separately registered fixed continuation expands exposure with the same rule.
+The fixed continuation also failed after14additional updates:10/24(2own-hit),
+matching original initial10/24(2own-hit). No candidate received replication.
 All final holdout seeds remain unused. No .25 result is an original-opponent
 success claim.
 
@@ -33,7 +34,8 @@ success claim.
 | Frozen epsilon behavior | Diagnostic only, `frozen-epsilon-diagnostic-20261016` | State-dependent and mean-Q bias-only policies both8/24, no own-hit wins |
 | Lower alpha versus hold4 .25 | [Protocol](2026-10-16-alpha-hold-pong-protocol.md) | Lower alpha9/24(1own-hit); hold4 11/24(3own-hit); neither qualifies |
 | Score-only smooth policy search .25 | [Protocol](2026-10-16-score-only-policy-search-protocol.md) | Seven updates/59,903 training cameras;12/24(4own-hit) versus initial10/24(2own-hit); failed14/6 gate |
-| Fixed search continuation .25 | [Prospective protocol](2026-10-16-score-only-policy-search-continuation-protocol.md) | Up to16 additional updates/120k NEW cameras, same restricted class and rule; no new endpoint yet |
+| Fixed search continuation .25 | [Protocol](2026-10-16-score-only-policy-search-continuation-protocol.md) | Fourteen additional updates/119,831 NEW training cameras;10/24(2own-hit), matching original initial; failed |
+| Stationary→.25 score-only curriculum | [Prospective protocol](2026-10-16-stationary-curriculum-protocol.md) | Fixed30k stationary +60k target, endpoint-only24DEV; authorized and launching after gates |
 | Cached delayed-template credit | [Diagnostic protocol](/workspace/m1b-experiments/cached-delayed-toy-20261016/PROTOCOL.md) | Fixed RMS/alpha.001 reaches both templates in all seeds by1000episodes; raw fails through2000 |
 | Oracle diagnostic closed-loop capacity | [NEW diagnostic protocol](/workspace/m1b-experiments/ORACLE-DIAGNOSTIC-closed-loop-capacity-20261016/PROTOCOL.md) | Camera-only oracle-fitted linear readout8/12(5own-hit); legal teacher8/12(5own-hit); NEVER reward acquisition |
 | Restricted-class oracle capacity | [NEW diagnostic protocol](/workspace/m1b-experiments/ORACLE-DIAGNOSTIC-restricted-capacity-20261016/PROTOCOL.md) | Frozen search class6/12(3own-hit),4loss/2timeout; capacity witness only, no learning |
@@ -455,7 +457,7 @@ fixed4715row PD-label/LSMR recipe, without tuning or coefficient export. It won
 This supports usable restricted-class control, not mastery, a class ceiling or
 reward acquisition. Its coefficients and labels never enter candidate learning.
 
-The [new fixed continuation](2026-10-16-score-only-policy-search-continuation-protocol.md)
+The [completed fixed continuation](2026-10-16-score-only-policy-search-continuation-protocol.md)
 starts from theta7, skips original partial-generation fitness, advances to its
 postdraw RNG and starts fresh global-generation index8. Up to16additional updates,
 120k NEW training cameras,34minutes training/40overall, four workers; same basis,
@@ -464,6 +466,22 @@ theta0 and simple controls define14/6 gate, theta7 is descriptive. Maximum23tota
 updates uses globalindices8..23 after the original0..6; index7 was not updated.
 No intermediate DEV or final seeds. A later replication must reproduce the whole
 staged procedure from zero, not selectively continue a promising intermediate.
+
+The continuation completed14newupdates (21total/globalindex21),119,831NEWtraining
+cameras+3486fresh evaluation,1642.78seconds sharedwall and5718.25summed persistent-
+task seconds.119,495cameras contributed updates;336partial-population cameras did
+not. Endpoint10/24(8natural+2own-hit),14loss/0timeout/10hits, score/rally−1/6,
+return/physicalsecond−.057506 over69.5583seconds. It matched the original initial
+10/24(2own-hit) and regressed from descriptive theta7's12/24(4own-hit);14/6 failed.
+Independent cached audit reconstructed inherited theta7/skipped RNG, all896new
+scored rollouts/directions/candidates/returns/updates and actual frozen readout
+exactly,5.21seconds/zero observations. Endpoint calibration function-RMS.40079,
+stateRMS.39784,biasRMS.04849; noise/policy RMS.62377 and meanlast-population action
+disagreement25.35% do not support exploration collapse. No further same-rule .25
+extension, replication or final evaluation is allocated. The next authorized
+experiment is a separately prospective fixed stationary→.25 score-only curriculum;
+implementation/review precedes launch and does not relabel either failed search.
+
 
 Four workers reduced matched exact-replay wall by18.13% in the parent-owned ABBA
 benchmark (4064old cameras, zero novel candidate data). Bulk tensor graph hashing
@@ -476,14 +494,14 @@ are not deployment-speed evidence. Final seeds remain unused.
 
 ## Cumulative allocation accounting
 
-The eleven registered learning/evaluation allocations, including the completed
-score-only search, committed **285,276 learning/training-fitness +81,852 evaluation transitions**,
+The twelve registered learning/evaluation allocations, including the completed
+search continuation, committed **405,107 learning/training-fitness +85,338 evaluation transitions**,
 plus512 toy calibration transitions. Separate Pong calibration used1024. The
 frozen epsilon diagnostic added4289 evaluation camera transitions and95.28seconds
 shared wall, with zero learning. Reused controls/calibration are counted only at
 their original allocation; exact replay adds no independent competence evidence.
 
-The allocation coordinator walls sum to7854.04seconds (130.90minutes); their
+The allocation coordinator walls sum to9496.82seconds (158.28minutes); their
 subprocess walls are recorded separately in the machine-readable ledger. **Neither is CPU time
 or real total elapsed time**: internal workers and some allocations overlapped.
 These totals exclude separately retained physics feasibility, execution/recovery

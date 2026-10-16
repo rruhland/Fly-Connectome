@@ -90,9 +90,20 @@ reconstructed all448scored rollouts, arrays, updates and RNG exactly. A separate
 restricted-class oracle witness won6/12(3own-hit),4loss/2timeouts; usable capacity,
 not reward learning. Oracle coefficients remain quarantined and unexported.
 
-The NEW [fixed continuation](2026-10-16-score-only-policy-search-continuation-protocol.md)
+The completed [fixed continuation](2026-10-16-score-only-policy-search-continuation-protocol.md)
 is authorized at `/workspace/m1b-experiments/pong-score-policy-search-continuation-20261016-r1/`.
-Before resuming inspect manifest/process/status, as preparation is not launch.
+Its coordinator exited cleanly; source freeze ended. Endpoint10/24(2own-hit)
+FAILED14/6gate, matching original initial and below theta7.14newupdates/21total,
+119,831NEWtrain+3486eval;336unusedpartial cameras,1642.78seconds. Cached audit
+exactly reconstructed896newrollouts, updates, RNG and endpoint. FunctionRMS.40079,
+noise/policy ratio.624 and25%actiondisagreement rule out an obvious exploration
+collapse. No replication/final use. A NEW [fixed stationary→.25 curriculum](2026-10-16-stationary-curriculum-protocol.md)
+is authorized after parent review: max30k/6gens/8min stationary, then
+max60k/8gens/16min target.25,30minoverall/fourworkers, endpoint-only24DEV14/6.
+No outcome-triggered stage change or new initial-control substitution. Artifacts:
+`/workspace/m1b-experiments/pong-stationary-curriculum-20261016-r1/`. Inspect
+manifest/process/status before resuming; source freezes at launch. No further
+same-rule .25 continuation. Preserve all prior source archives.
 It starts theta7/postdraw partialg7 RNG, skips that partial fitness, and uses global
 indices8..23 for at most16additional updates (23totalupdates). Same frozen rank183
 transform/366contrasts, noise.25/top4/step.10/hold1/.25physics. Fixed120k NEW cameras,

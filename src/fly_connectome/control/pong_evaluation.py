@@ -34,7 +34,7 @@ class PongEvaluationConfig:
                 or self.policy_kind not in ('trained','initial','random','noop','up')
                 or (self.policy_kind == 'random') != (self.action_seed is not None)
                 or (self.action_seed is not None and (type(self.action_seed) is not int or self.action_seed < 0))
-                or not isinstance(self.opponent_speed,(int,float)) or not math.isfinite(self.opponent_speed) or self.opponent_speed<=0
+                or not isinstance(self.opponent_speed,(int,float)) or not math.isfinite(self.opponent_speed) or self.opponent_speed<0
                 or (self.skip_baseline_perception and self.policy_kind == 'trained')):
             raise ValueError('invalid fresh Pong evaluation configuration')
 

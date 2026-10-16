@@ -22,8 +22,8 @@ class PongCamera:
     def __init__(self, seed=0, *, max_episode_ticks=None,opponent_speed=.45):
         if max_episode_ticks is not None and (type(max_episode_ticks) is not int or max_episode_ticks < 1):
             raise ValueError('positive episode tick limit required')
-        if not isinstance(opponent_speed,(int,float)) or not math.isfinite(opponent_speed) or opponent_speed<=0:
-            raise ValueError('finite positive opponent speed required')
+        if not isinstance(opponent_speed,(int,float)) or not math.isfinite(opponent_speed) or opponent_speed<0:
+            raise ValueError('finite nonnegative opponent speed required')
         self.game = Pong([seed],config=Physics(opponent_speed=float(opponent_speed)))
         self.max_episode_ticks = max_episode_ticks
         self.decisions = self.episode_ticks = self.total_ticks = 0
