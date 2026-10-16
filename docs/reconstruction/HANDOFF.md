@@ -1,6 +1,54 @@
-# Fly-Connectome M1B handoff — paused for the night
+# Fly-Connectome M1B handoff — reward and vision diagnostics completed
 
-## Night pause and exact resume point (2026-10-16)
+## Current resume state (supersedes the night pause below)
+
+Ryan resumed and explicitly requested informative reward and vision tests. The
+staged90k/three-seed score-only DCT run was NOT launched; its old launch command
+below is historical, not the next automatic step. No experiments are running.
+No genuine Pong acquisition or untouched-final evaluation has occurred.
+
+Completed NEW fixed reward diagnostic: same DCT/cap256/alpha.001/lambda.995/
+epsilon.2/hold1/.25, one matched seed,12k cameras EACH. Fresh raw-score24DEV:
+score8wins/0own-hit/2contacts; +1own-hit bonus9/1/7; +.1physical-second bonus9/1/3.
+All had8natural wins and0timeouts. No-op was10wins/2own/9contacts; random9/1/8,
+up10/2/7. No shaping arm exceeded simple controls or14/6; do NOT call the extra
+contacts acquisition. Training rewards were explicitly separated from raw score.
+36k train+7456eval cameras,659.59s shared wall,0replay. All43,456actions/physics/
+reward rows and36k TD equations independently verified exactly. Cached readouts
+remain state-varying, not proof of actual visual necessity or adequate linear Q.
+
+Parent's separate frozen-vision audit:4096distinct+4096reprocessed cameras,
+49.10+45.66s, frozen hashes unchanged. After startup, fresh ball matches~89%,
+observed-or-predicted coverage within3px99.85–99.90%;8-camera ball forecast errors
+1.79–1.94px beat persistence5.42–5.46 and encoder-CV2.88–2.95. Single-pixel
+detections are intermittent; own-paddle y90%interval coverage is only42.5–61%.
+These two trajectories do not refute earlier rare public-ID/velocity corruption.
+Cached privileged immediate-action feedback learned83–86%excluded-rally mapping
+across3seeds, but never rare no-op and never closed-loop reward-only competence.
+Its282,900updates/31.61s/0newvision and quarantined coefficients are separate.
+
+Read [combined report](2026-10-16-reward-and-vision-results.md) and
+[registered protocol](2026-10-16-reward-credit-diagnostic-protocol.md). Source
+commit3e79af5, local branch reconstruction/m1b-continuation. Full source/manifest/
+configs/journals/endpoint theta+W+cap/parent audit are preserved at
+`/workspace/m1b-experiments/pong-reward-diagnostic-20261016-r1/`.
+Vision evidence: `/workspace/m1b-experiments/vision-integrity-20261016-r1/RESULTS.md`.
+Latest docs commit follows3e79af5; read git log. Ledger now has14registered
+allocations,530,819training+96,995evaluation transitions, named diagnostics separate.
+
+Recommended next finite study, NOT yet allocated: same DCT hold1vs10 to test
+stronger coherent motor consequences with per-camera vision/journaling preserved,
+proper SMDP gamma/lambda.995^10 and explicit update-count confound. Physics-only
+legal-PD feasibility:13/24wins(5own) at both cadences, but hold10 lost8rallies
+versus0 and reduced contacts82→42. It is feasible, not an improvement guarantee.
+Online immediate-action-feedback oracle diagnostic is a fallback, not a candidate
+reward-only learner. Do not launch further training/holdouts or alter architecture
+without a new concrete allocation and orchestrator review under existing user
+authorization. Small/medium experiments do not require renewed user permission;
+genuinely major architecture changes still require user approval. Keep no-backprop
+and policy-input oracle exclusion; shaping was scalar and explicitly diagnostic.
+
+## Historical night pause (superseded; retained for provenance)
 
 Ryan requested a good stopping point. **No experiments are running. Do not launch
 the prepared DCT study or start its actual manifest clock until continuation is

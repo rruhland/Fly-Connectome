@@ -2,6 +2,13 @@
 
 ## Current result index
 
+Latest investigation: [reward-credit and vision results](2026-10-16-reward-and-vision-results.md).
+Three fixed12k DCT-SARSA arms yielded8/24score-only,9/24hit-shaped and9/24survival-
+shaped fresh wins, all below simple controls. Independent vision localization and
+ball forecasting were substantially functional on two tested trajectories; no
+visual-necessity or Bellman-Q adequacy claim follows. The staged90k score-only
+DCT study was NOT launched. No further experiment is automatically allocated.
+
 **No genuine Pong acquisition has been demonstrated.** The original .45 opponent
 has a likely scoring ceiling after own returns; it is paused as a learning target.
 The separately labeled .25 opponent is controllably scoreable, but its first raw
@@ -40,6 +47,8 @@ success claim.
 | Score-only smooth policy search .25 | [Protocol](2026-10-16-score-only-policy-search-protocol.md) | Seven updates/59,903 training cameras;12/24(4own-hit) versus initial10/24(2own-hit); failed14/6 gate |
 | Fixed search continuation .25 | [Protocol](2026-10-16-score-only-policy-search-continuation-protocol.md) | Fourteen additional updates/119,831 NEW training cameras;10/24(2own-hit), matching original initial; failed |
 | Stationary→.25 score-only curriculum | [Protocol](2026-10-16-stationary-curriculum-protocol.md) | 5stationary+7target updates/89,712training cameras;13/24(5own-hit), below14/6 gate |
+| DCT reward-credit diagnostic | [Protocol](2026-10-16-reward-credit-diagnostic-protocol.md); [combined results](2026-10-16-reward-and-vision-results.md) | 12k each: score8/24(0own), hit9/24(1own), survival9/24(1own), all below controls |
+| Frozen vision and immediate feedback | [Combined methods/results](2026-10-16-reward-and-vision-results.md) | Observed/predicted point coverage99.85–99.90%within3px; ball forecasts beat matched baselines; cached immediate mapping83–86%, no reward acquisition |
 | Cached delayed-template credit | [Diagnostic protocol](/workspace/m1b-experiments/cached-delayed-toy-20261016/PROTOCOL.md) | Fixed RMS/alpha.001 reaches both templates in all seeds by1000episodes; raw fails through2000 |
 | Oracle diagnostic closed-loop capacity | [NEW diagnostic protocol](/workspace/m1b-experiments/ORACLE-DIAGNOSTIC-closed-loop-capacity-20261016/PROTOCOL.md) | Camera-only oracle-fitted linear readout8/12(5own-hit); legal teacher8/12(5own-hit); NEVER reward acquisition |
 | Restricted-class oracle capacity | [NEW diagnostic protocol](/workspace/m1b-experiments/ORACLE-DIAGNOSTIC-restricted-capacity-20261016/PROTOCOL.md) | Frozen search class6/12(3own-hit),4loss/2timeout; capacity witness only, no learning |
@@ -518,14 +527,14 @@ are not deployment-speed evidence. Final seeds remain unused.
 
 ## Cumulative allocation accounting
 
-The thirteen registered learning/evaluation allocations, including the completed
-stationary curriculum, committed **494,819 learning/training-fitness +89,539 evaluation transitions**,
+The fourteen registered learning/evaluation allocations, including the completed
+reward-credit diagnostic, committed **530,819 learning/training-fitness +96,995 evaluation transitions**,
 plus512 toy calibration transitions. Separate Pong calibration used1024. The
 frozen epsilon diagnostic added4289 evaluation camera transitions and95.28seconds
 shared wall, with zero learning. Reused controls/calibration are counted only at
 their original allocation; exact replay adds no independent competence evidence.
 
-The allocation coordinator walls sum to10,791.29seconds (179.85minutes); their
+The allocation coordinator walls sum to11,450.88seconds (190.85minutes); their
 subprocess walls are recorded separately in the machine-readable ledger. **Neither is CPU time
 or real total elapsed time**: internal workers and some allocations overlapped.
 These totals exclude separately retained physics feasibility, execution/recovery
