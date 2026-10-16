@@ -2,7 +2,15 @@
 
 ## Current result index
 
-Latest investigation: [reliable-opponent return learning](2026-10-16-reliable-return-learning-results.md).
+Latest investigation: [camera-rate sustained exploration](2026-10-16-sustained-exploration-results.md).
+Two fresh 24k-camera hit-only learners kept identical SARSA update counts and about
+20% exploratory occupancy. Sustained exploration increased training contacts
+46→60 but yielded fewer fresh returns: first 3/24 versus independent 6/24, overall
+4/28 versus 8/32. Strongest random control achieved 10/24 and 12/35. Neither
+qualified; direct-arm uncertainty intervals cross zero. No acquisition or
+automatic further allocation follows.
+
+Previous investigation: [reliable-opponent return learning](2026-10-16-reliable-return-learning-results.md).
 Two hit-only DCT-SARSA policies trained for 12k cameras each against a .65 opponent.
 Fresh hold1 returned 3/27 incoming balls and 3/24 first balls; hold10 returned
 13/36 and 9/24. Strongest simple controls achieved 10/33 and 7/24. Hold10's small
@@ -58,6 +66,7 @@ success claim.
 | DCT reward-credit diagnostic | [Protocol](2026-10-16-reward-credit-diagnostic-protocol.md); [combined results](2026-10-16-reward-and-vision-results.md) | 12k each: score8/24(0own), hit9/24(1own), survival9/24(1own), all below controls |
 | Frozen vision and immediate feedback | [Combined methods/results](2026-10-16-reward-and-vision-results.md) | Observed/predicted point coverage99.85–99.90%within3px; ball forecasts beat matched baselines; cached immediate mapping83–86%, no reward acquisition |
 | Reliable-opponent hit-only hold1 versus hold10 | [Protocol](2026-10-16-reliable-return-learning-protocol.md); [results](2026-10-16-reliable-return-learning-results.md) | First returns 3/24 versus 9/24; overall 3/27 versus 13/36; strongest controls 7/24 and 10/33; neither qualifies |
+| Camera-rate independent versus sustained exploration | [Protocol](2026-10-16-sustained-exploration-protocol.md); [results](2026-10-16-sustained-exploration-results.md) | 24k updates each; first returns 6/24 versus 3/24, overall 8/32 versus 4/28; strongest control 10/24 and 12/35; neither qualifies |
 | Cached delayed-template credit | [Diagnostic protocol](/workspace/m1b-experiments/cached-delayed-toy-20261016/PROTOCOL.md) | Fixed RMS/alpha.001 reaches both templates in all seeds by1000episodes; raw fails through2000 |
 | Oracle diagnostic closed-loop capacity | [NEW diagnostic protocol](/workspace/m1b-experiments/ORACLE-DIAGNOSTIC-closed-loop-capacity-20261016/PROTOCOL.md) | Camera-only oracle-fitted linear readout8/12(5own-hit); legal teacher8/12(5own-hit); NEVER reward acquisition |
 | Restricted-class oracle capacity | [NEW diagnostic protocol](/workspace/m1b-experiments/ORACLE-DIAGNOSTIC-restricted-capacity-20261016/PROTOCOL.md) | Frozen search class6/12(3own-hit),4loss/2timeout; capacity witness only, no learning |

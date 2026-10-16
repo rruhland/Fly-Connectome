@@ -1,6 +1,50 @@
-# Fly-Connectome M1B handoff — reliable-opponent return screen completed
+# Fly-Connectome M1B handoff — sustained-exploration comparison completed
 
-## Current resume state: reliable-opponent return learning
+## Current resume state: camera-rate exploration comparison
+
+The user revised the next step toward genuine reward learning, rather than an
+online teacher diagnostic. The approved sustained-exploration study is complete.
+No experiments are running.
+**No further candidate allocation, replication or final holdout is authorized
+automatically. No genuine Pong acquisition has been demonstrated.** The former
+teacher recommendation below is historical, not the next default action.
+
+Source **77310e7**, branch `reconstruction/m1b-continuation`. Both from-zero arms
+used seed 736187003, hit-only scalar reward, frozen DCT/cap256, .65 opponent,
+alpha .001/lambda .995/epsilon .2, hold1 and exactly 24k camera-rate updates each.
+Independent redraws exploration each camera; sustained draws mode per ten-frame
+block, holds only exploratory random actions, and recomputes greedy each camera.
+Actual exploratory occupancy was 20.08% versus 19.76%, with median exploratory
+action runs of 1 versus 10 cameras. Training produced 46 versus 60 contact rewards.
+
+Fresh greedy evaluation on 24 new shared serves: independent first returns 6/24,
+overall 8/32; sustained 3/24 and 4/28. Strongest control random-h1 achieved 10/24
+and 12/35. Neither passed. Sustained-minus-independent paired intervals crossed
+zero (first −12.5 pp, CI −37.5 to +12.5; overall −10.71, CI −31.14 to +11.47).
+No natural wins occurred; opponent evaluation returns were 144/144. The experiment
+improved knowledge of training persistence, not demonstrated competence. One seed,
+sparse rewards and behavior-mode aliasing do not establish asymptotic impossibility.
+
+Read [latest results](2026-10-16-sustained-exploration-results.md) and
+[protocol](2026-10-16-sustained-exploration-protocol.md). Full manifest/source/
+journals/endpoints/metrics/costs are under
+`/workspace/m1b-experiments/pong-sustained-exploration-20261016-r1/`.
+All jobs completed: 48,000 training + 25,649 evaluation cameras, zero recovery
+replay, 1,345.97 seconds shared wall. The ledger now has 16 allocations:
+602,819 training + 145,482 evaluation transitions, with diagnostic work separate.
+Parent independently verified all 73,649 physical/reward rows, 48,000 TD updates,
+24 paired first trajectories, full exploration continuity and exact paired
+statistics in 57.12 seconds. Evidence:
+`/workspace/m1b-experiments/sustained-exploration-parent-audit-20261016/summary.json`.
+
+If the user chooses further work, prefer a new bounded same-class direct hit-return
+policy-optimization protocol over more tiny exploration sweeps; prior search
+failures and sample cost remain material. No launch is automatic. Preserve no
+backprop, policy-input oracle exclusion, untouched final streams and all negative
+results. Small/medium experiments remain within existing user authorization;
+genuinely major architecture changes require user approval.
+
+## Previous reliable-opponent return-learning screen
 
 The user's next authorized investigation is complete. **No experiments are
 running, no genuine Pong acquisition has been demonstrated, and final holdout
