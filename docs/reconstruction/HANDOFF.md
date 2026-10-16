@@ -27,6 +27,25 @@ the original task. Explicit .25-opponent Pong is winnable with legal actions, bu
 the first raw 6000-transition screen merely matched no-op at5/12 and stopped.
 No genuine Pong acquisition or final holdout use has occurred.
 
+Latest completed allocation: the fixed [stationary→.25 curriculum](2026-10-16-stationary-curriculum-protocol.md),
+artifact `/workspace/m1b-experiments/pong-stationary-curriculum-20261016-r1/`,
+finished cleanly at13/24wins(8natural+5own-hit),11loss/0timeout/15hits. It failed
+the unchanged14total/6own-hit screen; original theta0 was10/24(2own-hit).
+Five stationary updates and seven target updates used82,462 of89,712training
+cameras;7250partial-population cameras never updated the optimizer. Fresh eval
+used4201cameras; shared wall1294.47seconds, zero replay. Independent cached
+reconstruction of768full rollouts, all updates/RNG/phase boundaries and actual
+frozen readout passed. This remains an unreplicated development point estimate,
+not acquisition. Coordinator94805 has exited; its source archive/local commit
+fddda83 remain preserved and its source freeze has ended.
+
+Optional DCT-SARSA preparation is isolated at `/workspace/Fly-Connectome-dct-sarsa`,
+branch `reconstruction/m1b-dct-sarsa`, based on fddda83. It adds an exact fixed
+projection at the learner boundary, embedded immutable T persistence, and mapped
+raw-weight evaluation exports. It is NOT an allocated training study. Narrow
+tests and a bounded actual-T cost measurement must precede any prospective run;
+no new SARSA training allocation or untouched-final evaluation is authorized yet.
+
 The [paired30k exposure/sharing study](2026-10-15-pong-exposure-sharing-protocol.md)
 failed numerically before either endpoint: raw committed20,773 before nonfinite
 weights; sharing was explicitly resource-stopped at23,400 after finite divergence.
@@ -78,8 +97,9 @@ no coefficients exported or candidate use. Camera-only readout8/12wins(5own-hit)
 4loss/0timeout/19hits; teacher8/12(5own-hit),0loss/4timeouts/44hits. It completed
 in105.85seconds, providing a positive existing-class capacity witness, NEVER
 reward-learning acquisition or teacher equivalence. Full records/source/fit recipe
-and coefficient hashes are retained. The subsequent score-only policy-search allocation described below is authorized
-and active; no further allocation is automatic.
+and coefficient hashes are retained. The subsequent score-only policy-search
+allocations described below are completed negative studies; no further allocation
+is automatic.
 
 The completed [score-only smooth search](2026-10-16-score-only-policy-search-protocol.md)
 is preserved at `/workspace/m1b-experiments/pong-score-policy-search-20261016-r1/`.
@@ -97,21 +117,17 @@ FAILED14/6gate, matching original initial and below theta7.14newupdates/21total,
 119,831NEWtrain+3486eval;336unusedpartial cameras,1642.78seconds. Cached audit
 exactly reconstructed896newrollouts, updates, RNG and endpoint. FunctionRMS.40079,
 noise/policy ratio.624 and25%actiondisagreement rule out an obvious exploration
-collapse. No replication/final use. A NEW [fixed stationary→.25 curriculum](2026-10-16-stationary-curriculum-protocol.md)
-is authorized after parent review: max30k/6gens/8min stationary, then
-max60k/8gens/16min target.25,30minoverall/fourworkers, endpoint-only24DEV14/6.
-No outcome-triggered stage change or new initial-control substitution. Artifacts:
-`/workspace/m1b-experiments/pong-stationary-curriculum-20261016-r1/`. Inspect
-manifest/process/status before resuming; source freezes at launch. No further
-same-rule .25 continuation. Preserve all prior source archives.
-It starts theta7/postdraw partialg7 RNG, skips that partial fitness, and uses global
+collapse. No replication/final use. Its procedure starts theta7/postdraw partialg7
+RNG, skips that partial fitness, and uses global
 indices8..23 for at most16additional updates (23totalupdates). Same frozen rank183
 transform/366contrasts, noise.25/top4/step.10/hold1/.25physics. Fixed120k NEW cameras,
 34mintrain/40overall, four workers, full per-camera journals/warm chunks; no partial
 updates, no intermediate DEV or best-checkpoint selection. ORIGINAL theta0 plus
 simple controls define14total/6own-hit gate; theta7's earlier score is descriptive.
 All final seeds remain unused. Replication, if later authorized, reproduces the
-WHOLE staged procedure from zero. Source/coordinator/math/protocol freeze at launch.
+WHOLE staged procedure from zero. No further same-rule .25 continuation is allocated.
+The separate stationary→.25 curriculum also completed and failed, as recorded at
+the top of this handoff; preserve every prior source archive.
 The only new core-source change is exact-byte bulk graph hashing. Its source bridge
 retains earlier baseline projection proofs; old journals use archived source.
 Gates:37digest/search/evaluator tests,14continuation/durable/warm tests, plus

@@ -16,6 +16,10 @@ Score-only smooth policy search also failed its fixed gate:12/24 wins (four
 own-hit wins), versus its initial10/24 (two own-hit wins), after seven updates.
 The fixed continuation also failed after14additional updates:10/24(2own-hit),
 matching original initial10/24(2own-hit). No candidate received replication.
+The stationary→.25 curriculum also failed its fixed screen:13/24(5own-hit),
+versus original initial10/24(2own-hit), below the unchanged14total/6own-hit gate.
+This positive point estimate on one reused development allocation is not a
+replicated acquisition result; no checkpoint or threshold was changed.
 All final holdout seeds remain unused. No .25 result is an original-opponent
 success claim.
 
@@ -35,7 +39,7 @@ success claim.
 | Lower alpha versus hold4 .25 | [Protocol](2026-10-16-alpha-hold-pong-protocol.md) | Lower alpha9/24(1own-hit); hold4 11/24(3own-hit); neither qualifies |
 | Score-only smooth policy search .25 | [Protocol](2026-10-16-score-only-policy-search-protocol.md) | Seven updates/59,903 training cameras;12/24(4own-hit) versus initial10/24(2own-hit); failed14/6 gate |
 | Fixed search continuation .25 | [Protocol](2026-10-16-score-only-policy-search-continuation-protocol.md) | Fourteen additional updates/119,831 NEW training cameras;10/24(2own-hit), matching original initial; failed |
-| Stationary→.25 score-only curriculum | [Prospective protocol](2026-10-16-stationary-curriculum-protocol.md) | Fixed30k stationary +60k target, endpoint-only24DEV; authorized and launching after gates |
+| Stationary→.25 score-only curriculum | [Protocol](2026-10-16-stationary-curriculum-protocol.md) | 5stationary+7target updates/89,712training cameras;13/24(5own-hit), below14/6 gate |
 | Cached delayed-template credit | [Diagnostic protocol](/workspace/m1b-experiments/cached-delayed-toy-20261016/PROTOCOL.md) | Fixed RMS/alpha.001 reaches both templates in all seeds by1000episodes; raw fails through2000 |
 | Oracle diagnostic closed-loop capacity | [NEW diagnostic protocol](/workspace/m1b-experiments/ORACLE-DIAGNOSTIC-closed-loop-capacity-20261016/PROTOCOL.md) | Camera-only oracle-fitted linear readout8/12(5own-hit); legal teacher8/12(5own-hit); NEVER reward acquisition |
 | Restricted-class oracle capacity | [NEW diagnostic protocol](/workspace/m1b-experiments/ORACLE-DIAGNOSTIC-restricted-capacity-20261016/PROTOCOL.md) | Frozen search class6/12(3own-hit),4loss/2timeout; capacity witness only, no learning |
@@ -479,8 +483,28 @@ exactly,5.21seconds/zero observations. Endpoint calibration function-RMS.40079,
 stateRMS.39784,biasRMS.04849; noise/policy RMS.62377 and meanlast-population action
 disagreement25.35% do not support exploration collapse. No further same-rule .25
 extension, replication or final evaluation is allocated. The next authorized
-experiment is a separately prospective fixed stationary→.25 score-only curriculum;
-implementation/review precedes launch and does not relabel either failed search.
+experiment was a separately prospective fixed stationary→.25 score-only curriculum;
+it does not relabel either failed search.
+
+The [stationary curriculum](2026-10-16-stationary-curriculum-protocol.md) completed
+five stationary-opponent and seven .25-opponent updates from the original theta0,
+using the same generic transform, optimizer, perturbations and terminal-score-only
+fitness. Phase0 used24,360 of29,817observed training cameras; phase1 used58,102 of
+59,895. Both phases froze at their fixed camera budgets, discarding5457 and1793
+partial-population cameras respectively and advancing their postdraw RNG/index.
+The endpoint won13/24(8natural+5own-hit),11losses,0timeouts,15hits, versus original
+initial10/24(8natural+2own-hit). Score/rally+.083333 and return/physicalsecond
++.023859 over83.825seconds are descriptive; the unchanged14/6 gate FAILED.
+No replication, final evaluation or threshold relaxation follows this near miss.
+Its89,712training+4201fresh evaluation cameras/94,779images took1294.47seconds
+shared wall and4316.29summed persistent-task seconds, with zero replay. Independent
+cached reconstruction verified all768full rollouts, terminal-score returns,
+directions/candidates/manual updates/RNG, phase timestamps/skipped definitions and
+actual frozen endpoint exactly in3.66seconds, zero new observations. Endpoint
+calibration function-RMS.33240 and noise/policy RMS.75210 do not support exploration
+collapse. Artifacts: `/workspace/m1b-experiments/pong-stationary-curriculum-20261016-r1/`.
+Optional frozen-DCT SARSA integration is being prepared in the isolated
+`/workspace/Fly-Connectome-dct-sarsa` worktree, not allocated as a learning run.
 
 
 Four workers reduced matched exact-replay wall by18.13% in the parent-owned ABBA
@@ -494,14 +518,14 @@ are not deployment-speed evidence. Final seeds remain unused.
 
 ## Cumulative allocation accounting
 
-The twelve registered learning/evaluation allocations, including the completed
-search continuation, committed **405,107 learning/training-fitness +85,338 evaluation transitions**,
+The thirteen registered learning/evaluation allocations, including the completed
+stationary curriculum, committed **494,819 learning/training-fitness +89,539 evaluation transitions**,
 plus512 toy calibration transitions. Separate Pong calibration used1024. The
 frozen epsilon diagnostic added4289 evaluation camera transitions and95.28seconds
 shared wall, with zero learning. Reused controls/calibration are counted only at
 their original allocation; exact replay adds no independent competence evidence.
 
-The allocation coordinator walls sum to9496.82seconds (158.28minutes); their
+The allocation coordinator walls sum to10,791.29seconds (179.85minutes); their
 subprocess walls are recorded separately in the machine-readable ledger. **Neither is CPU time
 or real total elapsed time**: internal workers and some allocations overlapped.
 These totals exclude separately retained physics feasibility, execution/recovery
