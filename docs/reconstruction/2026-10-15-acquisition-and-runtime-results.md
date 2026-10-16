@@ -2,7 +2,15 @@
 
 ## Current result index
 
-Latest investigation: [reward-credit and vision results](2026-10-16-reward-and-vision-results.md).
+Latest investigation: [reliable-opponent return learning](2026-10-16-reliable-return-learning-results.md).
+Two hit-only DCT-SARSA policies trained for 12k cameras each against a .65 opponent.
+Fresh hold1 returned 3/27 incoming balls and 3/24 first balls; hold10 returned
+13/36 and 9/24. Strongest simple controls achieved 10/33 and 7/24. Hold10's small
+lifts had paired uncertainty intervals crossing zero; neither arm qualified.
+The opponent returned all 105 evaluation balls and there were no natural wins.
+No replication or further experiment is automatically allocated.
+
+Previous investigation: [reward-credit and vision results](2026-10-16-reward-and-vision-results.md).
 Three fixed12k DCT-SARSA arms yielded8/24score-only,9/24hit-shaped and9/24survival-
 shaped fresh wins, all below simple controls. Independent vision localization and
 ball forecasting were substantially functional on two tested trajectories; no
@@ -49,6 +57,7 @@ success claim.
 | Stationary→.25 score-only curriculum | [Protocol](2026-10-16-stationary-curriculum-protocol.md) | 5stationary+7target updates/89,712training cameras;13/24(5own-hit), below14/6 gate |
 | DCT reward-credit diagnostic | [Protocol](2026-10-16-reward-credit-diagnostic-protocol.md); [combined results](2026-10-16-reward-and-vision-results.md) | 12k each: score8/24(0own), hit9/24(1own), survival9/24(1own), all below controls |
 | Frozen vision and immediate feedback | [Combined methods/results](2026-10-16-reward-and-vision-results.md) | Observed/predicted point coverage99.85–99.90%within3px; ball forecasts beat matched baselines; cached immediate mapping83–86%, no reward acquisition |
+| Reliable-opponent hit-only hold1 versus hold10 | [Protocol](2026-10-16-reliable-return-learning-protocol.md); [results](2026-10-16-reliable-return-learning-results.md) | First returns 3/24 versus 9/24; overall 3/27 versus 13/36; strongest controls 7/24 and 10/33; neither qualifies |
 | Cached delayed-template credit | [Diagnostic protocol](/workspace/m1b-experiments/cached-delayed-toy-20261016/PROTOCOL.md) | Fixed RMS/alpha.001 reaches both templates in all seeds by1000episodes; raw fails through2000 |
 | Oracle diagnostic closed-loop capacity | [NEW diagnostic protocol](/workspace/m1b-experiments/ORACLE-DIAGNOSTIC-closed-loop-capacity-20261016/PROTOCOL.md) | Camera-only oracle-fitted linear readout8/12(5own-hit); legal teacher8/12(5own-hit); NEVER reward acquisition |
 | Restricted-class oracle capacity | [NEW diagnostic protocol](/workspace/m1b-experiments/ORACLE-DIAGNOSTIC-restricted-capacity-20261016/PROTOCOL.md) | Frozen search class6/12(3own-hit),4loss/2timeout; capacity witness only, no learning |
@@ -62,7 +71,8 @@ complete source snapshots rather than relying on dirty-source hashes alone.
 These are new observations from the reconstructed learner, not imported historical
 success claims. Runtime: `/workspace/Fly-Connectome/.venv/bin/python`, Python
 3.12.14, Torch 2.14.1+cpu, NumPy 2.5.4; explicit `PYTHONPATH` selects this worktree.
-No backprop or reward shaping was used. The pinned frozen visual prior has empty
+No backprop was used. Later reward diagnostics explicitly changed only the
+registered scalar objective; their scope is labeled separately. The pinned frozen visual prior has empty
 long-context banks and therefore uses its four-step fallback.
 
 ## Exact registered toy pilot

@@ -1,6 +1,57 @@
-# Fly-Connectome M1B handoff — reward and vision diagnostics completed
+# Fly-Connectome M1B handoff — reliable-opponent return screen completed
 
-## Current resume state (supersedes the night pause below)
+## Current resume state: reliable-opponent return learning
+
+The user's next authorized investigation is complete. **No experiments are
+running, no genuine Pong acquisition has been demonstrated, and final holdout
+streams remain unused.** Do not automatically launch the historical staged 90k
+DCT study, another seed, or a longer continuation.
+
+Latest fixed study: opponent speed .65, hit-only reward (+1 own contact; zero
+game-score and survival contribution), same frozen DCT/cap256/SARSA alpha .001 /
+epsilon .2 / camera lambda .995, one matched training seed, hold1 versus hold10.
+Both completed exactly 12,000 cameras. Training yielded only 22 and 29 hit rewards;
+hold1 made 12,000 updates, hold10 1,228. The latter also changes persistence and
+exploration coherence, so this is not a pure update-frequency comparison.
+
+On 24 new fresh-phase ten-second serves per policy, frozen hold1 returned 3/27
+incoming balls and 3/24 first balls; hold10 returned 13/36 and 9/24. Strongest
+simple controls achieved 10/33 overall (constant up) and 7/24 first returns
+(up/no-op). Hold10's +5.81 and +8.33 percentage-point lifts had paired 95% intervals
+crossing zero; neither arm passed the registered return-learning screen. There
+were no wins or natural wins. The opponent returned 105/105 evaluation balls,
+including 49/49 after own contacts. First-incoming trajectories matched exactly
+across all seven policies. This is a negative finite-budget mechanism screen,
+not an impossibility result or standard Pong competence claim.
+
+Read [latest results](2026-10-16-reliable-return-learning-results.md) and
+[protocol](2026-10-16-reliable-return-learning-protocol.md). Source commit
+**0ea413a**, branch `reconstruction/m1b-continuation`; full source archive,
+manifest, journals, theta/W/cap, counters and costs are under
+`/workspace/m1b-experiments/pong-reliable-returns-20261016-r1/`.
+Parent independently verified all 46,838 physical/reward rows, 13,228 TD updates,
+all 24 paired first trajectories and exact bootstrap statistics in 34.90 seconds:
+`/workspace/m1b-experiments/reliable-return-parent-audit-20261016/summary.json`.
+
+Total allocation: 24,000 training + 22,838 evaluation cameras, zero recovery replay,
+757.32 seconds shared wall. Separate .45/.65 opponent feasibility and .65 vision
+probes are diagnostic compute in the external cumulative ledger. The latter found
+99.80–99.90% observed/predicted ball coverage within three pixels on 2,048 frames;
+it does not certify all features or exclude rare faults. New training raw norms
+were sometimes high, but norm magnitude alone does not identify their cause.
+The ledger now contains 15 allocations: 554,819 training + 119,833 evaluation
+transitions, with calibration and diagnostic reexecution recorded separately.
+
+Recommended next distinction, **not allocated**: a quarantined online immediate
+privileged-action-feedback test on the learner's own closed-loop states. Prior
+cached mapping accuracy did not test that state distribution or adequate Bellman
+Q values. Teacher feedback must remain diagnostic only, never policy input,
+candidate initialization or acquisition evidence. Agree a new concrete bounded
+allocation with the orchestrator under existing user authorization before work.
+Small/medium experiments do not need renewed user permission; genuinely major
+architecture changes still do. No backprop.
+
+## Previous completed reward and vision investigation
 
 Ryan resumed and explicitly requested informative reward and vision tests. The
 staged90k/three-seed score-only DCT run was NOT launched; its old launch command
