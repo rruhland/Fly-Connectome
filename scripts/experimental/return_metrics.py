@@ -84,9 +84,10 @@ def aggregate(rallies):
         post_own_opponent_opportunities=sum(r['post_own_opponent_opportunities'] for r in rallies),
         post_own_opponent_returns=sum(r['post_own_opponent_returns'] for r in rallies))
 
-def paired_evidence(by_policy,*,draws=10000,seed=193870291):
+def paired_evidence(by_policy,*,draws=10000,seed=193870291,
+                    arms=('hold1','hold10'),comparison=None):
     """Paired serve resampling; contacts within a serve are never independent."""
-    controls=('initial','up','noop','random1','random10');names=('hold1','hold10',*controls)
+    controls=('initial','up','noop','random1','random10');names=(*arms,*controls)
     if any(len(by_policy.get(n,[]))!=24 for n in names):return dict(complete=False)
     for i in range(24):
         signatures=[]
@@ -108,7 +109,7 @@ def paired_evidence(by_policy,*,draws=10000,seed=193870291):
     if any(v is None for p in points.values() for v in p.values()):
         report.update(analyzable=False,reason='a complete policy cohort has no incoming opportunities')
         return report
-    for name in ('hold1','hold10'):
+    for name in arms:
         delta=rates[name]-np.max(np.stack([rates[c] for c in controls]),axis=0)
         delta_first=initial[name]-np.max(np.stack([initial[c] for c in controls]),axis=0)
         valid=np.isfinite(delta)&np.isfinite(delta_first)
@@ -120,4 +121,15 @@ def paired_evidence(by_policy,*,draws=10000,seed=193870291):
             all_opportunity_lift_ci95=ci,first_incoming_lift_ci95=ci_first,
             invalid_bootstrap_draws=int((~valid).sum()),
             promising_development_signal=bool(valid.all() and point>=.2 and first>=.2 and ci[0]>0 and ci_first[0]>0))
+    if comparison is not None:
+        positive,negative=comparison
+        delta=rates[positive]-rates[negative]
+        delta_first=initial[positive]-initial[negative]
+        valid=np.isfinite(delta)&np.isfinite(delta_first)
+        report['paired_arm_comparison']=dict(positive=positive,negative=negative,
+            all_opportunity_lift=points[positive]['all']-points[negative]['all'],
+            first_incoming_lift=points[positive]['first']-points[negative]['first'],
+            all_opportunity_lift_ci95=np.quantile(delta[valid],[.025,.975]).tolist() if valid.any() else None,
+            first_incoming_lift_ci95=np.quantile(delta_first[valid],[.025,.975]).tolist() if valid.any() else None,
+            invalid_bootstrap_draws=int((~valid).sum()),descriptive_not_multiplicity_adjusted=True)
     return report

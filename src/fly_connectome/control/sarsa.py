@@ -11,7 +11,8 @@ from .policy import FrozenLinearPolicy
 
 class TrueOnlineSarsa:
     def __init__(self, actions, dimension, *, alpha=.01, lam=.9,
-                 gamma_per_second=.99, epsilon=.1, seed=0, weights=None):
+                 gamma_per_second=.99, epsilon=.1, seed=0, weights=None,
+                 exploration_block_frames=None):
         if (type(actions) is not int or type(dimension) is not int or min(actions, dimension) < 1
                 or not math.isfinite(alpha) or alpha <= 0
                 or not 0 <= lam <= 1 or not 0 < gamma_per_second <= 1
@@ -27,6 +28,9 @@ class TrueOnlineSarsa:
         self.gamma_per_second, self.epsilon = gamma_per_second, epsilon
         self.rng = np.random.default_rng(seed)
         self.transitions = 0
+        if exploration_block_frames is not None:
+            from .exploration import BlockExploration
+            self.exploration=BlockExploration(exploration_block_frames)
         self.reset_episode()
 
     def reset_episode(self):
@@ -35,6 +39,7 @@ class TrueOnlineSarsa:
         self.incoming_discount = 0.
         self.pending_action = None
         self.pending_features = None
+        if hasattr(self,'exploration'):self.exploration.reset_episode()
 
     def _features(self, indices, values):
         # Share the transport validator, but never normalize features adaptively.
@@ -47,6 +52,8 @@ class TrueOnlineSarsa:
         with np.errstate(over='raise',invalid='raise'):
             q = self.weights @ x
         if not np.isfinite(q).all():raise FloatingPointError('nonfinite learner values')
+        if hasattr(self,'exploration'):
+            return self.exploration.choose(q,self.epsilon,self.rng)
         if self.rng.random() < self.epsilon:
             return int(self.rng.integers(len(q)))
         ties = np.flatnonzero(q == q.max())
@@ -71,6 +78,9 @@ class TrueOnlineSarsa:
         # Bootstrap from the actual final observation for truncation, never reset state.
         next_x = None if terminated else self._features(indices, values)
         next_action = None if terminated else self._sample(next_x)
+        next_exploration=None
+        if hasattr(self,'exploration') and next_action is not None:
+            next_exploration=dict(self.exploration.last_selection)
         q_next = 0. if terminated else float(self.weights[next_action] @ next_x)
         x = np.zeros_like(self.weights)
         x[self.pending_action] = self.pending_features
@@ -89,6 +99,7 @@ class TrueOnlineSarsa:
         self.transitions += 1
         info = dict(q=q, q_next=q_next, delta=delta, outgoing_discount=outgoing,
                     bootstrap_action=next_action)
+        if hasattr(self,'exploration'):info['bootstrap_exploration']=next_exploration
         if terminated or truncated:
             self.reset_episode()
         else:

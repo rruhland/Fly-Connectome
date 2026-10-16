@@ -170,6 +170,8 @@ def worker(directory,job_id,max_work_seconds=160.,*,emit=True,_live_run=None,_ke
     job=next(row for row in manifest['jobs'] if row['id']==job_id)
     if job['kind']!='learn' and job.get('reward_shaping') is not None:
         raise ValueError('diagnostic reward transforms are training-only; evaluation is raw score-only')
+    if job['kind']!='learn' and job.get('exploration_block_frames') is not None:
+        raise ValueError('exploration blocks are training-only; fresh evaluation is frozen greedy')
     checkpoints=job.get('checkpoints',(2000,6000))
     scaling=None if job.get('scaling_from') is None else json.loads((directory/job['scaling_from']).read_text())
     projection=None if job.get('projection_from') is None else json.loads((directory/job['projection_from']).read_text())
@@ -192,7 +194,8 @@ def worker(directory,job_id,max_work_seconds=160.,*,emit=True,_live_run=None,_ke
             session=LearningSession(job['seed'],max_episode_ticks=2400,lam=job['lam'],
                                     alpha=job.get('alpha',.0001),policy_scaling=scaling,
                                     opponent_speed=job.get('opponent_speed'),action_hold_frames=job.get('action_hold_frames',1),
-                                    policy_projection=projection,reward_shaping=job.get('reward_shaping'))
+                                    policy_projection=projection,reward_shaping=job.get('reward_shaping'),
+                                    exploration_block_frames=job.get('exploration_block_frames'))
         else:
             weights=None if job['weights_from'] is None else np.load(directory/job['weights_from'],allow_pickle=False)
             if weights is not None:
@@ -209,6 +212,7 @@ def worker(directory,job_id,max_work_seconds=160.,*,emit=True,_live_run=None,_ke
         if projection is not None:expected_config['policy_projection']=projection
         if job.get('reward_shaping') is not None:expected_config['reward_shaping']=job['reward_shaping']
         if 'opponent_speed' in job:expected_config['opponent_speed']=job['opponent_speed']
+        if job.get('exploration_block_frames') is not None:expected_config['exploration_block_frames']=job['exploration_block_frames']
         hold=job.get('action_hold_frames',1)
         if hold!=1:expected_config.update(action_hold_frames=hold,macro_lambda=job['lam']**hold)
         if type(session) is not LearningSession or session.config != expected_config:
@@ -262,6 +266,19 @@ def worker(directory,job_id,max_work_seconds=160.,*,emit=True,_live_run=None,_ke
         report['finite_weights']=bool(np.isfinite(session.learner.weights).all())
         report['max_absolute_weight']=float(np.max(np.abs(session.learner.weights)))
         report['max_policy_feature_norm2']=max((row['policy_feature_norm2'] for row in rows),default=0.)
+        if job.get('exploration_block_frames') is not None:
+            selected=[r['exploration'] for r in rows]
+            exploratory=sum(r['exploratory'] for r in selected)
+            nongreedy=sum(r['non_greedy'] for r in selected)
+            report.update(exploration_block_frames=job['exploration_block_frames'],
+                exploratory_transitions=exploratory,non_greedy_transitions=nongreedy,
+                exploratory_fraction=exploratory/len(rows) if rows else None,
+                non_greedy_fraction=nongreedy/len(rows) if rows else None,
+                exploratory_physical_seconds=sum(r['elapsed_seconds'] for r in rows if r['exploration']['exploratory']),
+                non_greedy_physical_seconds=sum(r['elapsed_seconds'] for r in rows if r['exploration']['non_greedy']),
+                exploration_blocks_started=sum(r['block_frame']==1 for r in selected),
+                exploratory_blocks_started=sum(r['block_frame']==1 and r['exploratory'] for r in selected),
+                learner_updates=session.learner.transitions)
         if job.get('reward_shaping') is not None:
             report.update(reward_shaping=session.reward_shaping,
                 total_learning_reward=sum(row['learning_reward'] for row in rows),

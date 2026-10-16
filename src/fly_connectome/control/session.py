@@ -38,11 +38,14 @@ class LearningSession:
     durable_kind = 'pong-learning-v1'
     def __init__(self, seed=1101, *, max_episode_ticks=None, weights=None,
                  alpha=.0001, lam=.8, gamma_per_second=.95, epsilon=.2, policy_scaling=None,
-                 opponent_speed=None, action_hold_frames=1, policy_projection=None,reward_shaping=None):
+                 opponent_speed=None, action_hold_frames=1, policy_projection=None,reward_shaping=None,
+                 exploration_block_frames=None):
         if type(action_hold_frames) is not int or action_hold_frames<1 or not 0<=lam<=1:
             raise ValueError('positive integer camera frames per action required')
         if policy_projection is not None and policy_scaling is not None:
             raise ValueError('projection owns its post-transform cap; separate scaling is ambiguous')
+        if exploration_block_frames is not None and action_hold_frames!=1:
+            raise ValueError('exploration blocks require camera-rate control and learning')
         model_bytes()
         self.config = dict(seed=seed,max_episode_ticks=max_episode_ticks,alpha=alpha,lam=lam,
                            gamma_per_second=gamma_per_second,epsilon=epsilon)
@@ -53,6 +56,7 @@ class LearningSession:
             self.config['reward_shaping']=self.reward_shaping
         self.model_hash, self.vision_configuration = MODEL_HASH, VISION_CONFIGURATION
         self.source = source_signature()
+        if exploration_block_frames is not None:self.config['exploration_block_frames']=exploration_block_frames
         if opponent_speed is not None:self.config['opponent_speed']=opponent_speed
         if action_hold_frames!=1:
             self.config.update(action_hold_frames=action_hold_frames,macro_lambda=lam**action_hold_frames)
@@ -74,7 +78,8 @@ class LearningSession:
             self.config['policy_projection']=self.projection.config
             dimension=self.projection.output_dimension
         self.learner = TrueOnlineSarsa(3,dimension,alpha=alpha,lam=lam**action_hold_frames,
-                                      gamma_per_second=gamma_per_second,epsilon=epsilon,seed=seed,weights=weights)
+                                      gamma_per_second=gamma_per_second,epsilon=epsilon,seed=seed,weights=weights,
+                                      exploration_block_frames=exploration_block_frames)
         self.previous = torch.zeros(64,64,dtype=torch.bool)
         self.transitions = self.episodes = 0
         self.initial_cameras = 1
@@ -114,6 +119,7 @@ class LearningSession:
     def step(self):
         if getattr(self,'action_hold_frames',1)!=1:return self._step_hold()
         action = self.learner.pending_action
+        exploration=None if not hasattr(self.learner,'exploration') else dict(self.learner.exploration.last_selection)
         active = self.latest_encoded
         q_values = self.learner.weights @ self.learner.pending_features
         policy_norm2=float(self.learner.pending_features @ self.learner.pending_features)
@@ -135,6 +141,7 @@ class LearningSession:
                       forecasts=len(active['forecasts']),q_spread=float(np.ptp(q_values)),
                       terminated=result.terminated,truncated=result.truncated,hits=result.hits,**info)
         if components is not None:record.update(components)
+        if exploration is not None:record['exploration']=exploration
         if result.terminated or result.truncated:
             self.episodes += 1
             self.initial_cameras += 1
@@ -215,6 +222,11 @@ class LearningSession:
             validate_reward(session.reward_shaping)
             if session.config.get('reward_shaping')!=session.reward_shaping:
                 raise ValueError('diagnostic reward configuration differs')
+        exploration=getattr(session.learner,'exploration',None)
+        if ((exploration is None)!=(session.config.get('exploration_block_frames') is None)
+                or (exploration is not None and (exploration.frames!=session.config['exploration_block_frames']
+                    or getattr(session,'action_hold_frames',1)!=1))):
+            raise ValueError('exploration configuration differs')
         projection=getattr(session,'projection',None)
         if projection is not None:
             projection.validate_embedded()
