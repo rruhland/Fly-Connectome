@@ -14,6 +14,7 @@ from fly_connectome.vision import load_default, VisualStateEncoder
 from .codec import fingerprint, frozen_tensors
 from .policy import FrozenLinearPolicy
 from .session import MODEL_HASH, VISION_CONFIGURATION, model_bytes
+from .scaling import make_policy_transform,policy_features,block_squared_norms
 
 
 @contextmanager
@@ -95,7 +96,7 @@ class VisibleChoiceTask:
 
 
 class FreshFrozenEvaluator:
-    def __init__(self, weights, config, *, random_action_seed=None):
+    def __init__(self, weights, config, *, random_action_seed=None, policy_scaling=None):
         with preserve_global_rngs():
             model_bytes()  # Verify pinned prior before constructing fresh perception.
             self.config = config
@@ -104,6 +105,7 @@ class FreshFrozenEvaluator:
             self.action_rng = None if random_action_seed is None else np.random.default_rng(random_action_seed)
             self.vision = load_default()
             self.encoder = VisualStateEncoder(64,64,config.period)
+            self.scaler=make_policy_transform(self.encoder.layout,self.encoder.dimension,policy_scaling)
             self.policy = FrozenLinearPolicy(weights)
             if self.policy.weights.shape != (2,self.encoder.dimension):
                 raise ValueError('two-action weights matching the pinned encoder required')
@@ -115,7 +117,7 @@ class FreshFrozenEvaluator:
 
     def learned_hash(self):
         # Frozen tensors plus calibration and private bank RNG state, excluding caches/history.
-        return fingerprint((self.policy.weights,frozen_tensors(self),self.vision.dynamics,self.vision.calibration))
+        return fingerprint((self.policy.weights,frozen_tensors(self),self.vision.dynamics,self.vision.calibration,self.scaler))
 
     def _observe(self, frame):
         events = torch.stack((self.previous & ~frame,~self.previous & frame)).float()
@@ -135,7 +137,8 @@ class FreshFrozenEvaluator:
         with preserve_global_rngs():
             if not self.task.active:
                 self.begin_episode()
-            action,q = self.policy.choose(self.encoded['indices'].numpy(),self.encoded['values'].numpy())
+            input_norms=block_squared_norms(self.encoded)
+            action,q = self.policy.choose(*policy_features(self.encoded,self.scaler))
             if self.action_rng is not None:
                 action = int(self.action_rng.integers(2))
             frame,reward,terminal,elapsed = self.task.step(action)
@@ -143,7 +146,7 @@ class FreshFrozenEvaluator:
             self.transitions += 1
             record = dict(episode=self.task.episode,transition=self.transitions-1,action=action,
                           q=q.tolist(),reward=reward,terminated=terminal,truncated=False,
-                          elapsed_seconds=elapsed)
+                          elapsed_seconds=elapsed,input_block_norm2=input_norms)
             if self.learned_hash() != self.initial_learned_hash:
                 raise RuntimeError('evaluation changed frozen parameters or bank state')
             self.records.append(record)

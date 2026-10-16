@@ -28,7 +28,10 @@ class FrozenLinearPolicy:
                 or (indices < 0).any() or (indices >= self._weights.shape[1]).any()
                 or len(np.unique(indices)) != len(indices)):
             raise ValueError('unique in-range integer indices and finite values required')
-        return self._weights[:, indices] @ values
+        with np.errstate(over='raise',invalid='raise'):
+            q=self._weights[:, indices] @ values
+        if not np.isfinite(q).all():raise FloatingPointError('nonfinite policy values')
+        return q
 
     def choose(self, indices, values, legal_actions=None):
         q = self.q_values(indices, values)

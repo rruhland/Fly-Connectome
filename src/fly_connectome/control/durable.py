@@ -12,7 +12,7 @@ import sys
 import numpy as np
 import torch
 
-from .codec import FrozenCodec, fingerprint
+from .codec import FrozenCodec, fingerprint, GRAPH_DIGEST
 from .journal import canonical, digest
 from .session import LearningSession
 
@@ -53,7 +53,7 @@ class DurableRun:
                 raise ValueError('initial session must precede first transition')
             self.session = session
             self.codec = FrozenCodec.from_session(session)
-            config = dict(schema='m1b-replay-v2',bank=self.codec.key,runtime=runtime_signature(),
+            config = dict(schema='m1b-replay-v2',graph_digest=GRAPH_DIGEST,bank=self.codec.key,runtime=runtime_signature(),
                           session_kind=session.durable_kind,
                           snapshot_transitions=snapshot_transitions,snapshot_seconds=snapshot_seconds)
             self.db.execute('BEGIN IMMEDIATE')
@@ -75,6 +75,9 @@ class DurableRun:
             if config['schema'] != 'm1b-replay-v2':
                 self.db.close()
                 raise ValueError('unsupported replay schema')
+            if config.get('graph_digest') != GRAPH_DIGEST:
+                self.db.close()
+                raise ValueError('unsupported graph digest; use the original source for old runs')
             if config.get('runtime') != runtime_signature():
                 self.db.close()
                 raise ValueError('incompatible runtime; migration requires a separate proof')
@@ -119,7 +122,9 @@ class DurableRun:
             if count and state_hash != records[count-1][1]:
                 raise ValueError('checkpoint/sample state mismatch')
             from .toy_session import ToySession
-            classes = {'pong-learning-v1':LearningSession,'toy-session-v1':ToySession}
+            from .pong_evaluation import FreshPongEvaluator
+            classes = {'pong-learning-v1':LearningSession,'toy-session-v1':ToySession,
+                       'pong-evaluation-v1':FreshPongEvaluator}
             if session_kind not in classes:
                 raise ValueError('unsupported session kind')
             self.session = classes[session_kind].validate_restored(self.codec.loads(payload))

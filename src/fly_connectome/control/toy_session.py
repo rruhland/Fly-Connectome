@@ -8,6 +8,7 @@ from fly_connectome.vision import load_default,VisualStateEncoder
 from .fresh_evaluation import EvaluationConfig,VisibleChoiceTask,FreshFrozenEvaluator
 from .sarsa import TrueOnlineSarsa
 from .session import LearningSession,MODEL_HASH,VISION_CONFIGURATION,model_bytes,source_signature
+from .scaling import make_policy_transform,validate_scaling,block_squared_norms
 
 
 @dataclass(frozen=True)
@@ -24,8 +25,10 @@ class ToySpec:
     alpha: float = .0001
     gamma_per_second: float = .95
     epsilon: float = .2
+    policy_scaling: dict | None = None
 
     def validate(self):
+        validate_scaling(self.policy_scaling)
         if (self.task not in ('immediate','delayed') or self.mode not in ('learn','evaluate')
                 or self.lam not in (0.,.8) or self.period != .02 or self.alpha != .0001
                 or self.gamma_per_second != .95 or self.epsilon != .2
@@ -40,6 +43,7 @@ class ToySpec:
         if (self.policy_kind=='random') != (self.action_seed is not None):
             raise ValueError('random baseline requires its independent action seed')
         if not self.diagnostic:
+            if self.policy_scaling is not None:raise ValueError('registered toy transport is unscaled')
             base=(2101 if self.task=='immediate' else 2201) if self.mode=='learn' else (3101 if self.task=='immediate' else 3201)
             expected=(200 if self.task=='immediate' else 25) if self.mode=='learn' else 20
             if self.seed not in range(base,base+3) or self.episodes!=expected:
@@ -81,7 +85,7 @@ class ToySession(LearningSession):
                 weights=np.zeros((2,dimension))
             if weights is None: raise ValueError('trained evaluation needs frozen weights')
             self.evaluator=FreshFrozenEvaluator(weights,EvaluationConfig(spec.task,spec.seed,spec.episodes),
-                                                 random_action_seed=spec.action_seed)
+                                                 random_action_seed=spec.action_seed,policy_scaling=spec.policy_scaling)
             self.env,self.vision,self.encoder=self.evaluator.task,self.evaluator.vision,self.evaluator.encoder
             self.previous=self.evaluator.previous
             self.learner=None
@@ -89,6 +93,7 @@ class ToySession(LearningSession):
             self.env=VisibleChoiceTask(spec)
             self.vision=load_default()
             self.encoder=VisualStateEncoder(64,64,.02)
+            self.scaler=make_policy_transform(self.encoder.layout,self.encoder.dimension,spec.policy_scaling)
             self.previous=torch.zeros(64,64,dtype=torch.bool)
             self.learner=TrueOnlineSarsa(2,self.encoder.dimension,alpha=spec.alpha,lam=spec.lam,
                                         gamma_per_second=spec.gamma_per_second,epsilon=spec.epsilon,seed=spec.seed)
@@ -105,7 +110,7 @@ class ToySession(LearningSession):
         self.vision.reset_state();self.encoder.reset_state();self.previous.zero_()
         self.initial_cameras+=1
         self.latest_encoded=self.observe(frame)
-        self.learner.start(self.latest_encoded['indices'].numpy(),self.latest_encoded['values'].numpy())
+        self.learner.start(*self.policy_features(self.latest_encoded))
 
     def step(self):
         if self.complete: raise StopIteration('registered allocation complete')
@@ -114,13 +119,17 @@ class ToySession(LearningSession):
             record=self.evaluator.step().copy()
             terminal=record['terminated']
         else:
+            input_norms=block_squared_norms(self.latest_encoded)
+            policy_norm2=float(self.learner.pending_features @ self.learner.pending_features)
             action=self.learner.pending_action
             frame,reward,terminal,elapsed=self.env.step(action)
             final=self.observe(frame)
-            _,info=self.learner.advance(reward,elapsed,final['indices'].numpy(),final['values'].numpy(),terminated=terminal)
+            _,info=self.learner.advance(reward,elapsed,*self.policy_features(final),terminated=terminal)
             self.latest_encoded=final
             record=dict(transition=self.transitions,episode=self.env.episode,action=action,reward=reward,
                         terminated=terminal,truncated=False,elapsed_seconds=elapsed,**info)
+            record['input_block_norm2']=input_norms
+            record['policy_feature_norm2']=policy_norm2
         # Scoring labels are logged after the update and never enter learner features.
         record.update(target_side=int(self.env.sides[self.env.episode]),selected_side=int(self.env.selected),
                       delay_step=self.env.elapsed_steps)

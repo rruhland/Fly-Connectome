@@ -7,8 +7,16 @@ import pickle
 import numpy as np
 import torch
 
+GRAPH_DIGEST = 'm1b-graph-v2:pickle5-no-memo'
+
 def fingerprint(value):
-    """Canonical graph digest including repeated-object aliases and RNG state."""
+    """Complete canonical graph digest, including aliases and RNG state.
+
+    Binary tensor contents avoid expanding the whole graph into hexadecimal JSON.
+    Pickle only encodes the canonical primitive tree; explicit references above
+    remove cycles, so disabling its memo prevents primitive object identity from
+    changing the digest. This is a versioned hash format, never deserialized here.
+    """
     seen = {}
     retained = []  # Keep temporary RNG state tensors alive while assigning alias IDs.
     def visit(obj):
@@ -20,18 +28,54 @@ def fingerprint(value):
         seen[identity] = len(seen)
         retained.append(obj)
         if isinstance(obj, torch.Tensor):
-            return ['tensor', str(obj.dtype), list(obj.shape), obj.detach().contiguous().numpy().tobytes().hex()]
+            return ['tensor', str(obj.dtype), list(obj.shape), obj.numpy(force=True).tobytes()]
         if isinstance(obj, np.random.Generator):
             return ['numpy-generator', visit(obj.bit_generator.state)]
         if isinstance(obj, np.ndarray):
-            return ['array', str(obj.dtype), list(obj.shape), obj.tobytes().hex()]
+            return ['array', str(obj.dtype), list(obj.shape), obj.tobytes()]
         if isinstance(obj, bytes):
-            return ['bytes', obj.hex()]
+            return ['bytes', obj]
         if isinstance(obj, torch.Generator):
             return ['torch-generator', visit(obj.get_state())]
         if isinstance(obj, dict):
             return ['dict', [[visit(k), visit(v)] for k, v in sorted(obj.items(), key=lambda kv: repr(kv[0]))]]
         if isinstance(obj, (list, tuple, deque)):
+            # Batch the bytes scan only; canonical nodes and graph reference IDs
+            # remain identical to the scalar format, including repeated aliases.
+            if len(obj) >= 32:
+                first = obj[0]
+                supported = {torch.bool, torch.uint8, torch.int8, torch.int16,
+                             torch.int32, torch.int64, torch.float16,
+                             torch.float32, torch.float64, torch.complex64,
+                             torch.complex128}
+                if (type(first) is torch.Tensor and first.device.type == 'cpu'
+                        and first.layout == torch.strided and first.dtype in supported
+                        and first.numel() <= 64 and not first.is_conj() and not first.is_neg()
+                        and len(obj) * first.numel() * first.element_size() <= 1048576):
+                    shape, dtype = first.shape, first.dtype
+                    if all(type(x) is torch.Tensor and x.device.type == 'cpu'
+                           and x.layout == torch.strided and x.shape == shape
+                           and x.dtype == dtype and not x.is_conj() and not x.is_neg()
+                           for x in obj):
+                        nodes, fresh, payload_nodes = [], [], []
+                        for x in obj:
+                            identity = id(x)
+                            if identity in seen:
+                                nodes.append(['ref', seen[identity]])
+                            else:
+                                seen[identity] = len(seen)
+                                retained.append(x)
+                                node = ['tensor', str(dtype), list(shape), None]
+                                nodes.append(node)
+                                fresh.append(x)
+                                payload_nodes.append(node)
+                        if fresh:
+                            with torch.no_grad():
+                                raw = torch.stack(fresh).numpy(force=True).tobytes()
+                            size = first.numel() * first.element_size()
+                            for index, node in enumerate(payload_nodes):
+                                node[3] = raw[index * size:(index + 1) * size]
+                        return [type(obj).__name__, nodes]
             return [type(obj).__name__, [visit(x) for x in obj]]
         if hasattr(obj, '__dict__'):
             fields = vars(obj)
@@ -41,7 +85,11 @@ def fingerprint(value):
                 fields['_variance_version'] = fields['_variance_version'] == fields['_variance_keys']._version
             return [type(obj).__module__+'.'+type(obj).__qualname__, visit(fields)]
         raise TypeError(type(obj))
-    return hashlib.sha256(json.dumps(visit(value), sort_keys=True).encode()).hexdigest()
+    stream = io.BytesIO()
+    writer = pickle.Pickler(stream, protocol=5)
+    writer.fast = True
+    writer.dump(visit(value))
+    return hashlib.sha256(GRAPH_DIGEST.encode()+b'\0'+stream.getvalue()).hexdigest()
 
 
 

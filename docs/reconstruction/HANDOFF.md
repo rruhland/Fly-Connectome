@@ -1,4 +1,149 @@
-# Fly-Connectome cloud handoff — paused before registered pilot
+# Fly-Connectome M1B handoff — active research continuation
+
+## Current authority and state (2026-10-16)
+
+The historical pause below is **superseded** by Ryan's explicit continuation and
+authorization for experiments and smaller/medium changes. Do not treat the old
+zero-count stop state as current. Major architecture changes still need review;
+no backprop, policy oracle state or silent reward shaping is authorized.
+
+Working worktree: `/workspace/Fly-Connectome-m1b`, on local branch
+`reconstruction/m1b-continuation`, based on `b36d8709be2d09d7f11ec1afc3740ff78d64ce86`.
+Accumulated intended source/tests/docs are preserved in a local commit before
+the continuation source archive. Do not discard edits; no push or PR was made. Runtime is the other checkout's
+`/workspace/Fly-Connectome/.venv/bin/python`, Python3.12.14/Torch2.14.1+cpu/
+NumPy2.5.4, with `PYTHONPATH=/workspace/Fly-Connectome-m1b/src`; use one Torch/BLAS
+thread per independent worker. The environment grants four CPU cores/16GiB.
+
+Start with the [current result index](2026-10-15-acquisition-and-runtime-results.md).
+The registered toy pilot and multiple bounded diagnostics/experiments completed.
+Immediate toy acquisition passed; original delayed toy conditioning/exposure and
+all Pong acquisition screens so far failed. A later exact cached-template probe
+shows RMS/alpha.001 learns both delayed templates by1000episodes in all seeds;
+this does not relabel earlier allocations or establish visual generalization.
+A subsequent fixed centering probe was negative and is not promoted. Original .45-opponent Pong has strong finite
+evidence of a return-to-score ceiling; further .45 training is paused, preserving
+the original task. Explicit .25-opponent Pong is winnable with legal actions, but
+the first raw 6000-transition screen merely matched no-op at5/12 and stopped.
+No genuine Pong acquisition or final holdout use has occurred.
+
+The [paired30k exposure/sharing study](2026-10-15-pong-exposure-sharing-protocol.md)
+failed numerically before either endpoint: raw committed20,773 before nonfinite
+weights; sharing was explicitly resource-stopped at23,400 after finite divergence.
+No trained endpoint evaluation occurred. Exact replay captured public-ID
+hypothesis switches producing large finite velocity inputs before trace/weight
+explosion. Preserve this failure and its post hoc resource-stop amendment.
+
+The [fixed radial-cap study](2026-10-16-radial-cap-pong-protocol.md) completed
+30k stably, but its fresh24-rally endpoint failed:9wins(8natural+1own-hit),15losses,
+0truncations, four contacts, versus strongest simple baseline10wins(2own-hit).
+It used30,000learning+2534fresh evaluation transitions in1215.19seconds, with no
+replay or replication allocation. Artifacts:
+`/workspace/m1b-experiments/pong-raw-cap-20261016-r1/`. This establishes numerical
+robustness at the allocation, not genuine Pong acquisition.
+
+The separately registered [capped block-RMS comparison](2026-10-16-capped-block-rms-pong-protocol.md)
+also failed its fixed30k endpoint:8/24wins, all natural,16losses,0truncation,two
+contacts, using30,000learning+2162fresh evaluation transitions in1221.49seconds.
+Both capped arms were finite; neither qualified or received replication.
+Frozen epsilon.2 raw and bias-only controls subsequently both won8/24 with no
+own-hit wins (4289camera transitions,95.28seconds shared wall, no updates).
+
+The completed [paired alpha/hold study](2026-10-16-alpha-hold-pong-protocol.md) is
+retained at `/workspace/m1b-experiments/pong-alpha-hold-20261016-r1/`: raw+cap256,
+alpha.0001/hold1 versus alpha.001/hold4, same firstseed/.25physics,30k camera
+transitions each, fixed24DEV endpoint. All cameras still update vision and commit
+durably; held actions update/sample only at macro boundaries, with exact physical
+discounts and lambda.995^4. Default hold1 records/weights/source-normalized complete
+state matched the previous source. Hold changes were prepared in the isolated
+`/workspace/Fly-Connectome-hold4` worktree and integrated only after both previous
+coordinators ended and old full source archives were verified. Old journals must
+use their original source archives. Check process/artifact status before resuming;
+both endpoint evaluations are complete: lower alpha9/24(1own-hit) and hold4
+11/24(3own-hit), both0truncations, below14total/6own-hit. No arm qualified. The
+source freeze has ended after all archives/coordinators completed. A separate
+worker-only warm-session benchmark is isolated in `/workspace/Fly-Connectome-warm`;
+do not silently overwrite the archived driver. The opt-in warm-worker path is
+now integrated after16focused tests; its1000camera matched continuation reduced
+36.49to32.16seconds(11.85%, one-pair/load caveat), with exact full states/records/
+weights/traces and unchanged per-camera durability/recovery checks. No replication/final holdout
+is automatically allocated. Nonfinite guards reject invalid
+updates before journal commit; discard failed live sessions and recover the last
+valid journal state.
+
+A NEW quarantined closed-loop witness completed under
+`/workspace/m1b-experiments/ORACLE-DIAGNOSTIC-closed-loop-capacity-20261016/PROTOCOL.md`:
+prior fixed fit recipe,12DEVrallies against legalPD teacher,180second shared wall,
+no coefficients exported or candidate use. Camera-only readout8/12wins(5own-hit),
+4loss/0timeout/19hits; teacher8/12(5own-hit),0loss/4timeouts/44hits. It completed
+in105.85seconds, providing a positive existing-class capacity witness, NEVER
+reward-learning acquisition or teacher equivalence. Full records/source/fit recipe
+and coefficient hashes are retained. The subsequent score-only policy-search allocation described below is authorized
+and active; no further allocation is automatic.
+
+The completed [score-only smooth search](2026-10-16-score-only-policy-search-protocol.md)
+is preserved at `/workspace/m1b-experiments/pong-score-policy-search-20261016-r1/`.
+Seven updates used56,089 of59,903training cameras;3814partial-generation7 cameras
+were excluded. Fixed endpoint12/24(4own-hit) versus original initial10/24(2own-hit)
+FAILED14/6 gate. No acquisition, replication or final evaluation. Read-only audit
+reconstructed all448scored rollouts, arrays, updates and RNG exactly. A separate
+restricted-class oracle witness won6/12(3own-hit),4loss/2timeouts; usable capacity,
+not reward learning. Oracle coefficients remain quarantined and unexported.
+
+The NEW [fixed continuation](2026-10-16-score-only-policy-search-continuation-protocol.md)
+is authorized at `/workspace/m1b-experiments/pong-score-policy-search-continuation-20261016-r1/`.
+Before resuming inspect manifest/process/status, as preparation is not launch.
+It starts theta7/postdraw partialg7 RNG, skips that partial fitness, and uses global
+indices8..23 for at most16additional updates (23totalupdates). Same frozen rank183
+transform/366contrasts, noise.25/top4/step.10/hold1/.25physics. Fixed120k NEW cameras,
+34mintrain/40overall, four workers, full per-camera journals/warm chunks; no partial
+updates, no intermediate DEV or best-checkpoint selection. ORIGINAL theta0 plus
+simple controls define14total/6own-hit gate; theta7's earlier score is descriptive.
+All final seeds remain unused. Replication, if later authorized, reproduces the
+WHOLE staged procedure from zero. Source/coordinator/math/protocol freeze at launch.
+The only new core-source change is exact-byte bulk graph hashing. Its source bridge
+retains earlier baseline projection proofs; old journals use archived source.
+Gates:37digest/search/evaluator tests,14continuation/durable/warm tests, plus
+fresh-process16new+1replay proof, all exact records/full graphs. A local commit and
+complete new source archive preserve code; outside-repo experiment data are excluded.
+
+The separately isolated `ORACLE-DIAGNOSTIC-readout-capacity-20261016` audit found
+86% excluded-rally/92% independent-calibration agreement with a legal PD teacher
+using a generic linear readout, versus60%/58% majority baselines. Solver reached
+its fixed iteration limit. No diagnostic coefficients were saved or supplied to
+candidate policies; this is representability evidence, not learned control.
+
+All artifacts live under `/workspace/m1b-experiments/`, including complete source
+snapshots, not just hashes. Source changes require replay compatibility checks;
+old hash-format journals require their original archived source. New binary digest
+is version-pinned and fail-closed. Fresh Pong evaluation is separate from the
+legacy trajectory-clone diagnostic. Default prior long banks are empty, so the
+four-step forecast fallback is the actual context configuration. Reserved final
+seeds308713321/1203078761/1983461927 remain untouched.
+
+Latest cap/recovery/driver focused gate:48passed/15.58s, then10passed/3.92s for
+composed block-scaling/cap/frozen-base/durable recovery before its launch.
+Hold preparation then passed51tests/25.16s plus13main/coordinator tests/9.06s;
+hold1 source-normalized complete state, all records and weights matched exactly.
+The fresh-process hold proof used80new+1replay cameras; direct-vs-worker400-camera
+proof matched all records, weights and complete state. Reused controls passed
+19,903 camera/action/physics projection checks before launch. Active source archive
+sha256 is `b8ae1ce0aaec2de877a647a47726fac8096175687972521ec3693888f073fb9e`.
+Captured-sequence replay
+reproduced both uncapped failure windows exactly and showed finite bounded capped
+updates. Reused controls passed11,551 exact cross-source physics/action comparisons.
+Earlier400-transition custom-checkpoint proof matched complete state, records and
+weights, including final export recovery. Full timing remains in SQLite despite
+compact progress reports. The known
+baseline native exact-float failure below was not relaxed. No push/merge occurred.
+
+Potential later execution optimization: the direct-step profile attributed about
+.267/2.019seconds (13%) to encoder deep copy, including .203seconds across4529
+Tensor deep copies. A tensor-clone/tree-copy implementation might reduce this
+while preserving full ownership/alias contracts. It is a measured opportunity,
+not implemented; do not edit the live study's source to pursue it.
+
+## Historical paused handoff (preserved for provenance)
 
 Ryan requested a safe stopping point so he can provide his own orchestration.
 This supersedes earlier permission to automatically launch the toy pilot.

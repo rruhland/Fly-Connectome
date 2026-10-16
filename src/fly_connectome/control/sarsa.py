@@ -44,7 +44,9 @@ class TrueOnlineSarsa:
         return x
 
     def _sample(self, x):
-        q = self.weights @ x
+        with np.errstate(over='raise',invalid='raise'):
+            q = self.weights @ x
+        if not np.isfinite(q).all():raise FloatingPointError('nonfinite learner values')
         if self.rng.random() < self.epsilon:
             return int(self.rng.integers(len(q)))
         ties = np.flatnonzero(q == q.max())
@@ -74,10 +76,16 @@ class TrueOnlineSarsa:
         x[self.pending_action] = self.pending_features
         q = float(np.sum(self.weights*x))
         delta = reward + outgoing*q_next - q
+        if not np.isfinite([q,q_next,delta]).all():
+            raise FloatingPointError('nonfinite learner target')
         decay = self.incoming_discount*self.lam
-        self.traces *= decay
-        self.traces += (1-self.alpha*float(np.sum(self.traces*x)))*x
-        self.weights += self.alpha*(delta+q-self.q_old)*self.traces - self.alpha*(q-self.q_old)*x
+        with np.errstate(over='raise',invalid='raise'):
+            self.traces *= decay
+            self.traces += (1-self.alpha*float(np.sum(self.traces*x)))*x
+            if not np.isfinite(self.traces).all():raise FloatingPointError('nonfinite learner traces')
+            proposed=self.weights + (self.alpha*(delta+q-self.q_old)*self.traces - self.alpha*(q-self.q_old)*x)
+        if not np.isfinite(proposed).all():raise FloatingPointError('nonfinite learner weights')
+        self.weights[:]=proposed
         self.transitions += 1
         info = dict(q=q, q_next=q_next, delta=delta, outgoing_discount=outgoing,
                     bootstrap_action=next_action)
