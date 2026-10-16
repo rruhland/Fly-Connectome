@@ -68,6 +68,43 @@ def export_checkpoint(directory,job_id,count,weights,*,checkpoints=(2000,6000)):
                 raise ValueError('past checkpoint weights changed')
 
 
+def export_training_checkpoint(directory,job_id,session,*,checkpoints=(2000,6000)):
+    """Keep reduced learner weights and exact mapped evaluation artifacts together.
+
+    A missing export is recoverable only while the journal is still exactly at
+    that checkpoint. Past exports fail closed; later weights cannot fill them.
+    The default learner retains the existing checkpoint format and behavior.
+    """
+    projection=getattr(session,'projection',None)
+    if projection is None:
+        return export_checkpoint(directory,job_id,session.transitions,session.learner.weights,checkpoints=checkpoints)
+    count=session.transitions
+    for checkpoint in checkpoints:
+        if count<=checkpoint:continue
+        theta_path=directory/f'{job_id}_at{checkpoint}.theta.npy'
+        cap_path=directory/f'{job_id}_at{checkpoint}.cap.json'
+        if not theta_path.exists() or not cap_path.exists():
+            raise ValueError('missing past projected checkpoint artifacts; reconstruct its exact state')
+        mapped,expected=projection.mapped_evaluation(np.load(theta_path,allow_pickle=False))
+        if json.loads(cap_path.read_text())!=expected:
+            raise ValueError('past projected checkpoint provenance changed')
+        metadata=json.loads((directory/f'{job_id}_at{checkpoint}.json').read_text())
+        if metadata['weight_hash']!=hashlib.sha256(mapped.tobytes()).hexdigest():
+            raise ValueError('past mapped checkpoint differs from projected weights')
+    mapped,cap=session.mapped_evaluation() if count in checkpoints else (session.learner.weights,None)
+    export_checkpoint(directory,job_id,count,mapped,checkpoints=checkpoints)
+    if count in checkpoints:
+        theta_path=directory/f'{job_id}_at{count}.theta.npy'
+        cap_path=directory/f'{job_id}_at{count}.cap.json'
+        if theta_path.exists():
+            if not np.array_equal(np.load(theta_path,allow_pickle=False),session.learner.weights):
+                raise ValueError('projected checkpoint weights disagree with durable state')
+        else:atomic_weights(theta_path,session.learner.weights)
+        if cap_path.exists() and json.loads(cap_path.read_text())!=cap:
+            raise ValueError('projected checkpoint provenance disagrees with durable state')
+        atomic_json(cap_path,cap)
+
+
 def jobs():
     learning=[];evaluation=[]
     for seed in TRAIN_SEEDS:
@@ -133,6 +170,9 @@ def worker(directory,job_id,max_work_seconds=160.,*,emit=True,_live_run=None,_ke
     job=next(row for row in manifest['jobs'] if row['id']==job_id)
     checkpoints=job.get('checkpoints',(2000,6000))
     scaling=None if job.get('scaling_from') is None else json.loads((directory/job['scaling_from']).read_text())
+    projection=None if job.get('projection_from') is None else json.loads((directory/job['projection_from']).read_text())
+    if projection is not None and (job['kind']!='learn' or scaling is not None):
+        raise ValueError('projection is training-only and owns its cap; evaluate mapped weights with their exported cap')
     evaluation_config=None if job['kind']=='learn' else dict(job['config'])
     if evaluation_config is not None and scaling is not None:evaluation_config['policy_scaling']=scaling
     db=directory/(job_id+'.db')
@@ -149,7 +189,8 @@ def worker(directory,job_id,max_work_seconds=160.,*,emit=True,_live_run=None,_ke
         if job['kind']=='learn':
             session=LearningSession(job['seed'],max_episode_ticks=2400,lam=job['lam'],
                                     alpha=job.get('alpha',.0001),policy_scaling=scaling,
-                                    opponent_speed=job.get('opponent_speed'),action_hold_frames=job.get('action_hold_frames',1))
+                                    opponent_speed=job.get('opponent_speed'),action_hold_frames=job.get('action_hold_frames',1),
+                                    policy_projection=projection)
         else:
             weights=None if job['weights_from'] is None else np.load(directory/job['weights_from'],allow_pickle=False)
             if weights is not None:
@@ -163,12 +204,13 @@ def worker(directory,job_id,max_work_seconds=160.,*,emit=True,_live_run=None,_ke
         expected_config=dict(seed=job['seed'],max_episode_ticks=2400,alpha=job.get('alpha',.0001),lam=job['lam'],
                              gamma_per_second=.95,epsilon=.2)
         if scaling is not None:expected_config['policy_scaling']=scaling
+        if projection is not None:expected_config['policy_projection']=projection
         if 'opponent_speed' in job:expected_config['opponent_speed']=job['opponent_speed']
         hold=job.get('action_hold_frames',1)
         if hold!=1:expected_config.update(action_hold_frames=hold,macro_lambda=job['lam']**hold)
         if type(session) is not LearningSession or session.config != expected_config:
             raise ValueError('training journal differs from declared configuration')
-        export_checkpoint(directory,job_id,session.transitions,session.learner.weights,checkpoints=checkpoints)
+        export_training_checkpoint(directory,job_id,session,checkpoints=checkpoints)
     elif type(session) is not FreshPongEvaluator or asdict(session.config) != evaluation_config:
         raise ValueError('evaluation journal differs from declared configuration')
     replayed=run.replayed if _live_run is None else 0;latencies=[]
@@ -185,7 +227,7 @@ def worker(directory,job_id,max_work_seconds=160.,*,emit=True,_live_run=None,_ke
                 atomic_json(directory/(job_id+'-numerical-stop.json'),failure)
                 raise FloatingPointError('prespecified numerical resource stop')
         if job['kind']=='learn' and session.transitions in checkpoints:
-            export_checkpoint(directory,job_id,session.transitions,session.learner.weights,checkpoints=checkpoints)
+            export_training_checkpoint(directory,job_id,session,checkpoints=checkpoints)
     rows=[json.loads(row[0]) for row in run.db.execute('SELECT record FROM replay_samples ORDER BY seq')]
     report=dict(job=job_id,kind=job['kind'],complete=complete(),transitions=session.transitions,
         new_transitions=session.transitions-before,replayed_transitions=replayed,

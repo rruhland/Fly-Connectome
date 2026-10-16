@@ -38,9 +38,11 @@ class LearningSession:
     durable_kind = 'pong-learning-v1'
     def __init__(self, seed=1101, *, max_episode_ticks=None, weights=None,
                  alpha=.0001, lam=.8, gamma_per_second=.95, epsilon=.2, policy_scaling=None,
-                 opponent_speed=None, action_hold_frames=1):
+                 opponent_speed=None, action_hold_frames=1, policy_projection=None):
         if type(action_hold_frames) is not int or action_hold_frames<1 or not 0<=lam<=1:
             raise ValueError('positive integer camera frames per action required')
+        if policy_projection is not None and policy_scaling is not None:
+            raise ValueError('projection owns its post-transform cap; separate scaling is ambiguous')
         model_bytes()
         self.config = dict(seed=seed,max_episode_ticks=max_episode_ticks,alpha=alpha,lam=lam,
                            gamma_per_second=gamma_per_second,epsilon=epsilon)
@@ -60,7 +62,13 @@ class LearningSession:
         self.encoder = VisualStateEncoder(64,64,.02)
         self.scaler = make_policy_transform(self.encoder.layout,self.encoder.dimension,policy_scaling)
         if policy_scaling is not None:self.config['policy_scaling']=self.scaler.config
-        self.learner = TrueOnlineSarsa(3,self.encoder.dimension,alpha=alpha,lam=lam**action_hold_frames,
+        dimension=self.encoder.dimension
+        if policy_projection is not None:
+            from .projection import FixedPolicyProjection
+            self.projection=FixedPolicyProjection(dimension,policy_projection)
+            self.config['policy_projection']=self.projection.config
+            dimension=self.projection.output_dimension
+        self.learner = TrueOnlineSarsa(3,dimension,alpha=alpha,lam=lam**action_hold_frames,
                                       gamma_per_second=gamma_per_second,epsilon=epsilon,seed=seed,weights=weights)
         self.previous = torch.zeros(64,64,dtype=torch.bool)
         self.transitions = self.episodes = 0
@@ -82,7 +90,15 @@ class LearningSession:
         return self.encoder.encode(self.vision.step(events,frame.float(),learn=False),frame.float())
 
     def policy_features(self,encoded):
+        projection=getattr(self,'projection',None)
+        if projection is not None:return projection.features(encoded)
         return policy_features(encoded,getattr(self,'scaler',None))
+
+    def mapped_evaluation(self):
+        """Owned raw weights/cap for independent greedy evaluation."""
+        projection=getattr(self,'projection',None)
+        if projection is not None:return projection.mapped_evaluation(self.learner.weights)
+        return self.learner.weights.copy(),copy.deepcopy(getattr(self.scaler,'config',None))
 
     def step(self):
         if getattr(self,'action_hold_frames',1)!=1:return self._step_hold()
@@ -179,6 +195,12 @@ class LearningSession:
                 or session.model_hash != MODEL_HASH or session.vision_configuration != VISION_CONFIGURATION):
             raise ValueError('incompatible source/model/configuration')
         model_bytes()
+        projection=getattr(session,'projection',None)
+        if projection is not None:
+            projection.validate_embedded()
+            if (session.learner.weights.shape!=(3,projection.output_dimension)
+                    or session.config.get('policy_projection')!=projection.config):
+                raise ValueError('projected learner/configuration dimensions differ')
         if session.body_alias is not session.env.game.body:
             raise ValueError('physics alias lost')
         random.setstate(session.python_rng)

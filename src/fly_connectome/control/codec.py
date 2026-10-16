@@ -98,6 +98,8 @@ def frozen_tensors(session):
     tensors = {'observer.weights':vision.observer.weights, 'observer.bias':vision.observer.bias}
     for name in ('keys','values','metric'):
         tensors['memory.'+name] = getattr(vision.state.memory,name)
+    projection=getattr(session,'projection',None)
+    if projection is not None:tensors['policy_projection.matrix']=projection.matrix
     for horizon, model in sorted(vision.dynamics.items()):
         for branch in ('short','long'):
             for name in ('keys','values'):
