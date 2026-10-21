@@ -43,21 +43,41 @@ retain that variability.192jobs/29,724cameras/272.00s, no training. Own six-mode
 zero-work recovery/allpins passed2.93s; parent allphysics/onset/statistics audit
 passed13.60s. Exec32120/PID14161 and workers exited0; **source unlocked**.
 
-**Next approved design, not launched:** third unchanged full-condition replica
-plus state-only comparison, old-core worktree rooted at886d05d. Joint roots
-train1782731441/optimizer947621083/DEV1662073981/tag29110/actions719456287,
-not yet expanded. Same200k/40mintrain/60minoverall each; sequential four-worker
-arms, common64DEV serves/exclusions registered before either clock. Full exactT
-and whole procedure stay unchanged; state-only214-row basis removes explicit
-forecast columns BEFORE centering/whitening, with rank/conditioning disclosed.
-Five simple controls may reuse verified full raw evidence; each owninitial,
-phase0, endpoint and blank actually execute. Parent reviews concrete protocol/code
-before launch under continuous authorization. One pair is a development forecast
-signal, not training-population inference. Final streams remain untouched.
+**Forecast pair complete, independently audited:** [results](2026-10-21-forecast-comparison-results.md),
+launch source39fe1f9, artifact `/workspace/m1b-experiments/pong-forecast-comparison-20261021-r1`.
+FULL (third unchanged seed)18→32→35/64 first returns,55/113 all; state-only
+18→30→38/64,49/110. Both improve over their own initial policies but fail the
+unchanged strict20pp/both-CI-positive strongest-control screen. FULL all-return
+point lift19.9369342pp receives no rounding tolerance. FULL−STATE first−4.69pp
+CI[−12.50,1.56],all+4.13ppCI[−3.57,11.60]: ablation inconclusive, not equivalence.
+Full/state supported ranks183/103; all state-only mapped forecast columns exact0.
+Total train199,702/199,688; newly executed eval97,513/47,786, plus47,496 reused
+FULL control rows attributed zero new STATE work. Coordinator times45.64/40.72min.
+Own zero-work/all-pins checks passed13.46/13.54s; parent audits passed140.02/119.65s,
+all544,689 distinct candidate rows. Both coordinators/workers exited0. Source is
+unlocked; final roots remain unexpanded. Hot/cold journal restoration manifests
+preserve byte-exact raw evidence.
 
-This is not complete M1B: third-seed/final evidence, winning/score-task transfer,
-a distinct visual task, state/forecast comparison, online-vision drift/retention
-and the connectome scope decision remain. See the [completion checklist](2026-10-21-continuous-m1b-plan.md).
+**Next approved allocation, staging without clock:** fixed-policy persistent-vision
+A→A integration/drift, using BOTH earlier qualified FULL endpoints. Existing
+visual learner only; no actor updates/backprop/new privileged inputs. Per policy
+2k learning-camera exposure, BEFORE/AFTER frozen probes on64 shared fresh serves,
+then separate2k prequential cameras. Explicit inherited/current learning counts,
+partial-final-rally truth and per-camera mutable-memory recovery are tested.
+Reviewed caps exposure240/probes1140/prequential240/scoring180, total1800s;
+roots1793074213/1360749281/927415613,tag29112,bootstrap170953167. No clock until
+source/archive/input pins and parent storage clearance. Implementation is in
+isolated `/workspace/Fly-Connectome-m1b-online-vision`, baseline98fa9a0 plus validated
+follow-up. Focused30tests passed34.65s; actual-policy archived prefix bridge passed;
+bank-growth preflight reached2k/2010learning images in93.63s. Those diagnostic
+observations are separate. This study measures integration/effects, with no
+posthoc retention/noninferiority gate. Next priority is a distinct native-survival
+visual task with learning ON, preserved Pong head/T and immediate A retention.
+
+This is not complete M1B: score-winning/final evidence, online distinct-task
+acquisition/retention and the B2 scope review remain. The [completion checklist](2026-10-21-continuous-m1b-plan.md)
+now marks demonstrated two-seed return acquisition, fixed-policy feedback evidence
+and the completed inconclusive forecast comparison explicitly.
 
 Cold storage: the completed `pong-score-policy-search-continuation-20261016-r1`
 DBs are now byte-verified `.db.zst` archives; metadata/readouts/source stay plain.

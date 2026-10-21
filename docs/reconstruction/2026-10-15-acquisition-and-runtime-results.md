@@ -1,5 +1,11 @@
 # Reconstruction acquisition and execution evidence
 
+Latest: [one-pair forecast ablation complete](2026-10-21-forecast-comparison-results.md).
+FULL−STATE first/all CIs both cross zero; both learn versus initialization but
+miss the unchanged primary screen. Earlier two qualified return-learning seeds
+and later-camera feedback evidence remain valid. Next is bounded fixed-policy
+online-vision integration, then distinct-task reward learning/retention.
+
 ## Current result index
 
 **Continuous iteration was authorized on 2026-10-21**, superseding historical

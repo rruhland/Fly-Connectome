@@ -25,14 +25,16 @@ passing unit tests full M1B completion.
   exact recovery. These establish correctness, not useful control.
 - [x] Two-template immediate toy acquisition; delayed toy finite-budget failures
   and later cached conditioning evidence remain separately labeled.
-- [ ] Genuine reward-based acquisition on held-out Pong trajectories, relative to
-  own initialization and strongest simple controls, reproducible across independent
-  training seeds. Return learning is a first component proof; winning/score-task
-  transfer and the original opponent's scoring limitation stay explicit.
-- [ ] Actual visual-state necessity checks for a successful candidate. State-varying
-  calibration scores and privileged fitted-controller witnesses are insufficient.
-- [ ] State-only versus state-plus-forecasts comparison with matched budgets and
-  frozen prospective criteria. Merely exposing forecasts proves no benefit.
+- [x] Two independently trained policies acquired hit-reward Pong RETURNS relative
+  to initialization and strongest matched simple controls on fresh development
+  serves. The third FULL seed improves but misses the unchanged strict screen.
+  Score winning, final confirmation and cross-task retention remain separate.
+- [x] Fixed-policy later-camera feedback sensitivity: paired live versus held/missing
+  camera interventions benefit the two-policy aggregate. Individual-seed uncertainty
+  and OOD limitations remain; this is not forecast-specific necessity.
+- [x] One prospectively paired, budget-matched state-only versus state-plus-forecasts
+  comparison completed and independently audited: no clear advantage either way.
+  This is an inconclusive one-pair ablation, not population inference/equivalence.
 - [ ] Reward learning on a substantially different visual interaction task with
   generic transport and declared actuator-specific heads, not Pong-specific labels.
 - [ ] Enable the existing visual online learner after the frozen-vision control;
@@ -69,16 +71,16 @@ OOD limitations and lower live performance on this fresh cohort stay explicit.
 This establishes later-camera benefit for the fixed tested set, not explicit
 forecast benefit or an optimal-controller necessity theorem.
 
-Next approved design (not launched): third unchanged full seed paired with one
-state-only arm, sequential four-worker runs with the same200k/40mintraining/60min
-overall limits each and a prospectively shared64-serve evaluation cohort. One
-pair can supply an initial forecast development signal, not across-seed inference.
+The [forecast comparison](2026-10-21-forecast-comparison-results.md) is complete:
+FULL−state-only first/all lifts −4.69/+4.13 pp, both paired CIs cross zero. Both
+arms improve over their own initial readouts; neither passes the unchanged
+strongest-control gate. FULL's all-return point lift is exactly19.9369342 pp,
+so it remains a failure without rounding tolerance. No extra forecast sweep.
 
-Subsequent design direction: a third unchanged full-condition seed may also form
-the full arm of a prospective state-only comparison, retaining the successful T
-and original score-free calibration for both fits. State-only mapped weights
-must have exactly zero raw forecast coefficients; report conditioning/rank and
-partially paired training streams. A separate old-core worktree preserves strict
-source provenance after feedback additions. Roots, budgets and criteria remain
-prospective. No final streams or genuinely major architecture changes authorized
-by implication; user review is still required for the latter.
+Next: fixed-policy persistent visual-learning integration/drift using the two
+previously qualified FULL policies, followed by native-survival learning on a
+substantially different visual task and an immediate A→B→A retention probe.
+The original Pong head/transform remains retained. Runtime preflight exercises
+real bank growth; all preflight observations stay separate from candidate data.
+Score winning, final-stream evidence and the scoped B2 representation review
+remain outstanding; user review is required for genuinely major architecture.
