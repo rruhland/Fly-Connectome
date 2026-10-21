@@ -121,11 +121,20 @@ def test_retained_frozen_probe_continuation_is_exact_and_cannot_mutate_snapshot(
     first=PersistentVisionSession(weights(),config(),learn_enabled=False,vision_snapshot=snapshot)
     second=PersistentVisionSession(weights(),config(),learn_enabled=False,vision_snapshot=snapshot)
     assert first.starting_visual_snapshot==before
+    inherited=snapshot.learning_observations
+    assert first.starting_visual_learning_observations==inherited
     assert not tensor_storages(first.vision)&tensor_storages(second.vision)
     while not first.complete:
         assert first.step()==second.step()
         assert fingerprint(first)==fingerprint(second)
     assert snapshot.validate().content_hash==before
+    assert first.visual_learning_observations==0
+    assert first.retained_vision().learning_observations==inherited
+    online=PersistentVisionSession(weights(),config(),learn_enabled=True,vision_snapshot=snapshot)
+    online.step()
+    assert online.visual_learning_observations==2  # New initial image plus transition.
+    assert online.retained_vision().learning_observations==inherited+2
+    assert online.summary()['cumulative_visual_learning_observations']==inherited+2
     third=PersistentVisionSession(weights(),config(),learn_enabled=False,vision_snapshot=snapshot)
     third.vision.dynamics[1].long.seen+=1
     with pytest.raises(RuntimeError,match='pinned'):

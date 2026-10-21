@@ -125,6 +125,7 @@ class PersistentVisionSession(FreshPongEvaluator):
         self.episode_seeds=episode_seeds
         self.visual_observations=self.visual_learning_observations=0
         self.starting_visual_snapshot=None
+        self.starting_visual_learning_observations=0
         super().__init__(weights,config)
         default_observer_hash=fingerprint(observer_tensors(self.vision))
         with preserve_global_rngs():
@@ -135,12 +136,14 @@ class PersistentVisionSession(FreshPongEvaluator):
                     raise ValueError('retained snapshot changed the fixed observer')
                 self.vision.reset_state()
                 self.starting_visual_snapshot=vision_snapshot.content_hash
+                self.starting_visual_learning_observations=vision_snapshot.learning_observations
             self.initial_learned_hash=self.learned_hash()
         self.capture_rng()
 
     def learned_hash(self):
         fixed=(self.policy.weights,observer_tensors(self.vision),self.scaler,self.config,self.env.game.config,
-               self.visual_memory_contract,self.learn_enabled,self.episode_seeds,self.starting_visual_snapshot)
+               self.visual_memory_contract,self.learn_enabled,self.episode_seeds,self.starting_visual_snapshot,
+               self.starting_visual_learning_observations)
         if not self.learn_enabled:fixed+=(learned_visual_state(self.vision),)
         return fingerprint(fixed)
 
@@ -183,12 +186,14 @@ class PersistentVisionSession(FreshPongEvaluator):
         with preserve_global_rngs():
             model=_copy_visual_model(self.vision);model.reset_state()
         return VisionSnapshot(model,fingerprint(model),copy.deepcopy(self.source),MODEL_HASH,
-                              VISION_CONFIGURATION,self.visual_learning_observations)
+                              VISION_CONFIGURATION,self.starting_visual_learning_observations+self.visual_learning_observations)
 
     def summary(self):
         report=super().summary()
         report.update(visual_learning_enabled=self.learn_enabled,visual_memory_contract=self.visual_memory_contract,
             visual_observations=self.visual_observations,visual_learning_observations=self.visual_learning_observations,
+            starting_visual_learning_observations=self.starting_visual_learning_observations,
+            cumulative_visual_learning_observations=self.starting_visual_learning_observations+self.visual_learning_observations,
             visual_memory_counts=memory_counts(self.vision),learned_visual_state_hash=fingerprint(learned_visual_state(self.vision)),
             starting_visual_snapshot=self.starting_visual_snapshot,
             prior_model_hash=MODEL_HASH,episode_seeds=None if self.episode_seeds is None else list(self.episode_seeds))
@@ -204,6 +209,9 @@ class PersistentVisionSession(FreshPongEvaluator):
                 or type(session.visual_observations) is not int or session.visual_observations<0
                 or type(session.visual_learning_observations) is not int
                 or session.visual_learning_observations!=(session.visual_observations if session.learn_enabled else 0)
+                or type(session.starting_visual_learning_observations) is not int
+                or session.starting_visual_learning_observations<0
+                or (session.starting_visual_snapshot is None and session.starting_visual_learning_observations!=0)
                 or session.visual_observations!=session.transition_cameras+session.initial_cameras):
             raise ValueError('invalid persistent visual-learning session contract/counters')
         seeds=session.episode_seeds

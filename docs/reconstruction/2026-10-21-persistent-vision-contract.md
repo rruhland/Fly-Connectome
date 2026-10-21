@@ -12,6 +12,9 @@ their private RNGs and all calibration evidence may change. The full mutable
 graph participates in every durable camera hash and checkpoint. Only observer
 weights/bias (and a projection if present) use immutable bank references. The
 default evaluator and learning-session contracts remain frozen and unchanged.
+Session counters separate inherited learning exposure from current observations;
+exported snapshots retain their cumulative learning-image count even after a
+frozen probe or a second online stream.
 
 At an episode reset the existing `reset_state()` clears observer traces, tracker
 state, per-slot context endpoints/confidence, entity histories and unfinished
