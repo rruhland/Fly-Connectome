@@ -115,15 +115,19 @@ def mirrored_update(theta,directions,returns,calibration,*,top=4,step_size=.10):
         update_function_rms=function_rms(update,calibration),zero_update=bool(np.array_equal(theta,proposed)))
 
 
-def generation_spec(theta,rng_state,generation,calibration,*,training_seed=172900127):
+def generation_spec(theta,rng_state,generation,calibration,*,training_seed=172900127,
+                    serves_per_generation=4,excluded_seeds=()):
+    if type(serves_per_generation) is not int or serves_per_generation<1:
+        raise ValueError('positive integer training serve count required')
     rng=np.random.default_rng();rng.bit_generator.state=copy.deepcopy(rng_state)
     directions=sample_directions(rng,calibration,SEARCH_CONFIG['directions'])
     candidates=theta[None,None,:,:]+SEARCH_CONFIG['noise_scale']*directions[:,None,:,:]*np.array([1.,-1.])[None,:,None,None]
     # Independent declared training seeds; each is a fresh environment/camera phase.
     serve_rng=np.random.default_rng(np.random.SeedSequence([training_seed,872631,generation]))
     excluded={904271833,308713321,1203078761,1983461927,849375169}
+    excluded.update(excluded_seeds)
     serves=[]
-    while len(serves)<4:
+    while len(serves)<serves_per_generation:
         value=int(serve_rng.integers(1,2147483647))
         if value not in excluded and value not in serves:serves.append(value)
     return directions,candidates,serves,copy.deepcopy(rng.bit_generator.state)

@@ -223,9 +223,16 @@ def rollout_task(directory,name,camera_grant,work_seconds):
         return dict(job=name,ok=False,error=traceback.format_exc(),wall_seconds=time.monotonic()-started)
 
 
-def execute_jobs(directory,jobs,pool,*,deadline,camera_cap,initial_consumed=0):
+def execute_jobs(directory,jobs,pool,*,deadline,camera_cap,initial_consumed=0,
+                 completion_report=None,completion_pin=None):
     """Reserve additional camera work BEFORE dispatch, including concurrent grants."""
-    pending=[j for j in jobs if complete_report(directory,j['id']) is None]
+    def verified(job):
+        return (complete_report(directory,job['id']) if completion_report is None
+                else completion_report(directory,job))
+    def pin(job):
+        if completion_pin is None:pin_completion(directory,job['id'])
+        else:completion_pin(directory,job)
+    pending=[j for j in jobs if verified(j) is None]
     settled=initial_consumed;active={};failed=False
     while pending or active:
         available=camera_cap-settled-sum(row['grant'] for row in active.values())
@@ -249,10 +256,10 @@ def execute_jobs(directory,jobs,pool,*,deadline,camera_cap,initial_consumed=0):
             with (directory/'rollout-costs.jsonl').open('a') as stream:
                 stream.write(json.dumps(cost)+'\n');stream.flush();os.fsync(stream.fileno())
             if not cost['ok']:failed=True
-            else:pin_completion(directory,reservation['job']['id'])
+            else:pin(reservation['job'])
             report=read_report(directory,reservation['job']['id'])
             if cost['ok'] and not (report or {}).get('complete'):pending.insert(0,reservation['job'])
-    complete=all(complete_report(directory,j['id']) is not None for j in jobs)
+    complete=all(verified(j) is not None for j in jobs)
     return dict(complete=complete,failed=failed,committed_cameras=settled,unfinished=[j['id'] for j in jobs if not (read_report(directory,j['id']) or {}).get('complete')])
 
 

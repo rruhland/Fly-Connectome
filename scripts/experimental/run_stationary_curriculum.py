@@ -122,7 +122,9 @@ def next_boundary(directory,state,global_offset):
     return state['rng_state'],global_offset+count,False
 
 
-def run_phase(directory,spec,transform,z,state,theta,global_offset,pool,deadline):
+def run_phase(directory,spec,transform,z,state,theta,global_offset,pool,deadline,*,
+              population_builder=prepare_generation,population_updater=engine.finish_generation,
+              execution_options=None):
     marker=directory/'training-endpoint.json'
     if marker.exists():
         frozen=json.loads(marker.read_text())
@@ -133,14 +135,14 @@ def run_phase(directory,spec,transform,z,state,theta,global_offset,pool,deadline
     costs=[json.loads(x) for x in (directory/'rollout-costs.jsonl').read_text().splitlines()] if (directory/'rollout-costs.jsonl').exists() else []
     failed=any(not c['ok'] for c in costs);stop='prior task failure' if failed else None
     while not failed and state['completed_generations']<spec['generations']:
-        definition,directions=prepare_generation(directory,transform,z,state,theta,global_offset,spec['opponent_speed'])
+        definition,directions=population_builder(directory,transform,z,state,theta,global_offset,spec['opponent_speed'])
         current=engine.counts(directory,json.loads((directory/'manifest.json').read_text()))['training_fitness']
         if current>=spec['camera_cap'] or deadline-time.time()<=25:stop='registered phase camera/wall budget';break
-        progress=engine.execute_jobs(directory,definition['jobs'],pool,deadline=deadline,camera_cap=spec['camera_cap'],initial_consumed=current)
+        progress=engine.execute_jobs(directory,definition['jobs'],pool,deadline=deadline,camera_cap=spec['camera_cap'],initial_consumed=current,**(execution_options or {}))
         if not progress['complete']:
             failed=progress['failed'];stop='task failure' if failed else 'registered phase camera/wall budget'
             atomic_json(directory/'incomplete-generation.json',dict(generation=state['completed_generations'],**progress));break
-        state,theta,result=engine.finish_generation(directory,definition,directions,theta,z)
+        state,theta,result=population_updater(directory,definition,directions,theta,z)
         print(json.dumps(dict(phase=spec['name'],completed_generations=state['completed_generations'],training_cameras=progress['committed_cameras'],returns=result['returns'])),flush=True)
     rng,index,skipped=next_boundary(directory,state,global_offset)
     observed=engine.counts(directory,json.loads((directory/'manifest.json').read_text()))['training_fitness']

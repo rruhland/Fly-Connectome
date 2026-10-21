@@ -25,9 +25,22 @@ def test_stationary_legal_and_default_unchanged_negative_nonfinite_rejected():
         with pytest.raises(ValueError):PongEvaluationConfig(7,opponent_speed=speed).validate()
 
 
-def test_exact_historical_first_population_and_stationary_only_change(tmp_path):
+def test_exact_historical_first_population_and_stationary_only_change(tmp_path,monkeypatch):
     needed=[driver.BRIDGE,driver.PRIOR_BRIDGE,driver.CACHE,driver.ORIGINAL/'g00-definition.json',driver.ORIGINAL/'search-transform.npy']
     if not all(p.exists() for p in needed):pytest.skip('historical population integration requires preserved local calibration/lineage/source proofs')
+    bridge=json.loads(driver.BRIDGE.read_text());ancestor=json.loads((driver.ORIGINAL/'manifest.json').read_text())
+    actual_pins=driver.pins
+    current=actual_pins()
+    if current['source']!=bridge['source'] or current['math_hash']!=ancestor['math_hash']:
+        with pytest.raises(ValueError,match='baseline source/projection chain'):
+            driver.prepare(tmp_path/'reject-current-source')
+    # Recreate only this historical fixture's archived source context. New
+    # generic helper defaults must still reproduce its population exactly;
+    # production validation above remains strict for the actual current source.
+    def archived_pins():
+        result=actual_pins();result.update(source=bridge['source'],math_hash=ancestor['math_hash'])
+        return result
+    monkeypatch.setattr(driver,'pins',archived_pins)
     manifest,transform,z,theta,rng=driver.prepare(tmp_path)
     directory,state,theta=driver.initialize_phase(tmp_path,driver.PHASES[0],theta,rng,0,manifest['started_wall_ns'])
     definition,directions=driver.prepare_generation(directory,transform,z,state,theta,0,0.)
