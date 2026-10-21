@@ -69,20 +69,24 @@ median/p95 58.98/80.36ms versus BEFORE44.54/66.89ms;20ms target unmet. Own recov
 all-pins audit passed25.42s; parent allphysics/counters/statistics passed61.44s.
 Exec1956/PID78086 and workers exited0. Source unlocked; no final streams.
 
-**Next unallocated learner:** native elapsed-survival pendulum with plastic vision
-and a new zero SARSA head. First pair is predetermined seed1 EXPOSURE-AFTER(2k)
-versus fresh generic prior, common score-free task calibration/T/roots/budgets.
-Do not choose seed2 or the4k prequential endpoint from observed return rates.
-Preserve Pong W/T and probe A immediately after B, before A retraining. Isolated
-`/workspace/Fly-Connectome-m1b-pendulum`, source **7bdb38f**, implements small RK4
-physics, camera-only/plastic-learning and truly frozen evaluator paths, and an
-explicit content-preserving control-source snapshot bridge. Focused24 tests passed
-12.76s,243 diagnostic camera transitions (4 replay subset), no candidate data.
-Approved common1,024-transition FROZEN-prior random-action calibration/visibility
-preflight uses roots680149923/1294557901,tag29113. It is diagnostic, not learner
-allocation. A preparation-only empty stdout JSON collision was preserved/fixed
-before any observation or seed expansion. Set B alpha/budget prospectively from
-finite norm/visibility/stability evidence, not a reward sweep.
+**LIVE second-task acquisition:** native elapsed-survival pendulum, plastic vision
+and new zero SARSA heads. The fixed pair is predetermined seed1 EXPOSURE-AFTER(2k)
+versus fresh generic prior; no selection of seed2 or the4k prequential endpoint.
+Artifact `/workspace/m1b-experiments/pendulum-online-acquisition-20261021-r1`, isolated
+source **2055109** at `/workspace/Fly-Connectome-m1b-pendulum`. Exec1380/PID79135,
+two training workers79137/79140, original clock1792572094121301399. Preserve this
+source/clock through both audits. Exactly20k transitions each, checkpoints5k/10k/20k,
+20min shared training and20min frozen evaluation/scoring,40min overall; no extensions.
+Native survival reward only; alpha.001/lambda.995/epsilon.2/gamma.95 per second,
+fixed common task transform/cap256, independent environment/exploration RNG streams.
+Endpoint screen requires mean>=3s,>=50% reaching5s,>=1s over strongest control and
+positive paired CI lower bound. Old online64 A serves are explicitly reused for
+before/after-B retention with unchanged A W/T/cap; no A retraining or formal NI.
+Protocol and launch/source pins are in the artifact. The1,024-transition frozen
+calibration, both512-transition plastic fixtures and15-camera handoff/recovery
+test are separate diagnostics; their updated heads/memories never seed candidates.
+The test's metadata-only study-root pre-expansion is preserved; zero observations,
+approved roots and the complete1,751-ID exclusion snapshot retained. No final streams.
 
 This is not complete M1B: score-winning/final evidence, online distinct-task
 acquisition/retention and the B2 scope review remain. The [completion checklist](2026-10-21-continuous-m1b-plan.md)
