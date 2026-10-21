@@ -1,6 +1,45 @@
-# Fly-Connectome M1B handoff — continuous iteration authorized 2026-10-21
+# Fly-Connectome M1B handoff — scaffold research
 
-## Current authority: continue until M1B is complete or the user stops
+## Current direction
+
+The user now authorizes starting the next research target: **reliable interception
+and sustained rallying**, building from the proven return learner. Follow the
+[continuous-learning scaffold plan](../plans/2026-10-21-continuous-learning-scaffolds.md).
+Record competing hypotheses and outside evidence; reuse Sol6.1XHigh for independent
+challenge and execution while Astra owns research selection and interpretation.
+Winning is descriptive, not the current skill gate. Time-varying rewards remain an
+integration hypothesis. Major architecture changes still require user review.
+
+Work in bounded research batches; do not revive the unrestricted overnight loop.
+Current research artifacts: `/workspace/m1b-experiments/pong-scaffold-research-20261021/`.
+No new scaffold experiment is allocated yet. The previous one-pass evaluation is
+complete; the older executed-child training allocation remains interrupted.
+
+## Historical instructions and status (superseded by the direction above)
+
+### Previous one-pass instruction (completed)
+
+The user now requests **one** hypothesis/research/experiment/interpretation pass,
+then stop. Astra owns independent hypothesis generation, outside-source synthesis,
+experiment selection and interpretation; Sol 6.1 XHigh independently challenges
+the hypotheses and implements the selected experiment. Do not continue the old
+automatic allocation loop. Current pass artifacts:
+`/workspace/m1b-experiments/pong-one-pass-20261021/`.
+
+The earlier executed-child run is interrupted, not live: seven committed cycles,
+two accepted updates, no final evaluation/summary. Its original clock must not be
+reset. This pass proposes a separate evaluation of its last committed policy on
+the already reserved, untouched development games; this cannot retroactively
+qualify the interrupted study. Historical status below is retained as history.
+
+**This one pass is now complete; stop here.** The separate fresh evaluation gave
+endpoint17/64 wins versus native-start14/64 and original13/64. Primary lift4.69pp,
+95%CI[−4.69,+15.63], failing the registered practical improvement screen. No new
+training was run;39,383 evaluation transitions+192initials completed in389.31s.
+See [one-pass results](2026-10-21-one-pass-orchestration-results.md). No automatic
+follow-up allocation, old-clock reset, or claim of M1B completion is warranted.
+
+### Earlier continuous authority (superseded)
 
 On **2026-10-21** the user explicitly authorized continuous research and execution.
 The historical no-further-allocation / stop-after-negative language below is

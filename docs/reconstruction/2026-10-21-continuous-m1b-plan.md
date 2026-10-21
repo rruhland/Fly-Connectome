@@ -1,4 +1,10 @@
-# Continuous M1B execution: authority and completion checklist
+# Historical continuous M1B execution: completion checklist
+
+**Current authority and research order:** follow the
+[continuous-learning scaffold plan](../plans/2026-10-21-continuous-learning-scaffolds.md).
+The continuous allocation instructions and live-run status below are historical.
+The user now prioritizes reliable interception and sustained rallying in bounded
+research batches; do not launch another winning/balancing run from this old queue.
 
 The user authorized continuous iteration on 2026-10-21 until M1B is complete or
 they stop the work. This supersedes earlier allocation-level pauses. Each
