@@ -73,3 +73,15 @@ def test_control_source_bridge_is_explicit_owned_and_rejects_visual_changes(tmp_
 def test_continuing_survival_rejects_undiscounted_values():
     with pytest.raises(ValueError,match='discount below one'):
         PendulumLearningSession(gamma_per_second=1.)
+
+
+def test_environment_and_exploration_have_independent_pinned_seed_streams():
+    torch.set_num_threads(1)
+    first=PendulumLearningSession(739397,learner_seed=739409)
+    second=PendulumLearningSession(739397,learner_seed=739411)
+    assert fingerprint(first.env)==fingerprint(second.env)
+    assert first.config['learner_seed']==739409 and second.config['learner_seed']==739411
+    assert fingerprint(first.learner.rng)!=fingerprint(second.learner.rng)
+    default=PendulumLearningSession(739397)
+    assert default.config['learner_seed']==int(np.random.SeedSequence([739397,824637]).generate_state(1)[0])
+    assert default.config['learner_seed']!=default.config['seed']

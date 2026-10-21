@@ -32,14 +32,19 @@ class PendulumLearningSession(LearningSession):
 
     def __init__(self,seed=0,*,max_episode_ticks=600,physics=PendulumPhysics(),
                  alpha=.001,lam=.995,gamma_per_second=.95,epsilon=.2,
-                 policy_projection=None,policy_scaling=None,vision_snapshot=None):
+                 policy_projection=None,policy_scaling=None,vision_snapshot=None,learner_seed=None):
         if not 0<gamma_per_second<1:
             raise ValueError('continuing survival requires an explicit discount below one per second')
         if policy_projection is not None and policy_scaling is not None:
             raise ValueError('fixed projection owns its post-projection cap')
         model_bytes();physics.validate()
+        if learner_seed is None:
+            learner_seed=int(np.random.SeedSequence([seed,824637]).generate_state(1)[0])
+        if type(learner_seed) is not int or learner_seed<0:
+            raise ValueError('explicit independent nonnegative exploration seed required')
         self.config=dict(seed=seed,max_episode_ticks=max_episode_ticks,physics=asdict(physics),
             alpha=alpha,lam=lam,gamma_per_second=gamma_per_second,epsilon=epsilon,
+            learner_seed=learner_seed,
             reward='elapsed survival seconds; failure terminal; time limit truncation',visual_learning=True)
         self.model_hash,self.vision_configuration=MODEL_HASH,VISION_CONFIGURATION
         self.source=source_signature();self.visual_memory_contract=MUTABLE_VISION_CONTRACT
@@ -64,7 +69,7 @@ class PendulumLearningSession(LearningSession):
             self.config['policy_projection']=copy.deepcopy(self.projection.config)
             dimension=self.projection.output_dimension
         self.learner=TrueOnlineSarsa(3,dimension,alpha=alpha,lam=lam,
-            gamma_per_second=gamma_per_second,epsilon=epsilon,seed=seed)
+            gamma_per_second=gamma_per_second,epsilon=epsilon,seed=learner_seed)
         self.previous=torch.zeros(64,64,dtype=torch.bool)
         self.transitions=self.episodes=self.transition_cameras=0;self.initial_cameras=1
         self.physics_seconds=self.episode_survival_seconds=0.;self.completed_rallies=[]
@@ -96,6 +101,19 @@ class PendulumLearningSession(LearningSession):
 
     def evaluate(self,transitions):
         raise NotImplementedError('Use a separate fresh frozen task evaluator; this session always learns visually')
+
+    def summary(self):
+        return dict(transitions=self.transitions,episodes=self.episodes,
+            initial_cameras=self.initial_cameras,transition_cameras=self.transition_cameras,
+            physics_seconds=self.physics_seconds,visual_observations=self.visual_observations,
+            visual_learning_observations=self.visual_learning_observations,
+            starting_visual_learning_observations=self.starting_visual_learning_observations,
+            cumulative_visual_learning_observations=self.starting_visual_learning_observations+self.visual_learning_observations,
+            starting_visual_snapshot=self.starting_visual_snapshot,
+            completed_rallies=copy.deepcopy(self.completed_rallies),
+            partial_episode_seconds=self.episode_survival_seconds,
+            boundary='after transition and any eager next-episode initial image/pending action',
+            memory_counts=memory_counts(self.vision))
 
     @classmethod
     def validate_restored(cls,session):
