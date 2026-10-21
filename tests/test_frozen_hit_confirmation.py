@@ -73,7 +73,7 @@ def test_partial_secondary_remains_partial_without_changing_primary(monkeypatch)
 
 def test_manifest_resume_keeps_clock_and_rejects_frozen_file_tampering(monkeypatch,tmp_path):
     monkeypatch.setattr(study,'SERVES',2);monkeypatch.setattr(study,'DEV_SEED',12345)
-    files=('endpoint.npy','initial-restricted.npy','radial-cap.json','projection.json',
+    files=('endpoint.npy','endpoint.json','initial-restricted.npy','initial-restricted.json','radial-cap.json','projection.json',
            'search-transform.npy','transform-fit.json')
     for name in files:(tmp_path/name).write_bytes(b'fixed-fixture')
     study.atomic_json(tmp_path/'lineage-proof.json',dict(source=study.prior.source_signature(),
@@ -86,3 +86,24 @@ def test_manifest_resume_keeps_clock_and_rejects_frozen_file_tampering(monkeypat
     assert manifest['new_training_observations']==0 and len(manifest['jobs'])==16
     (tmp_path/'endpoint.npy').write_bytes(b'tampered')
     with pytest.raises(ValueError,match='frozen readout'):study.prepare(tmp_path)
+
+
+def test_actual_worker_accepts_staged_weight_sidecar_before_session_construction(monkeypatch,tmp_path):
+    import numpy as np
+    worker=study.prior.engine.base
+    weights=np.ones((3,4389))*.001
+    study.prior.engine.weights_file(tmp_path,'endpoint.npy',weights)
+    (tmp_path/'radial-cap.json').write_text('{}')
+    job=study.declared_jobs([111])[0]
+    study.atomic_json(tmp_path/'manifest.json',dict(source=worker.source_signature(),runtime=worker.runtime_signature(),
+        driver_hash=study.sha(worker.__file__),jobs=[job]))
+    class ReachedConstructor(Exception):pass
+    def intercept(actual,config):
+        np.testing.assert_array_equal(actual,weights)
+        assert config.seed==111 and not config.blank_camera
+        raise ReachedConstructor
+    monkeypatch.setattr(worker,'FreshPongEvaluator',intercept)
+    with pytest.raises(ReachedConstructor):worker.worker(tmp_path,job['id'],emit=False)
+    assert not list(tmp_path.glob('*.db'))
+    (tmp_path/'endpoint.json').write_text(json.dumps(dict(shape=[3,4389],weight_hash='invalid')))
+    with pytest.raises(ValueError,match='checkpoint metadata'):worker.worker(tmp_path,job['id'],emit=False)

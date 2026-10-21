@@ -68,7 +68,8 @@ def stage(directory):
         if not np.array_equal(np.load(LINEAGE/f'policy_at{count}.npy'),
                               np.load(LINEAGE/f'theta_at{count}.npy')@matrix):
             raise ValueError('frozen mapped readout differs from its theta')
-    copies={'endpoint.npy':'policy_at9.npy','initial-restricted.npy':'policy_at0.npy',
+    copies={'endpoint.npy':'policy_at9.npy','endpoint.json':'policy_at9.json',
+        'initial-restricted.npy':'policy_at0.npy','initial-restricted.json':'policy_at0.json',
         **{name:name for name in ('radial-cap.json','projection.json','search-transform.npy','transform-fit.json')}}
     for target,source in copies.items():
         if (directory/target).exists():
@@ -113,7 +114,8 @@ def declared_jobs(serves):
 
 def prepare(directory):
     # stage() is explicitly separate so review/tests cannot consume the real clock.
-    required=('seed-exclusions.json','lineage-proof.json','endpoint.npy','initial-restricted.npy',
+    required=('seed-exclusions.json','lineage-proof.json','endpoint.npy','endpoint.json',
+              'initial-restricted.npy','initial-restricted.json',
               'radial-cap.json','projection.json','search-transform.npy','transform-fit.json')
     if any(not (directory/name).exists() for name in required):raise ValueError('stage frozen inputs before launch')
     proof=json.loads((directory/'lineage-proof.json').read_text())
