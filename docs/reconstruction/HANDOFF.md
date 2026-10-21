@@ -101,11 +101,20 @@ artifact `/workspace/m1b-experiments/pong-score-transfer-20261021-r1`; exec12221
 PID93633 and all workers exited0; source unlocked. Postlaunch full-width metadata
 check found no actual seed collision; future guards include high uint32 IDs.
 
-**Next:** reviewed new-episode B training from predetermined experienced20k theta/memory,
-traces reset/new paired roots, plastic versus frozen vision; no full-session source
-validation bypass. Static work is isolated at
-`/workspace/Fly-Connectome-m1b-pendulum-onoff`; no candidate clock yet. B stability,
-native score learning, final evidence and B2 scope review remain open.
+**Next sealed allocation:** [new-episode B continuation](2026-10-21-pendulum-continuation-protocol.md)
+from predetermined experienced20k theta/memory, traces reset and new paired roots,
+visual learning ON/OFF;20k new actor updates per arm, unchanged learner/T/cap.
+Original competence and incremental-vs-start comparisons remain separate. Exact
+OFF A snapshot/input identity permits explicit old-data reuse; otherwise64 more
+A probes fit the same cap.20min shared training +30min evaluation/scoring,
+50min overall; no clock extension.11 class/recovery checks,8 metadata harness
+checks and3 worker/export/clock regressions pass. The actual20k-memory runtime
+fixture passes23.268s with524 diagnostic transitions/531 images, outputs discarded.
+Source checkout `/workspace/Fly-Connectome-m1b-pendulum-onoff`, staged artifact
+`/workspace/m1b-experiments/pendulum-onoff-continuation-20261021-r1` (clock starts
+only at launch);64 fresh B starts and actions are disjoint from2,241 prior IDs.
+No full-session source validation bypass. B stability, native score learning,
+learning-enabled deployed/final evidence and B2 scope review remain open.
 
 This is not complete M1B: score-winning/final evidence, online distinct-task
 acquisition/retention and the B2 scope review remain. The [completion checklist](2026-10-21-continuous-m1b-plan.md)

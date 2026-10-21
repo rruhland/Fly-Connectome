@@ -30,6 +30,7 @@ def validate_inputs(directory,job):
     required=[job['snapshot_from']]
     if job['kind']!='train' and job.get('weights_from'):required.append(job['weights_from'])
     if job['kind']=='train':required.append('search-transform.npy')
+    if job.get('initial_weights_from') is not None:required.append(job['initial_weights_from'])
     if any(name not in job['input_hashes'] for name in required):
         raise ValueError('referenced pendulum inputs must be pinned')
     return m
@@ -98,7 +99,11 @@ def execute_job(directory,job,deadline):
         if not created:run=DurableRun(db)
         else:
             if job['kind']=='train':
-                session=PendulumLearningSession(**job['config'],policy_projection=m['projection'],vision_snapshot=snapshot)
+                optional={}
+                if job.get('initial_weights_from') is not None:
+                    optional['weights']=np.load(owned_file(directory,job['initial_weights_from']),allow_pickle=False)
+                if 'learn_enabled' in job:optional['learn_enabled']=job['learn_enabled']
+                session=PendulumLearningSession(**job['config'],policy_projection=m['projection'],vision_snapshot=snapshot,**optional)
             elif job['kind']=='pendulum':
                 weights=None if job['weights_from'] is None else np.load(directory/job['weights_from'],allow_pickle=False)
                 session=FreshPendulumEvaluator(weights,PendulumEvaluationConfig.from_dict(job['config']),vision_snapshot=snapshot)
@@ -114,6 +119,13 @@ def execute_job(directory,job,deadline):
         if job['kind']=='train':
             if any(s.config.get(k)!=v for k,v in job['config'].items()) or s.projection.config!=m['projection']:
                 raise ValueError('restored training parameters changed')
+            if (getattr(s,'learn_enabled',True)!=job.get('learn_enabled',True)
+                    or s.config['visual_learning']!=job.get('learn_enabled',True)):
+                raise ValueError('restored visual learning mode changed')
+            if job.get('initial_weights_from') is not None:
+                initial=np.load(owned_file(directory,job['initial_weights_from']),allow_pickle=False)
+                if s.config.get('starting_learner_weights_sha256')!=__import__('hashlib').sha256(initial.tobytes()).hexdigest():
+                    raise ValueError('restored starting head ancestry changed')
         elif s.config!=(PendulumEvaluationConfig.from_dict(job['config']) if job['kind']=='pendulum'
                          else PongEvaluationConfig(**job['config'])):
             raise ValueError('restored evaluation parameters changed')

@@ -38,10 +38,10 @@ def test_nine_cohorts_exact_task_and_real_worker_handoff(tmp_path,monkeypatch):
 def test_seed_snapshot_covers_newer_domain_schedules_and_is_immutable(tmp_path):
     old=tmp_path/'old';old.mkdir();new=tmp_path/'new';new.mkdir()
     (old/'manifest.json').write_text(json.dumps(dict(schedules=dict(development=[11,13],control_actions=[17,19]),
-        seed_roots=dict(environment=23,learner=29),jobs=[dict(config=dict(seed=31))])))
+        seed_roots=dict(environment=23,learner=29),jobs=[dict(config=dict(seed=31,action_seed=2**31+103))])))
     (old/'seed-exclusions.json').write_text(json.dumps(dict(ids=[37,41])))
     study.snapshot_exclusions(new,old);before=(new/'seed-exclusions.json').read_bytes()
-    assert {11,13,17,19,23,29,31,37,41,*study.prior.engine.FINAL}<=set(json.loads(before)['ids'])
+    assert {11,13,17,19,23,29,31,37,41,2**31+103,*study.prior.engine.FINAL}<=set(json.loads(before)['ids'])
     (old/'manifest.json').write_text('{}');study.snapshot_exclusions(new,old)
     assert (new/'seed-exclusions.json').read_bytes()==before and not (new/'manifest.json').exists()
 

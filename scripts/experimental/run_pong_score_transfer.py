@@ -5,7 +5,6 @@ from pathlib import Path
 import numpy as np
 import torch
 import run_direct_hit_policy_search as prior
-from run_frozen_hit_confirmation import collect_seed_ids
 from return_metrics import aggregate
 
 ROOT=Path(__file__).resolve().parents[2]
@@ -39,7 +38,7 @@ def snapshot_exclusions(directory,experiments=EXPERIMENTS):
     if path.exists():return
     ids=set(prior.engine.FINAL)|{849375169,686753009,904271833};sources={}
     def integers(v):
-        if type(v) is int and 0<v<2147483647:ids.add(v)
+        if type(v) is int and 0<v<2**32:ids.add(v)
         elif isinstance(v,list):
             for x in v:integers(x)
         elif isinstance(v,dict):
@@ -50,7 +49,15 @@ def snapshot_exclusions(directory,experiments=EXPERIMENTS):
         paths.update(experiments.rglob(pattern))
     for source in sorted(paths):
         if source.is_relative_to(directory):continue
-        value=json.loads(source.read_text());ids.update(collect_seed_ids(value))
+        value=json.loads(source.read_text())
+        def visit(v):
+            if isinstance(v,dict):
+                for key,item in v.items():
+                    if 'seed' in key.lower():integers(item)
+                    else:visit(item)
+            elif isinstance(v,list):
+                for item in v:visit(item)
+        visit(value)
         # Newer protocols keep expanded seeds under domain names rather than
         # keys containing "seed"; inherited exclusion snapshots are cumulative.
         if source.name=='seed-exclusions.json':integers(value.get('ids',[]))

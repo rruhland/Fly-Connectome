@@ -3,14 +3,14 @@
 Optional task session only: no launch, teacher, privileged policy features or
 change to the Pong path. The final time-limit image bootstraps before reset.
 """
-import copy
+import copy,hashlib
 from dataclasses import asdict
 import numpy as np
 import torch
 from fly_connectome.vision import load_default,VisualStateEncoder
 from .codec import fingerprint
 from .online_vision import (PersistentVisionSession,VisionSnapshot,MUTABLE_VISION_CONTRACT,
-                            observer_tensors,memory_counts)
+                            observer_tensors,memory_counts,learned_visual_state)
 from .pendulum import PendulumCamera,PendulumPhysics
 from .projection import FixedPolicyProjection
 from .sarsa import TrueOnlineSarsa
@@ -32,7 +32,9 @@ class PendulumLearningSession(LearningSession):
 
     def __init__(self,seed=0,*,max_episode_ticks=600,physics=PendulumPhysics(),
                  alpha=.001,lam=.995,gamma_per_second=.95,epsilon=.2,
-                 policy_projection=None,policy_scaling=None,vision_snapshot=None,learner_seed=None):
+                 policy_projection=None,policy_scaling=None,vision_snapshot=None,learner_seed=None,
+                 weights=None,learn_enabled=True):
+        if type(learn_enabled) is not bool:raise ValueError('explicit bool visual learning mode required')
         if not 0<gamma_per_second<1:
             raise ValueError('continuing survival requires an explicit discount below one per second')
         if policy_projection is not None and policy_scaling is not None:
@@ -45,7 +47,9 @@ class PendulumLearningSession(LearningSession):
         self.config=dict(seed=seed,max_episode_ticks=max_episode_ticks,physics=asdict(physics),
             alpha=alpha,lam=lam,gamma_per_second=gamma_per_second,epsilon=epsilon,
             learner_seed=learner_seed,
-            reward='elapsed survival seconds; failure terminal; time limit truncation',visual_learning=True)
+            reward='elapsed survival seconds; failure terminal; time limit truncation',visual_learning=learn_enabled)
+        # Omit optional attributes for the original plastic/default graph path.
+        if not learn_enabled:self.learn_enabled=False
         self.model_hash,self.vision_configuration=MODEL_HASH,VISION_CONFIGURATION
         self.source=source_signature();self.visual_memory_contract=MUTABLE_VISION_CONTRACT
         self.env=PendulumCamera(seed,max_episode_ticks=max_episode_ticks,config=physics)
@@ -69,27 +73,37 @@ class PendulumLearningSession(LearningSession):
             self.config['policy_projection']=copy.deepcopy(self.projection.config)
             dimension=self.projection.output_dimension
         self.learner=TrueOnlineSarsa(3,dimension,alpha=alpha,lam=lam,
-            gamma_per_second=gamma_per_second,epsilon=epsilon,seed=learner_seed)
+            gamma_per_second=gamma_per_second,epsilon=epsilon,seed=learner_seed,weights=weights)
+        if weights is not None:
+            self.config['starting_learner_weights_sha256']=hashlib.sha256(self.learner.weights.tobytes()).hexdigest()
         self.previous=torch.zeros(64,64,dtype=torch.bool)
         self.transitions=self.episodes=self.transition_cameras=0;self.initial_cameras=1
         self.physics_seconds=self.episode_survival_seconds=0.;self.completed_rallies=[]
         self.visual_observations=self.visual_learning_observations=0
+        if not learn_enabled:self.frozen_visual_hash=self._frozen_visual_hash()
         self.latest_encoded=self.observe(self.env.render())
         self.learner.start(*self.policy_features(self.latest_encoded));self.capture_rng()
 
     def observe(self,frame):
+        enabled=getattr(self,'learn_enabled',True)
+        if self.config['visual_learning'] is not enabled:raise ValueError('visual learning mode changed')
         events=torch.stack((self.previous & ~frame,~self.previous & frame)).float()
         self.previous.copy_(frame)
-        encoded=self.encoder.encode(self.vision.step(events,frame.float(),learn=True),frame.float())
-        self.visual_observations+=1;self.visual_learning_observations+=1
+        encoded=self.encoder.encode(self.vision.step(events,frame.float(),learn=enabled),frame.float())
+        if not enabled and self._frozen_visual_hash()!=self.frozen_visual_hash:
+            raise RuntimeError('frozen continuation changed observer or learned visual state')
+        self.visual_observations+=1;self.visual_learning_observations+=int(enabled)
         return encoded
+
+    def _frozen_visual_hash(self):
+        return fingerprint((observer_tensors(self.vision),learned_visual_state(self.vision)))
 
     def step(self):
         episode=self.episodes;before=self.visual_observations
         record=super().step()
         self.episode_survival_seconds+=record['elapsed_seconds']
         record.update(episode=episode,episode_survival_seconds=self.episode_survival_seconds,
-            visual_learning=dict(enabled=True,input_observations=before,
+            visual_learning=dict(enabled=getattr(self,'learn_enabled',True),input_observations=before,
                 next_observations=self.visual_observations,
                 reset_initial_image_added=bool(record['terminated'] or record['truncated']),
                 next_memory_counts=memory_counts(self.vision)))
@@ -100,7 +114,7 @@ class PendulumLearningSession(LearningSession):
         return record
 
     def evaluate(self,transitions):
-        raise NotImplementedError('Use a separate fresh frozen task evaluator; this session always learns visually')
+        raise NotImplementedError('Use a separate fresh frozen task evaluator; this session updates its policy')
 
     def summary(self):
         return dict(transitions=self.transitions,episodes=self.episodes,
@@ -117,6 +131,7 @@ class PendulumLearningSession(LearningSession):
 
     @classmethod
     def validate_restored(cls,session):
+        enabled=getattr(session,'learn_enabled',True)
         if (type(session) is not cls or session.source!=source_signature()
                 or session.model_hash!=MODEL_HASH or session.vision_configuration!=VISION_CONFIGURATION
                 or session.visual_memory_contract!=MUTABLE_VISION_CONTRACT
@@ -124,7 +139,9 @@ class PendulumLearningSession(LearningSession):
                 or session.config['physics']!=asdict(session.env.config)
                 or session.config['max_episode_ticks']!=session.env.max_episode_ticks
                 or session.env.needs_reset or session.initial_cameras!=session.episodes+1
-                or session.visual_learning_observations!=session.visual_observations
+                or type(enabled) is not bool or session.config['visual_learning'] is not enabled
+                or session.visual_learning_observations!=(session.visual_observations if enabled else 0)
+                or (not enabled and session._frozen_visual_hash()!=session.frozen_visual_hash)
                 or session.visual_observations!=session.transitions+session.initial_cameras
                 or session.transition_cameras!=session.transitions
                 or len(session.completed_rallies)!=session.episodes):

@@ -194,11 +194,13 @@ def evaluation_jobs(directory,m):
     return jobs
 
 
-def execute_phase(directory,m,phase,jobs,workers):
+def execute_phase(directory,m,phase,jobs,workers,*,phase_seconds=None,total_seconds=None):
     path=directory/(phase+'-boundary.json')
     start=m['started_wall_ns'] if phase=='training' else json.loads((directory/'training-boundary.json').read_text())['frozen_wall_ns']
-    expected=dict(started_wall_ns=start,deadline_wall_ns=min(start+int((TRAIN_SECONDS if phase=='training' else EVAL_SECONDS)*1e9),
-        m['started_wall_ns']+int(TOTAL_SECONDS*1e9)))
+    duration=(TRAIN_SECONDS if phase=='training' else EVAL_SECONDS) if phase_seconds is None else phase_seconds
+    total=TOTAL_SECONDS if total_seconds is None else total_seconds
+    if duration<=0 or total<=0:raise ValueError('positive phase and total wall caps required')
+    expected=dict(started_wall_ns=start,deadline_wall_ns=min(start+int(duration*1e9),m['started_wall_ns']+int(total*1e9)))
     costs=directory/(phase+'-costs.jsonl');failed=costs.exists() and any(not json.loads(x)['ok'] for x in costs.read_text().splitlines())
     if path.exists():
         b=json.loads(path.read_text())
