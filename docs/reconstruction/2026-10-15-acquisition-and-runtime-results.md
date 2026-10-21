@@ -4,13 +4,20 @@
 
 **Continuous iteration was authorized on 2026-10-21**, superseding historical
 stop-after-negative restrictions. Read the [completion checklist](2026-10-21-continuous-m1b-plan.md).
-Latest: [same-class continuation](2026-10-21-direct-hit-continuation-results.md),
-source aea715b. Seven new updates,159,842 training-phase cameras including anchors,
+Latest: [first-return curriculum](2026-10-21-first-return-curriculum-results.md),
+source36b05e7. Its audited one-seed screen passes: first returns14/64 initially,
+29/64 after first-return training,41/64 finally; final63/114 all returns versus
+strongest control20/82. Primary lifts42.19pp [23.44,50.00] and30.87pp [16.23,37.51].
+Both stage comparisons improved; blanking gives no-op.199,676 training/92,013 eval
+cameras,43.34min; all291,689 rows/updates/phase boundaries/statistics independently
+audited. ONE unchanged independent whole-procedure replica is next; no final
+streams or new replica clock yet. This is not replicated acquisition or complete M1B.
+
+Previous: [same-class continuation](2026-10-21-direct-hit-continuation-results.md),
+sourceaea715b. Seven new updates,159,842 training-phase cameras including anchors,
 103,900 evaluation cameras. First35/64 versus owninit32/64 andtheta9 37/64; all
-48/105 versus42/103 and48/107. Primary and extra-learning screens failed; blank
-input reduces performance. All263,742 rows/optimizer/anchors/statistics audited.
-Next is a prospectively registered fresh-start first-return/full-rally curriculum;
-no final streams or new allocation clock yet.
+48/105 versus42/103 and48/107. Primary and extra-learning screens failed. All263,742
+rows/optimizer/anchors/statistics audited; negative retained.
 
 Previous: [fresh frozen-policy confirmation](2026-10-21-frozen-hit-confirmation-results.md).
 Theta9 returns 34/64 first balls and 48/106 overall versus original theta0 27/64
@@ -60,7 +67,8 @@ ball forecasting were substantially functional on two tested trajectories; no
 visual-necessity or Bellman-Q adequacy claim follows. The staged90k score-only
 DCT study was NOT launched. No further experiment is automatically allocated.
 
-**No genuine Pong acquisition has been demonstrated.** The original .45 opponent
+**Historical negatives below remain unchanged.** The new single-seed return result
+is reported above; independent replication remains open. The original .45 opponent
 has a likely scoring ceiling after own returns; it is paused as a learning target.
 The separately labeled .25 opponent is controllably scoreable, but its first raw
 6000-transition screen only matched no-op at 5/12 wins. Both subsequent uncapped

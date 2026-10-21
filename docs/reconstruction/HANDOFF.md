@@ -9,37 +9,37 @@ audits and evidence-based adaptation through the orchestrator. Do not end the
 research loop merely because one allocation is negative. No backprop or privileged
 policy inputs; genuinely major architecture alterations still require user review.
 
-No genuine Pong acquisition has yet been established. A hit-return proof of
-concept is not complete M1B: the roadmap also requires a distinct visual task,
-state/forecast comparison, online-vision drift/retention and an explicit decision
-about the connectome comparison. Read the
-[continuation checklist](2026-10-21-continuous-m1b-plan.md); preserve all previous
-negative evidence, task changes and untouched final streams.
+The first independently audited **single-seed hit-return acquisition screen now
+passes**; independent training-seed reproducibility is not yet established. This
+is not complete M1B: winning/score-task transfer, a distinct visual task,
+state/forecast comparison, online-vision drift/retention and the connectome scope
+decision remain. Read the [completion checklist](2026-10-21-continuous-m1b-plan.md).
 
-**Latest audited result:** [same-class continuation](2026-10-21-direct-hit-continuation-results.md)
-completed at source **aea715b**, no candidate workers remain. New endpoint35/64
-first returns and48/105 overall versus original initial32/64 and42/103; primary
-screen failed. Inherited theta9 achieved37/64 and48/107; no extra-learning evidence.
-Blanking reduced performance but proves only whole-input dependence. Seven new
-updates used131,983 fitness cameras;18,885 partial-g17 and8,974 anchors remain
-separate (159,842 new training-phase total). Evaluation103,900;44.25 min overall.
-All263,742 physics rows, updates/RNG/anchors/geometry/statistics passed independent
-audit (209.76 s); zero-work/all1,380pins passed (8.59 s). Source is unlocked.
+**Latest audited result:** [first-return curriculum](2026-10-21-first-return-curriculum-results.md),
+source **36b05e7**, artifact
+`/workspace/m1b-experiments/pong-first-return-curriculum-20261021-r1/`.
+Fresh own initial → first-return stage → final gave **14/64 →29/64 →41/64** first
+returns on shared fresh64; all returns19/80 →40/102 →63/114. Primary max-control
+lifts42.19pp [23.44,50.00] and30.87pp [16.23,37.51] pass the unchanged screen.
+Both prespecified stage contrasts have positive paired intervals. Blank reduces
+performance to no-op; whole-input dependence, not ongoing tracking or forecast
+benefit. Opponent returned475/475 opportunities; zero wins/natural wins.
+Nine updates used178,890 of199,676 training cameras;20,786 incomplete-population
+rows unused. Evaluation92,013; total43.34min. All291,689 physics/update/RNG/phase/
+statistics checks passed independent audit225.35s; actual zero-work recovery,
+all2,085 pins and unchanged records/states/chains passed13.19s. Coordinator PID5469 /
+exec19462 exited0; no candidate workers remain. Source is unlocked.
 
-**Next reviewed allocation, staged for launch:**
-[first-return → full-rally curriculum](2026-10-21-first-return-curriculum-protocol.md),
-artifact `/workspace/m1b-experiments/pong-first-return-curriculum-20261021-r1/`.
-Fresh score-free random initialization; 8 directions ×12 serves /120k cameras /
-24 min first-return phase, then 8×6 /80k /16 min full-rally. At most 40 min shared
-training and 60 min overall, including 20 min evaluation from the durable phase-one
-freeze. First-hit stops are training-only task boundaries, not game wins or raw
-termination; the complete hit camera is retained. Final fresh64 evaluates endpoint,
-its own initial plus five simple primary controls, phase-zero endpoint and blank
-secondary. No best-stage selection, teacher labels, backprop or final streams.
-Source/protocol/test review passed; staging has not started the real clock. See
-`launch.json` and the root manifest for actual launch/resume status once present.
-Preserve original clocks, complete pending update reconciliation and partial-draw
-skip semantics. Continue under existing user authority after its finite outcome.
+**Next reviewed allocation:** ONE independent fresh-initialization/training-seed
+replica of the ENTIRE procedure, same first-return120k/24min/12 serves then full-
+rally80k/16min/6 serves,40min train/60overall with20eval. New roots and64 fresh DEV;
+unchanged primary screen, own initializer and five simple controls; phase0/blank
+secondary, plus prospectively declared final-minus-owninitial. Derive its own
+phase count/RNG/global index; never hardcode this seed's5 updates/global6 carry.
+Retain any negative/partial replica; no seed hunting, inherited trained weights,
+feature/rule changes or final streams. Lean seed/registration parameterization,
+focused default-equivalence/recovery checks and source/protocol archive precede
+orchestrator launch review under existing user authorization. No new clock yet.
 
 **Completed bounded continuation:** [protocol](2026-10-21-direct-hit-continuation-protocol.md),
 source **aea715b**, artifact

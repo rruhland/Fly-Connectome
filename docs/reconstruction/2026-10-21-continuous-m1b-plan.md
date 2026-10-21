@@ -53,63 +53,15 @@ passing unit tests full M1B completion.
 
 ## Current next experiment
 
-The [same-class continuation](2026-10-21-direct-hit-continuation-results.md)
-completed without extra-learning evidence: new endpoint35/64 first returns versus
-theta9 37/64 and original initialization32/64. No M1B acquisition qualification.
-Next reviewed design is fresh-start first-return→full-rally reward learning,
-8directions×12serves/120k first-phase cameras then8×6/80k full-rally, fixed40min
-training/60overall. Preserve raw physical termination/score under the explicit
-training-only first-hit task stop. Final evaluation includes the fixed phase-one
-checkpoint as secondary, never a best-stage selection. Protocol/source/tests must
-be reviewed and archived before its clock starts; no final streams are allocated.
+The [first-return curriculum](2026-10-21-first-return-curriculum-results.md)
+passed its audited single-seed screen: initial14/64 →phase0 29/64 →final41/64 first
+returns, final63/114 all returns, both stage contrasts positive. It is a component
+acquisition result; the reproducibility checkbox above remains open. No winning,
+forecast-benefit or ongoing visual-feedback claim follows from blanking.
 
-The initial policy-search launch was held after exact saved-action replay exposed
-a selected-lineage continuity defect: the encoder differenced positions from
-different beam hypotheses under one routing ID. A generic, prospectively versioned
-repair preserves association hypotheses while retiring discontinuous velocity,
-context and forecast credit. Validate it on both failures and ordinary occlusions;
-then ran the approved [corrected-vision24k SARSA screen](2026-10-21-continuity-repair-protocol.md)
-first. It completed stably but failed fresh controls (11/32 first returns,
-15/45 overall versus up11/32 and14/45). The repair suppresses false continuity,
-not association ambiguity. Keep the fixed transform and all negative evidence.
-The [direct hit-return search](2026-10-21-direct-hit-policy-search-results.md)
-completed at source 2e20707: nine updates, fresh first returns 16/32 and all 21/51,
-versus strongest control 9/32 and 10/42. Positive point estimates failed the
-unchanged development screen. Read HANDOFF and the audited artifacts before
-registering the next bounded experiment; retain the original frozen outcome.
-The [fresh frozen-policy confirmation](2026-10-21-frozen-hit-confirmation-protocol.md)
-completed with 64 new DEV serves and a separate blank-camera cohort, no new
-training. The primary screen failed; whole-input blanking reduced performance.
-Read its [audited result](2026-10-21-frozen-hit-confirmation-results.md). The next
-reviewed design is a fixed same-class continuation from theta9 with paired
-diagnostic anchors; no final streams or independent training replicas yet.
-
-Prior score-only search, its continuation and a stationary-opponent curriculum
-failed their development screens. Camera-rate hit-SARSA, full action holds and
-sustained exploration also failed to beat simple controls. Existing class-capacity
-witnesses do not prove adequate Bellman-Q representation. The next hypothesis is
-that directly optimizing controllable hit return can learn useful action scores
-without fitting Bellman values or waiting for return-to-score reward.
-
-Approved first design: unchanged frozen generic DCT/rank183 class, cap256, hold1,
-.65 opponent; random score-free initial function-RMS .10. Keep mirrored search
-8 directions/top4, noise .25, step .10. Each generation shares six new fresh-phase
-ten-second training serves across all 16 candidates. Fitness is mean own-hit count
-only. Maximum 16 complete generations / 160k new training cameras / 35 shared
-training minutes / 45 overall, four workers. Last complete generation is the
-endpoint, never the best; at least two are needed for a valid endpoint screen.
-
-Endpoint, own initialization and five simple controls share 32 new fresh-phase DEV
-serves. First-incoming returns and all-opportunity return fraction are co-primary;
-opportunities remain evaluation-only. The strongest-control max includes the own
-initial policy. A promising development screen remains ≥20 percentage-point lift
-on both metrics with paired serve-cluster 95% lower bounds above zero. This is
-not final acceptance or automatic M1B completion. No intermediate DEV selection.
-
-Prelaunch work pinned new seed recipes, preserved the existing transform,
-implemented variable-serve generation/fitness and generalized metrics, ran narrow
-mapping/update/partial-generation/recovery checks, and archived committed source.
-The orchestrator reviewed the launch-ready result. A bounded GC optimization
-passed exactness/lifetime checks and was explicitly pinned; no codec change.
-After every outcome: audit, update results/ledger/handoff, choose the next bounded
-test and continue under the user's authorization.
+Next is ONE independent from-scratch replication of the entire fixed120k/80k
+procedure, unchanged rule/features/objectives/budgets and screen, with new optimizer,
+training, DEV and action roots. Retain every negative/partial outcome; no seed
+replacement or best-stage selection. Source parameterization must preserve the
+original recipe and derive phase carry from each seed's own frozen state. Further
+independent seeds/final acceptance remain prospective; final streams are untouched.
