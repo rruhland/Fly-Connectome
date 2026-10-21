@@ -58,10 +58,13 @@ a selected-lineage continuity defect: the encoder differenced positions from
 different beam hypotheses under one routing ID. A generic, prospectively versioned
 repair preserves association hypotheses while retiring discontinuous velocity,
 context and forecast credit. Validate it on both failures and ordinary occlusions;
-then run the approved [corrected-vision24k SARSA screen](2026-10-21-continuity-repair-protocol.md)
-first. This is a lower-cost check of a demonstrated correctness failure, not a
-claim that association itself is solved. Keep the fixed transform and all previous
-negative evidence. The larger policy search below remains a subsequent option.
+then ran the approved [corrected-vision24k SARSA screen](2026-10-21-continuity-repair-protocol.md)
+first. It completed stably but failed fresh controls (11/32 first returns,
+15/45 overall versus up11/32 and14/45). The repair suppresses false continuity,
+not association ambiguity. Keep the fixed transform and all negative evidence.
+The [direct hit-return search](2026-10-21-direct-hit-policy-search-protocol.md)
+is now active at source2e20707; read HANDOFF and its durable manifest before
+continuing. Do not launch a duplicate or modify its pinned source/protocol.
 
 Prior score-only search, its continuation and a stationary-opponent curriculum
 failed their development screens. Camera-rate hit-SARSA, full action holds and

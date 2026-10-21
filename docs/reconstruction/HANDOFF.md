@@ -16,6 +16,19 @@ about the connectome comparison. Read the
 [continuation checklist](2026-10-21-continuous-m1b-plan.md); preserve all previous
 negative evidence, task changes and untouched final streams.
 
+**ACTIVE allocation:** [direct hit-return policy search](2026-10-21-direct-hit-policy-search-protocol.md),
+source **2e20707**, artifact
+`/workspace/m1b-experiments/pong-direct-hit-policy-search-20261021-r1/`.
+Coordinator PID2124 (session22295), four spawned workers. Keep all source and
+the pinned protocol unchanged until it exits. Six shared serves/16 candidates,
+last full generation only, max16 generations/160k cameras/35 training minutes/
+45 overall;32 fresh DEV serves/seven cohorts, including own initial readout.
+First generation:14,477 cameras,18 hits,6/8 nonzero mean contrasts; all six
+leave-one-serve-out updates nonzero and aligned. This is training-signal evidence,
+not acquisition. Read manifest/search-state/log for current progress; do not start
+a duplicate allocation. Parent independent optimizer/physics/statistics audit is
+prepared. Source archive and23 focused passing tests are retained in the artifact.
+
 **The visual continuity repair and its fixed SARSA screen are complete.** Read
 [results](2026-10-21-continuity-repair-results.md): source 570222e, 24k training,
 32 fresh serves per policy. Corrected SARSA first returns 11/32 and all 15/45 versus
@@ -23,8 +36,7 @@ constant up 11/32 and 14/45; no acquisition, paired intervals cross zero. Parent
 verified 50,467 physics/reward rows, 24k TD updates and all paired statistics;
 zero-work actual recovery and all 193 completion pins passed before shared-source
 changes. Full artifact: `/workspace/m1b-experiments/pong-continuity-repaired-sarsa-20261021-r1/`.
-The next approved step is direct hit-return search below; source integration,
-narrow tests, protocol/archive and final orchestrator review precede launch.
+The next approved step is now the active direct hit-return search above.
 Use the approved imports-only GC initializer once per fresh spawned search worker;
 never freeze inside repeated session/chunk calls. No codec optimization was adopted.
 
