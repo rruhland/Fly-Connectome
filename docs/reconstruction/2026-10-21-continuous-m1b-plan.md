@@ -68,9 +68,11 @@ versus strongest control 9/32 and 10/42. Positive point estimates failed the
 unchanged development screen. Read HANDOFF and the audited artifacts before
 registering the next bounded experiment; retain the original frozen outcome.
 The [fresh frozen-policy confirmation](2026-10-21-frozen-hit-confirmation-protocol.md)
-is now active with 64 new DEV serves and a separate blank-camera cohort, no new
-training. Preserve its original manifest clock and explicit zero-camera startup
-amendment; do not duplicate it or use final streams.
+completed with 64 new DEV serves and a separate blank-camera cohort, no new
+training. The primary screen failed; whole-input blanking reduced performance.
+Read its [audited result](2026-10-21-frozen-hit-confirmation-results.md). The next
+reviewed design is a fixed same-class continuation from theta9 with paired
+diagnostic anchors; no final streams or independent training replicas yet.
 
 Prior score-only search, its continuation and a stationary-opponent curriculum
 failed their development screens. Camera-rate hit-SARSA, full action holds and

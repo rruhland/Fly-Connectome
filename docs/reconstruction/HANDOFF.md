@@ -16,17 +16,28 @@ about the connectome comparison. Read the
 [continuation checklist](2026-10-21-continuous-m1b-plan.md); preserve all previous
 negative evidence, task changes and untouched final streams.
 
-**ACTIVE frozen-policy confirmation:** [registered protocol](2026-10-21-frozen-hit-confirmation-protocol.md),
+**Frozen confirmation complete:** [results](2026-10-21-frozen-hit-confirmation-results.md),
 source **5c9e219**, artifact
 `/workspace/m1b-experiments/pong-frozen-hit-confirmation-20261021-r1/`.
-Coordinator PID3339/session90528, four workers. No training: unchanged theta9 and
-original theta0, 64 new paired DEV serves, seven primary cohorts plus secondary
-blank camera. Keep code/protocol frozen; read the manifest before any continuation
-and do not launch a duplicate. Bounds are 15 minutes evaluation/18 overall from
-the ORIGINAL clock. Initial launch failed before any session/camera because two
-weight metadata sidecars were missing; the explicit zero-camera amendment retains
-the same serves, weights, failed costs and clock. The repaired run is progressing;
-nine distinct focused checks and exact immutable source archive are retained.
+No candidate workers remain. Theta9 first returns 34/64 and all 48/106 versus
+original theta0 27/64 and 34/95. Primary lifts +10.94/+9.49 pp have intervals
+crossing zero and fail the unchanged screen. Secondary full-minus-blank lifts
++31.25/+25.03 pp have positive intervals: whole-input dependence, not established
+reward acquisition, forecast benefit or ongoing tracking. All 83,814 physics rows,
+512 jobs, frozen weights, seed recipes, geometry and bootstraps passed independent
+audit (69.56 s); actual zero-work recovery/all 512 pins passed (2.65 s).
+The zero-camera startup sidecar repair retained the original clock/serves/weights.
+Nine distinct focused checks and both immutable source archives are retained.
+
+Next reviewed design: same-class continuation from theta9, skip unused g09 and
+start global10 with its retained post-draw RNG. Max 16 new updates/160k TOTAL
+fitness+diagnostic cameras/35 training minutes, 20 evaluation minutes/55 overall.
+Every second generation pins pre-update current-center/theta9 paired anchors
+before fitness and executes them after the learning update. They never enter
+fitness/selection. Fresh 64 DEV: original initialization and five simples primary;
+theta9 and new-endpoint blank secondary. Finish concrete protocol/code/checks,
+commit/archive and orchestrator review before launch. No final holdout or seed
+replication yet; continuous user authorization remains in force.
 
 **Latest allocation complete:** [direct hit-return search results](2026-10-21-direct-hit-policy-search-results.md),
 source **2e20707**, artifact
@@ -44,7 +55,7 @@ An environment restart interrupted the run. Parent resumed the same directory,
 clock and configuration; 399 committed training cameras lacked settled task-cost
 records, and 99 previously committed steps were exactly replayed. Preserve this
 accounting and unknown interrupted compute tails. Source archive and23 focused
-passing tests remain retained. The reviewed fresh confirmation is active above;
+passing tests remain retained. The reviewed fresh confirmation is complete above;
 it adds no training or final holdout. Continue under existing user authorization;
 do not silently extend the completed run or request renewed user permission for
 ordinary experiments.

@@ -4,7 +4,15 @@
 
 **Continuous iteration was authorized on 2026-10-21**, superseding historical
 stop-after-negative restrictions. Read the [completion checklist](2026-10-21-continuous-m1b-plan.md).
-Latest: [direct hit-return policy search](2026-10-21-direct-hit-policy-search-results.md).
+Latest: [fresh frozen-policy confirmation](2026-10-21-frozen-hit-confirmation-results.md).
+Theta9 returns 34/64 first balls and 48/106 overall versus original theta0 27/64
+and 34/95. Primary lifts +10.94/+9.49 pp have intervals crossing zero and fail the
+unchanged screen. Secondary blanking drops performance by +31.25/+25.03 pp,
+with positive intervals: whole-input dependence, not reward-acquisition proof.
+All 83,814 evaluation rows/512 jobs independently audited; no new training.
+Next is a separately registered same-class continuation, not final holdout.
+
+Previous: [direct hit-return policy search](2026-10-21-direct-hit-policy-search-results.md).
 Nine completed updates used 145,561 of 159,873 training cameras. Fresh endpoint
 returns 16/32 first balls and 21/51 overall versus own initial 8/32 and 8/40,
 strongest simple down 9/32 and 10/42. First lift 21.875 pp (95% interval −3.125 to 31.25),
@@ -88,6 +96,7 @@ success claim.
 | Camera-rate independent versus sustained exploration | [Protocol](2026-10-16-sustained-exploration-protocol.md); [results](2026-10-16-sustained-exploration-results.md) | 24k updates each; first returns 6/24 versus 3/24, overall 8/32 versus 4/28; strongest control 10/24 and 12/35; neither qualifies |
 | Corrected-vision hit-only SARSA | [Protocol](2026-10-21-continuity-repair-protocol.md); [results](2026-10-21-continuity-repair-results.md) | 24k cameras; first11/32 and all15/45 versus up11/32 and14/45; no acquisition |
 | Corrected-vision direct hit search | [Protocol](2026-10-21-direct-hit-policy-search-protocol.md); [results](2026-10-21-direct-hit-policy-search-results.md) | Nine updates/159,873 cameras; first16/32 and all21/51 versus strongest control9/32 and10/42; positive point estimates, screen failed |
+| Frozen hit-policy confirmation | [Protocol](2026-10-21-frozen-hit-confirmation-protocol.md); [results](2026-10-21-frozen-hit-confirmation-results.md) | Fresh 64: theta9 first34/64/all48/106 versus initial27/64/34/95; primary screen failed, secondary visual blanking reduces returns |
 | Cached delayed-template credit | [Diagnostic protocol](/workspace/m1b-experiments/cached-delayed-toy-20261016/PROTOCOL.md) | Fixed RMS/alpha.001 reaches both templates in all seeds by1000episodes; raw fails through2000 |
 | Oracle diagnostic closed-loop capacity | [NEW diagnostic protocol](/workspace/m1b-experiments/ORACLE-DIAGNOSTIC-closed-loop-capacity-20261016/PROTOCOL.md) | Camera-only oracle-fitted linear readout8/12(5own-hit); legal teacher8/12(5own-hit); NEVER reward acquisition |
 | Restricted-class oracle capacity | [NEW diagnostic protocol](/workspace/m1b-experiments/ORACLE-DIAGNOSTIC-restricted-capacity-20261016/PROTOCOL.md) | Frozen search class6/12(3own-hit),4loss/2timeout; capacity witness only, no learning |
