@@ -115,8 +115,12 @@ is complete and audited. It did not establish further learning or superiority to
 the reused .2 control: 2.502 versus 2.758 s, paired mean −0.255 s
 CI [−0.654,0.141], with only4/64 versus6/64 five-second balances. Retain the
 nonmonotonic fixed curves without selecting a midpoint. No epsilon grid follows.
-Next is reviewed native-win executed-child selection with separate fresh training
-validation at fixed .35. A possible later B complete-episode survival actor search
+The [native-win executed-child allocation](2026-10-21-validated-win-children-protocol.md)
+is now live from audited theta5, source6df746f in its isolated checkout, with
+160k training transitions and30/20/50min training/evaluation/overall limits.
+It uses separate fresh training validation at fixed .35 and retains only the last
+committed incumbent; false acceptances and partial-cycle costs remain explicit.
+A possible later B complete-episode survival actor search
 keeps visual memory immutable to test genuine native-reward optimization within
 the same greedy class; it remains external/unallocated and cannot prove online
 visual competence or isolate optimizer superiority across unequal experience.

@@ -9,6 +9,19 @@ audits and evidence-based adaptation through the orchestrator. Do not end the
 research loop merely because one allocation is negative. No backprop or privileged
 policy inputs; genuinely major architecture alterations still require user review.
 
+**Currently live:** [native-win executed-child learning](2026-10-21-validated-win-children-protocol.md)
+at fixed .35, execution source **6df746f** (integrated **e46e743**) in isolated
+`/workspace/Fly-Connectome-m1b-validated-child`. Artifact
+`/workspace/m1b-experiments/pong-validated-win-children-20261021-r1`; original start
+**1792585847619927483**, exec **9657**, coordinator **119077**, workers
+**119079/119082/119083/119084**. Last audited native theta5 start; 2 directions,
+12 discovery serves and 24 fresh validation serves, exact child accepted only at
+net ≥2 wins. All observations count toward160k/30min training,20min evaluation,
+50min overall; max24/min6 completed cycles, accepts may be0. Last incumbent only.
+22 focused zero-camera checks and actual source/input identity pass; independent
+stage check passes. Keep execution source frozen through both outcome audits;
+never reset its clock or expand final streams. All negative/partial results stay.
+
 **Latest completed:** [epsilon .02 pendulum continuation](2026-10-21-pendulum-low-exploration-results.md),
 source **c36ebdd** (integrated as **dc40c48**). Both audits pass. On 64 fresh common
 starts, .02 mean 2.502 s/4 caps versus reused .2 2.758 s/6 caps; paired mean
@@ -19,9 +32,8 @@ fail; no epsilon benefit/equivalence or best-midpoint selection. A first returns
 images in 1,738.553 s. Own705-pin/eight-zero-replay verification passed32.302s;
 parent all-physics/TD/reuse/statistics passed18.535s. The initial external verifier
 attribute error is preserved; candidates were unchanged. Exec25486/PID113443 and
-all workers exited0; source released. No final streams. Next is reviewed native-win
-validated-child selection at fixed .35; its zero-camera tests/provenance and
-registration precede launch. The separate frozen-survival B actor proposal is
+all workers exited0; source released. No final streams. The subsequent native-win
+validated-child allocation is live above. The separate frozen-survival B actor proposal is
 external and unallocated. Continue iteration; M1B remains incomplete.
 
 **Two independent training seeds now pass the unchanged hit-return DEV screen.**
