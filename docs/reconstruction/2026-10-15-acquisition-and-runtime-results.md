@@ -2,7 +2,16 @@
 
 ## Current result index
 
-Latest investigation: [camera-rate sustained exploration](2026-10-16-sustained-exploration-results.md).
+**Continuous iteration was authorized on 2026-10-21**, superseding historical
+stop-after-negative restrictions. Read the [completion checklist](2026-10-21-continuous-m1b-plan.md).
+Latest: [selected-lineage repair and corrected SARSA](2026-10-21-continuity-repair-results.md).
+The repair removes fabricated cross-hypothesis velocity/forecast histories while
+preserving ordinary coverage; retained forecasts have identical errors, with
+invalid ones withheld. The fixed24k reward learner remains negative:11/32 first
+returns and15/45 overall versus constant up11/32 and14/45. No genuine acquisition.
+The next bounded experiment directly optimizes hit return in the existing class.
+
+Previous investigation: [camera-rate sustained exploration](2026-10-16-sustained-exploration-results.md).
 Two fresh 24k-camera hit-only learners kept identical SARSA update counts and about
 20% exploratory occupancy. Sustained exploration increased training contacts
 46→60 but yielded fewer fresh returns: first 3/24 versus independent 6/24, overall

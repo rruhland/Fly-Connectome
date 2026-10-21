@@ -16,18 +16,27 @@ about the connectome comparison. Read the
 [continuation checklist](2026-10-21-continuous-m1b-plan.md); preserve all previous
 negative evidence, task changes and untouched final streams.
 
-**Launch is currently held for a generic visual continuity repair.** Saved-action
+**The visual continuity repair and its fixed SARSA screen are complete.** Read
+[results](2026-10-21-continuity-repair-results.md): source 570222e, 24k training,
+32 fresh serves per policy. Corrected SARSA first returns 11/32 and all 15/45 versus
+constant up 11/32 and 14/45; no acquisition, paired intervals cross zero. Parent
+verified 50,467 physics/reward rows, 24k TD updates and all paired statistics;
+zero-work actual recovery and all 193 completion pins passed before shared-source
+changes. Full artifact: `/workspace/m1b-experiments/pong-continuity-repaired-sarsa-20261021-r1/`.
+The next approved step is direct hit-return search below; source integration,
+narrow tests, protocol/archive and final orchestrator review precede launch.
+Use the approved imports-only GC initializer once per fresh spawned search worker;
+never freeze inside repeated session/chunk calls. No codec optimization was adopted.
+
+Saved-action
 replay established that a beam slot can alternate selected lineages while one
 public ID fabricates velocity and forecast differences across distant objects.
 The approved repair revises routing IDs on a selected-parent endpoint/time break,
 clears slot context and retires old forecast credit, preserving the beam and normal
 occlusion. Read the [repair protocol](2026-10-21-continuity-repair-protocol.md).
-After validation, the next approved bounded attempt is one corrected-vision
-independent SARSA run: historical seed/config736187003,24k hit-only camera updates,
-fresh32 serves and five matched simple/own-zero-init controls;20 training minutes,
-30 overall. Historical learning comparisons are nonpaired. No experiment has
-started yet; source tests, independent replay/compatibility checks and archive
-must pass before manifest creation.
+Historical learning comparisons remain nonpaired. The repair preserves current
+coverage and retained forecast errors while abstaining on discontinuous histories;
+it does not solve association itself. All experiments from that screen have exited.
 
 The following approved alternative is direct hit-return policy search in the existing frozen
 DCT class: random score-free initial function-RMS .10, same mirrored rule,
