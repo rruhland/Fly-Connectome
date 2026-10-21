@@ -4,16 +4,22 @@
 
 **Continuous iteration was authorized on 2026-10-21**, superseding historical
 stop-after-negative restrictions. Read the [completion checklist](2026-10-21-continuous-m1b-plan.md).
-Latest: [independent whole-procedure replica](2026-10-21-first-return-replication-results.md),
+Latest: [frozen later-camera feedback](2026-10-21-camera-feedback-results.md), source415f066.
+Across both fixed policies, live first-return lift12.50pp versus held and missing
+images; aggregate paired CIs[4.69,20.31]/[3.13,21.88] pass. Seed1 missing contrast
+individually inconclusive; fresh live10/32 and15/32 lower than prior cohorts.
+29,724eval cameras/192jobs/272.00s, allphysics/onset/stats audited, no training.
+Later visual-update benefit is not explicit forecast benefit or score mastery.
+Next approved design is third full seed plus state-only comparison in old-core worktree.
+
+Previous: [independent whole-procedure replica](2026-10-21-first-return-replication-results.md),
 source886d05d. Two independently trained seeds now pass the unchanged return screen.
 Replica initial6/64 → phase0 37/64 → final39/64; final64/122 all returns versus
 strongest control22/85. Primary lifts35.94pp [15.63,46.88] and26.58pp [13.81,33.65].
 199,771 training/95,918 eval cameras,43.20min; all295,689 rows/ten updates/phase
 boundaries/statistics independently audited. Replica's incremental second-stage
 benefit is inconclusive. [Two-seed chart](/workspace/m1b-experiments/pong-first-return-replication-20261021-r1/replication-summary.png).
-No score wins/forecast-benefit/ongoing-feedback claim or final-stream use. The
-next reviewed diagnostic is frozen live/warm-held/warm-missing camera feedback,
-not another unregistered training extension. Broader M1B remains open.
+No score wins/forecast-benefit claim or final-stream use. Broader M1B remains open.
 
 Previous: [first-return curriculum](2026-10-21-first-return-curriculum-results.md),
 source36b05e7, passed its first-seed screen:14/64 →29/64 →41/64 first returns,

@@ -62,12 +62,17 @@ This is two-seed reward-based return acquisition, not three-seed/final evidence,
 score winning or complete M1B. Incremental second-stage benefit is inconclusive
 in the replica; whole-procedure gains do not prove either stage necessary.
 
-Next reviewed small allocation tests BOTH frozen endpoints under live versus
-warm-held versus honestly missing camera input on32 new paired serves. Fixed20
-observations including initial, no updates/selection, 12 rollout/15 overall minutes.
-Report fixed-policy-set paired effects and OOD/missing-bias limits; do not infer
-forecast benefit from this intervention. Implement/review/pin only after source
-unlock, now granted. No feedback clock or stream expansion yet.
+The [feedback test](2026-10-21-camera-feedback-results.md) is complete: equal-policy
+first-return gains12.50pp over held and missing cameras, both paired aggregate CI
+lower bounds positive. Seed1 missing effect remains individually inconclusive;
+OOD limitations and lower live performance on this fresh cohort stay explicit.
+This establishes later-camera benefit for the fixed tested set, not explicit
+forecast benefit or an optimal-controller necessity theorem.
+
+Next approved design (not launched): third unchanged full seed paired with one
+state-only arm, sequential four-worker runs with the same200k/40mintraining/60min
+overall limits each and a prospectively shared64-serve evaluation cohort. One
+pair can supply an initial forecast development signal, not across-seed inference.
 
 Subsequent design direction: a third unchanged full-condition seed may also form
 the full arm of a prospective state-only comparison, retaining the successful T

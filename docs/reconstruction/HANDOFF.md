@@ -31,16 +31,29 @@ auditor, not candidate code; raw partial hits remained durable and unused. Extra
 partial recovery passed0.314s. Coordinator PID6544 / exec56235 exited0; all candidate
 workers and audits exited. **Source is unlocked.** No final streams were expanded.
 
-**Next reviewed small allocation:** frozen live/warm-held/warm-missing feedback
-comparison of BOTH verified final endpoints, regardless relative score. New32
-paired serves, three modes, 12 rollout/15 overall minutes; honest missingness,
-fixed20-observation warmup including initial, no updates or policy selection.
-External `FEEDBACK-PROTOCOL-DRAFT.md` in the replica artifact is reviewed; implementation,
-focused prefix/reset/recovery tests, protocol/source pins and parent code review
-precede launch. No feedback clock/stream has started. A third unchanged full seed
-plus a state-only comparison is a later prospective direction, not allocated.
-A separate worktree rooted at886d05d can preserve strict same-source provenance
-if optional feedback code changes the main evaluator. No major architecture change.
+**Feedback test complete and independently audited:** [results](2026-10-21-camera-feedback-results.md),
+source415f066, artifact `/workspace/m1b-experiments/pong-camera-feedback-20261021-r1/`.
+Both final policies on32 new shared serves: live first10/32 and15/32, held6/32 and11/32,
+missing9/32 and8/32. Equal-policy first lifts12.50pp versus both interventions;
+paired32-serve CIs[4.69,20.31]/[3.13,21.88] pass the prespecified aggregate criterion.
+Seed1 missing effect is individually inconclusive. Later visual updates benefit
+this fixed policy set; no forecast-specific claim or optimal opening-only control
+impossibility follows OOD masking. New live rates are lower than previous cohorts;
+retain that variability.192jobs/29,724cameras/272.00s, no training. Own six-mode
+zero-work recovery/allpins passed2.93s; parent allphysics/onset/statistics audit
+passed13.60s. Exec32120/PID14161 and workers exited0; **source unlocked**.
+
+**Next approved design, not launched:** third unchanged full-condition replica
+plus state-only comparison, old-core worktree rooted at886d05d. Joint roots
+train1782731441/optimizer947621083/DEV1662073981/tag29110/actions719456287,
+not yet expanded. Same200k/40mintrain/60minoverall each; sequential four-worker
+arms, common64DEV serves/exclusions registered before either clock. Full exactT
+and whole procedure stay unchanged; state-only214-row basis removes explicit
+forecast columns BEFORE centering/whitening, with rank/conditioning disclosed.
+Five simple controls may reuse verified full raw evidence; each owninitial,
+phase0, endpoint and blank actually execute. Parent reviews concrete protocol/code
+before launch under continuous authorization. One pair is a development forecast
+signal, not training-population inference. Final streams remain untouched.
 
 This is not complete M1B: third-seed/final evidence, winning/score-task transfer,
 a distinct visual task, state/forecast comparison, online-vision drift/retention
