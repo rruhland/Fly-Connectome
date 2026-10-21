@@ -98,8 +98,12 @@ serves, with no registered noninferiority margin. No policy-head transfer claim.
 The [ONE frozen.35 transfer study](2026-10-21-pong-score-transfer-results.md) is
 complete:14/16 wins versus12 best control; both registered score screens fail,
 while return behavior persists. Opponent changes also alter returned trajectories,
-so absent transfer does not isolate reward misalignment. Next is prospective
-new-episode B continuation with plastic/frozen vision from the predetermined
-experienced20k boundary, then consider genuine native-score learning at fixed.35,
-not another frozen speed sweep. No architecture diagnostic detour or final-root
-speculation.
+so absent transfer does not isolate reward misalignment. The subsequent
+[B continuation](2026-10-21-pendulum-continuation-results.md) is complete: +20k
+updates with plastic/frozen vision did not improve full 64 mean survival over the
+shared 20k head. ON cap success fell 7→1/64; ON−OFF is not a clear plasticity effect
+or equivalence. A behavior changed modestly; no formal retention guarantee.
+Next is reviewed genuine win-only learning at fixed .35 from the predetermined
+first qualified Pong head, rather than another frozen speed sweep. Stable B
+remains open, with the next single learner change chosen from complete curves and
+failure behavior. No architecture diagnostic detour or final-root speculation.

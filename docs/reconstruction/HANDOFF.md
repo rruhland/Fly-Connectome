@@ -101,20 +101,28 @@ artifact `/workspace/m1b-experiments/pong-score-transfer-20261021-r1`; exec12221
 PID93633 and all workers exited0; source unlocked. Postlaunch full-width metadata
 check found no actual seed collision; future guards include high uint32 IDs.
 
-**Next sealed allocation:** [new-episode B continuation](2026-10-21-pendulum-continuation-protocol.md)
-from predetermined experienced20k theta/memory, traces reset and new paired roots,
-visual learning ON/OFF;20k new actor updates per arm, unchanged learner/T/cap.
-Original competence and incremental-vs-start comparisons remain separate. Exact
-OFF A snapshot/input identity permits explicit old-data reuse; otherwise64 more
-A probes fit the same cap.20min shared training +30min evaluation/scoring,
-50min overall; no clock extension.11 class/recovery checks,8 metadata harness
-checks and3 worker/export/clock regressions pass. The actual20k-memory runtime
-fixture passes23.268s with524 diagnostic transitions/531 images, outputs discarded.
-Source checkout `/workspace/Fly-Connectome-m1b-pendulum-onoff`, staged artifact
-`/workspace/m1b-experiments/pendulum-onoff-continuation-20261021-r1` (clock starts
-only at launch);64 fresh B starts and actions are disjoint from2,241 prior IDs.
-No full-session source validation bypass. B stability, native score learning,
-learning-enabled deployed/final evidence and B2 scope review remain open.
+**B ON/OFF continuation complete and audited:** [results](2026-10-21-pendulum-continuation-results.md),
+launch source **51293d2**, integrated unchanged as **3c09df9**. Shared experienced
+20k head/memory, new episodes/traces reset, +20k native-survival updates per arm.
+Fresh 64 B survival: start 2.552 s/7 caps; ON 2.460 s/1 cap; OFF 2.440 s/5 caps.
+Incremental mean CIs both cross zero; ON cap decrease is −9.375 pp
+[−18.75,−1.56]. ON−OFF mean/cap do not establish a plasticity effect or equivalence.
+Both remain above controls but fail strict five-second competence. Fixed 32 curves
+are retained without midpoint selection. A first returns ON 36→34/64; OFF 64 trials
+are byte/content/config-verified reuse, not new work. No formal retention margin.
+Exactly 106,540 new transitions/1,126 initials/20,205 visual-learning images,
+28.14 min within 20/30/50 caps. Own 706-pin/eight-zero-work recovery check passed
+30.61 s; parent all-physics/TD/maps/stats/reuse audit passed 19.59 s. All candidate
+and audit processes exited0; source unlocked. Artifact:
+`/workspace/m1b-experiments/pendulum-onoff-continuation-20261021-r1`.
+
+**Next:** reviewed native-score learning at fixed .35, predetermined first qualified
+Pong head, win-only fitness and 12 shared serves, relative score-free exploration,
+200k inclusive new cameras/40 min train/55 overall. Static source is isolated at
+`/workspace/Fly-Connectome-m1b-native-score`; no candidate roots or clock yet.
+Complete focused checks/source proof before staging and parent launch review.
+Choose the next B learning change from the plateau/failure evidence while native
+score training runs; do not select a favorable old midpoint or declare class failure.
 
 This is not complete M1B: score-winning/final evidence, online distinct-task
 acquisition/retention and the B2 scope review remain. The [completion checklist](2026-10-21-continuous-m1b-plan.md)
