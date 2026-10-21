@@ -96,6 +96,16 @@ def fingerprint(value):
 def frozen_tensors(session):
     vision = session.vision
     tensors = {'observer.weights':vision.observer.weights, 'observer.bias':vision.observer.bias}
+    contract=getattr(session,'visual_memory_contract',None)
+    if contract is not None:
+        # Optional exact-class contract only. The default frozen bank is unchanged;
+        # mutable memories remain in full per-camera graph hashes/checkpoints.
+        from .online_vision import PersistentVisionSession,MUTABLE_VISION_CONTRACT
+        if type(session) is not PersistentVisionSession or contract!=MUTABLE_VISION_CONTRACT:
+            raise ValueError('unknown mutable visual-memory session contract')
+        projection=getattr(session,'projection',None)
+        if projection is not None:tensors['policy_projection.matrix']=projection.matrix
+        return tensors
     for name in ('keys','values','metric'):
         tensors['memory.'+name] = getattr(vision.state.memory,name)
     projection=getattr(session,'projection',None)

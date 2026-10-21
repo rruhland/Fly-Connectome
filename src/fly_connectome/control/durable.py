@@ -123,8 +123,10 @@ class DurableRun:
                 raise ValueError('checkpoint/sample state mismatch')
             from .toy_session import ToySession
             from .pong_evaluation import FreshPongEvaluator
+            from .online_vision import PersistentVisionSession
             classes = {'pong-learning-v1':LearningSession,'toy-session-v1':ToySession,
-                       'pong-evaluation-v1':FreshPongEvaluator}
+                       'pong-evaluation-v1':FreshPongEvaluator,
+                       'pong-persistent-vision-v1':PersistentVisionSession}
             if session_kind not in classes:
                 raise ValueError('unsupported session kind')
             self.session = classes[session_kind].validate_restored(self.codec.loads(payload))
