@@ -95,6 +95,11 @@ is now complete: survival means2.734/2.812s versus1.343s best simple control, bo
 paired lift CIs positive; only8/64 and9/64 reach5s, so strict competence fails.
 Fixed curves improve; A behavior survives the20k B exposure on reused development
 serves, with no registered noninferiority margin. No policy-head transfer claim.
-Next is the agreed ONE frozen.35 score-transfer study with original heads/priors,
-then prospective new-episode B continuation with plastic/frozen vision. No opponent
-sweep, architecture diagnostic detour or final-root speculation.
+The [ONE frozen.35 transfer study](2026-10-21-pong-score-transfer-results.md) is
+complete:14/16 wins versus12 best control; both registered score screens fail,
+while return behavior persists. Opponent changes also alter returned trajectories,
+so absent transfer does not isolate reward misalignment. Next is prospective
+new-episode B continuation with plastic/frozen vision from the predetermined
+experienced20k boundary, then consider genuine native-score learning at fixed.35,
+not another frozen speed sweep. No architecture diagnostic detour or final-root
+speculation.

@@ -89,18 +89,23 @@ fingerprinting dominates, not encoder copying. A subsequent byte-equivalent
 reduced one warmed saved-prefix loop by23.8%; this is not a universal speed claim.
 All512 benchmark record/state/chain rows remained exact. No final streams used.
 
-**Next sealed allocation:** ONE frozen.35 score-transfer study using both original
-qualified Pong heads/priors,64 fresh shared serves, nine cohorts,10s horizon/20min
-overall. No retraining/opponent sweep. Each policy must gain>=10pp in total wins AND
-own-hit-followed wins over the respective strongest seven controls, both CI lower
-bounds>0. [Protocol](2026-10-21-pong-score-transfer-protocol.md), staged artifact
-`/workspace/m1b-experiments/pong-score-transfer-20261021-r1`; roots1492093789 /
-836917243, tag29115, bootstrap1236702941 are approved and64 serves are registered
-against1,848 prior IDs. Source/inputs are sealed before the launch clock; both
-qualified-policy default prefixes and35 focused checks pass. Then prepare
-reviewed new-episode B training from predetermined experienced20k theta/memory,
+**Frozen.35 score transfer complete, both screens failed:** [results](2026-10-21-pong-score-transfer-results.md).
+Both original policies/priors,64 fresh paired serves, nine cohorts. Wins14/16
+versus best control12; own-hit wins5/7 versus3. Lifts3.125pp CI[-6.25,7.8125]
+and6.25pp[-3.125,12.5] miss the registered10pp/positive-CI gate. Nine natural wins
+are identical across cohorts, so total/own-hit lifts are the same paired evidence.
+No retraining/opponent sweep, no score-reward acquisition claim. All576 jobs/
+75,899 new cameras completed539.247s. Own576-pin/nine-zero-work verification
+passed5.984s; parent all-physics/statistics audit passed33.061s. Source10acd5e,
+artifact `/workspace/m1b-experiments/pong-score-transfer-20261021-r1`; exec12221 /
+PID93633 and all workers exited0; source unlocked. Postlaunch full-width metadata
+check found no actual seed collision; future guards include high uint32 IDs.
+
+**Next:** reviewed new-episode B training from predetermined experienced20k theta/memory,
 traces reset/new paired roots, plastic versus frozen vision; no full-session source
-validation bypass. B stability, final evidence and B2 scope review remain open.
+validation bypass. Static work is isolated at
+`/workspace/Fly-Connectome-m1b-pendulum-onoff`; no candidate clock yet. B stability,
+native score learning, final evidence and B2 scope review remain open.
 
 This is not complete M1B: score-winning/final evidence, online distinct-task
 acquisition/retention and the B2 scope review remain. The [completion checklist](2026-10-21-continuous-m1b-plan.md)
