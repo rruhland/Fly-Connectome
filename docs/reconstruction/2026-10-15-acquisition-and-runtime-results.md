@@ -1,5 +1,9 @@
 # Reconstruction acquisition and execution evidence
 
+Latest: [plastic-vision fixed-policy integration complete](2026-10-21-online-vision-drift-results.md).
+Paired skill changes inconclusive; exact mutable-memory recovery verified, with
+higher inference cost. Native-survival second-task preparation is next.
+
 Latest: [one-pair forecast ablation complete](2026-10-21-forecast-comparison-results.md).
 FULL−STATE first/all CIs both cross zero; both learn versus initialization but
 miss the unchanged primary screen. Earlier two qualified return-learning seeds

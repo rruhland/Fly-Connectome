@@ -58,23 +58,31 @@ all544,689 distinct candidate rows. Both coordinators/workers exited0. Source is
 unlocked; final roots remain unexpanded. Hot/cold journal restoration manifests
 preserve byte-exact raw evidence.
 
-**Persistent-vision allocation LIVE:** fixed-policy persistent-vision
-A→A integration/drift, using BOTH earlier qualified FULL endpoints. Existing
-visual learner only; no actor updates/backprop/new privileged inputs. Per policy
-2k learning-camera exposure, BEFORE/AFTER frozen probes on64 shared fresh serves,
-then separate2k prequential cameras. Explicit inherited/current learning counts,
-partial-final-rally truth and per-camera mutable-memory recovery are tested.
-Reviewed caps exposure240/probes1140/prequential240/scoring180, total1800s;
-roots1793074213/1360749281/927415613,tag29112,bootstrap170953167. Started after source/archive/input pins and parent storage clearance. Coordinator
-PID78086 / exec1956, original clock1792569076660360919, launch sourcecf163cd.
-Artifact `/workspace/m1b-experiments/pong-online-vision-drift-20261021-r1`. Its
-source is frozen through own and parent post-run audits. Implementation is in
-isolated `/workspace/Fly-Connectome-m1b-online-vision`, baseline98fa9a0 plus validated
-follow-up. Focused30tests passed34.65s; actual-policy archived prefix bridge passed;
-bank-growth preflight reached2k/2010learning images in93.63s. Those diagnostic
-observations are separate. This study measures integration/effects, with no
-posthoc retention/noninferiority gate. Next priority is a distinct native-survival
-visual task with learning ON, preserved Pong head/T and immediate A retention.
+**Persistent-vision study complete and audited:** [results](2026-10-21-online-vision-drift-results.md),
+launch source **cf163cd**, artifact `/workspace/m1b-experiments/pong-online-vision-drift-20261021-r1`.
+Both fixed qualified policies completed2k exposure and2k prequential transition doses;
+64 shared frozen BEFORE/AFTER probes each. First returns39→36 and40→41/64;
+equal-policy first/all effects−1.56pp CI[−6.25,2.34] and−1.75pp CI[−7.54,4.05].
+No clear benefit/harm and no noninferiority claim. Actual74,696 transitions +297
+initial images;8,041 learning images,0 actor updates,1,209.59s. AFTER inference
+median/p95 58.98/80.36ms versus BEFORE44.54/66.89ms;20ms target unmet. Own recovery/
+all-pins audit passed25.42s; parent allphysics/counters/statistics passed61.44s.
+Exec1956/PID78086 and workers exited0. Source unlocked; no final streams.
+
+**Next unallocated learner:** native elapsed-survival pendulum with plastic vision
+and a new zero SARSA head. First pair is predetermined seed1 EXPOSURE-AFTER(2k)
+versus fresh generic prior, common score-free task calibration/T/roots/budgets.
+Do not choose seed2 or the4k prequential endpoint from observed return rates.
+Preserve Pong W/T and probe A immediately after B, before A retraining. Isolated
+`/workspace/Fly-Connectome-m1b-pendulum`, source **7bdb38f**, implements small RK4
+physics, camera-only/plastic-learning and truly frozen evaluator paths, and an
+explicit content-preserving control-source snapshot bridge. Focused24 tests passed
+12.76s,243 diagnostic camera transitions (4 replay subset), no candidate data.
+Approved common1,024-transition FROZEN-prior random-action calibration/visibility
+preflight uses roots680149923/1294557901,tag29113. It is diagnostic, not learner
+allocation. A preparation-only empty stdout JSON collision was preserved/fixed
+before any observation or seed expansion. Set B alpha/budget prospectively from
+finite norm/visibility/stability evidence, not a reward sweep.
 
 This is not complete M1B: score-winning/final evidence, online distinct-task
 acquisition/retention and the B2 scope review remain. The [completion checklist](2026-10-21-continuous-m1b-plan.md)

@@ -84,3 +84,12 @@ The original Pong head/transform remains retained. Runtime preflight exercises
 real bank growth; all preflight observations stay separate from candidate data.
 Score winning, final-stream evidence and the scoped B2 representation review
 remain outstanding; user review is required for genuinely major architecture.
+
+The [fixed-policy online-vision study](2026-10-21-online-vision-drift-results.md)
+is complete: mutable-bank integration and exact recovery work; paired skill effects
+are inconclusive without noninferiority proof. Learned banks increase inference
+cost. Next is genuine plastic-vision B acquisition plus immediate A retention,
+not another frozen Pong optimization or forecast sweep. A single frozen.35
+score-transfer study is contingent after B/retention, using both original heads,
+original prior and own initials, with total-score and own-hit-followed-win lift
+against shared controls. No opponent/reward sweep or final-root speculation.
