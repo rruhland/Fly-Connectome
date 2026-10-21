@@ -86,7 +86,7 @@ def problem(directory,monkeypatch,spec=None,index=0):
         rng_state=copy.deepcopy(rng.bit_generator.state),initial_policy_hash=study.sha(directory/'policy_at0.npy'))
     study.atomic_json(directory/'search-state.json',state)
     manifest=dict(jobs=[],phase=spec,global_generation_offset=index,input_theta_hash=state['theta_hash'],
-        input_rng_state=state['rng_state'],excluded_training_seeds=[])
+        input_rng_state=state['rng_state'],excluded_training_seeds=[],training_seed=study.TRAINING_SEED)
     study.atomic_json(directory/'manifest.json',manifest)
     samples={};reports={};calls=[]
     monkeypatch.setattr(study.engine,'sample_count',lambda directory,name:samples.get(name,0))
@@ -158,7 +158,7 @@ def test_partial_failure_and_frozen_phase_boundary_preserved(tmp_path,monkeypatc
         else:(root/name).write_text('{}')
     study.atomic_json(root/'seed-exclusions.json',dict(ids=[]))
     study.atomic_json(root/'manifest.json',dict(source={},runtime={},driver_hash='x',coordinator_hash='x',
-        started_wall_ns=999,serve_seeds=[11,12]))
+        started_wall_ns=999,serve_seeds=[11,12],training_seed=study.TRAINING_SEED))
     nextdir,nextstate,value=study.initialize_phase(root,study.PHASES[1],updated,frozen['next_rng_state'],8,frozen['frozen_wall_ns'])
     np.testing.assert_array_equal(value,updated)
     assert nextstate['rng_state']==frozen['next_rng_state']
@@ -172,7 +172,7 @@ def rally(success):
 
 
 def test_final_cohorts_own_initial_stage_and_blank_are_separate(monkeypatch):
-    jobs=study.evaluation_jobs(dict(serve_seeds=list(range(1,65))))
+    jobs=study.evaluation_jobs(dict(serve_seeds=list(range(1,65)),development_seed=study.DEV_SEED,random_action_seed=study.ACTION_SEED))
     assert len(jobs)==576 and all('first_hit_cutoff' not in j for j in jobs)
     assert all(j['weights_from']=='policy_initial.npy' for j in jobs if j['policy']=='initial_restricted')
     assert all(j['weights_from']=='policy_phase0.npy' for j in jobs if j['policy']=='phase0')

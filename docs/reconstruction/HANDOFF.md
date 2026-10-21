@@ -37,9 +37,16 @@ unchanged primary screen, own initializer and five simple controls; phase0/blank
 secondary, plus prospectively declared final-minus-owninitial. Derive its own
 phase count/RNG/global index; never hardcode this seed's5 updates/global6 carry.
 Retain any negative/partial replica; no seed hunting, inherited trained weights,
-feature/rule changes or final streams. Lean seed/registration parameterization,
-focused default-equivalence/recovery checks and source/protocol archive precede
-orchestrator launch review under existing user authorization. No new clock yet.
+feature/rule changes or final streams. The [replica protocol](2026-10-21-first-return-replication-protocol.md)
+and seed-only parameterization are reviewed; all 32 focused checks pass. Actual-T
+proof reproduces the original initializer, first directions, all 16 candidates,
+serve schedule and post-draw RNG exactly, and validates the replica's distinct
+initializer and real worker sidecar/cutoff contract without observations.
+Artifact `/workspace/m1b-experiments/pong-first-return-replication-20261021-r1/`
+contains 848 excluded IDs, immutable registration and prelaunch proof. New roots:
+training 2093651519, optimizer 837263411, DEV 1179033779/tag 29108, actions 668291057.
+Commit/archive before launch; retain the resulting original manifest clock on
+any recovery. Source then stays frozen through completion and both audits.
 
 **Completed bounded continuation:** [protocol](2026-10-21-direct-hit-continuation-protocol.md),
 source **aea715b**, artifact
