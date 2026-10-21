@@ -110,7 +110,7 @@ Five complete updates used 165,212 fitness rows; total training 199,853 includes
 20,588 unused rows and 14,053 diagnostic anchors. No partial update or best policy
 selection. Usable reward contrasts did not establish fresh endpoint improvement.
 
-Next is one fixed epsilon .02 B continuation with visual learning enabled, from
+The current allocation is one fixed epsilon .02 B continuation with visual learning enabled, from
 the same predetermined E20k head/memory as the audited .2 control. Reuse that
 control's exact training/checkpoints; new common evaluation, original competence
 gate, separate mean+cap intervention contrasts and A-retention evidence. No epsilon

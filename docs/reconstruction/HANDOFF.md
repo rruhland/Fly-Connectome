@@ -9,6 +9,15 @@ audits and evidence-based adaptation through the orchestrator. Do not end the
 research loop merely because one allocation is negative. No backprop or privileged
 policy inputs; genuinely major architecture alterations still require user review.
 
+**Currently live:** [epsilon .02 pendulum continuation](2026-10-21-pendulum-low-exploration-protocol.md),
+execution source **c36ebdd** (integrated as **dc40c48**) in the isolated
+`/workspace/Fly-Connectome-m1b-pendulum-epsilon` checkout. Artifact
+`/workspace/m1b-experiments/pendulum-low-exploration-20261021-r1`; original start
+**1792583355548584344**, exec **25486**, coordinator **113443**, training worker
+**113462**. One 20k treatment dose; .2 control training reused. Keep this execution
+checkout frozen through own and independent audits. No final streams. Candidate
+status comes from the original manifest/journals; never restart its clock.
+
 **Two independent training seeds now pass the unchanged hit-return DEV screen.**
 The [first curriculum](2026-10-21-first-return-curriculum-results.md) gave initial
 14/64 → phase0 29/64 → final 41/64 first returns, final 63/114 all returns.
@@ -130,16 +139,18 @@ own pins/optimizer/seven zero-work recoveries passed 34.55 s; independent physic
 manual optimizer and statistics passed 120.57 s. All workers exited 0; source unlocked.
 Artifacts: `/workspace/m1b-experiments/pong-native-score-search-20261021-r1`.
 
-**Next:** reviewed epsilon .02 native-survival continuation from the predetermined
+**Current allocation:** reviewed epsilon .02 native-survival continuation from the predetermined
 E20k pendulum head/memory, reusing audited .2 ON training/checkpoints as its control.
 Only epsilon changes; 20k new treatment transitions, fixed 5k/10k/final exports,
 fresh 64-state matched B evaluation, unchanged competence and paired mean/cap contrasts,
 plus A retention with explicit old development-reference reuse. Static source:
-`/workspace/Fly-Connectome-m1b-pendulum-epsilon`; no roots or clock yet. Finish
-focused zero-camera checks, resource cleanup, source/inputs and parent preclock
-review before launch. Keep old ON/OFF on_train and 64 A journals plain for reuse
-verification. Subsequent validated-child win learning is a separate reviewed
-design, not an allocated run. Do not select old midpoints or claim class failure.
+`/workspace/Fly-Connectome-m1b-pendulum-epsilon`. All 16 zero-camera checks and actual
+owned-input/reuse validation passed; parent clock-free stage check passed. Fresh
+64 states/actions are pinned, with only the old environment/exploration roots
+intentionally reused. Limits are 20 min training/30 min evaluation/50 overall.
+Keep old ON/OFF on_train and 64 A journals plain for reuse verification. Subsequent
+validated-child win learning is a separate reviewed design, not an allocated run.
+Do not select old midpoints or claim class failure.
 
 This is not complete M1B: score-winning/final evidence, online distinct-task
 acquisition/retention and the B2 scope review remain. The [completion checklist](2026-10-21-continuous-m1b-plan.md)
