@@ -12,8 +12,17 @@ integration hypothesis. Major architecture changes still require user review.
 
 Work in bounded research batches; do not revive the unrestricted overnight loop.
 Current research artifacts: `/workspace/m1b-experiments/pong-scaffold-research-20261021/`.
-No new scaffold experiment is allocated yet. The previous one-pass evaluation is
-complete; the older executed-child training allocation remains interrupted.
+The bounded first-return refinement is complete: **no detectable improvement**.
+Both policies returned34/64 first balls; lift0pp,95%CI[-4.69,+4.69]. All-return
+lift+0.39pp,CI[-5.83,+6.64]; retention inconclusive. Four complete populations,
+79,835new training transitions and33,907evaluation transitions,19.5min execution.
+Reporting-only recovery fixed a duplicate-field summary failure with no new
+observations; parent evidence check passes. See
+[refinement results](2026-10-21-interception-refinement-results.md).
+No followup allocated. Reassess search credit versus visual/motor-state sufficiency
+before another training allocation; do not automatically sweep perturbation sizes.
+The previous one-pass evaluation is complete; the older executed-child training
+allocation remains interrupted.
 
 ## Historical instructions and status (superseded by the direction above)
 
