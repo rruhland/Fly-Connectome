@@ -50,32 +50,32 @@ def fingerprint(value):
                              torch.complex128}
                 if (type(first) is torch.Tensor and first.device.type == 'cpu'
                         and first.layout == torch.strided and first.dtype in supported
-                        and first.numel() <= 64 and not first.is_conj() and not first.is_neg()
+                        and first.numel() <= 64
                         and len(obj) * first.numel() * first.element_size() <= 1048576):
                     shape, dtype = first.shape, first.dtype
-                    if all(type(x) is torch.Tensor and x.device.type == 'cpu'
-                           and x.layout == torch.strided and x.shape == shape
-                           and x.dtype == dtype and not x.is_conj() and not x.is_neg()
-                           for x in obj):
-                        nodes, fresh, payload_nodes = [], [], []
-                        for x in obj:
-                            identity = id(x)
-                            if identity in seen:
-                                nodes.append(['ref', seen[identity]])
-                            else:
-                                seen[identity] = len(seen)
-                                retained.append(x)
-                                node = ['tensor', str(dtype), list(shape), None]
-                                nodes.append(node)
-                                fresh.append(x)
-                                payload_nodes.append(node)
-                        if fresh:
+                    if all(type(x) is torch.Tensor and x.dtype == dtype for x in obj):
+                        # Stack validates shape/device/layout before any child is
+                        # assigned a graph ID. force=True retains scalar handling
+                        # of negative/conjugate and noncontiguous logical values.
+                        try:
                             with torch.no_grad():
-                                raw = torch.stack(fresh).numpy(force=True).tobytes()
+                                raw = torch.stack(tuple(obj)).numpy(force=True).tobytes()
+                        except (RuntimeError, TypeError, NotImplementedError):
+                            raw = None
+                        if raw is not None:
                             size = first.numel() * first.element_size()
-                            for index, node in enumerate(payload_nodes):
-                                node[3] = raw[index * size:(index + 1) * size]
-                        return [type(obj).__name__, nodes]
+                            dtype_text, shape_list = str(dtype), list(shape)
+                            nodes = []
+                            for index, x in enumerate(obj):
+                                identity = id(x)
+                                if identity in seen:
+                                    nodes.append(['ref', seen[identity]])
+                                else:
+                                    seen[identity] = len(seen)
+                                    retained.append(x)
+                                    nodes.append(['tensor', dtype_text, shape_list,
+                                                  raw[index * size:(index + 1) * size]])
+                            return [type(obj).__name__, nodes]
             return [type(obj).__name__, [visit(x) for x in obj]]
         if hasattr(obj, '__dict__'):
             fields = vars(obj)

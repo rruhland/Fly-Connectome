@@ -119,3 +119,24 @@ def test_bulk_noncontiguous_empty_mixed_and_subclass_fallback():
             return super().numpy(*args,**kwargs)+1
     rows=[torch.zeros(2).as_subclass(ModifiedNumpy) for _ in range(40)]
     assert fingerprint(rows)==scalar_reference(rows)
+
+
+@pytest.mark.parametrize('container',[list,tuple,deque])
+def test_bulk_stack_validation_preserves_views_nan_bytes_and_external_aliases(container):
+    bits=np.array([0,0x8000000000000000,0x7ff8000000000001,0xfff8000000000013],dtype=np.uint64)
+    rows=[torch.from_numpy(bits.view(np.float64).copy()) for _ in range(40)]
+    for values in (rows,[torch._neg_view(x) for x in rows],
+                   [torch.complex(x,x).conj() for x in rows],
+                   [x[::2] for x in rows],[x[:1].expand(3) for x in rows]):
+        obj={'first':values[0],'sequence':container(values+[values[0]]),'last':values[-1]}
+        assert fingerprint(obj)==scalar_reference(obj)
+    obj={'numpy_alias':rows[0].numpy(),'sequence':container(rows)}
+    before=fingerprint(obj);rows[0].numpy()[0]=123.
+    assert fingerprint(obj)!=before and fingerprint(obj)==scalar_reference(obj)
+
+
+def test_bulk_stack_failure_preserves_scalar_unsupported_layout_behavior():
+    rows=[torch.ones(2) for _ in range(40)]
+    rows[-1]=torch.sparse_coo_tensor(torch.tensor([[0]]),torch.tensor([1.]),(2,))
+    for function in (fingerprint,scalar_reference):
+        with pytest.raises(TypeError):function(rows)
