@@ -26,15 +26,20 @@ separate (159,842 new training-phase total). Evaluation103,900;44.25 min overall
 All263,742 physics rows, updates/RNG/anchors/geometry/statistics passed independent
 audit (209.76 s); zero-work/all1,380pins passed (8.59 s). Source is unlocked.
 
-Next approved design: implement a fresh random score-free initialization and fixed
-first-return→full-rally curriculum, no teacher/backprop.8dirs×12serves first,
-120k/24min, then8×6/80k/16min;40train/60overall including20eval. First-hit cutoff
-must be training-only, explicitly task-stopped (not a game win/termination), retain
-its last camera, validate singleepisode and recover exactly. Final fresh64 evaluates
-endpoint/owninit+five simples primary, phase-one endpoint/blank secondary, same
-screen. Detailed external design/implementation notes are in the completed artifact.
-Commit results first, then lean code/protocol/tests and orchestrator launch review;
-no new manifest clock yet. Continue under existing user authority, no final streams.
+**Next reviewed allocation, staged for launch:**
+[first-return → full-rally curriculum](2026-10-21-first-return-curriculum-protocol.md),
+artifact `/workspace/m1b-experiments/pong-first-return-curriculum-20261021-r1/`.
+Fresh score-free random initialization; 8 directions ×12 serves /120k cameras /
+24 min first-return phase, then 8×6 /80k /16 min full-rally. At most 40 min shared
+training and 60 min overall, including 20 min evaluation from the durable phase-one
+freeze. First-hit stops are training-only task boundaries, not game wins or raw
+termination; the complete hit camera is retained. Final fresh64 evaluates endpoint,
+its own initial plus five simple primary controls, phase-zero endpoint and blank
+secondary. No best-stage selection, teacher labels, backprop or final streams.
+Source/protocol/test review passed; staging has not started the real clock. See
+`launch.json` and the root manifest for actual launch/resume status once present.
+Preserve original clocks, complete pending update reconciliation and partial-draw
+skip semantics. Continue under existing user authority after its finite outcome.
 
 **Completed bounded continuation:** [protocol](2026-10-21-direct-hit-continuation-protocol.md),
 source **aea715b**, artifact

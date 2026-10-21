@@ -43,11 +43,15 @@ class FreshPongEvaluator:
     durable_kind = 'pong-evaluation-v1'
     capture_rng = LearningSession.capture_rng
 
-    def __init__(self, weights, config):
+    def __init__(self, weights, config, *, first_hit_cutoff=False):
         config.validate()
+        if type(first_hit_cutoff) is not bool or (first_hit_cutoff and config.episodes != 1):
+            raise ValueError("first-hit task requires a bool flag and exactly one episode")
         with preserve_global_rngs():
             model_bytes()
             self.config = config
+            if first_hit_cutoff:
+                self.first_hit_cutoff = True
             self.source = source_signature()
             self.model_hash, self.vision_configuration = MODEL_HASH, VISION_CONFIGURATION
             # Constructor is the first serve. Do not reset and accidentally skip it.
@@ -81,8 +85,11 @@ class FreshPongEvaluator:
         self.capture_rng()
 
     def learned_hash(self):
-        return fingerprint((self.policy.weights, frozen_tensors(self), self.vision.dynamics,
-                            self.vision.calibration,self.scaler,self.config,self.env.game.config))
+        parameters=(self.policy.weights, frozen_tensors(self), self.vision.dynamics,
+                    self.vision.calibration,self.scaler,self.config,self.env.game.config)
+        if hasattr(self,"first_hit_cutoff"):
+            parameters += (("first-own-hit-task-v1",self.first_hit_cutoff),)
+        return fingerprint(parameters)
 
     @property
     def complete(self):
@@ -147,12 +154,20 @@ class FreshPongEvaluator:
             if self.config.action_hold_frames!=1:
                 record.update(macro_choice=choice,macro_choices=self.macro_choices,
                               hold_frame=self.config.action_hold_frames-self.hold_remaining)
-            if result.terminated or result.truncated:
+            task_stopped = bool(getattr(self,"first_hit_cutoff",False) and result.hits > 0
+                                and not result.terminated and not result.truncated)
+            if getattr(self,"first_hit_cutoff",False):
+                record.update(task_stopped=task_stopped,
+                              task_stop_reason="first_own_hit" if task_stopped else None)
+            if result.terminated or result.truncated or task_stopped:
                 if self.config.action_hold_frames!=1:
                     self.hold_remaining=0;self.held_action=None
                 self.rallies.append(dict(episode=self.episodes,reward=self.episode_return,
                     seconds=self.episode_seconds,hits=self.episode_hits,
                     terminated=result.terminated,truncated=result.truncated))
+                if getattr(self,"first_hit_cutoff",False):
+                    self.rallies[-1].update(task_stopped=task_stopped,
+                        task_stop_reason="first_own_hit" if task_stopped else None)
                 self.episodes += 1
             if self.learned_hash() != self.initial_learned_hash:
                 raise RuntimeError('evaluation changed frozen policy, vision or bank state')
@@ -177,6 +192,9 @@ class FreshPongEvaluator:
             return_per_physical_second=total/self.physics_seconds if self.physics_seconds else None,
             hits=sum(r['hits'] for r in self.rallies),rallies=self.rallies.copy())
         if self.config.action_hold_frames!=1:summary['macro_choices']=self.macro_choices
+        if getattr(self,'first_hit_cutoff',False):
+            summary.update(task_stops=sum(r['task_stopped'] for r in self.rallies),
+                           task_definition='first-own-hit-task-v1')
         return summary
 
     @classmethod
@@ -185,6 +203,8 @@ class FreshPongEvaluator:
                 or session.model_hash != MODEL_HASH or session.vision_configuration != VISION_CONFIGURATION):
             raise ValueError('incompatible fresh Pong source/model/configuration')
         session.config.validate()
+        if hasattr(session,"first_hit_cutoff") and (session.first_hit_cutoff is not True or session.config.episodes != 1):
+            raise ValueError("invalid restored first-hit task")
         model_bytes()
         if session.learned_hash() != session.initial_learned_hash:
             raise ValueError('restored frozen evaluation parameters changed')
