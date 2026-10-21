@@ -62,9 +62,11 @@ then ran the approved [corrected-vision24k SARSA screen](2026-10-21-continuity-r
 first. It completed stably but failed fresh controls (11/32 first returns,
 15/45 overall versus up11/32 and14/45). The repair suppresses false continuity,
 not association ambiguity. Keep the fixed transform and all negative evidence.
-The [direct hit-return search](2026-10-21-direct-hit-policy-search-protocol.md)
-is now active at source2e20707; read HANDOFF and its durable manifest before
-continuing. Do not launch a duplicate or modify its pinned source/protocol.
+The [direct hit-return search](2026-10-21-direct-hit-policy-search-results.md)
+completed at source 2e20707: nine updates, fresh first returns 16/32 and all 21/51,
+versus strongest control 9/32 and 10/42. Positive point estimates failed the
+unchanged development screen. Read HANDOFF and the audited artifacts before
+registering the next bounded experiment; retain the original frozen outcome.
 
 Prior score-only search, its continuation and a stationary-opponent curriculum
 failed their development screens. Camera-rate hit-SARSA, full action holds and
@@ -88,10 +90,10 @@ initial policy. A promising development screen remains ≥20 percentage-point li
 on both metrics with paired serve-cluster 95% lower bounds above zero. This is
 not final acceptance or automatic M1B completion. No intermediate DEV selection.
 
-Before launch: pin new seed recipes, preserve the existing transform, implement
-variable-serve generation/fitness and generalized metrics, run narrow exact
-mapping/update/partial-generation/recovery checks, commit/archive source, and have
-the orchestrator review the launch-ready result. Inspect runtime once for a bounded
-safe optimization decision; do not let infrastructure replace learning work.
+Prelaunch work pinned new seed recipes, preserved the existing transform,
+implemented variable-serve generation/fitness and generalized metrics, ran narrow
+mapping/update/partial-generation/recovery checks, and archived committed source.
+The orchestrator reviewed the launch-ready result. A bounded GC optimization
+passed exactness/lifetime checks and was explicitly pinned; no codec change.
 After every outcome: audit, update results/ledger/handoff, choose the next bounded
 test and continue under the user's authorization.

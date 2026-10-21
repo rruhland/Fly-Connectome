@@ -16,18 +16,28 @@ about the connectome comparison. Read the
 [continuation checklist](2026-10-21-continuous-m1b-plan.md); preserve all previous
 negative evidence, task changes and untouched final streams.
 
-**ACTIVE allocation:** [direct hit-return policy search](2026-10-21-direct-hit-policy-search-protocol.md),
+**Latest allocation complete:** [direct hit-return search results](2026-10-21-direct-hit-policy-search-results.md),
 source **2e20707**, artifact
 `/workspace/m1b-experiments/pong-direct-hit-policy-search-20261021-r1/`.
-Coordinator PID2124 (session22295), four spawned workers. Keep all source and
-the pinned protocol unchanged until it exits. Six shared serves/16 candidates,
-last full generation only, max16 generations/160k cameras/35 training minutes/
-45 overall;32 fresh DEV serves/seven cohorts, including own initial readout.
-First generation:14,477 cameras,18 hits,6/8 nonzero mean contrasts; all six
-leave-one-serve-out updates nonzero and aligned. This is training-signal evidence,
-not acquisition. Read manifest/search-state/log for current progress; do not start
-a duplicate allocation. Parent independent optimizer/physics/statistics audit is
-prepared. Source archive and23 focused passing tests are retained in the artifact.
+Nine updates; 159,873 training cameras, 145,561 used and 14,312 unused partial-g09.
+Frozen endpoint first returns 16/32 and all 21/51, versus own initial 8/32 and 8/40,
+strongest simple down 9/32 and 10/42. Positive point estimates **fail the unchanged
+screen**: first lift 21.875 pp (CI −3.125 to 31.25), all lift 17.367 pp (CI 1.772 to 25.359).
+No acquisition acceptance or final holdout follows. All candidate workers exited;
+parent independent audit passed all 192,340 physics rows, nine manual updates,
+pending-draw accounting and exact bootstrap results in 152.82 s. Actual zero-work
+recovery and all 1,171 complete completion pins passed before shared-source changes.
+
+An environment restart interrupted the run. Parent resumed the same directory,
+clock and configuration; 399 committed training cameras lacked settled task-cost
+records, and 99 previously committed steps were exactly replayed. Preserve this
+accounting and unknown interrupted compute tails. Source archive and23 focused
+passing tests remain retained. The next reviewed design freezes theta9 for a fresh
+64-serve DEV confirmation against original initialization and five simple controls,
+plus a separate secondary blank-camera cohort. It adds no training or final holdout.
+Finish/pin the concrete protocol, focused checks and source before its manifest
+clock starts. Continue under existing user authorization; do not silently extend
+the completed run or request renewed user permission for ordinary experiments.
 
 **The visual continuity repair and its fixed SARSA screen are complete.** Read
 [results](2026-10-21-continuity-repair-results.md): source 570222e, 24k training,
@@ -36,7 +46,7 @@ constant up 11/32 and 14/45; no acquisition, paired intervals cross zero. Parent
 verified 50,467 physics/reward rows, 24k TD updates and all paired statistics;
 zero-work actual recovery and all 193 completion pins passed before shared-source
 changes. Full artifact: `/workspace/m1b-experiments/pong-continuity-repaired-sarsa-20261021-r1/`.
-The next approved step is now the active direct hit-return search above.
+The subsequent direct hit-return search is complete above.
 Use the approved imports-only GC initializer once per fresh spawned search worker;
 never freeze inside repeated session/chunk calls. No codec optimization was adopted.
 
@@ -50,14 +60,11 @@ Historical learning comparisons remain nonpaired. The repair preserves current
 coverage and retained forecast errors while abstaining on discontinuous histories;
 it does not solve association itself. All experiments from that screen have exited.
 
-The following approved alternative is direct hit-return policy search in the existing frozen
-DCT class: random score-free initial function-RMS .10, same mirrored rule,
-six shared fresh training serves per generation, .65 opponent, hold1 and ten-second
-rallies. Bounds: 16 full generations / 160k new training cameras / 35 training
-minutes / 45 overall. Last full generation only, never best; 32 new shared DEV
-serves compare endpoint, its own initial policy and five simple controls. Source
-implementation, narrow tests, source archive and launch-ready review remain before
-the candidate clock starts. No final holdout is authorized for adaptive tuning.
+No final holdout is authorized for adaptive tuning. The original endpoint's
+post-draw RNG records skipped global index9 and next index10. A future separately
+registered continuation must explicitly declare whether it adopts the retained
+partial population or starts after that skipped draw; no partial update occurred
+in the completed allocation.
 
 ## Previous completed camera-rate exploration comparison
 
