@@ -5,8 +5,8 @@ its unchanged development screen. On 64 fresh paired serves, first-return succes
 rose from **14/64 initially →29/64 after the first-return phase →41/64 finally**.
 Final all-incoming returns were **63/114**, versus the strongest control's 20/82.
 Independent physics/optimizer/statistics audit and actual zero-work recovery passed.
-This establishes a positive single-seed hit-return result. Independent training
-replication, winning/score-task competence and broader M1B remain open.
+This establishes a positive single-seed hit-return result. The [independent replica](2026-10-21-first-return-replication-results.md) now also
+passes; winning/score-task competence and broader M1B remain open.
 
 Source **36b05e71bd11abe175df6aa07e8fe12fa3339291**; artifact
 `/workspace/m1b-experiments/pong-first-return-curriculum-20261021-r1/`.
@@ -95,8 +95,7 @@ Audit/recovery compute is separate from candidate exposure. All earlier negative
 including the [failed same-class continuation](2026-10-21-direct-hit-continuation-results.md),
 remain retained. Source was unlocked only after both proofs passed.
 
-Next reviewed condition is **one independent from-scratch whole-procedure replica**,
-with fresh initialization/training/DEV/action roots, same class/objectives/budgets
-and unchanged screen. Retain any failure/partial; no seed replacement. No optimizer,
-area-feature or architecture change is bundled. Final streams remain untouched;
-see the [M1B completion checklist](2026-10-21-continuous-m1b-plan.md).
+The [independent whole-procedure replica](2026-10-21-first-return-replication-results.md)
+is now complete and independently verified. It retains the same class/objectives/
+budgets and fresh initialization/training/DEV/action roots. Broader three-seed/final
+validation and the [M1B checklist](2026-10-21-continuous-m1b-plan.md) remain open.

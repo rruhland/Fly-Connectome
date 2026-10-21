@@ -4,14 +4,22 @@
 
 **Continuous iteration was authorized on 2026-10-21**, superseding historical
 stop-after-negative restrictions. Read the [completion checklist](2026-10-21-continuous-m1b-plan.md).
-Latest: [first-return curriculum](2026-10-21-first-return-curriculum-results.md),
-source36b05e7. Its audited one-seed screen passes: first returns14/64 initially,
-29/64 after first-return training,41/64 finally; final63/114 all returns versus
-strongest control20/82. Primary lifts42.19pp [23.44,50.00] and30.87pp [16.23,37.51].
-Both stage comparisons improved; blanking gives no-op.199,676 training/92,013 eval
-cameras,43.34min; all291,689 rows/updates/phase boundaries/statistics independently
-audited. ONE unchanged independent whole-procedure replica is next; no final
-streams or new replica clock yet. This is not replicated acquisition or complete M1B.
+Latest: [independent whole-procedure replica](2026-10-21-first-return-replication-results.md),
+source886d05d. Two independently trained seeds now pass the unchanged return screen.
+Replica initial6/64 → phase0 37/64 → final39/64; final64/122 all returns versus
+strongest control22/85. Primary lifts35.94pp [15.63,46.88] and26.58pp [13.81,33.65].
+199,771 training/95,918 eval cameras,43.20min; all295,689 rows/ten updates/phase
+boundaries/statistics independently audited. Replica's incremental second-stage
+benefit is inconclusive. [Two-seed chart](/workspace/m1b-experiments/pong-first-return-replication-20261021-r1/replication-summary.png).
+No score wins/forecast-benefit/ongoing-feedback claim or final-stream use. The
+next reviewed diagnostic is frozen live/warm-held/warm-missing camera feedback,
+not another unregistered training extension. Broader M1B remains open.
+
+Previous: [first-return curriculum](2026-10-21-first-return-curriculum-results.md),
+source36b05e7, passed its first-seed screen:14/64 →29/64 →41/64 first returns,
+final63/114 all returns; primary lifts42.19pp and30.87pp. Both stage comparisons
+improved in that seed.199,676 training/92,013 eval cameras,43.34min, all291,689
+raw rows/updates/statistics audited. Earlier negative allocations remain below.
 
 Previous: [same-class continuation](2026-10-21-direct-hit-continuation-results.md),
 sourceaea715b. Seven new updates,159,842 training-phase cameras including anchors,

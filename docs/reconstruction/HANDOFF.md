@@ -9,44 +9,47 @@ audits and evidence-based adaptation through the orchestrator. Do not end the
 research loop merely because one allocation is negative. No backprop or privileged
 policy inputs; genuinely major architecture alterations still require user review.
 
-The first independently audited **single-seed hit-return acquisition screen now
-passes**; independent training-seed reproducibility is not yet established. This
-is not complete M1B: winning/score-task transfer, a distinct visual task,
-state/forecast comparison, online-vision drift/retention and the connectome scope
-decision remain. Read the [completion checklist](2026-10-21-continuous-m1b-plan.md).
+**Two independent training seeds now pass the unchanged hit-return DEV screen.**
+The [first curriculum](2026-10-21-first-return-curriculum-results.md) gave initial
+14/64 → phase0 29/64 → final 41/64 first returns, final 63/114 all returns.
+The [whole-procedure replica](2026-10-21-first-return-replication-results.md), source
+**886d05d**, gave **6/64 → 37/64 → 39/64**, final **64/122**. Its primary lifts
+**35.94 pp [15.63,46.88] / 26.58 pp [13.81,33.65]** pass; final-minus-owninitial
+also improves both metrics. Additional replica phase1 benefit is inconclusive;
+do not imply both stages' incremental gains were independently reproduced.
+Blanking becomes constant down (original seed: no-op), showing whole-input
+sensitivity under OOD input, not ongoing tracking or forecast benefit.
 
-**Latest audited result:** [first-return curriculum](2026-10-21-first-return-curriculum-results.md),
-source **36b05e7**, artifact
-`/workspace/m1b-experiments/pong-first-return-curriculum-20261021-r1/`.
-Fresh own initial → first-return stage → final gave **14/64 →29/64 →41/64** first
-returns on shared fresh64; all returns19/80 →40/102 →63/114. Primary max-control
-lifts42.19pp [23.44,50.00] and30.87pp [16.23,37.51] pass the unchanged screen.
-Both prespecified stage contrasts have positive paired intervals. Blank reduces
-performance to no-op; whole-input dependence, not ongoing tracking or forecast
-benefit. Opponent returned475/475 opportunities; zero wins/natural wins.
-Nine updates used178,890 of199,676 training cameras;20,786 incomplete-population
-rows unused. Evaluation92,013; total43.34min. All291,689 physics/update/RNG/phase/
-statistics checks passed independent audit225.35s; actual zero-work recovery,
-all2,085 pins and unchanged records/states/chains passed13.19s. Coordinator PID5469 /
-exec19462 exited0; no candidate workers remain. Source is unlocked.
+Replica artifact `/workspace/m1b-experiments/pong-first-return-replication-20261021-r1/`
+retains the [two-seed chart](/workspace/m1b-experiments/pong-first-return-replication-20261021-r1/replication-summary.png),
+all source/protocol/recipe pins, readouts, RNG and raw journals. Six first-return
+plus four full-rally updates used 188,389/199,771 cameras; 11,382 partial rows
+unused, next global12. Evaluation95,918; total43.20min. Parent audit221.52s verified
+all295,689 raw rows/ten updates/phase carry/statistics; own zero-work recovery and
+all2,213 pins passed10.58s. Unfinished-rally hit summaries were clarified in the
+auditor, not candidate code; raw partial hits remained durable and unused. Extra
+partial recovery passed0.314s. Coordinator PID6544 / exec56235 exited0; all candidate
+workers and audits exited. **Source is unlocked.** No final streams were expanded.
 
-**Next reviewed allocation:** ONE independent fresh-initialization/training-seed
-replica of the ENTIRE procedure, same first-return120k/24min/12 serves then full-
-rally80k/16min/6 serves,40min train/60overall with20eval. New roots and64 fresh DEV;
-unchanged primary screen, own initializer and five simple controls; phase0/blank
-secondary, plus prospectively declared final-minus-owninitial. Derive its own
-phase count/RNG/global index; never hardcode this seed's5 updates/global6 carry.
-Retain any negative/partial replica; no seed hunting, inherited trained weights,
-feature/rule changes or final streams. The [replica protocol](2026-10-21-first-return-replication-protocol.md)
-and seed-only parameterization are reviewed; all 32 focused checks pass. Actual-T
-proof reproduces the original initializer, first directions, all 16 candidates,
-serve schedule and post-draw RNG exactly, and validates the replica's distinct
-initializer and real worker sidecar/cutoff contract without observations.
-Artifact `/workspace/m1b-experiments/pong-first-return-replication-20261021-r1/`
-contains 848 excluded IDs, immutable registration and prelaunch proof. New roots:
-training 2093651519, optimizer 837263411, DEV 1179033779/tag 29108, actions 668291057.
-Commit/archive before launch; retain the resulting original manifest clock on
-any recovery. Source then stays frozen through completion and both audits.
+**Next reviewed small allocation:** frozen live/warm-held/warm-missing feedback
+comparison of BOTH verified final endpoints, regardless relative score. New32
+paired serves, three modes, 12 rollout/15 overall minutes; honest missingness,
+fixed20-observation warmup including initial, no updates or policy selection.
+External `FEEDBACK-PROTOCOL-DRAFT.md` in the replica artifact is reviewed; implementation,
+focused prefix/reset/recovery tests, protocol/source pins and parent code review
+precede launch. No feedback clock/stream has started. A third unchanged full seed
+plus a state-only comparison is a later prospective direction, not allocated.
+A separate worktree rooted at886d05d can preserve strict same-source provenance
+if optional feedback code changes the main evaluator. No major architecture change.
+
+This is not complete M1B: third-seed/final evidence, winning/score-task transfer,
+a distinct visual task, state/forecast comparison, online-vision drift/retention
+and the connectome scope decision remain. See the [completion checklist](2026-10-21-continuous-m1b-plan.md).
+
+Cold storage: the completed `pong-score-policy-search-continuation-20261016-r1`
+DBs are now byte-verified `.db.zst` archives; metadata/readouts/source stay plain.
+Its `RESTORE-JOURNALS.md`, hash manifest and `restore-cold-journals.py` provide exact
+reconstruction before historical raw-journal audits. No live journals were removed.
 
 **Completed bounded continuation:** [protocol](2026-10-21-direct-hit-continuation-protocol.md),
 source **aea715b**, artifact

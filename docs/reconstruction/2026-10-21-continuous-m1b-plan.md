@@ -51,17 +51,29 @@ passing unit tests full M1B completion.
   uncertainty mechanism is demonstrated. Passive forecasts are not a learned
   action-conditioned simulator. Do not start a large latent-model rewrite by habit.
 
-## Current next experiment
+## Current evidence and next experiment
 
-The [first-return curriculum](2026-10-21-first-return-curriculum-results.md)
-passed its audited single-seed screen: initial14/64 →phase0 29/64 →final41/64 first
-returns, final63/114 all returns, both stage contrasts positive. It is a component
-acquisition result; the reproducibility checkbox above remains open. No winning,
-forecast-benefit or ongoing visual-feedback claim follows from blanking.
+The [first curriculum](2026-10-21-first-return-curriculum-results.md) and
+[independent whole-procedure replica](2026-10-21-first-return-replication-results.md)
+both pass the unchanged return screen. Fresh initial → final first returns were
+14/64 →41/64 and6/64 →39/64; final all-return fractions63/114 and64/122.
+All physics/optimizer/phase/statistics and actual zero-work recovery checks passed.
+This is two-seed reward-based return acquisition, not three-seed/final evidence,
+score winning or complete M1B. Incremental second-stage benefit is inconclusive
+in the replica; whole-procedure gains do not prove either stage necessary.
 
-Next is ONE independent from-scratch replication of the entire fixed120k/80k
-procedure, unchanged rule/features/objectives/budgets and screen, with new optimizer,
-training, DEV and action roots. Retain every negative/partial outcome; no seed
-replacement or best-stage selection. Source parameterization must preserve the
-original recipe and derive phase carry from each seed's own frozen state. Further
-independent seeds/final acceptance remain prospective; final streams are untouched.
+Next reviewed small allocation tests BOTH frozen endpoints under live versus
+warm-held versus honestly missing camera input on32 new paired serves. Fixed20
+observations including initial, no updates/selection, 12 rollout/15 overall minutes.
+Report fixed-policy-set paired effects and OOD/missing-bias limits; do not infer
+forecast benefit from this intervention. Implement/review/pin only after source
+unlock, now granted. No feedback clock or stream expansion yet.
+
+Subsequent design direction: a third unchanged full-condition seed may also form
+the full arm of a prospective state-only comparison, retaining the successful T
+and original score-free calibration for both fits. State-only mapped weights
+must have exactly zero raw forecast coefficients; report conditioning/rank and
+partially paired training streams. A separate old-core worktree preserves strict
+source provenance after feedback additions. Roots, budgets and criteria remain
+prospective. No final streams or genuinely major architecture changes authorized
+by implication; user review is still required for the latter.
