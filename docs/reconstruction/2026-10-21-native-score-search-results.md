@@ -77,6 +77,14 @@ Artifacts and both proofs:
 - [Cached training diagnostics](/workspace/m1b-experiments/native-score-training-signal-20261021/)
 - [Cumulative ledger](/workspace/m1b-experiments/cumulative-research-ledger-20261016.json)
 
+After both audits, 1,755 journals were archived losslessly: 5,190,774,784 bytes to
+686,729,387 bytes in 58.908 s, with every reconstructed original SHA verified
+before removal. Empty WAL/SHM bytes were preserved separately; main DB hashes did
+not change. Metadata/readouts/source remain plain. The artifact's
+[restore instructions](/workspace/m1b-experiments/pong-native-score-search-20261021-r1/JOURNAL-RESTORE.md)
+and per-file manifest preserve full raw-audit recoverability. No candidate clock
+overlapped storage work.
+
 Next is the reviewed epsilon .02 pendulum intervention with its audited .2 control
 reused, unchanged competence gate and fresh matched evaluation. A subsequent Pong
 proposal uses actually executed children and fresh training validation, rather
