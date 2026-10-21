@@ -58,15 +58,17 @@ all544,689 distinct candidate rows. Both coordinators/workers exited0. Source is
 unlocked; final roots remain unexpanded. Hot/cold journal restoration manifests
 preserve byte-exact raw evidence.
 
-**Next approved allocation, staging without clock:** fixed-policy persistent-vision
+**Persistent-vision allocation LIVE:** fixed-policy persistent-vision
 A→A integration/drift, using BOTH earlier qualified FULL endpoints. Existing
 visual learner only; no actor updates/backprop/new privileged inputs. Per policy
 2k learning-camera exposure, BEFORE/AFTER frozen probes on64 shared fresh serves,
 then separate2k prequential cameras. Explicit inherited/current learning counts,
 partial-final-rally truth and per-camera mutable-memory recovery are tested.
 Reviewed caps exposure240/probes1140/prequential240/scoring180, total1800s;
-roots1793074213/1360749281/927415613,tag29112,bootstrap170953167. No clock until
-source/archive/input pins and parent storage clearance. Implementation is in
+roots1793074213/1360749281/927415613,tag29112,bootstrap170953167. Started after source/archive/input pins and parent storage clearance. Coordinator
+PID78086 / exec1956, original clock1792569076660360919, launch sourcecf163cd.
+Artifact `/workspace/m1b-experiments/pong-online-vision-drift-20261021-r1`. Its
+source is frozen through own and parent post-run audits. Implementation is in
 isolated `/workspace/Fly-Connectome-m1b-online-vision`, baseline98fa9a0 plus validated
 follow-up. Focused30tests passed34.65s; actual-policy archived prefix bridge passed;
 bank-growth preflight reached2k/2010learning images in93.63s. Those diagnostic
