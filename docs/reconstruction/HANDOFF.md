@@ -84,13 +84,20 @@ source **2055109** (integrated unchanged into main). Complete115,941 transitions
 nine-zero-work recovery verification passed24.80s; independent all-physics/mapping/
 statistics audit passed29.76s. Exec1380/PID79135 and all workers/audits exited0;
 source unlocked. The separate128+1-image profile matched every old record/state/chain;
-fingerprinting dominates, not encoder copying. No speedup claim or final streams.
+fingerprinting dominates, not encoder copying. A subsequent byte-equivalent
+[bulk guard optimization](2026-10-21-hash-guard-runtime-results.md), source75dce69,
+reduced one warmed saved-prefix loop by23.8%; this is not a universal speed claim.
+All512 benchmark record/state/chain rows remained exact. No final streams used.
 
-**Next:** implement the agreed ONE frozen.35 score-transfer study using both original
+**Next sealed allocation:** ONE frozen.35 score-transfer study using both original
 qualified Pong heads/priors,64 fresh shared serves, nine cohorts,10s horizon/20min
 overall. No retraining/opponent sweep. Each policy must gain>=10pp in total wins AND
 own-hit-followed wins over the respective strongest seven controls, both CI lower
-bounds>0. Roots remain unallocated until prospective registration. Then prepare
+bounds>0. [Protocol](2026-10-21-pong-score-transfer-protocol.md), staged artifact
+`/workspace/m1b-experiments/pong-score-transfer-20261021-r1`; roots1492093789 /
+836917243, tag29115, bootstrap1236702941 are approved and64 serves are registered
+against1,848 prior IDs. Source/inputs are sealed before the launch clock; both
+qualified-policy default prefixes and35 focused checks pass. Then prepare
 reviewed new-episode B training from predetermined experienced20k theta/memory,
 traces reset/new paired roots, plastic versus frozen vision; no full-session source
 validation bypass. B stability, final evidence and B2 scope review remain open.
