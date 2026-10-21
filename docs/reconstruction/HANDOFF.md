@@ -1,6 +1,44 @@
-# Fly-Connectome M1B handoff — sustained-exploration comparison completed
+# Fly-Connectome M1B handoff — continuous iteration authorized 2026-10-21
 
-## Current resume state: camera-rate exploration comparison
+## Current authority: continue until M1B is complete or the user stops
+
+On **2026-10-21** the user explicitly authorized continuous research and execution.
+The historical no-further-allocation / stop-after-negative language below is
+**superseded**. Continue bounded, prospectively registered allocations, independent
+audits and evidence-based adaptation through the orchestrator. Do not end the
+research loop merely because one allocation is negative. No backprop or privileged
+policy inputs; genuinely major architecture alterations still require user review.
+
+No genuine Pong acquisition has yet been established. A hit-return proof of
+concept is not complete M1B: the roadmap also requires a distinct visual task,
+state/forecast comparison, online-vision drift/retention and an explicit decision
+about the connectome comparison. Read the
+[continuation checklist](2026-10-21-continuous-m1b-plan.md); preserve all previous
+negative evidence, task changes and untouched final streams.
+
+**Launch is currently held for a generic visual continuity repair.** Saved-action
+replay established that a beam slot can alternate selected lineages while one
+public ID fabricates velocity and forecast differences across distant objects.
+The approved repair revises routing IDs on a selected-parent endpoint/time break,
+clears slot context and retires old forecast credit, preserving the beam and normal
+occlusion. Read the [repair protocol](2026-10-21-continuity-repair-protocol.md).
+After validation, the next approved bounded attempt is one corrected-vision
+independent SARSA run: historical seed/config736187003,24k hit-only camera updates,
+fresh32 serves and five matched simple/own-zero-init controls;20 training minutes,
+30 overall. Historical learning comparisons are nonpaired. No experiment has
+started yet; source tests, independent replay/compatibility checks and archive
+must pass before manifest creation.
+
+The following approved alternative is direct hit-return policy search in the existing frozen
+DCT class: random score-free initial function-RMS .10, same mirrored rule,
+six shared fresh training serves per generation, .65 opponent, hold1 and ten-second
+rallies. Bounds: 16 full generations / 160k new training cameras / 35 training
+minutes / 45 overall. Last full generation only, never best; 32 new shared DEV
+serves compare endpoint, its own initial policy and five simple controls. Source
+implementation, narrow tests, source archive and launch-ready review remain before
+the candidate clock starts. No final holdout is authorized for adaptive tuning.
+
+## Previous completed camera-rate exploration comparison
 
 The user revised the next step toward genuine reward learning, rather than an
 online teacher diagnostic. The approved sustained-exploration study is complete.

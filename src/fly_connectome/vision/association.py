@@ -1,4 +1,4 @@
-"""Statistical association beams; unchanged from the approved visual candidate."""
+"""Statistical association beams with explicit selected-lineage continuity."""
 import math
 import torch
 import torch.nn.functional as F
@@ -72,13 +72,20 @@ class EvidenceTracker(GenericMultiTracker):
                        key=lambda i: not self.slots[i]['confirmed'])
         for index in order:
             slot = self.slots[index]
+            slot['lineage_discontinuity'] = False
             branches = []
             for history in slot['hypotheses']:
                 age = self.frame-history['last_seen']
                 if age > (64 if slot['confirmed'] else 2):
                     continue
+                # A beam slot can publish a different ancestral hypothesis on
+                # its next sample. Its routing identity must not imply that
+                # the two published endpoints belong to one motion history.
+                parent_is_selected = (history['last_seen'] == slot['last_seen']
+                                      and torch.equal(history['position'], slot['position']))
                 branches.append({**history, 'score': history['score']-2.,
-                                 'proposal': None})
+                                 'proposal': None,
+                                 '_parent_is_selected': parent_is_selected})
                 expected = history['position']+age*history['velocity']
                 for p, (position, mass) in enumerate(proposals):
                     if p in claimed or mass < .5*history['mass']:
@@ -97,6 +104,7 @@ class EvidenceTracker(GenericMultiTracker):
                         last_seen=self.frame, mass=mass,
                         hits=history['hits']+1,
                         score=history['score']-cost, proposal=p,
+                        _parent_is_selected=parent_is_selected,
                         **self.motion_metadata(history, velocity)))
             if not branches:
                 slot['hypotheses'] = []
@@ -108,6 +116,9 @@ class EvidenceTracker(GenericMultiTracker):
             for branch in beam:
                 branch['score'] -= normalizer
             best = beam[0]
+            slot['lineage_discontinuity'] = not best['_parent_is_selected']
+            for branch in beam:
+                del branch['_parent_is_selected']
             slot.update({key: best[key] for key in
                          ('position', 'velocity', 'last_seen', 'mass')})
             slot['confirmed'] = slot['confirmed'] or best['hits'] >= 3
@@ -120,6 +131,7 @@ class EvidenceTracker(GenericMultiTracker):
                                last_seen=self.frame, mass=mass, hits=1,
                                score=0., proposal=p)
                 self.slots.append({**history, 'confirmed': False,
+                                   'lineage_discontinuity': False,
                                    'hypotheses': [history]})
 
 

@@ -85,17 +85,20 @@ def aggregate(rallies):
         post_own_opponent_returns=sum(r['post_own_opponent_returns'] for r in rallies))
 
 def paired_evidence(by_policy,*,draws=10000,seed=193870291,
-                    arms=('hold1','hold10'),comparison=None):
+                    arms=('hold1','hold10'),comparison=None,expected_serves=24,
+                    controls=('initial','up','noop','random1','random10')):
     """Paired serve resampling; contacts within a serve are never independent."""
-    controls=('initial','up','noop','random1','random10');names=(*arms,*controls)
-    if any(len(by_policy.get(n,[]))!=24 for n in names):return dict(complete=False)
-    for i in range(24):
+    names=(*arms,*controls)
+    if not controls or type(expected_serves) is not int or expected_serves<1:
+        raise ValueError('positive serve count and nonempty matched controls required')
+    if any(len(by_policy.get(n,[]))!=expected_serves for n in names):return dict(complete=False)
+    for i in range(expected_serves):
         signatures=[]
         for name in names:
             first=by_policy[name][i]['first_incoming']
             signatures.append(None if first is None else {k:v for k,v in first.items() if k!='success'})
         if any(s!=signatures[0] for s in signatures[1:]):raise ValueError('first incoming trajectory differs before own contact')
-    index=np.random.default_rng(seed).integers(24,size=(draws,24));rates={};initial={};points={}
+    index=np.random.default_rng(seed).integers(expected_serves,size=(draws,expected_serves));rates={};initial={};points={}
     for name in names:
         data=by_policy[name];hits=np.array([r['own_returns'] for r in data]);opp=np.array([r['own_opportunities'] for r in data])
         present=np.array([r['first_incoming'] is not None for r in data]);first=np.array([bool(r['first_incoming'] and r['first_incoming']['success']) for r in data])
@@ -104,7 +107,7 @@ def paired_evidence(by_policy,*,draws=10000,seed=193870291,
             initial[name]=first[index].sum(1)/present[index].sum(1)
         points[name]=dict(all=hits.sum()/opp.sum() if opp.sum() else None,
                           first=first.sum()/present.sum() if present.sum() else None)
-    report=dict(complete=True,serve_clusters=24,bootstrap_draws=draws,bootstrap_seed=seed,
+    report=dict(complete=True,serve_clusters=expected_serves,bootstrap_draws=draws,bootstrap_seed=seed,
         first_incoming_geometry_identical=True,arms={})
     if any(v is None for p in points.values() for v in p.values()):
         report.update(analyzable=False,reason='a complete policy cohort has no incoming opportunities')

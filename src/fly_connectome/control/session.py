@@ -17,7 +17,8 @@ from .sarsa import TrueOnlineSarsa
 from .scaling import make_policy_transform,policy_features
 
 MODEL_HASH = 'a899338c94278854dc9a790c21e3cba746658abb7ac91fc3f85c84754f253173'
-VISION_CONFIGURATION = 'load_default:legacy-v1+upgrade_temporal_context:consensus-v3:64x64'
+VISION_CONFIGURATION = ('load_default:legacy-v1+upgrade_temporal_context:consensus-v3:64x64'
+                        '+selected-lineage-continuity-v1')
 
 
 def model_bytes():

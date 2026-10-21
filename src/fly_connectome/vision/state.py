@@ -92,10 +92,22 @@ class StreamingVisualState:
                               motion, self.trace, events))
         field = self.state.step(sensory, learn=learn, observation_available=available)
         tracker = self.state.tracker
+        retired = set()
         for slot in tracker.slots:
+            if slot.get('lineage_discontinuity', False) and 'public_id' in slot:
+                retired.add(slot.pop('public_id'))
             if 'public_id' not in slot:
                 slot['public_id'] = self.next_id
                 self.next_id += 1
+        if retired:
+            # A changed MAP lineage is identity uncertainty, not evidence that
+            # an earlier forecast failed to reidentify its original object.
+            self.histories = {key: value for key, value in self.histories.items()
+                              if key not in retired}
+            self.forecast_cache = {key: value for key, value in self.forecast_cache.items()
+                                   if key[0] not in retired}
+            self.pending = {sample: retained for sample, items in self.pending.items()
+                            if (retained := [item for item in items if item[0] not in retired])}
         entities = []
         observed = {}
         for entity in self.state.entities:

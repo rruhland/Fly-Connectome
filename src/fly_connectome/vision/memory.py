@@ -59,6 +59,11 @@ class AssociativePatchState:
                   for s in self.tracker.slots]
         self.tracker.step(sensory, observation_available=observation_available)
         for index, slot in enumerate(self.tracker.slots):
+            if slot.get('lineage_discontinuity', False):
+                # Context and endpoint credit belong to the selected lineage,
+                # not to the beam's reusable storage slot.
+                self.keys.pop(index, None)
+                self.confidence.pop(index, None)
             if slot['last_seen'] != self.tracker.frame:
                 continue
             if learn and index < len(before) and index in self.keys:
