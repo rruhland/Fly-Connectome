@@ -4,6 +4,10 @@
 
 **Continuous iteration was authorized on 2026-10-21**, superseding historical
 stop-after-negative restrictions. Read the [completion checklist](2026-10-21-continuous-m1b-plan.md).
+Active: [fixed hit-return continuation](2026-10-21-direct-hit-continuation-protocol.md)
+from theta9, source aea715b. Max 160k new total training-phase cameras including
+fixed diagnostic anchors; fresh64 serves compare the endpoint with original
+initialization/simple controls, theta9 and blank. No outcome or final holdout yet.
 Latest: [fresh frozen-policy confirmation](2026-10-21-frozen-hit-confirmation-results.md).
 Theta9 returns 34/64 first balls and 48/106 overall versus original theta0 27/64
 and 34/95. Primary lifts +10.94/+9.49 pp have intervals crossing zero and fail the

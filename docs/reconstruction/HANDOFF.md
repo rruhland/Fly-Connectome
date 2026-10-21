@@ -16,10 +16,31 @@ about the connectome comparison. Read the
 [continuation checklist](2026-10-21-continuous-m1b-plan.md); preserve all previous
 negative evidence, task changes and untouched final streams.
 
+**Active bounded continuation:** [protocol](2026-10-21-direct-hit-continuation-protocol.md),
+source **aea715b**, artifact
+`/workspace/m1b-experiments/pong-direct-hit-continuation-20261021-r1/`.
+Coordinator PID 3990 / exec session 55045, four spawned workers; consult the
+original manifest clock and durable journals before resuming after any restart.
+Starts exact theta9, skips unused g09, first global draw 10. Same hit-only rule,
+frozen vision/T/cap/.65 opponent. Max 16 new updates /160k TOTAL fitness+anchors /
+35 training minutes; fresh64 nine-cohort evaluation, 20 evaluation /55 overall
+minutes. Pre-update center/theta9 anchors are pinned every even global draw and
+executed after the learning update; never fitness or checkpoint selection.
+Original theta0 plus five simples remain primary; theta9 and blank are secondary.
+Extra-learning evidence requires positive lower bounds against theta9 on both
+return metrics, independently of primary qualification. No final streams.
+All 23 focused checks and actual staged mapping/sidecar/resume proofs passed;
+source/protocol/archive/seed exclusions are pinned. See `launch.json` and
+`prelaunch-proof.json`. Complete pending fitness is reconciled before a restart's
+budget check, persistent failures disqualify, and every original deadline remains.
+Do not alter live source/protocol or launch a duplicate. Parent owns independent
+optimizer/physics/anchor/bootstrap audit. Continue after this bounded outcome
+under the existing user authorization; no automatic stop after a negative.
+
 **Frozen confirmation complete:** [results](2026-10-21-frozen-hit-confirmation-results.md),
 source **5c9e219**, artifact
 `/workspace/m1b-experiments/pong-frozen-hit-confirmation-20261021-r1/`.
-No candidate workers remain. Theta9 first returns 34/64 and all 48/106 versus
+That allocation's candidate workers exited. Theta9 first returns 34/64 and all 48/106 versus
 original theta0 27/64 and 34/95. Primary lifts +10.94/+9.49 pp have intervals
 crossing zero and fail the unchanged screen. Secondary full-minus-blank lifts
 +31.25/+25.03 pp have positive intervals: whole-input dependence, not established
@@ -29,15 +50,8 @@ audit (69.56 s); actual zero-work recovery/all 512 pins passed (2.65 s).
 The zero-camera startup sidecar repair retained the original clock/serves/weights.
 Nine distinct focused checks and both immutable source archives are retained.
 
-Next reviewed design: same-class continuation from theta9, skip unused g09 and
-start global10 with its retained post-draw RNG. Max 16 new updates/160k TOTAL
-fitness+diagnostic cameras/35 training minutes, 20 evaluation minutes/55 overall.
-Every second generation pins pre-update current-center/theta9 paired anchors
-before fitness and executes them after the learning update. They never enter
-fitness/selection. Fresh 64 DEV: original initialization and five simples primary;
-theta9 and new-endpoint blank secondary. Finish concrete protocol/code/checks,
-commit/archive and orchestrator review before launch. No final holdout or seed
-replication yet; continuous user authorization remains in force.
+The reviewed continuation is active above. No final holdout or seed replication
+yet; continuous user authorization remains in force.
 
 **Latest allocation complete:** [direct hit-return search results](2026-10-21-direct-hit-policy-search-results.md),
 source **2e20707**, artifact
