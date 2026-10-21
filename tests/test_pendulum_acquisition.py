@@ -17,7 +17,9 @@ from fly_connectome.control.session import source_signature,MODEL_HASH,VISION_CO
 from fly_connectome.vision import load_default,VisualStateEncoder
 
 
-def test_seed_and_training_contract_is_independent_and_deterministic():
+def test_seed_and_training_contract_is_independent_and_deterministic(monkeypatch):
+    monkeypatch.setattr(study,'ROOTS',dict(environment=104729,learner=104743,development=104759,control_actions=104761))
+    monkeypatch.setattr(study,'TAG',104773)
     schedule=study.schedule([])
     assert len(set(schedule['development']))==64 and schedule==study.schedule([])
     assert not set(schedule['development'])&set(study.FINAL_SEEDS)
