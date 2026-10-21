@@ -124,9 +124,13 @@ class DurableRun:
             from .toy_session import ToySession
             from .pong_evaluation import FreshPongEvaluator
             from .online_vision import PersistentVisionSession
+            from .pendulum_session import PendulumLearningSession
+            from .pendulum_evaluation import FreshPendulumEvaluator
             classes = {'pong-learning-v1':LearningSession,'toy-session-v1':ToySession,
                        'pong-evaluation-v1':FreshPongEvaluator,
-                       'pong-persistent-vision-v1':PersistentVisionSession}
+                       'pong-persistent-vision-v1':PersistentVisionSession,
+                       'pendulum-learning-v1':PendulumLearningSession,
+                       'pendulum-evaluation-v1':FreshPendulumEvaluator}
             if session_kind not in classes:
                 raise ValueError('unsupported session kind')
             self.session = classes[session_kind].validate_restored(self.codec.loads(payload))
