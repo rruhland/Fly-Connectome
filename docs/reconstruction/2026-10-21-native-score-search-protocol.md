@@ -1,8 +1,9 @@
-# Native-score adaptation at one fixed opponent — prospective draft
+# Native-score adaptation at one fixed opponent
 
-This allocation is not yet launched. The current pendulum ON/OFF study and both
-integrity audits must finish before registration. The driver retains an explicit
-draft guard. No candidate training or development roots have been expanded.
+This protocol is frozen before candidate registration. The pendulum ON/OFF study
+and both integrity audits have finished. Passing current-source prelaunch evidence
+is required; clock-free staging expands the declared fresh cohort exactly once.
+The supervised budget clock starts separately at launch, not during preparation.
 
 ## Question and fixed starting policy
 
@@ -42,8 +43,10 @@ equivariant to positive score scaling; numerical checks use explicit tolerances,
 not a claim of byte equality after floating-point rescaling. The smaller local
 step may be slow in a finite run; it is fixed before reward observations.
 
-Stop at the first of twelve complete populations, **200,000 total new training-phase
-cameras including anchors**, or 40 minutes training. Require at least three complete
+Stop at the first of twelve complete populations, **200,000 new transition-camera
+observations across fitness and anchors**, or 40 minutes training. Episode initial
+images are reported separately and are additional to that transition cap.
+Require at least three complete
 populations, including legitimate zero updates, for a valid endpoint. Use four
 single-threaded workers and the existing once-per-process imports-only GC freeze.
 No intermediate DEV evaluation, best checkpoint, replacement seed, hidden bonus

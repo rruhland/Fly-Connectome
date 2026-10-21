@@ -116,7 +116,11 @@ def test_action_ids_and_fresh_roots_are_excluded_from_training(tmp_path,monkeypa
     actual=study.schedule([])
     assert len(set(actual['serves']))==len(set(actual['control_actions']))==64
     assert not set(actual['serves'])&set(actual['control_actions'])
-    assert study.transfer.collect_seed_ids({'control_action_seeds':[2**31+59]})=={2**31+59}
+    metadata=tmp_path/'metadata';metadata.mkdir()
+    study.atomic_json(metadata/'manifest.json',dict(control_action_seeds=[2**31+59]))
+    destination=tmp_path/'exclusion-proof';destination.mkdir()
+    study.transfer.snapshot_exclusions(destination,metadata)
+    assert 2**31+59 in json.loads((destination/'seed-exclusions.json').read_text())['ids']
     with pytest.raises(ValueError):study.schedule([study.DEV_SEED])
 
 

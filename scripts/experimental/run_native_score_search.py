@@ -12,7 +12,7 @@ from return_metrics import aggregate
 
 ROOT=Path(__file__).resolve().parents[2]
 PROTOCOL=ROOT/'docs/reconstruction/2026-10-21-native-score-search-protocol.md'
-DRAFT_ONLY=True
+DRAFT_ONLY=False
 TRAINING_SEED=1374860291;OPTIMIZER_SEED=1009827637
 DEV_SEED=1826405731;ACTION_SEED=593170827;BOOTSTRAP=1529704139;TAG=29117
 TRAIN_CAMERAS=200000;TRAIN_SECONDS=2400.;EVAL_SECONDS=900.;TOTAL_SECONDS=3300.
@@ -129,6 +129,7 @@ def prepare(directory):
         training_wall_seconds=TRAIN_SECONDS,evaluation_wall_seconds=EVAL_SECONDS,total_wall_seconds=TOTAL_SECONDS,
         evaluation_camera_cap=EVAL_CAMERAS,maximum_new_updates=MAX_UPDATES,minimum_complete_populations=MIN_UPDATES,
         training_serves=TRAIN_SERVES,noise_ratio=NOISE_RATIO,step_ratio=STEP_RATIO,fitness='terminal positive score indicator',
+        directions=8,top_directions=4,opponent_speed=.35,hold=1,max_episode_ticks=1200,
         primary_controls=list(CONTROLS),workers=4,gc_worker_mode=prior.GC_WORKER_MODE,
         anchor_cadence='even local generations; pre-update center and fixed acquired start',
         reserved_final_seeds=list(engine.FINAL))
@@ -350,12 +351,15 @@ def supervise(directory):
             partial_receipt_caveat='Initial/encoded counts use retained receipts; journal transition counts are authoritative')
         retained=outcome_evidence(directory,current_manifest)
         elapsed=time.time()-start;eval_elapsed=time.time()-eval_start
-        within=elapsed<=TOTAL_SECONDS and eval_elapsed<=EVAL_SECONDS
+        train_elapsed=frozen['frozen_wall_ns']/1e9-start;train_within=train_elapsed<=TRAIN_SECONDS
+        within=elapsed<=TOTAL_SECONDS and eval_elapsed<=EVAL_SECONDS and train_within
         valid=bool(frozen['valid'] and not frozen['anchor_failure'] and evaluated['complete'] and not evaluated['failed']
             and within and paired.get('complete',False))
         summary=dict(status='complete' if valid else 'partial',evidence_eligible=valid,counts=actual,logical_compute=logical,training_endpoint=frozen,
             evaluation=evaluated,groups=groups,paired_score_evidence=paired,qualifies=valid and paired.get('qualifies',False),
-            wall_seconds=elapsed,evaluation_wall_seconds=eval_elapsed,overall_budget_met=within,
+            wall_seconds=elapsed,training_wall_seconds=train_elapsed,training_budget_met=train_within,
+            evaluation_wall_seconds=eval_elapsed,evaluation_budget_met=eval_elapsed<=EVAL_SECONDS,
+            overall_budget_met=elapsed<=TOTAL_SECONDS,
             selected_checkpoint=f"policy_at{state['completed_updates']}.npy",selection='last complete population; anchors never select',
             scope='One warm-start native-score adaptation; no independent replication or completed M1B',final_streams_expanded=False)
         atomic_json(directory/'study-completion.json',dict(summary=summary,evidence=retained))
