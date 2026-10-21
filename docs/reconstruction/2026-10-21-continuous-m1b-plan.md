@@ -53,6 +53,16 @@ passing unit tests full M1B completion.
 
 ## Current next experiment
 
+The [same-class continuation](2026-10-21-direct-hit-continuation-results.md)
+completed without extra-learning evidence: new endpoint35/64 first returns versus
+theta9 37/64 and original initialization32/64. No M1B acquisition qualification.
+Next reviewed design is fresh-start first-return→full-rally reward learning,
+8directions×12serves/120k first-phase cameras then8×6/80k full-rally, fixed40min
+training/60overall. Preserve raw physical termination/score under the explicit
+training-only first-hit task stop. Final evaluation includes the fixed phase-one
+checkpoint as secondary, never a best-stage selection. Protocol/source/tests must
+be reviewed and archived before its clock starts; no final streams are allocated.
+
 The initial policy-search launch was held after exact saved-action replay exposed
 a selected-lineage continuity defect: the encoder differenced positions from
 different beam hypotheses under one routing ID. A generic, prospectively versioned

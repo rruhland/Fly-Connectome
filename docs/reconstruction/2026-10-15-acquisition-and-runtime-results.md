@@ -4,11 +4,15 @@
 
 **Continuous iteration was authorized on 2026-10-21**, superseding historical
 stop-after-negative restrictions. Read the [completion checklist](2026-10-21-continuous-m1b-plan.md).
-Active: [fixed hit-return continuation](2026-10-21-direct-hit-continuation-protocol.md)
-from theta9, source aea715b. Max 160k new total training-phase cameras including
-fixed diagnostic anchors; fresh64 serves compare the endpoint with original
-initialization/simple controls, theta9 and blank. No outcome or final holdout yet.
-Latest: [fresh frozen-policy confirmation](2026-10-21-frozen-hit-confirmation-results.md).
+Latest: [same-class continuation](2026-10-21-direct-hit-continuation-results.md),
+source aea715b. Seven new updates,159,842 training-phase cameras including anchors,
+103,900 evaluation cameras. First35/64 versus owninit32/64 andtheta9 37/64; all
+48/105 versus42/103 and48/107. Primary and extra-learning screens failed; blank
+input reduces performance. All263,742 rows/optimizer/anchors/statistics audited.
+Next is a prospectively registered fresh-start first-return/full-rally curriculum;
+no final streams or new allocation clock yet.
+
+Previous: [fresh frozen-policy confirmation](2026-10-21-frozen-hit-confirmation-results.md).
 Theta9 returns 34/64 first balls and 48/106 overall versus original theta0 27/64
 and 34/95. Primary lifts +10.94/+9.49 pp have intervals crossing zero and fail the
 unchanged screen. Secondary blanking drops performance by +31.25/+25.03 pp,

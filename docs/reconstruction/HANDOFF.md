@@ -16,10 +16,30 @@ about the connectome comparison. Read the
 [continuation checklist](2026-10-21-continuous-m1b-plan.md); preserve all previous
 negative evidence, task changes and untouched final streams.
 
-**Active bounded continuation:** [protocol](2026-10-21-direct-hit-continuation-protocol.md),
+**Latest audited result:** [same-class continuation](2026-10-21-direct-hit-continuation-results.md)
+completed at source **aea715b**, no candidate workers remain. New endpoint35/64
+first returns and48/105 overall versus original initial32/64 and42/103; primary
+screen failed. Inherited theta9 achieved37/64 and48/107; no extra-learning evidence.
+Blanking reduced performance but proves only whole-input dependence. Seven new
+updates used131,983 fitness cameras;18,885 partial-g17 and8,974 anchors remain
+separate (159,842 new training-phase total). Evaluation103,900;44.25 min overall.
+All263,742 physics rows, updates/RNG/anchors/geometry/statistics passed independent
+audit (209.76 s); zero-work/all1,380pins passed (8.59 s). Source is unlocked.
+
+Next approved design: implement a fresh random score-free initialization and fixed
+first-return→full-rally curriculum, no teacher/backprop.8dirs×12serves first,
+120k/24min, then8×6/80k/16min;40train/60overall including20eval. First-hit cutoff
+must be training-only, explicitly task-stopped (not a game win/termination), retain
+its last camera, validate singleepisode and recover exactly. Final fresh64 evaluates
+endpoint/owninit+five simples primary, phase-one endpoint/blank secondary, same
+screen. Detailed external design/implementation notes are in the completed artifact.
+Commit results first, then lean code/protocol/tests and orchestrator launch review;
+no new manifest clock yet. Continue under existing user authority, no final streams.
+
+**Completed bounded continuation:** [protocol](2026-10-21-direct-hit-continuation-protocol.md),
 source **aea715b**, artifact
 `/workspace/m1b-experiments/pong-direct-hit-continuation-20261021-r1/`.
-Coordinator PID 3990 / exec session 55045, four spawned workers; consult the
+Coordinator PID 3990 / exec session 55045 exited0; consult the
 original manifest clock and durable journals before resuming after any restart.
 Starts exact theta9, skips unused g09, first global draw 10. Same hit-only rule,
 frozen vision/T/cap/.65 opponent. Max 16 new updates /160k TOTAL fitness+anchors /
@@ -33,8 +53,8 @@ All 23 focused checks and actual staged mapping/sidecar/resume proofs passed;
 source/protocol/archive/seed exclusions are pinned. See `launch.json` and
 `prelaunch-proof.json`. Complete pending fitness is reconciled before a restart's
 budget check, persistent failures disqualify, and every original deadline remains.
-Do not alter live source/protocol or launch a duplicate. Parent owns independent
-optimizer/physics/anchor/bootstrap audit. Continue after this bounded outcome
+The retained source/protocol is immutable; both independent and own verification
+passed before source unlock. Continue after this bounded outcome
 under the existing user authorization; no automatic stop after a negative.
 
 **Frozen confirmation complete:** [results](2026-10-21-frozen-hit-confirmation-results.md),
