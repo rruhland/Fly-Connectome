@@ -69,24 +69,31 @@ median/p95 58.98/80.36ms versus BEFORE44.54/66.89ms;20ms target unmet. Own recov
 all-pins audit passed25.42s; parent allphysics/counters/statistics passed61.44s.
 Exec1956/PID78086 and workers exited0. Source unlocked; no final streams.
 
-**LIVE second-task acquisition:** native elapsed-survival pendulum, plastic vision
-and new zero SARSA heads. The fixed pair is predetermined seed1 EXPOSURE-AFTER(2k)
-versus fresh generic prior; no selection of seed2 or the4k prequential endpoint.
-Artifact `/workspace/m1b-experiments/pendulum-online-acquisition-20261021-r1`, isolated
-source **2055109** at `/workspace/Fly-Connectome-m1b-pendulum`. Exec1380/PID79135,
-two training workers79137/79140, original clock1792572094121301399. Preserve this
-source/clock through both audits. Exactly20k transitions each, checkpoints5k/10k/20k,
-20min shared training and20min frozen evaluation/scoring,40min overall; no extensions.
-Native survival reward only; alpha.001/lambda.995/epsilon.2/gamma.95 per second,
-fixed common task transform/cap256, independent environment/exploration RNG streams.
-Endpoint screen requires mean>=3s,>=50% reaching5s,>=1s over strongest control and
-positive paired CI lower bound. Old online64 A serves are explicitly reused for
-before/after-B retention with unchanged A W/T/cap; no A retraining or formal NI.
-Protocol and launch/source pins are in the artifact. The1,024-transition frozen
-calibration, both512-transition plastic fixtures and15-camera handoff/recovery
-test are separate diagnostics; their updated heads/memories never seed candidates.
-The test's metadata-only study-root pre-expansion is preserved; zero observations,
-approved roots and the complete1,751-ID exclusion snapshot retained. No final streams.
+**Second-task reward gain with plastic vision, strict competence still unmet:**
+[audited results](2026-10-21-pendulum-acquisition-results.md). Predetermined seed1
+EXPOSURE-AFTER(2k) versus fresh generic prior,20k native-survival SARSA cameras each.
+Frozen B means2.734/2.812s versus strongest simple1.343s; lifts+1.390s
+CI[1.088,1.698] and+1.469s [1.187,1.763]. Only8/64 and9/64 reach5s, so both
+fail the unchanged mean>=3s/50% cap screen. Shared32-state curves continue improving.
+No clear experienced-vision advantage. Old A readout retained without retraining:
+experienced first36→36/64 (same outcomes), fresh39→42; all-return effects inconclusive.
+These reuse old online64 development serves and do not prove formal noninferiority.
+Artifact `/workspace/m1b-experiments/pendulum-online-acquisition-20261021-r1`, launch
+source **2055109** (integrated unchanged into main). Complete115,941 transitions,
+1,230 initials,40,526 learning images in31.21min plus2.62s final sealing. Own706-pin/
+nine-zero-work recovery verification passed24.80s; independent all-physics/mapping/
+statistics audit passed29.76s. Exec1380/PID79135 and all workers/audits exited0;
+source unlocked. The separate128+1-image profile matched every old record/state/chain;
+fingerprinting dominates, not encoder copying. No speedup claim or final streams.
+
+**Next:** implement the agreed ONE frozen.35 score-transfer study using both original
+qualified Pong heads/priors,64 fresh shared serves, nine cohorts,10s horizon/20min
+overall. No retraining/opponent sweep. Each policy must gain>=10pp in total wins AND
+own-hit-followed wins over the respective strongest seven controls, both CI lower
+bounds>0. Roots remain unallocated until prospective registration. Then prepare
+reviewed new-episode B training from predetermined experienced20k theta/memory,
+traces reset/new paired roots, plastic versus frozen vision; no full-session source
+validation bypass. B stability, final evidence and B2 scope review remain open.
 
 This is not complete M1B: score-winning/final evidence, online distinct-task
 acquisition/retention and the B2 scope review remain. The [completion checklist](2026-10-21-continuous-m1b-plan.md)

@@ -633,3 +633,16 @@ some simple controls skip perception. The machine-readable, SQLite-checked ledge
 is `/workspace/m1b-experiments/cumulative-research-ledger-20261016.json` and states
 these limits explicitly. The cached-template diagnostics and isolated warm-session execution benchmark
 are separately counted diagnostic compute, not added to competence evidence.
+
+## 2026-10-21 native-survival second-task update
+
+The [pendulum result](2026-10-21-pendulum-acquisition-results.md) adds40,000 actor-
+learning and75,941 frozen-evaluation transitions,1,230 initial images and40,526
+plastic visual-learning images. Both new heads improve survival over simple
+controls; five-second competence remains unmet. Fixed original Pong heads retain
+behavior on reused development probes, without formal noninferiority. Allocation
+31.21min plus2.62s sealing; own verification24.80s/zero replay, independent physics/
+statistics29.76s. A separately counted128-camera+1-image exact-prefix profile took
+9.06s instrumented and identifies fingerprint traversal as the principal frozen-
+evaluation cost; no speedup is claimed. Cumulative counts and all diagnostic work
+remain in the external ledger; earlier dated totals above are historical snapshots.

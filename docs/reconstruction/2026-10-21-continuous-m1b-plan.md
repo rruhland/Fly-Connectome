@@ -37,9 +37,13 @@ passing unit tests full M1B completion.
   This is an inconclusive one-pair ablation, not population inference/equivalence.
 - [ ] Reward learning on a substantially different visual interaction task with
   generic transport and declared actuator-specific heads, not Pong-specific labels.
+  Native-survival pendulum now has audited positive gains over controls with plastic
+  vision; the registered five-second competence condition remains unmet.
 - [ ] Enable the existing visual online learner after the frozen-vision control;
   measure drift, retained skill and acquisition with learning enabled. Preserve
   A→B→A and shared-experience versus fresh-policy/fresh-vision distinctions.
+  Fixed-policy A→A drift and first plastic B acquisition/old-A probes are audited;
+  reused-cohort A behavior is retained empirically without formal noninferiority.
 - [ ] Report observations, physical time, wall time, p50/p95 end-to-end/update
   latency, memory and active features. Targets are priorities, not hard vetoes on
   stronger learning; optimize equivalent execution without weakening recovery.
@@ -77,19 +81,20 @@ arms improve over their own initial readouts; neither passes the unchanged
 strongest-control gate. FULL's all-return point lift is exactly19.9369342 pp,
 so it remains a failure without rounding tolerance. No extra forecast sweep.
 
-Next: fixed-policy persistent visual-learning integration/drift using the two
-previously qualified FULL policies, followed by native-survival learning on a
-substantially different visual task and an immediate A→B→A retention probe.
-The original Pong head/transform remains retained. Runtime preflight exercises
+The original Pong heads/transforms remain retained. Runtime preflights exercise
 real bank growth; all preflight observations stay separate from candidate data.
-Score winning, final-stream evidence and the scoped B2 representation review
-remain outstanding; user review is required for genuinely major architecture.
+Score winning, stable second-task competence, final-stream evidence and the scoped
+B2 representation review remain outstanding; user review is required for genuinely
+major architecture.
 
 The [fixed-policy online-vision study](2026-10-21-online-vision-drift-results.md)
 is complete: mutable-bank integration and exact recovery work; paired skill effects
 are inconclusive without noninferiority proof. Learned banks increase inference
-cost. Next is genuine plastic-vision B acquisition plus immediate A retention,
-not another frozen Pong optimization or forecast sweep. A single frozen.35
-score-transfer study is contingent after B/retention, using both original heads,
-original prior and own initials, with total-score and own-hit-followed-win lift
-against shared controls. No opponent/reward sweep or final-root speculation.
+cost. The [plastic B acquisition study](2026-10-21-pendulum-acquisition-results.md)
+is now complete: survival means2.734/2.812s versus1.343s best simple control, both
+paired lift CIs positive; only8/64 and9/64 reach5s, so strict competence fails.
+Fixed curves improve; A behavior survives the20k B exposure on reused development
+serves, with no registered noninferiority margin. No policy-head transfer claim.
+Next is the agreed ONE frozen.35 score-transfer study with original heads/priors,
+then prospective new-episode B continuation with plastic/frozen vision. No opponent
+sweep, architecture diagnostic detour or final-root speculation.
