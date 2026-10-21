@@ -116,13 +116,30 @@ Exactly 106,540 new transitions/1,126 initials/20,205 visual-learning images,
 and audit processes exited0; source unlocked. Artifact:
 `/workspace/m1b-experiments/pendulum-onoff-continuation-20261021-r1`.
 
-**Next:** reviewed native-score learning at fixed .35, predetermined first qualified
-Pong head, win-only fitness and 12 shared serves, relative score-free exploration,
-200k inclusive new cameras/40 min train/55 overall. Static source is isolated at
-`/workspace/Fly-Connectome-m1b-native-score`; no candidate roots or clock yet.
-Complete focused checks/source proof before staging and parent launch review.
-Choose the next B learning change from the plateau/failure evidence while native
-score training runs; do not select a favorable old midpoint or declare class failure.
+**Native-score learning complete, audited screen failed:**
+[results](2026-10-21-native-score-search-results.md), launch source **4f974bb**,
+integrated unchanged as **35cd0e9 + f6447b0**. Fixed .35/win-only search from the
+predetermined first qualified return head: endpoint 18/64 wins (8 own-hit) versus
+start 16/64 (6 own-hit), lift 3.125 pp CI [−6.25,12.50]; no established incremental
+winning skill. All cohorts share ten natural wins, so total/own-hit contrasts are
+one paired accounting result. Five complete populations; 199,853 training rows =
+165,212 used fitness + 20,588 unused incomplete-population fitness + 14,053 anchors.
+Last-complete theta5 retained; g05 skipped, next index 6. Measured training 28.93 min,
+overall 39.89 min, no failures. Total 285,351 new transitions/1,755 initials;
+own pins/optimizer/seven zero-work recoveries passed 34.55 s; independent physics,
+manual optimizer and statistics passed 120.57 s. All workers exited 0; source unlocked.
+Artifacts: `/workspace/m1b-experiments/pong-native-score-search-20261021-r1`.
+
+**Next:** reviewed epsilon .02 native-survival continuation from the predetermined
+E20k pendulum head/memory, reusing audited .2 ON training/checkpoints as its control.
+Only epsilon changes; 20k new treatment transitions, fixed 5k/10k/final exports,
+fresh 64-state matched B evaluation, unchanged competence and paired mean/cap contrasts,
+plus A retention with explicit old development-reference reuse. Static source:
+`/workspace/Fly-Connectome-m1b-pendulum-epsilon`; no roots or clock yet. Finish
+focused zero-camera checks, resource cleanup, source/inputs and parent preclock
+review before launch. Keep old ON/OFF on_train and 64 A journals plain for reuse
+verification. Subsequent validated-child win learning is a separate reviewed
+design, not an allocated run. Do not select old midpoints or claim class failure.
 
 This is not complete M1B: score-winning/final evidence, online distinct-task
 acquisition/retention and the B2 scope review remain. The [completion checklist](2026-10-21-continuous-m1b-plan.md)

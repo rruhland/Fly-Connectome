@@ -103,7 +103,17 @@ so absent transfer does not isolate reward misalignment. The subsequent
 updates with plastic/frozen vision did not improve full 64 mean survival over the
 shared 20k head. ON cap success fell 7→1/64; ON−OFF is not a clear plasticity effect
 or equivalence. A behavior changed modestly; no formal retention guarantee.
-Next is reviewed genuine win-only learning at fixed .35 from the predetermined
-first qualified Pong head, rather than another frozen speed sweep. Stable B
-remains open, with the next single learner change chosen from complete curves and
-failure behavior. No architecture diagnostic detour or final-root speculation.
+The [native win-only adaptation](2026-10-21-native-score-search-results.md) is
+complete and audited: endpoint 18/64 wins versus starting head 16/64, paired
+lift 3.125 pp CI [−6.25,12.50]; strict screen failed, no established incremental wins.
+Five complete updates used 165,212 fitness rows; total training 199,853 includes
+20,588 unused rows and 14,053 diagnostic anchors. No partial update or best policy
+selection. Usable reward contrasts did not establish fresh endpoint improvement.
+
+Next is one fixed epsilon .02 B continuation with visual learning enabled, from
+the same predetermined E20k head/memory as the audited .2 control. Reuse that
+control's exact training/checkpoints; new common evaluation, original competence
+gate, separate mean+cap intervention contrasts and A-retention evidence. No epsilon
+sweep, new representation or teacher diagnostic. A subsequent Pong design selects
+executed children using separate fresh training validation; it is unallocated.
+Stable B, score-winning and final/B2 evidence remain open. No final-root expansion.
