@@ -12,6 +12,17 @@ from .session import LearningSession, MODEL_HASH, VISION_CONFIGURATION, model_by
 from .scaling import make_policy_transform,policy_features,validate_scaling,block_squared_norms,policy_block_squared_norms
 
 
+def validate_camera_intervention(value):
+    """Return owned timing-only sensor configuration; no policy/physics inputs."""
+    if value is None:
+        return None
+    if (type(value) is not dict or set(value) != {'kind','warmup_observations'}
+            or value['kind'] not in ('warm_hold','warm_missing')
+            or type(value['warmup_observations']) is not int or value['warmup_observations'] < 1):
+        raise ValueError('invalid frozen camera intervention')
+    return dict(value)
+
+
 @dataclass(frozen=True)
 class PongEvaluationConfig:
     seed: int
@@ -43,15 +54,24 @@ class FreshPongEvaluator:
     durable_kind = 'pong-evaluation-v1'
     capture_rng = LearningSession.capture_rng
 
-    def __init__(self, weights, config, *, first_hit_cutoff=False):
+    def __init__(self, weights, config, *, first_hit_cutoff=False, camera_intervention=None):
         config.validate()
+        camera_intervention=validate_camera_intervention(camera_intervention)
         if type(first_hit_cutoff) is not bool or (first_hit_cutoff and config.episodes != 1):
             raise ValueError("first-hit task requires a bool flag and exactly one episode")
+        if camera_intervention is not None and (first_hit_cutoff or config.blank_camera
+                or config.skip_baseline_perception or config.policy_kind != 'trained'):
+            raise ValueError('camera intervention requires full frozen trained-policy evaluation')
         with preserve_global_rngs():
             model_bytes()
             self.config = config
             if first_hit_cutoff:
                 self.first_hit_cutoff = True
+            if camera_intervention is not None:
+                self.camera_intervention=camera_intervention
+                self.camera_observations=0
+                self.held_camera_frame=None
+                self.last_observation_mode='unobserved'
             self.source = source_signature()
             self.model_hash, self.vision_configuration = MODEL_HASH, VISION_CONFIGURATION
             # Constructor is the first serve. Do not reset and accidentally skip it.
@@ -89,6 +109,8 @@ class FreshPongEvaluator:
                     self.vision.calibration,self.scaler,self.config,self.env.game.config)
         if hasattr(self,"first_hit_cutoff"):
             parameters += (("first-own-hit-task-v1",self.first_hit_cutoff),)
+        if hasattr(self,'camera_intervention'):
+            parameters += (('camera-feedback-v1',self.camera_intervention),)
         return fingerprint(parameters)
 
     @property
@@ -99,11 +121,30 @@ class FreshPongEvaluator:
         if self.config.skip_baseline_perception:
             return
         if self.config.blank_camera:frame=torch.zeros_like(frame)
-        events = torch.stack((self.previous & ~frame,~self.previous & frame)).float()
-        self.previous.copy_(frame)
-        self.latest_encoded = self.encoder.encode(self.vision.step(events,frame.float(),learn=False),frame.float())
+        intervention=getattr(self,'camera_intervention',None)
+        mode='live'
+        if intervention is not None and self.camera_observations>=intervention['warmup_observations']:
+            mode=intervention['kind']
+            frame=self.held_camera_frame if mode=='warm_hold' else None
+        if frame is None:
+            # No disappearance event or hidden new pixels are supplied. The
+            # normal tracker/encoder receive their existing missing-frame API.
+            events=torch.zeros((2,*self.previous.shape),dtype=torch.float32)
+            self.latest_encoded=self.encoder.encode(self.vision.step(events,None,learn=False),None)
+        else:
+            events=torch.stack((self.previous & ~frame,~self.previous & frame)).float()
+            self.previous.copy_(frame)
+            # Preserve the default tensor ownership/call path exactly.
+            self.latest_encoded=self.encoder.encode(self.vision.step(events,frame.float(),learn=False),frame.float())
+        if intervention is not None:
+            self.camera_observations+=1
+            self.last_observation_mode=mode
+            if self.camera_observations==intervention['warmup_observations']:
+                self.held_camera_frame=frame.clone()
 
     def _begin_episode(self):
+        if hasattr(self,'camera_intervention'):
+            self.camera_observations=0;self.held_camera_frame=None;self.last_observation_mode='unobserved'
         if self.config.action_hold_frames!=1:
             self.hold_remaining=0;self.held_action=None
         frame = self.env.reset() if self.env.needs_reset else self.env.game.render(64,64)[0].clone()
@@ -119,6 +160,7 @@ class FreshPongEvaluator:
         with preserve_global_rngs():
             if self.initial_cameras == self.episodes:
                 self._begin_episode()
+            camera_input=(self.last_observation_mode,self.camera_observations) if hasattr(self,'camera_intervention') else None
             q = None
             input_norms=None if self.latest_encoded is None else block_squared_norms(self.latest_encoded)
             policy_norms=None if self.latest_encoded is None else policy_block_squared_norms(self.latest_encoded,self.scaler)
@@ -151,6 +193,9 @@ class FreshPongEvaluator:
                           reward=result.reward,hits=result.hits,terminated=result.terminated,
                           truncated=result.truncated,elapsed_seconds=result.elapsed_seconds,
                           physics_ticks=result.physics_ticks,input_block_norm2=input_norms,policy_block_norm2=policy_norms)
+            if camera_input is not None:
+                record['camera_observation']=dict(input_mode=camera_input[0],input_count=camera_input[1],
+                    next_mode=self.last_observation_mode,next_count=self.camera_observations)
             if self.config.action_hold_frames!=1:
                 record.update(macro_choice=choice,macro_choices=self.macro_choices,
                               hold_frame=self.config.action_hold_frames-self.hold_remaining)
@@ -195,6 +240,9 @@ class FreshPongEvaluator:
         if getattr(self,'first_hit_cutoff',False):
             summary.update(task_stops=sum(r['task_stopped'] for r in self.rallies),
                            task_definition='first-own-hit-task-v1')
+        if hasattr(self,'camera_intervention'):
+            summary.update(camera_intervention=dict(self.camera_intervention),
+                           current_episode_observations=self.camera_observations)
         return summary
 
     @classmethod
@@ -205,6 +253,18 @@ class FreshPongEvaluator:
         session.config.validate()
         if hasattr(session,"first_hit_cutoff") and (session.first_hit_cutoff is not True or session.config.episodes != 1):
             raise ValueError("invalid restored first-hit task")
+        if hasattr(session,'camera_intervention'):
+            mode=validate_camera_intervention(session.camera_intervention)
+            count=session.camera_observations;cache=session.held_camera_frame
+            if (mode is None or session.config.policy_kind!='trained' or session.config.blank_camera
+                    or session.config.skip_baseline_perception or getattr(session,'first_hit_cutoff',False)
+                    or type(count) is not int or count<0
+                    or session.last_observation_mode!=('unobserved' if count==0 else
+                        'live' if count<=mode['warmup_observations'] else mode['kind'])
+                    or (cache is not None)!=(count>=mode['warmup_observations'])
+                    or (cache is not None and (not isinstance(cache,torch.Tensor)
+                        or cache.device.type!='cpu' or cache.dtype!=torch.bool or cache.shape!=(64,64)))):
+                raise ValueError('invalid restored camera intervention state')
         model_bytes()
         if session.learned_hash() != session.initial_learned_hash:
             raise ValueError('restored frozen evaluation parameters changed')

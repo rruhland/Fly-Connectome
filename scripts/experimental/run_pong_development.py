@@ -17,7 +17,7 @@ import torch
 sys.path.insert(0,str(Path(__file__).resolve().parents[2]/'src'))
 from fly_connectome.control.codec import GRAPH_DIGEST
 from fly_connectome.control.durable import DurableRun, runtime_signature
-from fly_connectome.control.pong_evaluation import FreshPongEvaluator, PongEvaluationConfig
+from fly_connectome.control.pong_evaluation import FreshPongEvaluator, PongEvaluationConfig, validate_camera_intervention
 from fly_connectome.control.session import LearningSession, source_signature, MODEL_HASH
 from fly_connectome.vision import VisualStateEncoder
 
@@ -166,6 +166,17 @@ def validate_first_hit_job(job):
     return mode
 
 
+def validate_camera_job(job):
+    mode=validate_camera_intervention(job.get('camera_intervention'))
+    config=job.get('config',{})
+    if mode is not None and (job['kind']!='evaluate' or job.get('purpose')!='fresh_evaluation'
+            or config.get('episodes')!=1 or config.get('policy_kind')!='trained'
+            or config.get('blank_camera',False) or config.get('skip_baseline_perception',False)
+            or job.get('first_hit_cutoff',False)):
+        raise ValueError('camera intervention is single-episode frozen evaluation only')
+    return mode
+
+
 def worker(directory,job_id,max_work_seconds=160.,*,emit=True,_live_run=None,_keep_open=False,verify_only=False):
     if not 0 < max_work_seconds <= 160.:
         raise ValueError('worker work budget must be in (0,160] seconds')
@@ -181,6 +192,7 @@ def worker(directory,job_id,max_work_seconds=160.,*,emit=True,_live_run=None,_ke
     if job['kind']!='learn' and job.get('exploration_block_frames') is not None:
         raise ValueError('exploration blocks are training-only; fresh evaluation is frozen greedy')
     first_hit_cutoff=validate_first_hit_job(job)
+    camera_intervention=validate_camera_job(job)
     checkpoints=job.get('checkpoints',(2000,6000))
     scaling=None if job.get('scaling_from') is None else json.loads((directory/job['scaling_from']).read_text())
     projection=None if job.get('projection_from') is None else json.loads((directory/job['projection_from']).read_text())
@@ -211,8 +223,10 @@ def worker(directory,job_id,max_work_seconds=160.,*,emit=True,_live_run=None,_ke
                 metadata=json.loads((directory/job['weights_from']).with_suffix('.json').read_text())
                 if list(weights.shape)!=metadata['shape'] or hashlib.sha256(weights.tobytes()).hexdigest()!=metadata['weight_hash']:
                     raise ValueError('evaluation weights differ from checkpoint metadata')
-            session=(FreshPongEvaluator(weights,PongEvaluationConfig(**evaluation_config),first_hit_cutoff=True)
-                     if first_hit_cutoff else FreshPongEvaluator(weights,PongEvaluationConfig(**evaluation_config)))
+            options={}
+            if first_hit_cutoff:options['first_hit_cutoff']=True
+            if camera_intervention is not None:options['camera_intervention']=camera_intervention
+            session=FreshPongEvaluator(weights,PongEvaluationConfig(**evaluation_config),**options)
         run=DurableRun(db,session=session)
     session=run.session;before=session.transitions
     if job['kind']=='learn':
@@ -232,6 +246,8 @@ def worker(directory,job_id,max_work_seconds=160.,*,emit=True,_live_run=None,_ke
         raise ValueError('evaluation journal differs from declared configuration')
     if job['kind']!='learn' and getattr(session,'first_hit_cutoff',False)!=first_hit_cutoff:
         raise ValueError('restored task boundary differs from declared training purpose')
+    if job['kind']!='learn' and getattr(session,'camera_intervention',None)!=camera_intervention:
+        raise ValueError('restored camera intervention differs from declared evaluation')
     replayed=run.replayed if _live_run is None else 0;latencies=[]
     def complete():
         return session.transitions==job['transitions'] if job['kind'] in ('learn','calibration') else session.complete
