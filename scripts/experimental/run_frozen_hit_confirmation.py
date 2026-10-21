@@ -22,7 +22,7 @@ def collect_seed_ids(value):
     """Metadata only; never inspect reward, label or coefficient data."""
     found=set()
     def integers(v):
-        if type(v) is int and 0<v<2147483647:found.add(v)
+        if type(v) is int and 0<v<2**32:found.add(v)
         elif isinstance(v,list):
             for item in v:integers(item)
         elif isinstance(v,dict):

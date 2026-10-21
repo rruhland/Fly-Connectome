@@ -97,8 +97,8 @@ def declared_jobs(schedules):
     return jobs
 
 
-def stage(directory):
-    """Stage exact qualified heads and seeds without starting a budget clock."""
+def stage_lineages(directory):
+    """Stage exact qualified heads, without expanding any development stream."""
     directory.mkdir(parents=True,exist_ok=True);current=prior.source_signature();proofs={};fixed={}
     for policy,lineage in LINEAGES.items():
         m=json.loads((lineage/'manifest.json').read_text());s=json.loads((lineage/'summary.json').read_text())
@@ -140,7 +140,12 @@ def stage(directory):
     proof=dict(current_source=current,runtime=prior.runtime_signature(),model_hash=prior.MODEL_HASH,
         vision_configuration=prior.VISION_CONFIGURATION,policies=proofs,fixed_artifacts=fixed,
         original_generic_visual_prior=True,no_training_or_model_selection=True)
-    immutable_json(directory/'lineage-proof.json',proof);snapshot_exclusions(directory)
+    immutable_json(directory/'lineage-proof.json',proof)
+    return proof
+
+
+def stage(directory):
+    stage_lineages(directory);snapshot_exclusions(directory)
     schedules=schedule(json.loads((directory/'seed-exclusions.json').read_text())['ids'])
     immutable_json(directory/'schedules.json',schedules)
 
