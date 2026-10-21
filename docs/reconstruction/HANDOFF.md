@@ -16,6 +16,18 @@ about the connectome comparison. Read the
 [continuation checklist](2026-10-21-continuous-m1b-plan.md); preserve all previous
 negative evidence, task changes and untouched final streams.
 
+**ACTIVE frozen-policy confirmation:** [registered protocol](2026-10-21-frozen-hit-confirmation-protocol.md),
+source **5c9e219**, artifact
+`/workspace/m1b-experiments/pong-frozen-hit-confirmation-20261021-r1/`.
+Coordinator PID3339/session90528, four workers. No training: unchanged theta9 and
+original theta0, 64 new paired DEV serves, seven primary cohorts plus secondary
+blank camera. Keep code/protocol frozen; read the manifest before any continuation
+and do not launch a duplicate. Bounds are 15 minutes evaluation/18 overall from
+the ORIGINAL clock. Initial launch failed before any session/camera because two
+weight metadata sidecars were missing; the explicit zero-camera amendment retains
+the same serves, weights, failed costs and clock. The repaired run is progressing;
+nine distinct focused checks and exact immutable source archive are retained.
+
 **Latest allocation complete:** [direct hit-return search results](2026-10-21-direct-hit-policy-search-results.md),
 source **2e20707**, artifact
 `/workspace/m1b-experiments/pong-direct-hit-policy-search-20261021-r1/`.
@@ -32,12 +44,10 @@ An environment restart interrupted the run. Parent resumed the same directory,
 clock and configuration; 399 committed training cameras lacked settled task-cost
 records, and 99 previously committed steps were exactly replayed. Preserve this
 accounting and unknown interrupted compute tails. Source archive and23 focused
-passing tests remain retained. The next reviewed design freezes theta9 for a fresh
-64-serve DEV confirmation against original initialization and five simple controls,
-plus a separate secondary blank-camera cohort. It adds no training or final holdout.
-Finish/pin the concrete protocol, focused checks and source before its manifest
-clock starts. Continue under existing user authorization; do not silently extend
-the completed run or request renewed user permission for ordinary experiments.
+passing tests remain retained. The reviewed fresh confirmation is active above;
+it adds no training or final holdout. Continue under existing user authorization;
+do not silently extend the completed run or request renewed user permission for
+ordinary experiments.
 
 **The visual continuity repair and its fixed SARSA screen are complete.** Read
 [results](2026-10-21-continuity-repair-results.md): source 570222e, 24k training,

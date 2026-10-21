@@ -67,6 +67,10 @@ completed at source 2e20707: nine updates, fresh first returns 16/32 and all 21/
 versus strongest control 9/32 and 10/42. Positive point estimates failed the
 unchanged development screen. Read HANDOFF and the audited artifacts before
 registering the next bounded experiment; retain the original frozen outcome.
+The [fresh frozen-policy confirmation](2026-10-21-frozen-hit-confirmation-protocol.md)
+is now active with 64 new DEV serves and a separate blank-camera cohort, no new
+training. Preserve its original manifest clock and explicit zero-camera startup
+amendment; do not duplicate it or use final streams.
 
 Prior score-only search, its continuation and a stationary-opponent curriculum
 failed their development screens. Camera-rate hit-SARSA, full action holds and
