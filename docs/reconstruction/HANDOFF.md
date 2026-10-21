@@ -9,14 +9,20 @@ audits and evidence-based adaptation through the orchestrator. Do not end the
 research loop merely because one allocation is negative. No backprop or privileged
 policy inputs; genuinely major architecture alterations still require user review.
 
-**Currently live:** [epsilon .02 pendulum continuation](2026-10-21-pendulum-low-exploration-protocol.md),
-execution source **c36ebdd** (integrated as **dc40c48**) in the isolated
-`/workspace/Fly-Connectome-m1b-pendulum-epsilon` checkout. Artifact
-`/workspace/m1b-experiments/pendulum-low-exploration-20261021-r1`; original start
-**1792583355548584344**, exec **25486**, coordinator **113443**, training worker
-**113462**. One 20k treatment dose; .2 control training reused. Keep this execution
-checkout frozen through own and independent audits. No final streams. Candidate
-status comes from the original manifest/journals; never restart its clock.
+**Latest completed:** [epsilon .02 pendulum continuation](2026-10-21-pendulum-low-exploration-results.md),
+source **c36ebdd** (integrated as **dc40c48**). Both audits pass. On 64 fresh common
+starts, .02 mean 2.502 s/4 caps versus reused .2 2.758 s/6 caps; paired mean
+−0.255 s CI [−0.654,0.141], cap −3.125 pp [−12.50,6.25]. Both competence screens
+fail; no epsilon benefit/equivalence or best-midpoint selection. A first returns
+36→36/64 for .02 on explicitly reused development serves; no formal noninferiority.
+20k new training +69,691 evaluation transitions, 875 initials, 20,171 learning
+images in 1,738.553 s. Own705-pin/eight-zero-replay verification passed32.302s;
+parent all-physics/TD/reuse/statistics passed18.535s. The initial external verifier
+attribute error is preserved; candidates were unchanged. Exec25486/PID113443 and
+all workers exited0; source released. No final streams. Next is reviewed native-win
+validated-child selection at fixed .35; its zero-camera tests/provenance and
+registration precede launch. The separate frozen-survival B actor proposal is
+external and unallocated. Continue iteration; M1B remains incomplete.
 
 **Two independent training seeds now pass the unchanged hit-return DEV screen.**
 The [first curriculum](2026-10-21-first-return-curriculum-results.md) gave initial
