@@ -92,3 +92,32 @@ limitations. Sol's strongest alternative was restoring legal visual information
 lost by projection; the post-projection tanh branch cannot do that. Neither is
 implemented or ruled out; the direction evidence favors the smaller task-distribution
 experiment now. No additional major architecture change is authorized by this choice.
+
+## Accepted bounded protocol for implementation
+
+One linear ARtheta112 learner, at most40,000 training transitions/15minutes,
+400 batches maximum and20 complete batches minimum. Each batch has two fresh
+ordinary initial-leftward serves with two independent action/noise replicas each.
+Keep the10s first-hit training task, strong opponent and all learning constants.
+Use the last complete endpoint; incomplete work counts as exposure but is not used.
+
+Evaluate endpoint and exact carried control on64 fresh direct-serve starts through
+first own return or ordinary terminal loss, and64 separate fresh unfiltered20s
+full games. Existing greedy evaluator with first-hit cutoff serves the primary
+assessment; no sampled actor in evaluation. Count all256 evaluation jobs, their
+initial images and actual frames. Evaluation cap10minutes;25minutes overall.
+No outcome-based extension or DEV checkpoint selection. Budget does not reset.
+
+Primary direct-serve lift must be at least10 percentage points with a paired95%
+confidence lower bound strictly positive. Absolute80% direct-serve competence is
+separate. Full-game first-return and all-return retention each require the paired
+95% lower bound above minus5 percentage points. Rightward subgroup is descriptive.
+Positive learning requires independent replication before endpoint promotion;
+restricted80% is not full-task80% or M1B completion.
+
+Seed rejection uses only canonical ordinary initial direction and preserves the
+entire reset state. Record proposed/rejected seeds and prevent collisions with
+previously reserved streams, including unused seeds. Never expand reserved final
+roots. This is assistance in training distribution, not learner observation access.
+Sol implements compact coordinator reuse and a narrow worker-purpose validation
+extension for explicit greedy first-hit evaluation; Astra reviews before launch.
