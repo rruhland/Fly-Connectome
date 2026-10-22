@@ -152,3 +152,33 @@ def test_worker_exports_complete_actor_trace_and_pins_required_artifacts(tmp_pat
     verified=worker.worker(tmp_path,'fixture',emit=False,verify_only=True)
     assert verified['new_transitions']==0 and verified['actor']==report['actor']
     completion.pin_completion(tmp_path,job);assert completion.complete_report(tmp_path,job)==json.loads(json.dumps(verified))
+
+
+def test_contextual_two_start_paired_estimator_exact_expectation():
+    theta=np.array([[.12,-.09],[-.06,.07],[.03,.02]]);tau=.4
+    contexts=[np.array([.7,-.4]),np.array([-.2,.8])];mass=[.35,.65]
+    rewards=[np.array([0.,1.,0.]),np.array([1.,0.,1.])]
+    expected=np.zeros_like(theta);truth=np.zeros_like(theta);z=np.eye(2)
+    for si,x in enumerate(contexts):
+        _,p=probabilities(theta,x,tau)
+        truth+=mass[si]*sum(p[a]*rewards[si][a]*score_eligibility(a,p,x,tau) for a in range(3))
+    for s0,s1 in itertools.product(range(2),repeat=2):
+        xs=[contexts[s0]]*2+[contexts[s1]]*2
+        ps=[probabilities(theta,x,tau)[1] for x in xs]
+        for actions in itertools.product(range(3),repeat=4):
+            prob=mass[s0]*mass[s1]*float(np.prod([p[a] for p,a in zip(ps,actions)]))
+            rs=np.array([rewards[s0 if i<2 else s1][a] for i,a in enumerate(actions)])
+            es=np.array([score_eligibility(a,p,x,tau) for a,p,x in zip(actions,ps,xs)])
+            proposed,diag=batch_update(theta,es,rs,z,alpha=1.,step_cap=100.,paired_starts=True)
+            direct=((rs[0]-rs[1])*(es[0]-es[1])+(rs[2]-rs[3])*(es[2]-es[3]))/4.
+            np.testing.assert_allclose(proposed-theta,direct,atol=1e-15)
+            expected+=prob*(proposed-theta)
+    np.testing.assert_allclose(expected,truth,atol=1e-15)
+
+
+def test_cross_start_difficulty_without_within_start_contrast_is_zero():
+    theta=np.zeros((3,2));es=np.random.default_rng(8932).normal(size=(4,3,2));z=np.eye(2)
+    got,diag=batch_update(theta,es,[0,0,1,1],z,step_cap=.01,paired_starts=True)
+    assert np.array_equal(got,theta) and not diag['nonzero_update']
+    assert diag['mixed_outcomes'] and diag['cross_start_only_mixed_batch']
+    assert diag['within_start_disagreeing_pairs']==0 and diag['cross_start_disagreeing_pairs']==4

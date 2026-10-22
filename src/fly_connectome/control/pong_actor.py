@@ -26,28 +26,35 @@ def score_eligibility(action,p,x,temperature):
     return np.outer(residual,np.asarray(x,dtype=np.float64))/temperature
 
 
-def batch_update(theta,eligibilities,rewards,calibration,*,alpha=1e-5,step_cap):
-    """Exact LOO scalar baseline; center/cap the aggregate, never trajectories."""
+def batch_update(theta,eligibilities,rewards,calibration,*,alpha=1e-5,step_cap,paired_starts=False):
+    """LOO or paired-start scalar baseline; cap aggregate, never trajectories."""
     theta=np.asarray(theta,dtype=np.float64)
     es=np.asarray(eligibilities,dtype=np.float64);rs=np.asarray(rewards,dtype=np.float64)
     z=np.asarray(calibration,dtype=np.float64)
-    if (rs.shape!=(4,) or es.shape!=(4,*theta.shape) or not np.isfinite(es).all()
+    if (type(paired_starts) is not bool or rs.shape!=(4,) or es.shape!=(4,*theta.shape) or not np.isfinite(es).all()
             or not np.isin(rs,(0.,1.)).all() or z.ndim!=2 or z.shape[1]!=theta.shape[1]
             or not np.isfinite(z).all() or alpha<=0 or step_cap<=0):
         raise ValueError('one complete finite four-episode batch required')
-    baselines=(rs.sum()-rs)/3.
+    baselines=rs[[1,0,3,2]] if paired_starts else (rs.sum()-rs)/3.
     gradient=np.einsum('i,ijk->jk',rs-baselines,es)/4.
     delta=alpha*gradient;delta-=delta.mean(axis=0,keepdims=True)
     raw_rms=float(np.sqrt(np.mean((z@delta.T)**2)))
     scale=min(1.,step_cap/raw_rms) if raw_rms else 1.
     delta*=scale;proposed=theta+delta
     if not np.isfinite(proposed).all():raise FloatingPointError('nonfinite actor update')
-    return proposed,dict(rewards=rs.astype(int).tolist(),baselines=baselines.tolist(),
+    diagnostics=dict(rewards=rs.astype(int).tolist(),baselines=baselines.tolist(),
         mixed_outcomes=bool(0<rs.sum()<4),gradient_norm=float(np.linalg.norm(gradient)),
         raw_update_function_rms=raw_rms,aggregate_clip_scale=scale,
         applied_update_function_rms=float(np.sqrt(np.mean((z@delta.T)**2))),
         nonzero_update=bool(np.any(proposed!=theta)),
         calibration_greedy_changes=int(np.count_nonzero(np.argmax(z@proposed.T,axis=1)!=np.argmax(z@theta.T,axis=1))))
+    if paired_starts:
+        within=int(rs[0]!=rs[1])+int(rs[2]!=rs[3])
+        diagnostics.update(baseline='two-fresh-starts-two-independent-actions-v1',
+            within_start_disagreeing_pairs=within,within_start_pairs=2,
+            cross_start_disagreeing_pairs=sum(int(rs[i]!=rs[j]) for i,j in ((0,2),(0,3),(1,2),(1,3))),
+            cross_start_pairs=4,cross_start_only_mixed_batch=bool(0<rs.sum()<4 and within==0))
+    return proposed,diagnostics
 
 
 class FirstHitActorEpisode(FreshPongEvaluator):
