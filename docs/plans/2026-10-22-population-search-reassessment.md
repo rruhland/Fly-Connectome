@@ -263,3 +263,37 @@ Fresh evaluation must compare the endpoint to both its specialized start and the
 original global ARtheta112. Use a per-game rally measure to avoid interpreting a
 policy-dependent opportunities denominator as the sole progress test. Direct-skill
 preservation is a separate required gate. No new allocation launched yet.
+
+### Integration protocol decision before staging
+
+Original full-rally rule: 8 directions, +/- .25 perturbations, top 4, .10 update cap;
+6 shared fresh unfiltered starts per population; greedy K1, opponent .65, 10s games,
+mean total own-hit fitness. Budget80k/900s train, max12/min3 complete populations;
+600s eval/1500s overall, no extension. Earlier full-rally stage cost roughly20k
+cameras/population, so expect3–5 updates; report actual dose separately from gates.
+
+Three heads (DIRECT=r1theta9, GLOBAL=original ARtheta112, ENDPOINT) evaluated on64
+fresh direct first-contact starts and64 separate ordinary20s games:384jobs,
+288k maximum evaluation transitions. Fixed last complete endpoint, no checkpoint
+selection or DEV peeking. Primary: fraction of ordinary games with >=2 returns;
+ENDPOINT minus DIRECT >=10pp with paired95%lower>0. Combined progress additionally
+requires the same against GLOBAL. Preservation: direct first returns versus DIRECT
+lower>−5pp; ordinary first/all returns versus GLOBAL each lower>−5pp. Direct gain
+versus GLOBAL >=10pp with lower>0 is separate. Mean own hits/game and >=3/4 returns
+are secondary. Combined carry requires all gates; any positive needs replication.
+
+Interpret outcomes separately: rally gain/direct loss means unresolved retention;
+recovery over DIRECT but not GLOBAL means recovery, not overall progress; no rally
+gain despite substantive changes weighs state coverage/generalization, not an
+automatic rate/noise sweep. Natural mixed starts rehearse direct situations but
+cannot guarantee preservation. No new architecture or training allocation yet.
+
+Outside-source check: Astra read Kaplanis, Shanahan & Clopath (2019), introduction
+and section3, [Policy Consolidation for Continual Reinforcement Learning](https://proceedings.mlr.press/v97/kaplanis19a/kaplanis19a.pdf).
+Their discussion identifies within-task experience distribution changes and the
+distinction between parameter memory and behavioral memory. This supports checking
+retained behavior rather than small weight movement. Their PPO/distillation cascade
+is not adopted, and the paper does not establish our failure's cause. First test
+full-task exposure with the already demonstrated population rule before adding a
+consolidation mechanism. The paired outcome plot is
+`/workspace/m1b-experiments/pong-mechanism-review-20261022/population-replication.png`.
