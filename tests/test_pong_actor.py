@@ -117,7 +117,8 @@ def test_actor_checkpoint_requires_exact_external_projection(tmp_path):
     assert fingerprint(codec.loads(payload))==fingerprint(s)
 
 
-def test_worker_exports_complete_actor_trace_and_pins_required_artifacts(tmp_path,monkeypatch):
+@pytest.mark.parametrize('with_noise',[False,True])
+def test_worker_exports_complete_actor_trace_and_pins_required_artifacts(tmp_path,monkeypatch,with_noise):
     import sys
     sys.path.insert(0,str(Path(__file__).parents[1]/'scripts/experimental'))
     import run_pong_development as worker
@@ -136,6 +137,7 @@ def test_worker_exports_complete_actor_trace_and_pins_required_artifacts(tmp_pat
     job=dict(id='fixture',kind='evaluate',purpose='training_fitness',config=asdict(config),weights_from='weights.npy',
         projection_from='projection.json',first_hit_cutoff=True,compact_reports=True,
         actor=dict(theta_from='theta.npy',temperature=.1,action_seed=598933))
+    if with_noise:job['actor']['noise']=dict(kind='centered-gaussian-ar1-v1',sigma=.04,rho=.8,seed=431763)
     manifest=dict(source=source_signature(),runtime=runtime_signature(),driver_hash=hashlib.sha256(Path(worker.__file__).read_bytes()).hexdigest(),jobs=[job])
     worker.atomic_json(tmp_path/'manifest.json',manifest)
     original=FirstHitActorEpisode.__init__
@@ -182,3 +184,70 @@ def test_cross_start_difficulty_without_within_start_contrast_is_zero():
     assert np.array_equal(got,theta) and not diag['nonzero_update']
     assert diag['mixed_outcomes'] and diag['cross_start_only_mixed_batch']
     assert diag['within_start_disagreeing_pairs']==0 and diag['cross_start_disagreeing_pairs']==4
+
+
+def test_latent_markov_two_step_score_matches_exact_expected_return_derivative():
+    theta=np.array([[.1,-.06],[-.03,.07],[.02,.01]]);tau=.3
+    offsets=[np.array([.08,-.02,-.06]),np.array([-.08,.02,.06])]
+    def enumerate_return(head,want_gradient=False):
+        value=0.;gradient=np.zeros_like(head)
+        for n0,n1 in itertools.product(range(2),repeat=2):
+            latent=.5*(.8 if n0==n1 else .2)
+            x0=np.array([.7,-.2]);_,p0=probabilities(head,x0,tau,offsets[n0])
+            for a0 in range(3):
+                x1=np.array([.1+.2*(a0-1),.6]);_,p1=probabilities(head,x1,tau,offsets[n1])
+                for a1 in range(3):
+                    reward=float(a1==(a0+1)%3);prob=latent*p0[a0]*p1[a1]
+                    value+=prob*reward
+                    gradient+=prob*reward*(score_eligibility(a0,p0,x0,tau)+score_eligibility(a1,p1,x1,tau))
+        return gradient if want_gradient else value
+    exact=enumerate_return(theta,True);finite=np.zeros_like(theta);eps=1e-6
+    for index in np.ndindex(theta.shape):
+        plus=theta.copy();minus=theta.copy();plus[index]+=eps;minus[index]-=eps
+        finite[index]=(enumerate_return(plus)-enumerate_return(minus))/(2*eps)
+    np.testing.assert_allclose(exact,finite,atol=8e-11)
+
+
+def test_conditional_bias_sampling_uses_same_capped_x_and_one_noise_draw(tmp_path):
+    s=episode(tmp_path);config=s.config;theta=s.theta.copy();projection=s.actor_projection.config
+    noise=dict(kind='centered-gaussian-ar1-v1',sigma=.04,rho=.8,seed=431763)
+    s=FirstHitActorEpisode(theta,config,projection=projection,temperature=.1,action_seed=598933,noise=noise)
+    s._begin_episode();s.latest_encoded={'indices':torch.tensor([0,1]),'values':torch.tensor([10.,-3.])}
+    _,x=s.actor_projection.features(s.latest_encoded);bias_rng=np.random.default_rng(noise['seed'])
+    normal=bias_rng.standard_normal(3);bias=noise['sigma']*(normal-normal.mean())
+    action_rng=copy.deepcopy(s.actor_rng);expected=np.zeros_like(theta)
+    for decision in (1,2):
+        if decision==2:
+            normal=bias_rng.standard_normal(3);bias=.8*bias+np.sqrt(1-.8**2)*noise['sigma']*(normal-normal.mean())
+        q,p=probabilities(theta,x,.1,bias);a=int(action_rng.choice(3,p=p));expected+=score_eligibility(a,p,x,.1)
+        got,baseq=s._choose_policy();assert got==a and np.array_equal(q,baseq)
+        assert s.bias_draws==decision and np.array_equal(s.bias,bias)
+        np.testing.assert_allclose(s.eligibility,expected,atol=1e-13)
+        assert s.last_actor_choice['greedy_action']==int(q.argmax())
+        assert s.last_actor_choice['biased_greedy_action']==int((q+bias).argmax())
+        assert s.last_actor_choice['probabilities']==p.tolist()
+
+
+@pytest.mark.parametrize('rho',[0.,np.exp(-.02/.25)])
+def test_bias_rng_eligibility_recovery_and_terminal_camera(tmp_path,rho):
+    fixture=episode(tmp_path);noise=dict(kind='centered-gaussian-ar1-v1',sigma=.04,rho=float(rho),seed=431763)
+    s=FirstHitActorEpisode(fixture.theta,fixture.config,projection=fixture.actor_projection.config,
+        temperature=.1,action_seed=598933,noise=noise)
+    s.env.game.ball[0]=torch.tensor([.076,.5]);s.env.game.ball_velocity[0]=torch.tensor([-.55,0.])
+    path=tmp_path/'bias.db';run=DurableRun(path,session=s,snapshot_transitions=100)
+    first=run.step();h=fingerprint(run.session);assert first['actor']['bias_draws']==1
+    run.close_without_checkpoint();run=DurableRun(path)
+    assert run.replayed==1 and fingerprint(run.session)==h
+    expected=copy.deepcopy(run.session);last_expected=expected.step();last=run.step()
+    assert last==last_expected and fingerprint(run.session)==fingerprint(expected)
+    assert last['task_stopped'] and run.session.bias_draws==run.session.decisions==2
+    assert torch.equal(run.session.previous,run.session.env.game.render(64,64)[0])
+    h=fingerprint(run.session);run.close_without_checkpoint();run=DurableRun(path)
+    assert run.session.complete and run.replayed==2 and fingerprint(run.session)==h
+    run.stop()
+
+
+def test_bias_argument_requires_three_finite_components():
+    for bias in (0.,[0.],[0.,0.],[0.,0.,float('nan')]):
+        with pytest.raises(ValueError,match='three-action bias'):
+            probabilities(np.zeros((3,2)),np.ones(2),.1,bias)

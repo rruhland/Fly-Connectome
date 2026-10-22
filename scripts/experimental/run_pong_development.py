@@ -18,7 +18,7 @@ sys.path.insert(0,str(Path(__file__).resolve().parents[2]/'src'))
 from fly_connectome.control.codec import GRAPH_DIGEST
 from fly_connectome.control.durable import DurableRun, runtime_signature
 from fly_connectome.control.pong_evaluation import FreshPongEvaluator, PongEvaluationConfig, validate_camera_intervention
-from fly_connectome.control.pong_actor import FirstHitActorEpisode
+from fly_connectome.control.pong_actor import FirstHitActorEpisode,validate_bias
 from fly_connectome.control.session import LearningSession, source_signature, MODEL_HASH
 from fly_connectome.vision import VisualStateEncoder
 
@@ -181,11 +181,13 @@ def validate_camera_job(job):
 def validate_actor_job(job):
     mode=job.get('actor')
     if mode is not None:
-        if (type(mode) is not dict or set(mode)!={'theta_from','temperature','action_seed'}
+        if (type(mode) is not dict or set(mode) not in ({'theta_from','temperature','action_seed'},
+                {'theta_from','temperature','action_seed','noise'})
                 or not validate_first_hit_job(job) or job.get('camera_intervention') is not None
                 or job.get('projection_from') is None or job.get('scaling_from') is not None
                 or job['config'].get('action_hold_frames',1)!=1):
             raise ValueError('actor is projected K=1 first-hit training only')
+        validate_bias(mode.get('noise'))
     return mode
 
 
@@ -244,7 +246,7 @@ def worker(directory,job_id,max_work_seconds=160.,*,emit=True,_live_run=None,_ke
             else:
                 theta=np.load(directory/actor['theta_from'],allow_pickle=False)
                 session=FirstHitActorEpisode(theta,PongEvaluationConfig(**evaluation_config),projection=projection,
-                    temperature=actor['temperature'],action_seed=actor['action_seed'])
+                    temperature=actor['temperature'],action_seed=actor['action_seed'],noise=actor.get('noise'))
                 if not np.array_equal(weights,session.policy.weights):raise ValueError('actor mapped input differs')
         run=DurableRun(db,session=session)
     session=run.session;before=session.transitions
@@ -264,6 +266,7 @@ def worker(directory,job_id,max_work_seconds=160.,*,emit=True,_live_run=None,_ke
     elif type(session) is not (FreshPongEvaluator if actor is None else FirstHitActorEpisode) or asdict(session.config) != evaluation_config:
         raise ValueError('evaluation journal differs from declared configuration')
     if actor is not None and (session.temperature!=actor['temperature'] or session.actor_action_seed!=actor['action_seed']
+            or getattr(session,'actor_bias_config',None)!=actor.get('noise')
             or session.actor_projection.config!=projection or not np.array_equal(session.theta,np.load(directory/actor['theta_from'],allow_pickle=False))):
         raise ValueError('actor journal differs from declared head/exploration')
     if job['kind']!='learn' and getattr(session,'first_hit_cutoff',False)!=first_hit_cutoff:
