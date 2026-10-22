@@ -5,9 +5,10 @@
 Discover what can learn each component, then integrate the successful mechanisms
 and demonstrate the whole progression in one continuously adapting learner. Pong
 is the initial environment, not the definition of the eventual general learner.
-This plan supersedes the earlier emphasis on immediate win-rate qualification and
-the unrestricted overnight allocation loop. Start with a bounded research batch,
-review its evidence, and reassess before extending a failing direction.
+On 2026-10-22 the user explicitly requested continued orchestration until told to
+stop. Continue bounded research cycles autonomously, reviewing evidence and
+reassessing direction between them. This supersedes the previous single-batch
+stopping point; it does not remove resource discipline or architecture review.
 
 No backpropagation, privileged policy observations, oracle-fitted teachers, or
 hidden-state aiming instructions. Scalar environment rewards such as own hits may
@@ -97,7 +98,9 @@ training replication before calling a scaffold established.
 
 Keep each research batch to one primary experiment and at most one justified
 follow-up. Two credible failures within the same mechanism trigger a hypothesis
-reassessment and strategic checkpoint, not an automatic adjacent variation.
+reassessment and direction change, not an automatic adjacent variation. Continue
+within existing authorization; seek user review for genuinely major architecture
+changes or decisions that require it, rather than stopping after every batch.
 Optimization is valuable when measured and amortizable; do not turn it into an
 unbounded parallel project. Publish negative outcomes without relabeling them as
 learning success. The ultimate measure is dependable learned behavior per budget.

@@ -10,7 +10,10 @@ challenge and execution while Astra owns research selection and interpretation.
 Winning is descriptive, not the current skill gate. Time-varying rewards remain an
 integration hypothesis. Major architecture changes still require user review.
 
-Work in bounded research batches; do not revive the unrestricted overnight loop.
+On 2026-10-22 the user authorized ongoing orchestration until stopped. Continue
+bounded research cycles, with independent challenge and reassessment between
+allocations. The previous no-followup stopping point is superseded. Major
+architecture review and efficient resource use remain required.
 Current research artifacts: `/workspace/m1b-experiments/pong-scaffold-research-20261021/`.
 The bounded first-return refinement is complete: **no detectable improvement**.
 Both policies returned34/64 first balls; lift0pp,95%CI[-4.69,+4.69]. All-return
