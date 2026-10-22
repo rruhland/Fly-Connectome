@@ -128,3 +128,23 @@ Inherited training279,449 transitions:258,405 used,21,044 unused. The paired
 trial's550 completed journals were losslessly compressed1.656GB→.233GB in15.79s
 with full decompressed byte verification; metadata, heads and required T remain
 plain. Restore journals before further raw inspection.
+
+## Alternative explanations checked during execution
+
+Astra's mechanics-only diagnostic tested a 10,001-point grid of the initial
+leftward serve family against the actuator's extreme-position envelope, including
+wall reflections and crossing ticks. No tested target lay outside that envelope,
+even after a five-tick (41.7ms) initial delay; minimum collision-reach margin .025.
+This cost .050s and supplied no camera observations, policy execution or teacher
+labels. It weakens a gross reach-limit explanation, but is only a necessary
+reach envelope on a grid: it is not a constructive visual controller, an analysis
+of opponent-return serves, or proof of achievable learning. Sol independently
+agreed with that limited interpretation. Current training remains unchanged.
+
+Separately, code inspection distinguishes spatial precision from missing feature
+interactions. Current pooled relations already provide some interactions; a
+higher-resolution spatial DCT would not automatically add arbitrary relationships
+between channels or objects. [Konidaris et al. (2011)](https://people.cs.umass.edu/~pthomas/papers/Konidaris2011a.pdf),
+variable-coupling and limitations sections, informed this distinction. Its
+Fourier-of-state construction differs from our spatial occupancy transform; no
+benchmark performance is transferred. A capacity intervention remains unallocated.
