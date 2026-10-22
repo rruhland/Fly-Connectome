@@ -181,8 +181,8 @@ def validate_camera_job(job):
 def validate_actor_job(job):
     mode=job.get('actor')
     if mode is not None:
-        if (type(mode) is not dict or set(mode) not in ({'theta_from','temperature','action_seed'},
-                {'theta_from','temperature','action_seed','noise'})
+        if (type(mode) is not dict or not {'theta_from','temperature','action_seed'}<=set(mode)
+                or not set(mode)<={'theta_from','temperature','action_seed','noise','baseline_from'}
                 or not validate_first_hit_job(job) or job.get('camera_intervention') is not None
                 or job.get('projection_from') is None or job.get('scaling_from') is not None
                 or job['config'].get('action_hold_frames',1)!=1):
@@ -249,7 +249,8 @@ def worker(directory,job_id,max_work_seconds=160.,*,emit=True,_live_run=None,_ke
             else:
                 theta=np.load(directory/actor['theta_from'],allow_pickle=False)
                 session=FirstHitActorEpisode(theta,PongEvaluationConfig(**evaluation_config),projection=projection,
-                    temperature=actor['temperature'],action_seed=actor['action_seed'],noise=actor.get('noise'))
+                    temperature=actor['temperature'],action_seed=actor['action_seed'],noise=actor.get('noise'),
+                    baseline=None if actor.get('baseline_from') is None else np.load(directory/actor['baseline_from'],allow_pickle=False))
                 if not np.array_equal(weights,session.policy.weights):raise ValueError('actor mapped input differs')
         run=DurableRun(db,session=session,research_check_interval=research_interval)
     session=run.session;before=session.transitions
@@ -272,6 +273,9 @@ def worker(directory,job_id,max_work_seconds=160.,*,emit=True,_live_run=None,_ke
             or getattr(session,'actor_bias_config',None)!=actor.get('noise')
             or session.actor_projection.config!=projection or not np.array_equal(session.theta,np.load(directory/actor['theta_from'],allow_pickle=False))):
         raise ValueError('actor journal differs from declared head/exploration')
+    if actor is not None and (((actor.get('baseline_from') is not None)!=hasattr(session,'actor_baseline'))
+            or (actor.get('baseline_from') is not None and not np.array_equal(session.actor_baseline,np.load(directory/actor['baseline_from'],allow_pickle=False)))):
+        raise ValueError('actor journal differs from declared frozen state baseline')
     if job['kind']!='learn' and getattr(session,'first_hit_cutoff',False)!=first_hit_cutoff:
         raise ValueError('restored task boundary differs from declared training purpose')
     if job['kind']!='learn' and getattr(session,'camera_intervention',None)!=camera_intervention:
@@ -308,6 +312,15 @@ def worker(directory,job_id,max_work_seconds=160.,*,emit=True,_live_run=None,_ke
             if path.exists() and not np.array_equal(np.load(path,allow_pickle=False),session.eligibility):
                 raise ValueError('completed actor eligibility changed')
             if not path.exists():atomic_weights(path,session.eligibility)
+            if hasattr(session,'actor_baseline'):
+                exports={'baseline-features':np.asarray(session.baseline_features,dtype=np.float64),
+                    'baseline-score-norm2':np.asarray(session.baseline_score_norm2,dtype=np.float64),
+                    'baseline-correction':session.baseline_correction}
+                for stem,value in exports.items():
+                    path=directory/(job_id+'-'+stem+'.npy')
+                    if path.exists() and not np.array_equal(np.load(path,allow_pickle=False),value):
+                        raise ValueError('completed state baseline evidence changed')
+                    if not path.exists():atomic_weights(path,value)
         if job['kind']=='calibration':
             report['environment_episode_schedule_complete']=report['complete']
             report['complete']=complete()

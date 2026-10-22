@@ -119,7 +119,8 @@ def test_actor_checkpoint_requires_exact_external_projection(tmp_path):
 
 @pytest.mark.parametrize('with_noise',[False,True])
 @pytest.mark.parametrize('research_interval',[None,16])
-def test_worker_exports_complete_actor_trace_and_pins_required_artifacts(tmp_path,monkeypatch,with_noise,research_interval):
+@pytest.mark.parametrize('with_baseline',[False,True])
+def test_worker_exports_complete_actor_trace_and_pins_required_artifacts(tmp_path,monkeypatch,with_noise,research_interval,with_baseline):
     import sys
     sys.path.insert(0,str(Path(__file__).parents[1]/'scripts/experimental'))
     import run_pong_development as worker
@@ -140,6 +141,8 @@ def test_worker_exports_complete_actor_trace_and_pins_required_artifacts(tmp_pat
         actor=dict(theta_from='theta.npy',temperature=.1,action_seed=598933))
     if with_noise:job['actor']['noise']=dict(kind='centered-gaussian-ar1-v1',sigma=.04,rho=.8,seed=431763)
     if research_interval is not None:job['research_check_interval']=research_interval
+    if with_baseline:
+        np.save(tmp_path/'baseline.npy',np.array([.1,.2,-.05]));job['actor']['baseline_from']='baseline.npy'
     manifest=dict(source=source_signature(),runtime=runtime_signature(),driver_hash=hashlib.sha256(Path(worker.__file__).read_bytes()).hexdigest(),jobs=[job])
     worker.atomic_json(tmp_path/'manifest.json',manifest)
     original=FirstHitActorEpisode.__init__
@@ -151,6 +154,22 @@ def test_worker_exports_complete_actor_trace_and_pins_required_artifacts(tmp_pat
     assert report['complete'] and report['transitions']==report['actor']['decisions']==2
     if research_interval is not None:
         assert report['research_execution']['last_full_check']['count']==2
+    if with_baseline:
+        assert report['actor']['baseline']['feature_rows']==2
+        features=np.load(tmp_path/'fixture-baseline-features.npy');weights=np.load(tmp_path/'fixture-baseline-score-norm2.npy')
+        assert features.shape==(2,2) and weights.shape==(2,)
+        from fly_connectome.control.pong_actor import baseline_prediction
+        import sqlite3
+        with sqlite3.connect(tmp_path/'fixture.db') as db:
+            rows=[json.loads(r[0]) for r in db.execute('SELECT record FROM replay_samples ORDER BY seq')]
+        correction=np.zeros_like(theta)
+        for row,x,w in zip(rows,features,weights):
+            assert np.array_equal(theta@x,row['q'])
+            score=score_eligibility(row['action'],row['actor']['probabilities'],x,.1)
+            assert float(np.sum(score*score))==w
+            value,_=baseline_prediction(np.load(tmp_path/'baseline.npy'),x)
+            assert value==row['actor']['baseline_value'];correction+=value*score
+        np.testing.assert_array_equal(correction,np.load(tmp_path/'fixture-baseline-correction.npy'))
     completion.pin_completion(tmp_path,job);assert completion.complete_report(tmp_path,job)==json.loads(json.dumps(report))
     pin=json.loads((tmp_path/'fixture-completion.json').read_text())
     assert {'fixture-eligibility.npy','theta.npy','search-transform.npy','projection.json'}<=set(pin['endpoint_artifacts'])

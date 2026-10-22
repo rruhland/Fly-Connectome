@@ -77,6 +77,16 @@ def endpoint_artifacts(directory,job):
                     or report['actor']['decisions']!=report['transitions']):
                 raise ValueError('completed actor trace differs')
             paths.extend((path,directory/job['actor']['theta_from'],directory/'search-transform.npy'))
+            if job['actor'].get('baseline_from') is not None:
+                baseline=report['actor']['baseline'];parameters=np.load(directory/job['actor']['baseline_from'],allow_pickle=False)
+                if hashlib.sha256(parameters.tobytes()).hexdigest()!=baseline['parameters_sha256']:
+                    raise ValueError('completed actor baseline parameters differ')
+                for stem,key in (('baseline-features','features_sha256'),('baseline-score-norm2','score_norm2_sha256'),('baseline-correction','correction_sha256')):
+                    path=directory/(job['id']+'-'+stem+'.npy');value=np.load(path,allow_pickle=False)
+                    if not np.isfinite(value).all() or hashlib.sha256(value.tobytes()).hexdigest()!=baseline[key]:
+                        raise ValueError('completed state baseline evidence differs')
+                    paths.append(path)
+                paths.append(directory/job['actor']['baseline_from'])
     return {p.name:sha(p) for p in [*paths,directory/'projection.json']}
 
 def completed_count(directory,job):
