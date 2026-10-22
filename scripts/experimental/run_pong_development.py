@@ -208,6 +208,9 @@ def worker(directory,job_id,max_work_seconds=160.,*,emit=True,_live_run=None,_ke
     first_hit_cutoff=validate_first_hit_job(job)
     camera_intervention=validate_camera_job(job)
     actor=validate_actor_job(job)
+    research_interval=job.get('research_check_interval')
+    if research_interval is not None and (type(research_interval) is not int or research_interval != 16 or job['kind'] != 'evaluate'):
+        raise ValueError('research execution is explicit interval16 actor/greedy evaluation only')
     checkpoints=job.get('checkpoints',(2000,6000))
     scaling=None if job.get('scaling_from') is None else json.loads((directory/job['scaling_from']).read_text())
     projection=None if job.get('projection_from') is None else json.loads((directory/job['projection_from']).read_text())
@@ -219,10 +222,10 @@ def worker(directory,job_id,max_work_seconds=160.,*,emit=True,_live_run=None,_ke
     if _live_run is not None:
         run=_live_run
         actual=Path(run.db.execute('PRAGMA database_list').fetchone()[2]).resolve()
-        if actual!=db.resolve() or run.failed or run.stopped:
+        if actual!=db.resolve() or run.failed or run.stopped or run.research_check_interval!=research_interval:
             raise ValueError('live writer differs from requested healthy journal')
     elif db.exists():
-        run=DurableRun(db)
+        run=DurableRun(db,research_check_interval=research_interval)
     else:
         seed=job.get('seed',DEV_SEED)
         random.seed(seed);np.random.seed(seed);torch.manual_seed(seed)
@@ -248,7 +251,7 @@ def worker(directory,job_id,max_work_seconds=160.,*,emit=True,_live_run=None,_ke
                 session=FirstHitActorEpisode(theta,PongEvaluationConfig(**evaluation_config),projection=projection,
                     temperature=actor['temperature'],action_seed=actor['action_seed'],noise=actor.get('noise'))
                 if not np.array_equal(weights,session.policy.weights):raise ValueError('actor mapped input differs')
-        run=DurableRun(db,session=session)
+        run=DurableRun(db,session=session,research_check_interval=research_interval)
     session=run.session;before=session.transitions
     if job['kind']=='learn':
         expected_config=dict(seed=job['seed'],max_episode_ticks=2400,alpha=job.get('alpha',.0001),lam=job['lam'],
@@ -351,6 +354,8 @@ def worker(directory,job_id,max_work_seconds=160.,*,emit=True,_live_run=None,_ke
                           pending_hold_frames=session.hold_frames)
     if _keep_open:checkpoint_open_run(run)
     else:run.stop()
+    if research_interval is not None:
+        report['research_execution']=dict(contract=run.execution_contract,last_full_check=run.last_research_full_check)
     # Read the persisted save event, so chunk saving cost is included in prefixes.
     with sqlite3.connect(db) as connection:
         if job.get('compact_reports',False):

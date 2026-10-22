@@ -2,6 +2,11 @@
 
 Only committed transitions exist on recovery. A failed in-memory writer is poisoned;
 reopen from the journal instead of attempting to continue its advanced runtime.
+
+Default journals retain per-camera full-content checks. The explicitly opted-in
+Pong research contract chains every record but checks full contents every 16
+cameras and at checkpoints, terminal states and recovery exit. This changes
+mutation-detection granularity, not the session's observations or dynamics.
 """
 import hashlib
 import json
@@ -16,6 +21,9 @@ from .codec import FrozenCodec, fingerprint, GRAPH_DIGEST
 from .journal import canonical, digest
 from .session import LearningSession
 
+RESEARCH_EXECUTION = dict(kind='m1b-pong-research-interval-v1',full_check_interval=16)
+RESEARCH_UNCHECKED = 'm1b-pong-research-unchecked-v1'
+
 
 def runtime_signature():
     return dict(python=platform.python_version(),numpy=np.__version__,torch=torch.__version__,
@@ -24,10 +32,15 @@ def runtime_signature():
 
 class DurableRun:
     def __init__(self, path, *, session=None, snapshot_transitions=100,
-                 snapshot_seconds=10., clock=time):
+                 snapshot_seconds=10., clock=time, research_check_interval=None):
         if (type(snapshot_transitions) is not int or snapshot_transitions < 1
                 or not 0 < snapshot_seconds < float('inf')):
             raise ValueError('positive snapshot intervals required')
+        if research_check_interval is not None and (type(research_check_interval) is not int or research_check_interval != 16):
+            raise ValueError('research execution supports only the explicit 16-camera contract')
+        self.research_check_interval = research_check_interval
+        self.execution_contract = None if research_check_interval is None else dict(RESEARCH_EXECUTION)
+        self.last_research_full_check = None
         self.clock, self.started_wall, self.started_mono = clock, clock.time_ns(), clock.monotonic_ns()
         self.db = sqlite3.connect(path,timeout=30,isolation_level=None)
         self.db.execute('PRAGMA journal_mode=WAL')
@@ -52,10 +65,18 @@ class DurableRun:
                 self.db.close()
                 raise ValueError('initial session must precede first transition')
             self.session = session
+            if self.execution_contract is not None:
+                try:
+                    self._validate_research_session()
+                except BaseException:
+                    self.db.close()
+                    raise
             self.codec = FrozenCodec.from_session(session)
             config = dict(schema='m1b-replay-v2',graph_digest=GRAPH_DIGEST,bank=self.codec.key,runtime=runtime_signature(),
                           session_kind=session.durable_kind,
                           snapshot_transitions=snapshot_transitions,snapshot_seconds=snapshot_seconds)
+            if self.execution_contract is not None:
+                config['execution_contract'] = self.execution_contract
             self.db.execute('BEGIN IMMEDIATE')
             try:
                 self.db.execute('INSERT INTO replay_meta VALUES (1,?)',(canonical(config),))
@@ -72,6 +93,9 @@ class DurableRun:
                 self.db.close()
                 raise ValueError('existing journal must be resumed, not overwritten')
             config = json.loads(config[0])
+            if config.get('execution_contract') != self.execution_contract:
+                self.db.close()
+                raise ValueError('journal execution contract differs; explicit matching research opt-in required')
             if config['schema'] != 'm1b-replay-v2':
                 self.db.close()
                 raise ValueError('unsupported replay schema')
@@ -93,12 +117,34 @@ class DurableRun:
                         (kind,self.session.transitions,self.started_wall if kind == 'start' else self.clock.time_ns(),
                          self.clock.monotonic_ns()-self.started_mono,gap))
 
+    def _validate_research_session(self):
+        from .pong_evaluation import FreshPongEvaluator
+        from .pong_actor import FirstHitActorEpisode
+        s = self.session
+        if (type(s) not in (FreshPongEvaluator,FirstHitActorEpisode)
+                or s.config.episodes != 1 or s.config.policy_kind != 'trained'
+                or s.config.action_hold_frames != 1 or s.config.skip_baseline_perception
+                or s.config.blank_camera or hasattr(s,'camera_intervention')):
+            raise ValueError('research execution supports exact ordinary K=1 Pong actor/greedy episode classes only')
+
+    def _research_full_guard(self):
+        learned = self.session.verify_frozen()
+        actual = fingerprint(self.session)  # Actual contents, including external T.
+        self.last_research_full_check = dict(count=self.session.transitions,state_hash=actual,learned_hash=learned)
+        return actual
+
+    def _session_step(self):
+        if self.execution_contract is None:
+            return self.session.step()
+        return self.session.step(check_frozen=False)
+
     def _checkpoint(self):
         self.session.capture_rng()
         payload = self.codec.dumps(self.session)
+        state_hash = fingerprint(self.session) if self.execution_contract is None else self._research_full_guard()
         self.last_snapshot_wall = self.clock.time_ns()
         self.db.execute('INSERT OR REPLACE INTO replay_active VALUES (1,?,?,?,?,?)',
-                        (self.session.transitions,payload,digest(payload),fingerprint(self.session),self.last_snapshot_wall))
+                        (self.session.transitions,payload,digest(payload),state_hash,self.last_snapshot_wall))
 
     def _recover(self, bank_key, session_kind):
         # One consistent read transaction. CAS on append rejects competing writers.
@@ -113,13 +159,17 @@ class DurableRun:
                 expected = digest(canonical([previous,seq,raw.decode(),state_hash]))
                 if seq != len(records) or actual != expected:
                     raise ValueError('sample sequence/hash mismatch')
-                records.append((json.loads(raw),state_hash))
+                record = json.loads(raw)
+                terminal = any(record.get(k,False) for k in ('terminated','truncated','task_stopped'))
+                if state_hash == RESEARCH_UNCHECKED and (self.execution_contract is None or (seq+1)%16 == 0 or terminal):
+                    raise ValueError('unchecked sample violates declared execution contract')
+                records.append((record,state_hash))
                 previous = actual
             active = self.db.execute('SELECT count,payload,payload_hash,state_hash,wall_ns FROM replay_active WHERE id=1').fetchone()
             if active is None or not 0 <= active[0] <= len(records) or digest(active[1]) != active[2]:
                 raise ValueError('corrupt active checkpoint')
             count,payload,_,state_hash,self.last_snapshot_wall = active
-            if count and state_hash != records[count-1][1]:
+            if count and records[count-1][1] != RESEARCH_UNCHECKED and state_hash != records[count-1][1]:
                 raise ValueError('checkpoint/sample state mismatch')
             from .toy_session import ToySession
             from .pong_evaluation import FreshPongEvaluator
@@ -136,14 +186,19 @@ class DurableRun:
             if session_kind not in classes:
                 raise ValueError('unsupported session kind')
             self.session = classes[session_kind].validate_restored(self.codec.loads(payload))
+            if self.execution_contract is not None:
+                self._validate_research_session()
             if self.session.transitions != count or fingerprint(self.session) != state_hash:
                 raise ValueError('restored state mismatch')
             self.last_snapshot_count = count
             self.replayed = len(records)-count
             for expected_record,expected_hash in records[count:]:
-                actual_record = self.session.step()
-                if actual_record != expected_record or fingerprint(self.session) != expected_hash:
+                actual_record = self._session_step()
+                actual_hash = (self._research_full_guard() if self.execution_contract is not None else fingerprint(self.session)) if expected_hash != RESEARCH_UNCHECKED else None
+                if actual_record != expected_record or (expected_hash != RESEARCH_UNCHECKED and actual_hash != expected_hash):
                     raise ValueError('deterministic replay mismatch')
+            if self.execution_contract is not None:
+                self._research_full_guard()  # Also mandatory when an unchecked tail ends between boundaries.
         finally:
             self.db.execute('ROLLBACK')
 
@@ -152,10 +207,15 @@ class DurableRun:
             raise RuntimeError('writer unavailable; reopen journal')
         self.failed = True
         expected_count = self.session.transitions
-        record = self.session.step()
-        raw, state_hash = canonical(record),fingerprint(self.session)
+        record = self._session_step()
+        raw = canonical(record)
+        if self.execution_contract is None:
+            state_hash = fingerprint(self.session)
         due = (self.session.transitions-self.last_snapshot_count >= self.snapshot_transitions
                or self.clock.monotonic_ns()-self.last_snapshot_mono >= self.snapshot_seconds*1e9)
+        if self.execution_contract is not None:
+            boundary = self.session.transitions%16 == 0 or due or self.session.complete
+            state_hash = self._research_full_guard() if boundary else RESEARCH_UNCHECKED
         self.db.execute('BEGIN IMMEDIATE')
         try:
             head = self.db.execute('SELECT seq,chain_hash FROM replay_samples ORDER BY seq DESC LIMIT 1').fetchone()

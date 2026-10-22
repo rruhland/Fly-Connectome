@@ -152,8 +152,8 @@ class FirstHitActorEpisode(FreshPongEvaluator):
                 biased_greedy_action=int(np.argmax(q+self.bias)),bias_draws=self.bias_draws)
         return action,q
 
-    def step(self):
-        record=super().step()
+    def step(self, *, check_frozen=True):
+        record=super().step(check_frozen=check_frozen)
         record['actor']=self.last_actor_choice.copy()
         return record
 

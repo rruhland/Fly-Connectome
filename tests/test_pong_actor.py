@@ -118,7 +118,8 @@ def test_actor_checkpoint_requires_exact_external_projection(tmp_path):
 
 
 @pytest.mark.parametrize('with_noise',[False,True])
-def test_worker_exports_complete_actor_trace_and_pins_required_artifacts(tmp_path,monkeypatch,with_noise):
+@pytest.mark.parametrize('research_interval',[None,16])
+def test_worker_exports_complete_actor_trace_and_pins_required_artifacts(tmp_path,monkeypatch,with_noise,research_interval):
     import sys
     sys.path.insert(0,str(Path(__file__).parents[1]/'scripts/experimental'))
     import run_pong_development as worker
@@ -138,6 +139,7 @@ def test_worker_exports_complete_actor_trace_and_pins_required_artifacts(tmp_pat
         projection_from='projection.json',first_hit_cutoff=True,compact_reports=True,
         actor=dict(theta_from='theta.npy',temperature=.1,action_seed=598933))
     if with_noise:job['actor']['noise']=dict(kind='centered-gaussian-ar1-v1',sigma=.04,rho=.8,seed=431763)
+    if research_interval is not None:job['research_check_interval']=research_interval
     manifest=dict(source=source_signature(),runtime=runtime_signature(),driver_hash=hashlib.sha256(Path(worker.__file__).read_bytes()).hexdigest(),jobs=[job])
     worker.atomic_json(tmp_path/'manifest.json',manifest)
     original=FirstHitActorEpisode.__init__
@@ -147,6 +149,8 @@ def test_worker_exports_complete_actor_trace_and_pins_required_artifacts(tmp_pat
     monkeypatch.setattr(FirstHitActorEpisode,'__init__',init)
     report=worker.worker(tmp_path,'fixture',emit=False)
     assert report['complete'] and report['transitions']==report['actor']['decisions']==2
+    if research_interval is not None:
+        assert report['research_execution']['last_full_check']['count']==2
     completion.pin_completion(tmp_path,job);assert completion.complete_report(tmp_path,job)==json.loads(json.dumps(report))
     pin=json.loads((tmp_path/'fixture-completion.json').read_text())
     assert {'fixture-eligibility.npy','theta.npy','search-transform.npy','projection.json'}<=set(pin['endpoint_artifacts'])

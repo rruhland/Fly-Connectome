@@ -89,6 +89,18 @@ def completed_count(directory,job):
         raise ValueError('completed training must have exactly the declared endpoint rows')
     if job['kind']=='evaluate' and report['episodes']!=job['config']['episodes']:
         raise ValueError('completed evaluation episode count differs')
+    research=report.get('research_execution')
+    if job.get('research_check_interval') is not None:
+        from fly_connectome.control.durable import RESEARCH_EXECUTION
+        with sqlite3.connect(directory/(job['id']+'.db')) as db:
+            config=json.loads(db.execute('SELECT config FROM replay_meta WHERE id=1').fetchone()[0])
+            active=db.execute('SELECT count,state_hash FROM replay_active WHERE id=1').fetchone()
+        if (job['research_check_interval']!=16 or not research or research['contract']!=RESEARCH_EXECUTION
+                or config.get('execution_contract')!=RESEARCH_EXECUTION
+                or active!=(count,research['last_full_check']['state_hash']) or research['last_full_check']['count']!=count):
+            raise ValueError('research completion lacks the declared full terminal checkpoint')
+    elif research is not None:
+        raise ValueError('research completion requires explicit matching job contract')
     return report,count
 
 def completion_payload(directory,job):

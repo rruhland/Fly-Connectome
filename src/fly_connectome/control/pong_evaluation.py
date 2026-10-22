@@ -157,7 +157,15 @@ class FreshPongEvaluator:
     def _choose_policy(self):
         return self.policy.choose(*policy_features(self.latest_encoded,self.scaler))
 
-    def step(self):
+    def verify_frozen(self):
+        actual = self.learned_hash()
+        if actual != self.initial_learned_hash:
+            raise RuntimeError('evaluation changed frozen policy, vision or bank state')
+        return actual
+
+    def step(self, *, check_frozen=True):
+        if type(check_frozen) is not bool:
+            raise ValueError('boolean frozen-state check required')
         if self.complete:
             raise StopIteration('fresh Pong allocation complete')
         with preserve_global_rngs():
@@ -217,8 +225,8 @@ class FreshPongEvaluator:
                     self.rallies[-1].update(task_stopped=task_stopped,
                         task_stop_reason="first_own_hit" if task_stopped else None)
                 self.episodes += 1
-            if self.learned_hash() != self.initial_learned_hash:
-                raise RuntimeError('evaluation changed frozen policy, vision or bank state')
+            if check_frozen:
+                self.verify_frozen()
         self.capture_rng()
         return record
 
