@@ -203,3 +203,19 @@ zero observations/replay; heads/metadata remain plain. Archive completed BEFORE 
 R2 launch exec65584, originalstarted_wall_ns1792691458745935191. Same80k/900train+
 600eval/1500overall, noextensions. Source/driver/protocol freeze through bothchecks;
 DEVblind until exit. Reused Sol supervises; Astra's independent checker is prepared.
+
+## R1 retention interpretation while r2 remains blind
+
+Astra's metadata-only posthoc split of R1 ordinary games: among34direct openings,
+first returns13→30; among30opponent-first openings,18→9. Later returns/opportunities
+were13/25→8/38 for direct openings and24/39→1/10 for opponent-first openings.
+These conditional later exposures differ with policy; this is descriptive analysis,
+not a new gate or causal estimate. Cost0.3ms after reading plain metadata, no new
+observations, raw journals or replay. Artifact
+`/workspace/m1b-experiments/pong-mechanism-review-20261022/population-r1-direction-retention.json`.
+The direct skill generalizes to the direct subset inside ordinary games; the policy
+specializes away from opponent-return openings and later play. First-hit cutoff
+provides no postcontact training experience, motivating full-rally training as an
+integration contender after replication. It does not prove that one fixed policy
+can learn all situations or that architecture changes will be unnecessary.
+No r2outcomes read, protocol changes or new training allocation.
