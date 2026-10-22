@@ -23,7 +23,7 @@ flowchart TD
     N --> O[Opponent-return acquisition: 19 to 44 / 64]
     O --> P[Ordinary first returns: 31 to 54 / 64 vs global]
     P --> Q[Direct preservation unresolved: 54 to 50 / 64]
-    Q --> R[NEXT: balanced practice from learned opponent-return endpoint]
+    Q --> R[PAUSED by user: balanced practice selected; new run interrupted]
     classDef gain fill:#d9eddb,stroke:#46734a
     classDef fail fill:#f4ded9,stroke:#a15d49
     classDef active fill:#fff0c9,stroke:#967627
@@ -74,7 +74,11 @@ experimental scaffold carry, not qualified global promotion. Require new balance
 learning versus its own start plus phase retention and ordinary-game retention
 against its own start. The original direct and global heads remain relevant phase
 references. Exact opponent-return replication is deferred; this is integration
-exploration conditional on a single opponent-return training run. Not yet launched.
+exploration conditional on a single opponent-return training run. The balanced trial
+launched at2026-10-22T19:39:25.537299559Z, then the user requested a pause.
+It is being shut down promptly with partial exposure retained, not interpreted as
+a learning null. See HANDOFF for the final shutdown receipt. No further allocation
+is authorized while paused.
 
 Checked figure: `/workspace/m1b-experiments/pong-mechanism-review-20261022/rightward-result.png`.
 

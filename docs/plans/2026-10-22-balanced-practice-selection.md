@@ -62,3 +62,28 @@ not stored-experience replay or CLEAR, and not an autonomous continual learner.
 Phase labels select training starts only; they never enter policy observations.
 Every episode's fresh interaction is charged. Approximate phase symmetry does not
 justify asserting identical sample or update dose across experiments.
+
+## Independent stage review
+
+Root `/workspace/m1b-experiments/pong-balanced-interception-20261022-r1`.
+Same source68d15a7. Nine focused checks passed3.56s; Sol preparation2.2403s
+and own stage review48.7ms. Astra independently regenerated seven-root schedules,
+336accepted canonical seeds,278rejected draws and38576exclusions, checked exact
+carried/reference weights, all192first-population jobs, perturbations and RNG.
+Parent stage passed223ms with zero new observations/replay. Driver SHA256
+`5e79af3cc9cee2a264b9c7bf16e99680e31e5a78fa85657354729a33c745cf46`;
+protocol `da239d4de84e8110a101287e0cb6fff590f85c856f067a0354c35be73ec67113`;
+manifest `6757187646f25bca85a08da94eec47c5d667c541f2b0d4f782bb735c58fdbd3f`.
+Cleared for one bounded launch; exact receipt recorded separately. All three remain
+frozen until both post-exit checks. Parent checker scripts and outputs live under
+`/workspace/m1b-experiments/pong-mechanism-review-20261022/`.
+
+## User pause
+
+After launch at2026-10-22T19:39:25.537299559Z (exec9708), the user requested:
+“find a good pausing point and stop.” Orchestration stopped initiating work and
+requested prompt clean shutdown of the newly launched allocation. The last fully
+verified research result remains opponent-return acquisition with unresolved direct
+retention. Preserve partial balanced exposure/checkpoints and original clock; do not
+label interruption a null or silently restart the clock. HANDOFF/live state record
+final process and accounting receipts. Resume only on renewed user instruction.
