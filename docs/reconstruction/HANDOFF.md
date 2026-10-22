@@ -14,13 +14,15 @@ On 2026-10-22 the user authorized ongoing orchestration until stopped. Continue
 bounded research cycles, with independent challenge and reassessment between
 allocations. The previous no-followup stopping point is superseded. Major
 architecture review and efficient resource use remain required.
-**Active work: approved nonlinear residual implementation.** The user explicitly
-approved the [fixed64-feature nonlinear residual test](../plans/2026-10-22-nonlinear-residual-review.md).
-Reused Sol is implementing an isolated source and bounded correctness/cost proof;
-Astra reviews representation/evaluation consistency and frozen protocol before
-launch. No live training yet. No further permission is needed for this approved
-change/test. Preserve ARtheta112, exact warm start, no backpropagation or privileged
-inputs; fixed40k/arm and30-minute allocation, not a sweep.
+**Active research: approved nonlinear residual comparison running.** See the
+[fixed64-feature plan/protocol](../plans/2026-10-22-nonlinear-residual-review.md).
+Root`/workspace/m1b-experiments/pong-nonlinear-residual-20261022-r1`, exec71017,
+originalstart1792686199720929873ns, isolated source38a097f. Freeze source/driver/
+protocol through both outcome checks; no DEV peeking. Same ARtheta112, no failed
+baseline heads carried.40k training per arm,20min training+10min evaluation,
+30min overall. Reused Sol supervises; Astra independently checks/interprets.
+User explicitly approved this architecture test; no further permission needed.
+Continue orchestration after results, with major-change review boundary intact.
 
 Latest [visual baseline comparison](2026-10-22-visual-baseline-research.md): both
 checks pass, source integrated343e881. First returns41/64 carried versus44/64 in
