@@ -14,7 +14,7 @@ On 2026-10-22 the user authorized ongoing orchestration until stopped. Continue
 bounded research cycles, with independent challenge and reassessment between
 allocations. The previous no-followup stopping point is superseded. Major
 architecture review and efficient resource use remain required.
-**Active research: replicated direct-interception learning; staging full-rally integration.**
+**Active research: replicated direct-interception learning; full-rally integration running.**
 [Protocol/results](../plans/2026-10-22-population-search-reassessment.md).
 Both population trials COMPLETE with both independent checks PASS. Direct returns:
 r1 29→56/64, +42.19pp CI[29.69,54.69]; r2 27→49/64, +34.38pp CI[18.75,50].
@@ -25,10 +25,13 @@ precommitment; original ARtheta112 remains the global reference. Source68d15a7
 freeze released. R2: 79,825train,37,687eval,1,984initials,907.916s,9updates.
 
 Next selected question: can the existing original full-rally population stage retain
-this interception skill and improve sustained returns? Sol stages a bounded protocol
-from r1theta9 with ordinary mixed starts; Astra independently reviews before launch.
+this interception skill and improve sustained returns? Sol supervises the staged allocation from r1theta9 with ordinary mixed starts;
+both stage reviews PASS, no new architecture.
 Fresh evaluation will compare specialized start, global reference and endpoint;
-explicit direct preservation and per-game rally learning gates. No allocation yet.
+explicit direct preservation and per-game rally learning gates. Root
+`pong-full-rally-integration-20261022-r1`, exec84970, original start
+1792692905024392844ns.80k/900s train,600s eval/1500s total; min3/max12 populations.
+DEV blind; source68d15a7 and coordinator frozen through both postexit checks.
 
 The existing frozenvision/linearclass demonstrably supports high direct interception;
 prior localactor nulls did not establish representationceiling. Originalpopulation

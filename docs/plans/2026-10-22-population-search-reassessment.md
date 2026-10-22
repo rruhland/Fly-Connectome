@@ -329,3 +329,6 @@ both postexit checks. Parent result checker prepared independently.
 Interpretation clarification: >=2 returns requires actual repeated returns but can
 increase because more openings reach an unchanged continuation policy. It measures
 whole-trajectory rally success, not isolated postcontact-control improvement.
+
+Integration launched exec84970, originalstarted_wall_ns1792692905024392844
+(2026-10-22T18:15:05.024392844Z). Same staged caps, no extensions; DEV blind.
