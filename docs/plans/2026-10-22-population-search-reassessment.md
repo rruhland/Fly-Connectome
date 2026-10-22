@@ -297,3 +297,13 @@ is not adopted, and the paper does not establish our failure's cause. First test
 full-task exposure with the already demonstrated population rule before adding a
 consolidation mechanism. The paired outcome plot is
 `/workspace/m1b-experiments/pong-mechanism-review-20261022/population-replication.png`.
+
+R2 storage after both checks:1,984 journals5.767GB→.802GB,62.918s, all bytes
+reconstruct-verified, zero observations/replay. Parent sequencing error overlapped
+cold archive start with sidecar script's final post-removal DB hash check; that check
+raised missing-file because compression had removed a DB. Pre-removal sidecar and
+main-DB verification plus original hashes were already durable. Separate recovery
+reconstructed all1,984 affected databases against those original hashes and rechecked
+all3,968 archived sidecar members, PASS14.370s. No experimental/source changes or
+lost data; recovery artifact `sidecar-recovery-verification.json`. Next training
+has not launched, so no overlap with live training.
