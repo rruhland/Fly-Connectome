@@ -56,3 +56,47 @@ https://arxiv.org/pdf/1803.07055. It motivates a fair parameter-search baseline 
 attention to seed variability, not a guarantee on this task. Existing implementation
 already resembles that family; no wholesale algorithm import, supervised labels
 or backpropagation is needed.
+
+## Selected protocol for implementation and independent stage review
+
+80,000 new training camera transitions,900s training;600s evaluation;1500s overall
+from an immutable original clock. Max12 complete populations; at least5 complete
+populations for eligible assessment, with actual nonzero updates/movement reported
+separately. Last complete endpoint only. All partial observations and initial
+images count; no result-dependent extension.
+
+Use the original phase0 rule without retuning:8 centered Gaussian directions,
+normalized to unit function RMS on the fixed generic cache; paired perturbations
+plus/minus.25;12 fresh ordinary initial-leftward starts shared across all16greedy
+candidates.192rollouts/population, K1, strong.65opponent, first-hit10s episodes.
+Fitness is mean binary first-own-hit success. Original top4directions by maximum
+sign fitness, stable ties, selected-return standard-deviation normalization and
+.10 aggregate function-RMS cap. Original zero-update behavior for zero spread or
+zero contrasts; no invented fallback. Keep exact original ARtheta112/T and vision.
+
+At46–47cameras/rollout, one population costs roughly9,000transitions plus192initial
+images;80k affords approximately8–9 populations. The original successful first-hit
+phases completed5/6. Correction to Astra's earlier rough estimate:40k would afford
+only about4populations, not9–18. Timing is plausible from retained greedy throughput
+but short-episode overhead remains uncertain. A budget-limited partial dose is not
+a learning failure and does not authorize extending the run.
+
+Endpoint and carried control:64freshLEFT first-contact episodes plus64separate
+freshunfiltered20s games,256jobs total. PrimaryLEFT lift>=10pp and paired95%lower>0;
+absoluteLEFT80% separate. Full first-return AND all-return retention each require
+paired95%lower>-5pp. Fixed10k bootstrap, separate cohorts, DEV blind until exit.
+No full-task80% claim from restricted success; independent replication before
+promotion. No concurrent training control or pure-dose causal claim.
+
+Astra selected after Sol's measured comparison and independent challenge. Larger
+local-actor steps remain a legitimate deferred alternative; tiny carried movement
+leaves that hypothesis alive, but enlarging it would retain uncertain noisy-action
+to greedy-policy transfer. ExistingT already ridge-whitens generic moments, so
+another raw feature preconditioner is not an obviously missing ingredient. Input
+information loss remains possible. None of these alternatives is ruled out.
+
+Reuse the already checked greedy first-contact evaluator and explicit interval16
+research execution. No architecture or environment-source change is needed.
+Focused coordinator validation covers complete/partial populations, paired fitness,
+optimizer RNG/checkpoint progression, seed isolation and budget accounting. Frozen
+source/driver/protocol and independent stage approval are required before launch.
