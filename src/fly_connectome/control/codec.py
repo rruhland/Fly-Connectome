@@ -85,11 +85,22 @@ def fingerprint(value):
                 fields['_variance_version'] = fields['_variance_version'] == fields['_variance_keys']._version
             return [type(obj).__module__+'.'+type(obj).__qualname__, visit(fields)]
         raise TypeError(type(obj))
-    stream = io.BytesIO()
+    # Hash the exact canonical pickle stream without allocating a second full
+    # graph-sized buffer and prefix concatenation. Every content byte is still
+    # traversed; this does not cache or trust supposedly immutable arrays.
+    class DigestSink:
+        def __init__(self):
+            self.digest = hashlib.sha256(GRAPH_DIGEST.encode()+b'\0')
+
+        def write(self, data):
+            self.digest.update(data)
+            return len(data)
+
+    stream = DigestSink()
     writer = pickle.Pickler(stream, protocol=5)
     writer.fast = True
     writer.dump(visit(value))
-    return hashlib.sha256(GRAPH_DIGEST.encode()+b'\0'+stream.getvalue()).hexdigest()
+    return stream.digest.hexdigest()
 
 
 
