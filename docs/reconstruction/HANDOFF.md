@@ -14,22 +14,22 @@ On 2026-10-22 the user authorized ongoing orchestration until stopped. Continue
 bounded research cycles, with independent challenge and reassessment between
 allocations. The previous no-followup stopping point is superseded. Major
 architecture review and efficient resource use remain required.
-**Active research: two rally integration configurations failed; reassessing intermediate skill.**
-[Protocol/results](../plans/2026-10-22-population-search-reassessment.md).
+**Active research: RIGHT-first opponent-return interception curriculum running.**
+[Current protocol](../plans/2026-10-22-opponent-return-interception.md);
+[preceding results](../plans/2026-10-22-population-search-reassessment.md).
 Strong direct-interception acquisition replicated29→56/64 and27→49/64. Designated
-r1theta9 remains the direct scaffold, ARtheta112 the global reference.
+r1theta9 remains the direct scaffold, ARtheta112 the global reference. Two complete-
+rally configurations failed primary gates; all8pair-bank followup still improved
+LEFT53→61/64 as a secondary result, without rally gain or endpoint promotion.
 
-Full-rally integration failed rally gains and direct retention (DIRECT60→55/64;
-FULL>=2DIRECT15/GLOBAL12→ENDPOINT17). Followup48context/all8pair-bank run also
-failed rally primary (DIRECT6/GLOBAL12→ENDPOINT7/64), but improves direct first
-returns53→61/64,+12.5pp CI[4.6875,20.3125]. This secondary gain does not promote
-the endpoint or establish combined progress. Both checks PASS/source freeze released.
-Latest79,937train(12,569unused),53,764eval,788.109s,3updates/netRMS.059945.
-
-No automatic bank/rate/threshold sweep. Astra's new target contender: learn first
-incoming balls after an opponent return, using ordinary RIGHT-first curriculum
-while preserving direct skill. Sol challenges that and alternatives before selection.
-No new allocation selected; no architecture change. Source68d15a7 still unchanged.
+Both agents independently selected the missing native opponent-return opening skill.
+Ordinary RIGHT-first starts, first-own-hit cutoff, original12sharedstarts/8dirs/top4/
+.25noise/.10cap; same r1theta9 carry, no new architecture/inputs. Threeheads on
+64RIGHT+64LEFTfirst-contact+64FULL games (576jobs), explicit phase acquisition,
+preservation and FULLfirst-gain gates;80%allthree separate.
+Root`pong-rightward-interception-20261022-r1`, exec95719, originalstart
+1792695554956184660ns. Both stage reviews PASS;160k/1200train+900eval/2100overall,
+min5/max12; DEVblind, source68d15a7/driver/protocol frozen through both postexit checks.
 
 The existing frozenvision/linearclass demonstrably supports high direct interception;
 prior localactor nulls did not establish representationceiling. Originalpopulation

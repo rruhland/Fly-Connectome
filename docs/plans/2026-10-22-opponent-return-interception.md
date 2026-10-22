@@ -112,3 +112,6 @@ min5/max12. Source/driver/protocol frozen through both postexit checks; DEV blin
 Prior pair-bank journals archived only after both checks:726DB2.1845GB→.3147GB,
 20.134s; sidecar2.693s completed before archive. All bytes reconstruct-verified,
 zero observations/replay, no overlap with this new training allocation.
+
+Launched exec95719, originalstarted_wall_ns1792695554956184660
+(2026-10-22T18:59:14.956184660Z). Same frozen caps; DEV blind, no extensions.
