@@ -114,6 +114,24 @@ motor-state limitations, and choose a bounded intervention. Review the ten-secon
 horizon before making repeated-exchange claims. Winning remains descriptive at
 these stages. Dynamic reward scheduling and a new architecture are not selected.
 
+### 2026-10-22 evidence update
+
+Original-scale population search now replicates strong direct-interception learning:
+29→56/64 and27→49/64 on independent fresh cohorts from the same carried policy.
+The80% absolute threshold passed only the first run; reliable interception across
+ordinary games is not complete. Both specialized endpoints fail to establish
+full-rally preservation. This updates the optimization-versus-representation diagnosis:
+the existing frozen visual/linear class supports much stronger direct interception
+than the preceding local actor experiments demonstrated.
+
+The predesignated first-run endpoint is now being tested as a scaffold for the
+existing full-rally population stage. This is an integration experiment, not a claim
+that all earlier competence gates have passed. A single endpoint must preserve its
+new interception skill and exceed the original general policy on repeated returns;
+otherwise report recovery, tradeoff or null separately. The global reference remains
+original ARtheta112 until combined evidence warrants a change. Detailed prospective
+criteria and results: [population reassessment](2026-10-22-population-search-reassessment.md).
+
 Historical evidence and artifact locations: [HANDOFF](../reconstruction/HANDOFF.md).
 The [M1B roadmap](2026-09-27-m1a5-to-m1b-roadmap.md) remains the broader milestone
 reference; this plan governs the current scaffold research and orchestration.
