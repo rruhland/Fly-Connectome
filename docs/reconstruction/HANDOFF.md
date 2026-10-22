@@ -14,13 +14,18 @@ On 2026-10-22 the user authorized ongoing orchestration until stopped. Continue
 bounded research cycles, with independent challenge and reassessment between
 allocations. The previous no-followup stopping point is superseded. Major
 architecture review and efficient resource use remain required.
-**Active research:** running the selected
-[matched independent-versus-correlated exploration test](2026-10-22-temporal-exploration-research.md).
-Two arms, 40k new training transitions each, 64 fresh common full-game evaluations
-per arm and carried start; 45-minute overall cap. Trial root
-`/workspace/m1b-experiments/pong-temporal-exploration-20261022-r1`, source6d4923b,
-exec98424, originalstart1792680038289134991ns. Source/driver/protocol frozen
-through both checks; no DEV peeking. Continue orchestration; do not stop here.
+**Active research:** bounded research-only interval16 integrity-check execution
+optimization, preserving the default reference path. Sol is proving exact retained
+trajectory and full terminal-state equivalence and measuring throughput. No fresh
+learning allocation is live. Next candidate is a lagged learned visual-state
+baseline for local actor credit; design/challenge required before allocation.
+
+**Latest result:** [temporal exploration](2026-10-22-temporal-exploration-research.md)
+completed112 joint batches: first returns31/64 start,32/64 IID,33/64 correlated.
+Primary lift+3.125pp CI[-3.125,+9.375]: learning and coherence advantage fail.
+Correlated all-return retention passes; IID retention inconclusive.79,641 training
+(254 unused),48,063 evaluation transitions,32.21min. Both checks pass, freeze
+released, source integrated8c0fed5. Continue orchestration; no scaffold completion.
 
 **Latest completed 2026-10-22:** [paired-start actor](2026-10-22-action-credit-research.md).
 First returns26/64→28/64,+3.125pp CI[0,+7.8125], insufficient incremental learning.

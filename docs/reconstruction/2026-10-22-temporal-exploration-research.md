@@ -165,3 +165,43 @@ An older completed confirmation trial's512 journals were losslessly compressed
 1.453GB→.150GB in22.54s during training, preserving decompressed byte identity.
 That maintenance overlap is part of actual elapsed training time, not excluded
 from the trial or attributed to an algorithmic speed gain.
+
+## Completed result: no established incremental learning
+
+Both arms completed 112 joint batches. Fixed final checkpoints, no best-checkpoint
+selection: carried start first returns31/64, IID32/64, correlated33/64. Primary
+correlated lift+3.125pp,95%CI[-3.125,+9.375]; correlated-minus-IID+1.5625pp,
+CI[-3.125,+7.8125]. Neither learning, temporal-coherence advantage nor absolute
+80% competence was established. All returns49/113,50/113,62/124 respectively:
+correlated retention passes, improvement remains unproven; IID retention is
+inconclusive. At least two returns13/13/16 and three returns3/3/7 are descriptive.
+
+Training79,641 transitions: IID39,920 (39,666 used,254 partial unused),
+correlated39,721 all used. Evaluation48,063 transitions;1,090 initial images.
+Elapsed1,932.81s:1,469.43 training and463.38 evaluation. Sol's source/update/noise
+check passed8.829s and Astra's independent outcome check passed3.255s, neither
+adding observations. Source freeze released; source integrated as8c0fed5.
+
+The intervention worked mechanically: measured bias lag correlation approximately
+0 versus.924; comparable10.5% disagreement with unbiased greedy actions.
+Discordant same-start pairs28/224 versus37/224 and nonzero updates24 versus34
+show modestly increased contrast, not useful learning. No update clipped. Net
+movement relative to root-summed-squared steps was about1.05 in both arms,
+consistent descriptively with cancellation; this is not a formal gradient test.
+
+A small cache-flip count does not mean unchanged behavior:34/64 and35/64 fresh
+games changed actions before first contact, but only3 and4 first outcomes changed.
+Astra checked timing: median lead of first action divergence before contact was
+1.025s and.767s across changed games. Thus uniformly late changes cannot explain
+the null. This retrospective check is descriptive, not a causal experiment.
+
+Next: bounded research-execution optimization, then independently challenged
+visual-state baseline design. No automatic noise/rate sweep. A lagged baseline
+would change credit variance, not rewards or action selection; it remains an
+unallocated hypothesis until protocol review. Nonlinear residual capacity and
+ordinary-serve curriculum remain alternative explanations, not implemented changes.
+
+External evidence and check artifacts: temporal trial root above;
+`/workspace/m1b-experiments/pong-mechanism-review-20261022/temporal-parent-result-check.json`,
+`temporal-action-lead.json`; Sol interpretation under
+`/workspace/m1b-experiments/pong-credit-state-research-20261022/after-temporal-actor.md`.
