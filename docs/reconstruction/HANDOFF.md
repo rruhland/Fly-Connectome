@@ -14,21 +14,24 @@ On 2026-10-22 the user authorized ongoing orchestration until stopped. Continue
 bounded research cycles, with independent challenge and reassessment between
 allocations. The previous no-followup stopping point is superseded. Major
 architecture review and efficient resource use remain required.
-**Current research: reconsidering the interception scaffold after a checked nonlinear null.**
-The [user-approved residual comparison](../plans/2026-10-22-nonlinear-residual-review.md)
-completed111 joint batches: first returns38/64 carried,40/64 linear,37/64 residual.
-Neither learning nor retention established; no endpoint promoted. Both checks pass;
-source integratedfb55f7d, freeze released.79,443train,61,228eval,19.43min.
-Retain temporal ARtheta112. No live training allocation at this handoff update.
+**Active research: ordinary direct-serve curriculum running.**
+See [reassessment and bounded protocol](2026-10-22-scaffold-reassessment.md).
+Root`/workspace/m1b-experiments/pong-leftward-curriculum-20261022-r1`, exec81986,
+originalstart1792688471502393151ns, isolated source865a187. Source/driver/protocol
+frozen through both result checks; no DEV peeking. Same linear ARtheta112, no failed
+heads carried.40k/15min train,64LEFT first-contact+64unfiltered20s paired2heads,
+10min evaluation/25min overall. Primary learning and full first/all retention separate.
+Parent stage PASS73ms; focused13worker+4coordinator checks PASS; retained cutoff
+proof171old cameras/5.786s/0new observations. Reused Sol supervises; Astra checks.
 
-Sol independently proposed a transformed latent-Gaussian likelihood score. Astra's
-independent quadrature/finite-difference identity check passed, but Sol's retained
-same-trajectory comparison found18–19x paired-gradient dispersion, without better
-coherence. Reject a fresh allocation on this raw alternative. Current selection
-question: can an explicitly assisted initial-leftward-serve curriculum improve
-interception with the existing actor while preserving ordinary-game skill? Inspect
-retained direction splits before selecting the next bounded experiment. Continue
-orchestration; major architecture review boundary remains intact.
+Latest approved nonlinear residual comparison:38/64 carried,40/64 linear,37/64
+residual first returns. Neither learning nor retention established; no endpoint
+promoted. Both checks pass, source integratedfb55f7d.79,443train,61,228eval,19.43min.
+Sol's latent-Gaussian score alternative passed Astra's toy identity check but had
+18–19x retained paired-gradient dispersion; rejected before any fresh allocation.
+Direct-serve curriculum selected from retained shorter horizon and more informative
+outcome pairs per frame, with substantial room to improve. It is explicit task
+assistance; harder in available paddle-control time, not an easy-score subset.
 
 Latest [visual baseline comparison](2026-10-22-visual-baseline-research.md): both
 checks pass, source integrated343e881. First returns41/64 carried versus44/64 in

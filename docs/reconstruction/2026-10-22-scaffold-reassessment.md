@@ -121,3 +121,27 @@ previously reserved streams, including unused seeds. Never expand reserved final
 roots. This is assistance in training distribution, not learner observation access.
 Sol implements compact coordinator reuse and a narrow worker-purpose validation
 extension for explicit greedy first-hit evaluation; Astra reviews before launch.
+
+
+## Checked stage and launch
+
+Source `/workspace/Fly-Connectome-m1b-pong-leftward`,865a187602d273fb9ae8e877e8d3b1203890ad32.
+Allocation `/workspace/m1b-experiments/pong-leftward-curriculum-20261022-r1`.
+Driverdd72feaa9a9ba0b1074e8644da05a9d5e949bde0efe7d66d1f9b447e5214cc45;
+protocolb5ea8994551315f3366de9e698087a05a120baf788ef0acbda828a1070c5ba7e;
+prelaunch manifest57cd63b924c2e2a618c33daa72deabc58040fb5e104f4fbcdf434b47b727e4e8.
+Sol13worker tests PASS1.32s,4coordinator fixtures PASS1.67s. Retained success/miss
+cutoff proof171old cameras+2initials,5.786s; exact prefixes, native rewards, explicit
+task stop, ordinary loss and completion/recovery checked, zero candidate observations.
+
+Astra reviewed the narrow worker extension and coordinator. Final runtime accounting
+now includes statistics/bootstrap, masking gates if reporting crosses a deadline.
+Independent stage reconstruction73ms, zero observations: exact carried head/map,
+source/file pins,4,128 accepted IDs,928 canonical environment starts,953 rejected
+draws preserved,30,811 prior IDs excluded. Conditional schedules independently
+regenerated, including rejected draws. No final streams expanded.
+
+Launch exec81986, original clock1792688471502393151ns. Freeze source/driver/protocol
+through both postexit checks; DEV blind. Previous residual journals were losslessly
+archived3.447GB to.600GB,38.34s with full decompressed-byte verification before
+launch. No archive replay or new observations. No training cap extension authorized.
