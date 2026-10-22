@@ -187,3 +187,13 @@ actual function-space update sizes, coherent exploration and attainable complete
 populations under the shorter horizon. Sol independently challenges this against
 preconditioning and missing-information hypotheses. No automatic rate or seed sweep.
 Keep original ARtheta112 as starting policy pending that decision.
+
+Astra read Mania, Guy and Recht (2018), introduction, section2.1 and section3/
+Algorithm2, [Simple random search provides a competitive approach to reinforcement learning](https://arxiv.org/pdf/1803.07055).
+Their comparisons challenge assuming action-space exploration is always more
+sample efficient. Their method uses paired parameter perturbations, reward scaling,
+and optional state normalization/top-direction selection; results vary markedly
+across seeds. This supports comparing our existing population baseline fairly,
+not importing MuJoCo performance claims, new normalization, or an assumption that
+larger changes will improve this visual discrete-action Pong policy. No new
+allocation follows from the citation alone.
