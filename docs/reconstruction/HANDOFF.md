@@ -14,12 +14,14 @@ On 2026-10-22 the user authorized ongoing orchestration until stopped. Continue
 bounded research cycles, with independent challenge and reassessment between
 allocations. The previous no-followup stopping point is superseded. Major
 architecture review and efficient resource use remain required.
-**Active research:** design and independent challenge of a
-[lagged visual-state baseline](2026-10-22-visual-baseline-research.md) for local
-actor credit. No fresh learning allocation is live yet. Bounded research execution
-optimization integratedd4386da: four retained trajectories exactly equivalent,
-1.732x aggregate measured speedup; default integrity contract preserved, explicit
-interval16 research contract has weaker within-interval mutation detection.
+**Active research:** running the selected
+[lagged visual-state baseline comparison](2026-10-22-visual-baseline-research.md).
+Two arms40k training transitions each;20min training,10min evaluation,30min overall.
+Root`/workspace/m1b-experiments/pong-state-baseline-20261022-r1`, exec43838,
+originalstart1792683960700548703ns, source93cb0dd. Source/driver/protocol frozen
+through both checks; no DEV peeking. Continue orchestration after interpretation.
+Research execution optimization integratedd4386da, measured1.732x retained-episode
+speedup; explicit interval16 checks preserve default reference execution.
 
 **Latest result:** [temporal exploration](2026-10-22-temporal-exploration-research.md)
 completed112 joint batches: first returns31/64 start,32/64 IID,33/64 correlated.

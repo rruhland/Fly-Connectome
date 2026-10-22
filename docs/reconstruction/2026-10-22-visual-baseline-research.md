@@ -110,3 +110,26 @@ gradient agreed to3e-11. Runtime7ms, zero Pong observations. This checks the
 conditional-score/stopping argument, not Gaussian integration, implementation or
 variance improvement. Artifact:
 `/workspace/m1b-experiments/pong-mechanism-review-20261022/check_baseline_identity.json`.
+
+## Launched after independent review
+
+Live root `/workspace/m1b-experiments/pong-state-baseline-20261022-r1`, exec43838,
+original start1792683960700548703ns. Source93cb0dd1111ebf730f3fedd3d0692926a8af2161;
+driver9a641d01cd34f6a4c4e9cd1a2a0c188d7392f08c4cab5485937d16750d3e1a07;
+protocole5629f9890687bae0a5feb2d450ca36403072f504aa072c3b647d9383aed9548;
+prelaunch manifestb9d215bc4c546f628c7713551b323cc50145db0ffbcf7dfc33e9c16f3ce5f920.
+Freeze source/driver/protocol through both outcome checks. No DEV peeking.
+
+Astra independently checked source/artifact pins, exact carried head and maps,
+zero baseline/stats, budget/constants and7,264 fresh IDs excluded from16,270 prior
+reserved IDs;864 environment seeds also have distinct canonical identities.
+Stage check42ms, zero observations. The parent checker initially referenced the
+wrong job field for seed; correcting the checker required no candidate changes.
+An independent augmented least-squares comparison checked391 synthetic rows and
+215 coefficients against production normal equations: maximum error1.47e-14,
+22ms, zero Pong observations. Sol's37 focused checks passed.
+
+Retained cost proof replayed94 old cameras plus2 initial images; original actions,
+scores, bias and eligibility matched. Worker/export/pin2.566s, two215-dimensional
+fits together.0023s. This is a short sequential cost check, not full-run throughput.
+Its fit was discarded; candidate beta starts at zero. Free disk4.75GiB at launch.
