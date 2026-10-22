@@ -102,3 +102,11 @@ The previous IID arm's39,920 transitions remain study cost but are not ancestors
 of this carried AR actor. The completed temporal journals were losslessly archived
 3.295GB to.469GB with full decompressed byte verification after both checks and
 all engineering raw reads; metadata, heads and required projection remain plain.
+
+Astra independently checked the estimator identity by exactly enumerating28 toy
+paths with correlated exogenous bias, action-dependent next states and early
+stopping. Baseline and raw expectations agreed to1.4e-17; finite-difference reward
+gradient agreed to3e-11. Runtime7ms, zero Pong observations. This checks the
+conditional-score/stopping argument, not Gaussian integration, implementation or
+variance improvement. Artifact:
+`/workspace/m1b-experiments/pong-mechanism-review-20261022/check_baseline_identity.json`.
