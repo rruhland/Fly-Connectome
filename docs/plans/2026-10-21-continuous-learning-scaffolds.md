@@ -131,8 +131,10 @@ first returns improved31→54/64 versus the original general policy. Direct rete
 54→50/64 failed noninferiority, so combined progress is not yet established.
 Both checks passed; opponent-return acquisition has not yet been independently
 replicated. The next research question is acquiring and preserving both opening
-phases in one policy before escalating the rally objective. Exact replication and
-balanced first-contact practice are under active comparison; no new architecture
+phases in one policy before escalating the rally objective. Balanced first-contact practice from the learned opponent-return endpoint is
+selected next, requiring new learning and retention against its own start. This
+experimental carry preserves acquired updates without claiming qualified promotion;
+exact replication is deferred until a viable combined recipe. No new architecture
 is implied. Original ARtheta112 remains the global reference. Detailed criteria:
 [population reassessment](2026-10-22-population-search-reassessment.md),
 [opponent-return study](2026-10-22-opponent-return-interception.md).

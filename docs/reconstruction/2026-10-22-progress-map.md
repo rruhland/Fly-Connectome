@@ -23,7 +23,7 @@ flowchart TD
     N --> O[Opponent-return acquisition: 19 to 44 / 64]
     O --> P[Ordinary first returns: 31 to 54 / 64 vs global]
     P --> Q[Direct preservation unresolved: 54 to 50 / 64]
-    Q --> R[Next decision: replication versus balanced practice]
+    Q --> R[NEXT: balanced practice from learned opponent-return endpoint]
     classDef gain fill:#d9eddb,stroke:#46734a
     classDef fail fill:#f4ded9,stroke:#a15d49
     classDef active fill:#fff0c9,stroke:#967627
@@ -68,8 +68,13 @@ Both independent result checks passed with zero new observations or replay.
 Cost:159,833 training transitions (155,738 used;4,095 partial),89,386 evaluation
 transitions,1,759 initial images;1467.965s total (892.311 training,575.654 evaluation).
 Six complete updates. No automatic global promotion or rally-completion claim.
-Next selection is being challenged explicitly: exact independent replication versus
-balanced first-contact practice aimed at preserving both phases. Neither is yet launched.
+Next selected experiment: balanced fresh first-contact practice from the learned
+opponent-return endpoint, retaining its actual acquired weights. This is an
+experimental scaffold carry, not qualified global promotion. Require new balanced
+learning versus its own start plus phase retention and ordinary-game retention
+against its own start. The original direct and global heads remain relevant phase
+references. Exact opponent-return replication is deferred; this is integration
+exploration conditional on a single opponent-return training run. Not yet launched.
 
 Checked figure: `/workspace/m1b-experiments/pong-mechanism-review-20261022/rightward-result.png`.
 
