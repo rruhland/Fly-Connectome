@@ -90,4 +90,7 @@ The completed previous trial's journals were losslessly compressed with full
 byte-reconstruction verification: 3.119GB to .425GB in 32.67s. Restore from its
 archive manifest before raw-journal inspection; metadata and policies remain plain.
 
-Status: approved for bounded implementation; launch awaits prepared-source review.
+Status: launched after 15 focused checks and independent parent stage review.
+Exact trial: `/workspace/m1b-experiments/pong-first-hit-actor-20261022-r1/`;
+source `6e556d52ef2fa3d216bd2c73f6a7c781754841e2`; original launch
+1792675734506565778ns. Source/driver/protocol stay frozen through outcome checks.

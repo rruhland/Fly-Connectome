@@ -14,6 +14,15 @@ On 2026-10-22 the user authorized ongoing orchestration until stopped. Continue
 bounded research cycles, with independent challenge and reassessment between
 allocations. The previous no-followup stopping point is superseded. Major
 architecture review and efficient resource use remain required.
+**Active 2026-10-22:** [local actor credit trial](2026-10-22-action-credit-research.md)
+at `/workspace/m1b-experiments/pong-first-hit-actor-20261022-r1/`, isolated source
+`6e556d52ef2fa3d216bd2c73f6a7c781754841e2`. Launch1792675734506565778ns,
+agent exec31663.40k training/20min,64paired20s games/10min,30minoverall.
+No backprop; unchanged visual/head class, direct sampled-action eligibility with
+four-episode LOO baseline. Sources frozen through outcome checks. Reused Sol
+executes; Astra reviews. Continue research after interpretation, with fresh bounds.
+
+Previous batch below is completed history:
 Current research artifacts: `/workspace/m1b-experiments/pong-scaffold-research-20261021/`.
 The bounded first-return refinement is complete: **no detectable improvement**.
 Both policies returned34/64 first balls; lift0pp,95%CI[-4.69,+4.69]. All-return
