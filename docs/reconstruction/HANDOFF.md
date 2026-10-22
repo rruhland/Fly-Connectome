@@ -14,14 +14,14 @@ On 2026-10-22 the user authorized ongoing orchestration until stopped. Continue
 bounded research cycles, with independent challenge and reassessment between
 allocations. The previous no-followup stopping point is superseded. Major
 architecture review and efficient resource use remain required.
-**Active research:** running the selected
-[lagged visual-state baseline comparison](2026-10-22-visual-baseline-research.md).
-Two arms40k training transitions each;20min training,10min evaluation,30min overall.
-Root`/workspace/m1b-experiments/pong-state-baseline-20261022-r1`, exec43838,
-originalstart1792683960700548703ns, source93cb0dd. Source/driver/protocol frozen
-through both checks; no DEV peeking. Continue orchestration after interpretation.
-Research execution optimization integratedd4386da, measured1.732x retained-episode
-speedup; explicit interval16 checks preserve default reference execution.
+**Active research:** next-direction reassessment after the checked
+[visual baseline comparison](2026-10-22-visual-baseline-research.md). No live
+learning run. Both checks pass; source integrated343e881. First returns41/64
+carried versus44/64 in both arms: learning/advantage fail, retention inconclusive
+in both. Neither endpoint promoted; retain temporal ARtheta112. Baseline weighted
+prediction error improved10.4%, but same-trajectory gradient dispersion increased.
+No automatic baseline/rate sweep. Continue orchestration with independent pivot
+challenge; major capacity changes still require user review.
 
 **Latest result:** [temporal exploration](2026-10-22-temporal-exploration-research.md)
 completed112 joint batches: first returns31/64 start,32/64 IID,33/64 correlated.

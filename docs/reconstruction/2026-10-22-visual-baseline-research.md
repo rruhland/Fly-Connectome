@@ -133,3 +133,45 @@ Retained cost proof replayed94 old cameras plus2 initial images; original action
 scores, bias and eligibility matched. Worker/export/pin2.566s, two215-dimensional
 fits together.0023s. This is a short sequential cost check, not full-run throughput.
 Its fit was discarded; candidate beta starts at zero. Free disk4.75GiB at launch.
+
+## Completed: no established learning or baseline advantage
+
+Both checks pass; freeze released. Source integrated343e881. Fixed final joint
+batch108, no checkpoint selection. Fresh first returns: carried41/64, paired44/64,
+state44/64. State lift+4.6875pp CI[-3.125,+12.5]; paired+4.6875pp
+CI[-1.5625,+12.5]; state-minus-paired0pp CI[-4.6875,+4.6875]. Neither incremental
+learning nor80% competence passes. All returns77/139,78/140,84/145 respectively.
+State all-return lift+2.5354pp CI[-5.1259,+10.0152]; paired+.3186pp
+CI[-5.1728,+5.6345]. Both retention screens narrowly fail: preservation is
+inconclusive, not proven damage. At least2/3/4 returns: start21/8/4,
+paired23/7/2, state21/11/5; descriptive only. No new endpoint is promoted.
+Retain ARtheta112 as the last retention-qualified carried actor.
+
+Training79,507: paired39,812 (39,765 used,47 unused), state39,695 all used.
+Evaluation64,135;1,057 initial images. Wall1,095.795s (18.26min):710.232 training,
+385.563 evaluation. No failures, recovery or cap extension. Sol reconstructed
+all108 sequential actor/fit updates and79,507 saved action/noise/score decisions:
+PASS22.739s. Astra independently checked raw camera/hit totals, per-action
+baseline/score/E/C reconstruction and paired outcome statistics: PASS5.669s.
+Neither check added observations or replayed policy/physics.
+
+The baseline learned the selected proxy: weighted prequential squared error
+approximately.224 versus.25 for constant.5, a10.4% reduction in both arms.
+However, on the SAME trajectories its descriptive episode-gradient dispersion
+was1.491x the paired estimator on state-arm data and2.505x on control-arm data.
+Pair terms are dependent and policies change, so these are not unbiased estimates
+of total estimator variance. They nevertheless contradict treating better outcome
+prediction as established credit improvement. Uniform-outcome pairs accumulated
+additional state-gradient energy where paired updates were exactly zero.
+
+State updated108/108 batches versus paired27/108; none clipped. Net function-RMS
+movement.006956 versus.003471; net/root-summed-squared steps1.353 versus1.136.
+More updates and movement did not yield a first-return advantage. No automatic
+ridge, temperature or rate sweep. Astra and Sol wrote independent interpretation
+criteria before outcomes and independently reached this conclusion afterward.
+
+Evidence: trial root above; parent `baseline-parent-result-check.json`,
+`baseline-result.png/svg`, `baseline-mechanism-ratios.json` under
+`/workspace/m1b-experiments/pong-mechanism-review-20261022/`; Sol
+`completion-verification.json` in trial root. Next direction awaits joint
+reassessment, not another continuation of the failed state-baseline branch.
