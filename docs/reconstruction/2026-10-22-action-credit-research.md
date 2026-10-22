@@ -179,3 +179,54 @@ candidate observations. Trial:
 `/workspace/m1b-experiments/pong-paired-start-actor-20261022-r1/`;
 source `0c8fa7b31b42baf9db774ada4f6d7deb7bcb5642`, original launch
 1792677761272223108ns, agent exec91988. Sources stay frozen through outcome checks.
+
+
+### Paired-start result: insufficient incremental learning
+
+Both checks passed (Sol 1.838s, Astra 1.796s; no new observations). First returns
+rose 26/64 to 28/64: +3.125pp, paired 95% interval [0, +7.8125]. This fails the
+registered incremental-learning and absolute-competence screens. All returns
+rose 39/103 to 42/106: +1.759pp, interval [-3.481, +6.921]; the separate retention
+screen passes. Games with at least 2/3/4 returns changed 10/2/1 to 9/4/1.
+These are different fresh starts from the first actor trial; the lower absolute
+rate across trials does not establish deterioration.
+
+105 complete batches used 39,604 training transitions; another 258 from an
+unfinished batch count as unused exposure (39,862 total). Evaluation used 27,531
+transitions, with 550 initial images overall. Total wall time 1,071.08s
+(training 779.14s, evaluation 291.94s). Last complete theta105 is retained.
+
+The diagnostic is informative: 202/210 same-start pairs diverged in their actions,
+177 before halfway through the episode, but only 16/210 pairs had different return
+outcomes. Common action prefixes had median length 11 cameras. Of 63 globally
+mixed batches, 48 had only cross-start differences and no within-start outcome
+contrast. Conditioning the baseline removed much apparent signal attributable
+to start difficulty. Only 15 batches produced nonzero updates; none clipped.
+Actual nongreedy action frequency was 5.159%. Net function-RMS movement .004391
+was 1.461% of the carried head RMS, changing only 7/1,024 cached greedy decisions.
+Net movement/root-sum-squared step size was 1.358; this is descriptive, not proof
+of a reliable gradient. The result supports investigating exploration that lasts
+long enough to affect the paddle, rather than another learning-rate/group sweep.
+It does not demonstrate a representation ceiling.
+
+Astra proposed temporally correlated, theta-independent action-logit biases,
+compared with independent biases of the same stationary marginal distribution.
+Sol independently challenged amplitude/coherence confounding and the alternative
+representation and update-size explanations. The next protocol remains under
+review. Greedy/no-bias evaluation must test actual retained learning.
+[Plappert et al. (2018)](https://arxiv.org/pdf/1706.01905), abstract/introduction
+and on-policy derivation, informs the temporal-exploration distinction; its
+backprop-trained algorithms are not adopted. Both agents retain hypotheses that
+would disconfirm this direction. Continuous orchestration remains authorized.
+
+### Speed improvement before further training
+
+Canonical graph hashing now streams the exact same pickle bytes into SHA-256,
+removing graph-sized buffer copies while still traversing all actual contents.
+No hash format change or trusted-content cache. Ten legacy golden cases cover
+cycles, aliases, views, RNGs, tensor batches and large arrays; mutation visibility,
+actor and recovery checks also pass (32 tests, 13.63s). A retained actor checkpoint
+matched both old/new and stored hashes without executing policy or physics.
+Median full-state hashing was 20.42ms before and 13.58ms after (1.50x); the simpler
+matrix benchmark was about 2.8x. These are microbenchmarks, not end-to-end training
+speed claims. Source integrated as `f703b8a`; paired actor source as `5627a07`.

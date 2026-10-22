@@ -14,24 +14,20 @@ On 2026-10-22 the user authorized ongoing orchestration until stopped. Continue
 bounded research cycles, with independent challenge and reassessment between
 allocations. The previous no-followup stopping point is superseded. Major
 architecture review and efficient resource use remain required.
-**Active:** paired-start actor at
-`/workspace/m1b-experiments/pong-paired-start-actor-20261022-r1/`, source
-`0c8fa7b31b42baf9db774ada4f6d7deb7bcb5642`, agent exec91988.
-Two fresh starts × two independent action realizations/batch; carry theta107,
-unchanged tau/alpha/original step cap/vision/head; 40k/20min train +64paired20s
-full-rally eval/10min,30minoverall. Sources frozen through both outcome checks.
-Parent stage passes;18 focused checks pass. Second actor failure triggers
-mechanism reassessment, not another batch/rate sweep. Continue orchestration.
+**Active research:** selecting a matched independent-versus-temporally-correlated
+exploration test after the paired-start actor's negative incremental-learning
+screen. No new trial launched yet. Continue orchestration; do not stop here.
 
-**Latest completed 2026-10-22:** [local actor credit trial](2026-10-22-action-credit-research.md).
-First returns35/64 before and after,0pp CI[-4.69,+4.69]; no learning qualification.
-All returns51/115→61/124,+4.85pp CI[-1.64,+11.06], retention screen passes but
-improvement unproven.107batches/90nonzero updates,39,911train+33,559eval,
-19.82min; both focused outcome checks pass. Source integrated09b8f71.
-Research continues: Astra proposed same-start independent-action groups for a
-start-conditioned LOO baseline; Sol challenges before any next allocation.
-That completed run is historical; active continuation is described above.
-Major architecture changes still need review.
+**Latest completed 2026-10-22:** [paired-start actor](2026-10-22-action-credit-research.md).
+First returns26/64→28/64,+3.125pp CI[0,+7.8125], insufficient incremental learning.
+All-return retention passes. Only16/210same-start pairs changed outcome despite
+202action-divergent pairs;15nonzero updates/105batches.39,862train (258unused),
+27,531eval,17.85min. Both checks pass; source freeze released. Actor source
+integrated5627a07. Exact-byte hash streaming integratedf703b8a,32tests pass;
+retained-state hash microbenchmark1.50x faster, not an end-to-end claim.
+The first actor also failed incremental first-return learning (35/64 both);
+no scaffold-completion claim. Temporal exploration, visual precision and credit
+quality remain competing explanations. Major architecture changes need review.
 
 Previous batch below is completed history:
 Current research artifacts: `/workspace/m1b-experiments/pong-scaffold-research-20261021/`.
