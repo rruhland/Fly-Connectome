@@ -89,8 +89,8 @@ The preceding reassessment records the primary literature actually read: Mania
 et al.2018 for random search/seed variability, Kaplanis et al.2019 for behavioral
 retention under within-task drift, and Ng et al.1999 for limits of policy-invariant
 shaping in whole-episode search. None establishes this curriculum will succeed.
-The decision is grounded in the observed native-phase performance gap. No new
-allocation has launched; independent stage review comes first.
+The decision is grounded in the observed native-phase performance gap. At selection, no new
+allocation had launched; independent stage review came first.
 
 ## Independently staged
 
@@ -125,3 +125,43 @@ new architecture on the false premise that all velocity-position binding is abse
 The fixed projection can reduce resolution, and the policy does not receive an
 explicit action-history feature. Neither observation establishes a causal failure.
 No new observations, replay, diagnostic allocation or change to the running trial.
+
+
+## Checked completion and next selection
+
+Coordinator exited0. Six complete and nonzero original-rule updates used155,738
+training transitions;4,095additional partial transitions were charged and unused.
+Training total159,833; evaluation89,386 (RIGHT26,075/LEFT8,555/FULL54,756),1,759
+initial images. Original-clock wall1467.965s =892.311training+575.654evaluation,
+within all fixed caps. Net function RMS movement.211107,203cache greedy changes;
+163/576direction-serve pairs and38/48mean direction contrasts were nonzero.
+
+RIGHT DIRECT19→44/64: +39.0625pp,95%CI[26.5625,51.5625], acquisition passes.
+RIGHT GLOBAL37→44/64: +10.9375pp,[−3.125,25], noninferiority passes;
+optional superiority fails. LEFT DIRECT54→50/64: −6.25pp,[−17.1875,4.6875],
+preservation fails. This does not establish definite degradation. FULL GLOBAL
+first31→54/64: +35.9375pp,[23.4375,48.4375], gain passes; all54/118→81/144:
++10.4873pp,[2.2075,20.0293], preservation passes. Four of five gates pass;
+combined_first_progress and provisional competence are false. Endpoint first-return
+rates RIGHT68.75%,LEFT78.125%,FULL84.375% do not all meet80%. No rally-completion,
+replication or combined/global-promotion claim. The existing class can learn the
+opponent-return phase; preservation and higher reliability remain unresolved.
+
+Sol completion verification PASS13.6918s reconstructs all six sequential updates,
+optimizer RNG/maps/source/completion pins and raw greedy/native task boundaries.
+Astra independent verification PASS3.2187s reproduces updates/counts/paired gates.
+Both add zero candidate observations/replay. Source freeze released. Evidence is
+in the experiment's summary.json/completion-verification.json and
+`pong-mechanism-review-20261022/rightward-parent-result-check.json`.
+
+After both checks and raw reads completed, sidecar preservation exited0 in3.4909s;
+only then cold-journal archival ran and exited0 in56.6969s (56.8321s CPU).
+1,759DBs5,248,086,016→689,020,049bytes, all original bytes reconstruct-verified,
+zero observations/replay. Heads/T/metadata remain plain; raw DBs require restore.
+
+Next selection is [balanced fresh practice](2026-10-22-balanced-practice-selection.md)
+from the predesignated RIGHT r1theta6 experimental candidate. Exact RIGHT-only
+replication is deferred; it has not occurred. Candidate accumulated training is
+558,832transitions =532,296used+26,536unused. New balanced learning versus its own
+start and required preservation gates must pass before any candidate promotion;
+independent replication remains necessary. General plan/progress map are parent-owned.

@@ -14,22 +14,26 @@ On 2026-10-22 the user authorized ongoing orchestration until stopped. Continue
 bounded research cycles, with independent challenge and reassessment between
 allocations. The previous no-followup stopping point is superseded. Major
 architecture review and efficient resource use remain required.
-**Active research: RIGHT-first opponent-return interception curriculum running.**
-[Current protocol](../plans/2026-10-22-opponent-return-interception.md);
-[preceding results](../plans/2026-10-22-population-search-reassessment.md).
-Strong direct-interception acquisition replicated29→56/64 and27→49/64. Designated
-r1theta9 remains the direct scaffold, ARtheta112 the global reference. Two complete-
-rally configurations failed primary gates; all8pair-bank followup still improved
-LEFT53→61/64 as a secondary result, without rally gain or endpoint promotion.
+**RIGHT-first curriculum completed: strong acquisition; joint preservation unfinished.**
+[Checked protocol/result](../plans/2026-10-22-opponent-return-interception.md).
+RIGHT19→44/64 (+39.06pp,95%CI[26.56,51.56]); FULL first31GLOBAL→54/64
+(+35.94pp,[23.44,48.44]). Four of five required gates pass; LEFT54DIRECT→50/64
+has−6.25pp CI[−17.19,4.69], failing preservation without proving damage.
+No combined/global promotion or replication claim. Six complete/nonzero updates,
+159,833train (155,738used/4,095unused),89,386eval,1,759initials,1467.965s.
+Both checks PASS (Sol13.692s,Astra3.219s,zero new observations/replay); freeze released.
+RIGHT r1theta6 remains an experimental accumulated-skill candidate, not qualified global.
 
-Both agents independently selected the missing native opponent-return opening skill.
-Ordinary RIGHT-first starts, first-own-hit cutoff, original12sharedstarts/8dirs/top4/
-.25noise/.10cap; same r1theta9 carry, no new architecture/inputs. Threeheads on
-64RIGHT+64LEFTfirst-contact+64FULL games (576jobs), explicit phase acquisition,
-preservation and FULLfirst-gain gates;80%allthree separate.
-Root`pong-rightward-interception-20261022-r1`, exec95719, originalstart
-1792695554956184660ns. Both stage reviews PASS;160k/1200train+900eval/2100overall,
-min5/max12; DEVblind, source68d15a7/driver/protocol frozen through both postexit checks.
+**Selected next: balanced fresh6LEFT+6RIGHT first-contact practice from RIGHTtheta6.**
+[Selection/rationale](../plans/2026-10-22-balanced-practice-selection.md).
+New equal-weight phase learning versus its own start is required, plus phase and
+ordinary-game preservation against the appropriate original and immediate controls.
+Same original8directions/top4/.25noise/.10cap;160k/1200train+900eval/2100overall,
+min5/max12. Preparing external stage; no new allocation launched. Exact RIGHT-only
+replication is deferred. Fresh simultaneous practice is assistance, not stored replay.
+The direct r1theta9 and global ARtheta112 remain frozen references. RIGHT journals
+archived strictly after both checks:1759DB5.2481GB→.6890GB,56.697s; sidecars3.491s
+finished first. Every original byte reconstructed; zero observations/replay.
 
 The existing frozenvision/linearclass demonstrably supports high direct interception;
 prior localactor nulls did not establish representationceiling. Originalpopulation
