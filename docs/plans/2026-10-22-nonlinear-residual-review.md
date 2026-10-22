@@ -111,3 +111,31 @@ agreed. No map, seed or scale changed. This is a test of one fixed feature
 augmentation, including conditioning effects, not a clean isolation of nonlinear
 capacity. A null cannot refute nonlinear capacity; a gain must not be attributed
 solely to nonlinear expressivity. No extra diagnostic training branch is added.
+
+## Implementation and independent prelaunch review accepted
+
+Isolated source `/workspace/Fly-Connectome-m1b-pong-residual`, commit
+38a097f53621aef6a452e834c19c8b03639accd9. Allocation root
+`/workspace/m1b-experiments/pong-nonlinear-residual-20261022-r1`.
+Driver7fccbbc2e2a640ce7c3e7870b12227c592e2a5975aa77dd8bf6224f7678ca3f4;
+protocold61b228e901a023c7ba67e258e5c1bde6c75f1e8cab0225cf16e962d64227fb6;
+prelaunch manifest1fb9877c7c5652507e3c1cdf019e43c523bf413506230853a639e3460524582f.
+Sol44 focused core tests PASS32.16s and2 joint-driver tests PASS1.42s. Astra reviewed
+actor/update/evaluation/recovery/worker-completion code and independently verified
+artifact/source pins, exact warm start/B0, fixed map generation, constants and
+7,264 new IDs excluded from23,540 prior IDs;864 canonical environment starts
+unique. Parent stage check56ms, zero new observations.
+
+Retained proof470 old cameras plus4 initial images, zero candidate observations:
+12.518s. Actor q/p/actions/noise/E exactly match at B0; full-game greedy actions
+and physics match legacy, excluding deliberately different score/policy-norm
+magnitudes. Two full-game greedy cases total376 cameras,8.040s including export
+and completion pin;10-minute evaluation budget is plausible but not guaranteed
+under contention. All three evaluated policies use the same capped projected
+score path. A/c arrays are embedded and content-validated on recovery; only T
+remains a required external checkpoint dependency. No learned baseline is used.
+
+Astra authorized launch after these checks. Source/driver/protocol freeze through
+both outcome checks, no DEV peeking. Another482 completed old journals were
+losslessly archived1.434GB to.203GB in15.26s, with decompressed byte verification,
+before launch to reserve disk; zero candidate observations/replay.
