@@ -454,3 +454,25 @@ are precedent; their common-random-number communication scheme concerns perturba
 seeds, not validation of our environment-bank choice. No source guarantees our
 coverage design improves Pong or skill preservation. Staging only; parent review
 before launch, no architecture change.
+
+Completed integration journals archived after both checks/raw-read completion:
+731DB2.204GB→.319GB,20.168s; sidecar verification/removal completed first,2.765s.
+All original bytes reconstruct-verified, no observations/replay or live-run overlap.
+
+### All8 pair-bank followup independently staged
+
+Root `/workspace/m1b-experiments/pong-pairbank-rally-20261022-r1`; unchanged core
+source68d15a7. Actual config explicitly top8/all-direction index sum,48contexts per
+population/6per pair. External all8 formula replaces top4 selection; no worker or
+architecture changes. Eleven focused checks PASS2.25s. Sol stage PASS37ms after
+1.898s preparation; Astra independently regenerated schedules, pins/maps,
+8directions/all96candidate cells and actual budgets/config in131ms. Zero observations.
+
+Training2327816039, LEFTDEV1229601473, FULLDEV3895042739, optimizer1683719501,
+bootstrap3047608219, tag29130.576prospective unfiltered train+128evaluation starts,
+704fresh canonical starts total,55rejected LEFTDEV candidates reserved,37,175priorIDs
+excluded. Driverfab44a5557a5eaa55b94da8c57ad82fdde87cbe24a32893b09edd3b98de219d0;
+protocol3357852c664f4bb9e60c82c5b627ed834d84c4b34b72711e2f5885d0196797f0;
+prelaunch manifest1229454b185c995f29d412c05525405b72bd3c390c82d980af5573483cc21345.
+Same80k/900train+600eval/1500overall,max12/min3; no extensions. Launch authorized
+after both checks; freeze through both postexit checks, DEV blind.
