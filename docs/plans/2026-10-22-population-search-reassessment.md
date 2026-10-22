@@ -476,3 +476,6 @@ protocol3357852c664f4bb9e60c82c5b627ed834d84c4b34b72711e2f5885d0196797f0;
 prelaunch manifest1229454b185c995f29d412c05525405b72bd3c390c82d980af5573483cc21345.
 Same80k/900train+600eval/1500overall,max12/min3; no extensions. Launch authorized
 after both checks; freeze through both postexit checks, DEV blind.
+
+Pair-bank trial launched exec14961, originalstarted_wall_ns1792694292347795608
+(2026-10-22T18:38:12.347795608Z). Same staged caps; DEV blind, no extensions.

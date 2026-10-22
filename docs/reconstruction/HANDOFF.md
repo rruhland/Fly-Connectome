@@ -14,7 +14,7 @@ On 2026-10-22 the user authorized ongoing orchestration until stopped. Continue
 bounded research cycles, with independent challenge and reassessment between
 allocations. The previous no-followup stopping point is superseded. Major
 architecture review and efficient resource use remain required.
-**Active research: replicated interception, first full-rally integration failed its gates; reassessing.**
+**Active research: all8 pair-bank full-rally followup running after integration null.**
 [Protocol/results](../plans/2026-10-22-population-search-reassessment.md).
 LEFT acquisition replicated29→56/64 and27→49/64; 80% threshold passes only r1.
 Designatedr1theta9 remains the direct scaffold; ARtheta112 remains global reference.
@@ -25,8 +25,14 @@ LEFT: GLOBAL31/DIRECT60/ENDPOINT55 out of64; FULL>=2returns12/15/17 out of64.
 Rally gains vs both controls fail; LEFT preservation fails; full GLOBAL preservation
 and LEFT gain over GLOBAL pass. No combined promotion. Training covers18unique
 starts,288episodes but only67post-first hits; netRMS.174 with174cache changes.
-Source68d15a7 unchanged. Reused Sol independently explores a learning pivot, Astra
-compares coverage/objective/optimizer alternatives. No followup allocation yet.
+Source68d15a7 unchanged. Both agents independently rejected first-hit reward dilution:
+later-hit components supplied55–75%of actual update projection. Selected one followup
+changes6shared starts/population to48starts shared within each+/-pair, sums all8
+directions without reward ranking, same reward/model/carry/evaluation/gates.
+Root`pong-pairbank-rally-20261022-r1`, exec14961, originalstart1792694292347795608ns.
+Both stage checks PASS;80k/900train+600eval/1500overall,min3/max12; DEV blind and
+source/driver/protocol frozen through both postexit checks. Credible null requires
+a different mechanism reassessment, not bank/rate/threshold sweeps.
 
 The existing frozenvision/linearclass demonstrably supports high direct interception;
 prior localactor nulls did not establish representationceiling. Originalpopulation
