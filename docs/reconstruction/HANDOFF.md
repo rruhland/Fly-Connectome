@@ -24,12 +24,17 @@ No combined/global promotion or replication claim. Six complete/nonzero updates,
 Both checks PASS (Sol13.692s,Astra3.219s,zero new observations/replay); freeze released.
 RIGHT r1theta6 remains an experimental accumulated-skill candidate, not qualified global.
 
-**Selected next: balanced fresh6LEFT+6RIGHT first-contact practice from RIGHTtheta6.**
+**Active: balanced fresh6LEFT+6RIGHT first-contact practice from RIGHTtheta6.**
 [Selection/rationale](../plans/2026-10-22-balanced-practice-selection.md).
 New equal-weight phase learning versus its own start is required, plus phase and
 ordinary-game preservation against the appropriate original and immediate controls.
 Same original8directions/top4/.25noise/.10cap;160k/1200train+900eval/2100overall,
-min5/max12. Preparing external stage; no new allocation launched. Exact RIGHT-only
+min5/max12. Both stages PASS;9focusedchecks PASS3.56s, parent223ms/zeroobs.
+Root`pong-balanced-interception-20261022-r1`, exec9708, originalstart
+1792697965537299559ns (2026-10-22T19:39:25.537299559Z). Source68d15a7,
+driver5e79af3c/protocolda239d4d/manifest67571876 frozen through both checks; DEVblind.
+Primary independently resamples64LEFT and64RIGHT episodes per bootstrap replicate;
+eight learning/preservation guards, unconditional80 separate. Exact RIGHT-only
 replication is deferred. Fresh simultaneous practice is assistance, not stored replay.
 The direct r1theta9 and global ARtheta112 remain frozen references. RIGHT journals
 archived strictly after both checks:1759DB5.2481GB→.6890GB,56.697s; sidecars3.491s
