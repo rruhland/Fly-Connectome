@@ -91,3 +91,23 @@ with learned output weights. Astra read those sections. Its independent supervis
 sample/empirical-risk assumptions do not establish online RL learning, a suitable
 64-feature size, or our estimator's sample efficiency. This is architectural
 precedent, not evidence that the Pong intervention will work.
+
+## Fixed-map check and interpretation limit before launch
+
+Map seed1639497361; A sampled standard normal then c uniform[-1,1], artifact
+`/workspace/m1b-experiments/pong-nonlinear-residual-20261022-r1/residual-map.npz`,
+SHA256a4caf0613b4e8abdfbdfa0e41d2227ac208e5b167f118f3166fec918edab9423.
+Astra's score-free1024-row cache check found all64 new feature directions outside
+the existing linear span (residual singular values.1725–1.218), but only.7323% of
+centered feature energy outside that span. Existing features plus intercept have
+numerical rank183; residual feature squared norms13.98–30.97, saturation above.99
+only.0153%. Cost45ms; no candidate observations, labels, policy fitting or map
+selection. Artifact `pong-mechanism-review-20261022/residual-feature-span.json`.
+
+Astra challenged whether to remove the fitted linear component. Sol recommended
+retaining the exact approved map: subtracting and renormalizing a small remainder
+would alter scaling, boundedness and extrapolation from a limited cache. Astra
+agreed. No map, seed or scale changed. This is a test of one fixed feature
+augmentation, including conditioning effects, not a clean isolation of nonlinear
+capacity. A null cannot refute nonlinear capacity; a gain must not be attributed
+solely to nonlinear expressivity. No extra diagnostic training branch is added.
