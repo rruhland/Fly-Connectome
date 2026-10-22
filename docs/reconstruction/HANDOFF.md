@@ -14,13 +14,13 @@ On 2026-10-22 the user authorized ongoing orchestration until stopped. Continue
 bounded research cycles, with independent challenge and reassessment between
 allocations. The previous no-followup stopping point is superseded. Major
 architecture review and efficient resource use remain required.
-**Next action: awaiting user architecture review.** Astra and reused Sol independently
-recommend a [fixed64-feature nonlinear residual](../plans/2026-10-22-nonlinear-residual-review.md)
-with zero output weights, exact carried-policy initialization and no backpropagation.
-Concrete proposal committed9a4c8f8; async approval question sent. The user explicitly
-reserved major architecture changes for review. Do not implement/launch this change
-until approval arrives. No active learning run or source freeze; reuse the existing
-Sol agent after approval. Do not start an adjacent sweep just to remain busy.
+**Active work: approved nonlinear residual implementation.** The user explicitly
+approved the [fixed64-feature nonlinear residual test](../plans/2026-10-22-nonlinear-residual-review.md).
+Reused Sol is implementing an isolated source and bounded correctness/cost proof;
+Astra reviews representation/evaluation consistency and frozen protocol before
+launch. No live training yet. No further permission is needed for this approved
+change/test. Preserve ARtheta112, exact warm start, no backpropagation or privileged
+inputs; fixed40k/arm and30-minute allocation, not a sweep.
 
 Latest [visual baseline comparison](2026-10-22-visual-baseline-research.md): both
 checks pass, source integrated343e881. First returns41/64 carried versus44/64 in

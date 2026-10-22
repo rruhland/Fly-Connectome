@@ -1,6 +1,7 @@
 # Proposed next scaffold: fixed nonlinear residual policy
 
-**Status: awaiting user architecture review. Not implemented or allocated.**
+**Status: user explicitly approved the nonlinear residual test on2026-10-22.**
+Implementation and a frozen prelaunch review are authorized; no launch yet.
 The user authorized ongoing experimentation but reserved genuinely major architecture
 alterations for review. Astra and Sol independently recommend a capacity intervention
 after the [checked visual-baseline result](../reconstruction/2026-10-22-visual-baseline-research.md).
@@ -71,3 +72,15 @@ leftward-serve curriculum with full-task retention checks. We recommend capacity
 review first because another task restriction currently has weaker evidence and
 would make the claim narrower. No experiment is launched simply to keep busy while
 this architectural decision is pending.
+
+## Approval and implementation boundary
+
+The user answered the explicit architecture question: “Approve the nonlinear
+residual test.” Reuse Sol for implementation; no repeated permission request.
+Legacy greedy evaluation uses mapped raw-feature scores while the actor uses
+capped projected x. Their linear greedy choices are equivalent under the positive
+common cap, but reported score magnitudes differ. Nonlinear evaluation must use
+the same capped x and separate score branches as sampling. Verify exact actor
+scores/probabilities at B=0 and matched legacy greedy actions separately; do not
+claim equality of differently scaled diagnostic score records. Implementation
+choices remain subject to independent prelaunch correctness review.
