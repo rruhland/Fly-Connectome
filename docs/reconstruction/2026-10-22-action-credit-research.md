@@ -145,3 +145,37 @@ the learner. The tradeoff is fewer distinct starts and potentially many uniform,
 zero-update groups. Sol is independently challenging this proposal against
 update-scale, critic and representation alternatives before another allocation.
 No outcome-based extension of the completed trial is allowed.
+
+### Selected follow-up: two starts, two independent attempts each
+
+After Sol's independent derivation and challenge, Astra selected two fresh starts
+with two independent action realizations each, balancing conditional comparison
+against lost start diversity. The same-start pair estimator is unbiased before
+aggregate clipping: conditional on a start, the other episode's reward is
+independent of this episode's actions and the expected score eligibility is zero.
+Common action/visual prefixes also cancel from each eligibility difference.
+
+`G = ((R0-R1)*(E0-E1) + (R2-R3)*(E2-E3)) / 4`
+
+Carry theta107 from the completed actor and preserve the exact temperature, alpha,
+original .0030083477355236915 step cap, vision and head class. Do not recalibrate
+temperature to the new head; its generic cached nongreedy probability is .04975.
+All episodes start normally; no state fork or privileged reset. Inherited training
+is 239,587 transitions (218,801 used, 20,786 unused). Register 800 distinct training
+starts, each used twice, 1,600 independent action seeds and 64 fresh evaluation
+starts. Prior unused schedule reservations and canonical physics seed identities
+are excluded as well as raw IDs.
+
+Same 40k/20-minute training, 64 paired full games/10-minute evaluation, 30-minute
+overall caps and first-return/absolute-reliability/retention screens. Report
+within-start outcome disagreement separately from differences across starts.
+Many uniform pairs despite differing actions would suggest limited influence of
+the sampled action changes; it would not establish a representation ceiling.
+A second actor failure triggers mechanism reassessment, not another rate/group
+sweep. Continuing orchestration remains authorized.
+
+Launched after 18 focused checks (6.14s) and parent review (.021s), both without
+candidate observations. Trial:
+`/workspace/m1b-experiments/pong-paired-start-actor-20261022-r1/`;
+source `0c8fa7b31b42baf9db774ada4f6d7deb7bcb5642`, original launch
+1792677761272223108ns, agent exec91988. Sources stay frozen through outcome checks.
