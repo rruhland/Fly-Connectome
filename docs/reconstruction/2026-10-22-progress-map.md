@@ -76,8 +76,9 @@ against its own start. The original direct and global heads remain relevant phas
 references. Exact opponent-return replication is deferred; this is integration
 exploration conditional on a single opponent-return training run. The balanced trial
 launched at2026-10-22T19:39:25.537299559Z, then the user requested a pause.
-It is being shut down promptly with partial exposure retained, not interpreted as
-a learning null. See HANDOFF for the final shutdown receipt. No further allocation
+It stopped with14879training transitions,161initial images, zero complete updates
+and zero evaluation. The learned RIGHTtheta6 is unchanged. Partial exposure is
+retained and is not a learning null. See HANDOFF for the shutdown receipt. No further allocation
 is authorized while paused.
 
 Checked figure: `/workspace/m1b-experiments/pong-mechanism-review-20261022/rightward-result.png`.

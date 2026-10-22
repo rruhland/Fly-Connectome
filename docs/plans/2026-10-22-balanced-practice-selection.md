@@ -87,3 +87,11 @@ verified research result remains opponent-return acquisition with unresolved dir
 retention. Preserve partial balanced exposure/checkpoints and original clock; do not
 label interruption a null or silently restart the clock. HANDOFF/live state record
 final process and accounting receipts. Resume only on renewed user instruction.
+
+Shutdown confirmed: exec9708 exited130 after coordinator SIGINT; all workers and
+resource tracker exited. Durable receipt reports14879training transitions and161
+initial images, zero complete populations/updates/evaluation. This includes291
+transitions drained after interrupt but absent from the coordinator cost log.
+All partial exposure is unused for learning; theta_at0 remains exact RIGHTtheta6.
+Receipt: `/workspace/m1b-experiments/pong-balanced-interception-20261022-r1/pause-receipt.json`.
+Parent independently checked no matching training/worker processes remained.
