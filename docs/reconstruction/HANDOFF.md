@@ -14,24 +14,19 @@ On 2026-10-22 the user authorized ongoing orchestration until stopped. Continue
 bounded research cycles, with independent challenge and reassessment between
 allocations. The previous no-followup stopping point is superseded. Major
 architecture review and efficient resource use remain required.
-**Active research: ordinary direct-serve curriculum running.**
-See [reassessment and bounded protocol](2026-10-22-scaffold-reassessment.md).
-Root`/workspace/m1b-experiments/pong-leftward-curriculum-20261022-r1`, exec81986,
-originalstart1792688471502393151ns, isolated source865a187. Source/driver/protocol
-frozen through both result checks; no DEV peeking. Same linear ARtheta112, no failed
-heads carried.40k/15min train,64LEFT first-contact+64unfiltered20s paired2heads,
-10min evaluation/25min overall. Primary learning and full first/all retention separate.
-Parent stage PASS73ms; focused13worker+4coordinator checks PASS; retained cutoff
-proof171old cameras/5.786s/0new observations. Reused Sol supervises; Astra checks.
+**Current research: reassessing the learning mechanism after a checked direct-serve null.**
+See [results and next question](2026-10-22-scaffold-reassessment.md).
+Direct first returns26/64→29/64,+4.6875pp CI[0,+10.9375]: no qualified learning.
+Ordinary first34/64both and all70/134→79/140: both retention gates PASS.
+213complete batches,39,824train (51unused),45,477eval,12.84min. Both checks PASS;
+source integrated90d7d73, freeze released. No live allocation and no endpoint promoted.
+Retain original temporal ARtheta112. Sol compares measured population-search versus
+local-actor update sizes and challenges next mechanisms; Astra reviews/synthesizes.
+No automatic adjacent sweep; continue orchestration within major-review boundary.
 
-Latest approved nonlinear residual comparison:38/64 carried,40/64 linear,37/64
-residual first returns. Neither learning nor retention established; no endpoint
-promoted. Both checks pass, source integratedfb55f7d.79,443train,61,228eval,19.43min.
-Sol's latent-Gaussian score alternative passed Astra's toy identity check but had
-18–19x retained paired-gradient dispersion; rejected before any fresh allocation.
-Direct-serve curriculum selected from retained shorter horizon and more informative
-outcome pairs per frame, with substantial room to improve. It is explicit task
-assistance; harder in available paddle-control time, not an easy-score subset.
+Earlier approved nonlinear comparison also failed learning/retention (38/64 carried,
+40/64linear,37/64residual); sourcefb55f7d. Latent-score alternative rejected before
+fresh training after retained dispersion18–19x higher despite correct toy identity.
 
 Latest [visual baseline comparison](2026-10-22-visual-baseline-research.md): both
 checks pass, source integrated343e881. First returns41/64 carried versus44/64 in

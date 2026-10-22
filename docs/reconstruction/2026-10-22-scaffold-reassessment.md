@@ -145,3 +145,45 @@ Launch exec81986, original clock1792688471502393151ns. Freeze source/driver/prot
 through both postexit checks; DEV blind. Previous residual journals were losslessly
 archived3.447GB to.600GB,38.34s with full decompressed-byte verification before
 launch. No archive replay or new observations. No training cap extension authorized.
+
+
+## Checked direct-serve result
+
+Both checks pass; source integrated90d7d73 and freeze released. No endpoint promoted.
+213 complete batches,39,824 training transitions (39,773used+51unused),45,477 fresh
+evaluation transitions (5,984direct+39,493full),1,109 initial images.770.103s total:
+456.125s training+313.977s evaluation. No recovery or budget extension.
+
+| Test | Carried ARtheta112 | Endpoint | Paired change,95% CI |
+|---|---:|---:|---|
+| Direct first returns |26/64|29/64|+4.6875pp,[0,+10.9375]|
+| Ordinary first returns |34/64|34/64|0pp,[-4.6875,+4.6875]|
+| Ordinary all returns |70/134|79/140|+4.1898pp,[-1.8451,+10]|
+
+Primary learning and80% competence fail. Both full-task retention gates pass.
+Ordinary games with at least2/3/4returns: carried20/10/4, endpoint23/9/6.
+The point estimates do not establish acquisition; this is not a replication target.
+
+62 nonzero updates/213,64 discordant pairs/426, no clipped updates. Net score RMS
+.003796=1.26% originalR0, net/root-RSS1.180,6generic-cache greedy flips. Actions
+changed before contact in21/64direct and35/64full games; median lead .450s/.975s.
+More efficient update collection did not establish a meaningful skill gain.
+
+Sol's execution/RNG/first-contact/update check passed21.557s. Astra independently
+reconstructed213updates, raw journal counts/rewards, paired statistics and gates
+in1.799s. Neither check added observations or replay. Artifacts:
+`/workspace/m1b-experiments/pong-mechanism-review-20261022/leftward-parent-result-check.json`,
+`leftward-result.png/svg`; allocation `completion-verification.json`.
+
+During evaluation,1,173 old completed direct-hit journals were losslessly archived
+3.4895GB to.4651GB in56.888s, plus2.759s preserving empty sidecars. All original
+bytes reconstruct-verified; zero new observations or replay. This overlapped the
+reported evaluation clock and did not shift or extend it.
+
+Next research question, not yet allocated: are we over-attributing weak local-actor
+progress to representation/task limitations after abandoning the population learner
+that established the earlier acquisition? Astra requests a measured comparison of
+actual function-space update sizes, coherent exploration and attainable completed
+populations under the shorter horizon. Sol independently challenges this against
+preconditioning and missing-information hypotheses. No automatic rate or seed sweep.
+Keep original ARtheta112 as starting policy pending that decision.
