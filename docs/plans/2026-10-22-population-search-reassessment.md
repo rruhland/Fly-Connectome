@@ -425,3 +425,32 @@ all-direction mirrored sum and reward-spread-normalized variants; top-direction
 selection is optional. It motivates an all-direction alternative, not a guarantee
 for our Pong estimator, metric-normalized perturbations, paired seed design or
 capped updates. Sol is independently challenging details before protocol selection.
+
+## Selected one coverage/aggregation followup
+
+Same predesignatedr1theta9 start and original GLOBAL reference, same native full-hit
+fitness/10s games/.25noise/.10cap, same three-head fresh evaluation/gates and
+80k/900train+600eval/1500overall,max12/min3. For each of8directions, six distinct
+fresh ordinary unfiltered starts shared only by its +/- pair; banks disjoint across
+directions.48contexts/96episodes instead of6. Sum all8paired mean contrasts in fixed
+direction index order, with standard deviation across all16sign means, row centering
+and existing function-RMS cap. No reward ranking, learned crossbank baseline or
+absolute-contrast selection. Manifest must state actual top8/all-direction config.
+
+Sol independently recommends the same simplest choice. Six contexts per direction
+leave individual contrast noise unchanged; shared banks could improve covariance,
+so greater coverage is not a guaranteed variance reduction. Between-bank difficulty
+still enters the common spread and may reduce update dose. Report it; do not adapt
+normalization after outcomes. The paired contrast estimates the expected sign
+return difference for a fixed direction; the whole normalized/capped update is not
+claimed an unbiased Gaussian gradient. Healthy movement with failed fresh gates
+weakens this route; do not automatically sweep bank sizes, rates or thresholds.
+A combined positive needs independent replication. This is the one justified
+followup to the initial full-rally null, not an open-ended adjacent search.
+
+Sol additionally read Salimans et al.2017 section2/Algorithms1–2,
+[Evolution Strategies](https://arxiv.org/pdf/1703.03864). Mirrored/all-sample methods
+are precedent; their common-random-number communication scheme concerns perturbation
+seeds, not validation of our environment-bank choice. No source guarantees our
+coverage design improves Pong or skill preservation. Staging only; parent review
+before launch, no architecture change.
