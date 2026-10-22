@@ -84,3 +84,10 @@ the same capped x and separate score branches as sampling. Verify exact actor
 scores/probabilities at B=0 and matched legacy greedy actions separately; do not
 claim equality of differently scaled diagnostic score records. Implementation
 choices remain subject to independent prelaunch correctness review.
+
+Additional primary source: [Rahimi and Recht (2008)](https://pages.cs.wisc.edu/~brecht/papers/08.rah.rec.nips.pdf),
+intro/Algorithm1/Theorem1, directly treats fixed bounded random nonlinearities
+with learned output weights. Astra read those sections. Its independent supervised
+sample/empirical-risk assumptions do not establish online RL learning, a suitable
+64-feature size, or our estimator's sample efficiency. This is architectural
+precedent, not evidence that the Pong intervention will work.
