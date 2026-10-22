@@ -90,7 +90,58 @@ The completed previous trial's journals were losslessly compressed with full
 byte-reconstruction verification: 3.119GB to .425GB in 32.67s. Restore from its
 archive manifest before raw-journal inspection; metadata and policies remain plain.
 
-Status: launched after 15 focused checks and independent parent stage review.
+Status: completed; no demonstrated first-return improvement. See results below.
 Exact trial: `/workspace/m1b-experiments/pong-first-hit-actor-20261022-r1/`;
 source `6e556d52ef2fa3d216bd2c73f6a7c781754841e2`; original launch
-1792675734506565778ns. Source/driver/protocol stay frozen through outcome checks.
+1792675734506565778ns. Both outcome checks passed; source freeze released.
+
+## Completed outcome
+
+| Fresh paired evaluation | Carried start | Actor endpoint |
+|---|---:|---:|
+| First returns | 35/64 | 35/64 |
+| All returns / opportunities | 51/115 (44.35%) | 61/124 (49.19%) |
+| Games with at least two returns | 12/64 | 16/64 |
+| Games with at least three returns | 2/64 | 5/64 |
+| Games with at least four returns | 2/64 | 3/64 |
+
+Primary first-return lift 0pp, paired 95% interval [-4.69, +4.69]. Learning and
+80% absolute reliability screens fail. All-return lift +4.85pp, interval
+[-1.64, +11.06]; gain is not established, but the separate -5pp retention screen
+passes. One endpoint game timed out with an unfinished incoming approach. No
+winning or scaffold-completion claim follows.
+
+107 complete batches used all 39,911 training transitions, with no unused partial
+batch. 428 attempts supplied 225 hits and 203 failures; 90 mixed-outcome batches
+produced 90 nonzero updates. No update reached the aggregate cap. Actual sampled
+nongreedy frequency was 4.788%, mean entropy .1182. Thus absent exploration,
+uniform rewards and clipping do not explain this null.
+
+Net function-RMS movement was .004975, only 1.654% of the initial head RMS.
+Median nonzero step was .000530 versus the .003008 cap. The final head changed
+10/1,024 greedy decisions on the generic calibration cache; mean probability
+total-variation shift was .843pp. Those are cached-input measurements, not an
+on-policy coverage guarantee. Net movement divided by root-sum-squared step
+length was .9303, so largely canceling updates are a competing explanation to
+simply too-small steps. This is descriptive, not a gradient significance test.
+
+Execution cost: 879.43s training, 309.98s evaluation, 1189.41s total (19.82min);
+33,559 evaluation transitions and 556 initial images. No worker/report failures.
+Training throughput 45.38 cameras/s versus evaluation 108.26; repeated full
+projection-content checks and projection arithmetic plausibly contribute, but
+no isolated speed benchmark was run. Fifteen focused prelaunch tests passed.
+Sol's sequential-update/source/trace check passed in 1.706s; Astra's independent
+raw-count/action-probability/paired-outcome check passed in 1.567s, both with zero
+new observations. Implementation integrated into main as `09b8f71`.
+
+## Next hypothesis under continuing authority
+
+Astra proposed conditioning the empirical baseline on the starting serve: four
+ordinary episodes from the same fresh start, with independent action RNGs and
+fixed weights, instead of four different starts. A leave-one-out baseline then
+compares different action realizations under the same initial difficulty. All
+episodes still start normally and all exposure counts; no hidden state enters
+the learner. The tradeoff is fewer distinct starts and potentially many uniform,
+zero-update groups. Sol is independently challenging this proposal against
+update-scale, critic and representation alternatives before another allocation.
+No outcome-based extension of the completed trial is allowed.
