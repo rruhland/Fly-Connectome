@@ -91,3 +91,24 @@ retention under within-task drift, and Ng et al.1999 for limits of policy-invari
 shaping in whole-episode search. None establishes this curriculum will succeed.
 The decision is grounded in the observed native-phase performance gap. No new
 allocation has launched; independent stage review comes first.
+
+## Independently staged
+
+Root `/workspace/m1b-experiments/pong-rightward-interception-20261022-r1`, unchanged
+core/worker/math source68d15a7. Eight focused checks PASS2.39s; no new execution or
+cost replay. Sol stage PASS41ms after2.086s preparation. Astra independently
+regenerated six-root native schedules, all336canonical starts/rejections, exact
+maps/source pins and8directions/all192candidate cells in191ms; zero observations.
+
+Roots: training2947108631, RIGHTDEV1596827437, LEFTDEV4103586919,
+FULLDEV1179302843, optimizer3756142097, bootstrap2284095761; tag29131.
+144RIGHTtrain+64RIGHTDEV+64LEFTDEV+64FULLDEV;293rejected candidates reserved,
+37,940priorIDs excluded. Driver14b7fa99dad4f4a93c39206b88385a72f00c2257d2bc4a7ff40f090858b03b9f;
+protocol544d2d577eb954a3a538b27adeb53951ab426c9d76b91850a6c9e1bc9e2ecf99;
+prelaunch manifest016015758a3429232b7f27be3e5b42fd95f5acdb7a9e3857ae1abefdab66c940.
+Launch authorized after both checks; same160k/1200train+900eval/2100overall,
+min5/max12. Source/driver/protocol frozen through both postexit checks; DEV blind.
+
+Prior pair-bank journals archived only after both checks:726DB2.1845GB→.3147GB,
+20.134s; sidecar2.693s completed before archive. All bytes reconstruct-verified,
+zero observations/replay, no overlap with this new training allocation.
