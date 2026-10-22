@@ -14,15 +14,22 @@ On 2026-10-22 the user authorized ongoing orchestration until stopped. Continue
 bounded research cycles, with independent challenge and reassessment between
 allocations. The previous no-followup stopping point is superseded. Major
 architecture review and efficient resource use remain required.
-**Current research: reassessing the learning mechanism after a checked direct-serve null.**
-See [results and next question](2026-10-22-scaffold-reassessment.md).
-Direct first returns26/64→29/64,+4.6875pp CI[0,+10.9375]: no qualified learning.
-Ordinary first34/64both and all70/134→79/140: both retention gates PASS.
-213complete batches,39,824train (51unused),45,477eval,12.84min. Both checks PASS;
-source integrated90d7d73, freeze released. No live allocation and no endpoint promoted.
-Retain original temporal ARtheta112. Sol compares measured population-search versus
-local-actor update sizes and challenges next mechanisms; Astra reviews/synthesizes.
-No automatic adjacent sweep; continue orchestration within major-review boundary.
+**Active research: original-scale greedy population learner on direct serves.**
+[Protocol and reassessment](../plans/2026-10-22-population-search-reassessment.md).
+Root`/workspace/m1b-experiments/pong-leftward-population-20261022-r1`,exec71247,
+originalstart1792690225066585708ns, isolated source68d15a7. Source/driver/protocol
+frozen; DEV blind. Same original ARtheta112/T; restore demonstrated8directions,
+plus/minus.25 perturbations,12sharedLEFTstarts,top4/.10stepcap.80k/900s train,
+600s eval/1500s overall,max12/min5complete populations. Fresh64LEFT+64full20s,
+matched endpoint/start, separate learning/80%/both retention gates. No capextension.
+Sol7focused checks and parent independentstage191ms PASS, zero new observations.
+
+Latest direct-serve actor result: first26/64→29/64,+4.6875pp CI[0,+10.9375], no
+qualified learning. Ordinary first34/64both and all70/134→79/140: both retention
+PASS.213batches,39,824train(51unused),45,477eval,12.84min. Both checks PASS;
+source90d7d73, no endpoint promotion. Measured successful original population steps
+~.095 versus actor median.000364 motivated reassessing the mechanism, not adding
+another architecture. Objective alignment/exploration/dose confounded explicitly.
 
 Earlier approved nonlinear comparison also failed learning/retention (38/64 carried,
 40/64linear,37/64residual); sourcefb55f7d. Latent-score alternative rejected before

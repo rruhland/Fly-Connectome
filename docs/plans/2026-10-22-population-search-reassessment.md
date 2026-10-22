@@ -100,3 +100,27 @@ research execution. No architecture or environment-source change is needed.
 Focused coordinator validation covers complete/partial populations, paired fitness,
 optimizer RNG/checkpoint progression, seed isolation and budget accounting. Frozen
 source/driver/protocol and independent stage approval are required before launch.
+
+
+## Independent stage accepted; allocation live
+
+Source `/workspace/Fly-Connectome-m1b-pong-leftward-population`, commit
+68d15a7ed658347da9f6f5a7b2c4d5b4da644616; core/worker/math unchanged and clean.
+Allocation `/workspace/m1b-experiments/pong-leftward-population-20261022-r1`.
+Driver8200c75ff4529a76c6827e24e64aaf370c13ac8b0203dffe6b60be09705bd853;
+protocolaafc37de93dae44c1196444f769fecdef005632ed969624d7139f91ba7a9b236;
+prelaunch manifestc7bee37ddbe1d220f90cf768b96d5b7e15f0e5608b8c7abc4c4a335bdbf77656.
+
+Sol7focused checks PASS1.51s, zero observations; unchanged greedy execution proof
+reused, no redundant replay. Stage1.772s plus own verification41ms. Parent reviewed
+310-line coordinator, independently regenerated conditional seed schedule including
+227rejections, all8normalized Gaussian directions and192candidate cells/mapped heads,
+source/file pins and exact carried policy. Parent check191ms, zero observations.
+272fresh canonical environment IDs,35,899prior IDs excluded, no final stream use.
+
+Launch exec71247, original started_wall_ns1792690225066585708. Source/driver/protocol
+frozen through both postexit checks; DEV blind.80k/900s training,600s evaluation,
+1500s overall, no extension. Reused Sol supervises; Astra independently reconstructs
+final updates and learning/retention evidence. Completed prior direct-serve actor
+journals archived3.292GB to.481GB in34.548s after both checks, zero observations or
+replay and all bytes reconstruct-verified, before this launch.
