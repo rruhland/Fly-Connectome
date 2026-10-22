@@ -115,3 +115,13 @@ zero observations/replay, no overlap with this new training allocation.
 
 Launched exec95719, originalstarted_wall_ns1792695554956184660
 (2026-10-22T18:59:14.956184660Z). Same frozen caps; DEV blind, no extensions.
+
+### Read-only representation review while evaluation remains blind
+
+Astra checked `src/fly_connectome/vision/interface.py`: signed observed velocity is
+bound to16×16current-position bins, and signed relative velocity is bound to9×9
+relative-position bins. These interactions are already present; do not propose a
+new architecture on the false premise that all velocity-position binding is absent.
+The fixed projection can reduce resolution, and the policy does not receive an
+explicit action-history feature. Neither observation establishes a causal failure.
+No new observations, replay, diagnostic allocation or change to the running trial.
