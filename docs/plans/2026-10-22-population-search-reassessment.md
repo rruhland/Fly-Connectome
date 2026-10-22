@@ -392,3 +392,36 @@ counts and paired gates in1.700s. Zero observations/replay. Parent artifacts:
 and `integration-result.png/svg`. Reused Sol independently challenges the next
 mechanism while Astra assesses optimization, objective and coverage alternatives;
 no followup allocation selected yet.
+
+### Reassessment rejects a superficially plausible reward pivot
+
+Astra and Sol independently decomposed the three saved population count contrasts
+(the small analyses crossed in flight;16ms and29ms, zero observations/replay/raw
+journal reads). Later-hit contributions were not drowned out by first-hit rewards:
+their projections along the actual updates were75.06%,74.85%,54.84%. Astra's
+independent total-versus-later update cosines were.996,.929,.975, with first/later
+components positively aligned in every population. Do not infer that credit was
+absent from the low absolute number of later hits. A binary-two-hit reward change
+would need a different justification. Artifacts: parent
+`integration-contrast-decomposition.json`; Sol's prep `metadata-reassessment.json`.
+
+Sol's descriptive direction split: DIRECT→ENDPOINT ordinary direct-opening first
+returns32→28/39,>=2games11→12; opponent-first opening first returns10→11/25,
+>=2games4→5 (GLOBAL opponent-first returns17/25). These conditional cohorts are
+not new acceptance tests. The18used training starts were9LEFT/9RIGHT overall but
+population0 had5LEFT/1RIGHT and subsequent populations2LEFT/4RIGHT each.
+
+Both agents independently favor broader context sampling as a contender: each
+positive/negative perturbation pair shares six starts, but different directions
+use different fresh starts. This yields48contexts per96episodes, versus6before.
+Astra challenges retaining top4 ranking across unequal banks because bank difficulty
+can drive selection. The simplest contender uses all8 directions and spread over
+all16 sign means, retaining original.25noise/.10cap. This changes both sampling and
+aggregation, so any positive would not isolate context diversity alone.
+
+Astra re-read Mania, Guy & Recht (2018), section2.1/Algorithm1 and section3/Algorithm2:
+[Simple random search](https://arxiv.org/pdf/1803.07055). The paper defines a basic
+all-direction mirrored sum and reward-spread-normalized variants; top-direction
+selection is optional. It motivates an all-direction alternative, not a guarantee
+for our Pong estimator, metric-normalized perturbations, paired seed design or
+capped updates. Sol is independently challenging details before protocol selection.
