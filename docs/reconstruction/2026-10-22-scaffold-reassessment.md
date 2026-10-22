@@ -59,3 +59,36 @@ reset access and useful local reversibility. Our possible serve filter is a much
 narrower manual curriculum, not that algorithm; their results do not establish
 transfer or learnability for this visual Pong actor. We import no backpropagation,
 goal-state examples or success guarantee.
+
+## Selected direction after retained split
+
+Sol's direction split used existing reports only (70.7ms, zero observations,
+replay or journal reads). On two fresh historical DEV cohorts with the SAME carried
+ARtheta112, direct incoming starts yielded33/65 first returns; opponent-first
+starts46/63. Median incoming times were0.842s versus2.575s. In the retained paired
+training cohort, direct starts had18/104 outcome-discordant pairs versus11/112,
+with mean46.46 versus134.38 camera transitions per episode. These retrospective
+figures motivate a prospective learning test; they do not establish curriculum
+benefit or explain causally why the original learner plateaued.
+
+Astra selects one bounded learning arm on ordinary direct-serve starts, with fresh
+matched carried-policy controls for direct-serve learning and separate unfiltered
+full-game retention. Keep architecture, visual processing, paired categorical
+credit, exploration, learning rate and cap unchanged. No concurrent ordinary-start
+learning arm: this tests whether incremental scaffold learning occurs, not whether
+filtering is causally more efficient than ordinary training. Exact protocol and
+source require prelaunch review. Independent replication follows a positive result.
+
+This is a shorter-horizon but empirically HARDER subset: the paddle has less time
+to align. The competing prediction is that visual precision or motor timing remains
+limiting and filtering will not help. Preserve the complete ordinary reset joint
+state; initial height and angle share one random draw. Filter by predetermined
+canonical direction only, never by outcomes, landing locations or changed parity.
+
+Astra also challenged fixed feature-metric preconditioning as an alternative to
+raw-coordinate updates. It could address correlated/rank-deficient features, but
+would return to an optimizer intervention without resolving task or information
+limitations. Sol's strongest alternative was restoring legal visual information
+lost by projection; the post-projection tanh branch cannot do that. Neither is
+implemented or ruled out; the direction evidence favors the smaller task-distribution
+experiment now. No additional major architecture change is authorized by this choice.
