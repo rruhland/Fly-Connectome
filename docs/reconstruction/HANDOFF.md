@@ -14,7 +14,7 @@ On 2026-10-22 the user authorized ongoing orchestration until stopped. Continue
 bounded research cycles, with independent challenge and reassessment between
 allocations. The previous no-followup stopping point is superseded. Major
 architecture review and efficient resource use remain required.
-**Current research: exact replication of a strong direct-interception learning result.**
+**Active research: exact replication of strong direct-interception learning is running.**
 [Protocol/results](../plans/2026-10-22-population-search-reassessment.md).
 Original-scale population r1 COMPLETE, both checks PASS: direct first29/64→56/64,
 +42.1875pp CI[29.6875,54.6875],87.5% provisionalcompetence PASS. Ordinary first31→39/64
@@ -24,7 +24,9 @@ unchanged, freeze released. Currentglobalancestor remains originalARtheta112.
 
 Sol stages exactr2 fromoriginalARtheta112 with onlyfreshseedroots/path changed;
 same80k/900train+600eval/1500overall,max12/min5,8directions,.25noise,.10cap,12sharedLEFTstarts.
-Parent reviewsstage beforelaunch. No liveallocation in this update. Ifreplicated,
+R2stage independentlyPASS202ms; root`pong-leftward-population-20261022-r2`,exec65584,
+originalstart1792691458745935191ns. Frozen source68d15a7; DEVblind; samecaps, noextension.
+R1journalarchive completedbeforelaunch, headsplain. Ifreplicated,
 r1theta9 is designated LEFTscaffoldcandidate regardless of whichseedlooksbetter.
 Full-rally preservation/integration is subsequent question, not an architecture change.
 

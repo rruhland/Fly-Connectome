@@ -177,3 +177,29 @@ as a combined learner while preservation remains unproved. The original full-ral
 population stage and mixed-task training are integration contenders after replication;
 no integration allocation selected yet. The ultimate continuous-learning objective
 and major-architecture review boundary remain unchanged.
+
+
+## Exact replication staged and launched
+
+Root `/workspace/m1b-experiments/pong-leftward-population-20261022-r2`, same source
+68d15a7. Driverdiff is exactly oneROOTSline; fixturebyte-identical, no new tests or
+replays. Training3158167291,LEFTDEV1740069383,FULLDEV4021736819,optimizer2185392077,
+bootstrap947630153; sameTAG29128.272freshcanonicalstarts,217rejectedcandidates,
+36,404priorIDs excluded including all r1unused/rejected schedules.
+
+Driver0e57ce62f9f00983572b09cea923e4919fe1a9146d8f5e8872200f646c6a36fa;
+protocolc6876e0c6c25a2b814734577e779dcd4fc63204a657d6926d54d15f3bf65731d;
+prelaunch manifest2192ad19f7fefd61f4eab6672453708850ed7594b13ba04c78c777b714810f0a;
+replication-lineage8ac553730745d5ddf2aef97acd1f04631741fa5ed215f3b21e6a3a58a6226199.
+Provenance explicitly designates r1theta9 regardless of r2score and pins both r1checks.
+Solstage PASS37ms after1.855s prep; Astra independently regenerated seeds,
+8directions/all192candidate cells and checked the exact driverdiff/pins in202ms.
+Zero candidate observations at staging.
+
+R1journals archived after bothchecks/rawread completion:2,014DB5.8557GB→.8124GB,
+65.018s plus1.622s empty-sidecar preservation. All bytes reconstruct-verified,
+zero observations/replay; heads/metadata remain plain. Archive completed BEFORE r2.
+
+R2 launch exec65584, originalstarted_wall_ns1792691458745935191. Same80k/900train+
+600eval/1500overall, noextensions. Source/driver/protocol freeze through bothchecks;
+DEVblind until exit. Reused Sol supervises; Astra's independent checker is prepared.
