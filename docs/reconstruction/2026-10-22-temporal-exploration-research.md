@@ -148,3 +148,20 @@ between channels or objects. [Konidaris et al. (2011)](https://people.cs.umass.e
 variable-coupling and limitations sections, informed this distinction. Its
 Fourier-of-state construction differs from our spatial occupancy transform; no
 benchmark performance is transferred. A capacity intervention remains unallocated.
+
+## Performance finding prepared for the next cycle
+
+During training, Astra profiled an exact replay of50 already-recorded first-actor
+cameras; all returned records matched. No fresh candidate experience was added.
+The profiled2.581s included150 fingerprint calls (three/camera), totaling1.677s,
+about65% of wall time. Profiling overhead and concurrent work limit extrapolation;
+nested function times must not be summed. This motivates a separate proposal for
+research execution with less redundant checking, followed by actual equivalence
+and throughput measurement. It does not authorize silently dropping integrity
+checks or changing the live allocation. Sol will independently assess a bounded
+proposal after both current outcome checks, preserving the full reference path.
+
+An older completed confirmation trial's512 journals were losslessly compressed
+1.453GB→.150GB in22.54s during training, preserving decompressed byte identity.
+That maintenance overlap is part of actual elapsed training time, not excluded
+from the trial or attributed to an algorithmic speed gain.
