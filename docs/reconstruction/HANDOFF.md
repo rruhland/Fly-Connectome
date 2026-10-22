@@ -14,24 +14,19 @@ On 2026-10-22 the user authorized ongoing orchestration until stopped. Continue
 bounded research cycles, with independent challenge and reassessment between
 allocations. The previous no-followup stopping point is superseded. Major
 architecture review and efficient resource use remain required.
-**Active research: replicated direct-interception learning; full-rally integration running.**
+**Active research: replicated interception, first full-rally integration failed its gates; reassessing.**
 [Protocol/results](../plans/2026-10-22-population-search-reassessment.md).
-Both population trials COMPLETE with both independent checks PASS. Direct returns:
-r1 29→56/64, +42.19pp CI[29.69,54.69]; r2 27→49/64, +34.38pp CI[18.75,50].
-Learning replicates; 80% absolute competence passes only r1. Ordinary all-return
-retention fails in both, and multi-return games decline descriptively. No combined
-learner promotion. R1 designated theta9 remains the direct scaffold candidate by
-precommitment; original ARtheta112 remains the global reference. Source68d15a7
-freeze released. R2: 79,825train,37,687eval,1,984initials,907.916s,9updates.
+LEFT acquisition replicated29→56/64 and27→49/64; 80% threshold passes only r1.
+Designatedr1theta9 remains the direct scaffold; ARtheta112 remains global reference.
 
-Next selected question: can the existing original full-rally population stage retain
-this interception skill and improve sustained returns? Sol supervises the staged allocation from r1theta9 with ordinary mixed starts;
-both stage reviews PASS, no new architecture.
-Fresh evaluation will compare specialized start, global reference and endpoint;
-explicit direct preservation and per-game rally learning gates. Root
-`pong-full-rally-integration-20261022-r1`, exec84970, original start
-1792692905024392844ns.80k/900s train,600s eval/1500s total; min3/max12 populations.
-DEV blind; source68d15a7 and coordinator frozen through both postexit checks.
+Full-rally integration COMPLETE, both checks PASS, source freeze released. Three
+substantive updates,79,947train(11,041unused),59,802eval,804.568s. Fresh matched
+LEFT: GLOBAL31/DIRECT60/ENDPOINT55 out of64; FULL>=2returns12/15/17 out of64.
+Rally gains vs both controls fail; LEFT preservation fails; full GLOBAL preservation
+and LEFT gain over GLOBAL pass. No combined promotion. Training covers18unique
+starts,288episodes but only67post-first hits; netRMS.174 with174cache changes.
+Source68d15a7 unchanged. Reused Sol independently explores a learning pivot, Astra
+compares coverage/objective/optimizer alternatives. No followup allocation yet.
 
 The existing frozenvision/linearclass demonstrably supports high direct interception;
 prior localactor nulls did not establish representationceiling. Originalpopulation

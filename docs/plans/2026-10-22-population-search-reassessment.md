@@ -351,3 +351,44 @@ truncation, nonzero terminal potentials or time-varying potentials need separate
 analysis rather than assuming invariance. Current raw own-hit fitness deliberately
 changes the objective to learn a scaffold; it is not claimed equivalent to winning.
 No current protocol change, diagnostic allocation or new observations.
+
+## Checked full-rally integration: no combined-progress result
+
+Both checks PASS; source freeze released. Three complete/nonzero updates.79,947
+training transitions=68,906used+11,041unused partial;59,802evaluation
+(8,434LEFT+51,368FULL),731initials.804.568s=425.594train+378.974eval.
+
+| Fresh test | Original GLOBAL | Specialized DIRECT start | ENDPOINT |
+|---|---:|---:|---:|
+| Direct first returns |31/64|60/64|55/64|
+| Ordinary first returns |31/64|42/64|39/64|
+| Ordinary total returns/opportunities |50/114|63/127|69/133|
+| Games with >=2 returns |12/64|15/64|17/64|
+| Games with >=3 / >=4 returns |5 / 1|4 / 2|8 / 3|
+
+Primary rally gains fail: +3.125pp CI[-9.375,15.625] versus DIRECT and +7.8125pp
+CI[-3.125,18.75] versus GLOBAL. LEFT preservation fails: −7.8125pp
+CI[-15.625,0] versus DIRECT. LEFT improvement over GLOBAL passes: +37.5pp
+CI[23.4375,51.5625]. Ordinary first/all preservation against GLOBAL both pass
+(first+12.5pp CI[-1.5625,26.5625]; all+8.0201pp CI[0,16.9751]). Mean hits/game
+changes are secondary and inconclusive: +.09375 CI[-.1875,.375] vs DIRECT and
++.296875 CI[0,.625] vs GLOBAL. No combined learner promotion, competence completion
+or absence-of-learning claim. The learned interception remains useful but its full
+preservation and a reliable rally gain were not established.
+
+69/144 direction/serve pairs contrast. Steps .10,.09885,.09769; net function
+RMS .174471 (comparable to original full-stage displacement),174cache action changes.
+Fresh precontact actions change in63/64 games per cohort versus DIRECT. Thus this
+was not an inactive-update null. However, training covered only18unique starts;
+288used episodes supply229own hits,162hit-bearing episodes and67post-first hits.
+Only53episodes have >=2 returns. The successful LEFT acquisition had108unique
+training starts. Parameter movement alone does not establish adequate context or
+later-contact coverage. These metadata observations motivate reassessment, not an
+automatic longer run or architecture change.
+
+Sol's verification PASS5.693s; Astra independently reconstructs all3updates, raw
+counts and paired gates in1.700s. Zero observations/replay. Parent artifacts:
+`/workspace/m1b-experiments/pong-mechanism-review-20261022/integration-parent-result-check.json`
+and `integration-result.png/svg`. Reused Sol independently challenges the next
+mechanism while Astra assesses optimization, objective and coverage alternatives;
+no followup allocation selected yet.
