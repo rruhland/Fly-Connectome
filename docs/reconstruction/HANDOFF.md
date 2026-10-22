@@ -14,14 +14,19 @@ On 2026-10-22 the user authorized ongoing orchestration until stopped. Continue
 bounded research cycles, with independent challenge and reassessment between
 allocations. The previous no-followup stopping point is superseded. Major
 architecture review and efficient resource use remain required.
-**Active research:** next-direction reassessment after the checked
-[visual baseline comparison](2026-10-22-visual-baseline-research.md). No live
-learning run. Both checks pass; source integrated343e881. First returns41/64
-carried versus44/64 in both arms: learning/advantage fail, retention inconclusive
-in both. Neither endpoint promoted; retain temporal ARtheta112. Baseline weighted
-prediction error improved10.4%, but same-trajectory gradient dispersion increased.
-No automatic baseline/rate sweep. Continue orchestration with independent pivot
-challenge; major capacity changes still require user review.
+**Next action: awaiting user architecture review.** Astra and reused Sol independently
+recommend a [fixed64-feature nonlinear residual](../plans/2026-10-22-nonlinear-residual-review.md)
+with zero output weights, exact carried-policy initialization and no backpropagation.
+Concrete proposal committed9a4c8f8; async approval question sent. The user explicitly
+reserved major architecture changes for review. Do not implement/launch this change
+until approval arrives. No active learning run or source freeze; reuse the existing
+Sol agent after approval. Do not start an adjacent sweep just to remain busy.
+
+Latest [visual baseline comparison](2026-10-22-visual-baseline-research.md): both
+checks pass, source integrated343e881. First returns41/64 carried versus44/64 in
+both arms: learning/advantage fail, retention inconclusive. Neither endpoint promoted;
+retain temporal ARtheta112. Prediction error improved10.4% but update dispersion
+increased. Durable plan and checked result are complete.
 
 **Latest result:** [temporal exploration](2026-10-22-temporal-exploration-research.md)
 completed112 joint batches: first returns31/64 start,32/64 IID,33/64 correlated.
