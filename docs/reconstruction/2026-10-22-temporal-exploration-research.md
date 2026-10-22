@@ -1,6 +1,7 @@
 # Research target: exploration that changes interception outcomes
 
-Status: selected for implementation and protocol review, not launched yet.
+Status: launched after independent code/protocol/calibration review. Source,
+driver and protocol frozen through both outcome checks.
 Ongoing orchestration remains authorized. Follow the
 [continuous-learning scaffold plan](../plans/2026-10-21-continuous-learning-scaffolds.md).
 
@@ -103,3 +104,27 @@ buffer copies while preserving full content verification and existing hashes.
 isolated benchmark. End-to-end throughput remains to be measured. Completed
 journals are losslessly compressed only after all checks; staged transforms and
 recovery metadata remain available.
+
+
+## Launch record
+
+Trial `/workspace/m1b-experiments/pong-temporal-exploration-20261022-r1`, source
+`6d4923bfa55cd1f54b7c7197e49551fea3ed0fa1` in isolated
+`/workspace/Fly-Connectome-m1b-pong-temporal-bias`; agent exec98424, original
+start1792680038289134991ns. Driver SHA256
+`3d4465d5a586fc79113d03ce78b84dfa291a0027d035150c68ebf2f9a7b4ed0b`;
+protocol `199f2991ce01ec454e6c9c849cf144caef01b182e5aabb681da89bed6b9e8d17`.
+24 focused checks pass in10.11s; staging6.07s, no candidate observations.
+
+Shared sigma .06438251354725585 in score units. Centered Gaussian covariance
+is sigma²(I−11ᵀ/3); deterministic quadrature gives .100000006 at order40 and
+.099999931 at64. Parent independently sampled4,096 three-dimensional Gaussian
+vectors with antithetic pairing: mean disagreement .099576, standard error
+.000821. Independent stage/pin/seed/warm-start review passed in .456s, zero
+candidate observations. All7,264 new IDs are distinct from9,000 prior reserved
+IDs;864 environment starts also pass canonical physics-seed checks.
+
+Inherited training279,449 transitions:258,405 used,21,044 unused. The paired
+trial's550 completed journals were losslessly compressed1.656GB→.233GB in15.79s
+with full decompressed byte verification; metadata, heads and required T remain
+plain. Restore journals before further raw inspection.

@@ -14,11 +14,13 @@ On 2026-10-22 the user authorized ongoing orchestration until stopped. Continue
 bounded research cycles, with independent challenge and reassessment between
 allocations. The previous no-followup stopping point is superseded. Major
 architecture review and efficient resource use remain required.
-**Active research:** implementing and reviewing the selected
+**Active research:** running the selected
 [matched independent-versus-correlated exploration test](2026-10-22-temporal-exploration-research.md).
 Two arms, 40k new training transitions each, 64 fresh common full-game evaluations
-per arm and carried start; 45-minute overall cap. No trial launched yet. Continue
-orchestration; do not stop here.
+per arm and carried start; 45-minute overall cap. Trial root
+`/workspace/m1b-experiments/pong-temporal-exploration-20261022-r1`, source6d4923b,
+exec98424, originalstart1792680038289134991ns. Source/driver/protocol frozen
+through both checks; no DEV peeking. Continue orchestration; do not stop here.
 
 **Latest completed 2026-10-22:** [paired-start actor](2026-10-22-action-credit-research.md).
 First returns26/64→28/64,+3.125pp CI[0,+7.8125], insufficient incremental learning.
