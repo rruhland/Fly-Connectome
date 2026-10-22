@@ -1,7 +1,7 @@
 # Proposed next scaffold: fixed nonlinear residual policy
 
 **Status: user explicitly approved the nonlinear residual test on2026-10-22.**
-Implementation and a frozen prelaunch review are authorized; no launch yet.
+Completed: both independent checks pass; neither endpoint establishes learning or retention.
 The user authorized ongoing experimentation but reserved genuinely major architecture
 alterations for review. Astra and Sol independently recommend a capacity intervention
 after the [checked visual-baseline result](../reconstruction/2026-10-22-visual-baseline-research.md).
@@ -140,4 +140,39 @@ both outcome checks, no DEV peeking. Another482 completed old journals were
 losslessly archived1.434GB to.203GB in15.26s, with decompressed byte verification,
 before launch to reserve disk; zero candidate observations/replay.
 
-Live exec71017, original launch1792686199720929873ns. Source freeze active.
+Completed exec71017, original launch1792686199720929873ns. Both checks pass; source freeze released and source integrated as fb55f7d.
+
+
+## Checked result and decision
+
+111 complete joint batches; 79,443 training transitions (256 unused partial),
+61,228 evaluation transitions and 1,082 initial images. Execution 1,165.712s,
+including 749.976s training and 415.736s evaluation. No budget extension or recovery.
+
+| Measure | Carried ARtheta112 | Linear control | Nonlinear residual |
+|---|---:|---:|---:|
+| First returns | 38/64 | 40/64 | 37/64 |
+| All returns/opportunities | 79/140 | 89/149 | 78/140 |
+| Games with at least two returns | 21 | 23 | 21 |
+| Games with at least four returns | 5 | 6 | 5 |
+
+Residual first-return lift is -1.5625pp, paired 95% CI [-7.8516,+4.6875];
+linear lift +3.125pp, CI [-3.125,+9.375]. Residual versus linear -4.6875pp,
+CI [-10.9375,+1.5625]. Neither learning nor 80% competence nor advantage passes.
+All-return retention is inconclusive for both: residual lift -0.7143pp,
+CI [-8.7173,+7.4803]; linear +3.3030pp, CI [-5.4208,+11.9517].
+This does not establish harm. No endpoint promoted; retain ARtheta112.
+
+Residual changes were active: combined net score RMS .01158 versus .00395 for
+linear, 26 versus 6 generic-cache greedy flips, and 48/64 fresh residual trajectories
+changed before first contact (median lead 1.133s). Only five first outcomes changed.
+The branch did not simply fail to move the policy. Its raw features were largely
+linearly redundant, so this null does not refute nonlinear capacity generally.
+No automatic map, seed or rate sweep follows.
+
+Sol's complete source/RNG/eligibility/update/recovery-pin check passed in25.888s;
+Astra's independent raw-outcome, update and bootstrap reconstruction passed in4.647s.
+Both added zero observations or replay. Parent artifacts:
+`/workspace/m1b-experiments/pong-mechanism-review-20261022/residual-parent-result-check.json`
+and `residual-result.png/svg`; executor evidence is the allocation's
+`completion-verification.json`. Source is integrated; raw reads are finished.

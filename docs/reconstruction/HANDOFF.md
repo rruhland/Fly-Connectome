@@ -14,15 +14,21 @@ On 2026-10-22 the user authorized ongoing orchestration until stopped. Continue
 bounded research cycles, with independent challenge and reassessment between
 allocations. The previous no-followup stopping point is superseded. Major
 architecture review and efficient resource use remain required.
-**Active research: approved nonlinear residual comparison running.** See the
-[fixed64-feature plan/protocol](../plans/2026-10-22-nonlinear-residual-review.md).
-Root`/workspace/m1b-experiments/pong-nonlinear-residual-20261022-r1`, exec71017,
-originalstart1792686199720929873ns, isolated source38a097f. Freeze source/driver/
-protocol through both outcome checks; no DEV peeking. Same ARtheta112, no failed
-baseline heads carried.40k training per arm,20min training+10min evaluation,
-30min overall. Reused Sol supervises; Astra independently checks/interprets.
-User explicitly approved this architecture test; no further permission needed.
-Continue orchestration after results, with major-change review boundary intact.
+**Current research: reconsidering the interception scaffold after a checked nonlinear null.**
+The [user-approved residual comparison](../plans/2026-10-22-nonlinear-residual-review.md)
+completed111 joint batches: first returns38/64 carried,40/64 linear,37/64 residual.
+Neither learning nor retention established; no endpoint promoted. Both checks pass;
+source integratedfb55f7d, freeze released.79,443train,61,228eval,19.43min.
+Retain temporal ARtheta112. No live training allocation at this handoff update.
+
+Sol independently proposed a transformed latent-Gaussian likelihood score. Astra's
+independent quadrature/finite-difference identity check passed, but Sol's retained
+same-trajectory comparison found18–19x paired-gradient dispersion, without better
+coherence. Reject a fresh allocation on this raw alternative. Current selection
+question: can an explicitly assisted initial-leftward-serve curriculum improve
+interception with the existing actor while preserving ordinary-game skill? Inspect
+retained direction splits before selecting the next bounded experiment. Continue
+orchestration; major architecture review boundary remains intact.
 
 Latest [visual baseline comparison](2026-10-22-visual-baseline-research.md): both
 checks pass, source integrated343e881. First returns41/64 carried versus44/64 in
