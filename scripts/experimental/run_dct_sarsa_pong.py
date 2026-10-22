@@ -77,6 +77,15 @@ def endpoint_artifacts(directory,job):
                     or report['actor']['decisions']!=report['transitions']):
                 raise ValueError('completed actor trace differs')
             paths.extend((path,directory/job['actor']['theta_from'],directory/'search-transform.npy'))
+            if job['actor'].get('residual') is not None:
+                residual=job['actor']['residual'];path=directory/(job['id']+'-residual-eligibility.npy')
+                value=np.load(path,allow_pickle=False);B=np.load(directory/residual['B_from'],allow_pickle=False)
+                if (value.shape!=(3,64) or not np.isfinite(value).all()
+                        or hashlib.sha256(value.tobytes()).hexdigest()!=report['actor']['residual']['eligibility_sha256']
+                        or hashlib.sha256(B.tobytes()).hexdigest()!=report['actor']['residual']['B_sha256']):
+                    raise ValueError('completed residual actor trace differs')
+                paths.extend((path,directory/residual['B_from'],directory/residual['map_from']))
+                paths.append(Path(json.loads((directory/residual['map_from']).read_text())['file']))
             if job['actor'].get('baseline_from') is not None:
                 baseline=report['actor']['baseline'];parameters=np.load(directory/job['actor']['baseline_from'],allow_pickle=False)
                 if hashlib.sha256(parameters.tobytes()).hexdigest()!=baseline['parameters_sha256']:
@@ -87,6 +96,14 @@ def endpoint_artifacts(directory,job):
                         raise ValueError('completed state baseline evidence differs')
                     paths.append(path)
                 paths.append(directory/job['actor']['baseline_from'])
+        if job.get('projected_greedy') is not None:
+            head=job['projected_greedy'];report=json.loads((directory/(job['id']+'.json')).read_text())['projected_greedy']
+            for key in ('theta','B'):
+                path=directory/head[key+'_from'];value=np.load(path,allow_pickle=False)
+                if hashlib.sha256(value.tobytes()).hexdigest()!=report[key+'_sha256']:raise ValueError('completed projected greedy head differs')
+                paths.append(path)
+            paths.extend((directory/head['map_from'],directory/'search-transform.npy'))
+            paths.append(Path(json.loads((directory/head['map_from']).read_text())['file']))
     return {p.name:sha(p) for p in [*paths,directory/'projection.json']}
 
 def completed_count(directory,job):

@@ -19,6 +19,7 @@ from fly_connectome.control.codec import GRAPH_DIGEST
 from fly_connectome.control.durable import DurableRun, runtime_signature
 from fly_connectome.control.pong_evaluation import FreshPongEvaluator, PongEvaluationConfig, validate_camera_intervention
 from fly_connectome.control.pong_actor import FirstHitActorEpisode,validate_bias
+from fly_connectome.control.pong_residual import ResidualFirstHitActorEpisode,ProjectedResidualGreedy
 from fly_connectome.control.session import LearningSession, source_signature, MODEL_HASH
 from fly_connectome.vision import VisualStateEncoder
 
@@ -182,12 +183,26 @@ def validate_actor_job(job):
     mode=job.get('actor')
     if mode is not None:
         if (type(mode) is not dict or not {'theta_from','temperature','action_seed'}<=set(mode)
-                or not set(mode)<={'theta_from','temperature','action_seed','noise','baseline_from'}
+                or not set(mode)<={'theta_from','temperature','action_seed','noise','baseline_from','residual'}
                 or not validate_first_hit_job(job) or job.get('camera_intervention') is not None
                 or job.get('projection_from') is None or job.get('scaling_from') is not None
                 or job['config'].get('action_hold_frames',1)!=1):
             raise ValueError('actor is projected K=1 first-hit training only')
         validate_bias(mode.get('noise'))
+        if mode.get('residual') is not None:
+            if set(mode['residual'])!={'B_from','map_from'} or mode.get('baseline_from') is not None:
+                raise ValueError('residual actor requires fixed map and B, without learned baseline')
+    return mode
+
+
+def validate_projected_greedy_job(job):
+    mode=job.get('projected_greedy')
+    if mode is not None and (type(mode) is not dict or set(mode)!={'theta_from','B_from','map_from'}
+            or job.get('actor') is not None or job['kind']!='evaluate' or job.get('purpose')!='fresh_evaluation'
+            or job.get('projection_from') is None or job.get('scaling_from') is not None
+            or job.get('first_hit_cutoff',False) or job.get('camera_intervention') is not None
+            or job['config'].get('episodes')!=1 or job['config'].get('action_hold_frames',1)!=1):
+        raise ValueError('projected residual greedy is ordinary full-game evaluation only')
     return mode
 
 
@@ -208,13 +223,14 @@ def worker(directory,job_id,max_work_seconds=160.,*,emit=True,_live_run=None,_ke
     first_hit_cutoff=validate_first_hit_job(job)
     camera_intervention=validate_camera_job(job)
     actor=validate_actor_job(job)
+    projected_greedy=validate_projected_greedy_job(job)
     research_interval=job.get('research_check_interval')
     if research_interval is not None and (type(research_interval) is not int or research_interval != 16 or job['kind'] != 'evaluate'):
         raise ValueError('research execution is explicit interval16 actor/greedy evaluation only')
     checkpoints=job.get('checkpoints',(2000,6000))
     scaling=None if job.get('scaling_from') is None else json.loads((directory/job['scaling_from']).read_text())
     projection=None if job.get('projection_from') is None else json.loads((directory/job['projection_from']).read_text())
-    if projection is not None and ((job['kind']!='learn' and actor is None) or scaling is not None):
+    if projection is not None and ((job['kind']!='learn' and actor is None and projected_greedy is None) or scaling is not None):
         raise ValueError('projection is training-only and owns its cap; evaluate mapped weights with their exported cap')
     evaluation_config=None if job['kind']=='learn' else dict(job['config'])
     if evaluation_config is not None and scaling is not None:evaluation_config['policy_scaling']=scaling
@@ -244,11 +260,19 @@ def worker(directory,job_id,max_work_seconds=160.,*,emit=True,_live_run=None,_ke
             options={}
             if first_hit_cutoff:options['first_hit_cutoff']=True
             if camera_intervention is not None:options['camera_intervention']=camera_intervention
-            if actor is None:
+            if projected_greedy is not None:
+                session=ProjectedResidualGreedy(np.load(directory/projected_greedy['theta_from'],allow_pickle=False),
+                    np.load(directory/projected_greedy['B_from'],allow_pickle=False),PongEvaluationConfig(**evaluation_config),projection=projection,
+                    residual_map=json.loads((directory/projected_greedy['map_from']).read_text()))
+                if not np.array_equal(weights,session.policy.weights):raise ValueError('projected greedy mapped input differs')
+            elif actor is None:
                 session=FreshPongEvaluator(weights,PongEvaluationConfig(**evaluation_config),**options)
             else:
                 theta=np.load(directory/actor['theta_from'],allow_pickle=False)
-                session=FirstHitActorEpisode(theta,PongEvaluationConfig(**evaluation_config),projection=projection,
+                residual=actor.get('residual');extras={} if residual is None else dict(
+                    B=np.load(directory/residual['B_from'],allow_pickle=False),residual_map=json.loads((directory/residual['map_from']).read_text()))
+                actor_class=FirstHitActorEpisode if residual is None else ResidualFirstHitActorEpisode
+                session=actor_class(theta=theta,config=PongEvaluationConfig(**evaluation_config),projection=projection,**extras,
                     temperature=actor['temperature'],action_seed=actor['action_seed'],noise=actor.get('noise'),
                     baseline=None if actor.get('baseline_from') is None else np.load(directory/actor['baseline_from'],allow_pickle=False))
                 if not np.array_equal(weights,session.policy.weights):raise ValueError('actor mapped input differs')
@@ -267,7 +291,7 @@ def worker(directory,job_id,max_work_seconds=160.,*,emit=True,_live_run=None,_ke
         if type(session) is not LearningSession or session.config != expected_config:
             raise ValueError('training journal differs from declared configuration')
         export_training_checkpoint(directory,job_id,session,checkpoints=checkpoints)
-    elif type(session) is not (FreshPongEvaluator if actor is None else FirstHitActorEpisode) or asdict(session.config) != evaluation_config:
+    elif type(session) is not (ProjectedResidualGreedy if projected_greedy is not None else FreshPongEvaluator if actor is None else ResidualFirstHitActorEpisode if actor.get('residual') is not None else FirstHitActorEpisode) or asdict(session.config) != evaluation_config:
         raise ValueError('evaluation journal differs from declared configuration')
     if actor is not None and (session.temperature!=actor['temperature'] or session.actor_action_seed!=actor['action_seed']
             or getattr(session,'actor_bias_config',None)!=actor.get('noise')
@@ -276,6 +300,14 @@ def worker(directory,job_id,max_work_seconds=160.,*,emit=True,_live_run=None,_ke
     if actor is not None and (((actor.get('baseline_from') is not None)!=hasattr(session,'actor_baseline'))
             or (actor.get('baseline_from') is not None and not np.array_equal(session.actor_baseline,np.load(directory/actor['baseline_from'],allow_pickle=False)))):
         raise ValueError('actor journal differs from declared frozen state baseline')
+    residual=actor.get('residual') if actor is not None else None
+    head=projected_greedy or residual
+    if head is not None and (not np.array_equal(session.B,np.load(directory/head['B_from'],allow_pickle=False))
+            or session.residual_map.config!=json.loads((directory/head['map_from']).read_text())):
+        raise ValueError('residual journal differs from declared fixed map/head')
+    if projected_greedy is not None and (session.actor_projection.config!=projection
+            or not np.array_equal(session.theta,np.load(directory/projected_greedy['theta_from'],allow_pickle=False))):
+        raise ValueError('projected greedy journal differs from declared coordinates/head')
     if job['kind']!='learn' and getattr(session,'first_hit_cutoff',False)!=first_hit_cutoff:
         raise ValueError('restored task boundary differs from declared training purpose')
     if job['kind']!='learn' and getattr(session,'camera_intervention',None)!=camera_intervention:
@@ -312,6 +344,11 @@ def worker(directory,job_id,max_work_seconds=160.,*,emit=True,_live_run=None,_ke
             if path.exists() and not np.array_equal(np.load(path,allow_pickle=False),session.eligibility):
                 raise ValueError('completed actor eligibility changed')
             if not path.exists():atomic_weights(path,session.eligibility)
+            if hasattr(session,'residual_eligibility'):
+                path=directory/(job_id+'-residual-eligibility.npy')
+                if path.exists() and not np.array_equal(np.load(path,allow_pickle=False),session.residual_eligibility):
+                    raise ValueError('completed residual eligibility changed')
+                if not path.exists():atomic_weights(path,session.residual_eligibility)
             if hasattr(session,'actor_baseline'):
                 exports={'baseline-features':np.asarray(session.baseline_features,dtype=np.float64),
                     'baseline-score-norm2':np.asarray(session.baseline_score_norm2,dtype=np.float64),

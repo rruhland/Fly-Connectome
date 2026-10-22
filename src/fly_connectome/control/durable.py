@@ -120,8 +120,9 @@ class DurableRun:
     def _validate_research_session(self):
         from .pong_evaluation import FreshPongEvaluator
         from .pong_actor import FirstHitActorEpisode
+        from .pong_residual import ResidualFirstHitActorEpisode,ProjectedResidualGreedy
         s = self.session
-        if (type(s) not in (FreshPongEvaluator,FirstHitActorEpisode)
+        if (type(s) not in (FreshPongEvaluator,FirstHitActorEpisode,ResidualFirstHitActorEpisode,ProjectedResidualGreedy)
                 or s.config.episodes != 1 or s.config.policy_kind != 'trained'
                 or s.config.action_hold_frames != 1 or s.config.skip_baseline_perception
                 or s.config.blank_camera or hasattr(s,'camera_intervention')):
@@ -174,12 +175,15 @@ class DurableRun:
             from .toy_session import ToySession
             from .pong_evaluation import FreshPongEvaluator
             from .pong_actor import FirstHitActorEpisode
+            from .pong_residual import ResidualFirstHitActorEpisode,ProjectedResidualGreedy
             from .online_vision import PersistentVisionSession
             from .pendulum_session import PendulumLearningSession
             from .pendulum_evaluation import FreshPendulumEvaluator
             classes = {'pong-learning-v1':LearningSession,'toy-session-v1':ToySession,
                        'pong-evaluation-v1':FreshPongEvaluator,
                        'pong-first-hit-actor-v1':FirstHitActorEpisode,
+                       'pong-residual-first-hit-actor-v1':ResidualFirstHitActorEpisode,
+                       'pong-projected-residual-greedy-v1':ProjectedResidualGreedy,
                        'pong-persistent-vision-v1':PersistentVisionSession,
                        'pendulum-learning-v1':PendulumLearningSession,
                        'pendulum-evaluation-v1':FreshPendulumEvaluator}

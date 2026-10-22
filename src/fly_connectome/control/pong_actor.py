@@ -175,6 +175,14 @@ class FirstHitActorEpisode(FreshPongEvaluator):
         normal=self.bias_rng.standard_normal(3)
         return self.actor_bias_config['sigma']*(normal-normal.mean())
 
+    def _action_probabilities(self,x,bias):
+        return probabilities(self.theta,x,self.temperature,bias)
+
+    def _accumulate_score(self,action,p,x):
+        score=score_eligibility(action,p,x,self.temperature)
+        self.eligibility+=score
+        return score
+
     def _choose_policy(self):
         _,x=self.actor_projection.features(self.latest_encoded)
         noise=getattr(self,'actor_bias_config',None)
@@ -182,12 +190,11 @@ class FirstHitActorEpisode(FreshPongEvaluator):
             rho=noise['rho']
             self.bias=rho*self.bias+math.sqrt(1.-rho*rho)*self._bias_innovation()
             self.bias_draws+=1
-        q,p=probabilities(self.theta,x,self.temperature,None if noise is None else self.bias)
+        q,p=self._action_probabilities(x,None if noise is None else self.bias)
         if hasattr(self,'actor_baseline'):
             value,raw_value=baseline_prediction(self.actor_baseline,x)  # Pre-action and batch-frozen.
         action=int(self.actor_rng.choice(3,p=p))
-        score=score_eligibility(action,p,x,self.temperature)
-        self.eligibility+=score
+        score=self._accumulate_score(action,p,x)
         if hasattr(self,'actor_baseline'):
             self.baseline_correction+=value*score
             self.baseline_features.append(x.copy())  # Append only; stack once at terminal export.
