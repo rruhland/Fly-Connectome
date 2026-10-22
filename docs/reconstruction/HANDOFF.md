@@ -14,22 +14,24 @@ On 2026-10-22 the user authorized ongoing orchestration until stopped. Continue
 bounded research cycles, with independent challenge and reassessment between
 allocations. The previous no-followup stopping point is superseded. Major
 architecture review and efficient resource use remain required.
-**Active research: original-scale greedy population learner on direct serves.**
-[Protocol and reassessment](../plans/2026-10-22-population-search-reassessment.md).
-Root`/workspace/m1b-experiments/pong-leftward-population-20261022-r1`,exec71247,
-originalstart1792690225066585708ns, isolated source68d15a7. Source/driver/protocol
-frozen; DEV blind. Same original ARtheta112/T; restore demonstrated8directions,
-plus/minus.25 perturbations,12sharedLEFTstarts,top4/.10stepcap.80k/900s train,
-600s eval/1500s overall,max12/min5complete populations. Fresh64LEFT+64full20s,
-matched endpoint/start, separate learning/80%/both retention gates. No capextension.
-Sol7focused checks and parent independentstage191ms PASS, zero new observations.
+**Current research: exact replication of a strong direct-interception learning result.**
+[Protocol/results](../plans/2026-10-22-population-search-reassessment.md).
+Original-scale population r1 COMPLETE, both checks PASS: direct first29/64→56/64,
++42.1875pp CI[29.6875,54.6875],87.5% provisionalcompetence PASS. Ordinary first31→39/64
+retentionPASS; all68/128→48/112 retentionFAIL, >=2returns15→6. No combined-learner
+promotion.9populations,79,829train(1,397unused),38,851eval,15.61min. Source68d15a7
+unchanged, freeze released. Currentglobalancestor remains originalARtheta112.
 
-Latest direct-serve actor result: first26/64→29/64,+4.6875pp CI[0,+10.9375], no
-qualified learning. Ordinary first34/64both and all70/134→79/140: both retention
-PASS.213batches,39,824train(51unused),45,477eval,12.84min. Both checks PASS;
-source90d7d73, no endpoint promotion. Measured successful original population steps
-~.095 versus actor median.000364 motivated reassessing the mechanism, not adding
-another architecture. Objective alignment/exploration/dose confounded explicitly.
+Sol stages exactr2 fromoriginalARtheta112 with onlyfreshseedroots/path changed;
+same80k/900train+600eval/1500overall,max12/min5,8directions,.25noise,.10cap,12sharedLEFTstarts.
+Parent reviewsstage beforelaunch. No liveallocation in this update. Ifreplicated,
+r1theta9 is designated LEFTscaffoldcandidate regardless of whichseedlooksbetter.
+Full-rally preservation/integration is subsequent question, not an architecture change.
+
+The existing frozenvision/linearclass demonstrably supports high direct interception;
+prior localactor nulls did not establish representationceiling. Originalpopulation
+changes objectivealignment/exploration/dose together, so no purestepsizecausalclaim.
+Earlier directserveactor primaryfailed26→29/64 but fullretentionpassed; source90d7d73.
 
 Earlier approved nonlinear comparison also failed learning/retention (38/64 carried,
 40/64linear,37/64residual); sourcefb55f7d. Latent-score alternative rejected before

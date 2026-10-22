@@ -124,3 +124,56 @@ frozen through both postexit checks; DEV blind.80k/900s training,600s evaluation
 final updates and learning/retention evidence. Completed prior direct-serve actor
 journals archived3.292GB to.481GB in34.548s after both checks, zero observations or
 replay and all bytes reconstruct-verified, before this launch.
+
+
+## Checked first result: substantial acquisition, preservation not established
+
+Both checks PASS; frozen source/driver released.9complete populations/9nonzero
+updates.79,829train (78,432used+1,397unusedpartial);38,851eval (5,716direct+33,135full),
+2,014initial images.936.362s total=662.624train+273.738eval. No recovery/extension.
+
+| Test | Carried ARtheta112 | Endpoint | Paired change,95% CI |
+|---|---:|---:|---|
+| Direct first returns |29/64|56/64|+42.1875pp,[+29.6875,+54.6875]|
+| Ordinary first returns |31/64|39/64|+12.5pp,[-4.6875,+29.6875]|
+| Ordinary all returns |68/128|48/112|-10.2679pp,[-21.1275,+2.5298]|
+
+**Primary learning and provisional direct-serve80% competence PASS.** Ordinary
+first-return retention passes, but all-return retention fails. Games with at least
+2/3/4returns fall15/9/7→6/2/1. The all-return interval does not prove a population
+mean decline at95%, but clearly does not establish preservation. Do not erase the
+strong acquisition result or promote this as a combined competent learner.
+
+310/864 direction/serve pairs supplied contrast. Steps.0769–.10, net RMS.311016,
+328generic-cache greedy changes; precontact actions changed in64/64 of both cohorts.
+This exercised substantial behavior change. The frozen visual representation and
+linear class can support high direct interception. It does not establish visual
+sufficiency for later rallies or isolate which population-mechanism change helped.
+
+Sol's source/RNG/direction/update/greedy-action/cutoff verification PASS14.054s;
+Astra independently reconstructed all9updates, raw counts/rewards and paired outcome
+gates in2.551s. Zero new observations/replay in both checks. Artifacts:
+`/workspace/m1b-experiments/pong-mechanism-review-20261022/population-parent-result-check.json`
+and `population-result.png/svg`; allocation `completion-verification.json`.
+
+Storage overlap: old completed Pendulum ON/OFF706journals archived4.6076GB→.9024GB,
+58.005s plus.293s empty-sidecar preservation, during training. Both dependent epsilon
+reused-control checks had already passed, satisfying the old plain-file retention
+condition. All bytes reconstruct-verified, no observations/replay or clock shift.
+
+## Selected independent replication before integration
+
+Exact same source, algorithm, constants,80k/900+600/1500budget,max12/min5populations,
+cohorts and gates, from original ARtheta112. Change only prospectively declared
+independent seed roots and allocation path. Exclude all r1 accepted/rejected/unused
+schedules and canonical aliases. Pin r1manifest/results and both checks in immutable
+replication provenance. Reuse verified coordinator and checks; no new architecture,
+mixture, rate tuning, redundant tests or replay. Independent stage review before launch.
+
+Predeclare before r2outcomes: if acquisition replicates, r1lastcomplete theta9 stays
+the designated direct-interception scaffold candidate regardless of which seed
+scores better. R2 tests reproducibility, not endpoint selection. Neither is promoted
+as a combined learner while preservation remains unproved. The original full-rally
+population stage and mixed-task training are integration contenders after replication;
+no integration allocation selected yet. The ultimate continuous-learning objective
+and major-architecture review boundary remain unchanged.
