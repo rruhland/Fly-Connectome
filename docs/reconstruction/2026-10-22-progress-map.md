@@ -1,8 +1,8 @@
 # Pong scaffold progress — 2026-10-22
 
 The current visual/linear policy can learn strong direct interception without
-backpropagation. That finding replicates. Reliable interception across opening
-phases, sustained rallies and a continuously adapting general learner remain open.
+backpropagation. That finding replicates. Opponent-return interception now also shows strong acquisition in one run.
+Reliable interception across opening phases, sustained rallies and a continuously adapting general learner remain open.
 
 ```mermaid
 flowchart TD
@@ -20,13 +20,16 @@ flowchart TD
     K --> L[Broader training coverage, all 8 directions]
     L --> M[Direct 53 to 61 / 64; rally 6 to 7 / 64, primary fails]
     M --> N[Return to unfinished interception phase]
-    N --> O[RUNNING: learn opponent-returned balls, preserve direct skill]
+    N --> O[Opponent-return acquisition: 19 to 44 / 64]
+    O --> P[Ordinary first returns: 31 to 54 / 64 vs global]
+    P --> Q[Direct preservation unresolved: 54 to 50 / 64]
+    Q --> R[Next decision: replication versus balanced practice]
     classDef gain fill:#d9eddb,stroke:#46734a
     classDef fail fill:#f4ded9,stroke:#a15d49
     classDef active fill:#fff0c9,stroke:#967627
-    class G,H gain
+    class G,H,O,P gain
     class C,D,J,M fail
-    class O active
+    class Q,R active
 ```
 
 Rates below are matched within each experiment. Absolute scores from different
@@ -41,7 +44,7 @@ fresh cohorts must not be read as a single learning curve.
 | Exact independent run2 |27→49/64; +34.38pp CI[18.75,50] | Acquisition replicates;80% threshold does not |
 | Full-rally continuation |>=2returns15→17/64; direct60→55/64 | No qualified rally gain or direct preservation |
 | Context-diverse all8 continuation |>=2returns6→7/64; direct53→61/64 | Secondary direct gain; rally primary still fails |
-| Opponent-return interception | Running, fresh outcomes blind | Test an unfinished native phase before claiming general interception |
+| Opponent-return interception |19→44/64; +39.06pp CI[26.56,51.56]; ordinary first31→54/64 vs GLOBAL | Strong acquisition and transfer; direct preservation54→50/64 fails noninferiority |
 
 ## What actually carried forward
 
@@ -54,16 +57,21 @@ curricula and scalar own-hit rewards are declared scaffold assistance.
 
 ## Current decision
 
-The current trial uses ordinary starts where the ball first travels toward the
-opponent, and trains only through the learner's first contact. It separately tests
-RIGHT acquisition, LEFT retention, original RIGHT preservation, overall first-return
-gain and all-return retention. Absolute80% across all three cohorts is a separate
-provisional threshold; independent training replication is still required.
+The completed opponent-return trial passed acquisition, original opponent-return
+preservation, ordinary first-return gain, and ordinary all-return preservation.
+Direct-skill noninferiority alone failed: −6.25pp, paired95%CI[−17.19,4.69].
+That does not establish definite harm, but blocks the combined promotion gate.
+The endpoint reached68.75% opponent-return,78.125% direct and84.375% ordinary
+first-return success; the provisional80% requirement across all cohorts failed.
 
-If the new phase improves while direct ability survives, carry that evidence toward
-broader interception and then rallying. If it improves by erasing direct ability,
-retention remains the problem. A null does not by itself prove defective vision or
-missing motor memory. Do not respond with an automatic neighboring-parameter sweep.
+Both independent result checks passed with zero new observations or replay.
+Cost:159,833 training transitions (155,738 used;4,095 partial),89,386 evaluation
+transitions,1,759 initial images;1467.965s total (892.311 training,575.654 evaluation).
+Six complete updates. No automatic global promotion or rally-completion claim.
+Next selection is being challenged explicitly: exact independent replication versus
+balanced first-contact practice aimed at preserving both phases. Neither is yet launched.
+
+Checked figure: `/workspace/m1b-experiments/pong-mechanism-review-20261022/rightward-result.png`.
 
 Sources, exact budgets, costs and independent checks:
 [population reassessment](../plans/2026-10-22-population-search-reassessment.md),

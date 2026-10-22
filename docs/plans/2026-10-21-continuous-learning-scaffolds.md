@@ -124,13 +124,18 @@ full-rally preservation. This updates the optimization-versus-representation dia
 the existing frozen visual/linear class supports much stronger direct interception
 than the preceding local actor experiments demonstrated.
 
-The predesignated first-run endpoint is now being tested as a scaffold for the
-existing full-rally population stage. This is an integration experiment, not a claim
-that all earlier competence gates have passed. A single endpoint must preserve its
-new interception skill and exceed the original general policy on repeated returns;
-otherwise report recovery, tradeoff or null separately. The global reference remains
-original ARtheta112 until combined evidence warrants a change. Detailed prospective
-criteria and results: [population reassessment](2026-10-22-population-search-reassessment.md).
+Two full-rally continuation variants failed their primary rally gates. A subsequent
+opponent-return first-contact curriculum from the predesignated direct endpoint
+produced strong acquisition:19→44/64, paired gain39.06pp CI[26.56,51.56]. Ordinary
+first returns improved31→54/64 versus the original general policy. Direct retention
+54→50/64 failed noninferiority, so combined progress is not yet established.
+Both checks passed; opponent-return acquisition has not yet been independently
+replicated. The next research question is acquiring and preserving both opening
+phases in one policy before escalating the rally objective. Exact replication and
+balanced first-contact practice are under active comparison; no new architecture
+is implied. Original ARtheta112 remains the global reference. Detailed criteria:
+[population reassessment](2026-10-22-population-search-reassessment.md),
+[opponent-return study](2026-10-22-opponent-return-interception.md).
 
 Historical evidence and artifact locations: [HANDOFF](../reconstruction/HANDOFF.md).
 The [M1B roadmap](2026-09-27-m1a5-to-m1b-roadmap.md) remains the broader milestone
