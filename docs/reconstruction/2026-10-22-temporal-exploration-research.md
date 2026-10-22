@@ -1,0 +1,105 @@
+# Research target: exploration that changes interception outcomes
+
+Status: selected for implementation and protocol review, not launched yet.
+Ongoing orchestration remains authorized. Follow the
+[continuous-learning scaffold plan](../plans/2026-10-21-continuous-learning-scaffolds.md).
+
+## Question and reason for changing direction
+
+Can temporally sustained exploration produce useful return experiences and
+retained interception learning without backpropagation? The previous
+[paired-start actor](2026-10-22-action-credit-research.md) changed actions in
+202/210 same-start pairs, often early, but changed the first-return outcome in
+only 16. Conditioning the reward baseline on the serve removed many apparent
+contrasts caused by easy versus difficult starts. Neither actor trial qualified
+as incremental interception learning. Another rate or batch-size sweep is not
+the selected response.
+
+Astra proposed a temporal-exploration mechanism based on motor filtering. Sol
+independently derived the conditional estimator, challenged amplitude confounding,
+and compared representation/timing and insufficient update-size explanations.
+The agreed comparison uses independent versus correlated additive logit biases
+with the same stationary marginal distribution. This changes exploration while
+preserving the visual representation, linear policy class and camera cadence.
+
+## Fixed comparison
+
+Carry the latest paired actor theta105, whose separate rally-retention screen
+passed. Keep the frozen visual model, feature transform/cap, temperature,
+learning rate and original aggregate update cap. Every episode begins normally;
+no simulator-state forks, privileged observations, oracle labels or teacher.
+Scalar first-own-hit reward remains the explicit interception scaffold.
+
+At every camera, sample the action from
+`p = softmax((theta x + b) / temperature)`.
+The local eligibility remains `(onehot(action)-p) outer x / temperature`.
+The Gaussian bias process is independent of theta, so conditioning on its sampled
+history requires no noise-density derivative. No autodiff or backward propagation
+through the visual system, recurrent state or physics is introduced.
+
+- Independent arm: fresh centered Gaussian bias each camera.
+- Correlated arm: stationary AR(1) centered Gaussian bias with
+  `rho = exp(-.02/.25)`, approximately .9231.
+- Both arms initialize from the same stationary distribution and use the same
+  fixed marginal scale. Action and bias streams are independent within and
+  between episode replicas.
+
+The .25-second time scale is borrowed from the known motor dynamics. Record this
+as hyperparameter assistance, not discovered knowledge. The policy still reacts
+to every new camera; no action holding is added.
+
+Choose one noise scale using only the existing reward-free generic feature cache:
+expected disagreement with the **unbiased carried greedy action** targets 10%.
+Calibrating disagreement with the biased winner would answer the wrong question.
+Both arms share this scale and the existing temperature. Match the stationary
+marginal on this cache; do not claim or force equal on-policy noise after states,
+biases and episode survival become correlated. Report actual disagreement with
+both unbiased and biased greedy choices, plus conditional action entropy.
+
+Two fresh starts, each with two independent action/bias realizations, form each
+arm's batch. The conditional paired baseline is unchanged. Use common fresh
+starts across arms; alternate execution order. Apply both updates only after all
+eight episodes complete. Partial joint work counts toward exposure but supplies
+no accepted update. Last complete joint endpoints only.
+
+## Bounded allocation and decision rules
+
+Selected caps: 40,000 new training transitions per arm, 30 minutes training;
+64 fresh common 20-second full games for correlated, independent and carried
+start heads, 192,000 maximum evaluation transitions, 15 minutes evaluation;
+45 minutes overall. These are caps, not a promised runtime. At least 20 complete
+joint batches and both reward outcomes per arm are needed for an eligible result.
+No outcome-based extension or development-set peeking.
+
+Evaluation is greedy with **no exploratory bias**. Primary correlated-versus-start
+learning screen: at least +10pp first returns and paired 95% lower bound above
+zero. Absolute 80% interception is a separate provisional competence target.
+All-return retention uses the separate -5pp lower-bound margin. Report the same
+learning/retention screens for the independent arm and the paired correlated-minus-
+independent contrast. Claim a coherence advantage only if correlated learning
+passes and its advantage over independent exploration has positive evidence.
+If both learn similarly, that supports learning without isolating coherence as
+the cause. Replication is still needed before promoting a scaffold. Wins are
+only descriptive. Report at least 2/3/4 returns and censored opportunities.
+
+If correlation raises outcome discordance but greedy learning remains absent
+despite substantial policy movement, exploration loses priority. Reassess credit,
+visual precision and timing instead of automatically sweeping correlation, noise
+scale or learning rate. If policy movement stays tiny, do not infer a visual
+representation ceiling. The next decision must account for both outcomes and
+mechanistic diagnostics.
+
+## Outside evidence and execution efficiency
+
+[Plappert et al., 2018](https://arxiv.org/pdf/1706.01905), introduction and on-policy
+derivation, motivates separating temporal exploration from learning rules.
+Its backprop-trained methods are not used. [Sehnke et al., 2010](https://archive.air.in.tum.de/Main/Publications/Sehnke2010a.pdf)
+provides a competing perspective on action-noise variance. Neither paper proves
+this intervention will help this visual Pong learner.
+
+Before this trial, exact-byte graph-hash streaming removed redundant large
+buffer copies while preserving full content verification and existing hashes.
+32 focused tests passed; a retained checkpoint's hash was 1.50x faster in an
+isolated benchmark. End-to-end throughput remains to be measured. Completed
+journals are losslessly compressed only after all checks; staged transforms and
+recovery metadata remain available.

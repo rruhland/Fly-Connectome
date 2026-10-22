@@ -14,9 +14,11 @@ On 2026-10-22 the user authorized ongoing orchestration until stopped. Continue
 bounded research cycles, with independent challenge and reassessment between
 allocations. The previous no-followup stopping point is superseded. Major
 architecture review and efficient resource use remain required.
-**Active research:** selecting a matched independent-versus-temporally-correlated
-exploration test after the paired-start actor's negative incremental-learning
-screen. No new trial launched yet. Continue orchestration; do not stop here.
+**Active research:** implementing and reviewing the selected
+[matched independent-versus-correlated exploration test](2026-10-22-temporal-exploration-research.md).
+Two arms, 40k new training transitions each, 64 fresh common full-game evaluations
+per arm and carried start; 45-minute overall cap. No trial launched yet. Continue
+orchestration; do not stop here.
 
 **Latest completed 2026-10-22:** [paired-start actor](2026-10-22-action-credit-research.md).
 First returns26/64→28/64,+3.125pp CI[0,+7.8125], insufficient incremental learning.
