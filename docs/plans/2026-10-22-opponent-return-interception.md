@@ -165,3 +165,22 @@ replication is deferred; it has not occurred. Candidate accumulated training is
 558,832transitions =532,296used+26,536unused. New balanced learning versus its own
 start and required preservation gates must pass before any candidate promotion;
 independent replication remains necessary. General plan/progress map are parent-owned.
+
+
+## User pause after the selected balanced followup began
+
+The user then asked to find a good pausing point and stop. The selected balanced
+practice allocation was stopped promptly by coordinator SIGINT; workers settled,
+exec9708 exited130 and no processes remain. Its immutable launch clock
+1792697965537299559ns remains unchanged. Durable paid cost14,879training transitions+
+161initials,161complete episodes, zero complete populations/updates/evaluation.
+The partial population contributes no learning result. Last durable head is the
+unchanged copy of this RIGHTtheta6. Exact costs/source/RNG/process checks are in
+`pong-balanced-interception-20261022-r1/pause-receipt.json`; four settled jobs'
+291transitions are included although their coordinator cost receipts were unwritten.
+No new observations/replay were added by bookkeeping. The previous completed RIGHT
+result above remains the last checked learning checkpoint.
+
+Orchestration is PAUSED. Do not restart that old driver or reset its immutable clock.
+Preserve journals/checkpoints; future learning requires user continuation and a new
+prospective allocation/design/budget. No RIGHT replication or combined promotion.

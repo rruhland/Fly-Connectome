@@ -24,21 +24,34 @@ No combined/global promotion or replication claim. Six complete/nonzero updates,
 Both checks PASS (Sol13.692s,Astra3.219s,zero new observations/replay); freeze released.
 RIGHT r1theta6 remains an experimental accumulated-skill candidate, not qualified global.
 
-**Active: balanced fresh6LEFT+6RIGHT first-contact practice from RIGHTtheta6.**
-[Selection/rationale](../plans/2026-10-22-balanced-practice-selection.md).
-New equal-weight phase learning versus its own start is required, plus phase and
-ordinary-game preservation against the appropriate original and immediate controls.
-Same original8directions/top4/.25noise/.10cap;160k/1200train+900eval/2100overall,
-min5/max12. Both stages PASS;9focusedchecks PASS3.56s, parent223ms/zeroobs.
-Root`pong-balanced-interception-20261022-r1`, exec9708, originalstart
-1792697965537299559ns (2026-10-22T19:39:25.537299559Z). Source68d15a7,
-driver5e79af3c/protocolda239d4d/manifest67571876 frozen through both checks; DEVblind.
-Primary independently resamples64LEFT and64RIGHT episodes per bootstrap replicate;
-eight learning/preservation guards, unconditional80 separate. Exact RIGHT-only
-replication is deferred. Fresh simultaneous practice is assistance, not stored replay.
-The direct r1theta9 and global ARtheta112 remain frozen references. RIGHT journals
-archived strictly after both checks:1759DB5.2481GB→.6890GB,56.697s; sidecars3.491s
-finished first. Every original byte reconstructed; zero observations/replay.
+**PAUSED by user: “find a good pausing point and stop.”**
+Ongoing orchestration is cancelled. No candidate processes remain. Balanced fresh
+practice was interrupted promptly by SIGINT to exec9708's coordinator; active
+workers settled, EXIT130.161completed episodes paid14,879training transitions+
+161initials; zero complete populations, zero updates, zero evaluation. These are
+unused partial-population observations, not a null/failed learning result. Four
+settled jobs'291transitions are included from durable journals despite absent
+coordinator cost receipts. Source/driver/protocol and optimizer/head remain unchanged.
+
+The last fully checked learning result is RIGHT r1theta6 above; its copy at
+`pong-balanced-interception-20261022-r1/theta_at0.npy` is the last durable head.
+Paid candidate lineage573,711train=532,296used+41,415unused; no new learned update.
+Root`pong-balanced-interception-20261022-r1`, originalstart1792697965537299559ns;
+final coordinator output83.9197s after start, later shutdown confirmation135.1914s
+(includes bookkeeping; exact exit instant was not sampled). See pause-receipt.json.
+All journals/checkpoints and immutable frozen protocol are preserved; no summary or
+eligible evidence was fabricated. No observations/replay were added by stop checks.
+
+**Resume only after the user requests continuation. Do not restart this old driver,
+reset its immutable clock, or treat the partial population as completed.** Any future
+learning requires a new prospective allocation/design/budget; preserve the existing
+partial artifacts. The [balanced selection](../plans/2026-10-22-balanced-practice-selection.md)
+remains an untested proposal beyond partial exposure, not a replicated RIGHT recipe
+or qualified combined scaffold. No global promotion or rally completion is claimed.
+
+RIGHT cold archive completed before this allocation:1759DB5.2481GB→.6890GB,
+56.697s; sidecars3.491s EXIT0 first. Every original byte reconstruct-verified,
+zero observations/replay. Heads/T/metadata remain plain.
 
 The existing frozenvision/linearclass demonstrably supports high direct interception;
 prior localactor nulls did not establish representationceiling. Originalpopulation
