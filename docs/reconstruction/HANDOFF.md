@@ -14,11 +14,12 @@ On 2026-10-22 the user authorized ongoing orchestration until stopped. Continue
 bounded research cycles, with independent challenge and reassessment between
 allocations. The previous no-followup stopping point is superseded. Major
 architecture review and efficient resource use remain required.
-**Active research:** bounded research-only interval16 integrity-check execution
-optimization, preserving the default reference path. Sol is proving exact retained
-trajectory and full terminal-state equivalence and measuring throughput. No fresh
-learning allocation is live. Next candidate is a lagged learned visual-state
-baseline for local actor credit; design/challenge required before allocation.
+**Active research:** design and independent challenge of a
+[lagged visual-state baseline](2026-10-22-visual-baseline-research.md) for local
+actor credit. No fresh learning allocation is live yet. Bounded research execution
+optimization integratedd4386da: four retained trajectories exactly equivalent,
+1.732x aggregate measured speedup; default integrity contract preserved, explicit
+interval16 research contract has weaker within-interval mutation detection.
 
 **Latest result:** [temporal exploration](2026-10-22-temporal-exploration-research.md)
 completed112 joint batches: first returns31/64 start,32/64 IID,33/64 correlated.

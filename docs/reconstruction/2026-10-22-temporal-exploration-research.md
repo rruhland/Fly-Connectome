@@ -205,3 +205,24 @@ External evidence and check artifacts: temporal trial root above;
 `/workspace/m1b-experiments/pong-mechanism-review-20261022/temporal-parent-result-check.json`,
 `temporal-action-lead.json`; Sol interpretation under
 `/workspace/m1b-experiments/pong-credit-state-research-20261022/after-temporal-actor.md`.
+
+## Research execution improvement accepted
+
+Sol implemented the explicit interval16 contract, integrated asd4386da. Astra
+reviewed the actual guard/recovery/completion code and proof artifacts. Forty
+focused tests passed plus four worker completion/recovery fixtures (two overlap).
+Four retained episodes spanning IID success, AR failure and greedy success/failure
+reproduced every original camera record; reference and research modes had identical
+full terminal graphs, RNG, bias and eligibility. Alternated unprofiled timing:
+18.052s reference versus10.425s research,1.732x aggregate.940 old transition cameras
+and8 old initial images replayed; zero new candidate observations or updates.
+This is a four-trajectory execution result, not a parallel training speed claim.
+
+Default execution remains per-camera. Research mode chains every record and
+checks actual full contents at16-camera boundaries, checkpoints, terminal states
+and recovery exit. Persistent mutation fails before completion/learning;
+mutation-and-reversion within an interval is a weaker guarantee than default.
+The declared contract cannot silently reinterpret existing journals. Required
+external projection content remains validated, not cached as trusted identity.
+Evidence: `/workspace/m1b-experiments/pong-research-execution-20261022/equivalence-timing.json`.
+Next learning hypothesis is specified in [visual baseline research](2026-10-22-visual-baseline-research.md).
