@@ -18,6 +18,7 @@ sys.path.insert(0,str(Path(__file__).resolve().parents[2]/'src'))
 from fly_connectome.control.codec import GRAPH_DIGEST
 from fly_connectome.control.durable import DurableRun, runtime_signature
 from fly_connectome.control.pong_evaluation import FreshPongEvaluator, PongEvaluationConfig, validate_camera_intervention
+from fly_connectome.control.pong_actor import FirstHitActorEpisode
 from fly_connectome.control.session import LearningSession, source_signature, MODEL_HASH
 from fly_connectome.vision import VisualStateEncoder
 
@@ -177,6 +178,17 @@ def validate_camera_job(job):
     return mode
 
 
+def validate_actor_job(job):
+    mode=job.get('actor')
+    if mode is not None:
+        if (type(mode) is not dict or set(mode)!={'theta_from','temperature','action_seed'}
+                or not validate_first_hit_job(job) or job.get('camera_intervention') is not None
+                or job.get('projection_from') is None or job.get('scaling_from') is not None
+                or job['config'].get('action_hold_frames',1)!=1):
+            raise ValueError('actor is projected K=1 first-hit training only')
+    return mode
+
+
 def worker(directory,job_id,max_work_seconds=160.,*,emit=True,_live_run=None,_keep_open=False,verify_only=False):
     if not 0 < max_work_seconds <= 160.:
         raise ValueError('worker work budget must be in (0,160] seconds')
@@ -193,10 +205,11 @@ def worker(directory,job_id,max_work_seconds=160.,*,emit=True,_live_run=None,_ke
         raise ValueError('exploration blocks are training-only; fresh evaluation is frozen greedy')
     first_hit_cutoff=validate_first_hit_job(job)
     camera_intervention=validate_camera_job(job)
+    actor=validate_actor_job(job)
     checkpoints=job.get('checkpoints',(2000,6000))
     scaling=None if job.get('scaling_from') is None else json.loads((directory/job['scaling_from']).read_text())
     projection=None if job.get('projection_from') is None else json.loads((directory/job['projection_from']).read_text())
-    if projection is not None and (job['kind']!='learn' or scaling is not None):
+    if projection is not None and ((job['kind']!='learn' and actor is None) or scaling is not None):
         raise ValueError('projection is training-only and owns its cap; evaluate mapped weights with their exported cap')
     evaluation_config=None if job['kind']=='learn' else dict(job['config'])
     if evaluation_config is not None and scaling is not None:evaluation_config['policy_scaling']=scaling
@@ -226,7 +239,13 @@ def worker(directory,job_id,max_work_seconds=160.,*,emit=True,_live_run=None,_ke
             options={}
             if first_hit_cutoff:options['first_hit_cutoff']=True
             if camera_intervention is not None:options['camera_intervention']=camera_intervention
-            session=FreshPongEvaluator(weights,PongEvaluationConfig(**evaluation_config),**options)
+            if actor is None:
+                session=FreshPongEvaluator(weights,PongEvaluationConfig(**evaluation_config),**options)
+            else:
+                theta=np.load(directory/actor['theta_from'],allow_pickle=False)
+                session=FirstHitActorEpisode(theta,PongEvaluationConfig(**evaluation_config),projection=projection,
+                    temperature=actor['temperature'],action_seed=actor['action_seed'])
+                if not np.array_equal(weights,session.policy.weights):raise ValueError('actor mapped input differs')
         run=DurableRun(db,session=session)
     session=run.session;before=session.transitions
     if job['kind']=='learn':
@@ -242,8 +261,11 @@ def worker(directory,job_id,max_work_seconds=160.,*,emit=True,_live_run=None,_ke
         if type(session) is not LearningSession or session.config != expected_config:
             raise ValueError('training journal differs from declared configuration')
         export_training_checkpoint(directory,job_id,session,checkpoints=checkpoints)
-    elif type(session) is not FreshPongEvaluator or asdict(session.config) != evaluation_config:
+    elif type(session) is not (FreshPongEvaluator if actor is None else FirstHitActorEpisode) or asdict(session.config) != evaluation_config:
         raise ValueError('evaluation journal differs from declared configuration')
+    if actor is not None and (session.temperature!=actor['temperature'] or session.actor_action_seed!=actor['action_seed']
+            or session.actor_projection.config!=projection or not np.array_equal(session.theta,np.load(directory/actor['theta_from'],allow_pickle=False))):
+        raise ValueError('actor journal differs from declared head/exploration')
     if job['kind']!='learn' and getattr(session,'first_hit_cutoff',False)!=first_hit_cutoff:
         raise ValueError('restored task boundary differs from declared training purpose')
     if job['kind']!='learn' and getattr(session,'camera_intervention',None)!=camera_intervention:
@@ -275,6 +297,11 @@ def worker(directory,job_id,max_work_seconds=160.,*,emit=True,_live_run=None,_ke
         chunk_p95_seconds=float(np.quantile(latencies,.95)) if latencies else None)
     if job['kind']!='learn':
         report.update(session.summary())
+        if actor is not None and session.complete:
+            path=directory/(job_id+'-eligibility.npy')
+            if path.exists() and not np.array_equal(np.load(path,allow_pickle=False),session.eligibility):
+                raise ValueError('completed actor eligibility changed')
+            if not path.exists():atomic_weights(path,session.eligibility)
         if job['kind']=='calibration':
             report['environment_episode_schedule_complete']=report['complete']
             report['complete']=complete()

@@ -123,11 +123,13 @@ class DurableRun:
                 raise ValueError('checkpoint/sample state mismatch')
             from .toy_session import ToySession
             from .pong_evaluation import FreshPongEvaluator
+            from .pong_actor import FirstHitActorEpisode
             from .online_vision import PersistentVisionSession
             from .pendulum_session import PendulumLearningSession
             from .pendulum_evaluation import FreshPendulumEvaluator
             classes = {'pong-learning-v1':LearningSession,'toy-session-v1':ToySession,
                        'pong-evaluation-v1':FreshPongEvaluator,
+                       'pong-first-hit-actor-v1':FirstHitActorEpisode,
                        'pong-persistent-vision-v1':PersistentVisionSession,
                        'pendulum-learning-v1':PendulumLearningSession,
                        'pendulum-evaluation-v1':FreshPendulumEvaluator}

@@ -154,6 +154,9 @@ class FreshPongEvaluator:
         self.episode_seconds = self.episode_return = 0.
         self.episode_hits = 0
 
+    def _choose_policy(self):
+        return self.policy.choose(*policy_features(self.latest_encoded,self.scaler))
+
     def step(self):
         if self.complete:
             raise StopIteration('fresh Pong allocation complete')
@@ -176,7 +179,7 @@ class FreshPongEvaluator:
             elif self.config.policy_kind == 'initial':
                 action = 0
             else:
-                action, values = self.policy.choose(*policy_features(self.latest_encoded,self.scaler))
+                action, values = self._choose_policy()
                 q = values.tolist()
             if self.config.action_hold_frames!=1:
                 if choice:

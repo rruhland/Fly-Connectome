@@ -65,7 +65,18 @@ def endpoint_artifacts(directory,job):
             weight_hash=hashlib.sha256(weights.tobytes()).hexdigest())
         if (not np.array_equal(saved,weights) or json.loads(paths[1].read_text())!=metadata
                 or json.loads(paths[3].read_text())!=cap):raise ValueError('projected endpoint artifacts disagree')
-    else:paths=[directory/job[k] for k in ('weights_from','scaling_from') if job.get(k) is not None]
+    else:
+        paths=[directory/job[k] for k in ('weights_from','scaling_from') if job.get(k) is not None]
+        if job.get('actor') is not None:
+            path=directory/(job['id']+'-eligibility.npy')
+            eligibility=np.load(path,allow_pickle=False)
+            report=json.loads((directory/(job['id']+'.json')).read_text())
+            theta=np.load(directory/job['actor']['theta_from'],allow_pickle=False)
+            if (eligibility.shape!=theta.shape or not np.isfinite(eligibility).all()
+                    or hashlib.sha256(eligibility.tobytes()).hexdigest()!=report['actor']['eligibility_sha256']
+                    or report['actor']['decisions']!=report['transitions']):
+                raise ValueError('completed actor trace differs')
+            paths.extend((path,directory/job['actor']['theta_from'],directory/'search-transform.npy'))
     return {p.name:sha(p) for p in [*paths,directory/'projection.json']}
 
 def completed_count(directory,job):
