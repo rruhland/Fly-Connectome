@@ -307,3 +307,25 @@ reconstructed all1,984 affected databases against those original hashes and rech
 all3,968 archived sidecar members, PASS14.370s. No experimental/source changes or
 lost data; recovery artifact `sidecar-recovery-verification.json`. Next training
 has not launched, so no overlap with live training.
+
+### Full-rally integration independently staged
+
+Root `/workspace/m1b-experiments/pong-full-rally-integration-20261022-r1`; unchanged
+core source68d15a7. External coordinator339lines; nine focused tests PASS2.22s.
+No new observations, execution replay or architecture change. Own stage PASS34ms
+after1.772s preparation; Astra independently reconstructed schedules, exact two
+control maps, directions/all96 candidate cells, source/pins and budgets in125ms.
+
+Training root1079496173, LEFTDEV2871539609, FULLDEV4190580731,
+optimizer1976038441, bootstrap3531946279, tag29129.200fresh canonical starts;
+72unfiltered train (27LEFT/45RIGHT; no balancing),64LEFT and64FULL evaluation;
+71rejected LEFTDEV candidates reserved,36,898priorIDs excluded.
+Driverc2c8e8fd11eb5efade8e779d6ce867e1145879f0498480ffb290c5f500af4c3c;
+protocol3a9849c41142b9a6b82e26bb0e0b914253cfebe1e7050332ff239c4fcd2cb760;
+prelaunch manifest771f52f00afe021c3a06b9073cfa14729bb5e217899cb078c86c1b294a72d553.
+Launch authorized after both stage checks; source/driver/protocol frozen through
+both postexit checks. Parent result checker prepared independently.
+
+Interpretation clarification: >=2 returns requires actual repeated returns but can
+increase because more openings reach an unchanged continuation policy. It measures
+whole-trajectory rally success, not isolated postcontact-control improvement.
