@@ -162,9 +162,15 @@ def checkpoint_open_run(run):
 
 def validate_first_hit_job(job):
     mode=job.get('first_hit_cutoff',False)
+    fresh=(job.get('purpose')=='fresh_evaluation' and job.get('evaluation_target')=='first-contact-v1'
+        and job.get('actor') is None and job.get('projected_greedy') is None
+        and job['config'].get('policy_kind')=='trained' and job['config'].get('action_hold_frames',1)==1
+        and job['config'].get('action_seed') is None and not job['config'].get('skip_baseline_perception',False)
+        and not job['config'].get('blank_camera',False) and job.get('camera_intervention') is None)
     if (type(mode) is not bool or (mode and
-            (job['kind']!='evaluate' or job.get('purpose')!='training_fitness' or job['config'].get('episodes')!=1))):
-        raise ValueError('first-hit cutoff is single-episode training fitness only')
+            (job['kind']!='evaluate' or (job.get('purpose')!='training_fitness' and not fresh) or job['config'].get('episodes')!=1))
+            or (job.get('evaluation_target') is not None and (not fresh or not mode))):
+        raise ValueError('first-hit cutoff requires training fitness or declared ordinary greedy first-contact evaluation')
     return mode
 
 
@@ -185,6 +191,7 @@ def validate_actor_job(job):
         if (type(mode) is not dict or not {'theta_from','temperature','action_seed'}<=set(mode)
                 or not set(mode)<={'theta_from','temperature','action_seed','noise','baseline_from','residual'}
                 or not validate_first_hit_job(job) or job.get('camera_intervention') is not None
+                or job.get('purpose')!='training_fitness'
                 or job.get('projection_from') is None or job.get('scaling_from') is not None
                 or job['config'].get('action_hold_frames',1)!=1):
             raise ValueError('actor is projected K=1 first-hit training only')
