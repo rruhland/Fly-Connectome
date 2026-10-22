@@ -14,25 +14,22 @@ On 2026-10-22 the user authorized ongoing orchestration until stopped. Continue
 bounded research cycles, with independent challenge and reassessment between
 allocations. The previous no-followup stopping point is superseded. Major
 architecture review and efficient resource use remain required.
-**Active research: all8 pair-bank full-rally followup running after integration null.**
+**Active research: two rally integration configurations failed; reassessing intermediate skill.**
 [Protocol/results](../plans/2026-10-22-population-search-reassessment.md).
-LEFT acquisition replicated29→56/64 and27→49/64; 80% threshold passes only r1.
-Designatedr1theta9 remains the direct scaffold; ARtheta112 remains global reference.
+Strong direct-interception acquisition replicated29→56/64 and27→49/64. Designated
+r1theta9 remains the direct scaffold, ARtheta112 the global reference.
 
-Full-rally integration COMPLETE, both checks PASS, source freeze released. Three
-substantive updates,79,947train(11,041unused),59,802eval,804.568s. Fresh matched
-LEFT: GLOBAL31/DIRECT60/ENDPOINT55 out of64; FULL>=2returns12/15/17 out of64.
-Rally gains vs both controls fail; LEFT preservation fails; full GLOBAL preservation
-and LEFT gain over GLOBAL pass. No combined promotion. Training covers18unique
-starts,288episodes but only67post-first hits; netRMS.174 with174cache changes.
-Source68d15a7 unchanged. Both agents independently rejected first-hit reward dilution:
-later-hit components supplied55–75%of actual update projection. Selected one followup
-changes6shared starts/population to48starts shared within each+/-pair, sums all8
-directions without reward ranking, same reward/model/carry/evaluation/gates.
-Root`pong-pairbank-rally-20261022-r1`, exec14961, originalstart1792694292347795608ns.
-Both stage checks PASS;80k/900train+600eval/1500overall,min3/max12; DEV blind and
-source/driver/protocol frozen through both postexit checks. Credible null requires
-a different mechanism reassessment, not bank/rate/threshold sweeps.
+Full-rally integration failed rally gains and direct retention (DIRECT60→55/64;
+FULL>=2DIRECT15/GLOBAL12→ENDPOINT17). Followup48context/all8pair-bank run also
+failed rally primary (DIRECT6/GLOBAL12→ENDPOINT7/64), but improves direct first
+returns53→61/64,+12.5pp CI[4.6875,20.3125]. This secondary gain does not promote
+the endpoint or establish combined progress. Both checks PASS/source freeze released.
+Latest79,937train(12,569unused),53,764eval,788.109s,3updates/netRMS.059945.
+
+No automatic bank/rate/threshold sweep. Astra's new target contender: learn first
+incoming balls after an opponent return, using ordinary RIGHT-first curriculum
+while preserving direct skill. Sol challenges that and alternatives before selection.
+No new allocation selected; no architecture change. Source68d15a7 still unchanged.
 
 The existing frozenvision/linearclass demonstrably supports high direct interception;
 prior localactor nulls did not establish representationceiling. Originalpopulation

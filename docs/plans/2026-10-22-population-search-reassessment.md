@@ -479,3 +479,45 @@ after both checks; freeze through both postexit checks, DEV blind.
 
 Pair-bank trial launched exec14961, originalstarted_wall_ns1792694292347795608
 (2026-10-22T18:38:12.347795608Z). Same staged caps; DEV blind, no extensions.
+
+## Checked pair-bank result: secondary interception gain, rally primary still fails
+
+Both checks PASS; source freeze released. Three complete/nonzero updates.79,937
+training=67,368used+12,569unused partial;53,764evaluation,726initials.788.109s
+=436.361train+351.748eval. No extensions/recovery.
+
+| Fresh test | GLOBAL | DIRECT start | ENDPOINT |
+|---|---:|---:|---:|
+| LEFT first returns |33/64|53/64|61/64|
+| FULL first returns |32/64|36/64|38/64|
+| FULL total returns/opportunities |54/118|44/108|47/111|
+| Games with >=2 returns |12/64|6/64|7/64|
+| Games with >=3 / >=4 returns |5 / 4|1 / 1|2 / 0|
+
+Rally primary fails versus DIRECT (+1.5625pp CI[-7.8125,10.9375]) and GLOBAL
+(−7.8125pp CI[-20.3125,4.6875]). LEFT retention passes and shows a useful secondary
+increment: +12.5pp CI[4.6875,20.3125] versus DIRECT; LEFT gain over GLOBAL passes
+(+43.75pp CI[31.25,56.25]). Full first/all retention against GLOBAL both fail to
+establish preservation. No combined-progress result, endpoint promotion or claim
+that broader coverage caused the secondary gain. Reward and sampling/aggregation
+were jointly configured; this is not a causal comparison against the preceding run.
+
+144unique training starts rather than18;288used episodes supply223hits,159hit-bearing
+episodes and64post-first hits.62/144direction/serve pairs contrast. Applied steps
+.02879,.04428,.02936, netRMS.059945 and72cache changes. This is real movement but
+smaller than the previous net.174, so the result does not isolate coverage under
+matched update dose. Do not respond with an automatic scale/bank/threshold sweep.
+
+Own check PASS6.018s; parent all8 reconstruction/raw counts/paired gates PASS1.634s,
+zero new observations/replay. Parent artifacts `pairbank-parent-result-check.json`
+and `pairbank-result.png/svg` in `pong-mechanism-review-20261022`. The two full-rally
+configurations have now failed primary gates; reassess a different mechanism.
+
+Astra's next target contender: finish broader reliable interception before full
+rallying, specifically learning first incoming balls after an opponent return using
+ordinary RIGHT-first starts, while preserving LEFT skill. This would be explicit
+curriculum assistance, not a privileged observation or oracle reset. Start again
+from predesignatedr1theta9; do not select the ALL8endpoint because its secondary
+metric improved. Sol independently challenges target/cost/alternatives before any
+selection. Vision after bounces and motor-state access remain hypotheses, not
+established defects or automatic architecture changes. No new allocation selected.
