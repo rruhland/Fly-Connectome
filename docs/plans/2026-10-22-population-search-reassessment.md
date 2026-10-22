@@ -219,3 +219,47 @@ provides no postcontact training experience, motivating full-rally training as a
 integration contender after replication. It does not prove that one fixed policy
 can learn all situations or that architecture changes will be unnecessary.
 No r2outcomes read, protocol changes or new training allocation.
+
+## Checked replication: acquisition repeats, combined skill remains unproved
+
+R2 COMPLETE, both checks PASS and source freeze released. Nine complete/nonzero
+population updates; 79,825 training transitions, all used; 37,687 evaluation
+transitions (5,876 direct + 31,811 ordinary), 1,984 initial images. Wall 907.916s
+=631.124s training +276.792s evaluation, no extension or recovery.
+
+| Test | Carried ARtheta112 | R2 endpoint | Paired change, 95% CI |
+|---|---:|---:|---|
+| Direct first returns |27/64|49/64|+34.375pp,[+18.75,+50]|
+| Ordinary first returns |34/64|39/64|+7.8125pp,[-10.9375,+26.5625]|
+| Ordinary all returns |59/122|47/111|-6.0183pp,[-16.8198,+5.5303]|
+
+**Learning replicates; the 80% absolute competence threshold does not** (76.5625%).
+Both ordinary retention tests fail to establish preservation. Games with at least
+2/3/4 returns fall 14/6/4 to 8/0/0. Descriptive adverse rally change is consistent
+with r1; intervals do not establish population mean harm at 95%.
+327/864 direction/serve pairs contrast; net function RMS .319505, 326 cache action
+changes. All 64 games per cohort change precontact actions, median first divergence 0s.
+
+Sol's verification PASS12.682s; Astra independently reconstructed all nine updates
+and fresh raw outcome counts/paired bootstrap in 1.761s. Zero new observations or
+physics/vision replay in either check. Parent artifact:
+`/workspace/m1b-experiments/pong-mechanism-review-20261022/population-r2-parent-result-check.json`.
+
+As predeclared, r1 theta9 is the direct-interception scaffold candidate, independent
+of which seed performs better. Original ARtheta112 remains the qualified global
+reference; neither specialized endpoint is a combined learner. These trials refute
+the claim that the current visual/linear class cannot learn strong direct interception,
+but do not isolate exploration scale from objective alignment or establish autonomous
+continuous learning.
+
+## Selected next research question: preserve interception while learning rallies
+
+Restore the original full-rally population stage from designated r1 theta9, using
+ordinary mixed starts and full-episode own-hit count fitness. No new architecture,
+backpropagation or privileged observations. First-contact training omitted later
+states entirely; merely mixing opening directions would still omit those states.
+Sol independently challenges/stages a bounded protocol; Astra reviews before launch.
+Fresh evaluation must compare the endpoint to both its specialized start and the
+original global ARtheta112. Use a per-game rally measure to avoid interpreting a
+policy-dependent opportunities denominator as the sole progress test. Direct-skill
+preservation is a separate required gate. No new allocation launched yet.

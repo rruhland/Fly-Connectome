@@ -14,21 +14,21 @@ On 2026-10-22 the user authorized ongoing orchestration until stopped. Continue
 bounded research cycles, with independent challenge and reassessment between
 allocations. The previous no-followup stopping point is superseded. Major
 architecture review and efficient resource use remain required.
-**Active research: exact replication of strong direct-interception learning is running.**
+**Active research: replicated direct-interception learning; staging full-rally integration.**
 [Protocol/results](../plans/2026-10-22-population-search-reassessment.md).
-Original-scale population r1 COMPLETE, both checks PASS: direct first29/64→56/64,
-+42.1875pp CI[29.6875,54.6875],87.5% provisionalcompetence PASS. Ordinary first31→39/64
-retentionPASS; all68/128→48/112 retentionFAIL, >=2returns15→6. No combined-learner
-promotion.9populations,79,829train(1,397unused),38,851eval,15.61min. Source68d15a7
-unchanged, freeze released. Currentglobalancestor remains originalARtheta112.
+Both population trials COMPLETE with both independent checks PASS. Direct returns:
+r1 29→56/64, +42.19pp CI[29.69,54.69]; r2 27→49/64, +34.38pp CI[18.75,50].
+Learning replicates; 80% absolute competence passes only r1. Ordinary all-return
+retention fails in both, and multi-return games decline descriptively. No combined
+learner promotion. R1 designated theta9 remains the direct scaffold candidate by
+precommitment; original ARtheta112 remains the global reference. Source68d15a7
+freeze released. R2: 79,825train,37,687eval,1,984initials,907.916s,9updates.
 
-Sol stages exactr2 fromoriginalARtheta112 with onlyfreshseedroots/path changed;
-same80k/900train+600eval/1500overall,max12/min5,8directions,.25noise,.10cap,12sharedLEFTstarts.
-R2stage independentlyPASS202ms; root`pong-leftward-population-20261022-r2`,exec65584,
-originalstart1792691458745935191ns. Frozen source68d15a7; DEVblind; samecaps, noextension.
-R1journalarchive completedbeforelaunch, headsplain. Ifreplicated,
-r1theta9 is designated LEFTscaffoldcandidate regardless of whichseedlooksbetter.
-Full-rally preservation/integration is subsequent question, not an architecture change.
+Next selected question: can the existing original full-rally population stage retain
+this interception skill and improve sustained returns? Sol stages a bounded protocol
+from r1theta9 with ordinary mixed starts; Astra independently reviews before launch.
+Fresh evaluation will compare specialized start, global reference and endpoint;
+explicit direct preservation and per-game rally learning gates. No allocation yet.
 
 The existing frozenvision/linearclass demonstrably supports high direct interception;
 prior localactor nulls did not establish representationceiling. Originalpopulation
