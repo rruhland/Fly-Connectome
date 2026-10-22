@@ -332,3 +332,22 @@ whole-trajectory rally success, not isolated postcontact-control improvement.
 
 Integration launched exec84970, originalstarted_wall_ns1792692905024392844
 (2026-10-22T18:15:05.024392844Z). Same staged caps, no extensions; DEV blind.
+
+### Reward-design research while integration remains blind
+
+Astra read Ng, Harada & Russell (1999), section3 theorem1 and subsequent remarks,
+[Policy invariance under reward transformations](https://people.eecs.berkeley.edu/~russell/papers/icml99-shaping.pdf).
+The theorem identifies potential-based shaping F=gamma*Phi(next)-Phi(current) as
+policy-preserving under its stated MDP/boundedness/terminal conditions. This is not
+a convergence-rate guarantee for our algorithm.
+
+Specific inference for this search: with undiscounted complete episodes and zero
+terminal potential, sum(F)=-Phi(start). All sixteen candidates share the same starts,
+so this contributes the same mean offset to every candidate. Mirrored differences,
+maximum-sign direction ordering and selected-return standard deviation remain
+unchanged. Thus correctly telescoping shaping alone cannot accelerate this whole-
+episode population update. Temporal credit learners can use the intermediate signals;
+truncation, nonzero terminal potentials or time-varying potentials need separate
+analysis rather than assuming invariance. Current raw own-hit fitness deliberately
+changes the objective to learn a scaffold; it is not claimed equivalent to winning.
+No current protocol change, diagnostic allocation or new observations.
