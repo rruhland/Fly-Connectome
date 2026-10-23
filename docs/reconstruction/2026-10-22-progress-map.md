@@ -25,13 +25,16 @@ flowchart TD
     P --> Q[Direct preservation unresolved: 54 to 50 / 64]
     Q --> R[Balanced practice: direct47 to59; opponent-return51 to37 /64]
     R --> S[Real phase tradeoff; no balanced gain]
-    S --> T[Reassess acquisition path versus cheap learned-weight combination]
+    S --> T[Five learned-weight mixtures: unchanged start wins TRAIN]
+    T --> U[Skip redundant evaluation; no new learning]
+    U --> V[Active: train weaker-phase fitness, same policy and search]
     classDef gain fill:#d9eddb,stroke:#46734a
     classDef fail fill:#f4ded9,stroke:#a15d49
     classDef active fill:#fff0c9,stroke:#967627
     class G,H,O,P gain
     class C,D,J,M fail
-    class Q,T active
+    class Q,V active
+    class T,U fail
     class R,S fail
 ```
 
@@ -51,14 +54,15 @@ fresh cohorts must not be read as a single learning curve.
 
 ## What actually carried forward
 
-The designated first direct-population endpoint r1theta9 is the scaffold start.
+The designated direct-population r1theta9 seeded the successful opponent-return
+run. Its RIGHTtheta6 endpoint is now the preserved experimental integration start.
 The original ARtheta112 remains the qualified global reference. Neither failed
 full-rally endpoint is promoted or carried because a secondary result looked good.
 All current experiments use the existing frozen generic vision/linear readout,
 with no backpropagation or privileged policy observations. Explicit seed-defined
 curricula and scalar own-hit rewards are declared scaffold assistance.
 
-## Current decision
+## Previous checkpoint: opponent-return acquisition and pause
 
 The completed opponent-return trial passed acquisition, original opponent-return
 preservation, ordinary first-return gain, and ordinary all-return preservation.

@@ -107,12 +107,15 @@ learning success. The ultimate measure is dependable learned behavior per budget
 
 ## Immediate research target
 
-Reliable interception, then sustained rallying, starting from the proven return
-learner rather than the win-adapted branch. Independently examine why current
-fresh return rates are only roughly50–65%, distinguish optimization from visual/
-motor-state limitations, and choose a bounded intervention. Review the ten-second
-horizon before making repeated-exchange claims. Winning remains descriptive at
-these stages. Dynamic reward scheduling and a new architecture are not selected.
+Reliable interception across direct and opponent-return openings, then sustained
+rallying. Direct acquisition has replicated and opponent-return acquisition has
+succeeded once, but combining and retaining both remains unresolved. Carry the
+preserved RIGHTtheta6 experimental head while testing explicit integration
+scaffolds; report fresh phase rates and ordinary-game transfer separately.
+Distinguish optimization/objective/sampling limitations from visual or motor-state
+limitations before proposing architecture changes. Ten-second first-contact tasks
+do not demonstrate repeated exchanges. Winning remains descriptive at this stage;
+autonomous reward scheduling and a new architecture are not selected.
 
 ### 2026-10-22 evidence update
 
