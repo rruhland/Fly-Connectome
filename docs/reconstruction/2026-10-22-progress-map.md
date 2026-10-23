@@ -23,7 +23,7 @@ flowchart TD
     N --> O[Opponent-return acquisition: 19 to 44 / 64]
     O --> P[Ordinary first returns: 31 to 54 / 64 vs global]
     P --> Q[Direct preservation unresolved: 54 to 50 / 64]
-    Q --> R[PAUSED by user: balanced practice selected; new run interrupted]
+    Q --> R[2026-10-23 RUNNING: fresh balanced practice from learned endpoint]
     classDef gain fill:#d9eddb,stroke:#46734a
     classDef fail fill:#f4ded9,stroke:#a15d49
     classDef active fill:#fff0c9,stroke:#967627
@@ -87,3 +87,11 @@ Sources, exact budgets, costs and independent checks:
 [population reassessment](../plans/2026-10-22-population-search-reassessment.md),
 [current opponent-return protocol](../plans/2026-10-22-opponent-return-interception.md),
 [general scaffold plan](../plans/2026-10-21-continuous-learning-scaffolds.md).
+
+## 2026-10-23 bounded continuation
+
+User renewed orchestration for at most two hours; hard stop08:09UTC. A fresh
+balanced-practice allocation launched06:12:19.786634486UTC after both stage checks,
+with unchanged learning rules and criteria, entirely new seeds excluding the
+interrupted schedule. Its results remain blind until exit. Historical interrupted
+costs above remain recorded; no old clock or incomplete fitness was reused.

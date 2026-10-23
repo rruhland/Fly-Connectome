@@ -107,3 +107,27 @@ published schedule. No old driver restart, clock reset or partial-fitness reuse.
 The previous14879unused training transitions remain separate paid research cost;
 the carried learned state is unchanged RIGHTtheta6. Review results before selecting
 any further experiment; no automatic parameter sweep or architecture change.
+
+Fresh root `pong-balanced-interception-20261023-r1` independently staged:
+336accepted canonical starts,238rejections,39198excluded IDs including all of the
+interrupted schedule. Driver differs only in seven roots andTAG32911; focused
+fixtures unchanged,9PASS3.56s. Sol stage2.0945s plus50.5ms own review; parent
+independent stage225ms, zero observations/replay. Driver hash
+`b9a99c850e692ec012f8e120ed6ea6e5b9e6e8eee414860c6fb6ff14474714b2`;
+protocol `17d79da59d1e857de203f284a43fe5ff33f6a6756c1cc8865bf445ba42b54b84`;
+prelaunch manifest `70462eeab32246d5696bb08d361dce8366a342ca0867870872a59f2eb32130af`.
+One bounded launch authorized after both checks; no criteria/architecture changes.
+
+Launch receipt: exec68737, original clock1792735939786634486ns,
+2026-10-23T06:12:19.786634486Z. Protocol limit ends no later than06:47:20UTC,
+well inside the session deadline. Fresh outcomes remain blind until exit.
+
+While blind, Astra read Plappert et al., ICLR2018, *Parameter Space Noise for
+Exploration*,§3: https://arxiv.org/pdf/1706.01905 . They motivate controlling
+parameter perturbations through induced action differences as sensitivity changes.
+This suggests checking behavioral exploration dose if a substantive-update null
+occurs. Their DQN/DDPG/TRPO updates are not our derivative-free method and are not
+adopted. No noise adaptation is selected: prior smaller-noise ES already failed,
+and recent original-scale restoration succeeded. Existing generic-cache RMS alone
+cannot establish the behavioral dose on encountered Pong states. This is one
+conditional hypothesis for later comparison, not a reason to change the live run.
