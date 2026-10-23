@@ -21,7 +21,9 @@ old paused run below stays immutable and must not restart/reset its clock.
 [Fresh execution protocol](../plans/2026-10-23-balanced-practice.md) stages the same
 balanced6LEFT+6RIGHT practice from RIGHTtheta6, with new roots/TAG and exclusion
 of every prior accepted/rejected/unused schedule and canonical identity. No old
-partial fitness is reused. Stage frozen for independent review; not yet launched.
+partial fitness is reused. Both stage checks PASS; fresh run LIVE exec68737, start06:12:19.786634486UTC
+(1792735939786634486ns). DEVblind; source68d15a7/driverb9a99c85/protocol17d79da5
+remain frozen through both result checks. Full fixed budget ends by06:47:20UTC.
 No automatic second allocation: interpret and jointly select first.
 
 **RIGHT-first curriculum completed: strong acquisition; joint preservation unfinished.**
