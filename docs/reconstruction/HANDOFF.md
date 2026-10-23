@@ -14,11 +14,52 @@ On 2026-10-22 the user authorized ongoing orchestration until stopped. Continue
 bounded research cycles, with independent challenge and reassessment between
 allocations. The previous no-followup stopping point is superseded. Major
 architecture review and efficient resource use remain required.
-**PAUSED after the bounded 2026-10-23 research session. No candidate is active.**
-The user authorized up to two hours, ending by 08:09 UTC. The selected experiments
-have finished and both verification paths passed; no further training is scheduled.
-Future continuation needs a new prospective allocation and budget. Never restart an
-old clock or reuse incomplete-population fitness.
+**PAUSED after the renewed continuation. No candidate or worker is active.**
+The selected batch is finished; both independent completion checks passed for both
+allocations. No further training is scheduled, regardless of time remaining before
+the 18:49:30 UTC ceiling. Future work needs a new prospective allocation; never
+restart either immutable clock or reuse partial-population fitness.
+
+The [weighted-proposal confirmation trial](../plans/2026-10-23-confirmed-proposal-interception.md)
+and final [executed-child follow-up](../plans/2026-10-23-executed-child-interception.md)
+each completed six cycles and accepted zero updates. Both retained exact RIGHTtheta6
+and correctly skipped all DEV under their registered unchanged-policy rules. No
+held-out learning, preservation, competence or promotion result was produced. All
+fresh total success differences were below two even without phase protection;
+strict phase guards alone do not explain the failures.
+
+Weighted proposals used 159,824 training transitions (157,443 complete-cycle used;
+2,381 partial unused), 1,755 initials and 981.600 seconds. Exact-child selection
+used 159,824 training transitions (154,313 used; 5,511 unused), 1,789 initials and
+949.207 seconds. Total continuation cost:319,648 training transitions,
+311,756 used / 7,892 unused;3,544 initials;zero evaluation;1,930.807 allocation seconds
+excluding preparation, verification, archival and orchestration. Own/parent checks
+passed13.029/2.731 seconds for weighted proposals and12.331/2.749 seconds for
+children, all with zero observations/replay. Raw reads are complete; parent owns
+explicit scoped archival, with heads/T/metadata plain and interrupted roots excluded.
+
+The weighted proposals moved 0.07945–0.10 function RMS and children 0.25; applied
+movement was zero. Confirming an actually executed controller did not overcome the
+poor fresh gains. This is not a representation-capacity refutation or a held-out null
+for rejected heads. RIGHTtheta6 remains the experimental accumulated-skill
+candidate; DIRECTtheta9 and qualified GLOBAL ARtheta112 remain separate.
+RIGHT-only acquisition and a combined reliable-interception recipe are unreplicated.
+No failed morning or afternoon head is promoted. Learned ancestry remains 558,832
+training transitions (532,296 used; 26,536 unused); interrupted 14,879 transitions are
+separately paid unused exposure.
+
+A future recommendation, not a selected allocation, is balanced acquisition directly
+from DIRECTtheta9 with explicit new RIGHT acquisition, LEFT preservation and
+full-game global guards. It would be a separate research lineage and path test,
+not a way to manufacture gain from a weaker baseline. Larger discovery banks,
+phase-local perturbations and information/history changes remain alternatives;
+none is implemented or authorized by this result. No threshold, noise, rate,
+initialization or architecture sweep follows automatically.
+
+The completed morning session below remains historical. Its checks and archival
+passed; no morning candidate was promoted. Preserved RIGHTtheta6 has learned
+ancestry 558,832 training transitions (532,296 used; 26,536 unused). Interrupted
+14,879 transitions are separately paid unused research exposure.
 
 The [minimum-phase objective test](../plans/2026-10-23-minphase-interception.md)
 finished with nine nonzero updates but no combined first-return improvement:
@@ -39,11 +80,10 @@ skill reference, and qualified GLOBAL ARtheta112 separately. Heads, projections,
 protocols and verification reports remain plain. The original interrupted run remains
 immutable, with its paid partial observations separately charged and unused.
 
-A future fresh TRAIN comparison of the deployed center and proposed update may
-address proposal-to-center mismatch before another noise, rate or objective sweep.
-This is a recommendation only. Finite-bank uncertainty, initialization and information
+The two completed fresh TRAIN comparisons above addressed proposal-to-center
+mismatch without producing accepted updates. They supersede the morning recommendation. Finite-bank uncertainty, initialization and information
 limitations remain unresolved; the results do not prove incompatible representation.
-No new candidate or architecture change is selected. Parent owns the final visual,
+No new architecture change is selected. Parent owns the final visual,
 progress map and session closure; this handoff records execution and verification.
 
 **RIGHT-first curriculum completed: strong acquisition; joint preservation unfinished.**
