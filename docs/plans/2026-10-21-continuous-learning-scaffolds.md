@@ -142,3 +142,7 @@ is implied. Original ARtheta112 remains the global reference. Detailed criteria:
 Historical evidence and artifact locations: [HANDOFF](../reconstruction/HANDOFF.md).
 The [M1B roadmap](2026-09-27-m1a5-to-m1b-roadmap.md) remains the broader milestone
 reference; this plan governs the current scaffold research and orchestration.
+
+### 2026-10-23 bounded integration update
+
+Fresh balanced practice produced real direct-skill improvement and real opponent-return harm; combined progress failed. Effective update magnitude was substantial. The preserved opponent-return head remains an experimental carry; the new endpoint is not promoted. A bounded fresh-reward coefficient test now asks whether their changes can combine in one existing head. This is an explicit integration scaffold with no architecture change, not the completed continuous learner. See [decision and conditional alternatives](2026-10-23-interpolation-selection.md). Next allocations require interpretation rather than automatic parameter sweeps.
