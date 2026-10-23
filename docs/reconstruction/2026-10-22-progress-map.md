@@ -27,13 +27,16 @@ flowchart TD
     R --> S[Real phase tradeoff; no balanced gain]
     S --> T[Five learned-weight mixtures: unchanged start wins TRAIN]
     T --> U[Skip redundant evaluation; no new learning]
-    U --> V[Active: train weaker-phase fitness, same policy and search]
+    U --> V[Weaker-phase fitness: direct48 to45; opponent-return44 to42 /64]
+    V --> W[No joint first-learning; exploratory three-return signal2 to9 /64]
+    W --> X[Pause: consider fresh confirmation before accepting updates]
     classDef gain fill:#d9eddb,stroke:#46734a
     classDef fail fill:#f4ded9,stroke:#a15d49
     classDef active fill:#fff0c9,stroke:#967627
     class G,H,O,P gain
     class C,D,J,M fail
-    class Q,V active
+    class Q,X active
+    class V,W fail
     class T,U fail
     class R,S fail
 ```
@@ -127,3 +130,6 @@ all576 heldout jobs:28167training transitions,320initial images, zero evaluation
 Both independent checks passed. No changed learner or heldout claim. Next selected
 is one [weaker-phase objective test](../plans/2026-10-23-worst-phase-selection.md),
 with identical policy/search/curriculum and fresh seeds; not an adaptive mixture sweep.
+
+
+Final weaker-phase result: balanced−3.90625pp CI[−12.5,4.6875]; no new first-interception learning. Nine substantial updates, net.25267,253calibration greedy changes. Three of eight screens pass, combined/80% fail. Secondary three-return games2→9/64 remain exploratory; mean returns and two-return gain uncertain. Both independent checks passed. Session stopped after synthesis, no additional training queued. See [checked session overview and visual](2026-10-23-bounded-session-results.md).
