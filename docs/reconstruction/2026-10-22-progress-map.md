@@ -116,3 +116,10 @@ LEFT-improved balancedtheta9 compete on64fresh balanced training starts. One
 selected existing head gets unchanged heldout gates; alpha0 selection stops early
 without redundant evaluation. No architecture change or backpropagation. See
 [selection and source rationale](../plans/2026-10-23-interpolation-selection.md).
+
+Interpolation completed in189.085s: alpha0 (unchanged policy) scored50/64 fresh
+training hits, versus47,47,43,43 for the four mixtures. Registered futility saved
+all576 heldout jobs:28167training transitions,320initial images, zero evaluation.
+Both independent checks passed. No changed learner or heldout claim. Next selected
+is one [weaker-phase objective test](../plans/2026-10-23-worst-phase-selection.md),
+with identical policy/search/curriculum and fresh seeds; not an adaptive mixture sweep.
