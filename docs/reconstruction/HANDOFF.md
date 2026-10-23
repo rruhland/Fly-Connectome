@@ -14,30 +14,30 @@ On 2026-10-22 the user authorized ongoing orchestration until stopped. Continue
 bounded research cycles, with independent challenge and reassessment between
 allocations. The previous no-followup stopping point is superseded. Major
 architecture review and efficient resource use remain required.
-**2026-10-23 user continuation: bounded orchestration until08:09UTC at latest.**
-The user explicitly resumed for up to two hours. Reserve10minutes for shutdown and
-handoff; no new35minute allocation after07:24UTC, including time for checks. The
-old paused run below stays immutable and must not restart/reset its clock.
-**Active: fresh-reward one-coefficient interpolation test.**
-[Execution protocol](../plans/2026-10-23-interpolation-interception.md).
-Five fixed alphas0/.25/.5/.75/1 between preserved RIGHTtheta6 and the failed-joint
-balancedtheta9 donor (explicit research assistance, no promotion). All320fresh
-32LEFT+32RIGHT shared training episodes required; TRAIN-only stable lowest-alpha
-selection. Same heldout primary/eight guards/unconditional80; alpha0 stops without
-redundant heldout jobs/claims. Exec36345,start1792738457156322413ns
-(06:54:17.156322413UTC);50k/420train+900eval/1320overall,endsby07:16:17UTC.
-Both stage checks PASS; driverbd44f101/protocol021b28f0/manifest ea19555b frozen
-through both result checks. Health only until exit; no alpha/fitness/DEV peeking.
+**Current authority: bounded user continuation on 2026-10-23, until 08:09 UTC.**
+Reserve ten minutes for shutdown and handoff. Old interrupted runs remain immutable;
+do not restart their clocks or reuse partial fitness.
 
-[Fresh balanced result](../plans/2026-10-23-balanced-practice.md) complete: nine
-nonzero updates,159854train+90374eval,2360initials,1746.956s. LEFT47→59/64
-(+18.75pp,[9.375,28.125]) but RIGHT51→37/64 (−21.875pp,[−34.375,−10.9375]);
-primary balanced−1.5625pp,[−9.375,6.25], joint gates fail. This is skill tradeoff,
-not a weak-dose null. NetfunctionRMS.26638/202cache flips. Both checks PASS
-(Sol18.9675s/Astra3.074s,zeroobs/replay); no endpoint promotion. Preserve separate
-RIGHTtheta6; only joint review can select a next experiment, no automatic allocation.
-Core/source/driver/protocol unchanged; current journals raw until both readers DONE
-(now confirmed), heads/T remain plain. Old interrupted run stays immutable/unused.
+**Active experiment: minimum-phase first-interception fitness.**
+[Execution protocol](../plans/2026-10-23-minphase-interception.md).
+Use the same RIGHT theta6, six LEFT plus six RIGHT starts and original search constants.
+Only candidate fitness changes from mean phase return to the lower phase return.
+This is not a formal retention constraint. The same eight held-out guards still apply.
+Exec20934 started at 07:03:27.304 UTC (1792739007304033303 ns); budgets are
+160,000 training transitions/1,200 seconds, 900 seconds evaluation, 2,100 seconds total.
+The full cap ends by 07:38:27. Both stage reviews passed. Source68d15a7, driver141a1928,
+protocol e1dfb394 and manifest88c482f4 stay frozen through both checks. Outcomes
+remain unread until exit. No automatic further candidate follows this attempt.
+
+Completed this session: [mean-balanced practice](../plans/2026-10-23-balanced-practice.md)
+gained LEFT returns, 47→59/64, but lost RIGHT returns, 51→37/64. Both checks passed;
+no combined promotion. The [scalar interpolation test](../plans/2026-10-23-interpolation-interception.md)
+then selected coefficient zero on all 320 fresh training episodes: 50/64 successes,
+versus 47, 47, 43 and 43 for nonzero coefficients. Its registered early stop skipped
+held-out games. Cost was 28,167 training transitions and 320 initial images in
+189.085 seconds. Both checks passed; no held-out or capacity claim. The preserved
+RIGHT head remains separate; neither the failed donor nor grid outcome is carried
+into the current objective test. Heads, projections and verification reports remain plain.
 
 **RIGHT-first curriculum completed: strong acquisition; joint preservation unfinished.**
 [Checked protocol/result](../plans/2026-10-22-opponent-return-interception.md).

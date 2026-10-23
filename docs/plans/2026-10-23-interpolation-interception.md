@@ -37,3 +37,26 @@ protocol frozen through both checks; healthonly/no alpha/fitness/DEV reads until
 Previous balanced2360DB archive EXIT0 before this stage:6,962,348,032→939,137,393bytes,
 88.1925s wall/90.0648CPU. Sidecars EXIT0 first3.58225s; all originals reconstruct-
 verified,zero observations/replay. Heads/T/metadata plain; interrupted priorrun unchanged.
+
+
+## Verified result: unchanged starting policy selected
+
+All 320 training episodes completed. The selected coefficient was zero, the unique
+best training score: 50/64 successes, versus 47, 47, 43 and 43 for the four nonzero
+coefficients. LEFT counts were 26, 26, 28, 28, 28 out of 32; RIGHT counts were
+24, 21, 19, 15, 15. The fixed training criterion therefore retained the exact RIGHT
+starting head. The registered futility rule correctly skipped all held-out jobs.
+This is no changed policy and no qualifying incremental learning; it makes no
+held-out claim about every coefficient or the wider policy class.
+
+The coordinator exited successfully after 189.085 seconds: 187.434 seconds training
+and 1.651 seconds reporting. Cost: 28,167 training transitions, all used for scalar
+selection, 320 initial images, zero evaluation and no partial training. Own verification
+passed in 1.435 seconds and parent verification in 0.451 seconds, both with zero new
+observations or replay. They reconstructed all candidate maps, stable complete-grid
+selection, native counts and the unchanged-policy early stop. Source freeze released;
+RIGHT theta6 remains separate and no endpoint is promoted. Raw reads are complete.
+
+The jointly selected next experiment changes only candidate fitness aggregation to
+the smaller of the two phase means, from the same RIGHT theta6. The failed donor
+is not carried into that experiment. No adaptive coefficient search follows this result.
