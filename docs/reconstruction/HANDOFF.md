@@ -18,6 +18,17 @@ architecture review and efficient resource use remain required.
 The user explicitly resumed for up to two hours. Reserve10minutes for shutdown and
 handoff; no new35minute allocation after07:24UTC, including time for checks. The
 old paused run below stays immutable and must not restart/reset its clock.
+**Active: fresh-reward one-coefficient interpolation test.**
+[Execution protocol](../plans/2026-10-23-interpolation-interception.md).
+Five fixed alphas0/.25/.5/.75/1 between preserved RIGHTtheta6 and the failed-joint
+balancedtheta9 donor (explicit research assistance, no promotion). All320fresh
+32LEFT+32RIGHT shared training episodes required; TRAIN-only stable lowest-alpha
+selection. Same heldout primary/eight guards/unconditional80; alpha0 stops without
+redundant heldout jobs/claims. Exec36345,start1792738457156322413ns
+(06:54:17.156322413UTC);50k/420train+900eval/1320overall,endsby07:16:17UTC.
+Both stage checks PASS; driverbd44f101/protocol021b28f0/manifest ea19555b frozen
+through both result checks. Health only until exit; no alpha/fitness/DEV peeking.
+
 [Fresh balanced result](../plans/2026-10-23-balanced-practice.md) complete: nine
 nonzero updates,159854train+90374eval,2360initials,1746.956s. LEFT47→59/64
 (+18.75pp,[9.375,28.125]) but RIGHT51→37/64 (−21.875pp,[−34.375,−10.9375]);
