@@ -95,3 +95,15 @@ transitions drained after interrupt but absent from the coordinator cost log.
 All partial exposure is unused for learning; theta_at0 remains exact RIGHTtheta6.
 Receipt: `/workspace/m1b-experiments/pong-balanced-interception-20261022-r1/pause-receipt.json`.
 Parent independently checked no matching training/worker processes remained.
+
+## Bounded resumption on2026-10-23
+
+User renewed orchestration for at most two hours, clarifying “Run for up to two
+hours from now.” Session starts06:09:32UTC and stops by08:09UTC, with ten minutes
+reserved for closure. No new35-minute allocation after07:24UTC. Reuse Sol6.1XHigh.
+The same selected balanced experiment receives a fresh prospective allocation,
+new independent roots and exclusions including the interrupted allocation's whole
+published schedule. No old driver restart, clock reset or partial-fitness reuse.
+The previous14879unused training transitions remain separate paid research cost;
+the carried learned state is unchanged RIGHTtheta6. Review results before selecting
+any further experiment; no automatic parameter sweep or architecture change.
