@@ -14,30 +14,37 @@ On 2026-10-22 the user authorized ongoing orchestration until stopped. Continue
 bounded research cycles, with independent challenge and reassessment between
 allocations. The previous no-followup stopping point is superseded. Major
 architecture review and efficient resource use remain required.
-**Current authority: bounded user continuation on 2026-10-23, until 08:09 UTC.**
-Reserve ten minutes for shutdown and handoff. Old interrupted runs remain immutable;
-do not restart their clocks or reuse partial fitness.
+**PAUSED after the bounded 2026-10-23 research session. No candidate is active.**
+The user authorized up to two hours, ending by 08:09 UTC. The selected experiments
+have finished and both verification paths passed; no further training is scheduled.
+Future continuation needs a new prospective allocation and budget. Never restart an
+old clock or reuse incomplete-population fitness.
 
-**Active experiment: minimum-phase first-interception fitness.**
-[Execution protocol](../plans/2026-10-23-minphase-interception.md).
-Use the same RIGHT theta6, six LEFT plus six RIGHT starts and original search constants.
-Only candidate fitness changes from mean phase return to the lower phase return.
-This is not a formal retention constraint. The same eight held-out guards still apply.
-Exec20934 started at 07:03:27.304 UTC (1792739007304033303 ns); budgets are
-160,000 training transitions/1,200 seconds, 900 seconds evaluation, 2,100 seconds total.
-The full cap ends by 07:38:27. Both stage reviews passed. Source68d15a7, driver141a1928,
-protocol e1dfb394 and manifest88c482f4 stay frozen through both checks. Outcomes
-remain unread until exit. No automatic further candidate follows this attempt.
+The [minimum-phase objective test](../plans/2026-10-23-minphase-interception.md)
+finished with nine nonzero updates but no combined first-return improvement:
+LEFT48→45/64, RIGHT44→42/64; equal-weight −3.91 pp, 95% interval [−12.50,4.69].
+Three of eight gates passed. A secondary ≥3-return signal, 2→9/64 versus START,
+is unreplicated and does not establish rally learning. The endpoint is a separate
+research artifact, not a promoted learner. Actual cost: 159,830 training transitions
+(153,978 used; 5,852 unused), 89,902 evaluation transitions, 2,374 initial images,
+1,598.446 seconds. Own and parent checks passed in 16.702 and 3.558 seconds with
+zero new observations/replay. Raw reads and verified archival are complete.
 
-Completed this session: [mean-balanced practice](../plans/2026-10-23-balanced-practice.md)
-gained LEFT returns, 47→59/64, but lost RIGHT returns, 51→37/64. Both checks passed;
-no combined promotion. The [scalar interpolation test](../plans/2026-10-23-interpolation-interception.md)
-then selected coefficient zero on all 320 fresh training episodes: 50/64 successes,
-versus 47, 47, 43 and 43 for nonzero coefficients. Its registered early stop skipped
-held-out games. Cost was 28,167 training transitions and 320 initial images in
-189.085 seconds. Both checks passed; no held-out or capacity claim. The preserved
-RIGHT head remains separate; neither the failed donor nor grid outcome is carried
-into the current objective test. Heads, projections and verification reports remain plain.
+Earlier this session, [mean-balanced practice](../plans/2026-10-23-balanced-practice.md)
+gained LEFT skill and damaged RIGHT skill. The [scalar interpolation test](../plans/2026-10-23-interpolation-interception.md)
+then selected coefficient zero on all 320 fresh training episodes and skipped held-out
+games under its registered early-stop rule. Neither result qualifies a combined head.
+Preserve RIGHTtheta6 as the main experimental candidate, DIRECTtheta9 as its direct-
+skill reference, and qualified GLOBAL ARtheta112 separately. Heads, projections,
+protocols and verification reports remain plain. The original interrupted run remains
+immutable, with its paid partial observations separately charged and unused.
+
+A future fresh TRAIN comparison of the deployed center and proposed update may
+address proposal-to-center mismatch before another noise, rate or objective sweep.
+This is a recommendation only. Finite-bank uncertainty, initialization and information
+limitations remain unresolved; the results do not prove incompatible representation.
+No new candidate or architecture change is selected. Parent owns the final visual,
+progress map and session closure; this handoff records execution and verification.
 
 **RIGHT-first curriculum completed: strong acquisition; joint preservation unfinished.**
 [Checked protocol/result](../plans/2026-10-22-opponent-return-interception.md).
