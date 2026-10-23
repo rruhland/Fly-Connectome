@@ -23,13 +23,16 @@ flowchart TD
     N --> O[Opponent-return acquisition: 19 to 44 / 64]
     O --> P[Ordinary first returns: 31 to 54 / 64 vs global]
     P --> Q[Direct preservation unresolved: 54 to 50 / 64]
-    Q --> R[2026-10-23 RUNNING: fresh balanced practice from learned endpoint]
+    Q --> R[Balanced practice: direct47 to59; opponent-return51 to37 /64]
+    R --> S[Real phase tradeoff; no balanced gain]
+    S --> T[Reassess acquisition path versus cheap learned-weight combination]
     classDef gain fill:#d9eddb,stroke:#46734a
     classDef fail fill:#f4ded9,stroke:#a15d49
     classDef active fill:#fff0c9,stroke:#967627
     class G,H,O,P gain
     class C,D,J,M fail
-    class Q,R active
+    class Q,T active
+    class R,S fail
 ```
 
 Rates below are matched within each experiment. Absolute scores from different
@@ -93,5 +96,23 @@ Sources, exact budgets, costs and independent checks:
 User renewed orchestration for at most two hours; hard stop08:09UTC. A fresh
 balanced-practice allocation launched06:12:19.786634486UTC after both stage checks,
 with unchanged learning rules and criteria, entirely new seeds excluding the
-interrupted schedule. Its results remain blind until exit. Historical interrupted
+interrupted schedule. Both independent result checks passed. Historical interrupted
 costs above remain recorded; no old clock or incomplete fitness was reused.
+
+Balanced result: equal-weight first-return lift−1.5625pp CI[−9.375,6.25].
+Direct gains+18.75pp CI[9.375,28.125], opponent-return declines−21.875pp
+CI[−34.375,−10.9375]: a real phase tradeoff, not merely inconclusive preservation.
+Ordinary first51→50/64, all77/141→68/132; only direct-vs-DIRECT preservation and
+ordinary first gain versus GLOBAL pass. No combined promotion or80%competence.
+Nine nonzero updates, net function-RMS movement.26638; effective update dose is not
+negligible.159854train=155015used+4839partial,90374eval,2360initial images;
+1746.956s=1104.022training+642.934evaluation. Parent3.074s and Sol18.968s checks
+add no observations/replay. The strong RIGHTtheta6 remains the accumulated candidate.
+Figure: `/workspace/m1b-experiments/pong-mechanism-review-20261022/balanced-20261023-result.png`.
+
+Next selected: a cheaper fresh-reward interpolation test before another full
+training restart. Five fixed combinations of preserved RIGHTtheta6 and the
+LEFT-improved balancedtheta9 compete on64fresh balanced training starts. One
+selected existing head gets unchanged heldout gates; alpha0 selection stops early
+without redundant evaluation. No architecture change or backpropagation. See
+[selection and source rationale](../plans/2026-10-23-interpolation-selection.md).
