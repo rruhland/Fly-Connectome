@@ -14,6 +14,16 @@ On 2026-10-22 the user authorized ongoing orchestration until stopped. Continue
 bounded research cycles, with independent challenge and reassessment between
 allocations. The previous no-followup stopping point is superseded. Major
 architecture review and efficient resource use remain required.
+**2026-10-23 user continuation: bounded orchestration until08:09UTC at latest.**
+The user explicitly resumed for up to two hours. Reserve10minutes for shutdown and
+handoff; no new35minute allocation after07:24UTC, including time for checks. The
+old paused run below stays immutable and must not restart/reset its clock.
+[Fresh execution protocol](../plans/2026-10-23-balanced-practice.md) stages the same
+balanced6LEFT+6RIGHT practice from RIGHTtheta6, with new roots/TAG and exclusion
+of every prior accepted/rejected/unused schedule and canonical identity. No old
+partial fitness is reused. Stage frozen for independent review; not yet launched.
+No automatic second allocation: interpret and jointly select first.
+
 **RIGHT-first curriculum completed: strong acquisition; joint preservation unfinished.**
 [Checked protocol/result](../plans/2026-10-22-opponent-return-interception.md).
 RIGHT19→44/64 (+39.06pp,95%CI[26.56,51.56]); FULL first31GLOBAL→54/64
@@ -24,7 +34,7 @@ No combined/global promotion or replication claim. Six complete/nonzero updates,
 Both checks PASS (Sol13.692s,Astra3.219s,zero new observations/replay); freeze released.
 RIGHT r1theta6 remains an experimental accumulated-skill candidate, not qualified global.
 
-**PAUSED by user: “find a good pausing point and stop.”**
+**Historical pause on2026-10-22: “find a good pausing point and stop.”**
 Ongoing orchestration is cancelled. No candidate processes remain. Balanced fresh
 practice was interrupted promptly by SIGINT to exec9708's coordinator; active
 workers settled, EXIT130.161completed episodes paid14,879training transitions+
@@ -42,7 +52,7 @@ final coordinator output83.9197s after start, later shutdown confirmation135.191
 All journals/checkpoints and immutable frozen protocol are preserved; no summary or
 eligible evidence was fabricated. No observations/replay were added by stop checks.
 
-**Resume only after the user requests continuation. Do not restart this old driver,
+**Continuation was requested on2026-10-23; do not restart this old driver,
 reset its immutable clock, or treat the partial population as completed.** Any future
 learning requires a new prospective allocation/design/budget; preserve the existing
 partial artifacts. The [balanced selection](../plans/2026-10-22-balanced-practice-selection.md)
