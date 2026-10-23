@@ -18,13 +18,15 @@ architecture review and efficient resource use remain required.
 The user explicitly resumed for up to two hours. Reserve10minutes for shutdown and
 handoff; no new35minute allocation after07:24UTC, including time for checks. The
 old paused run below stays immutable and must not restart/reset its clock.
-[Fresh execution protocol](../plans/2026-10-23-balanced-practice.md) stages the same
-balanced6LEFT+6RIGHT practice from RIGHTtheta6, with new roots/TAG and exclusion
-of every prior accepted/rejected/unused schedule and canonical identity. No old
-partial fitness is reused. Both stage checks PASS; fresh run LIVE exec68737, start06:12:19.786634486UTC
-(1792735939786634486ns). DEVblind; source68d15a7/driverb9a99c85/protocol17d79da5
-remain frozen through both result checks. Full fixed budget ends by06:47:20UTC.
-No automatic second allocation: interpret and jointly select first.
+[Fresh balanced result](../plans/2026-10-23-balanced-practice.md) complete: nine
+nonzero updates,159854train+90374eval,2360initials,1746.956s. LEFT47→59/64
+(+18.75pp,[9.375,28.125]) but RIGHT51→37/64 (−21.875pp,[−34.375,−10.9375]);
+primary balanced−1.5625pp,[−9.375,6.25], joint gates fail. This is skill tradeoff,
+not a weak-dose null. NetfunctionRMS.26638/202cache flips. Both checks PASS
+(Sol18.9675s/Astra3.074s,zeroobs/replay); no endpoint promotion. Preserve separate
+RIGHTtheta6; only joint review can select a next experiment, no automatic allocation.
+Core/source/driver/protocol unchanged; current journals raw until both readers DONE
+(now confirmed), heads/T remain plain. Old interrupted run stays immutable/unused.
 
 **RIGHT-first curriculum completed: strong acquisition; joint preservation unfinished.**
 [Checked protocol/result](../plans/2026-10-22-opponent-return-interception.md).
