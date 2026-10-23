@@ -133,3 +133,10 @@ with identical policy/search/curriculum and fresh seeds; not an adaptive mixture
 
 
 Final weaker-phase result: balanced−3.90625pp CI[−12.5,4.6875]; no new first-interception learning. Nine substantial updates, net.25267,253calibration greedy changes. Three of eight screens pass, combined/80% fail. Secondary three-return games2→9/64 remain exploratory; mean returns and two-return gain uncertain. Both independent checks passed. Session stopped after synthesis, no additional training queued. See [checked session overview and visual](2026-10-23-bounded-session-results.md).
+
+
+## October23 resumed continuation
+
+Weighted-proposal fresh confirmation →6completecycles/0accepted →unchanged head.
+Best-executed-child fresh confirmation →6completecycles/0accepted →unchanged head.
+Both independent audits passed for each;319648TRAIN,3544initials,0DEV under prospective unchanged-policy futility. No new learning gain or M1B completion. Next recommended research question is joint acquisition from the earlier DIRECT scaffold, with explicit skill-retention and absolute comparisons; no next run selected. [Full evidence and visual](2026-10-23-continuation-session-results.md).

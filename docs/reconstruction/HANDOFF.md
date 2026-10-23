@@ -15,6 +15,8 @@ bounded research cycles, with independent challenge and reassessment between
 allocations. The previous no-followup stopping point is superseded. Major
 architecture review and efficient resource use remain required.
 **PAUSED after the renewed continuation. No candidate or worker is active.**
+
+[Combined continuation results and visual](2026-10-23-continuation-session-results.md). Both completed confirmation roots are now losslessly archived after both raw audits; restore journals before a new raw audit. All heads, source, protocols and metadata remain plain.
 The selected batch is finished; both independent completion checks passed for both
 allocations. No further training is scheduled, regardless of time remaining before
 the 18:49:30 UTC ceiling. Future work needs a new prospective allocation; never
