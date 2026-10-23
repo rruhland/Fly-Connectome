@@ -131,3 +131,25 @@ adopted. No noise adaptation is selected: prior smaller-noise ES already failed,
 and recent original-scale restoration succeeded. Existing generic-cache RMS alone
 cannot establish the behavioral dose on encountered Pong states. This is one
 conditional hypothesis for later comparison, not a reason to change the live run.
+
+### Further alternatives discussed while outcomes remain blind
+
+Sol's independent precommit favors exact balanced-stage replication after a pass;
+a material tradeoff instead favors balanced acquisition from DIRECTtheta9 to test
+training-history dependence before changing architecture. NI uncertainty alone is
+not proof of a tradeoff. Astra challenged last-stage replication because it shares
+the unreplicated RIGHT intermediate. Both agree a fresh RIGHT→balanced procedure
+would test more of the progression, conditional on the same DIRECT ancestor.
+
+Both independently identified a ceiling problem: a stronger new RIGHT intermediate
+can leave less than10pp room for balanced-stage gain, even if the final procedure is
+effective. A prospective procedure study should distinguish cumulative acquisition
+from incremental final-stage learning. An efficient possibility is train-only RIGHT,
+carry its last eligible complete head without intermediate DEV selection, then train
+balanced and evaluate all relevant frozen heads together. Adding RIGHT-DIRECT64jobs
+would enable cumulative paired phase gain versus DIRECT. Approximate worst-case
+budget20min+20min+15min evaluation=55min, plus staging/checks. This is a possible
+new-primary procedure-validation study, not exact last-stage replication. Nothing
+is selected or staged until the current result is independently checked and remaining
+deadline room is assessed. A credible null does not authorize an automatic noise,
+rate, mixture or architecture sweep.
