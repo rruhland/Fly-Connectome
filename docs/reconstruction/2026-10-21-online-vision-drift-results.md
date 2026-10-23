@@ -52,3 +52,14 @@ A retraining. No task-learning allocation has started; numerical/session tests
 and the common score-free camera calibration preflight precede its fixed recipe.
 
 [Protocol](2026-10-21-online-vision-drift-protocol.md) · [Artifacts](/workspace/m1b-experiments/pong-online-vision-drift-20261021-r1/summary.json) · [Independent audit/chart](/workspace/m1b-experiments/online-vision-parent-audit-20261021/online-vision-drift.png)
+
+## Cold artifact storage,2026-10-23
+
+After both completed-study checks, all260journals were losslessly archived during
+a later independent training run:1,242,812,416→193,907,941bytes,18.343s wall and
+12.450s CPU. Every original byte was reconstructed and SHA-verified before unlink.
+Empty sidecars were separately verified/archived in.195s and exited successfully
+before journal archiving began. No observations or replay were added. Heads,
+visual snapshots and metadata remain plain; use the storage-management manifest
+and `cold_journals.py --restore` for journal access. Live and interrupted studies
+were untouched. This maintenance overlapped the new run's immutable wall clock.
