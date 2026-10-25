@@ -26,13 +26,14 @@ def load_saved_cases(directory):
     return positive,preserve,guards
 
 
-def solve_constrained(theta,positive,preservation,guards,buffer_X,buffer_weights,ridge=1e-3,kappa_fraction=.05,matching_preservation=None,matching_weight=.25):
+def solve_constrained(theta,positive,preservation,guards,buffer_X,buffer_weights,ridge=1e-3,kappa_fraction=.05,matching_preservation=None,matching_weight=.25,positive_weight=1.):
     began=time.monotonic();X=np.concatenate([c['X'] for c in positive]);a=np.concatenate([c['actions'] for c in positive]);weights=episode_weights(positive)
     q=X@theta.T;q_buffer=buffer_X@theta.T
     q_rms=max(1e-12,float(np.sqrt(np.sum(buffer_weights[:,None]*q_buffer*q_buffer)/3)))
     scale=max(1e-12,float(np.sqrt(buffer_weights@np.sum(buffer_X*buffer_X,axis=1))))
     target,changed=preference_targets(q,a,kappa_fraction*q_rms);assert changed.all()
-    U=X/scale;G=U.T@(weights[:,None]*U);B=target.T@(weights[:,None]*U)
+    assert np.isfinite(positive_weight) and positive_weight>0
+    U=X/scale;G=positive_weight*(U.T@(weights[:,None]*U));B=positive_weight*(target.T@(weights[:,None]*U))
     if preservation:
         P=np.concatenate([c['X'] for c in preservation])/scale;pw=episode_weights(preservation);G+=P.T@(pw[:,None]*P)
     if matching_preservation:
@@ -54,11 +55,13 @@ def solve_constrained(theta,positive,preservation,guards,buffer_X,buffer_weights
     solver=osqp.OSQP();solver.setup(P=sparse.triu(quadratic,format='csc'),q=linear,A=A,l=l,u=np.full(len(l),np.inf),
         verbose=False,polishing=True,eps_abs=1e-9,eps_rel=1e-9,max_iter=30000,time_limit=30.)
     solver.warm_start(x=np.zeros(2*d));answer=solver.solve(raise_error=False)
-    assert answer.info.status_val in (1,2),answer.info.status
+    if answer.info.status_val not in (1,2):
+        raise RuntimeError('OSQP failure: '+str(dict(status=answer.info.status,iterations=answer.info.iter,run_seconds=answer.info.run_time,
+            primal_residual=answer.info.prim_res,dual_residual=answer.info.dual_res)))
     u=np.asarray(answer.x);delta=(CONTRAST@u.reshape(2,d))/scale;delta-=delta.mean(0,keepdims=True)
     violation=float(np.max(np.maximum(l-A@u,0))) if len(l) else 0.
     assert violation<1e-7 and np.isfinite(delta).all(), 'infeasible/nonfinite constrained solution'
-    du=delta*scale;zero=float(np.sum(weights[:,None]*target*target));objective=float(zero+np.sum((du@G)*du)-2*np.sum(B*du))
+    du=delta*scale;zero=float(positive_weight*np.sum(weights[:,None]*target*target));objective=float(zero+np.sum((du@G)*du)-2*np.sum(B*du))
     assert objective<=zero+1e-7,'constrained objective cannot be worse than feasible zero'
     unconstrained=np.linalg.solve(G,B.T).T
     unconstrained_flat=(CONTRAST.T@unconstrained).reshape(-1)
@@ -74,5 +77,5 @@ def solve_constrained(theta,positive,preservation,guards,buffer_X,buffer_weights
         positive_rows=len(X),positive_episodes=len(positive),preservation_rows=sum(len(c['X']) for c in preservation),guard_rows=guard_rows,
         requested_actions_after_fit_fraction=float(np.mean(action_match)),requested_actions_after_fit_weighted_fraction=float(weights@action_match),
         guard_action_fraction=guard_match/guard_rows if guard_rows else None,maximum_action_row_sum=float(np.max(np.abs(delta.sum(0)))),
-        matching_preservation_rows=sum(len(c['X']) for c in matching_preservation or []),matching_preservation_weight=matching_weight if matching_preservation else 0.)
+        matching_preservation_rows=sum(len(c['X']) for c in matching_preservation or []),matching_preservation_weight=matching_weight if matching_preservation else 0.,positive_weight=positive_weight)
     return delta,result
