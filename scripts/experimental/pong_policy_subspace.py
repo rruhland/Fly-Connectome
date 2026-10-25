@@ -47,3 +47,15 @@ def population(rng,incumbent,mapping,outputs,weights,base_logits,count=16,dose=.
 
 def acceptable(score,incumbent,anchor,maximum_regression=.03):
     return score['key'][0]>incumbent['key'][0]+1e-15 and all(score['rates'][p]>=anchor['rates'][p]-maximum_regression-1e-15 for p in ('left','right'))
+
+
+def measured_slope(candidates,outputs,weights,dose=.05):
+    pairs={}
+    for c in candidates:pairs.setdefault(c['direction'],{})[c['sign']]=c
+    chosen=sorted(pairs,key=lambda i:(-max(v['screen']['key'][0] for v in pairs[i].values()),i))[:4]
+    direction=np.zeros(len(candidates[0]['coefficients']))
+    for i in chosen:
+        plus=pairs[i][1.];minus=pairs[i][-1.]
+        direction+=(plus['screen']['key'][0]-minus['screen']['key'][0])*(np.array(plus['coefficients'])-np.array(minus['coefficients']))/2
+    norm=legal_rms(outputs,weights,direction)
+    return (direction*dose/norm if norm>1e-12 else direction),dict(selected_pairs=chosen,raw_legal_rms=norm,dose=dose,zero_direction=norm<=1e-12)

@@ -1,5 +1,5 @@
 import numpy as np
-from pong_policy_subspace import build_basis,map_weights,population,acceptable
+from pong_policy_subspace import build_basis,map_weights,population,acceptable,measured_slope,legal_rms
 
 
 def test_basis_contrasts_zero_exact_and_bounded_forward_doses():
@@ -18,3 +18,9 @@ def test_selection_requires_native_harmonic_gain_and_bounded_phase_regression():
     assert not acceptable(anchor,anchor,anchor)
     assert acceptable(dict(key=[.91,.91],rates=dict(left=.88,right=.95)),anchor,anchor)
     assert not acceptable(dict(key=[.92,.92],rates=dict(left=.86,right=.99)),anchor,anchor)
+
+
+def test_measured_combination_uses_paired_reward_sign_and_fixed_output_dose():
+    rows=[dict(direction=0,sign=1.,coefficients=[1.],screen=dict(key=[.8])),dict(direction=0,sign=-1.,coefficients=[-1.],screen=dict(key=[.9]))]
+    outputs=np.array([[[1.,-1.,0.]]]);weights=np.array([1.]);d,info=measured_slope(rows,outputs,weights)
+    assert d[0]<0 and np.isclose(legal_rms(outputs,weights,d),.05) and info['selected_pairs']==[0]
