@@ -1,3 +1,9 @@
+## Current direction after targeted discovery
+
+Carry `/workspace/m1b-experiments/pong-local-repair-20261025-r1/selected.npy`. Targeted exploration discovered returns on 13/32 persistent misses, but fitting retained only 3/13. Overall training gained five returns; fresh gained three (LEFT 24→25/32, RIGHT 25→27/32). This is useful partial learning, below the reliability target.
+
+The next selected pass uses exactly the same DCT5 base, 13 successful trajectories, matching-action soft preservation and 16 hard success guards, but weights positive repair loss fourfold. Retain the useful onefold candidate as an eligible common-bank comparator. No data recapture or new discovery batch. Fresh comparison uses the best current head versus a newly selected head, without repeating the original baseline. We are testing under-absorption directly before spending more exploration. Stop neither at this allocation boundary nor old session deadlines.
+
 ## Current direction after seven completed blocks
 
 Reliable interception remains unresolved. Carry `/workspace/m1b-experiments/pong-spatial-residual-20261025-r1/selected.npy`: 135/165 LEFT and 136/169 RIGHT across all 334 now-observed contexts. Recent donor meshing and finer spatial search improved practiced situations, but their fresh comparisons changed by only +1 and -1 return respectively. Do not confuse those training gains with reliable transfer.
