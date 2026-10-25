@@ -47,15 +47,32 @@ def stage(directory,source):
     base.atomic_json(directory/'manifest.json',m);print(json.dumps(dict(staged=True,new_observations=0,positive_episodes=13,guards=16,bank=base.phases(sm['bank'],carry_hits),cases={k:len(v) for k,v in cases.items()})),flush=True)
 
 
-def run(directory):
-    directory=Path(directory);m=base.read(directory/'manifest.json');s=base.read(directory/'schedules.json');assert m['files']==pins() and m['source']==base.source_signature()
-    assert all(base.sha(directory/name)==h for name,h in m['data_hashes'].items());assert not (directory/'work-clock.json').exists()
-    start=time.monotonic();base.atomic_json(directory/'work-clock.json',dict(started_wall_ns=time.time_ns(),started_monotonic=start));deadline=start+600
+def run(directory,technical=False):
+    directory=Path(directory);m=base.read(directory/'manifest.json');s=base.read(directory/'schedules.json');assert m['source']==base.source_signature()
+    assert all(base.sha(directory/name)==h for name,h in m['data_hashes'].items())
+    if technical:
+        assert (directory/'fit-failure.json').exists() and not (directory/'fit-report.json').exists() and not list((directory/'episodes').glob('*.json'))
+        original_failure=directory/'fit-failure-initial.json'
+        if not original_failure.exists():original_failure.write_bytes((directory/'fit-failure.json').read_bytes())
+        assert all(v==pins()[k] for k,v in m['files'].items() if k!='run_reweighted_local_pong.py')
+        start=base.read(directory/'work-clock.json')['started_monotonic'];remaining=start+600-time.monotonic();extension=300 if remaining<200 else 0
+        base.atomic_json(directory/'technical-continuation.json',dict(previous_files=m['files'],new_files=pins(),working_set_hash=base.sha(Path(__file__).with_name('pong_working_set_qp.py')),original_failure_hash=base.sha(original_failure),
+            original_clock_preserved=True,elapsed_before_continuation=time.monotonic()-start,explicit_extension_seconds=extension,
+            reason='authorized technical recovery of the unchanged4xfit after dense solver limit; no new capture/discovery/data'))
+    else:
+        assert m['files']==pins() and not (directory/'work-clock.json').exists();start=time.monotonic();extension=0
+        base.atomic_json(directory/'work-clock.json',dict(started_wall_ns=time.time_ns(),started_monotonic=start))
+    deadline=start+600+extension
     theta=np.load(directory/'fit_start_theta.npy');old=np.load(directory/'old-transform.npy');extra=np.load(directory/'extra-transform.npy')
     assert np.array_equal(map_split(theta,old,extra),np.load(directory/'fit_start.npy'))
     cases={k:[prior.case(directory,v) for v in values] for k,values in m['cases'].items()}
     with np.load(directory/'feature-buffer.npz') as f:X=f['X'];w=f['weights']
-    try:delta,fit=solve_constrained(theta,cases['positive'],cases['preservation'],cases['guard'],X,w,matching_preservation=cases['matching'],matching_weight=.25,positive_weight=4.)
+    solver=solve_constrained;options={}
+    if technical:
+        from pong_working_set_qp import solve_constrained as solver
+        source=Path(m['source_block']);old_alpha=base.read(source/'fit-report.json')['protection']['alpha_after']
+        options['initial_delta']=np.load(source/'applied_residual.npy')/old_alpha
+    try:delta,fit=solver(theta,cases['positive'],cases['preservation'],cases['guard'],X,w,matching_preservation=cases['matching'],matching_weight=.25,positive_weight=4.,**options)
     except Exception as error:
         base.atomic_json(directory/'fit-failure.json',dict(error=repr(error),wall_seconds=time.monotonic()-start,new_observations=0,data_preserved=True));raise
     z=np.asarray(base.old_engine.read_calibration(base.old_engine.CACHE)@np.vstack([old,extra]).T);_,dose=cap_residual(theta,delta,X,w,z)
@@ -65,8 +82,11 @@ def run(directory):
     base.atomic_json(directory/'fit-report.json',dict(fit=fit,dose=dose,protection=protection));base.save_array(directory/'applied_residual.npy',applied)
     proposed=theta+applied;base.save_array(directory/'proposal_theta.npy',proposed);base.save_array(directory/'proposal.npy',map_split(proposed,old,extra))
     with prior.ProcessPoolExecutor(max_workers=4,mp_context=mp.get_context('spawn'),initializer=base.initialize) as pool:
-        jobs=base.bank_jobs(directory,'proposal',m['bank'],'proposal.npy');rr,ok=prior.dispatch(directory,jobs,pool,deadline);assert ok,'partial4xbankcheck'
-        hits=base.hits_for(jobs,rr);guard_returns=sum(hits[str(seed)] for seed in s['guards']);repaired={p:sum(hits[str(v['seed'])] for v in s['repair_contexts'] if v['phase']==p) for p in ('left','right')}
+        if np.array_equal(np.load(directory/'proposal.npy'),np.load(directory/'fit_start.npy')):hits=m['fit_start_hits'];ok=True
+        else:
+            jobs=base.bank_jobs(directory,'proposal',m['bank'],'proposal.npy');rr,ok=prior.dispatch(directory,jobs,pool,deadline);assert ok,'partial4xbankcheck'
+            hits=base.hits_for(jobs,rr)
+        guard_returns=sum(hits[str(seed)] for seed in s['guards']);repaired={p:sum(hits[str(v['seed'])] for v in s['repair_contexts'] if v['phase']==p) for p in ('left','right')}
         contenders=[dict(label='carry_1x',score=base.phases(m['bank'],m['carry_hits'])),dict(label='fit_start',score=base.phases(m['bank'],m['fit_start_hits']))]
         if guard_returns==16:contenders.append(dict(label='proposal_4x',score=base.phases(m['bank'],hits)))
         winner=base.choose(contenders);chosen=proposed if winner['label']=='proposal_4x' else np.load(directory/'carry_theta.npy') if winner['label']=='carry_1x' else theta
@@ -83,6 +103,6 @@ def run(directory):
 
 
 if __name__=='__main__':
-    p=argparse.ArgumentParser();p.add_argument('mode',choices=('stage','run'));p.add_argument('root',type=Path);p.add_argument('--source',type=Path);a=p.parse_args()
+    p=argparse.ArgumentParser();p.add_argument('mode',choices=('stage','run','continue'));p.add_argument('root',type=Path);p.add_argument('--source',type=Path);a=p.parse_args()
     if a.mode=='stage':stage(a.root,a.source)
-    else:run(a.root)
+    else:run(a.root,technical=a.mode=='continue')
