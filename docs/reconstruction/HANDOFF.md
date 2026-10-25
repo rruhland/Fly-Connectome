@@ -1,3 +1,7 @@
+## Active continuation — localized reward discovery (2026-10-25)
+
+Current carry: `/workspace/m1b-experiments/pong-spatial-residual-20261025-r1/selected.npy`. Practical interception remains incomplete: about 80% on recent fresh games, with no clear fresh gain from the last two fits. The next authorized pass discovers new own-rewarded returns through legal-state-local weight mutations, retains complete successful action traces, and integrates them with constrained preference fitting. Same Sol agent `/root/pong_one_pass_research`; see the current practical plan and outcome log. User requests continuation until reliable efficient interception or user stop; old time limits are superseded. No backprop or privileged action labels; major architecture changes still require review.
+
 # Fly-Connectome M1B handoff — scaffold research
 
 ## Active October25 engineering continuation
