@@ -1,3 +1,7 @@
+## Active action: bounded backtracking after a rejected native search
+
+The full first-round finalist regressed LEFT 360→353/389 and RIGHT 354→327/393. No head accepted. Stop the identical-radius second round; its already executed partial work remains charged. Run at most three short 128-context probes using existing data: half-best direction, half-LEFT-improving direction, and one conservative reward-weighted paired combination. Only an actual 128-context improvement earns the complete bank/fresh check. No further macro tuning after a null. A separate [local action-credit hypothesis](2026-10-25-local-action-credit-options.md) is prepared for independent challenge, not selected for execution.
+
 ## Selected next experiment: coherent eight-dimensional reward search
 
 Use the existing raw linear controller with eight optimizer directions: DIRECT minus current, original RIGHT minus current, and gain directions for six generic visual encoder blocks. Zero coefficients preserve the current controller. This changes optimizer coordinates, not deployed architecture or inputs. Normalize effective dose using legal/generic features; report induced action changes. Sol chooses candidate construction, including combinations.
