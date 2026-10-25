@@ -1,3 +1,13 @@
+## Current direction: repeat reward discovery and integration
+
+Carry `/workspace/m1b-experiments/pong-local-repair-weighted-20261025-r1/selected.npy`: 139/165 LEFT, 143/169 RIGHT on practice; latest fresh 28/32 LEFT and 26/32 RIGHT. Stronger fitting improved practice but left fresh totals unchanged. No further loss-weight sweep.
+
+Next, append only the latest 64 fresh contexts as explicit TRAIN, forming a 398-context bank with cached carried-policy outcomes. Explore 16 misses per phase: latest 4 LEFT/6 RIGHT failures plus persistent never-returned contexts. Use the existing bounded local action mutations and native return reward. Reuse complete successful donor trajectories for the eight previously discovered contexts the current policy still misses, refilter against the current head, and add newly successful trajectories. One trajectory per seed; report absorption of old versus new repairs separately. Fit once using fourfold repair loss, .25 matching-action preservation, current-success guards and the fast working-set solver; evaluate actual bank and fresh behavior. Keep useful carry checkpoints.
+
+One small consistency fix accompanies the loop: omit desired-action rows whose byte-identical projected X occurs in a hard guard with a different action. Such rows cannot attain their requested choice under the selected protection constraints. Retain full donor memory and remaining rows, and report omissions. Do not use approximate-neighbor filtering or discard whole successful trajectories. Exact full cloning is not a valid requirement: three identical-input conflict groups at frames 0–1 request different actions across donor/guard traces. This affects only two of thirteen donors and is not the main explanation of under-absorption; prefix-projected discovery is deferred.
+
+The working-set solver completed the same previously stalled fit in 1.23 seconds, checking all 3,488 original inequalities, with no approximate fallback used. Prefer it for future fits. Finite approximate iterates may be used only with explicit labeling, full guard feasibility/choice checks and original-objective checks; do not reject a useful update solely for failing extreme numerical tolerance.
+
 ## Current direction after targeted discovery
 
 Carry `/workspace/m1b-experiments/pong-local-repair-20261025-r1/selected.npy`. Targeted exploration discovered returns on 13/32 persistent misses, but fitting retained only 3/13. Overall training gained five returns; fresh gained three (LEFT 24→25/32, RIGHT 25→27/32). This is useful partial learning, below the reliability target.

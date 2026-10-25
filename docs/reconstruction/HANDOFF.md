@@ -1,3 +1,7 @@
+## Active continuation — repeated repair learning (2026-10-25)
+
+Current carry: `/workspace/m1b-experiments/pong-local-repair-weighted-20261025-r1/selected.npy`. Interception is still incomplete. Local exploration discovered 13 new rewarded returns; 4× fitting integrates five and gives practice 139/165 LEFT, 143/169 RIGHT, fresh 28/32 and 26/32. A working-set QP now solves in 1.23s rather than timing out at 30s. Next selected pass: 398-context bank, new missed-context discovery plus reuse of eight old missed successful trajectories, same 4× fitting, exact hard-guard conflict filtering. Same Sol agent implements; root owns direction/review. See current practical plan. Continue until reliable efficient interception or user stop; no old time ceiling.
+
 ## Active continuation — localized reward discovery (2026-10-25)
 
 Current carry: `/workspace/m1b-experiments/pong-spatial-residual-20261025-r1/selected.npy`. Practical interception remains incomplete: about 80% on recent fresh games, with no clear fresh gain from the last two fits. The next authorized pass discovers new own-rewarded returns through legal-state-local weight mutations, retains complete successful action traces, and integrates them with constrained preference fitting. Same Sol agent `/root/pong_one_pass_research`; see the current practical plan and outcome log. User requests continuation until reliable efficient interception or user stop; old time limits are superseded. No backprop or privileged action labels; major architecture changes still require review.
