@@ -1,3 +1,7 @@
+## Active action: resolve fresh transfer of the causal-credit candidate
+
+Soft-preserved causal learning gained15LEFTreturns on the782context practice bank without netRIGHTloss, but small fresh comparison was LEFT29→29/32 and RIGHT28→25/32. Freeze both heads for128genuinelynewstarts perphase (two64cohorts), soft versus r4, with ordinaryfullgames only if softboth≥90%. No more fitting until this resolves carry choice. r4 remains the trusted fallback, soft remains a candidate. Same Sol agent runs/reviews with root; no learning or retries during the comparison.
+
 ## Active action: single-action causal credit learning
 
 The bounded macro backtrack was null and is closed. Select the [one-action learning trial](2026-10-25-local-action-credit-options.md): actual alternative-action continuations from current policy states, strict success-versus-failure preferences, regularized fitting in the same existing linear policy, followed by actual bank/fresh checks. No backprop, privileged learner inputs, teacher actions or architecture changes. Same Sol XHigh agent implements while root reviews and challenges. Continue until reliable efficient interception or user stop.
