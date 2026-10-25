@@ -4,7 +4,7 @@ from concurrent.futures import ProcessPoolExecutor,wait,FIRST_COMPLETED
 from pathlib import Path
 import numpy as np
 import run_spatial_residual_pong as previous
-from pong_local_discovery import state_indices,local_mutation
+from pong_local_discovery import state_indices,local_mutation,drop_guard_conflicts
 from fast_pong_feature_rollout import run_episode
 from pong_constrained_residual import solve_constrained
 from pong_spatial_extension import map_split
@@ -16,7 +16,25 @@ base=previous.base
 def pins():
     return {n:base.sha(Path(__file__).with_name(n)) for n in ('run_local_repair_pong.py','pong_local_discovery.py','pong_constrained_residual.py',
         'pong_spatial_extension.py','pong_rewarded_residual.py','pong_behavior_preservation.py','fast_pong_feature_rollout.py','run_practical_pong_v2.py',
-        'run_spatial_residual_pong.py','run_preserved_rewarded_residual_pong.py')}
+        'run_spatial_residual_pong.py','run_preserved_rewarded_residual_pong.py','pong_local_learning_state.py','pong_working_set_qp.py')}
+
+
+def stage_next(directory,source):
+    from pong_local_learning_state import prepare_next
+    directory=Path(directory);data=prepare_next(directory,source);fresh=previous.worker.fresh_seeds()
+    fresh.update({k:data[k] for k in ('bank','targets','guards','new_guards')});base.atomic_json(directory/'schedules.json',fresh)
+    m=dict(source=base.source_signature(),files=pins(),source_block=str(source),bank=data['bank'],carry_hits=data['hits'],fallback_hits=data['fallback'],
+        reused=data['reused'],donor_memory=data['donor_memory'],reused_donors=data['reused_donors'],learning_step=True,positive_weight=4.,matching_soft_weight=.25,
+        carry_only_fallback=True,work_seconds=600,maximum_mutation_rms=.25,states_per_failure=4,alternatives_per_state=2,kappa_q_rms_fraction=.05,
+        target_selection=data['target_selection'],previous_probe_reclassified_as_TRAIN=True,
+        assistance='repeated own rewarded local discovery and full-trajectory memory; exact hard-guard conflict filtering; same linear policy and inputs')
+    m['data_hashes']={v['feature_file']:base.sha(directory/v['feature_file']) for v in m['reused']+m['donor_memory']}
+    old=np.load(directory/'old-transform.npy');extra=np.load(directory/'extra-transform.npy')
+    assert np.array_equal(map_split(np.load(directory/'carry_theta.npy'),old,extra),np.load(directory/'carry.npy'))
+    base.atomic_json(directory/'manifest.json',m)
+    print(json.dumps(dict(staged=True,new_observations=0,bank=base.phases(m['bank'],m['carry_hits']),bank_contexts=sum(map(len,m['bank'].values())),
+        targets={p:len(v) for p,v in fresh['targets'].items()},selection=m['target_selection'],guards=len(fresh['guards']),
+        donor_memory=len(m['donor_memory']),currently_missed_old_donors=len(m['reused_donors']),reused_current_success_episodes=len(m['reused']))),flush=True)
 
 
 def stage(directory,source):
@@ -101,6 +119,7 @@ def case(directory,r):
 def run(directory):
     directory=Path(directory);m=base.read(directory/'manifest.json');s=base.read(directory/'schedules.json')
     assert m['source']==base.source_signature() and m['files']==pins();assert not (directory/'work-clock.json').exists()
+    assert all(base.sha(directory/f)==h for f,h in m.get('data_hashes',{}).items())
     start=time.monotonic();base.atomic_json(directory/'work-clock.json',dict(started_wall_ns=time.time_ns(),started_monotonic=start));deadline=start+600
     theta=np.load(directory/'carry_theta.npy');old=np.load(directory/'old-transform.npy');extra=np.load(directory/'extra-transform.npy');matrix=np.vstack([old,extra])
     assert np.array_equal(map_split(theta,old,extra),np.load(directory/'carry.npy'))
@@ -130,7 +149,7 @@ def run(directory):
                         name=f'mutants/{jid}.npy';base.save_array(directory/name,weights);trial=base.job(directory,jid,j['seed'],name,j['phase'],'discovery');jobs.append(trial);seen[key]=jid
                     else:name=next(v['weights'] for v in jobs if v['id']==alias)
                     mutations.append(dict(id=jid,executed_id=seen[key],seed=j['seed'],phase=j['phase'],weights=name,state_index=t,**info))
-        base.atomic_json(directory/'mutation-report.json',dict(kappa=kappa,requested=256,candidates=len(mutations),unique_episodes=len(jobs),skipped_byte_identical=skipped,
+        base.atomic_json(directory/'mutation-report.json',dict(kappa=kappa,requested=8*sum(map(len,s['targets'].values())),candidates=len(mutations),unique_episodes=len(jobs),skipped_byte_identical=skipped,
             intended_flips=sum(v['intended_flip_achieved'] for v in mutations),cap_limited=sum(v['cap_limited'] for v in mutations),mutations=mutations))
         discovery,ok=dispatch(directory,jobs,pool,deadline);assert ok,'partial local discovery'
         successful={}
@@ -140,32 +159,52 @@ def run(directory):
         discovery_report=dict(candidates=len(mutations),unique_episodes=len(jobs),successful_episodes=sum(r['report']['hits']>0 for r in discovery.values()),
             repaired_contexts={p:sum(v['phase']==p for v in selected) for p in ('left','right')},intended_flips=sum(v['intended_flip_achieved'] for v in mutations),cap_limited=sum(v['cap_limited'] for v in mutations),selected=selected)
         base.atomic_json(directory/'discovery-report.json',discovery_report);print(json.dumps(dict(discovery=discovery_report)),flush=True)
-        if not selected:
-            base.atomic_json(directory/'summary.json',dict(status='complete_no_new_rewarded_repairs',discovery=discovery_report,accounting=base.accounting(directory),wall_seconds=time.monotonic()-start));return
+        if not selected and not m.get('reused_donors'):
+            base.save_array(directory/'selected_theta.npy',theta);base.save_array(directory/'selected.npy',np.load(directory/'carry.npy'))
+            summary=dict(status='complete_no_new_rewarded_repairs',discovery=discovery_report,probe={},accounting=base.accounting(directory),wall_seconds=time.monotonic()-start)
+            base.atomic_json(directory/'summary.json',summary)
+            if m.get('learning_step'):
+                from pong_local_learning_state import export_state
+                export_state(directory,m,s,m['carry_hits'],{}, {},rr)
+            return
         donor_jobs=[]
         for i,v in enumerate(selected):
             j=base.job(directory,f'donor_{i:02d}',v['seed'],v['weights'],v['phase'],'train');j['capture_kind']='donor';donor_jobs.append(j)
         donor_reports,ok=dispatch(directory,donor_jobs,pool,deadline);assert ok,'partial rewarded donor capture'
-        positive=[];matching=[];preserve=[];guards=[]
+        positive=[];matching=[];preserve=[];guards=[];donors={v['seed']:case(directory,v) for v in m.get('reused_donors',[])}
         for item in m['reused']:
             c=case(directory,item);preserve.append(c)
             if item['kind']=='guard':guards.append(c)
         for j in captures:
             if j['capture_kind']=='guard':c=case(directory,rr[j['id']]);guards.append(c);preserve.append(c)
         for j in donor_jobs:
-            r=donor_reports[j['id']];assert r['report']['hits']>0;c=case(directory,r);different=c['actions']!=np.argmax(c['X']@theta.T,axis=1)
+            r=donor_reports[j['id']];assert r['report']['hits']>0;donors[r['seed']]=case(directory,r)
+        for c in donors.values():
+            different=c['actions']!=np.argmax(c['X']@theta.T,axis=1)
             assert different.any(),'rewarded repair of deterministic miss must contain differing actions'
             positive.append(dict(seed=c['seed'],phase=c['phase'],X=c['X'][different],actions=c['actions'][different]))
             if (~different).any():matching.append(dict(seed=c['seed'],phase=c['phase'],X=c['X'][~different]))
-        assert len(guards)==16
-        delta,fit=solve_constrained(theta,positive,preserve,guards,X,w,matching_preservation=matching,matching_weight=.25)
+        assert len(guards)==len(s['guards']);unfiltered=positive
+        if m.get('learning_step'):positive,conflicts=drop_guard_conflicts(positive,guards)
+        else:conflicts=dict(dropped_rows=0,dropped_episodes=0,details=[])
+        base.atomic_json(directory/'target-consistency.json',conflicts);assert positive,'all desired targets conflict with hard guards; data preserved'
+        solver=solve_constrained
+        if m.get('learning_step'):
+            from pong_working_set_qp import solve_constrained as solver
+        delta,fit=solver(theta,positive,preserve,guards,X,w,matching_preservation=matching,matching_weight=.25,positive_weight=m.get('positive_weight',1.))
         _,dose=cap_residual(theta,delta,X,w,z);limit,protection=half_margin_bound(theta,delta,guards);alpha=min(dose['alpha'],limit);applied=alpha*delta
         protection.update(alpha_before=dose['alpha'],alpha_after=alpha,applied_function_rms=base.function_rms(applied,z),buffer_disagreement=positive_disagreement(theta,delta,X,w,alpha),guard_choices=preserved_action_fraction(delta,alpha,guards))
         assert protection['guard_choices']==1.;fit.update(action_diagnostics(theta,applied,positive,preserve))
+        fit['target_consistency']=conflicts
+        fit['unfiltered_positive_rows']=sum(len(c['X']) for c in unfiltered)
         base.atomic_json(directory/'fit-report.json',dict(fit=fit,dose=dose,protection=protection));base.save_array(directory/'applied_residual.npy',applied)
         proposed=theta+applied;base.save_array(directory/'proposal_theta.npy',proposed);base.save_array(directory/'proposal.npy',map_split(proposed,old,extra))
-        js=base.bank_jobs(directory,'proposal',m['bank'],'proposal.npy');bank_reports,ok=dispatch(directory,js,pool,deadline);assert ok,'partial proposal bank check'
-        hits=base.hits_for(js,bank_reports);guard_returns=sum(hits[str(v)] for v in s['guards']);contenders=[dict(label='carry',score=base.phases(m['bank'],m['carry_hits'])),dict(label='fallback',score=base.phases(m['bank'],m['fallback_hits']))]
+        if np.array_equal(np.load(directory/'proposal.npy'),np.load(directory/'carry.npy')):hits=m['carry_hits'];ok=True
+        else:
+            js=base.bank_jobs(directory,'proposal',m['bank'],'proposal.npy');bank_reports,ok=dispatch(directory,js,pool,deadline);assert ok,'partial proposal bank check'
+            hits=base.hits_for(js,bank_reports)
+        guard_returns=sum(hits[str(v)] for v in s['guards']);contenders=[dict(label='carry',score=base.phases(m['bank'],m['carry_hits']))]
+        if not m.get('carry_only_fallback'):contenders.append(dict(label='fallback',score=base.phases(m['bank'],m['fallback_hits'])))
         if guard_returns==len(s['guards']):contenders.append(dict(label='proposal',score=base.phases(m['bank'],hits)))
         winner=base.choose(contenders);chosen=proposed if winner['label']=='proposal' else theta if winner['label']=='carry' else np.load(directory/'fallback_theta.npy')
         base.save_array(directory/'selected_theta.npy',chosen);base.save_array(directory/'selected.npy',map_split(chosen,old,extra));probe={}
@@ -177,10 +216,19 @@ def run(directory):
                 probe[phase]={label:[int(pr[f'probe_{phase}_{label}_{i:02d}']['report']['hits']>0) for i in range(32)] for label in ('carry','selected')}
         summary=dict(status='one_local_discovery_fit_complete' if ok else 'partial_probe',discovery=discovery_report,selected=winner,bank_carry=contenders[0]['score'],bank_proposal=base.phases(m['bank'],hits),
             guard_returns=guard_returns,guard_episodes=len(s['guards']),fit=fit,dose=dose,protection=protection,probe=probe,accounting=base.accounting(directory),wall_seconds=time.monotonic()-start)
+        summary['donor_absorption']={kind:{p:dict(returned=sum(hits[str(v['seed'])] for v in items if v['phase']==p),episodes=sum(v['phase']==p for v in items)) for p in ('left','right')}
+            for kind,items in [('old',m.get('reused_donors',[])),('new',selected)]}
+        summary['old_new_donor_overlap']=len({v['seed'] for v in m.get('reused_donors',[])}&{v['seed'] for v in selected})
+        summary['unique_fitted_donor_contexts']=len(donors)
+        if m.get('learning_step') and ok:
+            from pong_local_learning_state import export_state
+            chosen_hits=hits if winner['label']=='proposal' else m['carry_hits']
+            export_state(directory,m,s,chosen_hits,probe,donor_reports,rr)
         base.atomic_json(directory/'summary.json',summary);print(json.dumps(summary),flush=True)
 
 
 if __name__=='__main__':
-    p=argparse.ArgumentParser();p.add_argument('mode',choices=('stage','run'));p.add_argument('root',type=Path);p.add_argument('--source',type=Path);a=p.parse_args()
+    p=argparse.ArgumentParser();p.add_argument('mode',choices=('stage','stage-next','run'));p.add_argument('root',type=Path);p.add_argument('--source',type=Path);a=p.parse_args()
     if a.mode=='stage':stage(a.root,a.source)
+    elif a.mode=='stage-next':stage_next(a.root,a.source)
     else:run(a.root)

@@ -1,5 +1,5 @@
 import numpy as np
-from pong_local_discovery import state_indices,local_mutation
+from pong_local_discovery import state_indices,local_mutation,drop_guard_conflicts
 from pong_constrained_residual import solve_constrained
 
 
@@ -30,3 +30,11 @@ def test_positive_weight_scales_both_quadratic_and_target_without_diluting_match
     d,r=solve_constrained(theta,p,[],[],np.eye(2),np.array([.5,.5]),matching_preservation=matching,positive_weight=4.)
     G=np.diag([4.251,.251]);B=np.zeros((3,2));B[:,0]=4*(1+.05/np.sqrt(3))*(np.array([0.,1.,0.])-1/3)
     assert np.allclose(d,np.linalg.solve(G,B.T).T,atol=1e-7) and r['positive_weight']==4.
+
+
+def test_guard_conflicts_are_exact_only_and_do_not_discard_the_episode():
+    guards=[dict(X=np.array([[1.,0.]]),actions=np.array([0]))]
+    cases=[dict(seed=9,phase='left',X=np.array([[1.,0.],[1.,1e-12],[2.,0.]]),actions=np.array([1,1,2]))]
+    kept,report=drop_guard_conflicts(cases,guards)
+    assert report['dropped_rows']==1 and report['dropped_episodes']==0
+    assert np.array_equal(kept[0]['actions'],[1,2]) and kept[0]['X'][0,1]==1e-12
