@@ -62,7 +62,7 @@ def preferences(outcomes,q=None):
     return [(a,b) for a in successful for b in range(3) if not outcomes[b]]
 
 
-def fit_preferences(theta,states,buffer_X,buffer_weights,ridge=.001,anchor_weight=.25,maximum_rms=.05):
+def fit_preferences(theta,states,buffer_X,buffer_weights,ridge=.001,anchor_weight=.25,maximum_rms=.05,broad_preservation=None,broad_weight=1.):
     """Closed-form regularized pairwise preference residual; no BP or Q targets."""
     began=time.monotonic();d=theta.shape[1]
     bx=np.asarray(buffer_X);bw=np.asarray(buffer_weights);bw=bw/bw.sum()
@@ -93,6 +93,15 @@ def fit_preferences(theta,states,buffer_X,buffer_weights,ridge=.001,anchor_weigh
     G=Z.T@(w[:,None]*Z)+ridge*np.eye(2*d)
     common=anchor.T@(np.asarray(aw)[:,None]*anchor)*(anchor_weight/3)
     G[:d,:d]+=common;G[d:,d:]+=common
+    broad_report=None
+    if broad_preservation:
+        broad=np.concatenate([c['X'] for c in broad_preservation])/scale;bw_full=[]
+        for case in broad_preservation:
+            count=sum(c['phase']==case['phase'] for c in broad_preservation)
+            bw_full.extend([1/(2*count*len(case['X']))]*len(case['X']))
+        bw_full=np.asarray(bw_full);assert abs(bw_full.sum()-1)<1e-12
+        penalty=broad.T@(bw_full[:,None]*broad)*(broad_weight/3)
+        G[:d,:d]+=penalty;G[d:,d:]+=penalty
     rhs=Z.T@(w*target);coef=np.linalg.solve(G,rhs).reshape(2,d)
     raw=CONTRAST@coef/scale;raw-=raw.mean(0,keepdims=True)
     output=bx@raw.T;raw_rms=float(np.sqrt(np.sum(bw[:,None]*output*output)/3));alpha=min(1.,maximum_rms/max(1e-30,raw_rms));delta=alpha*raw
@@ -112,5 +121,15 @@ def fit_preferences(theta,states,buffer_X,buffer_weights,ridge=.001,anchor_weigh
         kappa=kappa,input_rms=scale,carried_legal_contrast_q_rms=qrms,raw_legal_contrast_rms=raw_rms,applied_legal_contrast_rms=raw_rms*alpha,
         alpha=alpha,maximum_rms=maximum_rms,raw=diag(raw),applied=diag(delta),fit_seconds=time.monotonic()-began,
         phase_contrast_states={p:sum(s['phase']==p for s in positive) for p in ('left','right')})
+    if broad_preservation:
+        def broad_diag(update):
+            rows=[]
+            for case in broad_preservation:
+                x=case['X'];before=np.argmax(x@theta.T,1);after=np.argmax(x@(theta+update).T,1);change=before!=after
+                assert np.array_equal(before,case['actions'])
+                first=np.flatnonzero(change)
+                rows.append(dict(seed=case['seed'],phase=case['phase'],frames=len(x),changed=int(change.sum()),first_change=int(first[0]) if len(first) else None))
+            return dict(phase_episode_weighted_action_change=float(sum(c['changed']/c['frames']/(2*sum(v['phase']==c['phase'] for v in rows)) for c in rows)),episodes=rows)
+        report['broad_soft_preservation']=dict(weight=broad_weight,episodes=len(broad_preservation),rows=sum(len(c['X']) for c in broad_preservation),raw=broad_diag(raw),applied=broad_diag(delta))
     assert np.isfinite(delta).all() and np.max(abs(delta.sum(0)))<1e-10
     return delta,report

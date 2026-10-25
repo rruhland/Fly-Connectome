@@ -30,3 +30,17 @@ class CreditTests(unittest.TestCase):
         self.assertTrue(np.array_equal(delta,np.zeros_like(delta)))
 
 if __name__=='__main__':unittest.main()
+
+class BroadPreservationTests(unittest.TestCase):
+    def test_broad_penalty_is_soft_phase_balanced(self):
+        theta=np.array([[.1,0.],[0.,.1],[-.1,-.1]])
+        states=[dict(seed=1,phase='left',x=[1.,0.],outcomes=[0,1,1],base_action=0),dict(seed=2,phase='right',x=[0.,1.],outcomes=[1,0,0],base_action=1)]
+        broad=[dict(seed=3,phase='left',X=np.array([[1.,1.]]),actions=np.array([0])),dict(seed=4,phase='right',X=np.array([[1.,1.],[1.,1.]]),actions=np.array([0,0]))]
+        raw,r=fit_preferences(theta,states,np.eye(2),np.ones(2)/2,maximum_rms=float('inf'))
+        protected,p=fit_preferences(theta,states,np.eye(2),np.ones(2)/2,maximum_rms=float('inf'),broad_preservation=broad)
+        self.assertLessEqual(np.linalg.norm(protected@np.ones(2)),np.linalg.norm(raw@np.ones(2))+1e-12)
+        self.assertEqual(p['broad_soft_preservation']['episodes'],2)
+        self.assertEqual(p['alpha'],1.)
+        duplicate=[dict(c, X=np.repeat(c['X'],2,axis=0),actions=np.repeat(c['actions'],2)) for c in broad]
+        same,_=fit_preferences(theta,states,np.eye(2),np.ones(2)/2,maximum_rms=float('inf'),broad_preservation=duplicate)
+        self.assertTrue(np.allclose(same,protected,atol=1e-12))
