@@ -24,6 +24,7 @@ def fresh_seeds():
         elif isinstance(v,dict):
             for x in v.values():collect(x)
     for p in base.EXPERIMENTS.rglob('schedules.json'):collect(base.read(p))
+    for p in base.EXPERIMENTS.glob('*/seed-exclusions.json'):collect(base.read(p).get('ids',[]))
     used.update(ROOTS.values());canonical={v%base.MODULUS for v in used};out={};rejects=[]
     for phase in ('left','right'):
         rng=np.random.default_rng(np.random.SeedSequence([ROOTS[phase],TAG]));out[phase]=[]
@@ -120,7 +121,7 @@ def dispatch(directory,jobs,pool,deadline):
 
 def run(directory):
     directory=Path(directory);m=base.read(directory/'manifest.json')
-    assert m['driver_hash']==base.sha(__file__) and m['math_hash']==base.sha(Path(__file__).with_name('pong_rewarded_residual.py')) and m['capture_hash']==base.sha(Path(__file__).with_name('fast_pong_feature_rollout.py')) and m['source']==base.source_signature() and m['practical_helpers_hash']==base.sha(Path(base.__file__))
+    assert m['config']==CONFIG and m['driver_hash']==base.sha(__file__) and m['math_hash']==base.sha(Path(__file__).with_name('pong_rewarded_residual.py')) and m['capture_hash']==base.sha(Path(__file__).with_name('fast_pong_feature_rollout.py')) and m['source']==base.source_signature() and m['practical_helpers_hash']==base.sha(Path(base.__file__))
     assert not (directory/'launch.json').exists(),'do not reset/restart this one-proposal clock'
     base.atomic_json(directory/'launch.json',dict(started_wall_ns=time.time_ns(),started_monotonic=time.monotonic()));start=base.read(directory/'launch.json')['started_monotonic'];deadline=start+CONFIG['wall_seconds']
     theta=np.load(directory/'carry_theta.npy');matrix=np.load(directory/'search-transform.npy');bank=m['bank'];s=base.read(directory/'schedules.json');capture=[]
@@ -154,12 +155,14 @@ def run(directory):
         probe={}
         if selected and not same:
             for p,seeds in s['probe'].items():
-                jobs=[]
+                jobs=[];aliases={};seen={}
+                for label in ('original_start','carry','selected'):
+                    digest=base.sha(directory/(label+'.npy'));aliases[label]=seen.setdefault(digest,label)
                 for i,seed in enumerate(seeds):
-                    for label in ('original_start','carry','selected'):jobs.append(base.job(directory,f'probe_{p}_{label}_{i:02d}',seed,label+'.npy',p,'phase_probe'))
+                    for label in dict.fromkeys(aliases.values()):jobs.append(base.job(directory,f'probe_{p}_{label}_{i:02d}',seed,label+'.npy',p,'phase_probe'))
                 rr,ok=dispatch(directory,jobs,pool,deadline)
                 if not ok:break
-                probe[p]={label:[int(rr[f'probe_{p}_{label}_{i:02d}']['report']['hits']>0) for i in range(32)] for label in ('original_start','carry','selected')}
+                probe[p]={label:[int(rr[f'probe_{p}_{aliases[label]}_{i:02d}']['report']['hits']>0) for i in range(32)] for label in ('original_start','carry','selected')}
         summary=dict(status='one_proposal_complete' if ok else 'partial_probe',fit=fit,dose=dose,bank_before=before,bank_proposal=after,selected_proposal=selected,
             selected_theta_hash=base.ah(chosen),residual_rescaling_can_amplify=True,probe=probe,no_changed_head_probe_skipped=not selected,accounting=base.accounting(directory),wall_seconds=time.monotonic()-start,
             interpretation='One directed self-repair preference proposal, no Q/teacher/BP; reused bank and new probe progress, no final reliability claim')
