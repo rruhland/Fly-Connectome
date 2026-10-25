@@ -4,6 +4,16 @@ The user renewed ongoing orchestration on October25: continue until interception
 
 The deliverable is improved behavior, not passed audit gates. Preserve promising partial improvements and compare them honestly with the carried learner. Retain enough checks to catch bugs and overfitting; do not require eight simultaneous statistical screens before continuing a useful learner. Record actual work, including unsuccessful rollouts, without recreating large protocol documents for every adjustment.
 
+## Current direction after five completed blocks
+
+Reliable interception is still unresolved. The carried policy is `/workspace/m1b-experiments/pong-constrained-residual-20261025-r1/selected.npy`. On the 206 contexts now available for training it returns 75/101 LEFT and 84/105 RIGHT, compared with its predecessor’s 69/101 and 84/105. Its latest fresh comparison improved LEFT by three hits but lost two RIGHT hits; retain the useful partial checkpoint without calling it reliable.
+
+Stop broad random-mutation populations for now. Use the learner’s own reward-successful attempts to fit directed linear preference updates, with explicit protection of acquired behavior. An unconstrained fit learned LEFT but damaged RIGHT; shrinking it to preserve RIGHT made it ineffective. Fitting the preservation constraints directly found a useful-sized direction and improved the common training bank. This changes weight optimization, not the deployed linear architecture, and uses no backpropagation or privileged action labels.
+
+The active next pass meshes previously reward-trained skills. Test DIRECTtheta9 only on the current policy’s 26 LEFT misses, retain successful trajectories, and use the older RIGHT-capable policy where it returned a start the current policy misses. Refilter older repair traces against the current policy. Preserve its newly acquired LEFT and RIGHT successes with full trajectories. Run one constrained fit, one common-bank evaluation, then a fresh comparison if the candidate improves. Historical probe contexts explicitly become TRAIN when reused. If this genuinely new donor source stalls, consider higher spatial frequencies within the existing linear weights instead of another data-only or tiny-step loop.
+
+Keep the same Sol 6.1 XHigh agent for independent challenge and implementation; Astra selects direction, checks sources and interprets outcomes. Continue until the user’s interception goal is achieved or the user stops work. Short experiment clocks are review points, not session deadlines. See [the outcome log](../reconstruction/2026-10-25-practical-interception-results.md) for evidence and costs. The sections below preserve earlier decisions from this session.
+
 ## Immediate engineering direction
 
 First make the rollout loop cheaper without changing the legal camera, vision, policy, actuator or simulator semantics. Use the existing evaluator directly, with start/end frozen-state checks and compact episode accounting rather than per-frame SQLite and full-state fingerprints. Check a few exact trajectories against retained reference records and measure speed. This is an explicit lightweight research execution path; it does not promise the old crash-recovery/within-episode mutation-detection contract.
