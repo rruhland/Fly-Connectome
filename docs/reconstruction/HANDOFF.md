@@ -1,3 +1,7 @@
+## Active continuation — first larger reliability check (2026-10-25)
+
+Current frozen carry: `/workspace/m1b-experiments/pong-local-repair-20261025-r3/selected.npy`. Practice 211/229 LEFT and 210/233 RIGHT; latest fresh 28/32 and 29/32, +6 paired returns with no losses. Same Sol agent is staging/running `pong-interception-reliability-20261025-r1`: 128 fresh starts per phase in two cohorts versus original RIGHTtheta6, conditional ordinary-game check if both aggregates≥90%. No learning during validation, no retries. First-interception goal still not declared complete; continue until fulfilled or user stop. See practical plan/outcome log for exact provenance.
+
 ## Active continuation — repeated repair learning (2026-10-25)
 
 Current carry: `/workspace/m1b-experiments/pong-local-repair-weighted-20261025-r1/selected.npy`. Interception is still incomplete. Local exploration discovered 13 new rewarded returns; 4× fitting integrates five and gives practice 139/165 LEFT, 143/169 RIGHT, fresh 28/32 and 26/32. A working-set QP now solves in 1.23s rather than timing out at 30s. Next selected pass: 398-context bank, new missed-context discovery plus reuse of eight old missed successful trajectories, same 4× fitting, exact hard-guard conflict filtering. Same Sol agent implements; root owns direction/review. See current practical plan. Continue until reliable efficient interception or user stop; no old time ceiling.

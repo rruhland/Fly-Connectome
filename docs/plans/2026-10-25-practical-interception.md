@@ -1,3 +1,9 @@
+## Current action: frozen larger reliability check
+
+Freeze `/workspace/m1b-experiments/pong-local-repair-20261025-r3/selected.npy`. Combined remembered LEFT skill and broader exploration improved practice to 211/229 LEFT and 210/233 RIGHT, both above 90%. Fresh paired returns improved LEFT 26→28/32 and RIGHT 25→29/32 with no losses. This is meaningful learning progress, not yet a reliability claim.
+
+Next: exactly two prospectively fixed fresh cohorts of 64 starts per phase each, current policy versus original RIGHTtheta6, totaling 512 first-return episodes. Report each cohort, 128-per-phase aggregates and paired gains/losses. Descriptive uncertainty is not an extra statistical veto. If both aggregate current rates reach 90%, run 32 ordinary 20-second full games per head with predrawn seeds, measuring first returns and repeated hits separately from winning. No learner updates, checkpoint selection or retries on this check. Then assess remaining learning or recipe replication before declaring the interception scaffold reliable.
+
 ## Current direction: cheap remembered LEFT skill, then broader exploration
 
 Carry `/workspace/m1b-experiments/pong-local-repair-20261025-r2/selected.npy`. The repeated step retained six of eight older repairs and improved practice, but fresh remained 26/32 LEFT and 30/32 RIGHT. New LEFT discovery was weak: two successes, neither absorbed. Hold the fitting rule fixed and improve useful LEFT experience.
