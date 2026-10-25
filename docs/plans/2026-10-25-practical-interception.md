@@ -1,3 +1,7 @@
+## Stopped at the operational first-interception milestone
+
+The fixed larger fresh check passed:125/128LEFT and117/128RIGHT, versusr4118/113. Ordinaryfullgames retained28/32firstreturns and11multiple-return games, with no rallygain. Across all160heldout starts perphase, RIGHTis142/160=88.75%; keep that variation visible rather than claim a distribution-wide guarantee. No more training selected. [Final checkpoint, visual, costs and limits](../reconstruction/2026-10-25-interception-milestone.md). The sections below preserve chronological decisions, including superseded proposals.
+
 ## Active action: resolve fresh transfer of the causal-credit candidate
 
 Soft-preserved causal learning gained15LEFTreturns on the782context practice bank without netRIGHTloss, but small fresh comparison was LEFT29→29/32 and RIGHT28→25/32. Freeze both heads for128genuinelynewstarts perphase (two64cohorts), soft versus r4, with ordinaryfullgames only if softboth≥90%. No more fitting until this resolves carry choice. r4 remains the trusted fallback, soft remains a candidate. Same Sol agent runs/reviews with root; no learning or retries during the comparison.
