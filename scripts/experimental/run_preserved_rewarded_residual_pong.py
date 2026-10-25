@@ -162,7 +162,8 @@ def run(directory):
             proposal_hits=base.hits_for(jobs,rr)
         protection['known_guard_returns_after_bank']=sum(proposal_hits[str(seed)] for seed in s['guards'])
         protection['known_guard_episodes']=len(s['guards'])
-        after=base.phases(bank,proposal_hits);selected=tuple(after['key'])>tuple(before['key']);chosen=proposed if selected else theta
+        protection['actual_guard_returns_preserved']=protection['known_guard_returns_after_bank']==protection['known_guard_episodes']
+        after=base.phases(bank,proposal_hits);selected=bool(protection['actual_guard_returns_preserved'] and tuple(after['key'])>tuple(before['key']));chosen=proposed if selected else theta
         base.save_array(directory/'selected_theta.npy',chosen);base.save_array(directory/'selected.npy',chosen@matrix)
         probe={}
         if selected and not same:
