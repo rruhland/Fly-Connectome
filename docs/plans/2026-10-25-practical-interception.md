@@ -1,3 +1,9 @@
+## Active direction: leave imitation-margin tuning, improve actual control
+
+Local-r4 remains the carried head. Larger fresh qualification reached 88.28% LEFT and 86.72% RIGHT; genuine improvement but short of reliable interception. Relaxing protected confidence improved action-target fit but lost five practiced returns, so reject it and do not deepen that parameter sweep. Sol is independently challenging a next practical direction: direct reward search over coherent existing-policy directions or feature-block gains. No new architecture or privileged inputs authorized by this proposal. Decide after synthesis, then execute and check actual fresh returns. Continue until the user goal or user stop.
+
+The sections below preserve chronological decisions, including superseded proposals.
+
 ## Current action: second larger fresh check of a new checkpoint
 
 Freeze `/workspace/m1b-experiments/pong-local-repair-20261025-r4/selected.npy`. Learning from the first qualification's misses improved practice to 360/389 LEFT and 354/393 RIGHT; new routine fresh returns reached 29/32 in both phases. The unchanged reliability driver is now checking two genuinely new 64-per-phase cohorts versus original RIGHTtheta6, with the same conditional ordinary-game check. No training, protocol changes or sample-based retries during this evaluation.
