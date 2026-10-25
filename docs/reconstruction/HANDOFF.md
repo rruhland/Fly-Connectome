@@ -1,6 +1,10 @@
 # Fly-Connectome M1B handoff — scaffold research
 
-## Current direction
+## Active October25 engineering continuation
+
+User renewed ongoing work until reliable, efficient interception learning or stop. The old two-hour and two-experiment limits below are historical. Use the [practical interception plan](../plans/2026-10-25-practical-interception.md): concrete miss fixes, a cheaper equivalent rollout loop, consistent training practice, and fresh-game checks. Preserve real partial gains instead of requiring every old statistical gate. No backprop; major architecture changes still need user review. Same Sol XHigh agent reused.
+
+## Previous research direction
 
 The user now authorizes starting the next research target: **reliable interception
 and sustained rallying**, building from the proven return learner. Follow the
