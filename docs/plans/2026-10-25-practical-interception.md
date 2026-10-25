@@ -1,3 +1,11 @@
+## Current action: recover known returns and continue LEFT learning
+
+The larger frozen check confirmed genuine improvement versus the original carry: LEFT 92→113/128 (88.28%), RIGHT 104→117/128 (91.41%). LEFT remains below target. The two RIGHT cohorts varied 63/64 versus 54/64, so retain representative successes while learning further. No ordinary-game check ran because the predeclared LEFT threshold was not met.
+
+Selected next pass keeps the successful recipe fixed. Add the latest routine 64 contexts plus all 256 qualification contexts as explicit TRAIN (782 total), keeping qualification files unchanged and requiring future validation to be new. Capture the original learned policy's 13 demonstrated regression repairs (8 LEFT, 5 RIGHT). Query DIRECT on unknown LEFT misses, reuse complete existing successful traces and skip cached failures. Run LEFT-focused broader local exploration only where available own-success witnesses do not already cover the missed context. Fit the same fourfold objective with .25 matching preservation, exact conflicting-target filtering and working-set guards. Add eight RIGHT guards (four per qualification cohort), preferring current success/original failure, plus ordinary recently gained guard contexts. Missing prior-head outcomes on the new contexts remain absent; selection is candidate versus current carry only.
+
+This step repairs forgetting and adds experience; it is not a new architecture or optimizer sweep. Continue until reliable efficient interception or user stop.
+
 ## Current action: frozen larger reliability check
 
 Freeze `/workspace/m1b-experiments/pong-local-repair-20261025-r3/selected.npy`. Combined remembered LEFT skill and broader exploration improved practice to 211/229 LEFT and 210/233 RIGHT, both above 90%. Fresh paired returns improved LEFT 26→28/32 and RIGHT 25→29/32 with no losses. This is meaningful learning progress, not yet a reliability claim.

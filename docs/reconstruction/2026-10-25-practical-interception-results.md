@@ -126,3 +126,11 @@ The single integrated policy improved practice LEFT 194→211/229 (18 gains, one
 Cost: 257.62 seconds, 68,780 TRAIN transitions, 11,122 fresh transitions and 996 initial cameras, exact; parent independently summed receipts. Working-set fitting took 1.74 seconds. No architecture, inputs, backpropagation or teacher/oracle actions were introduced.
 
 Next selected action is a fixed larger reliability check, not another learner change: two fresh cohorts of 64 starts per phase each, selected r3 versus the original RIGHTtheta6 carry. Report each cohort and the 128-per-phase aggregate; if both aggregate phases reach 90%, run 32 ordinary full games per head. Keep winning separate from interception, and do not tune or retry the validation cohorts.
+
+## Larger frozen reliability check: genuine gain, LEFT still below target
+
+The predeclared 128 starts per phase confirmed clear accumulated learning against original RIGHTtheta6: LEFT 92→113/128 (71.88%→88.28%), 29 gains and eight losses; RIGHT 104→117/128 (81.25%→91.41%), 18 gains and five losses. Current cohort counts were LEFT 57/64 and 56/64, RIGHT 63/64 and 54/64; the RIGHT variation matters, and the aggregate is not a uniform guarantee. No learner updates or cohort retries occurred. The ordinary-game trigger correctly did not fire because LEFT remained below 90%.
+
+Cost: 145.79 seconds, 44,553 evaluation transitions and 512 initial cameras; zero TRAIN or full-game cameras. Parent independently recomputed paired counts and summed receipts. Root: `/workspace/m1b-experiments/pong-interception-reliability-20261025-r1`.
+
+Continue learning rather than declare completion. The next selected pass explicitly reclassifies these 256 contexts as TRAIN, retains the original evaluation artifacts unchanged, and also adds the latest routine 64 probes (782 total contexts). The original comparison already demonstrates 13 useful forgotten behaviors: eight LEFT and five RIGHT current misses were returned by the original learned head. Capture those successes, query remembered DIRECT for new LEFT misses, and use broader local exploration where useful repair witnesses remain missing. Keep the fitting rule fixed; add eight representative RIGHT success guards, four per qualification cohort, plus ordinary newly acquired guards. Future reliability checks must use genuinely new contexts.
