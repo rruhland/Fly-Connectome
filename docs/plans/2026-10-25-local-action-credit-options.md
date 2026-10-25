@@ -1,6 +1,6 @@
-# Local action credit: unselected research option
+# Local action credit: selected one-action learning trial
 
-Status: parent hypothesis for independent Sol challenge after the bounded native backtrack. Not an authorized implementation selection or a claim of success.
+Status: selected after independent Sol challenge and the completed native-backtrack null; implementation underway. No success claim.
 
 Current evidence: own-success trajectory fitting produced genuine accumulated interception gains but plateaued around 87–88% in the latest larger fresh check. Relaxing protected margins improved action fitting but lost actual returns. Coherent large controller perturbations damaged both phases. These outcomes suggest credit assignment and disturbance of existing behavior remain practical problems; they do not prove a representation ceiling.
 
@@ -13,3 +13,11 @@ Efficiency option: reuse a saved simulator/vision prefix when comparing continua
 Primary source read: Lagoudakis and Parr (ICML 2003), [Reinforcement Learning as Classification](https://gwern.net/doc/reinforcement-learning/model/alphago/2003-lagoudakis.pdf), sections 2–3. They estimate action returns through continuations and learn action preferences with a classifier instead of fitting a value function. Their method assumes generative simulator access and observed Markov state; our compressed visual observations do not satisfy that assumption, so their improvement results are not guarantees here. We would retain the existing deployed policy class unless a separate major-architecture proposal is reviewed by the user.
 
 Questions for Sol: does this materially improve credit over our earlier local repairs? How short an intervention can affect an inertial paddle without assigning credit to an arbitrary long burst? Can existing rollout code make exploration cheap enough? Which minimal actual-learning trial would distinguish useful credit from more fitting without transfer? Offer alternatives, not just implementation of this suggestion.
+
+## Selected practical trial
+
+Same local-r4 controller, 566-coordinate projection, raw linear policy and native camera cadence. Choose 64 current TRAIN contexts: 24 misses and eight successes per phase, explicitly a repair curriculum. At 5/10/15/20 cameras before the cached terminal event, compare each alternative single action followed by the unchanged policy. Prefix snapshots must reproduce unmodified continuations exactly, including context-cache validity. Count each executed prefix and suffix honestly. No bursts or unobserved action labels.
+
+Fit a regularized pairwise residual only from strict native return differences: an action that returned is preferred to one that failed; equally successful or failed actions are not ordered. No hard retention of old trajectories or arbitrary logit confidence. Sol chooses practical fitting details and conservative dose; a fitted head must improve the actual 782-context bank and then face genuinely fresh paired starts. Preserve the current head on failure. If no strict contrasts are discovered, report lack of single-action leverage and reassess immediately rather than forcing labels. Target roughly five to eight minutes execution after preparation, not a session stopping limit.
+
+Parent snapshot feasibility proof: saved RIGHT miss, clone at step60,93-step unchanged suffix, all records and final graph exact. Existing context-cache validity helpers are required around deepcopy. Copy .039s; suffix about1s. Total306OLDtransitions/twoinitials including a failed plain-copy check; zero counterfactual actions. This is one feasibility case, not a substitute for intervention-path checks.

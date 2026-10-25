@@ -1,3 +1,7 @@
+## Active action: single-action causal credit learning
+
+The bounded macro backtrack was null and is closed. Select the [one-action learning trial](2026-10-25-local-action-credit-options.md): actual alternative-action continuations from current policy states, strict success-versus-failure preferences, regularized fitting in the same existing linear policy, followed by actual bank/fresh checks. No backprop, privileged learner inputs, teacher actions or architecture changes. Same Sol XHigh agent implements while root reviews and challenges. Continue until reliable efficient interception or user stop.
+
 ## Active action: bounded backtracking after a rejected native search
 
 The full first-round finalist regressed LEFT 360→353/389 and RIGHT 354→327/393. No head accepted. Stop the identical-radius second round; its already executed partial work remains charged. Run at most three short 128-context probes using existing data: half-best direction, half-LEFT-improving direction, and one conservative reward-weighted paired combination. Only an actual 128-context improvement earns the complete bank/fresh check. No further macro tuning after a null. A separate [local action-credit hypothesis](2026-10-25-local-action-credit-options.md) is prepared for independent challenge, not selected for execution.
