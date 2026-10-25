@@ -6,6 +6,7 @@ import scipy.sparse as sp
 import osqp
 from pong_constrained_residual import CONTRAST
 from pong_rewarded_residual import episode_weights,preference_targets
+from pong_behavior_preservation import required_guard_margin
 
 
 def solve_qp(P,q,A,lower,*,initial=None,initial_rows=(),time_limit=60.,batch=128):
@@ -49,7 +50,7 @@ def solve_qp(P,q,A,lower,*,initial=None,initial_rows=(),time_limit=60.,batch=128
     raise RuntimeError('working-set round budget exhausted: '+str(history))
 
 
-def solve_constrained(theta,positive,preservation,guards,buffer_X,buffer_weights,*,matching_preservation=None,matching_weight=.25,positive_weight=4.,ridge=.001,kappa_fraction=.05,initial_delta=None):
+def solve_constrained(theta,positive,preservation,guards,buffer_X,buffer_weights,*,matching_preservation=None,matching_weight=.25,positive_weight=4.,ridge=.001,kappa_fraction=.05,initial_delta=None,guard_margin_cap=None):
     began=time.monotonic();X=np.concatenate([c['X'] for c in positive]);a=np.concatenate([c['actions'] for c in positive]);weights=episode_weights(positive)
     q=X@theta.T;qb=buffer_X@theta.T;q_rms=max(1e-12,float(np.sqrt(np.sum(buffer_weights[:,None]*qb*qb)/3)))
     scale=max(1e-12,float(np.sqrt(buffer_weights@np.sum(buffer_X*buffer_X,axis=1))));target,changed=preference_targets(q,a,kappa_fraction*q_rms);assert changed.all()
@@ -61,7 +62,8 @@ def solve_constrained(theta,positive,preservation,guards,buffer_X,buffer_weights
     for c in guards:
         x=c['X']/scale;actions=c['actions'];q0=c['q'];assert np.max(abs(c['X']@theta.T-q0))<1e-10 and np.array_equal(np.argmax(q0,axis=1),actions)
         rows=np.repeat(np.arange(len(x)),2);other=np.array([[b for b in range(3) if b!=v] for v in actions]).reshape(-1)
-        contrast=CONTRAST[actions[rows]]-CONTRAST[other];matrices.append(np.hstack([contrast[:,0,None]*x[rows],contrast[:,1,None]*x[rows]]));bounds.append(-.5*(q0[rows,actions[rows]]-q0[rows,other]))
+        contrast=CONTRAST[actions[rows]]-CONTRAST[other];matrices.append(np.hstack([contrast[:,0,None]*x[rows],contrast[:,1,None]*x[rows]]))
+        gap=q0[rows,actions[rows]]-q0[rows,other];bounds.append(required_guard_margin(gap,guard_margin_cap)-gap)
     A=sp.csc_matrix(np.vstack(matrices));lower=np.concatenate(bounds);assert np.all(lower<=1e-12)
     P=sp.block_diag((sp.csc_matrix(2*G),sp.csc_matrix(2*G)),format='csc');linear=(-2*(CONTRAST.T@B)).reshape(-1)
     initial=(CONTRAST.T@(initial_delta*scale)).reshape(-1) if initial_delta is not None else None
@@ -75,6 +77,6 @@ def solve_constrained(theta,positive,preservation,guards,buffer_X,buffer_weights
         variables=len(u),constraints=len(lower),maximum_half_margin_violation=info['maximum_full_violation'],working_set=info,
         zero_residual_objective=zero,constrained_objective=objective,input_rms=scale,incumbent_q_rms=q_rms,kappa=kappa_fraction*q_rms,ridge=ridge,
         positive_rows=len(X),positive_episodes=len(positive),preservation_rows=sum(len(c['X']) for c in preservation),guard_rows=sum(len(c['X']) for c in guards),
-        matching_preservation_rows=sum(len(c['X']) for c in matching_preservation or []),matching_preservation_weight=matching_weight,positive_weight=positive_weight,
+        matching_preservation_rows=sum(len(c['X']) for c in matching_preservation or []),matching_preservation_weight=matching_weight,positive_weight=positive_weight,guard_margin_cap=guard_margin_cap,
         requested_actions_after_fit_fraction=float(np.mean(np.argmax(q+X@delta.T,axis=1)==a)),requested_actions_after_fit_weighted_fraction=float(weights@(np.argmax(q+X@delta.T,axis=1)==a)),guard_action_fraction=float(guard_choices))
     return delta,result
