@@ -150,8 +150,22 @@ def mixture_quantile(centers, weights, probability):
 
 def batched_mixture_quantiles(centers, weights, probabilities):
     """Run the unchanged scalar search over independent mixtures and bounds."""
-    return torch.vmap(torch.vmap(mixture_quantile, in_dims=(None, None, 0)),
-                      in_dims=(0, 0, 0))(centers, weights, probabilities)
+    # Explicit batch/bound axes avoid nested-vmap dispatch on every search step.
+    # Keep the scalar arithmetic and component reduction order unchanged.
+    low = (centers.min(1).values-10.)[:, None, :].expand_as(probabilities)
+    high = (centers.max(1).values+10.)[:, None, :].expand_as(probabilities)
+    components = centers[:, None, :, :]
+    mass = weights[:, None, :, None]
+    for _ in range(32):
+        midpoint = (low+high)/2
+        pit = ((.5+.5*torch.erf((midpoint[:, :, None, :]-components)/math.sqrt(2)))
+               *mass).sum(2)
+        below = pit < probabilities
+        low = torch.where(below, midpoint, low)
+        high = torch.where(below, high, midpoint)
+    value = (low+high)/2
+    value = torch.where(probabilities <= 0, -torch.inf, value)
+    return torch.where(probabilities >= 1, torch.inf, value)
 
 
 class MarginalCalibration:
