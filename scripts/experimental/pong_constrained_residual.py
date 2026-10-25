@@ -26,7 +26,7 @@ def load_saved_cases(directory):
     return positive,preserve,guards
 
 
-def solve_constrained(theta,positive,preservation,guards,buffer_X,buffer_weights,ridge=1e-3,kappa_fraction=.05):
+def solve_constrained(theta,positive,preservation,guards,buffer_X,buffer_weights,ridge=1e-3,kappa_fraction=.05,matching_preservation=None,matching_weight=.25):
     began=time.monotonic();X=np.concatenate([c['X'] for c in positive]);a=np.concatenate([c['actions'] for c in positive]);weights=episode_weights(positive)
     q=X@theta.T;q_buffer=buffer_X@theta.T
     q_rms=max(1e-12,float(np.sqrt(np.sum(buffer_weights[:,None]*q_buffer*q_buffer)/3)))
@@ -35,6 +35,10 @@ def solve_constrained(theta,positive,preservation,guards,buffer_X,buffer_weights
     U=X/scale;G=U.T@(weights[:,None]*U);B=target.T@(weights[:,None]*U)
     if preservation:
         P=np.concatenate([c['X'] for c in preservation])/scale;pw=episode_weights(preservation);G+=P.T@(pw[:,None]*P)
+    if matching_preservation:
+        assert matching_weight>=0
+        P=np.concatenate([c['X'] for c in matching_preservation])/scale;pw=episode_weights(matching_preservation)
+        G+=matching_weight*(P.T@(pw[:,None]*P))
     G+=ridge*np.eye(theta.shape[1]);d=theta.shape[1]
     matrices=[];lower=[]
     for case in guards:
@@ -69,5 +73,6 @@ def solve_constrained(theta,positive,preservation,guards,buffer_X,buffer_weights
         zero_residual_objective=zero,constrained_objective=objective,input_rms=scale,incumbent_q_rms=q_rms,kappa=kappa_fraction*q_rms,ridge=ridge,
         positive_rows=len(X),positive_episodes=len(positive),preservation_rows=sum(len(c['X']) for c in preservation),guard_rows=guard_rows,
         requested_actions_after_fit_fraction=float(np.mean(action_match)),requested_actions_after_fit_weighted_fraction=float(weights@action_match),
-        guard_action_fraction=guard_match/guard_rows if guard_rows else None,maximum_action_row_sum=float(np.max(np.abs(delta.sum(0)))))
+        guard_action_fraction=guard_match/guard_rows if guard_rows else None,maximum_action_row_sum=float(np.max(np.abs(delta.sum(0)))),
+        matching_preservation_rows=sum(len(c['X']) for c in matching_preservation or []),matching_preservation_weight=matching_weight if matching_preservation else 0.)
     return delta,result
