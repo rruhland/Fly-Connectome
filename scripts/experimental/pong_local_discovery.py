@@ -3,10 +3,14 @@ import numpy as np
 from policy_search_math import function_rms
 
 
-def state_indices(q,bins=4):
+def state_indices(q,bins=4,midpoints=False):
     q=np.asarray(q);assert q.ndim==2 and q.shape[1]==3 and len(q)>0
     ordered=np.sort(q,axis=1);margin=ordered[:,-1]-ordered[:,-2]
-    return [int(part[np.argmin(margin[part])]) for part in np.array_split(np.arange(len(q)),min(bins,len(q)))]
+    result=[]
+    for part in np.array_split(np.arange(len(q)),min(bins,len(q))):
+        result.append(int(part[np.argmin(margin[part])]))
+        if midpoints:result.append(int(part[len(part)//2]))
+    return list(dict.fromkeys(result))
 
 
 def local_mutation(theta,x,alternative,calibration,*,kappa,maximum_rms=.25):

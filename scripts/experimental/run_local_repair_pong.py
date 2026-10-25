@@ -19,18 +19,36 @@ def pins():
         'run_spatial_residual_pong.py','run_preserved_rewarded_residual_pong.py','pong_local_learning_state.py','pong_working_set_qp.py')}
 
 
-def stage_next(directory,source):
+def stage_next(directory,source,left_focused=False,direct_first=False):
     from pong_local_learning_state import prepare_next
-    directory=Path(directory);data=prepare_next(directory,source);fresh=previous.worker.fresh_seeds()
+    directory=Path(directory);counts=dict(left=24,right=8) if left_focused else dict(left=16,right=16)
+    data=prepare_next(directory,source,target_counts=counts);fresh=previous.worker.fresh_seeds()
     fresh.update({k:data[k] for k in ('bank','targets','guards','new_guards')});base.atomic_json(directory/'schedules.json',fresh)
     m=dict(source=base.source_signature(),files=pins(),source_block=str(source),bank=data['bank'],carry_hits=data['hits'],fallback_hits=data['fallback'],
         reused=data['reused'],donor_memory=data['donor_memory'],reused_donors=data['reused_donors'],learning_step=True,positive_weight=4.,matching_soft_weight=.25,
         carry_only_fallback=True,work_seconds=600,maximum_mutation_rms=.25,states_per_failure=4,alternatives_per_state=2,kappa_q_rms_fraction=.05,
-        target_selection=data['target_selection'],previous_probe_reclassified_as_TRAIN=True,
+        target_selection=data['target_selection'],previous_probe_reclassified_as_TRAIN=True,left_focused=left_focused,direct_first=direct_first,target_counts=counts,
         assistance='repeated own rewarded local discovery and full-trajectory memory; exact hard-guard conflict filtering; same linear policy and inputs')
     m['data_hashes']={v['feature_file']:base.sha(directory/v['feature_file']) for v in m['reused']+m['donor_memory']}
     old=np.load(directory/'old-transform.npy');extra=np.load(directory/'extra-transform.npy')
     assert np.array_equal(map_split(np.load(directory/'carry_theta.npy'),old,extra),np.load(directory/'carry.npy'))
+    if direct_first:
+        direct=base.EXPERIMENTS/'pong-leftward-population-20261022-r1';assert np.array_equal(old,np.load(direct/'search-transform.npy'))
+        assert np.array_equal(np.load(direct/'theta_at9.npy')@old,np.load(direct/'endpoint.npy'))
+        assert base.read(direct/'completion-verification.json')['passed'] and base.read(direct/'summary.json')['paired_evidence']['learning']
+        (directory/'direct.npy').write_bytes((direct/'endpoint.npy').read_bytes());weight_hash=base.sha(directory/'direct.npy');known={}
+        misses={v for v in data['bank']['left'] if not data['hits'][str(v)]}
+        for root in base.EXPERIMENTS.glob('pong-*-20261025-r*'):
+            for path in (root/'episodes').glob('*.json'):
+                r=base.read(path);seed=r.get('seed')
+                if seed not in misses or r.get('weights_sha256')!=weight_hash or not r.get('complete') or not r.get('observations_exact') or not r.get('first_hit_cutoff'):continue
+                standard=base.job(directory,'check',seed,'carry.npy','left','train')
+                if base.config_key(r['config'])==base.config_key(standard['config']):known[seed]=int(r['report']['hits']>0)
+        fresh['direct_queries']=[dict(seed=v,phase='left',expected_success=bool(known.get(v))) for v in sorted(misses) if known.get(v)!=0]
+        fresh['target_pools']=data['target_pools'];base.atomic_json(directory/'schedules.json',fresh)
+        m['direct_provenance']=dict(theta=str(direct/'theta_at9.npy'),summary_hash=base.sha(direct/'summary.json'),weights_hash=weight_hash,
+            queries=len(fresh['direct_queries']),cached_successes=sum(known.values()),cached_failures=len(known)-sum(known.values()),unqueried=len(misses)-len(known))
+        m['data_hashes']['direct.npy']=weight_hash
     base.atomic_json(directory/'manifest.json',m)
     print(json.dumps(dict(staged=True,new_observations=0,bank=base.phases(m['bank'],m['carry_hits']),bank_contexts=sum(map(len,m['bank'].values())),
         targets={p:len(v) for p,v in fresh['targets'].items()},selection=m['target_selection'],guards=len(fresh['guards']),
@@ -116,6 +134,22 @@ def case(directory,r):
     with np.load(directory/r['feature_file']) as v:return dict(seed=r['seed'],phase=r['phase'],**{k:v[k] for k in v.files})
 
 
+def donor_entry(directory,r):
+    return dict(seed=r['seed'],phase=r['phase'],feature_file=r['feature_file'],reward_receipt=str(directory/'episodes'/(r['id']+'.json')))
+
+
+def choose_donor_entries(directory,entries,raw,current_weights):
+    chosen={};distances={}
+    for entry in entries:
+        receipt=Path(entry['reward_receipt']);r=base.read(receipt);weights=receipt.parent.parent/r['weights_file'];h=base.sha(weights)
+        assert h==r['weights_sha256'] and r['report']['hits']>0
+        if h not in distances:distances[h]=float(np.sqrt(np.mean(np.asarray(raw@(np.load(weights)-current_weights).T)**2)))
+        candidate=dict(entry,current_function_distance=distances[h])
+        old=chosen.get(entry['seed'])
+        if old is None or (candidate['current_function_distance'],candidate['reward_receipt'])<(old['current_function_distance'],old['reward_receipt']):chosen[entry['seed']]=candidate
+    return list(chosen.values())
+
+
 def run(directory):
     directory=Path(directory);m=base.read(directory/'manifest.json');s=base.read(directory/'schedules.json')
     assert m['source']==base.source_signature() and m['files']==pins();assert not (directory/'work-clock.json').exists()
@@ -132,16 +166,34 @@ def run(directory):
     for i,g in enumerate(s['new_guards']):
         j=base.job(directory,f'guard_{i:02d}',g['seed'],'carry.npy',g['phase'],'train');j['capture_kind']='guard';captures.append(j)
     with ProcessPoolExecutor(max_workers=4,mp_context=mp.get_context('spawn'),initializer=base.initialize) as pool:
+        external_reports={};direct_report=dict(queries=0,successes=0)
+        if m.get('direct_first'):
+            external_jobs=[]
+            for i,v in enumerate(s['direct_queries']):
+                j=base.job(directory,f'direct_{i:02d}',v['seed'],'direct.npy','left','train');j.update(capture_kind='skill_donor',expected_success=v['expected_success']);external_jobs.append(j)
+            external_reports,ok=dispatch(directory,external_jobs,pool,deadline);assert ok,'partial reward-trained DIRECT collection'
+            for j in external_jobs:
+                if j['expected_success']:assert external_reports[j['id']]['report']['hits']>0,'known DIRECT success must reproduce'
+            direct_success={r['seed'] for r in external_reports.values() if r['report']['hits']>0}
+            direct_report=dict(queries=len(external_jobs),successes=len(direct_success),success_seeds=sorted(direct_success))
+            base.atomic_json(directory/'direct-report.json',direct_report)
+            effective={p:[v for v in s['target_pools'][p] if v not in direct_success][:m['target_counts'][p]] for p in ('left','right')}
+            s=dict(s,targets=effective);captures=[j for j in captures if j['capture_kind']=='guard']
+            for p,seeds in effective.items():
+                for i,seed in enumerate(seeds):
+                    j=base.job(directory,f'failure_{p}_{i:02d}',seed,'carry.npy',p,'train');j['capture_kind']='failure';captures.append(j)
+            base.atomic_json(directory/'effective-targets.json',dict(targets=effective,direct_successes=sorted(direct_success)))
         rr,ok=dispatch(directory,captures,pool,deadline);assert ok,'partial failure/guard capture'
-        mutations=[];jobs=[];seen={};skipped=0
+        mutations=[];jobs=[];seen={};skipped=0;ineffective=0
         for j in captures:
             if j['capture_kind']!='failure':assert rr[j['id']]['report']['hits']>0;continue
             r=rr[j['id']];assert r['report']['hits']==0,'selected current miss must reproduce';c=case(directory,r)
             assert np.max(abs(c['X']@theta.T-c['q']))<1e-10
-            for slot,t in enumerate(state_indices(c['q'])):
+            for slot,t in enumerate(state_indices(c['q'],midpoints=bool(m.get('left_focused') and j['phase']=='left'))):
                 a=int(np.argmax(c['q'][t]))
                 for b in (v for v in range(3) if v!=a):
                     delta,info=local_mutation(theta,c['X'][t],b,z,kappa=kappa,maximum_rms=.25)
+                    if m.get('left_focused') and not info['intended_flip_achieved']:ineffective+=1;continue
                     weights=map_split(theta+delta,old,extra);jid=f'mutate_{j["phase"]}_{j["seed"]}_{slot}_{b}'
                     if np.array_equal(weights,np.load(directory/'carry.npy')):skipped+=1;continue
                     key=(j['seed'],base.ah(weights));alias=seen.get(key)
@@ -149,7 +201,8 @@ def run(directory):
                         name=f'mutants/{jid}.npy';base.save_array(directory/name,weights);trial=base.job(directory,jid,j['seed'],name,j['phase'],'discovery');jobs.append(trial);seen[key]=jid
                     else:name=next(v['weights'] for v in jobs if v['id']==alias)
                     mutations.append(dict(id=jid,executed_id=seen[key],seed=j['seed'],phase=j['phase'],weights=name,state_index=t,**info))
-        base.atomic_json(directory/'mutation-report.json',dict(kappa=kappa,requested=8*sum(map(len,s['targets'].values())),candidates=len(mutations),unique_episodes=len(jobs),skipped_byte_identical=skipped,
+        requested=sum(len(v)*(16 if m.get('left_focused') and p=='left' else 8) for p,v in s['targets'].items())
+        base.atomic_json(directory/'mutation-report.json',dict(kappa=kappa,requested_upper_bound=requested,candidates=len(mutations),unique_episodes=len(jobs),skipped_byte_identical=skipped,skipped_ineffective=ineffective,
             intended_flips=sum(v['intended_flip_achieved'] for v in mutations),cap_limited=sum(v['cap_limited'] for v in mutations),mutations=mutations))
         discovery,ok=dispatch(directory,jobs,pool,deadline);assert ok,'partial local discovery'
         successful={}
@@ -159,7 +212,8 @@ def run(directory):
         discovery_report=dict(candidates=len(mutations),unique_episodes=len(jobs),successful_episodes=sum(r['report']['hits']>0 for r in discovery.values()),
             repaired_contexts={p:sum(v['phase']==p for v in selected) for p in ('left','right')},intended_flips=sum(v['intended_flip_achieved'] for v in mutations),cap_limited=sum(v['cap_limited'] for v in mutations),selected=selected)
         base.atomic_json(directory/'discovery-report.json',discovery_report);print(json.dumps(dict(discovery=discovery_report)),flush=True)
-        if not selected and not m.get('reused_donors'):
+        external_success=[r for r in external_reports.values() if r['report']['hits']>0]
+        if not selected and not m.get('reused_donors') and not external_success:
             base.save_array(directory/'selected_theta.npy',theta);base.save_array(directory/'selected.npy',np.load(directory/'carry.npy'))
             summary=dict(status='complete_no_new_rewarded_repairs',discovery=discovery_report,probe={},accounting=base.accounting(directory),wall_seconds=time.monotonic()-start)
             base.atomic_json(directory/'summary.json',summary)
@@ -171,14 +225,17 @@ def run(directory):
         for i,v in enumerate(selected):
             j=base.job(directory,f'donor_{i:02d}',v['seed'],v['weights'],v['phase'],'train');j['capture_kind']='donor';donor_jobs.append(j)
         donor_reports,ok=dispatch(directory,donor_jobs,pool,deadline);assert ok,'partial rewarded donor capture'
-        positive=[];matching=[];preserve=[];guards=[];donors={v['seed']:case(directory,v) for v in m.get('reused_donors',[])}
+        positive=[];matching=[];preserve=[];guards=[]
         for item in m['reused']:
             c=case(directory,item);preserve.append(c)
             if item['kind']=='guard':guards.append(c)
         for j in captures:
             if j['capture_kind']=='guard':c=case(directory,rr[j['id']]);guards.append(c);preserve.append(c)
-        for j in donor_jobs:
-            r=donor_reports[j['id']];assert r['report']['hits']>0;donors[r['seed']]=case(directory,r)
+        for r in donor_reports.values():assert r['report']['hits']>0
+        entries=list(m.get('reused_donors',[]))+[donor_entry(directory,r) for r in external_success+list(donor_reports.values())]
+        entries=choose_donor_entries(directory,entries,base.old_engine.read_calibration(base.old_engine.CACHE),np.load(directory/'carry.npy'))
+        base.atomic_json(directory/'witness-selection.json',dict(one_per_seed=True,criterion='minimum current-relative generic function distance, stable receipt tie',entries=entries))
+        donors={v['seed']:case(directory,v) for v in entries}
         for c in donors.values():
             different=c['actions']!=np.argmax(c['X']@theta.T,axis=1)
             assert different.any(),'rewarded repair of deterministic miss must contain differing actions'
@@ -220,15 +277,19 @@ def run(directory):
             for kind,items in [('old',m.get('reused_donors',[])),('new',selected)]}
         summary['old_new_donor_overlap']=len({v['seed'] for v in m.get('reused_donors',[])}&{v['seed'] for v in selected})
         summary['unique_fitted_donor_contexts']=len(donors)
+        summary['DIRECT']=direct_report
+        summary['DIRECT_absorption']=dict(returned=sum(hits[str(r['seed'])] for r in external_success),episodes=len(external_success))
+        old_seeds={v['seed'] for v in m.get('reused_donors',[])};local_seeds={v['seed'] for v in selected};direct_seeds={v['seed'] for v in external_success}
+        summary['source_context_overlaps']=dict(old_local=len(old_seeds&local_seeds),old_DIRECT=len(old_seeds&direct_seeds),local_DIRECT=len(local_seeds&direct_seeds))
         if m.get('learning_step') and ok:
             from pong_local_learning_state import export_state
             chosen_hits=hits if winner['label']=='proposal' else m['carry_hits']
-            export_state(directory,m,s,chosen_hits,probe,donor_reports,rr)
+            export_state(directory,m,s,chosen_hits,probe,donor_reports,rr,chosen_donors=entries)
         base.atomic_json(directory/'summary.json',summary);print(json.dumps(summary),flush=True)
 
 
 if __name__=='__main__':
-    p=argparse.ArgumentParser();p.add_argument('mode',choices=('stage','stage-next','run'));p.add_argument('root',type=Path);p.add_argument('--source',type=Path);a=p.parse_args()
+    p=argparse.ArgumentParser();p.add_argument('mode',choices=('stage','stage-next','run'));p.add_argument('root',type=Path);p.add_argument('--source',type=Path);p.add_argument('--left-focused',action='store_true');p.add_argument('--direct-first',action='store_true');a=p.parse_args()
     if a.mode=='stage':stage(a.root,a.source)
-    elif a.mode=='stage-next':stage_next(a.root,a.source)
+    elif a.mode=='stage-next':stage_next(a.root,a.source,a.left_focused,a.direct_first)
     else:run(a.root)

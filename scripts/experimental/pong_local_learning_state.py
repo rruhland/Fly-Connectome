@@ -28,7 +28,7 @@ def load_state(source):
         probe=r['probe'],probe_seeds=s['probe'])
 
 
-def prepare_next(directory,source):
+def prepare_next(directory,source,target_counts=None):
     directory=Path(directory);source=Path(source);state=load_state(source)
     directory.mkdir(parents=True,exist_ok=True);assert not (directory/'manifest.json').exists()
     for n in ('episodes','features','reused_features','memory_donors','mutants'):(directory/n).mkdir()
@@ -63,22 +63,23 @@ def prepare_next(directory,source):
             if seed not in misses or not rr.get('complete') or not rr.get('observations_exact') or not rr.get('first_hit_cutoff') or rr['report']['hits']<1:continue
             phase='left' if seed in bank['left'] else 'right';standard=base.job(directory,'check',seed,'carry.npy',phase,'train')
             if base.config_key(rr['config'])==base.config_key(standard['config']):known.add(seed)
-    targets={};selection={}
+    targets={};selection={};pools={};target_counts=target_counts or dict(left=16,right=16)
     for p in bank:
         recent=list(latest[p]);never=sorted(v for v in bank[p] if v in misses-known and v not in recent)
         other=sorted(v for v in bank[p] if v in misses and v not in recent and v not in never)
-        targets[p]=(recent+never+other)[:16]
+        pools[p]=recent+never+other;targets[p]=pools[p][:target_counts[p]]
         selection[p]=dict(latest=sum(v in recent for v in targets[p]),persistent_never_hit=sum(v in never for v in targets[p]),known_other_success=sum(v in other for v in targets[p]))
     guards=[v['seed'] for v in reused if v['kind']=='guard']+[v['seed'] for v in new_guards]
     assert len(guards)==len(set(guards)) and all(hits[str(v)] for v in guards)
-    return dict(bank=bank,hits=hits,fallback=fallback,targets=targets,guards=guards,new_guards=new_guards,reused=reused,
+    return dict(bank=bank,hits=hits,fallback=fallback,targets=targets,target_pools=pools,guards=guards,new_guards=new_guards,reused=reused,
         donor_memory=memory,reused_donors=old_donors,target_selection=selection,previous_probe_reclassified_as_TRAIN=True)
 
 
-def export_state(directory,m,s,hits,probe,donor_reports,capture_reports):
+def export_state(directory,m,s,hits,probe,donor_reports,capture_reports,chosen_donors=None):
     directory=Path(directory);memory={v['seed']:absolute_case(directory,v) for v in m.get('donor_memory',[])}
     for r in donor_reports.values():
         memory[r['seed']]=dict(seed=r['seed'],phase=r['phase'],feature_file=str(directory/r['feature_file']),reward_receipt=str(directory/'episodes'/(r['id']+'.json')))
+    for entry in chosen_donors or []:memory[entry['seed']]=absolute_case(directory,entry)
     current={v['seed']:absolute_case(directory,v) for v in m['reused']}
     for r in capture_reports.values():
         if r.get('capture_kind')=='guard':current[r['seed']]=dict(seed=r['seed'],phase=r['phase'],kind='guard',feature_file=str(directory/r['feature_file']))

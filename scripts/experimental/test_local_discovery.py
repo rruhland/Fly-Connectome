@@ -6,6 +6,7 @@ from pong_constrained_residual import solve_constrained
 def test_temporal_bins_and_local_margin():
     q=np.array([[3.,0.,0.],[.01,0.,0.],[2.,0.,0.],[1.,0.,0.],[.3,0.,0.],[2.,0.,0.],[4.,0.,0.],[.2,0.,0.]])
     assert state_indices(q)==[1,3,4,7]
+    assert state_indices(q,midpoints=True)==[1,3,4,5,7]
     theta=np.array([[2.,1.],[1.,0.],[-4.,1.]]);x=np.array([1.,2.]);z=np.eye(2)
     for b in (1,2):
         d,r=local_mutation(theta,x,b,z,kappa=.2,maximum_rms=100.)
@@ -38,3 +39,15 @@ def test_guard_conflicts_are_exact_only_and_do_not_discard_the_episode():
     kept,report=drop_guard_conflicts(cases,guards)
     assert report['dropped_rows']==1 and report['dropped_episodes']==0
     assert np.array_equal(kept[0]['actions'],[1,2]) and kept[0]['X'][0,1]==1e-12
+
+
+def test_rewarded_witness_choice_uses_current_relative_distance(tmp_path):
+    import json
+    from run_local_repair_pong import choose_donor_entries,base
+    (tmp_path/'episodes').mkdir();entries=[]
+    for name,scale in [('far',2.),('near',.2)]:
+        np.save(tmp_path/(name+'.npy'),np.full((3,2),scale));receipt=tmp_path/'episodes'/(name+'.json')
+        receipt.write_text(json.dumps(dict(weights_file=name+'.npy',weights_sha256=base.sha(tmp_path/(name+'.npy')),report=dict(hits=1))))
+        entries.append(dict(seed=1,phase='left',feature_file=name+'.npz',reward_receipt=str(receipt)))
+    chosen=choose_donor_entries(tmp_path,entries,np.eye(2),np.zeros((3,2)))
+    assert len(chosen)==1 and chosen[0]['feature_file']=='near.npz' and np.isclose(chosen[0]['current_function_distance'],.2)
