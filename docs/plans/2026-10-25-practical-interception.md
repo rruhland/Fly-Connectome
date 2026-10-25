@@ -1,3 +1,9 @@
+## Current action: second larger fresh check of a new checkpoint
+
+Freeze `/workspace/m1b-experiments/pong-local-repair-20261025-r4/selected.npy`. Learning from the first qualification's misses improved practice to 360/389 LEFT and 354/393 RIGHT; new routine fresh returns reached 29/32 in both phases. The unchanged reliability driver is now checking two genuinely new 64-per-phase cohorts versus original RIGHTtheta6, with the same conditional ordinary-game check. No training, protocol changes or sample-based retries during this evaluation.
+
+A behavior-only protection alternative was discussed but is not selected or implemented: retain a small positive action margin `min(.5 * old_gap, 1e-4 * q_RMS)` instead of half of old confidence. If ever tested, both QP inequalities and post-fit radial bounds must use the same required margins, and actual guard choices/returns must remain preserved. Prefer qualifying the current learner if it meets the goal rather than adding another optimizer change.
+
 ## Current action: recover known returns and continue LEFT learning
 
 The larger frozen check confirmed genuine improvement versus the original carry: LEFT 92→113/128 (88.28%), RIGHT 104→117/128 (91.41%). LEFT remains below target. The two RIGHT cohorts varied 63/64 versus 54/64, so retain representative successes while learning further. No ordinary-game check ran because the predeclared LEFT threshold was not met.
