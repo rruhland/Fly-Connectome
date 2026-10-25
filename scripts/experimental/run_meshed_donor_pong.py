@@ -29,6 +29,10 @@ def stage(directory,source):
     directory.mkdir(parents=True,exist_ok=True);assert not (directory/'manifest.json').exists()
     for name in ('episodes','features','reused_features'):(directory/name).mkdir()
     theta=np.load(source/'selected_theta.npy');matrix=np.load(source/'search-transform.npy')
+    direct_root=base.EXPERIMENTS/'pong-leftward-population-20261022-r1'
+    assert np.array_equal(matrix,np.load(direct_root/'search-transform.npy'))
+    assert np.array_equal(np.load(direct_root/'theta_at9.npy')@matrix,np.load(direct_root/'endpoint.npy'))
+    assert base.read(direct_root/'completion-verification.json')['passed'] and base.read(direct_root/'summary.json')['paired_evidence']['learning']
     files={'carry_theta.npy':theta,'carry.npy':theta@matrix,'fallback_theta.npy':np.load(source/'carry_theta.npy'),'fallback.npy':np.load(source/'carry.npy'),
         'search-transform.npy':matrix,'original_start.npy':np.load(source/'original_start.npy'),'direct.npy':np.load(base.EXPERIMENTS/'pong-leftward-population-20261022-r1/endpoint.npy')}
     for name,x in files.items():base.save_array(directory/name,x)
@@ -74,7 +78,7 @@ def stage(directory,source):
             if current and not old:new_guards.append(dict(phase=p,seed=seed))
     fresh=worker.fresh_seeds();fresh.update(bank=bank,queries=queries,new_guards=new_guards,guards=[c['seed'] for c in reused_guards]+[c['seed'] for c in new_guards]);base.atomic_json(directory/'schedules.json',fresh)
     m=dict(driver_hash=base.sha(__file__),solver_hash=base.sha(Path(__file__).with_name('pong_constrained_residual.py')),worker_hash=base.sha(Path(worker.__file__)),source=base.source_signature(),
-        carry_hash=base.ah(theta),carry_hits=hitsets['carry'],fallback_hits=hitsets['fallback'],bank=bank,source_block=str(source),osqp_version=osqp.__version__,
+        direct_source=str(direct_root/'theta_at9.npy'),direct_reward_summary_hash=base.sha(direct_root/'summary.json'),carry_hash=base.ah(theta),carry_hits=hitsets['carry'],fallback_hits=hitsets['fallback'],bank=bank,source_block=str(source),osqp_version=osqp.__version__,
         reused_positive=reused_positive,reused_preservation=reused_preserve,reused_guards=reused_guards,work_seconds=600,
         assistance='reward-trained DIRECT/prior-RIGHT donor repairs, current-success constraints, no oracle/BP/new class',
         donor_precedence='one episode per missed context: successful named skill donor before old child; old child fallback; recheck current action contrast')
@@ -100,7 +104,7 @@ def run(directory):
             case=read_case(directory/item['feature_file'],item['phase'],item['seed']);positive[case['seed']]=case
         for item in m['reused_preservation']:preserve.append(read_case(directory/item['feature_file'],item['phase'],item['seed']))
         for item in m['reused_guards']:guards.append(read_case(directory/item['feature_file'],item['phase'],item['seed']))
-        donor_stats={d:dict(queries=0,successes=0,contrasting_successes=0) for d in ('DIRECT','prior_RIGHT')}
+        donor_stats={d:dict(queries=0,successes=0,contrasting_successes=0,zero_contrast_successes=0) for d in ('DIRECT','prior_RIGHT')}
         for j in jobs:
             r=reports[j['id']];success=r['report']['hits']>0
             if j['capture_kind']=='guard':assert success,'new carry gain must reproduce'
@@ -111,6 +115,7 @@ def run(directory):
             case=read_case(directory/r['feature_file'],j['phase'],j['seed'])
             if j['capture_kind']=='guard':guards.append(case);preserve.append(case)
             elif len(case['X']):positive[case['seed']]=case;donor_stats[j['donor']]['contrasting_successes']+=1
+            else:donor_stats[j['donor']]['zero_contrast_successes']+=1
         positive=list(positive.values())
         with np.load(directory/'feature-buffer.npz') as b:X=b['X'];w=b['weights']
         delta,fit=solve_constrained(theta,positive,preserve,guards,X,w)
