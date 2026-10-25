@@ -28,7 +28,7 @@ def load_state(source):
         probe=r['probe'],probe_seeds=s['probe'])
 
 
-def prepare_next(directory,source,target_counts=None):
+def prepare_next(directory,source,target_counts=None,include_evaluation=None):
     directory=Path(directory);source=Path(source);state=load_state(source)
     directory.mkdir(parents=True,exist_ok=True);assert not (directory/'manifest.json').exists()
     for n in ('episodes','features','reused_features','memory_donors','mutants'):(directory/n).mkdir()
@@ -41,6 +41,39 @@ def prepare_next(directory,source,target_counts=None):
             assert seed not in bank[p];bank[p].append(seed);hits[str(seed)]=b;fallback[str(seed)]=a
             if not b:latest[p].append(seed)
             if b and not a:new_guards.append(dict(seed=seed,phase=p))
+    evaluation_queries=[];evaluation_record=None
+    if include_evaluation:
+        evaluation=Path(include_evaluation);em=base.read(evaluation/'manifest.json');er=base.read(evaluation/'summary.json');es=base.read(evaluation/'schedules.json')
+        assert er['status']=='complete' and er['first_hit_complete'] and em['no_learning']
+        assert em['current_hash']==base.sha(directory/'carry.npy') and em['original_hash']==base.sha(evaluation/'original.npy')
+        (directory/'original_donor.npy').write_bytes((evaluation/'original.npy').read_bytes())
+        assert np.array_equal(np.load(base.PARENT/'theta_at6.npy')@np.load(base.PARENT/'search-transform.npy'),np.load(directory/'original_donor.npy'))
+        qualification_priority={p:[] for p in bank}
+        for cohort,phases in es['cohorts'].items():
+            for p,seeds in phases.items():
+                qualification_misses=[];successes=[];gained=[]
+                for i,seed in enumerate(seeds):
+                    assert seed not in bank[p] and base.leftward(seed)==(p=='left');values={}
+                    for head in ('current','original'):
+                        rr=base.read(evaluation/'episodes'/f'{cohort}_{p}_{head}_{i:02d}.json');standard=base.job(directory,'check',seed,'carry.npy',p,'train')
+                        assert rr['seed']==seed and rr['complete'] and rr['observations_exact'] and rr['first_hit_cutoff'] and rr['weights_sha256']==em[head+'_hash']
+                        assert base.config_key(rr['config'])==base.config_key(standard['config'])
+                        values[head]=int(rr['report']['hits']>0)
+                    bank[p].append(seed);hits[str(seed)]=values['current']
+                    if not values['current']:qualification_misses.append(seed)
+                    else:
+                        successes.append(seed)
+                        if not values['original']:gained.append(seed)
+                    if values['original'] and not values['current']:evaluation_queries.append(dict(seed=seed,phase=p,weights='original_donor.npy',expected_success=True,donor_source='ORIGINAL'))
+                qualification_priority[p].extend(qualification_misses)
+                if p=='right':
+                    selected=[gained[ix] for ix in np.linspace(0,len(gained)-1,min(4,len(gained)),dtype=int)]
+                    other=[v for v in successes if v not in selected]
+                    if len(selected)<4:selected.extend(other[ix] for ix in np.linspace(0,len(other)-1,min(4-len(selected),len(other)),dtype=int))
+                    for seed in selected:new_guards.append(dict(seed=seed,phase='right',origin='qualification_current_success_prefer_gain',cohort=cohort))
+        for p in bank:latest[p]=qualification_priority[p]+latest[p]
+        evaluation_record=dict(root=str(evaluation),manifest_hash=base.sha(evaluation/'manifest.json'),summary_hash=base.sha(evaluation/'summary.json'),
+            current_contexts_added=256,prior_evaluation_immutable=True,usage='TRAIN from this new learning step; previous reliability report is unchanged',missing_prior_head_outcomes='left absent; carry-only selection')
     theta=np.load(directory/'carry_theta.npy');reused=[]
     for item in state['current_cases']:
         if not hits[str(item['seed'])]:
@@ -71,8 +104,10 @@ def prepare_next(directory,source,target_counts=None):
         selection[p]=dict(latest=sum(v in recent for v in targets[p]),persistent_never_hit=sum(v in never for v in targets[p]),known_other_success=sum(v in other for v in targets[p]))
     guards=[v['seed'] for v in reused if v['kind']=='guard']+[v['seed'] for v in new_guards]
     assert len(guards)==len(set(guards)) and all(hits[str(v)] for v in guards)
+    assert len({v%base.MODULUS for seeds in bank.values() for v in seeds})==sum(map(len,bank.values()))
     return dict(bank=bank,hits=hits,fallback=fallback,targets=targets,target_pools=pools,guards=guards,new_guards=new_guards,reused=reused,
-        donor_memory=memory,reused_donors=old_donors,target_selection=selection,previous_probe_reclassified_as_TRAIN=True)
+        donor_memory=memory,reused_donors=old_donors,target_selection=selection,previous_probe_reclassified_as_TRAIN=True,
+        included_evaluation=evaluation_record,evaluation_queries=evaluation_queries)
 
 
 def export_state(directory,m,s,hits,probe,donor_reports,capture_reports,chosen_donors=None):
