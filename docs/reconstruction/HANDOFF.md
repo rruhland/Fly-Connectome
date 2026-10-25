@@ -4,7 +4,7 @@
 
 User renewed ongoing work until reliable, efficient interception learning or stop. The old two-hour and two-experiment limits below are historical. Use the [practical interception plan](../plans/2026-10-25-practical-interception.md): concrete miss fixes, a cheaper equivalent rollout loop, consistent training practice, and fresh-game checks. Preserve real partial gains instead of requiring every old statistical gate. No backprop; major architecture changes still need user review. Same Sol XHigh agent reused.
 
-The lean rollout implementation is integrated (`e9d72ef`); its exact retained-trajectory benchmark is1.617×faster. The first repeated-bank block completed in20.37minutes with no net fresh interception gain. See [October25 practical results](2026-10-25-practical-interception-results.md). Work continues with anchored selection, broader practice and forward action-dose calibration; the failed endpoint is not promoted as a better learner.
+The lean rollout implementation is integrated (`e9d72ef`); its exact retained-trajectory benchmark is1.617×faster. Two practical blocks completed in20.37and20.92minutes, both with no net fresh interception gain. The second used broader practice, retained anchors, harmonic utility and forward action-dose calibration (`28c7651`). See [October25 practical results](2026-10-25-practical-interception-results.md). No further blind mutation sweep is selected. Work continues with a directed, closed-form residual from the learner’s own rewarded action changes, preserving successful behavior. Current carry is practical-r2 theta_g03, a common-bank candidate rather than a proved fresh improvement. Runtime-only encoder-copy branch`1b4dddf`is parked, not integrated.
 
 ## Previous research direction
 
