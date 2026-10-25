@@ -1,3 +1,11 @@
+## Current direction: cheap remembered LEFT skill, then broader exploration
+
+Carry `/workspace/m1b-experiments/pong-local-repair-20261025-r2/selected.npy`. The repeated step retained six of eight older repairs and improved practice, but fresh remained 26/32 LEFT and 30/32 RIGHT. New LEFT discovery was weak: two successes, neither absorbed. Hold the fitting rule fixed and improve useful LEFT experience.
+
+Append the latest 64 contexts as TRAIN (462 total). First query/capture the earlier reward-trained DIRECTtheta9 on current LEFT misses: 22 unknown outcomes plus five known successful outcomes requiring full traces; skip eight cached failures. This is replay of the learner's own earlier rewarded skill, not an expert/oracle. Retain actual returns only. Then explore still-unrepaired contexts, up to 24 LEFT and eight RIGHT. LEFT gets low-margin positions plus temporal-bin midpoints (deduplicated); RIGHT keeps four low-margin positions. This explores confident decisions as well as cheap flips. Fewer targets are fine when remembered skill already supplies successes.
+
+Combine successful DIRECT traces, new local traces and still-needed full donor memory, one witness per seed, using the same fourfold repair loss, .25 matching preservation, exact guard-conflict filtering and working-set solver. Preserve useful carry on failure/ties; measure actual bank and fresh returns. Report remembered-skill, new local and old-memory absorption separately. No objective or architecture change. Sol proposed the cheap DIRECT-first step; Astra proposed LEFT-focused broader temporal exploration; both selected their combination before execution.
+
 ## Current direction: repeat reward discovery and integration
 
 Carry `/workspace/m1b-experiments/pong-local-repair-weighted-20261025-r1/selected.npy`: 139/165 LEFT, 143/169 RIGHT on practice; latest fresh 28/32 LEFT and 26/32 RIGHT. Stronger fitting improved practice but left fresh totals unchanged. No further loss-weight sweep.
