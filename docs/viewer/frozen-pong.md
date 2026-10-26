@@ -4,6 +4,8 @@ Watch a frozen learned checkpoint play the native deterministic test opponent, o
 
 ## Launch
 
+**Cloud access:** `127.0.0.1` in a local browser refers to the user's computer, not this cloud workspace. A successful workspace health check or queued browser-panel request does not establish user access. This environment has no available configured public preview/port-forwarding route. The local-run bundle at `/workspace/shared/pong-viewer-local.zip` includes the exact inference source, five checkpoints, and Windows/macOS/Linux launchers; extract it on the user's computer before launching. Python 3.11+ is required and the launchers install NumPy/PyTorch on first use. The package passed a 24-camera vision/frozen-state smoke check in the workspace; the Windows launcher has not been executed on Windows.
+
 From the repository root, using the existing experiment artifacts:
 
 ```sh
