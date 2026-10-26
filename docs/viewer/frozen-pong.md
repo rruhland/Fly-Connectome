@@ -4,6 +4,18 @@ Watch a frozen learned checkpoint play the native deterministic test opponent, o
 
 ## Launch
 
+### Updating a local Git checkout
+
+The viewer source is on `reconstruction/m1b-continuation`. Fetch and switch to that branch, then use `git pull --ff-only` for subsequent updates. Checkpoints remain separate from source and are not downloaded by a Git pull. Reuse the `checkpoints` folder from the extracted `pong-viewer-local` package:
+
+```sh
+python scripts/run_pong_viewer.py --checkpoints "/path/to/pong-viewer-local/checkpoints"
+```
+
+Use the Python interpreter from the downloaded viewer's `.venv` if that is where NumPy and PyTorch are installed. The script always runs the source in this Git checkout, binds locally, and opens the browser. Stop the old viewer before launching it on the same port. Alternatively copy the downloaded `checkpoints` folder to this repo's root and omit `--checkpoints`; that directory is already ignored by Git. Updating the source requires restarting the viewer. There is no background remote-access or file-transfer service installed by this launcher.
+
+A future direct artifact bridge requires a reachable, authenticated local endpoint and an authorized cloud network route. At present VPN is not configured and TCP grants are empty. A proposed route is outbound cloud SSH/SFTP through the supported VPN proxy to a dedicated transfer directory on the user's computer; it is **not connected or tested yet**. Do not interpret a Git push as establishing that bridge.
+
 **Cloud access:** `127.0.0.1` in a local browser refers to the user's computer, not this cloud workspace. A successful workspace health check or queued browser-panel request does not establish user access. This environment has no available configured public preview/port-forwarding route. The local-run bundle at `/workspace/shared/pong-viewer-local.zip` includes the exact inference source, five checkpoints, and Windows/macOS/Linux launchers; extract it on the user's computer before launching. Python 3.11+ is required and the launchers install NumPy/PyTorch on first use. The package passed a 24-camera vision/frozen-state smoke check in the workspace; the Windows launcher has not been executed on Windows.
 
 From the repository root, using the existing experiment artifacts:
