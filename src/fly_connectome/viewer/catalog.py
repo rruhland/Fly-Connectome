@@ -27,11 +27,22 @@ def read(path):
     return json.loads(Path(path).read_text())
 
 
+def runtime_source_matches(expected):
+    actual=source_signature()
+    if actual==expected:return True
+    if actual.keys()!=expected.keys():return False
+    # An existing Windows checkout may still have CRLF from core.autocrlf.
+    # Permit only that newline conversion, not a different runtime implementation.
+    root=Path(__file__).parents[1]
+    return all(hashlib.sha256((root/name).read_bytes().replace(b'\r\n',b'\n')).hexdigest()==digest
+               for name,digest in expected.items())
+
+
 def load_catalog(experiments,export=None):
     root=Path(experiments);export=Path(export) if export else root/'pong-interception-checkpoint-20261025'
     model_bytes()  # Verify the same frozen visual prior used in the benchmark.
     declared=read(export/'checkpoint.json')
-    if declared['source_signature']!=source_signature():
+    if not runtime_source_matches(declared['source_signature']):
         raise ValueError('export runtime source signature differs from the installed benchmark path')
     if declared['vision_configuration']!=VISION_CONFIGURATION:
         raise ValueError('export visual configuration mismatch')

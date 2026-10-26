@@ -1,0 +1,4 @@
+# Keep pinned Python runtime sources byte-stable on Windows checkouts.
+*.py text eol=lf
+*.pt -text
+*.npy -text
