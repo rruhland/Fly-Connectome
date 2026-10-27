@@ -58,7 +58,7 @@ def prune_task(directory,case,index,deadline):
             if success:best=r;best_mask=candidate;accepted+=1
         if len(trials)>=8 or time.monotonic()>=deadline:break
     prefix_X=sp.load_npz(case['prefix_raw'])[:query];full=sp.vstack([prefix_X,best['X']],format='csr');actions=np.r_[[r['action'] for r in receipt['records'][:query]],best['actions']]
-    Xpath=f'witnesses/case_{index:02d}.npz';meta=f'witnesses/case_{index:02d}_actions.npy';sp.save_npz(directory/Xpath,full);base.save_array(directory/meta,actions)
+    Xpath=f'witnesses/case_{index:02d}.npz';meta=f'witnesses/case_{index:02d}_actions.npy';sp.save_npz(directory/Xpath,full);np.save(directory/meta,actions.astype(np.int64),allow_pickle=False)
     hits=[i for i,r in enumerate(receipt['records'][:query]) if r['hits']]+[full.shape[0]-1]
     result=dict(seed=case['seed'],phase=case['phase'],role=case['role'],transition=query,source='native-reward-verified chunk deletion of current burst witness',path=Xpath,actions_path=meta,hit_indices=hits,target_hits=len(hits),
         original_hold=hold,remaining_forced=int(best_mask.sum()),original_contrasting_overrides=original_contrasts,remaining_contrasting_overrides=best['contrasting_overrides'],accepted_deletions=accepted,trials=trials,
@@ -82,22 +82,31 @@ def cases(raw_manifest):
     return selected
 
 
-def run(directory):
-    directory=Path(directory);assert not directory.exists();directory.mkdir();(directory/'cases').mkdir();(directory/'witnesses').mkdir()
-    for name in ('carry.npy','radial-cap.json'):(directory/name).write_bytes((RAW/name).read_bytes())
-    raw_manifest=base.read(RAW/'manifest.json');assert base.read(RAW/'completion-verification.json')['passed'];selected=cases(raw_manifest)
-    files={n:base.sha(Path(__file__).with_name(n)) for n in ('run_rally_incremental_pruned.py','pong_rally_raw_margin.py','run_rally_raw_optimizer.py','rally_raw_capture.py','pong_action_credit.py')}
-    m=dict(source=base.source_signature(),files=files,carry_sha256=base.sha(directory/'carry.npy'),raw_data_source=str(RAW),cases=selected,work_seconds=420,max_trials_per_case=8,
-        positive_memory='only four chosen current burst recoveries; all other requested changes deferred',preservation='all197 current earned successful segments, soft',no_new_search=True,no_holdout_fitted=True,no_backprop=True)
-    base.atomic_json(directory/'manifest.json',m);began=time.monotonic();deadline=began+420;base.atomic_json(directory/'work-clock.json',dict(started_wall_ns=time.time_ns(),started_monotonic=began,deadline_monotonic=deadline));results=[]
-    print(json.dumps(dict(launched=True,cases=[{k:c[k] for k in ('seed','role','phase','contrasting_overrides')} for c in selected],seconds=420)),flush=True)
-    with ProcessPoolExecutor(max_workers=4,mp_context=mp.get_context('spawn'),initializer=base.initialize) as pool:
-        futures=[pool.submit(prune_task,str(directory),case,i,min(deadline-180,began+150)) for i,case in enumerate(selected)]
-        for f in futures:results.append(f.result())
-    base.atomic_json(directory/'pruning-summary.json',dict(cases=results,transition_cameras=sum(r['transition_cameras'] for r in results),initial_cameras=sum(r['initial_cameras'] for r in results),all_complete=all(r['complete'] for r in results)))
+def run(directory,resume_fit=False):
+    directory=Path(directory)
+    if resume_fit:
+        m=base.read(directory/'manifest.json');raw_manifest=base.read(RAW/'manifest.json');clock=base.read(directory/'work-clock.json')
+        began=clock['started_monotonic'];deadline=clock['deadline_monotonic'];results=base.read(directory/'pruning-summary.json')['cases']
+        assert base.sha(directory/'carry.npy')==m['carry_sha256'] and m['source']==base.source_signature()
+        assert not (directory/'fit-report.json').exists() and all(r['complete'] for r in results)
+        files={n:base.sha(Path(__file__).with_name(n)) for n in m['files']}
+        base.atomic_json(directory/'technical-resume.json',dict(reason='saved action arrays were float64 because generic weight-array writer coerces dtype; validate and cast discrete actions, no data/camera repeat',original_files=m['files'],resumed_files=files,original_clock=clock,resumed_wall_ns=time.time_ns(),additional_candidate_observations_before_resume=0))
+    else:
+        directory=Path(directory);assert not directory.exists();directory.mkdir();(directory/'cases').mkdir();(directory/'witnesses').mkdir()
+        for name in ('carry.npy','radial-cap.json'):(directory/name).write_bytes((RAW/name).read_bytes())
+        raw_manifest=base.read(RAW/'manifest.json');assert base.read(RAW/'completion-verification.json')['passed'];selected=cases(raw_manifest)
+        files={n:base.sha(Path(__file__).with_name(n)) for n in ('run_rally_incremental_pruned.py','pong_rally_raw_margin.py','run_rally_raw_optimizer.py','rally_raw_capture.py','pong_action_credit.py')}
+        m=dict(source=base.source_signature(),files=files,carry_sha256=base.sha(directory/'carry.npy'),raw_data_source=str(RAW),cases=selected,work_seconds=420,max_trials_per_case=8,
+            positive_memory='only four chosen current burst recoveries; all other requested changes deferred',preservation='all197 current earned successful segments, soft',no_new_search=True,no_holdout_fitted=True,no_backprop=True)
+        base.atomic_json(directory/'manifest.json',m);began=time.monotonic();deadline=began+420;base.atomic_json(directory/'work-clock.json',dict(started_wall_ns=time.time_ns(),started_monotonic=began,deadline_monotonic=deadline));results=[]
+        print(json.dumps(dict(launched=True,cases=[{k:c[k] for k in ('seed','role','phase','contrasting_overrides')} for c in selected],seconds=420)),flush=True)
+        with ProcessPoolExecutor(max_workers=4,mp_context=mp.get_context('spawn'),initializer=base.initialize) as pool:
+            futures=[pool.submit(prune_task,str(directory),case,i,min(deadline-180,began+150)) for i,case in enumerate(selected)]
+            for f in futures:results.append(f.result())
+        base.atomic_json(directory/'pruning-summary.json',dict(cases=results,transition_cameras=sum(r['transition_cameras'] for r in results),initial_cameras=sum(r['initial_cameras'] for r in results),all_complete=all(r['complete'] for r in results)))
     W,unused,preservation,unused_matching,qerror=build(RAW);positive=[];matching=[]
     for r in results:
-        X=sp.load_npz(directory/r['path']);actions=np.load(directory/r['actions_path']);contrast=actions!=np.argmax(X@W.T,axis=1);start_t=0
+        X=sp.load_npz(directory/r['path']);saved_actions=np.load(directory/r['actions_path']);assert np.array_equal(saved_actions,np.rint(saved_actions));actions=saved_actions.astype(np.int64);contrast=actions!=np.argmax(X@W.T,axis=1);start_t=0
         for ordinal,end in enumerate(r['hit_indices']):
             segment=np.arange(start_t,end+1);start_t=end+1;group=('first_' if ordinal==0 else 'later_')+r['phase']
             for mask,target in ((contrast,positive),(~contrast,matching)):
@@ -128,4 +137,4 @@ def run(directory):
     base.atomic_json(directory/'summary.json',summary);print(json.dumps(summary),flush=True)
 
 if __name__=='__main__':
-    p=argparse.ArgumentParser();p.add_argument('directory');a=p.parse_args();run(a.directory)
+    p=argparse.ArgumentParser();p.add_argument('directory');p.add_argument('--resume-fit',action='store_true');a=p.parse_args();run(a.directory,a.resume_fit)
