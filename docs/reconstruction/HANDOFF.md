@@ -2,9 +2,10 @@
 
 User authorizes continuation until match-long returns are learnably consistent or stop. Bridge belongs to another thread. Follow [plan](../plans/2026-10-27-sustained-return-learning.md) and [results](2026-10-27-sustained-return-results.md). Reuse Sol XHigh `/root/pong_one_pass_research`; root owns hypotheses, selection and review.
 
-CURRENT provisional TRAIN carry: `/workspace/m1b-experiments/pong-rally-pruned-incremental-20261027-r1/selected.npy` (same existing4389-feature linearpolicy/currentvision). Reward-pruning reduced four recoveries to five changed-action labels. Native96:80/96first,134/201later(66.7%),214hits, all4targetedrecoveries improved; prior fe132e carry77/96,120/185,197hits. No fresh qualification for this new head. Earlier regression head remains fresh-supported fallback; originalOctober25 export immutable. No reliability claim.
+CURRENT continuing TRAIN carry: `/workspace/m1b-experiments/pong-rally-guarded-repair-20261027-r1/selected.npy` (df1f49fb…), same4389-feature linearpolicy/currentvision. Guardedrepair retained ALL96prior returncounts and gained19hits:81first,152/217later(70%),233hits. Fresh32paired02b→df1:26→28first,34/57→40/66later,60→68hits; modesttransfer, reliabilitynotmet. OriginalOct25export and02bfallback immutable.
 
-r2four-repairrepeat wasnotpromoted. GuardedONErepair nowworks: all393rewardwitnessactions and32,049old/matchingchoicescertified; native96first81,later152/217(70.05%),233hits(+19), NOseedlostoldreturns. Head `/workspace/m1b-experiments/pong-rally-guarded-repair-20261027-r1/proposal.npy` df1f49fb…; previous02b remainsfallback. ACTIVE fresh32paired02bvsdf1 at `pong-rally-guarded-fresh-20261027-r1` (17L15R), exec51443 onSol; nofitting. Continueafterfreshreview, goalstill95%+first/laternotmet.
+That32freshcohort is NOW explicitly admittedtoTRAIN afteritsfreshresult waspreserved; futurequalificationmustnewseeds. Combinedcurrentbank128cases/301earnedsegments/109first/192of283later, no newcameras toassemble. Active next: Solreview/implementationof~3sequentialguardedreward-prunedrepairs, fullwitnesscertificateandold/newearned-prefixguardsforeach, thenONEfull128nativeevaluation. Rebaseafteracceptedpatch;deferfailedwitnesses. NoBP/privilegedinputs/newruntimearchitecture. Exactepisode-reusehelperavailable; source/core/config/RNGunchangedrequired, actualcachedvsexecutedcostsseparate. Olderactive/pausedsectionsbelowhistorical.
+
 
 ## GitHub synchronization and local artifact bridge (2026-10-26)
 
