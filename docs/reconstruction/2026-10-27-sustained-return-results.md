@@ -1,5 +1,17 @@
 # Sustained-return continuation
 
+## Progress at a glance
+
+Same64 TRAIN starts, native opponent, normal learned action selection throughout:
+
+| Policy | First returns | Later returns | Total hits | Games reaching4 returns |
+|---|---:|---:|---:|---:|
+| October25 carry |54/64|33/86 (38%)|87|4|
+| Rewarded-sequence regression |53/64|49/100 (49%)|102|5|
+| Soft action margins |51/64|84/127 (66%)|135|15|
+
+The regression head also improved on32 fresh paired starts: later19/48→37/67 and hits48→68. The margin head has not had separate fresh qualification; its32 additional TRAIN starts gave26/32 first and36/58 later before further learning. All these policies still miss frequently. Current work aggregates opening and rally recoveries under the margin head.
+
 ## Starting evidence
 
 The immutable October25 final head is the carry. Re-reading its existing32 full-game receipts (no new episodes) gives28/32 first returns and14/42 later returns. All32 ended in an agent miss. The matched r4 baseline had28/32 first and17/45 later returns. This reinforces that the prior milestone did not improve sustained play; the opponent was not ending those games early.
@@ -56,3 +68,17 @@ Root: `/workspace/m1b-experiments/pong-rally-margin-20261027-r1`. Same original 
 On64 TRAIN games, first returns51/64 versus original54 and ridge53; later84/127 (66.14%) versus original33/86 and ridge49/100; total hits135 versus87/102. Games reaching2/3/4/5/6 returns34/24/15/8/3 versus ridge27/15/5/2/0. Six of12 witness contexts gained an extra deployed return. The opponent returned164/164 opportunities;56 own misses and8 timeouts. Cost31,298 transition cameras +64initials,94.367s. Head SHA256 `fe132e0dd2466494142ef4578b187e6856341dc1bb4a3803456ca16e7703b625`.
 
 Root selected this as the next experimental TRAIN carry; the first ridge checkpoint remains the fresh-supported fallback, and the original export stays immutable. No fresh qualification claim for the margin head. Next authorized learning cycle: add32 new TRAIN starts, discover approximately24 rewarded recoveries spanning opening and later misses, aggregate successful experience, fit one same-margin update and evaluate on the expanded TRAIN bank. This follows learner-induced state coverage rather than repeating objective variants on the original12 witnesses.
+
+## Aggregated recovery update, allocation6 — rejected
+
+Root: `/workspace/m1b-experiments/pong-rally-aggregate-20261027-r1`. Added32 new TRAIN starts under the margin carry (26/32first,36/58later); combined96 baseline77/96first,120/185later,197hits. Found24/24 new successful recoveries (12opening/12later,17from new starts),15,460 search cameras, no censored branches. Seven remembered earlier first-return successes plus12 new opening recoveries covered all19 opening misses. Six unresolved older burst witnesses were also retained.
+
+The same soft-margin fit converged in1.774s, but achieved only52.13% weighted requested-action agreement; changed18.68% of current successful-segment actions. Native96 fell to69/96first,53/119later (44.54%),122hits; only9/24 new witnesses gained an extra deployed return. Three timeouts, no opponent misses. **Rejected; fe132e0d margin carry retained.** Finding recoveries is currently easy; combining them without interference is not.
+
+Costs:15,393 new TRAIN cameras,15,460 search,32,613 candidate;152initials. Learning-cycle wall156.305s, separate new-start collection49.712s. Root's saved-data label diagnostic found904 positive rows,854unique vectors, no exact positive-positive contradictory labels;9 exact positive-preservation conflicting vectors covered12 positive rows. This rules against trivial exact aliasing as the main explanation, not against nearby-state interference or unnecessary actions in rewarded sequences. Next decision compares excessive update size, objective underfitting and the566-coordinate optimizer restriction within the unchanged4389-feature policy. No new training architecture selected yet.
+
+## Underfitting diagnosis and selected correction
+
+Stored-data checks used no new camera observations. Halving the rejected update reduced requested-action agreement52.13%→20.21%, so simple damping was not selected. Removing preservation while retaining ridge0.001 only increased agreement to58.68%. Root challenged an interpretation of this as insufficient feature capacity: with the same566 features and positive data, a single positive-only diagnostic at ridge0.000001 attained99.96% weighted agreement in0.71s. It changed40.67% of preserved actions and is explicitly **not a deployable candidate**.
+
+The diagnosis is strong regularization-induced underfitting; positive-only separability does not establish joint compatibility with all successful behaviors or generalization. Selected next: one full aggregate fit at ridge0.000001, retaining the original soft preservation/matching objectives, same data/normalization/margins/architecture, followed by96 native TRAIN games. No raw-feature recapture or feature expansion yet; no parameter grid.

@@ -4,7 +4,7 @@ User authorizes continuation until match-long ball returns are learnably consist
 
 Current experimental TRAIN carry: `pong-rally-margin-20261027-r1/proposal.npy` (fe132e0d…), same architecture/vision, analytic soft action margins.64TRAIN gives51/64 first,84/127 later(66.1%),135hits; original54/64,33/86,87hits. Eight timeouts, no opponent misses. First ridge update `pong-rally-imitation-20261027-r1/proposal.npy` remains fresh-supported fallback:32fresh first31/32,later37/67 vs original29/32,19/48. Original October25 export remains immutable. No reliability claim.
 
-Active next:32new TRAIN starts on margin carry, approximately24 opening/later reward-earned recoveries, experience aggregation, same-margin fit and expanded96TRAIN evaluation. No fresh fitting, BP or privileged policy inputs. Major architecture changes require review. Older active/paused sections below are historical.
+Aggregation cycle completed and REJECTED:24/24 discoveries succeeded, but96TRAIN first77→69, later120/185→53/119, hits197→122. Keep fe132e0d margin carry. Root diagnostic finds same566features can fit99.96% of positive actions when ridge falls0.001→0.000001 (positive-only diagnostic, not deployed). Active next: one full soft-margin fit at weaker ridge with all preservation/matching retained, then96 native TRAIN games. No feature expansion yet. No fresh fitting, BP or privileged policy inputs. Major architecture changes require review. Older active/paused sections below are historical.
 
 ## GitHub synchronization and local artifact bridge (2026-10-26)
 
