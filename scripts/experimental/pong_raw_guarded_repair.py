@@ -59,7 +59,7 @@ def fit(W,positive,guards,normal,deadline,ridge=1e-6,batch=128,initial_rows=()):
     assert np.isfinite(delta).all() and maximum<1e-8 and objective<=zero+1e-8
     policy=FrozenLinearPolicy(W+delta);changed=0
     for i,a in enumerate(ag):
-        lo,hi=Xg.indptr[i:i+2];got,_=policy.choose(Xg.indices[lo:hi],Xg.data[lo:hi]);changed+=got!=a
+        lo,hi=Xg.indptr[i:i+2];got,_=policy.choose(Xg.indices[lo:hi],Xg.data[lo:hi]);changed+=int(got!=a)
     assert changed==0, ('guard argmax changed',changed)
     report=dict(solver='OSQP diagonal hinge-slack QP with lazy sparse guard generation',osqp_version=osqp.__version__,status=status,variables=n+ns,raw_contrast_parameters=n,positive_rows=X.shape[0],hinge_slacks=ns,guard_rows=Xg.shape[0],all_guard_inequalities=len(lower),working_guard_inequalities=len(working),rounds=len(history),history=history,
         maximum_actual_logit_guard_violation=maximum,guard_action_changes=changed,required_margin='min(kappa, half carried gap)',required_margin_min=float(required.min()),required_margin_max=float(required.max()),ridge=ridge,input_rms=scale,kappa=kappa,

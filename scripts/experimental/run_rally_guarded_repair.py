@@ -13,24 +13,34 @@ from run_rally_incremental_cycle import current_rows,dataset
 from run_rally_raw_optimizer import native_task,more
 from rally_action_equivalence import certify_episode
 from return_metrics import aggregate
+from fly_connectome.control.policy import FrozenLinearPolicy
 import run_practical_pong_v2 as base
 
 
-def run(directory,source,witness_root,seed):
-    directory=Path(directory);source=Path(source);witness_root=Path(witness_root);assert not directory.exists();W,rows=current_rows(source)
+def run(directory,source,witness_root,seed,resume=False):
+    directory=Path(directory);source=Path(source);witness_root=Path(witness_root);assert resume or not directory.exists();W,rows=current_rows(source)
     witness=next(w for w in base.read(witness_root/'discovery-summary.json')['selected_witnesses'] if w['seed']==seed)
     assert base.read(witness_root/'manifest.json')['carry_sha256']==base.sha(source/'proposal.npy')
     positive,guards,matching=dataset(witness_root,W,rows,[witness]);assert sum(c['X'].shape[0] for c in positive)==3
-    directory.mkdir()
+    directory.mkdir(exist_ok=resume)
     for old,new in [('proposal.npy','carry.npy'),('radial-cap.json','radial-cap.json')]:(directory/new).write_bytes((source/old).read_bytes())
     files={n:base.sha(Path(__file__).with_name(n)) for n in ('run_rally_guarded_repair.py','pong_raw_guarded_repair.py','run_rally_incremental_cycle.py','run_rally_raw_optimizer.py','rally_action_equivalence.py')}
-    manifest=dict(source=base.source_signature(),files=files,source_root=str(source),carry_sha256=base.sha(directory/'carry.npy'),witness_root=str(witness_root),witness=witness,guarded_earned_segments=len(guards),rows=[r['receipt'] for r in rows],work_seconds=420,solver_seconds=90,
+    manifest=dict(source=base.source_signature(),files=files,source_root=str(source),carry_sha256=base.sha(directory/'carry.npy'),witness_root=str(witness_root),witness=witness,guarded_earned_segments=len(guards),matching_witness_guard_rows=sum(c['X'].shape[0] for c in matching),rows=[r['receipt'] for r in rows],work_seconds=420,solver_seconds=90,
         objective='diagonal raw contrast ridge plus requested action hinge slack; every earned prefix has capped action-choice margins',required_guard_gap='min(kappa, half old gap)',failed_suffix_guarded=False,no_new_capture=True,no_new_discovery=True,no_holdout_fitted=True,no_backprop=True)
-    base.atomic_json(directory/'manifest.json',manifest);began=time.monotonic();deadline=began+420;base.atomic_json(directory/'work-clock.json',dict(started_wall_ns=time.time_ns(),started_monotonic=began,deadline_monotonic=deadline))
+    if resume:
+        original=base.read(directory/'manifest.json');clock=base.read(directory/'work-clock.json');assert original['carry_sha256']==manifest['carry_sha256'] and original['source']==manifest['source']
+        began=clock['started_monotonic'];deadline=clock['deadline_monotonic'];base.atomic_json(directory/'matching-guard-amendment.json',dict(reason='add samewitness matching actions to exact fulltrajectory certificate; fix numpy integer report serialization; no newcapture or clockreset',original_manifest=original,resumed_manifest=manifest,original_clock=clock,resumed_wall_ns=time.time_ns()))
+    else:
+        base.atomic_json(directory/'manifest.json',manifest);began=time.monotonic();deadline=began+420;base.atomic_json(directory/'work-clock.json',dict(started_wall_ns=time.time_ns(),started_monotonic=began,deadline_monotonic=deadline))
     normal0=base.read(base.EXPERIMENTS/'pong-action-credit-soft-preserve-20261025-r1/fit-report.json');normal={k:normal0[k] for k in ('input_rms','kappa')}
-    delta,report=fit(W,positive,guards,normal,min(deadline-180,time.monotonic()+90),ridge=1e-6);base.save_array(directory/'applied_delta.npy',delta);base.save_array(directory/'proposal.npy',W+delta);base.atomic_json(directory/'fit-report.json',report);print(json.dumps(dict(fit=report)),flush=True)
-    if report['positive']['requested_action_fraction']==0:
-        base.atomic_json(directory/'summary.json',dict(status='no_effective_repair',zero_candidate_observations=True,fit=report,wall_seconds=time.monotonic()-began));return
+    delta,report=fit(W,positive,guards+matching,normal,min(deadline-180,time.monotonic()+90),ridge=1e-6);base.save_array(directory/'applied_delta.npy',delta);base.save_array(directory/'proposal.npy',W+delta);base.atomic_json(directory/'fit-report.json',report);print(json.dumps(dict(fit=report)),flush=True)
+    WX=sp.load_npz(witness_root/witness['path']);wa=np.load(witness_root/witness['actions_path']);policy=FrozenLinearPolicy(W+delta);witness_changes=[]
+    for i,a in enumerate(wa):
+        lo,hi=WX.indptr[i:i+2];action,_=policy.choose(WX.indices[lo:hi],WX.data[lo:hi])
+        if action!=a:witness_changes.append(i)
+    base.atomic_json(directory/'full-witness-action-certificate.json',dict(certified=not witness_changes,seed=seed,checked_rows=len(wa),changed_rows=witness_changes,native_reward_source=str(witness_root/'discovery-summary.json'),executed_transition_cameras=0,reason='exact greedy actions along whole reward-earned trajectory imply reproduced trajectory with same deterministic sensor/physics path'))
+    if witness_changes:
+        base.atomic_json(directory/'summary.json',dict(status='no_full_witness_repair',zero_candidate_observations=True,fit=report,wall_seconds=time.monotonic()-began));return
     for name in ('episodes','features'):(directory/'native_candidate'/name).mkdir(parents=True)
     candidate=W+delta;candidate_hash=base.sha(directory/'proposal.npy');source_manifest=base.read(source/'manifest.json');outcomes=[];jobs=[];certificates=[];cert_began=time.monotonic()
     for i,r in enumerate(rows):
@@ -64,4 +74,4 @@ def run(directory,source,witness_root,seed):
     base.atomic_json(directory/'summary.json',summary);print(json.dumps(summary),flush=True)
 
 if __name__=='__main__':
-    p=argparse.ArgumentParser();p.add_argument('directory');p.add_argument('--source-root',required=True);p.add_argument('--witness-root',required=True);p.add_argument('--seed',type=int,default=104562292);a=p.parse_args();run(a.directory,a.source_root,a.witness_root,a.seed)
+    p=argparse.ArgumentParser();p.add_argument('directory');p.add_argument('--source-root',required=True);p.add_argument('--witness-root',required=True);p.add_argument('--seed',type=int,default=104562292);p.add_argument('--resume',action='store_true');a=p.parse_args();run(a.directory,a.source_root,a.witness_root,a.seed,a.resume)
