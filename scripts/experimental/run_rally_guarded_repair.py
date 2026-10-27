@@ -17,7 +17,7 @@ from fly_connectome.control.policy import FrozenLinearPolicy
 import run_practical_pong_v2 as base
 
 
-def run(directory,source,witness_root,seed,resume=False):
+def run(directory,source,witness_root,seed,resume=False,initial_delta_file=None):
     directory=Path(directory);source=Path(source);witness_root=Path(witness_root);assert resume or not directory.exists();W,rows=current_rows(source)
     witness=next(w for w in base.read(witness_root/'discovery-summary.json')['selected_witnesses'] if w['seed']==seed)
     assert base.read(witness_root/'manifest.json')['carry_sha256']==base.sha(source/'proposal.npy')
@@ -29,11 +29,12 @@ def run(directory,source,witness_root,seed,resume=False):
         objective='diagonal raw contrast ridge plus requested action hinge slack; every earned prefix has capped action-choice margins',required_guard_gap='min(kappa, half old gap)',failed_suffix_guarded=False,no_new_capture=True,no_new_discovery=True,no_holdout_fitted=True,no_backprop=True)
     if resume:
         original=base.read(directory/'manifest.json');clock=base.read(directory/'work-clock.json');assert original['carry_sha256']==manifest['carry_sha256'] and original['source']==manifest['source']
-        began=clock['started_monotonic'];deadline=clock['deadline_monotonic'];base.atomic_json(directory/'matching-guard-amendment.json',dict(reason='add samewitness matching actions to exact fulltrajectory certificate; fix numpy integer report serialization; no newcapture or clockreset',original_manifest=original,resumed_manifest=manifest,original_clock=clock,resumed_wall_ns=time.time_ns()))
+        began=clock['started_monotonic'];deadline=clock['deadline_monotonic'];base.atomic_json(directory/('solver-warm-continuation.json' if initial_delta_file else 'matching-guard-amendment.json'),dict(reason='add samewitness matching actions to exact fulltrajectory certificate; fix numpy integer report serialization; no newcapture or clockreset',original_manifest=original,resumed_manifest=manifest,original_clock=clock,resumed_wall_ns=time.time_ns()))
     else:
         base.atomic_json(directory/'manifest.json',manifest);began=time.monotonic();deadline=began+420;base.atomic_json(directory/'work-clock.json',dict(started_wall_ns=time.time_ns(),started_monotonic=began,deadline_monotonic=deadline))
     normal0=base.read(base.EXPERIMENTS/'pong-action-credit-soft-preserve-20261025-r1/fit-report.json');normal={k:normal0[k] for k in ('input_rms','kappa')}
-    delta,report=fit(W,positive,guards+matching,normal,min(deadline-180,time.monotonic()+90),ridge=1e-6);base.save_array(directory/'applied_delta.npy',delta);base.save_array(directory/'proposal.npy',W+delta);base.atomic_json(directory/'fit-report.json',report);print(json.dumps(dict(fit=report)),flush=True)
+    initial_delta=np.load(initial_delta_file) if initial_delta_file else None
+    delta,report=fit(W,positive,guards+matching,normal,min(deadline-90,time.monotonic()+60 if initial_delta_file else time.monotonic()+90),ridge=1e-6,initial_delta=initial_delta,state_path=directory/'solver-state.npz');base.save_array(directory/'applied_delta.npy',delta);base.save_array(directory/'proposal.npy',W+delta);base.atomic_json(directory/'fit-report.json',report);print(json.dumps(dict(fit=report)),flush=True)
     WX=sp.load_npz(witness_root/witness['path']);wa=np.load(witness_root/witness['actions_path']);policy=FrozenLinearPolicy(W+delta);witness_changes=[]
     for i,a in enumerate(wa):
         lo,hi=WX.indptr[i:i+2];action,_=policy.choose(WX.indices[lo:hi],WX.data[lo:hi])
@@ -74,4 +75,4 @@ def run(directory,source,witness_root,seed,resume=False):
     base.atomic_json(directory/'summary.json',summary);print(json.dumps(summary),flush=True)
 
 if __name__=='__main__':
-    p=argparse.ArgumentParser();p.add_argument('directory');p.add_argument('--source-root',required=True);p.add_argument('--witness-root',required=True);p.add_argument('--seed',type=int,default=104562292);p.add_argument('--resume',action='store_true');a=p.parse_args();run(a.directory,a.source_root,a.witness_root,a.seed,a.resume)
+    p=argparse.ArgumentParser();p.add_argument('directory');p.add_argument('--source-root',required=True);p.add_argument('--witness-root',required=True);p.add_argument('--seed',type=int,default=104562292);p.add_argument('--resume',action='store_true');p.add_argument('--initial-delta');a=p.parse_args();run(a.directory,a.source_root,a.witness_root,a.seed,a.resume,a.initial_delta)
