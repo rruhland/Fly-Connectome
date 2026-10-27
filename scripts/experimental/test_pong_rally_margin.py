@@ -15,4 +15,9 @@ class MarginTests(unittest.TestCase):
   self.assertTrue(np.allclose(g,numerical,atol=1e-8));self.assertTrue(np.allclose(H,np.array(columns).T,atol=1e-7))
  def test_softfit_descends_and_prefers_rewarded_action(self):
   t,p,s=self.data();delta,r=fit(t,p,s,[],dict(input_rms=1.,kappa=.05));self.assertLess(r['final_objective'],r['zero_residual_objective']);self.assertGreater(r['positive']['weighted_requested_action_fraction'],0.9);self.assertLess(np.max(abs(delta.sum(0))),1e-12)
+ def test_explicit_ridge_is_used_and_reported(self):
+  from pong_constrained_residual import CONTRAST
+  t,p,s=self.data();normal=dict(input_rms=1.,kappa=.05);delta,r=fit(t,p,s,[],normal,ridge=1e-6)
+  parameters=(CONTRAST.T@delta).reshape(-1);self.assertEqual(r['ridge'],1e-6)
+  self.assertAlmostEqual(r['final_objective'],objective(parameters,problem(t,p,s,[],normal),ridge=1e-6,need_gradient=False),places=12)
 if __name__=='__main__':unittest.main()

@@ -46,25 +46,26 @@ def active_hessian(data,hinge,ridge=.001):
     return H
 
 
-def fit(theta,positive,preservation,matching,normalization):
-    began=time.monotonic();data=problem(theta,positive,preservation,matching,normalization);p=np.zeros(2*theta.shape[1]);value,gradient,hinge=objective(p,data);zero=value;g0=float(np.linalg.norm(gradient));history=[];status='iteration_limit'
+def fit(theta,positive,preservation,matching,normalization,ridge=.001):
+    assert np.isfinite(ridge) and ridge>0
+    began=time.monotonic();data=problem(theta,positive,preservation,matching,normalization);p=np.zeros(2*theta.shape[1]);value,gradient,hinge=objective(p,data,ridge=ridge);zero=value;g0=float(np.linalg.norm(gradient));history=[];status='iteration_limit'
     for iteration in range(40):
         if time.monotonic()-began>30:status='time_limit_feasible_iterate';break
         if np.linalg.norm(gradient)<=1e-6*max(1.,g0):status='converged';break
-        H=active_hessian(data,hinge);direction=-np.linalg.solve(H,gradient);slope=float(gradient@direction)
+        H=active_hessian(data,hinge,ridge=ridge);direction=-np.linalg.solve(H,gradient);slope=float(gradient@direction)
         assert np.isfinite(direction).all() and slope<0
         step=1.;accepted=False
         for _ in range(24):
-            trial=p+step*direction;trial_value=objective(trial,data,need_gradient=False)
+            trial=p+step*direction;trial_value=objective(trial,data,ridge=ridge,need_gradient=False)
             if np.isfinite(trial_value) and trial_value<=value+1e-4*step*slope:
                 p=trial;accepted=True;break
             step*=.5
         if not accepted:status='line_search_stopped_finite_iterate';break
-        value,gradient,hinge=objective(p,data);history.append(dict(iteration=iteration+1,objective=value,step=step,active_pairs=int(np.count_nonzero(hinge)),gradient_norm=float(np.linalg.norm(gradient))))
+        value,gradient,hinge=objective(p,data,ridge=ridge);history.append(dict(iteration=iteration+1,objective=value,step=step,active_pairs=int(np.count_nonzero(hinge)),gradient_norm=float(np.linalg.norm(gradient))))
     assert np.isfinite(p).all() and value<=zero+1e-10
     delta=CONTRAST@p.reshape(2,theta.shape[1])/normalization['input_rms'];delta-=delta.mean(0,keepdims=True)
     report=dict(algorithm='soft squared-hinge action margins on own reward-success sequences',solver='analytic active-set Newton with Armijo line search',status=status,
-        positive_weight=1.,broad_success_weight=1.,matching_weight=.25,ridge=.001,frozen_input_normalization=normalization['input_rms'],kappa=normalization['kappa'],
+        positive_weight=1.,broad_success_weight=1.,matching_weight=.25,ridge=ridge,frozen_input_normalization=normalization['input_rms'],kappa=normalization['kappa'],
         preservation_margin='min(kappa, carried desired-action gap), clipped at0 for numerical near ties',pair_weighting='each row weight divided equally between its two alternative-action comparisons',
         weighting='equal present group, episode, segment, row',radial_shrink=None,hard_action_constraints=False,
         positive=diagnostics(theta,delta,positive),preservation=diagnostics(theta,delta,preservation),matching=diagnostics(theta,delta,matching),
