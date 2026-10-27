@@ -42,7 +42,10 @@ def objective(p,data,ridge=1e-6,gradient=True):
 
 
 def hessian_operator(data,hinge,ridge):
-    U,c,old,required,w=data;d=U.shape[1];active=2*w*(hinge>0)
+    U,c,old,required,w=data;d=U.shape[1]
+    selected=np.any(hinge>0,axis=1)
+    U=U[selected];c=c[selected];w=w[selected];hinge=hinge[selected]
+    active=2*w*(hinge>0)
     def product(v):
         z=U@v.reshape(2,d).T; dm=np.einsum('ni,nji->nj',z,c)
         result=(U.T@np.sum((active*dm)[:,:,None]*c,axis=1)).T.reshape(-1)
@@ -60,9 +63,16 @@ def diagnostics(W,delta,cases):
         raw_input_rms=float(np.sqrt(w@np.asarray(X.multiply(X).sum(axis=1)).ravel())))
 
 
-def fit(W,positive,preservation,matching,normal,deadline,ridge=1e-6):
+def fit(W,positive,preservation,matching,normal,deadline,ridge=1e-6,initial_delta=None):
     began=time.monotonic(); data=problem(W,positive,preservation,matching,normal); d=W.shape[1];p=np.zeros(2*d)
-    value,g,hinge=objective(p,data,ridge);zero=value;g0=float(np.linalg.norm(g));history=[];status='iteration_limit'
+    zero,gzero,_=objective(p,data,ridge)
+    if initial_delta is not None:
+        initial_delta=np.asarray(initial_delta);assert initial_delta.shape==W.shape and np.isfinite(initial_delta).all()
+        centered=initial_delta-initial_delta.mean(0,keepdims=True)
+        assert np.max(abs(centered-initial_delta))<1e-10
+        p=(CONTRAST.T@centered*normal['input_rms']).reshape(-1)
+    value,g,hinge=objective(p,data,ridge);assert value<=zero+1e-10
+    initial_value=value;g0=float(np.linalg.norm(gzero));history=[];status='iteration_limit'
     for i in range(35):
         if time.monotonic()>=deadline:status='time_limit_finite_downhill_iterate';break
         if np.linalg.norm(g)<=1e-6*max(1.,g0):status='converged';break
@@ -84,6 +94,6 @@ def fit(W,positive,preservation,matching,normal,deadline,ridge=1e-6):
     assert np.isfinite(p).all() and value<=zero+1e-10
     delta=CONTRAST@p.reshape(2,d)/normal['input_rms'];delta-=delta.mean(0,keepdims=True)
     return delta,dict(solver='analytic sparse Newton-CG, diagonal preconditioner, Armijo; no autodiff',status=status,raw_dimension=d,contrast_parameters=2*d,
-        ridge=ridge,frozen_input_normalization=normal['input_rms'],kappa=normal['kappa'],geometry='L2 on normalized raw coefficient residual; differs from restricted DCT parameter metric',
+        ridge=ridge,warm_start=initial_delta is not None,initial_objective=initial_value,active_row_hessian_exact=True,frozen_input_normalization=normal['input_rms'],kappa=normal['kappa'],geometry='L2 on normalized raw coefficient residual; differs from restricted DCT parameter metric',
         positive_weight=1.,preservation_weight=1.,matching_weight=.25,positive=diagnostics(W,delta,positive),preservation=diagnostics(W,delta,preservation),matching=diagnostics(W,delta,matching),
         zero_residual_objective=zero,final_objective=value,gradient_norm=float(np.linalg.norm(g)),history=history,fit_seconds=time.monotonic()-began,hard_constraints=False,radial_shrink=None)
