@@ -124,3 +124,14 @@ No extra fit based on a noisy sentinel aggregate. A failed fit stops updates;
 qualify the last verified candidate if time permits. Full256 and unused fresh32
 versus40069 run once at the end. Review implementation and focused tests before
 launch. No action-pruning or intervention-label changes in this block.
+
+## Assumptions to challenge after the block
+
+The user's goal is reliable learned returns, not exact preservation of every
+historical action. Complete-prefix locks give efficient retention guarantees, but
+may also preserve incidental behavior and force complicated decision boundaries.
+If broader experience again improves only practiced games, reconsider that
+constraint alongside causal credit and on-policy coverage before blaming feature
+capacity or launching another identical block. Earlier linear-only soft-retention
+failures do not establish failure for the joint learner. No such ablation is part
+of the current block.
