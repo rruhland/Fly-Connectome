@@ -49,3 +49,21 @@ Implementation target10minutes. Reuse the actor and qualification helpers, retai
 completed experiment sources, and review concrete code/spec/tests before launch.
 If this correction also regresses broadly, stop this family and prepare a concrete
 generic continuous visual representation proposal for the user's required review.
+
+
+## Reviewed and launched
+
+Agent88e4ee8 integrated as main805a976.17focused tests, compilation and diff
+checks passed. Parent review and the independent layout test caught an incorrect
+nongrid cutoff before launch: future_outside3840:3848 andmetadata4381:4389 are
+frozen; context4373:4381 must remain eligible for smooth updates. The corrected
+code derives the mask from the basis, not a hand-entered cutoff.
+
+Root `pong-rally-smooth-actor-20261028-r1`, specSHA
+`e945f4ac8ca581cc440b33365df544e0971d4758a8326bec888fbb9a68a0ae9a`;
+freshTAG63089. New900s clock,400s training bound. Source frozen. Firstbatch at
+17.82s used2,039cameras and rewards[2,5,1,1], exactly matching the prior actor.
+Parent independently verified all raw observations/actions/probabilities/hits
+bit-for-bit and projected old full-space eligibility/credit into the new198basis;
+maximum error9.1e−13. Zero extra observations,0.038s computation. Artifact
+`parent-first-batch-projection-audit.json`. No performance claim before evaluation.

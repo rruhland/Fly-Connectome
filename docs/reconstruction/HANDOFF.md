@@ -30,14 +30,20 @@ Causal pass completed80.737s with9269cameras+11initials, no restartneeded.
 One rewardedaction learned in5.33s; target2→3, but representative32total60→57,
 first24same,second16same,later36/56→33/55. Candidate85b35d rejected; nofull/fresh.
 TAG63057unused/reserved. Sourcec9295e1/main789648b;35focusedchecks passed.
-User mandate continues. Full-rally on-policy actor now launched: source20b0a078,
-main59ac9a1;15focused tests pass; plan [online actor](../plans/2026-10-28-full-rally-online-actor.md).
-Root pong-rally-full-actor-20261028-r1, session68908, one900s clock includingprep,
-max600strain/64kcameras/32batches; finalendpoint only. Fixed currentraw+512features,
-analyticoutputeligibility, noBP/noarchitecturechange/noactionlocks. FreshTAG63073.
-SpecSHA c8ea9b7fdb421ece01caa986f57d37ce66d2803b32f91bd47ae60d6b523b4572.
-Reused rally_integration owns native execution; root independently audits firstbatch
-saved credit with no new observations. No activecodechanges.
+User mandate continues. Full-coordinate actor completed786.97s,190265cameras+
+384initials. FULL256662→566,first233→214,second161→144,later429/615→352/535.
+Reject4a30; nofresh63073. Training-start greedy returns also151→141. Keep40069.
+
+Active: SAMEarchitecture with198smooth TRAINING coordinates mapped intoexistingW;
+R/non-grid/high-frequencycomponents fixed. Plan [smooth correction](../plans/2026-10-28-smooth-output-correction.md).
+Agent88e4ee8/main805a976,17focusedchecks passed. Rootpong-rally-smooth-actor-20261028-r1,
+session22159, specSHAe945f4ac8ca581cc440b33365df544e0971d4758a8326bec888fbb9a68a0ae9a.
+New900sclock,400strain/32batches/64kcameras; FINALendpoint→fixed128TRAINscreen
+(all64trainingstarts+64other)→conditionalfresh63089. SameT/cache/actionseeds as
+prioractor; no rank/step sweep. Firstbatch exacttrajectory/projection auditPASS,
+0extraobs. Reused rally_integration owns execution; no activecodechanges.
+If broadregression again, stop actorfamily andpreparecontinuousrepresentation
+proposal for user's required major-change review ratherthan morevariants.
 
 
 ## Current provisional model and actual evidence
