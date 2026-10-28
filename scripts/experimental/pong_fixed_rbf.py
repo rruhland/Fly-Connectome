@@ -15,6 +15,7 @@ class FixedRBF:
         if (self.centers.ndim!=2 or self.scale.shape!=(self.centers.shape[1],) or not np.isfinite(self.centers).all() or not np.isfinite(self.scale).all() or not (self.scale>0).all() or not np.isfinite(self.sigma) or self.sigma<=0):raise ValueError('finite fixed scaled centers, positive scale and bandwidth required')
         self.norm=np.einsum('ij,ij->i',self.centers,self.centers)
         for a in (self.centers,self.scale,self.norm):a.flags.writeable=False
+        self.output_dim=len(self.centers)
 
     def features(self,indices,values):
         z=np.asarray(values,dtype=np.float64)/self.scale[indices];distance=np.maximum(0.,self.norm+z@z-2*(self.centers[:,indices]@z));return np.exp(-distance/(2*self.sigma*self.sigma))
@@ -24,6 +25,7 @@ class FixedRBF:
 
 
 class FrozenRBFReadout:
+    schema=SCHEMA
     def __init__(self,base_weights,basis,residual):
         self.base=FrozenLinearPolicy(base_weights);self.basis=basis;self.residual=np.array(residual,dtype=np.float64,copy=True)
         if self.residual.shape!=(3,len(basis.centers)) or not np.isfinite(self.residual).all():raise ValueError('finite three-action residual matching fixed centers required')
@@ -42,7 +44,11 @@ class FrozenRBFReadout:
 
 
 def load_readout(path):
-    with np.load(path,allow_pickle=False) as f:return FrozenRBFReadout(f['base'],FixedRBF(f['centers'],f['scale'],float(f['sigma'])),f['residual'])
+    with np.load(path,allow_pickle=False) as f:
+        if 'kind' in f and str(f['kind'])=='fixed-centered-tensorsketch2-v1':
+            from pong_fixed_pairwise import FixedPairwise,FrozenPairwiseReadout
+            return FrozenPairwiseReadout(f['base'],FixedPairwise(f['hashes'],f['signs'],f['scale'],f['mean'],f['rms']),f['residual'])
+        return FrozenRBFReadout(f['base'],FixedRBF(f['centers'],f['scale'],float(f['sigma'])),f['residual'])
 
 
 def save_readout(path,base,basis,residual):

@@ -21,7 +21,8 @@ def run(directory,baseline,candidate,absolute_deadline=None):
         if (source/'rbf-model.npz').exists():(folder/'rbf-model.npz').write_bytes((source/'rbf-model.npz').read_bytes())
     files={n:base.sha(Path(__file__).with_name(n)) for n in ('run_rally_raw_fresh_screen.py','run_rally_raw_optimizer.py','run_rally_fresh_screen.py')}
     model_hash=lambda head:base.sha(directory/head/('rbf-model.npz' if (directory/head/'rbf-model.npz').exists() else 'proposal.npy'))
-    if (directory/'candidate/rbf-model.npz').exists():files['pong_fixed_rbf.py']=base.sha(Path(__file__).with_name('pong_fixed_rbf.py'))
+    if (directory/'candidate/rbf-model.npz').exists():
+        for n in ('pong_fixed_rbf.py','pong_fixed_pairwise.py'):files[n]=base.sha(Path(__file__).with_name(n))
     manifest=dict(source=base.source_signature(),files=files,baseline_root=str(baseline),candidate_root=str(candidate),heads={head:model_hash(head) for head in ('carry','candidate')},settings='native20s/.65opponent/K1/fullgame/unchangedlegalcamera',seeds=seeds,work_seconds=300,no_fitting=True,no_retries=True)
     base.atomic_json(directory/'manifest.json',manifest);began=time.monotonic();deadline=min(began+300,absolute_deadline) if absolute_deadline is not None else began+300;base.atomic_json(directory/'work-clock.json',dict(started_wall_ns=time.time_ns(),started_monotonic=began,deadline_monotonic=deadline));results={head:{} for head in ('carry','candidate')}
     with ProcessPoolExecutor(max_workers=4,mp_context=mp.get_context('spawn'),initializer=base.initialize) as pool:

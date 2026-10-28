@@ -38,9 +38,10 @@ def calibrate(rows,scale):
     return basis,report,provenance
 
 
-def fit_residual(W,basis,cases,G,kappa,deadline):
+def fit_residual(W,basis,cases,G,kappa,deadline,readout_class=FrozenRBFReadout):
     began=time.monotonic();X=sp.vstack([c['X'] for c in cases],format='csr');actions=np.concatenate([c['actions'] for c in cases]);required=[];qbase=[]
     for case in cases:
+        assert np.array_equal(W,case['source_weights']), 'residual constraints require the exact frozen deployed base head'
         policy=FrozenLinearPolicy(case['source_weights']);forced={v['row']:v for v in case.get('interventions',[])}
         for i,a in enumerate(case['actions']):
             lo,hi=case['X'].indptr[i:i+2];choice,q=policy.choose(case['X'].indices[lo:hi],case['X'].data[lo:hi]);qbase.append(q)
@@ -48,11 +49,12 @@ def fit_residual(W,basis,cases,G,kappa,deadline):
                 v=forced[i];assert v['reward_verified'] and v['action']==a and v['source_action']==choice;required.append([kappa*1e-4]*2)
             else:
                 assert choice==a;required.append([min(kappa*1e-4,.5*max(q[a]-q[b],0.)) for b in range(3) if b!=a])
-    required=np.asarray(required);qbase=np.asarray(qbase);other=np.array([[b for b in range(3) if b!=a] for a in actions]);row=np.arange(len(actions));old=qbase[row,actions,None]-qbase[row[:,None],other];contrast=CONTRAST[actions,None,:]-CONTRAST[other];Phi=basis.batch(X);values=np.repeat(Phi,2,axis=0);direction=contrast.reshape(-1,2);A=np.hstack((values*direction[:,0,None],values*direction[:,1,None]));lower=(required-old).reshape(-1);norm=np.linalg.norm(A,axis=1);assert (norm>0).all();An=A/norm[:,None];lowern=lower/norm;P=sp.block_diag((2*sp.csc_matrix(G),2*sp.csc_matrix(G)),format='csc');working=np.flatnonzero(lower>0).tolist();v=np.zeros(128);duals={};history=[];candidate=None;status='bounded_no_verified_RBF_fit';tight=False;infeasibility=None
+    m=basis.output_dim;assert G.shape==(m,m)
+    required=np.asarray(required);qbase=np.asarray(qbase);other=np.array([[b for b in range(3) if b!=a] for a in actions]);row=np.arange(len(actions));old=qbase[row,actions,None]-qbase[row[:,None],other];contrast=CONTRAST[actions,None,:]-CONTRAST[other];Phi=basis.batch(X);values=np.repeat(Phi,2,axis=0);direction=contrast.reshape(-1,2);A=np.hstack((values*direction[:,0,None],values*direction[:,1,None]));lower=(required-old).reshape(-1);norm=np.linalg.norm(A,axis=1);assert (norm>0).all();An=A/norm[:,None];lowern=lower/norm;P=sp.block_diag((2*sp.csc_matrix(G),2*sp.csc_matrix(G)),format='csc');working=np.flatnonzero(lower>0).tolist();v=np.zeros(2*m);duals={};history=[];candidate=None;status='bounded_no_verified_residual_fit';tight=False;infeasibility=None
     for iteration in range(30):
         remaining=deadline-time.monotonic()
         if remaining<=0:break
-        eps=1e-11 if tight else 1e-8;solver=osqp.OSQP();solver.setup(P=P,q=np.zeros(128),A=sp.csc_matrix(An[working]),l=lowern[working],u=np.full(len(working),np.inf),verbose=False,polishing=True,eps_abs=eps,eps_rel=eps,max_iter=30000,time_limit=max(.01,min(remaining,12.)));solver.warm_start(x=v,y=np.array([duals.get(i,0.) for i in working]));answer=solver.solve(raise_error=False)
+        eps=1e-11 if tight else 1e-8;solver=osqp.OSQP();solver.setup(P=P,q=np.zeros(2*m),A=sp.csc_matrix(An[working]),l=lowern[working],u=np.full(len(working),np.inf),verbose=False,polishing=True,eps_abs=eps,eps_rel=eps,max_iter=30000,time_limit=max(.01,min(remaining,12.)));solver.warm_start(x=v,y=np.array([duals.get(i,0.) for i in working]));answer=solver.solve(raise_error=False)
         if 'infeasible' in answer.info.status:
             status='solver_reported_'+answer.info.status
             if answer.prim_inf_cert is not None:
@@ -63,11 +65,11 @@ def fit_residual(W,basis,cases,G,kappa,deadline):
         if answer.y is not None and np.isfinite(answer.y).all():duals={i:float(y) for i,y in zip(working,answer.y)}
         violation=lower-A@v;maximum=max(0.,float(violation.max()));history.append(dict(round=iteration+1,working=len(working),maximum_original_logit_violation=maximum,solver_status=answer.info.status,iterations=int(answer.info.iter)))
         if maximum<=1e-9:
-            R=CONTRAST@v.reshape(2,64);readout=FrozenRBFReadout(W,basis,R);wrong=[];actual_violation=0.
+            R=CONTRAST@v.reshape(2,m);readout=readout_class(W,basis,R);wrong=[];actual_violation=0.
             for i,a in enumerate(actions):
                 lo,hi=X.indptr[i:i+2];got,q=readout.choose(X.indices[lo:hi],X.data[lo:hi]);actual_violation=max(actual_violation,float(np.max(required[i]-np.array([q[a]-q[b] for b in range(3) if b!=a]))))
                 if got!=a:wrong.append(i)
-            if not wrong and actual_violation<=1e-9:candidate=R;status='verified_all_original_RBF_choices';break
+            if not wrong and actual_violation<=1e-9:candidate=R;status='verified_all_original_residual_choices';break
             if not tight:tight=True;continue
             status='deployed_original_certificate_failed';break
         existing=set(working);fresh=np.array([i for i in np.flatnonzero(violation>1e-9) if int(i) not in existing],dtype=int)
@@ -75,7 +77,7 @@ def fit_residual(W,basis,cases,G,kappa,deadline):
             if not tight:tight=True;continue
             status='bounded_numerical_residual_no_fallback';break
         working=sorted(existing|set(map(int,fresh[np.argsort(-violation[fresh],kind='stable')[:256]])))
-    return candidate,dict(status=status,verified=candidate is not None,hard_cases=len(cases),original_rows=X.shape[0],original_inequalities=len(lower),working_inequalities=len(working),history=history,wall_seconds=time.monotonic()-began,infeasibility_diagnostic=infeasibility,objective='minimum equal-episode empirical residual score change, mean-diagonal normalized covariance plus1%ridge',residual_parameters=192,contrast_parameters=128,base_head_frozen=True,original_deployed_choices_certified=X.shape[0] if candidate is not None else 0,maximum_actual_logit_violation=actual_violation if candidate is not None else None,no_confidence_growth_objective=True,numerical_fallback=False,new_observations=0)
+    return candidate,dict(status=status,verified=candidate is not None,hard_cases=len(cases),original_rows=X.shape[0],original_inequalities=len(lower),working_inequalities=len(working),history=history,wall_seconds=time.monotonic()-began,infeasibility_diagnostic=infeasibility,objective='minimum equal-episode empirical residual score change, mean-diagonal normalized covariance plus1%ridge',residual_parameters=3*m,contrast_parameters=2*m,base_head_frozen=True,original_deployed_choices_certified=X.shape[0] if candidate is not None else 0,maximum_actual_logit_violation=actual_violation if candidate is not None else None,no_confidence_growth_objective=True,numerical_fallback=False,new_observations=0)
 
 
 def run(directory,bank_path,index_path,sentinel_schedule,resume_saved_basis=False):
