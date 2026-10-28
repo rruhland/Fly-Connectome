@@ -1,6 +1,6 @@
 # Approved bounded test: localized nonlinear policy residual
 
-Status: user approved this specific bounded test on 2026-10-28; implementation and execution in progress. The opening-retention
+Status: approved test completed on 2026-10-28 with no verified fitted candidate and no native cameras; current model retained. The opening-retention
 trial completed at403 versus409 returns, with all143 known successful openings
 preserved and one additional opening recovered. Later returns regressed by seven.
 This is interference evidence, not a proof that the current policy cannot learn.
@@ -67,3 +67,31 @@ new construction. The parent and independent Sol review now recommend this bound
 velocity diagnostic already showed a possible smoothing benefit in one case, but
 other misses had usable visual information; velocity cleanup remains a separate,
 smaller alternative and is not evidence that a nonlinear branch is necessary.
+
+## Parent review during implementation
+
+The comparison must identify partial evaluations explicitly and exclude previously
+used qualification seeds from any new-game screen, not merely current TRAIN seeds.
+Zero-output action and Q parity use the deployed choose path. An out-of-episode
+linear-explanation diagnostic needs its linear control reported alongside it;
+explanation error alone is not proof of useful nonlinear capacity. Actual returns
+remain the outcome criterion.
+
+Outside context: Geramifard et al., [Online Discovery of Feature Dependencies
+(ICML 2011)](https://icml.cc/2011/papers/473_icmlpaper.pdf), introduction and approach,
+motivates low-dimensional feature conjunctions rather than whole-state similarity.
+Its binary-feature assumptions do not match our transport. This informs diagnosis
+of poor locality; it neither changes this fixed test nor authorizes another architecture.
+
+## In-budget amendment after calibration
+
+The fixed basis stopped at the implementation's heuristic effective-rank gate
+(rank 1.208 versus threshold 4) after 4.81 seconds, with no fitting or cameras.
+Parent challenged that inference and Sol independently agreed: low effective rank
+is not proof the remaining directions cannot express the needed correction.
+The original screening result is preserved. Authorize one at-most-60-second output
+fit on the EXACT saved basis/data/objective, then the original native gates if
+certified. The original 600-second deadline remains unchanged, including elapsed
+review/implementation time. No recalibration, bandwidth change, model expansion,
+second fit, or new ten-minute allocation. This is a documented relaxation of a
+diagnostic heuristic, not a new architecture comparison.

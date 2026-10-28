@@ -1,3 +1,11 @@
+## Completed — fixed localized residual did not produce a candidate
+
+User-approved 64-RBF comparison at `pong-rally-local-rbf-20261028-r1` calibrated from2,048 native TRAIN observations across160episodes. Zero outputs reproduced all92,162 saved deployed action/Q rows exactly. Fixed bandwidth2.69274 produced broad activations (minimum.411, median.700), centered effective rank1.208. Distances were52.3%current,38.5%future,8.47%relations; context/metadata did not dominate. Heldout linear error66.6% was not strong novelty evidence because the tangent linear control itself had51.0% error. Batch versus deployed feature discrepancy2.33e-15; feature computation18.5microseconds/sample.
+
+Initial diagnostic screen stopped at4.81s. Parent challenged treating low effective rank as functional inability; Sol independently agreed. Original result was preserved, and one output fit continued on the EXACT saved basis/data/objective under the ORIGINAL600s deadline. No bandwidth retry or second architecture. Fit6.18s produced no verified candidate: solver-reported primal infeasibility with784working inequalities from28,536original constraints (whole848-row rewarded donor plus143known opening prefixes). The approximate certificate is not an exact mathematical impossibility proof. No native cameras, no fresh evaluation, no model promotion.
+
+Implementation416.4s recorded separately. Eleven focused tests passed. Agent7bb1847/191bde6 integrated main1baf03a/2ad26e7. Current3ac7f87f/r4bank409 remains selected and immutable; reliable learned match-long returns remain unmet. Parent/Sol now reconsider a smaller velocity-estimation or reward-credit mechanism; no further RBF sweep authorized. Bridge remains other thread's work.
+
 ## Active — user approved the localized residual test
 
 User explicitly approved the single 10-minute 64-feature RBF residual comparison on 2026-10-28. Reused Sol agent `/root/rally_integration` is implementing the finalized proposal; parent reviews actual retention/generalization evidence. No other architecture sweep approved. Current 3ac7f87f checkpoint remains immutable and selected until actual evaluation justifies replacement. The goal of reliable match-long learned returns remains unmet. Bridge work belongs to the other thread.
