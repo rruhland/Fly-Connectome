@@ -13,7 +13,7 @@ from rally_raw_capture import start,SparseRows
 import run_practical_pong_v2 as base
 
 
-def choose(bank,candidate,excluded=(),opening_repair=False):
+def choose(bank,candidate,excluded=(),opening_repair=False,prioritize_openings=False):
     old={e['seed']:e for e in bank['bank']};cases=[]
     for p in sorted((candidate/'native_candidate/episodes').glob('*.json')):
         c=base.read(p);e=old[c['seed']];d=base.read(Path(e['receipt']));dh=d['report']['hits'];ch=c['report']['hits']
@@ -23,6 +23,12 @@ def choose(bank,candidate,excluded=(),opening_repair=False):
         f=Path(c['feature_file']);f=f if f.is_absolute() else candidate/f
         cases.append(dict(seed=c['seed'],phase='left' if base.leftward(c['seed']) else 'right',old_receipt=e['receipt'],old_feature=e['raw_feature'],candidate_receipt=str(p),candidate_feature=str(f),old_hits=dh,candidate_hits=ch,first_divergence=t,old_action=d['records'][t]['action'],candidate_action=c['records'][t]['action'],later_loss=max(dh-1,0)-max(ch-1,0)))
     def key(c):return (not(c['candidate_hits']>0 and c['later_loss']>0),-c['later_loss'],-(c['old_hits']-c['candidate_hits']),c['seed'])
+    if prioritize_openings:
+        selected=sorted([c for c in cases if c['candidate_hits']==0],key=key)[:8]
+        while len(selected)<8:
+            remaining=[c for c in cases if c not in selected];assert remaining
+            phase=min(('left','right'),key=lambda p:sum(c['phase']==p for c in selected));options=[c for c in remaining if c['phase']==phase] or remaining;selected.append(min(options,key=key))
+        return selected
     selected=[]
     for phase in ('left','right'):
         phase_cases=[c for c in cases if c['phase']==phase]
@@ -83,9 +89,9 @@ def task(directory,case,index,deadline,save_positive=False):
     result['rewarded_donors']=donors;base.atomic_json(directory/'cases'/f'case_{index:02d}.json',result);return result
 
 
-def run(directory,bank_path,candidate,exclude_source=None,opening_repair=False,save_positive=False):
+def run(directory,bank_path,candidate,exclude_sources=(),opening_repair=False,save_positive=False,prioritize_openings=False):
     directory=Path(directory);bank_path=Path(bank_path);candidate=Path(candidate);assert not directory.exists();directory.mkdir();(directory/'cases').mkdir();(directory/'rows').mkdir();bank=base.read(bank_path);assert bank['source']==base.source_signature()
-    (directory/'old.npy').write_bytes(Path(bank['current_head']).read_bytes());(directory/'candidate.npy').write_bytes((candidate/'proposal.npy').read_bytes());excluded=[c['seed'] for c in base.read(Path(exclude_source)/'manifest.json')['cases']] if exclude_source else [];cases=choose(bank,candidate,excluded,opening_repair);files={n:base.sha(Path(__file__).with_name(n)) for n in ('run_rally_divergence_credit.py','pong_action_credit.py','rally_raw_capture.py')}
+    (directory/'old.npy').write_bytes(Path(bank['current_head']).read_bytes());(directory/'candidate.npy').write_bytes((candidate/'proposal.npy').read_bytes());excluded=sorted({c['seed'] for source in exclude_sources for c in base.read(Path(source)/'manifest.json')['cases']});cases=choose(bank,candidate,excluded,opening_repair,prioritize_openings);files={n:base.sha(Path(__file__).with_name(n)) for n in ('run_rally_divergence_credit.py','pong_action_credit.py','rally_raw_capture.py')}
     if save_positive:(directory/'donors').mkdir()
     # This fixed TRAIN sentinel is selected before any branch outcomes or fit.
     oldrows={e['seed']:base.read(Path(e['receipt'])) for e in bank['bank']};sentinel=[c['seed'] for c in cases]
@@ -95,7 +101,7 @@ def run(directory,bank_path,candidate,exclude_source=None,opening_repair=False,s
             group=[s for s in available if min(oldrows[s]['report']['hits'],3)==band];picked+=group[:3]
         picked+= [s for s in available if s not in picked][:12-len(picked)];sentinel+=picked
     assert len(sentinel)==32 and len(set(sentinel))==32;base.atomic_json(directory/'sentinel-schedule.json',dict(seeds=sentinel,selection='eight targets plus12other starts/phase spread over d7 hit depths0,1,2,3+; fixed before branch/fit',TRAIN_not_holdout=True))
-    manifest=dict(source=base.source_signature(),files=files,bank_path=str(bank_path),candidate_root=str(candidate),old_sha256=base.sha(directory/'old.npy'),candidate_sha256=base.sha(directory/'candidate.npy'),cases=cases,excluded_previous_cases=excluded,opening_repair=opening_repair,save_positive_full_raw_actions=save_positive,selection='four per initial direction; up toone opening regression ifenabled then later losses; descending later/total hit loss and seed',seconds=150,credit='old single action versus candidate action, identical state and SAME candidate continuation to20s/native end; third queried only on positive cases; ties unordered',no_privileged_policy_inputs=True)
+    manifest=dict(source=base.source_signature(),files=files,bank_path=str(bank_path),candidate_root=str(candidate),old_sha256=base.sha(directory/'old.npy'),candidate_sha256=base.sha(directory/'candidate.npy'),cases=cases,excluded_previous_cases=excluded,opening_repair=opening_repair,prioritize_all_current_opening_regressions=prioritize_openings,save_positive_full_raw_actions=save_positive,selection='all remaining opening regressions first when requested, then phase-balanced costly later losses; otherwise four perphase with optional oneopening',seconds=150,credit='old single action versus candidate action, identical state and SAME candidate continuation to20s/native end; third queried only on positive cases; ties unordered',no_privileged_policy_inputs=True)
     base.atomic_json(directory/'manifest.json',manifest);began=time.monotonic();deadline=began+150;base.atomic_json(directory/'work-clock.json',dict(started_wall_ns=time.time_ns(),started_monotonic=began,deadline_monotonic=deadline))
     with ProcessPoolExecutor(max_workers=4,mp_context=mp.get_context('spawn'),initializer=base.initialize) as pool:
         futures=[pool.submit(task,str(directory),case,i,deadline-1,save_positive) for i,case in enumerate(cases)];results=[f.result() for f in futures]
@@ -103,4 +109,4 @@ def run(directory,bank_path,candidate,exclude_source=None,opening_repair=False,s
     base.atomic_json(directory/'summary.json',summary);print(json.dumps(summary),flush=True)
 
 if __name__=='__main__':
-    p=argparse.ArgumentParser();p.add_argument('directory');p.add_argument('--bank',required=True);p.add_argument('--candidate',required=True);p.add_argument('--exclude-source');p.add_argument('--repair-openings',action='store_true');p.add_argument('--save-positive',action='store_true');a=p.parse_args();run(a.directory,a.bank,a.candidate,a.exclude_source,a.repair_openings,a.save_positive)
+    p=argparse.ArgumentParser();p.add_argument('directory');p.add_argument('--bank',required=True);p.add_argument('--candidate',required=True);p.add_argument('--exclude-source',action='append',default=[]);p.add_argument('--repair-openings',action='store_true');p.add_argument('--prioritize-openings',action='store_true');p.add_argument('--save-positive',action='store_true');a=p.parse_args();run(a.directory,a.bank,a.candidate,a.exclude_source,a.repair_openings,a.save_positive,a.prioritize_openings)
