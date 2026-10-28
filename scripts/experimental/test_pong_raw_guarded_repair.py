@@ -64,4 +64,11 @@ class GuardedRepairTest(unittest.TestCase):
         self.assertEqual(r['guard_action_changes'],0);self.assertEqual(r['positive']['requested_action_fraction'],1.)
         np.testing.assert_allclose(d.sum(0),0,atol=1e-15);self.assertAlmostEqual(r['feature_scale_max'],3.)
 
+    def test_spatial_prior_has_constant_nullspace_and_exact_quadratic(self):
+        from pong_raw_spatial_prior import spatial_laplacian,parameter_metric
+        L=spatial_laplacian();np.testing.assert_allclose(L@np.ones(4389),0,atol=1e-15)
+        self.assertEqual(L[4381:].nnz,0);rng=np.random.default_rng(8);scale=np.exp(rng.normal(size=4389));p=rng.normal(size=(2,4389));G=parameter_metric(scale,2.)
+        actual=float(p.ravel()@(G@p.ravel()));expected=float(np.sum(p*p)+4*sum((v/scale)@(L@(v/scale)) for v in p))
+        self.assertAlmostEqual(actual,expected,places=8);self.assertGreater(actual,float(np.sum(p*p)))
+
 if __name__=='__main__':unittest.main()

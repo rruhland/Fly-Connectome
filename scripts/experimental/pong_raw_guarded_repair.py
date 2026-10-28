@@ -23,7 +23,7 @@ def contrast_rows(X,contrasts,flat_indices,scale):
     return sp.hstack([values.multiply(c[:,0,None]),values.multiply(c[:,1,None])],format='csc')
 
 
-def fit(W,positive,guards,normal,deadline,ridge=1e-6,batch=128,initial_rows=(),initial_delta=None,initial_state=None,state_path=None,initial_guard_duals=None,stop_on_earned_repair=False,guard_margin_scale=1.,feature_scale=None):
+def fit(W,positive,guards,normal,deadline,ridge=1e-6,batch=128,initial_rows=(),initial_delta=None,initial_state=None,state_path=None,initial_guard_duals=None,stop_on_earned_repair=False,guard_margin_scale=1.,feature_scale=None,spatial_smoothness=False):
     began=time.monotonic();d=W.shape[1];scale=normal['input_rms'] if feature_scale is None else np.asarray(feature_scale,dtype=np.float64);kappa=normal['kappa'];n=2*d
     if feature_scale is not None:assert scale.shape==(d,) and np.isfinite(scale).all() and (scale>0).all()
     X=sp.vstack([c['X'] for c in positive],format='csr');actions=np.concatenate([c['actions'] for c in positive]);other,old,c=pairs(X,actions,W);target=(kappa-old).reshape(-1);pair_weights=np.repeat(weights(positive)/2,2);ns=len(target)
@@ -31,7 +31,12 @@ def fit(W,positive,guards,normal,deadline,ridge=1e-6,batch=128,initial_rows=(),i
     assert 0<guard_margin_scale<=1
     required=np.minimum(kappa*guard_margin_scale,.5*np.maximum(gap,0.));lower=(required-gap).reshape(-1);assert lower.max()<=0
     Z=contrast_rows(X,c,np.arange(ns),scale);Apositive=sp.hstack([Z,sp.eye(ns,format='csc')],format='csc');Anonnegative=sp.hstack([sp.csc_matrix((ns,n)),sp.eye(ns,format='csc')],format='csc')
-    diagonal=np.r_[np.full(n,2*ridge),2*pair_weights];P=sp.diags(diagonal,format='csc');q=np.zeros(n+ns);z=np.r_[np.zeros(n),np.maximum(target,0.)];zero=float(np.sum(pair_weights*np.maximum(target,0.)**2));working=sorted(set(map(int,initial_rows)));history=[];status='working_set_limit'
+    geometry=None
+    if spatial_smoothness:
+        from pong_raw_spatial_prior import parameter_metric
+        geometry=parameter_metric(np.broadcast_to(scale,(d,)),normal['input_rms'])
+    diagonal=np.r_[np.full(n,2*ridge),2*pair_weights];P=sp.diags(diagonal,format='csc') if geometry is None else sp.block_diag((2*ridge*geometry,sp.diags(2*pair_weights)),format='csc');q=np.zeros(n+ns);z=np.r_[np.zeros(n),np.maximum(target,0.)];zero=float(np.sum(pair_weights*np.maximum(target,0.)**2));working=sorted(set(map(int,initial_rows)));history=[];status='working_set_limit'
+    def coefficient_cost(v):return float(ridge*(v@v if geometry is None else v@(geometry@v)))
     def evaluate(v):
         delta=CONTRAST@v[:n].reshape(2,d)/scale;change=Xg@delta.T;gdelta=change[np.arange(len(ag)),ag,None]-change[np.arange(len(ag))[:,None],og]
         return delta,gdelta,lower-gdelta.reshape(-1)
@@ -69,7 +74,7 @@ def fit(W,positive,guards,normal,deadline,ridge=1e-6,batch=128,initial_rows=(),i
                 if got!=action:requested=False;break
             if requested:
                 trial_z=z.copy();trial_z[:n]*=candidate_alpha;trial_z[n:]=np.maximum(target-Z@trial_z[:n],0.)
-                candidate_objective=float(.5*np.sum(diagonal*trial_z*trial_z));choices=True
+                candidate_objective=coefficient_cost(trial_z[:n])+float(np.sum(pair_weights*trial_z[n:]**2));choices=True
                 if np.isfinite(candidate_objective) and candidate_objective<=zero+1e-8:
                     for row,action in enumerate(ag):
                         lo_,hi_=Xg.indptr[row:row+2];got,_=policy.choose(Xg.indices[lo_:hi_],Xg.data[lo_:hi_])
@@ -90,14 +95,14 @@ def fit(W,positive,guards,normal,deadline,ridge=1e-6,batch=128,initial_rows=(),i
     if alpha<1.:alpha*=1-1e-9
     delta*=alpha;v=z[:n]*alpha;change=Xg@delta.T;newgap=gap+change[np.arange(len(ag)),ag,None]-change[np.arange(len(ag))[:,None],og];maximum=max(0.,float(np.max(required-newgap)))
     pred=X@delta.T;margins=old+pred[np.arange(len(actions)),actions,None]-pred[np.arange(len(actions))[:,None],other];hinge=np.maximum(kappa-margins,0.)
-    objective=float(np.sum(pair_weights*hinge.reshape(-1)**2)+ridge*(v@v))
+    objective=float(np.sum(pair_weights*hinge.reshape(-1)**2)+coefficient_cost(v))
     assert np.isfinite(delta).all() and maximum<1e-8 and objective<=zero+1e-8
     policy=FrozenLinearPolicy(W+delta);changed=0
     for i,a in enumerate(ag):
         lo,hi=Xg.indptr[i:i+2];got,_=policy.choose(Xg.indices[lo:hi],Xg.data[lo:hi]);changed+=int(got!=a)
     assert changed==0, ('guard argmax changed',changed)
     report=dict(solver='OSQP diagonal hinge-slack QP with lazy sparse guard generation',osqp_version=osqp.__version__,status=status,early_stop_enabled=stop_on_earned_repair,early_stop_feasibility_alpha=early_alpha,warm_start=initial_delta is not None or initial_state is not None,solver_state_saved=state_path is not None,variables=n+ns,raw_contrast_parameters=n,positive_rows=X.shape[0],hinge_slacks=ns,guard_rows=Xg.shape[0],all_guard_inequalities=len(lower),working_guard_inequalities=len(working),rounds=len(history),history=history,
-        maximum_actual_logit_guard_violation=maximum,guard_action_changes=changed,required_margin='min(kappa * guard_margin_scale, half carried gap)',guard_margin_scale=guard_margin_scale,required_margin_min=float(required.min()),required_margin_max=float(required.max()),ridge=ridge,input_rms=normal['input_rms'],feature_metric='uniform raw coefficient ridge' if feature_scale is None else 'frozen diagonal TRAIN input-second-moment metric',feature_scale_min=float(np.min(scale)),feature_scale_max=float(np.max(scale)),feature_scale_mean_squared=float(np.mean(np.asarray(scale)**2)),kappa=kappa,
+        maximum_actual_logit_guard_violation=maximum,guard_action_changes=changed,required_margin='min(kappa * guard_margin_scale, half carried gap)',guard_margin_scale=guard_margin_scale,required_margin_min=float(required.min()),required_margin_max=float(required.max()),ridge=ridge,input_rms=normal['input_rms'],feature_metric='uniform raw coefficient ridge' if feature_scale is None else 'frozen diagonal TRAIN input-second-moment metric',spatial_smoothness=spatial_smoothness,spatial_penalty='input_rms^2 * sum(physical residual neighbor differences squared)/4; generic within-channel grids' if spatial_smoothness else None,feature_scale_min=float(np.min(scale)),feature_scale_max=float(np.max(scale)),feature_scale_mean_squared=float(np.mean(np.asarray(scale)**2)),kappa=kappa,
         feasible_contraction=alpha,zero_residual_objective=zero,final_objective=objective,positive=diagnostics(W,delta,positive),guard_outputs=diagnostics(W,delta,guards),wall_seconds=time.monotonic()-began,
         no_hard_q_or_confidence_preservation=True,failed_suffix_guarded=False,weighting='positive equal present group/episode/segment/row; each row split between two alternative comparisons')
     return delta,report
