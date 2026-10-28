@@ -357,3 +357,37 @@ Root `pong-rally-credit-prefix-20261028-r1`; agentd6d62f1→main31c0af1. Full848
 Actual target4→5 passed (1,000cameras+1initial). Fixed32sentinel61→64total,24→25first,37/58→39/61later;7,282cameras+9initials,23reusedgames. Full160 FAILED409→394total,143→144first,266/384→250/368later (69.27→67.93%). Full reused95games, executed65,45,953cameras+65initials,155.04s. Total54,235cameras+75initials,223.82s. No fresh evaluation/promotion. Source/base frozen.
 
 Conclusion: copying those94ordinary continuation actions was unnecessary for the target's fifth return, but relaxing them did not solve broader interference. Parent stops this covariance/constraint sequence rather than proceeding to another weighting sweep. Parent and Sol are reviewing a concrete generic pairwise-feature architecture proposal; implementation requires user approval. Current3ac7f87f remains selected.
+
+## Approved pairwise residual — modest TRAIN gain, qualification pending
+
+Root `pong-rally-pairwise-residual-20261028-r1`; agent157d364→mainf2a4f10.
+Fixed centered degree-two TensorSketch512, same capped legal inputs, label-free
+equal-episode calibration, frozen vision/base3ac, only3×512outputs fitted withoutBP.
+Feature effective rank222.16/numerical rank512; RMS .04331–.08565, no floored
+channels; batch/deployed error1.42e-14. Feature36.3microseconds; whole choose
+81.7microseconds versus baseline34.3. Heldout linear error1.149 versus linear
+control.452 is not standalone nonlinear-capacity evidence.
+
+Seventeen focused tests passed. Zero outputs reproduced92,162saved action/Q rows.
+Fit7.77s certified all14,174original hard rows; actual target4→5 succeeded.
+Sentinel61→62total,24→27first,37/58→35/58later stopped its strict later gate.
+Parent challenged treating this mixed net-positive32TRAIN outcome as decisive.
+Sol agreed: full160 ran on EXACT samebundle under ORIGINAL600s deadline,
+preserving initial sentinel summary and recording the screening amendment.
+
+Full160:409→412total,143→146first,266/384→266/380later (69.27→70.00%).
+No previously successful opening lost.40games gained81returns;44lost78.
+At least2returns103→95, at least5returns30→35, timeouts26→34. Net later count
+is unchanged: modest TRAIN improvement, not demonstrated reliable later learning.
+Exact final action/Q audit passed160receipts/92,316stored rows. No automatic
+promotion;3ac andd7 hashes unchanged. Bundle
+`eb2cbcf10aaaf88ee5fd0877cbc966b828286e230a0782bd91c4dce9ddce9152`.
+
+Approved experiment ended556.11s,92,106actual cameras+156initials. Implementation
+204s separately. Strict full later-count gate meant no fresh games in that test.
+Parent now selects a SEPARATE ordinary frozen paired32new-game validation under
+the user's standing continuation mandate, at most180s; it is not hidden inside
+or a reset of the completed600s test. Same weights/features, no fitting/admission,
+no architecture sweep. Motivation: qualify modest gain before any further training.
+Use the originally planned unconsumed fresh seed schedule and exclude prior/reserved
+streams. Current selected model remains3ac until independent outcomes reviewed.

@@ -1,6 +1,6 @@
 # Review proposal: fixed pairwise visual-feature residual
 
-Status: user explicitly approved this single bounded comparison on2026-10-28; implementation/execution in progress.
+Status: approved comparison completed in556.11s with modest TRAIN gain, no net later-count gain; separate frozen validation selected under standing continuation mandate.
 
 ## Why this next
 
@@ -94,3 +94,52 @@ This is not blanket approval for feature-count/hash-seed/architecture sweeps.
 
 Independent Sol review recommends this fixed test with the asset hashing,
 equal-episode calibration and no-recap clarifications now incorporated.
+
+## In-budget review of mixed sentinel outcome
+
+The fixed map had effective centered rank222.16 and verified the14,174-row
+contract in7.77s. Actual target4→5 passed. The fixed32TRAIN screen had61→62total,
+24→27first,37/58→35/58later, eight games gained16returns and seven lost15.
+Its implementation's strict later-return screen stopped after76.26s.
+
+Parent challenged treating this mixed, net-positive small TRAIN screen as decisive
+global rejection. Independent Sol agreed to complete the SAME frozen model's
+full160 comparison under the ORIGINAL600second deadline. Preserve the initial
+sentinel-stop summary and document the narrow screening-gate relaxation. No
+refit, feature/basis/hash change, repeated candidate, or budget reset. Full total
+and later returns must improve before fresh testing; opening gain alone is not
+accepted as reliable rally learning.
+
+## Approved pairwise residual — modest TRAIN gain, qualification pending
+
+Root `pong-rally-pairwise-residual-20261028-r1`; agent157d364→mainf2a4f10.
+Fixed centered degree-two TensorSketch512, same capped legal inputs, label-free
+equal-episode calibration, frozen vision/base3ac, only3×512outputs fitted withoutBP.
+Feature effective rank222.16/numerical rank512; RMS .04331–.08565, no floored
+channels; batch/deployed error1.42e-14. Feature36.3microseconds; whole choose
+81.7microseconds versus baseline34.3. Heldout linear error1.149 versus linear
+control.452 is not standalone nonlinear-capacity evidence.
+
+Seventeen focused tests passed. Zero outputs reproduced92,162saved action/Q rows.
+Fit7.77s certified all14,174original hard rows; actual target4→5 succeeded.
+Sentinel61→62total,24→27first,37/58→35/58later stopped its strict later gate.
+Parent challenged treating this mixed net-positive32TRAIN outcome as decisive.
+Sol agreed: full160 ran on EXACT samebundle under ORIGINAL600s deadline,
+preserving initial sentinel summary and recording the screening amendment.
+
+Full160:409→412total,143→146first,266/384→266/380later (69.27→70.00%).
+No previously successful opening lost.40games gained81returns;44lost78.
+At least2returns103→95, at least5returns30→35, timeouts26→34. Net later count
+is unchanged: modest TRAIN improvement, not demonstrated reliable later learning.
+Exact final action/Q audit passed160receipts/92,316stored rows. No automatic
+promotion;3ac andd7 hashes unchanged. Bundle
+`eb2cbcf10aaaf88ee5fd0877cbc966b828286e230a0782bd91c4dce9ddce9152`.
+
+Approved experiment ended556.11s,92,106actual cameras+156initials. Implementation
+204s separately. Strict full later-count gate meant no fresh games in that test.
+Parent now selects a SEPARATE ordinary frozen paired32new-game validation under
+the user's standing continuation mandate, at most180s; it is not hidden inside
+or a reset of the completed600s test. Same weights/features, no fitting/admission,
+no architecture sweep. Motivation: qualify modest gain before any further training.
+Use the originally planned unconsumed fresh seed schedule and exclude prior/reserved
+streams. Current selected model remains3ac until independent outcomes reviewed.

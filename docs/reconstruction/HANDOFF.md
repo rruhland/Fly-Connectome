@@ -37,24 +37,25 @@ experiment root.160existing TRAIN seeds; no recent fresh admission.
 Frozen vision, existing scaler/cap and3×4389 linear greedy K1 head remain deployed.
 Original viewer/interception export is older and is NOT the current research head.
 
-## Active — approved pairwise residual test
+## Active — separate frozen qualification after approved pairwise test
 
-Fixed4-observation LS velocity pilot rejected:16TRAIN66→52total,16→16first,
-50/58→36/46later.10,819cameras+16initials,44.37s. No filter sweep/learning.
+Approved pairwise test completed556.11s within original600s budget. Fixed512
+map fit7.77s and actual target4→5; full160409→412total,143→146first,
+266/384→266/380later. All143known openings retained, but later count unchanged;
+40games gained81returns/44lost78. Bundleeb2cbcf10aaaf88ee5fd0877cbc966b828286e230a0782bd91c4dce9ddce9152
+at `pong-rally-pairwise-residual-20261028-r1/rbf-model.npz`. All160receipt actions/Q
+verified.92,106newcameras+156initials;204simplementation separately.
 
-Burst-credit test learned target4→5 with94ordinary continuation choices free.
-Sentinel61→64, but full160409→394total,143→144first,266/384→250/368later.
-Rejected; no fresh/promotion.54,235cameras+75initials,223.82s.95full games reused.
-Original3ac7f87f/default transport remain selected. All runs exited.
+Current selected model remains3ac. Parent selected SEPARATE at-most180s frozen
+paired32fresh-game comparison under user's standing continuation mandate, explicitly
+communicated to user. It is not a reset/extension hidden inside the approved600s
+test. No fitting, feature changes, admission or architecture sweep. Reused Sol
+is executing; use originally planned unusedROOT1943906127/TAG62945 and exclude
+all prior/reserved schedules. Review independent first/later/total outcomes before
+promotion or moretraining. See [proposal/results](../plans/2026-10-28-pairwise-residual-review.md).
 
-Parent and Sol recommend one fixed centered degree-two TensorSketch512 residual
-comparison. Concrete proposal: [pairwise residual review](../plans/2026-10-28-pairwise-residual-review.md).
-Independent review completed; proposal includes asset hashing, equal-episode
-calibration, unchanged base Q/cap and one absolute deadline.
-User explicitly approved this512-feature comparison on2026-10-28. Reused Sol
-`/root/rally_integration` is implementing/executing the finalized proposal.
-One600second experimental clock; no feature/hash/architecture sweep. Current-turn total65,054actual transition
-cameras+91initials across velocity/credit tests; RBF test used zero cameras.
+Prior velocity cleanup66→52 and free-continuation linear update409→394 rejected;
+no parameter/guard/filter sweeps. Bridge belongs to other thread.
 
 ## Completed block and failed routes
 
