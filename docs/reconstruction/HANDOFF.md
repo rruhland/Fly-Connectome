@@ -1,3 +1,9 @@
+## Active continuation — 2026-10-28
+
+Current selected carry: `/workspace/m1b-experiments/pong-rally-guarded-curriculum-20261027-r1/selected.npy`, SHA `1f45726341691dcee3f5b573e70f3d45238f1897d63aace921d477f159c0eafc`.128 TRAIN:112 opening,203/293 later,315hits,22timeouts; no per-seed loss against df1 baseline. Two sequential guarded repairs accepted, third deferred. Full result in sustained-return-results. Goal still unmet; continue until consistent learned returns or user stops.
+
+Reused Sol agent `/root/pong_one_pass_research` authorized to benchmark early feasible repair stopping on saved data, refresh current128 bank, then seek6accepted/max8attempted repairs with one final128 evaluation. Root explicitly approved this next allocation. Do not duplicate its running work. Bridge belongs to another thread. Prior status below is historical.
+
 ## Active sustained-return learning (2026-10-27)
 
 User authorizes continuation until match-long returns are learnably consistent or stop. Bridge belongs to another thread. Follow [plan](../plans/2026-10-27-sustained-return-learning.md) and [results](2026-10-27-sustained-return-results.md). Reuse Sol XHigh `/root/pong_one_pass_research`; root owns hypotheses, selection and review.
