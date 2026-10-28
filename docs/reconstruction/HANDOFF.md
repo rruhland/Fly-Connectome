@@ -1,3 +1,11 @@
+## Active — integrate complete earned trajectories after third correction
+
+Selected safe carry remains d7d7d872 (160TRAIN407total/143first/264of377later). Selective causal correction intermediates progressed343→376→403, but thirdopening-focused iteration reached400: first139→143 restored, later264→257. No candidate promoted/fresh. Thirdscreen6/8positive,7,558cameras+8initials,10donors; sentinel50→63hits and+4first; full160 caught7othergames losing18returns against9gains totaling15.
+
+Root proposed next bounded mechanism to same Sol: use existing complete actualnative receipts to merge seven lost403 earnedprefixes with nine newlygained400 earnedprefixes plusoriginal783target. Cheap exact-alias screen; min-distance QP without an assumed feasible anchor; only accept verified complete choices, exclude failedsuffixes. This differs from another isolatedpair pass. Parent awaits agent briefchallenge/implementation; d7 and403/400 intermediates immutable. No runtimearchitecturechange/backprop/privilegedlabels. Usergoalstillactive; continue until reliable match-long learning or stop.
+
+Parent alternate-episode reuse is validated/integrated793990c/main; agenta558b68. Thirdfull160 executed only15games8,752cameras+15initials in29.53s; reused32sentinel+113preceding403episodes, reportingstillagainst d7. All160helper parity proof saved under `pong-alternate-episode-reuse-20261028-r1`. Agent source72f1486 integratedmain4401160; generic consequence runner2d9823a→c936542. Thirdcandidate root `pong-rally-divergence-correction-20261028-r3`, headSHAa1cc20157c7c2c6071cfcc4fcb1137e395987678b651913b68a01ea9639ac713. Prior403head rootr2, SHA6cee95bbcd10c51f44ca35214186cae2a2e7a285a2ff4dd22a99fbc046c4a75e. No bridgework.
+
 ## Active — second selective-credit iteration from intermediate376
 
 Completed first consequence-sensitive correction:376total/138first/238of357later versus rejected parent343/140/203of331, but below safed7's407/143/264of377. No promotion/fresh. Actual+33total/+35later means mechanism has useful intermediate progress;4of5targetconditional outcomes deployed exactly. Technical completion passed with frozenmodel after counter-boundary fix.
