@@ -29,7 +29,7 @@ def problem(W, positive, preservation, matching, normal):
         other=np.array([[j for j in range(3) if j!=v] for v in a]); q=X@W.T; row=np.arange(len(a)); old=q[row,a,None]-q[row[:,None],other]
         required=np.full_like(old,normal['kappa']) if kind=='positive' else np.minimum(normal['kappa'],np.maximum(old,0.))
         if kind!='positive':assert old.min()>-1e-10
-        blocks.append((X/normal['input_rms'],CONTRAST[a,None,:]-CONTRAST[other],old,required,np.repeat((w/2)[:,None],2,axis=1)))
+        blocks.append((X/normal.get('feature_scale',normal['input_rms']),CONTRAST[a,None,:]-CONTRAST[other],old,required,np.repeat((w/2)[:,None],2,axis=1)))
     return (sp.vstack([v[0] for v in blocks],format='csr'),*(np.concatenate([v[i] for v in blocks]) for i in range(1,5)))
 
 
@@ -65,12 +65,13 @@ def diagnostics(W,delta,cases):
 
 def fit(W,positive,preservation,matching,normal,deadline,ridge=1e-6,initial_delta=None):
     began=time.monotonic(); data=problem(W,positive,preservation,matching,normal); d=W.shape[1];p=np.zeros(2*d)
+    scale=normal.get('feature_scale',normal['input_rms'])
     zero,gzero,_=objective(p,data,ridge)
     if initial_delta is not None:
         initial_delta=np.asarray(initial_delta);assert initial_delta.shape==W.shape and np.isfinite(initial_delta).all()
         centered=initial_delta-initial_delta.mean(0,keepdims=True)
         assert np.max(abs(centered-initial_delta))<1e-10
-        p=(CONTRAST.T@centered*normal['input_rms']).reshape(-1)
+        p=(CONTRAST.T@centered*scale).reshape(-1)
     value,g,hinge=objective(p,data,ridge);assert value<=zero+1e-10
     initial_value=value;g0=float(np.linalg.norm(gzero));history=[];status='iteration_limit'
     for i in range(35):
@@ -92,8 +93,8 @@ def fit(W,positive,preservation,matching,normal,deadline,ridge=1e-6,initial_delt
         if not accepted:status='line_search_finite_downhill_iterate';break
         value,g,hinge=objective(p,data,ridge);history.append(dict(iteration=i+1,objective=value,step=step,cg_iterations=iterations[0],cg_status=int(info),gradient_norm=float(np.linalg.norm(g))))
     assert np.isfinite(p).all() and value<=zero+1e-10
-    delta=CONTRAST@p.reshape(2,d)/normal['input_rms'];delta-=delta.mean(0,keepdims=True)
+    delta=CONTRAST@p.reshape(2,d)/scale;delta-=delta.mean(0,keepdims=True)
     return delta,dict(solver='analytic sparse Newton-CG, diagonal preconditioner, Armijo; no autodiff',status=status,raw_dimension=d,contrast_parameters=2*d,
-        ridge=ridge,warm_start=initial_delta is not None,initial_objective=initial_value,active_row_hessian_exact=True,frozen_input_normalization=normal['input_rms'],kappa=normal['kappa'],geometry='L2 on normalized raw coefficient residual; differs from restricted DCT parameter metric',
+        ridge=ridge,warm_start=initial_delta is not None,initial_objective=initial_value,active_row_hessian_exact=True,frozen_input_normalization=normal['input_rms'],kappa=normal['kappa'],geometry='L2 in frozen activity-metric coordinates' if 'feature_scale' in normal else 'L2 on normalized raw coefficient residual; differs from restricted DCT parameter metric',
         positive_weight=1.,preservation_weight=1.,matching_weight=.25,positive=diagnostics(W,delta,positive),preservation=diagnostics(W,delta,preservation),matching=diagnostics(W,delta,matching),
         zero_residual_objective=zero,final_objective=value,gradient_norm=float(np.linalg.norm(g)),history=history,fit_seconds=time.monotonic()-began,hard_constraints=False,radial_shrink=None)

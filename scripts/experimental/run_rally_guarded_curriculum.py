@@ -49,6 +49,7 @@ def earned_target_witness(directory,receipt,known_hits,role,phase):
 
 def check_target(step,seed,known_hits,role,phase,bank,entry,baseline):
     directory=step/'target-native';directory.mkdir();(directory/'proposal.npy').write_bytes((step/'proposal.npy').read_bytes());(directory/'radial-cap.json').write_bytes(Path(bank['radial_cap']).read_bytes())
+    base.atomic_json(directory/'manifest.json',dict(source=base.source_signature(),weights_sha256=base.sha(directory/'proposal.npy'),config=baseline['config'],known_current_hits=known_hits,no_forced_actions=True))
     sourceX=sp.load_npz(entry['raw_feature']);certificate=certify_episode(baseline,sourceX,np.load(bank['current_head']),np.load(directory/'proposal.npy'),source_weights_sha256=bank['current_head_sha256'],source_fingerprint=bank['source'],candidate_fingerprint=base.source_signature(),candidate_config=baseline['config'])
     base.atomic_json(directory/'source-episode-certificate.json',{k:v for k,v in certificate.items() if k!='records'})
     if certificate['certified'] and baseline['report']['hits']<=known_hits:
