@@ -77,7 +77,7 @@ def run(directory,bank_path,attempts=3,target_accepted=3,slot_cycle=None,skip_se
     manifest=dict(source=base.source_signature(),files=files,bank_path=str(bank_path),bank_sha256=base.sha(bank_path),carry_sha256=base.sha(current_path),slots=slot_cycle or SLOTS,maximum_attempts=attempts,target_accepted=target_accepted,skipped_seeds=list(skip_seeds),early_feasible_stop=early_stop,acquisition_seconds_per_slot=40,solver_seconds_per_slot=90,final_native_seconds=500,planned_phase_seconds_upper=attempts*130+500,no_holdout_fitted=True,no_backprop=True,acceptance='exact all old guard choices and entire native-reward witness action sequence; no intermediate full-bank result assumed')
     if resume:
         original=base.read(directory/'manifest.json')
-        assert {k:v for k,v in original.items() if k!='files'}=={k:v for k,v in manifest.items() if k!='files'}
+        assert json.dumps({k:v for k,v in original.items() if k!='files'},sort_keys=True)==json.dumps({k:v for k,v in manifest.items() if k!='files'},sort_keys=True)
         assert all(original['files'][k]==v for k,v in files.items() if k!=Path(__file__).name)
         restarts=base.read(directory/'restart-record.json')['restarts'] if (directory/'restart-record.json').exists() else []
         restarts.append(dict(resumed_wall_ns=time.time_ns(),original_manifest_sha256=base.sha(directory/'manifest.json'),files=files,reason='environment reset interrupted numerical fit; completed acquisitions and steps reused; original guard margins unchanged'))
