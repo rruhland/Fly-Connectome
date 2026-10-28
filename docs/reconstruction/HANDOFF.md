@@ -22,10 +22,12 @@ Cloud connection recovered. Final broad-block fresh32 rejected bfb: 90→69
 returns versus40069, first30 unchanged, later60/82→39/66, zero gains/eight losses.
 Only six missing evaluation games were recovered in a separate13.575s extension;
 original deadline expired, saved58 unchanged, unknown interrupted work preserved.
-No promotion. TRAIN256's662→686 gain did not transfer. Reused rally_integration
-is finishing audits and independently challenging the next learning direction.
-Do not repeat another identical hard-prefix replay block. See broader plan's
-completed-results section. User mandate continues; no training is active yet.
+No promotion. TRAIN256's662→686 gain did not transfer. Final audit passed35,048fresh action/Q rows;14games changed actions,8lost
+returns, with6losses first diverging after an earned hit. No identical hard-prefix
+replay block. Reused rally_integration is implementing one bounded causal-burst
+plus joint-output pass; see [plan](../plans/2026-10-28-causal-joint-return-learning.md).
+Concrete code/spec review required before launch. User mandate continues;
+no training is active yet.
 
 ## Current provisional model and actual evidence
 
