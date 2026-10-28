@@ -74,3 +74,26 @@ the selected discovery/integration pass before recommending a major policy chang
 The earlier redundant 64-feature residual result argues against simply repeating
 an unconditioned random-feature expansion. Any genuinely major replacement or
 extension still comes to the user for review.
+
+### Empirical score retention and consequence-selected guards
+
+The full covariance trial is selected after three bounded hard-preservation fits
+failed to verify. It minimizes equal-episode score changes on142other current
+earned prefixes (61,663rows), plus1%normalized ridge, with the complete new earned
+target hard. Parent covariance construction/Cholesky took2.43s; Sol independently
+recommended a target-constraint dual solve. No additional policy features or
+backpropagation are introduced.
+
+First fit verified848 target choices in0.517s, but native TRAIN sentinel61→58
+returns despite target4→5. Three actual lost trajectories accounted for10lost
+returns. One selected refinement now makes these three current earned prefixes
+hard, retaining the rest softly. This is outcome-selected TRAIN retention, not an
+untouched validation claim. No automatic all-guard growth or solver budget sweep.
+
+Related outside context read after proposing this geometry: Kaplanis, Shanahan
+and Clopath, [Policy Consolidation for Continual Reinforcement
+Learning](https://proceedings.mlr.press/v97/kaplanis19a/kaplanis19a.pdf), introduction
+and policy-space consolidation discussion. It motivates retaining behavior across
+changing experience distributions rather than just parameter values. Our
+quadratic linear-score method does not implement their PPO, KL objective, hidden
+network cascade, or their empirical/theoretical claims.
