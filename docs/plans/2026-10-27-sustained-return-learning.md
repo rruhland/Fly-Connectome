@@ -37,3 +37,27 @@ After one-witness soft fitting and target-only projection lost broad native retu
 If at least two independent decisions have positive credit, minimally project the candidate onto those verified choices plus its already successful complete target trajectory. Keep other old commands unrestricted. Evaluate actual160TRAIN outcomes; useful total/later improvement earns an untouched paired fresh comparison. If causal differences are scarce or the correction does not deploy, reconsider coordinated changes; do not extend a one-action fishing expedition. d7 remains immutable. First block bounded8–12min; this is a review cadence, not a user stop limit.
 
 Root reviewed [Lazaric, Ghavamzadeh and Munos2016](https://www.jmlr.org/papers/volume17/10-364/10-364.pdf), abstract and regret discussion: action errors should be weighted by their consequences. Our deterministic branch screen adapts that motivation; it is not their algorithm or a transfer of its Markov-policy guarantees. Sol independently recommended the same selective-credit mechanism after reviewing failed37-witness aggregation and historical8D global search. Both chose this over another global penalty or blind search.
+
+### 2026-10-28: extend discovery beyond restoring prior actions
+
+After complete-prefix integration produced a modest positive fresh comparison,
+continue from merged head3ac7f87f provisionally (d7 retained). Reuse Sol for a fixed
+eight-case screen: four current later misses where d7 is better and four where
+current merged behavior already matches/exceeds the named recent heads, balanced
+by initial direction. Query both alternative actions at at most two legal-history
+selected decisions per case; stop after useful reward contrast. Save complete
+own-reward donor traces. No fresh admission. Replace a target's old prefix with
+its improved donor when attempting integration; do not demand mutually exclusive
+old/new choices. Bound discovery and verified no-anchor solving; check actual
+sentinel/full games before fresh. An infeasible merge triggers interpretation of
+conflicting requirements, not an unbounded parameter sweep.
+
+Parent read the algorithm and budget discussion in Gabillon, Lazaric and
+Ghavamzadeh, [Rollout Allocation Strategies for Classification-based Policy
+Iteration](https://mohammadghavamzadeh.github.io/PUBLICATIONS/icml10-rollout.pdf).
+Useful principle: allocate rollouts to action comparisons that can change the
+learned policy rather than repeatedly sampling uninformative states. Our fixed
+seed deterministic three-action comparisons require no repeated identical
+rollouts; this is an adaptation, not their algorithm or a proof that the current
+visual encoding is Markov. Current learning is still reset/branch-assisted
+scaffolding, not a demonstrated continuous online learner.
