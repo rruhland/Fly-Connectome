@@ -701,3 +701,31 @@ approval before implementation. These failures do not prove a capacity limit:
 credit variance and stochastic-training versus greedy-deployment mismatch remain
 plausible. No architecture implementation or native experiment is authorized by
 preparing that review document.
+
+## 2026-10-28: distinct parallel value-learning feasibility
+
+User approved continuous visual residual and requested broader parallel hypothesis
+exploration rather than exhaustive variants. A fresh Sol6.1XHigh independently
+reviewed fitted value learning, learned dynamics/planning, and temporal predictive
+hierarchies; parent reviewed its proposed LSPI calculation using existing runtime
+features (no architecture expansion).
+
+`pong-value-feasibility-20261028-r1`: three fixed LSTDQ/LSPI iterations on11,776
+sampled TRAIN transitions from full-actor and smooth-actor exploration, including
+failed suffixes.711existing features (DCT198, one existing metadata coordinate,
+fixed512TensorSketch), output mapped exactly into old W/R; no backpropagation.
+Rewards are actual own-hit events; prior logits initialize only the greedy target
+policy, never reward-value targets. One120s bound; completed4.613s, zero cameras.
+Only29reward events survived uniform episode-stratified sampling, an important
+limitation; this was not a comprehensive value-learning test.
+
+Mapping error <=6.22e-15, but72.55% of chosen actions had behavior probability<.01.
+Parent therefore checked8fixed existing TRAIN bank entries in actual games rather
+than treating a numerical fit as progress. In7.424s/1097new cameras+8initials:
+23→2returns,7→1first,16→1later. Reject7195fd; retain40069. No sweep/retry/fresh.
+This is evidence against this unsupported fitted endpoint, not against value
+learning generally. Future value tests need action coverage and reward-event
+retention, not another regularization search on this exact sparse sample.
+Independent next-direction research continues while the approved continuous
+pilot runs. Detailed spec, source hashes, sampling receipts, fit summary and
+native screen8 receipts are in the artifact root.

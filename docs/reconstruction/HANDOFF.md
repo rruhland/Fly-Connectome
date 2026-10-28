@@ -39,15 +39,25 @@ Screen128287→237returns,first106→91,second67→61,later181/262→146/222.
 Both64strata lost25returns; rejectdc33740, keep40069. No fresh63089; no process
 active. AllchecksPASS, no unknownwork. Actorfamily stopped aspredeclared.
 
-Next: prepare concrete generic continuous entity/pair-feature residual review;
-major input/architecture change requires USER APPROVAL before implementation.
-Reviewed proposal ready: [continuous visual residual](../plans/2026-10-28-continuous-visual-residual-review.md).
-256fixedRFF features from anonymous6Dentities/12Danchoredpairs; old40069frozen,
-new3×256outputzero, one600snativepilot/≤300strain/48kcameras/max24batches,
-≤2048calib,32TRAINscreen→conditional32pairedfresh. Floors0.1medianpositive,
-fixedmapseed/no sweep. NOTIMPLEMENTED, NOTAPPROVED. Userreviewrequired next.
-Reused rally_integration idle; no native process active.
-No more actor/temperature/rank/guard sweeps authorized. Usergoal stillNOTmet.
+User approved the continuous visual residual pilot; implementation a8e1806 +
+c858d15 reviewed and launched in worker checkout. Artifact root:
+`/workspace/m1b-experiments/pong-rally-continuous-actor-20261028-r1`.
+One600s total clock, <=300s training, <=48k training cameras, <=2048 calibration,
+32TRAIN screen then conditional32 paired fresh. Original40069 stays frozen.
+No automatic promotion. The user explicitly requests distinct parallel hypotheses,
+outside evidence, and advancing/combining promising methods instead of exhausting
+feature/actor variants.
+
+Fresh Sol6.1XHigh `/root/fresh_learning_directions` independently researched
+value learning, learned dynamics/planning, and temporal predictive hierarchies:
+[research note](../plans/2026-10-28-independent-learning-directions.md).
+It is running one120s zero-native LSPI feasibility calculation using saved TRAIN
+successes AND failures. This maps to existing W/R runtime; no new architecture.
+Spec bf5e8a1aa837a29cb4b67e6c1096f09e9970e3aab96a1717c8c02fb55acac227.
+Artifact root `pong-value-feasibility-20261028-r1`. Native launch requires parent
+review; sparse alternative-action coverage is the main concern. New tree,
+planning, or temporal controller architectures still require user review.
+Goal remains unmet. Do not resume actor/temperature/rank/guard sweeps.
 
 
 ## Current provisional model and actual evidence

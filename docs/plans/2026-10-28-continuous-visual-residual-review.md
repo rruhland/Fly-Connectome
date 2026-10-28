@@ -1,7 +1,9 @@
 # Review proposal: continuous anonymous visual entity/pair residual
 
-Status: PROPOSED MAJOR CHANGE; user approval required before implementation or
-native execution. This document authorizes neither. One fixed comparison only.
+Status: USER APPROVED in chat on 2026-10-28. One fixed 600-second comparison only.
+Implementation reviewed; native pilot launched with manifest SHA
+30b97d9242071c30ca6f353603bc681559ddfb6f4983dfdc1ae020e97123923d.
+No promotion or additional architecture variants are implied.
 
 ## Reason for the proposal
 
