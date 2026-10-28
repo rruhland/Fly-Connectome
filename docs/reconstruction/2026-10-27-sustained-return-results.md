@@ -198,3 +198,14 @@ Within the same goal allocation, Sol selected ONE further distinct bias: diagona
 ## Parent throughput prototype: exact saved-prefix continuation
 
 `pong-prefix-cache-prototype-20261028-r1` captured an actual d7 evaluator after its603rd camera/last earned return on seed104562292, including physical and vision state. Trusted local pickle restoration restored cache validity and RNG; same-head and switched-frozen-b9 suffixes both exactly matched independently recorded native raw features, every record, and final summaries. Each suffix224cameras. Snapshot1,406,209bytes; restore0.11/0.21s versus5.99s to replay the prefix. Validation cost1,051 actual cameras +1initial,12.19s. This supports future prefix-cache optimization; it is not production-integrated, a global speedup claim, or a new learning result. Counter/provenance and exact prefix-action checks must be preserved in any integration.
+
+
+## Spatial, soft-memory, and target-projection outcomes
+
+The spatial-prior trial `pong-rally-spatial-prior-20261028-r1` learned only1/11 requested actions; actual target remained3 returns. Cost792 cameras +1initial,89.74s. No full-bank evaluation or promotion. This is a bounded learning failure, not a representation impossibility proof.
+
+`pong-rally-soft-activity-20261028-r1` removed blanket old-action locks. Analytic fitting converged in8.22s, learned11/11 requested late actions, and retained99.06% weighted old commands. Actual target nevertheless fell3→1 returns. The complete successful trajectory differed at four earlier rows234,292,424,519; first divergence preceded its second return. Cost298 cameras +1initial;11.45s total. This demonstrates why action-agreement percentages cannot replace closed-loop reward.
+
+Root selected one targeted correction rather than a regularizer sweep: minimally project that soft head onto ONLY the complete783-action own-rewarded target trajectory, leaving other games unconstrained. `pong-rally-target-projection-20261028-r1` solved in0.062s with5 active inequalities, verified all1,566 constraints and exact runtime choices; activity-metric correction cost8.005e-8. Actual target improved3→4. However `pong-rally-target-projection-native-20261028-r1` fell407→343 total returns,143→140 first,264/377→203/331 later (70.03%→61.33%),30→12 timeouts across160TRAIN games.132 games executed,74,248 cameras +132initials;28 exact whole-game reuses,7,938 logical cameras. Native215.0s. Rejected without fresh evaluation. Selected d7 remains immutable.
+
+Next decision: stop this family of one-witness soft fits and penalty variants. Root and reused Sol independently reassess how successful recoveries are selected/combined, including counterfactual reward credit and direct policy-reward optimization. Previous aggregate37-witness failure must inform any new coverage proposal. Current bank is `pong-rally-TRAIN-bank-20261028-r3/admission.json` (160starts/407earned returns). Goal remains unmet; orchestration continues.

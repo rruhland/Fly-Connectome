@@ -1,3 +1,11 @@
+## Current state — target projection rejected; mechanism reassessment
+
+Selected d7d7d872 remains unchanged (160TRAIN:407returns,143first,264/377later). Spatial-prior trial failed to learn target. Soft-memory activity fit learned late labels but missed early (3→1). Minimal full-target projection fixed that rally (3→4) but damaged the full bank (343vs407returns;61.33%vs70.03%later), so rejected without fresh. See sustained-return-results for costs and paths.
+
+Same Sol `/root/pong_one_pass_research` is synthesizing alternatives to one-witness fitting/penalty variants; parent independently reviewing historical multi-witness failures and policy-credit methods. No next large run yet. User requires continued orchestration until reliable match-long learned returns or stop; not a pause request. Prefix-cache prototype remains available but not production-integrated. Current bank `pong-rally-TRAIN-bank-20261028-r3/admission.json`. Runtime remains same frozen vision +4389-feature linear policy, no backprop/privileged labels; major architecture changes require review. Bridge is another thread.
+
+Historical updates below superseded.
+
 ## Current run — one spatial-prior trial
 
 Selected carry remains d7d7d872. Expanded TRAIN160 has407returns/143first/264of377later. Input-activity metric candidate54097 learned one later repair quickly and TRAIN416, but NEW32 fresh76→66hits and66.7→61.9%later versusd7; rejected. No fresh data from this latest comparison admitted.
