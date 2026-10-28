@@ -45,6 +45,9 @@ class FrozenRBFReadout:
 
 def load_readout(path):
     with np.load(path,allow_pickle=False) as f:
+        if 'kind' in f and str(f['kind'])=='fixed-supported-value-forest-v1':
+            from pong_fixed_value_tree import from_archive
+            return from_archive(f)
         if 'kind' in f and str(f['kind'])=='fixed-continuous-entity-pair-rff-v1':
             from pong_continuous_visual import from_archive
             return from_archive(f)
