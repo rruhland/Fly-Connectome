@@ -22,11 +22,15 @@ def undo(reference,theta,raw_denom,phi_denom):
 
 
 def fit(reference,cases,raw_denom,phi_denom,cholesky,kappa,deadline,reference_sha256=None):
-    began=time.monotonic();fullX=sp.vstack([c['X'] for c in cases],format='csr');fulla=np.concatenate([c['actions'] for c in cases]);required=[];refq=[];source_rows=0;different_sources=0
+    began=time.monotonic();fullX=sp.vstack([c['X'] for c in cases],format='csr');fulla=np.concatenate([c['actions'] for c in cases]);required=[];refq=[];source_rows=0;different_sources=0;intervention_rows=[]
     for c in cases:
-        source=c['source_readout'];same=reference_sha256 is not None and c.get('source_policy_sha256')==reference_sha256;different_sources+=int(not same)
+        source=c['source_readout'];same=reference_sha256 is not None and c.get('source_policy_sha256')==reference_sha256;different_sources+=int(not same);interventions={v['row']:v for v in c.get('interventions',[])};assert len(interventions)==len(c.get('interventions',[])) and all(0<=i<len(c['actions']) for i in interventions)
         for i,a in enumerate(c['actions']):
-            lo,hi=c['X'].indptr[i:i+2];ix=c['X'].indices[lo:hi];xx=c['X'].data[lo:hi];got,q=source.choose(ix,xx);assert got==a and not c.get('interventions');required.append([min(kappa*1e-4,.5*max(q[a]-q[b],0)) for b in range(3) if b!=a]);refq.append(q if same else reference.choose(ix,xx)[1]);source_rows+=1
+            lo,hi=c['X'].indptr[i:i+2];ix=c['X'].indices[lo:hi];xx=c['X'].data[lo:hi];got,q=source.choose(ix,xx)
+            if i in interventions:
+                v=interventions[i];assert c.get('causal_audit_passed') and v['reward_verified'] and v['native_total_hit_advantage']>0 and v['action']==a and v['source_action']==got and got!=a;required.append([kappa]*2);intervention_rows.append(dict(seed=c.get('seed'),row=i,action=int(a),source_action=int(got),margin=kappa,joint_burst_effect_not_individual_causality=True))
+            else:assert got==a;required.append([min(kappa*1e-4,.5*max(q[a]-q[b],0)) for b in range(3) if b!=a])
+            refq.append(q if same else reference.choose(ix,xx)[1]);source_rows+=1
     required=np.asarray(required);refq=np.asarray(refq);fullrequired=required.copy();keep=[];seen=set()
     for i,a in enumerate(fulla):
         lo,hi=fullX.indptr[i:i+2];key=(fullX.indices[lo:hi].tobytes(),fullX.data[lo:hi].tobytes(),int(a),required[i].tobytes())
@@ -56,5 +60,5 @@ def fit(reference,cases,raw_denom,phi_denom,cholesky,kappa,deadline,reference_sh
             if not tight:tight=True;continue
             status='bounded_joint_numerical_residual';break
         working=sorted(existing|set(map(int,fresh[np.argsort(-violation[fresh],kind='stable')[:256]])))
-    report=dict(status=status,verified=result is not None,wall_seconds=time.monotonic()-began,original_rows=len(fulla),unique_hard_rows=len(actions),original_inequalities=2*len(fulla),hard_cases=len(cases),source_exact_choose_rows=source_rows,source_policies_distinct_from_reference_cases=different_sources,reference_Q_is_carried_nonlinear_Q=True,trainable_existing_coordinates=2*(d+reference.basis.output_dim),working_inequalities=len(working),history=history,all_row_whitening=False,all_row_kernel_columns=False,dense_primal_constraint_matrix=False,active_RHS_only=True,numerical_fallback=False,new_observations=0,original_deployed_rows_certified=len(fulla) if result is not None else 0,maximum_actual_logit_violation=actual_violation if result is not None else None,source_margin='min(kappa*1e-4, half actualsource gap)')
+    report=dict(status=status,verified=result is not None,wall_seconds=time.monotonic()-began,original_rows=len(fulla),unique_hard_rows=len(actions),original_inequalities=2*len(fulla),hard_cases=len(cases),source_exact_choose_rows=source_rows-len(intervention_rows),source_audited_rows=source_rows,reward_verified_intervention_rows=intervention_rows,source_policies_distinct_from_reference_cases=different_sources,reference_Q_is_carried_nonlinear_Q=True,trainable_existing_coordinates=2*(d+reference.basis.output_dim),working_inequalities=len(working),history=history,all_row_whitening=False,all_row_kernel_columns=False,dense_primal_constraint_matrix=False,active_RHS_only=True,numerical_fallback=False,new_observations=0,original_deployed_rows_certified=len(fulla) if result is not None else 0,maximum_actual_logit_violation=actual_violation if result is not None else None,source_margin='greedy:min(kappa*1e-4,halfsourcegap); explicit native-reward-verified burst differences:fixed kappa')
     return result,report
