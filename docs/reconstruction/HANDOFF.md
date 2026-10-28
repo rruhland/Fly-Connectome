@@ -1,3 +1,13 @@
+## Current continuation — 2026-10-28 00:42 UTC
+
+Selected carry `/workspace/m1b-experiments/pong-rally-guarded-curriculum-20261028-r2/selected.npy`, SHA `d7d7d872c1acde4b34748240c2ce9bf9d37af4c65ff2cd1f25d753f19d01fe61`.128 TRAIN:113 first,210/299 later,323 hits,24 timeouts; no per-seed losses vs315-hit prior head. Goal still unmet; user asks continue until reliable returns or stop.
+
+Same Sol agent `/root/pong_one_pass_research` running zero-camera empty-working-set benchmark at `pong-guard-working-set-benchmark-20261028-r1`, private exec17524. It reconstructs failed replay step2 around currenthead. If successful, verify all refreshed323 earned segments before reusing candidate. Await result/root nextallocation. Agent implements/executes; root reviews directions/results. Bridge separate thread.
+
+Guarded replay now screens exact positive/old-action input conflicts and uses smaller confidence cap `kappa*1e-4`. Previous larger block stopped after3failedfits, preserving4acquisitions; reuse those experiences. Current accepted head learned one further recovery, other fits likely slowed by inheriting thousands of inactive working constraints across different witnesses. Keep within-same-fit warm starts; test clearing cross-witness state before bigger changes.
+
+Historical updates below are superseded.
+
 ## Active continuation — 2026-10-28
 
 Current selected carry: `/workspace/m1b-experiments/pong-rally-guarded-curriculum-20261027-r1/selected.npy`, SHA `1f45726341691dcee3f5b573e70f3d45238f1897d63aace921d477f159c0eafc`.128 TRAIN:112 opening,203/293 later,315hits,22timeouts; no per-seed loss against df1 baseline. Two sequential guarded repairs accepted, third deferred. Full result in sustained-return-results. Goal still unmet; continue until consistent learned returns or user stops.
