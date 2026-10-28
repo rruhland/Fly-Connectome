@@ -41,7 +41,12 @@ active. AllchecksPASS, no unknownwork. Actorfamily stopped aspredeclared.
 
 Next: prepare concrete generic continuous entity/pair-feature residual review;
 major input/architecture change requires USER APPROVAL before implementation.
-Reused rally_integration drafting proposal ONLY; parent will review and push it.
+Reviewed proposal ready: [continuous visual residual](../plans/2026-10-28-continuous-visual-residual-review.md).
+256fixedRFF features from anonymous6Dentities/12Danchoredpairs; old40069frozen,
+new3×256outputzero, one600snativepilot/≤300strain/48kcameras/max24batches,
+≤2048calib,32TRAINscreen→conditional32pairedfresh. Floors0.1medianpositive,
+fixedmapseed/no sweep. NOTIMPLEMENTED, NOTAPPROVED. Userreviewrequired next.
+Reused rally_integration idle; no native process active.
 No more actor/temperature/rank/guard sweeps authorized. Usergoal stillNOTmet.
 
 

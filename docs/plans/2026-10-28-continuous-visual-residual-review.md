@@ -41,9 +41,12 @@ no object is assigned a ball/paddle/controlled-agent identity.
 For each descriptor family, center and divide ONLY its continuous coordinates
 by frozen TRAIN standard deviations. Flags remain0/1. Give episodes equal weight,
 frames equal weight within episode, and entities/pairs equal weight within frame;
-a crowded frame must not dominate calibration. Use denominator floor1e-6 times
+a crowded frame must not dominate calibration. Use denominator floor0.1 times
 the median positive continuous-coordinate standard deviation. Record floors;
-stop if an entire continuous descriptor family has no positive scale. Do not
+stop if an entire continuous descriptor family has no positive scale. Parent
+review selected this substantial floor before any data or execution, rather than
+a numerical epsilon that could amplify a nearly constant calibration coordinate
+into rapidly varying Fourier phases after a small later change. No floor sweep. Do not
 clip continuous descriptors or alter the already capped base-policy input.
 
 Use ONE fixed RNG seed831496043. Draw, in order, entity matrix128×6 and pair
@@ -56,7 +59,7 @@ Entity and ordered-pair blocks have128features each:256total.
 Freeze pooled feature means and RMS denominators from the same TRAIN calibration,
 again with equal episode/frame weights. Subtract each block's mean only when
 that block is available; absent entity/pair blocks stay exactly zero. Use RMS
-floor1e-6 times median positive feature RMS; stop if all feature RMS are zero.
+floor0.1 times median positive feature RMS; stop if all feature RMS are zero.
 The pair block is zero for fewer than two entities. Pooling and calibration use
 canonical descriptor-content order for reproducible floating reductions; ID or
 list permutation must not change features. Compute all ordered pairs in chunks;
@@ -159,3 +162,13 @@ This adds a feature source and residual branch: it is explicitly a MAJOR
 architecture/input change, outside prior512TensorSketch and actor approvals.
 Parent and independent review should resolve material corrections, then request
 the user's approval for exactly this one bounded comparison before coding/running.
+
+
+## Parent review and approval boundary
+
+Parent reviewed the field whitelist, dimensions, anchored ordered-pair semantics,
+empty-block handling, zero-correction delegation, learning rule and complete cost
+budget. The only material pre-approval amendment was the normalization floor
+above; feature construction and test remain unimplemented. This proposal is ready
+for the user to approve or decline. Approval applies to this one bounded pilot,
+not an open-ended representation, frequency or learner sweep.
