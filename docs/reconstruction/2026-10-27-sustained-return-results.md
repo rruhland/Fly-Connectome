@@ -322,3 +322,13 @@ Parent selected a different retention contract after independent Sol challenge: 
 
 Active reused replacement worker `/root/rally_integration` (Sol6.1XHigh) is implementing/executing this trial in `/workspace/Fly-Connectome-m1b-pong-fast`. Parent owns hypothesis/review, no new architecture/backprop/privileged input. Source528dece→maincb101eb,205bdc0→mainc4f49d4. User goal remains active; do not stop merely because a bounded trial ends.
 
+
+
+## Current — architecture review proposed after opening-retention result
+
+Opening-retention candidate d25620d2 completed full160:409→403 total,143→144 first,266/384→259/373 later. Every previously successful opening retained, but seven net later returns lost; rejected, no fresh evaluation. Fit8.36s, all14,268 original hard rows certified; fixedsentinel61→62. Full72,447cameras+114initials200.24s; totalincluding sentinel85,381+136. Current provisional3ac7f87f/r4bank409 remains unchanged.
+
+Parent and Sol independently recommend one bounded generic64-RBF residual capacity test after failed hard-all, softscore and first-stage retention attempts. Concrete proposal: `docs/plans/2026-10-28-local-nonlinear-residual-review.md`. It preserves current policy exactly at initialization, freezes vision/base linear head, learns only3×64 output weights without backprop, uses legal TRAIN inputs for fixed basis calibration, and requires actual retained/gained returns. This is a MAJOR architecture change and requires user's review; not implemented or approved. Earlier64-tanh approval applied to a different completed test. Do not infer global impossibility from current results. Parent will ask via async tool; no new architecture execution until response.
+
+Worker `/root/rally_integration` is active and has completed current run; no more linear guard-growth fits selected. Existing velocity diagnostic and new metadata/handoff review can continue while awaiting user. Current selected head and every rejected intermediate preserved. Bridge remains other thread's work.
+

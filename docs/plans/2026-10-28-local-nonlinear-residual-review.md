@@ -1,7 +1,9 @@
 # Draft review: localized nonlinear policy residual
 
-Status: proposal only; not approved or implemented. The current opening-retention
-trial is still running. Do not replace that outcome with an architecture claim.
+Status: ready for user review; not approved or implemented. The opening-retention
+trial completed at403 versus409 returns, with all143 known successful openings
+preserved and one additional opening recovered. Later returns regressed by seven.
+This is interference evidence, not a proof that the current policy cannot learn.
 
 ## Problem and hypothesis
 
@@ -21,10 +23,12 @@ encoded inputs requiring different behavior.
 ## Concrete bounded proposal
 
 Keep the existing frozen vision, scaler, actuator and learned linear head.
-Add64 fixed radial-basis features of the same legal visual input. Choose centers
-from existing TRAIN observations without reward or physics labels, and set a
-single bandwidth from their distance distribution. Calibrate activity on TRAIN
-only. Record nonlinear variation beyond a fitted linear map; do not repeat the
+Add64 fixed radial-basis features of the same legal visual input. Take a fixed-seed,
+episode-balanced sample of2,048 current native TRAIN observations, select64
+farthest-point centers using the existing diagonal feature scaling, and set one
+bandwidth from the median positive distance to each center's eight nearest centers.
+No reward labels, new donor trajectories or physics labels select the centers.
+Calibrate activity on TRAIN only. Record nonlinear variation beyond a fitted linear map; do not repeat the
 previous nearly linear64-tanh branch without checking its redundancy.
 
 Initialize all new output weights to zero: the complete carried policy is exactly
@@ -47,5 +51,7 @@ regression or unavailable useful nonlinear variation.
 This adds a nonlinear policy branch, so it is a major architecture experiment
 reserved for user review. The earlier approval concerned a specific64-feature
 residual test already completed; it is not treated as blanket approval for this
-new construction. Await a concrete parent recommendation after the active trial
-and the Sol review before requesting approval.
+new construction. The parent and independent Sol review now recommend this bounded test. The prior
+velocity diagnostic already showed a possible smoothing benefit in one case, but
+other misses had usable visual information; velocity cleanup remains a separate,
+smaller alternative and is not evidence that a nonlinear branch is necessary.
