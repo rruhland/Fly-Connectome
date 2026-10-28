@@ -1,3 +1,5 @@
+Approval request is now pending in the conversation. Sol completed a zero-camera audit of all160 TRAIN seeds and92,162 retained action/Q rows;3ac7f87f and d7 match their saved hashes. Current block actual cost202,995 transition cameras+309initials. All runs stopped at the user-reserved architecture review boundary. Concrete proposal includes independent review corrections on out-of-sample TRAIN novelty and exact fitting certificates.
+
 ## Current — architecture review proposed after opening-retention result
 
 Opening-retention candidate d25620d2 completed full160:409→403 total,143→144 first,266/384→259/373 later. Every previously successful opening retained, but seven net later returns lost; rejected, no fresh evaluation. Fit8.36s, all14,268 original hard rows certified; fixedsentinel61→62. Full72,447cameras+114initials200.24s; totalincluding sentinel85,381+136. Current provisional3ac7f87f/r4bank409 remains unchanged.

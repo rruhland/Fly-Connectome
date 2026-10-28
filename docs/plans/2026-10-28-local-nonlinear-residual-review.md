@@ -42,6 +42,17 @@ contract for a single bounded comparison. Verify initialization action parity,
 record fit time and inference overhead, and test actual fixed TRAIN sentinel,
 full160 if useful, then new games. A fitted witness is insufficient for acceptance.
 Compare against the preserved3ac7f87f head; keep every old checkpoint immutable.
+Measure nonlinear novelty on separate TRAIN episodes from those used to fit the
+linear explanatory map; do not use an in-sample fit of2,048 observations with4,389
+linear inputs as evidence of redundancy. Record activation coverage, saturation
+and effective rank before spending native cameras. These are TRAIN diagnostics,
+not new-game policy qualification.
+
+Use a fixed minimum empirical residual-score-change objective with the documented
+normalized1%ridge, the whole reward-earned donor and known opening prefixes hard.
+Require exact original-row and deployed-action certificates. If no verified fit
+exists within the budget, perform no native run and no bandwidth retry.
+
 No architecture/bandwidth sweep follows automatically. Proposed execution budget:
 10minutes including fitting and native checks; stop this branch on clear global
 regression or unavailable useful nonlinear variation.
