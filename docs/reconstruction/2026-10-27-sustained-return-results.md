@@ -447,3 +447,22 @@ Candidate bundleef890acc5c553b2f4ac3e7e3b9f9157718d39eb2bb87c164443011aa9a823be1
 is retained without automatic promotion. Early-stage transfer is promising but
 sustained-rally improvement is unproven; ebcarry remains provisional. Parent/Sol
 review next mechanism rather than automatically extending guard/weight variants.
+
+## Projected direct-reward proposals — optimizer stopped before reward testing
+
+Root `pong-rally-pairwise-reward-search-20261028-r1`; source39fe237→mainc1278f0,
+21focusedtests passed. Four fixed covariance-conditioned directions and opposites
+were calibrated to10% phase/episode-balanced action change.37,183guardrows retain
+174first/secondprefixes and the earlier104562292five-return acquisition.
+All eight projections failed to verify within their12second limits; residual
+original inequalities remained .099–.398. Total83.49s, ZERO native cameras or
+initials, no changed checkpoint. This is bounded solver nonconvergence, not
+infeasibility or evidence against reward-selected output search. The generic
+summary status `no_strict_actual_reward_screen_winner` must not be interpreted
+as eight tested reward failures: no proposal reached native evaluation.
+
+Parent rejects extending a solver/guard tuning loop as the automatic next step.
+Sol will cheaply estimate feasible carry-ray changes from saved proposals without
+refitting or new games; parent proposes direct native scoring of the SAME eight
+requests with outcome retention gates, awaiting independent critique. That would
+be an explicitly separate follow-up, not a reset of this completed pass.

@@ -69,8 +69,17 @@ one forward-only10%behavior dose, <=12sprojection each, one900sexecutionclock.
 Protect174first/secondprefixes AND the original acquired104562292five-hitprefix
 (which ef forgot5→2). Eight common TRAIN games rank actualreward; beststrictgain
 proceeds192thenfresh. No donor labels, parameter/scale sweep or averagedninthhead.
-Implementation/review inprogress; no newcandidategames yet. Plan:
-[projected reward search](../plans/2026-10-28-projected-reward-search.md).
+Projected search source39fe237/mainc1278f0 passed21focusedtests but all8proposals
+failed bounded12sprojection verification. Root `pong-rally-pairwise-reward-search-20261028-r1`
+completed83.49s, ZERO native cameras. Not an actual reward-search failure or
+capacity/infeasibility proof. Sources stayed frozen; all runs exited.
+Parent/Sol now selected a separate direct native comparison of the SAME8saved
+rawrequests, no refit/rescale/newdirections. Check actual104562292≥5 first; only
+survivors play the same8TRAINscreen. Strict total/latergain plus earlyretention
+thenfull192/fresh, max900s; implementation active, no newcameraexecutionyet.
+Exact action locks are replaced by actual outcome retention; preserve failed
+projected artifacts and report screened-out games as unevaluated. Plan:
+[projected reward search and follow-up](../plans/2026-10-28-projected-reward-search.md).
 
 Parent explicitly authorized admitting only32CANDIDATE fresh receipts intoTRAIN
 after evaluation; authorization is under `pong-rally-pairwise-frozen-fresh-20261028-r1/parent-admission-authorization.json`.

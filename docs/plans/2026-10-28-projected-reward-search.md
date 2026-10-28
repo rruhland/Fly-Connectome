@@ -72,3 +72,26 @@ rallies do not dominate the10% target. Parent independently checked prospective
 carry-first reuse on the preceding fresh32:9completeepisodes/4,434of35,116cameras
 could have been avoided (zero new cameras). Defer that helper rewrite for this
 pass; its expected savings do not justify delaying the learning experiment.
+
+
+## Completed projection failure and selected separate direct follow-up
+
+Eight12second projections yielded no verified candidate (remaining violations
+.099–.398),83.49s total, ZERO native cameras. No reward comparison ran. Do not
+interpret generic summary `no_strict_actual_reward_screen_winner` as negative
+game results or feature-capacity evidence. Original artifacts/source stay preserved.
+
+Parent proposed direct actual scoring of the SAME saved eight requests, replacing
+exact action locks with actual retention gates. Sol independently agreed and
+recommended evaluating104562292first: reject if it earns fewer than5, then run the
+same eight TRAIN games only for survivors. Unexecuted games remain UNEVALUATED.
+This saves cameras without changing which candidates could qualify. No fitting,
+new directions, new scales, reward-driven calibration, or averaged ninth policy.
+Separate explicitly named follow-up, at most900seconds, under standing mandate;
+not a reset or hidden continuation of the completed83.49second pass.
+
+Advance a candidate only for strict total AND later own-return gains on the common
+screen with first/second retention, then same full192gates plus acquiredskill≥5,
+then untouched freshgames. Preserve source request arrays/hashes and all costs.
+This still risks coarse exploration and overfitting; actual full/fresh results,
+rather than an action-agreement percentage, decide its usefulness.
