@@ -65,36 +65,46 @@ def check_target(step,seed,known_hits,role,phase,bank,entry,baseline):
 
 def evaluate(directory,bank,entries,baseline,head,cached_native_root=None,native_seconds=500,alternate_native_root=None,candidate_readout=None,candidate_hash_override=None,absolute_deadline=None):
     directory=Path(directory);candidate=np.load(head);sourceW=np.load(bank['current_head']);candidate_hash=candidate_hash_override or base.sha(head);outcomes=[];jobs=[];certificates=[]
+    source_readout=None;source_hash=bank['current_head_sha256']
+    if bank.get('current_model_bundle'):
+        from pong_fixed_rbf import load_readout
+        source_hash=base.sha(bank['current_model_bundle']);assert source_hash==bank['current_policy_sha256'];source_readout=load_readout(bank['current_model_bundle']);assert np.array_equal(source_readout.base.weights,sourceW)
+    def stamp(value):
+        if candidate_readout is not None:value.update(model_kind=candidate_readout.schema,model_file=str(directory/'rbf-model.npz'),base_weights_sha256=base.sha(head))
+        return value
     for name in ('episodes','features'):(directory/'native_candidate'/name).mkdir(parents=True)
     cached={}
     if cached_native_root is not None:
         cached_native_root=Path(cached_native_root);assert base.read(cached_native_root/'manifest.json')['source']==base.source_signature()
         cached={base.read(p)['seed']:(p,base.read(p)) for p in (cached_native_root/'native_candidate/episodes').glob('*.json')}
-    alternate={};alternateW=None;alternate_hash=None;alternate_source=None
+    alternate={};alternateW=None;alternate_hash=None;alternate_source=None;alternate_readout=None
     if alternate_native_root is not None:
         alternate_native_root=Path(alternate_native_root)
         alternate_source=base.read(alternate_native_root/'manifest.json')['source'];assert alternate_source==base.source_signature()
         alternateW=np.load(alternate_native_root/'proposal.npy');alternate_hash=base.sha(alternate_native_root/'proposal.npy')
+        if (alternate_native_root/'rbf-model.npz').exists():
+            from pong_fixed_rbf import load_readout
+            alternate_readout=load_readout(alternate_native_root/'rbf-model.npz');alternate_hash=base.sha(alternate_native_root/'rbf-model.npz');assert np.array_equal(alternate_readout.base.weights,alternateW)
         alternate={base.read(p)['seed']:(p,base.read(p)) for p in (alternate_native_root/'native_candidate/episodes').glob('*.json')}
     for i,(entry,r) in enumerate(zip(entries,baseline)):
         if r['seed'] in cached and cached[r['seed']][1].get('transport_kind','visual-transport-v1')=='visual-transport-v1':
             path,value=cached[r['seed']];assert value['complete'] and value['weights_sha256']==candidate_hash and value['config']==r['config']
             feature=Path(value['feature_file']);feature=feature if feature.is_absolute() else cached_native_root/feature
             value=dict(value,feature_file=str(feature),execution='reused_completed_native_same_head',executed_transition_cameras=0,executed_initial_cameras=0,source_receipt=str(path),source_receipt_sha256=base.sha(path),source_feature_file=str(feature))
-            base.atomic_json(directory/'native_candidate/episodes'/f'train_{i:02d}.json',value);outcomes.append(value);certificates.append(dict(seed=r['seed'],certified=True,reason='previous completed actual native game under identical candidate/config/source',executed_transition_cameras=0));continue
+            base.atomic_json(directory/'native_candidate/episodes'/f'train_{i:02d}.json',stamp(value));outcomes.append(value);certificates.append(dict(seed=r['seed'],certified=True,reason='previous completed actual native game under identical candidate/config/source',executed_transition_cameras=0));continue
         if r['seed'] in alternate:
             path,value=alternate[r['seed']];feature=Path(value['feature_file']);feature=feature if feature.is_absolute() else alternate_native_root/feature
             alternateX=sp.load_npz(feature)
-            other_cert=certify_episode(value,alternateX,alternateW,candidate,source_weights_sha256=alternate_hash,source_fingerprint=alternate_source,candidate_fingerprint=base.source_signature(),candidate_config=r['config'],candidate_readout=candidate_readout)
+            other_cert=certify_episode(value,alternateX,alternateW,candidate,source_weights_sha256=alternate_hash,source_fingerprint=alternate_source,candidate_fingerprint=base.source_signature(),candidate_config=r['config'],candidate_readout=candidate_readout,source_readout=alternate_readout)
             if other_cert['certified']:
                 value=dict(value,weights_sha256=candidate_hash,records=other_cert['records'],feature_file=str(feature),execution='reused_by_exact_alternate_episode',executed_transition_cameras=0,executed_initial_cameras=0,source_receipt=str(path),source_receipt_sha256=base.sha(path),source_feature_file=str(feature),source_weights_sha256=alternate_hash,action_equivalence_certificate={k:v for k,v in other_cert.items() if k!='records'})
-                base.atomic_json(directory/'native_candidate/episodes'/f'train_{i:02d}.json',value);outcomes.append(value)
+                base.atomic_json(directory/'native_candidate/episodes'/f'train_{i:02d}.json',stamp(value));outcomes.append(value)
                 certificates.append(dict(seed=r['seed'],alternate_source_receipt=str(path),**{k:v for k,v in other_cert.items() if k!='records'}));continue
-        X=sp.load_npz(entry['raw_feature']);cert=certify_episode(r,X,sourceW,candidate,source_weights_sha256=bank['current_head_sha256'],source_fingerprint=bank['source'],candidate_fingerprint=base.source_signature(),candidate_config=r['config'],candidate_readout=candidate_readout)
+        X=sp.load_npz(entry['raw_feature']);cert=certify_episode(r,X,sourceW,candidate,source_weights_sha256=source_hash,source_fingerprint=bank['source'],candidate_fingerprint=base.source_signature(),candidate_config=r['config'],candidate_readout=candidate_readout,source_readout=source_readout)
         certificates.append(dict(seed=r['seed'],**{k:v for k,v in cert.items() if k!='records'}))
         if not cert['certified']:jobs.append((i,r['seed']));continue
-        value=dict(r,weights_sha256=candidate_hash,records=cert['records'],feature_file=entry['raw_feature'],feature_format='actual capped raw CSR',execution='reused_by_exact_action_certificate',executed_transition_cameras=0,executed_initial_cameras=0,source_receipt=entry['receipt'],source_feature_file=entry['raw_feature'],source_weights_sha256=bank['current_head_sha256'],action_equivalence_certificate={k:v for k,v in cert.items() if k!='records'})
-        base.atomic_json(directory/'native_candidate/episodes'/f'train_{i:02d}.json',value);outcomes.append(value)
+        value=dict(r,weights_sha256=candidate_hash,records=cert['records'],feature_file=entry['raw_feature'],feature_format='actual capped raw CSR',execution='reused_by_exact_action_certificate',executed_transition_cameras=0,executed_initial_cameras=0,source_receipt=entry['receipt'],source_feature_file=entry['raw_feature'],source_weights_sha256=source_hash,action_equivalence_certificate={k:v for k,v in cert.items() if k!='records'})
+        base.atomic_json(directory/'native_candidate/episodes'/f'train_{i:02d}.json',stamp(value));outcomes.append(value)
     base.atomic_json(directory/'reuse-certificates.json',dict(certificates=certificates,reused_complete_games=len(outcomes),reused_logical_cameras=sum(r['transitions'] for r in outcomes),new_observations=0))
     began=time.monotonic();deadline=min(began+native_seconds,absolute_deadline) if absolute_deadline is not None else began+native_seconds;base.atomic_json(directory/'native-clock.json',dict(started_wall_ns=time.time_ns(),started_monotonic=began,deadline_monotonic=deadline,seconds=max(0.,deadline-began)));new=[]
     with ProcessPoolExecutor(max_workers=4,mp_context=mp.get_context('spawn'),initializer=base.initialize) as pool:

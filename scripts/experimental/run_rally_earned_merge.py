@@ -4,6 +4,7 @@ from pathlib import Path
 import numpy as np
 import scipy.sparse as sp
 from pong_earned_trace_merge import merge
+from fly_connectome.control.policy import FrozenLinearPolicy
 from run_rally_fixed_bank_check import run as native_check
 from return_metrics import aggregate
 import run_practical_pong_v2 as base
@@ -16,6 +17,10 @@ def donors_in(case):
 def load_case(entry):
     """Validate native provenance or an explicitly reward-earned forced trace."""
     source_weights=np.load(entry['source_head']);source_hash=base.sha(entry['source_head']);assert source_hash==entry['source_head_sha256']
+    source_policy=FrozenLinearPolicy(source_weights)
+    if entry.get('source_model_bundle'):
+        from pong_fixed_rbf import load_readout
+        source_hash=base.sha(entry['source_model_bundle']);assert source_hash==entry['source_policy_sha256'];source_policy=load_readout(entry['source_model_bundle']);assert np.array_equal(source_policy.base.weights,source_weights)
     X=sp.load_npz(entry['raw_feature']).tocsr();interventions=[]
     if 'discovery_summary' in entry:
         summary=base.read(Path(entry['discovery_summary']));assert summary['status']=='complete' and summary['source_frozen']
@@ -44,8 +49,11 @@ def load_case(entry):
     else:
         receipt=base.read(Path(entry['receipt']));assert receipt['weights_sha256']==source_hash;records=receipt['records'];assert receipt['complete'] and len(records)==X.shape[0]
     assert records[entry['end']-1]['hits'] and 0<entry['end']<=len(records)
+    for i,record in enumerate(records):
+        lo,hi=X.indptr[i:i+2];a,q=source_policy.choose(X.indices[lo:hi],X.data[lo:hi]);assert np.array_equal(q,np.asarray(record['q']))
+        assert a==record.get('unmodified_greedy_action',record['action'])
     actions=np.array([r['action'] for r in records[:entry['end']]],dtype=np.int64)
-    return dict(seed=entry['seed'],X=X[:entry['end']].tocsr(),actions=actions,source_weights=source_weights,interventions=interventions)
+    return dict(seed=entry['seed'],X=X[:entry['end']].tocsr(),actions=actions,source_weights=source_weights,source_readout=source_policy,source_policy_sha256=source_hash,interventions=interventions)
 
 
 def run(directory,index_path,bank_path,reference_root):

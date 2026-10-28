@@ -6,6 +6,7 @@ from fly_connectome.control.policy import FrozenLinearPolicy
 from pong_fixed_pairwise import FixedPairwise,FrozenPairwiseReadout,save_readout
 from pong_fixed_rbf import load_readout
 from run_rally_rbf_residual import fit_residual
+from rally_action_equivalence import certify_episode
 
 
 class PairwiseTests(unittest.TestCase):
@@ -26,6 +27,15 @@ class PairwiseTests(unittest.TestCase):
     def test_non64_fit_dimensions_and_deployed_certificate(self):
         b=self.basis(5);W=np.zeros((3,4));X=sp.csr_matrix([[.7,0.,-.5,0.]]);case=dict(X=X,actions=np.array([1]),source_weights=W,interventions=[dict(row=0,reward_verified=True,action=1,source_action=0)])
         R,r=fit_residual(W,b,[case],np.eye(5),1.,time.monotonic()+5,FrozenPairwiseReadout);self.assertTrue(r['verified']);self.assertEqual(R.shape,(3,5));self.assertEqual(r['contrast_parameters'],10);self.assertEqual(FrozenPairwiseReadout(W,b,R).choose(X.indices,X.data)[0],1)
+
+    def test_carried_nonlinear_reference_and_distinct_historical_source(self):
+        b=self.basis(5);W=np.zeros((3,4));W[0,0]=.2;X=sp.csr_matrix([[.7,0.,-.5,0.]]);phi=b.batch(X)[0];R0=np.zeros((3,5));R0[1]=phi/(phi@phi);carried=FrozenPairwiseReadout(W,b,R0);self.assertEqual(carried.choose(X.indices,X.data)[0],1)
+        current=dict(X=X,actions=np.array([1]),source_weights=W,source_readout=carried);R,r=fit_residual(W,b,[current],np.eye(5),1.,time.monotonic()+5,FrozenPairwiseReadout,carried);self.assertTrue(r['verified']);np.testing.assert_allclose(R,R0,atol=1e-12)
+        historical=dict(X=X,actions=np.array([0]),source_weights=W);R,r=fit_residual(W,b,[historical],np.eye(5),1.,time.monotonic()+5,FrozenPairwiseReadout,carried);self.assertTrue(r['verified']);self.assertEqual(FrozenPairwiseReadout(W,b,R).choose(X.indices,X.data)[0],0)
+
+    def test_nonlinear_source_receipt_requires_exact_readout(self):
+        b=self.basis();W=np.zeros((3,4));R=np.zeros((3,7));R[1]=b.batch(sp.csr_matrix([[.7,0.,-.5,0.]]))[0];p=FrozenPairwiseReadout(W,b,R);X=sp.csr_matrix([[.7,0.,-.5,0.]]);a,q=p.choose(X.indices,X.data);config=dict(policy_kind='trained',action_hold_frames=1,episodes=1,action_seed=None);r=dict(complete=True,report=dict(complete=True),weights_sha256='bundle',model_kind=p.schema,config=config,feature_format='actual capped raw CSR',transitions=1,initial_cameras=1,records=[dict(action=a,q=q.tolist())]);kw=dict(source_weights_sha256='bundle',source_fingerprint={'v':1},candidate_fingerprint={'v':1},candidate_config=config,candidate_readout=p)
+        self.assertFalse(certify_episode(r,X,W,W,**kw)['certified']);self.assertTrue(certify_episode(r,X,W,W,source_readout=p,**kw)['certified'])
 
 
 if __name__=='__main__':unittest.main()

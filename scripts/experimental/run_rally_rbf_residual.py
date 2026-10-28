@@ -38,13 +38,15 @@ def calibrate(rows,scale):
     return basis,report,provenance
 
 
-def fit_residual(W,basis,cases,G,kappa,deadline,readout_class=FrozenRBFReadout):
+def fit_residual(W,basis,cases,G,kappa,deadline,readout_class=FrozenRBFReadout,reference_readout=None):
     began=time.monotonic();X=sp.vstack([c['X'] for c in cases],format='csr');actions=np.concatenate([c['actions'] for c in cases]);required=[];qbase=[]
+    reference=FrozenLinearPolicy(W) if reference_readout is None else reference_readout
+    if reference_readout is not None:assert np.array_equal(reference_readout.base.weights,W) and reference_readout.basis is basis
     for case in cases:
         assert np.array_equal(W,case['source_weights']), 'residual constraints require the exact frozen deployed base head'
-        policy=FrozenLinearPolicy(case['source_weights']);forced={v['row']:v for v in case.get('interventions',[])}
+        policy=case.get('source_readout',FrozenLinearPolicy(case['source_weights']));forced={v['row']:v for v in case.get('interventions',[])}
         for i,a in enumerate(case['actions']):
-            lo,hi=case['X'].indptr[i:i+2];choice,q=policy.choose(case['X'].indices[lo:hi],case['X'].data[lo:hi]);qbase.append(q)
+            lo,hi=case['X'].indptr[i:i+2];ix=case['X'].indices[lo:hi];xx=case['X'].data[lo:hi];choice,q=policy.choose(ix,xx);qbase.append(reference.choose(ix,xx)[1])
             if i in forced:
                 v=forced[i];assert v['reward_verified'] and v['action']==a and v['source_action']==choice;required.append([kappa*1e-4]*2)
             else:
@@ -65,7 +67,9 @@ def fit_residual(W,basis,cases,G,kappa,deadline,readout_class=FrozenRBFReadout):
         if answer.y is not None and np.isfinite(answer.y).all():duals={i:float(y) for i,y in zip(working,answer.y)}
         violation=lower-A@v;maximum=max(0.,float(violation.max()));history.append(dict(round=iteration+1,working=len(working),maximum_original_logit_violation=maximum,solver_status=answer.info.status,iterations=int(answer.info.iter)))
         if maximum<=1e-9:
-            R=CONTRAST@v.reshape(2,m);readout=readout_class(W,basis,R);wrong=[];actual_violation=0.
+            R=CONTRAST@v.reshape(2,m)
+            if reference_readout is not None:R=reference_readout.residual+R
+            readout=readout_class(W,basis,R);wrong=[];actual_violation=0.
             for i,a in enumerate(actions):
                 lo,hi=X.indptr[i:i+2];got,q=readout.choose(X.indices[lo:hi],X.data[lo:hi]);actual_violation=max(actual_violation,float(np.max(required[i]-np.array([q[a]-q[b] for b in range(3) if b!=a]))))
                 if got!=a:wrong.append(i)
@@ -77,7 +81,7 @@ def fit_residual(W,basis,cases,G,kappa,deadline,readout_class=FrozenRBFReadout):
             if not tight:tight=True;continue
             status='bounded_numerical_residual_no_fallback';break
         working=sorted(existing|set(map(int,fresh[np.argsort(-violation[fresh],kind='stable')[:256]])))
-    return candidate,dict(status=status,verified=candidate is not None,hard_cases=len(cases),original_rows=X.shape[0],original_inequalities=len(lower),working_inequalities=len(working),history=history,wall_seconds=time.monotonic()-began,infeasibility_diagnostic=infeasibility,objective='minimum equal-episode empirical residual score change, mean-diagonal normalized covariance plus1%ridge',residual_parameters=3*m,contrast_parameters=2*m,base_head_frozen=True,original_deployed_choices_certified=X.shape[0] if candidate is not None else 0,maximum_actual_logit_violation=actual_violation if candidate is not None else None,no_confidence_growth_objective=True,numerical_fallback=False,new_observations=0)
+    return candidate,dict(status=status,verified=candidate is not None,hard_cases=len(cases),original_rows=X.shape[0],original_inequalities=len(lower),working_inequalities=len(working),history=history,wall_seconds=time.monotonic()-began,infeasibility_diagnostic=infeasibility,objective='minimum equal-episode empirical residual score CHANGE, mean-diagonal normalized covariance plus1%ridge',carried_residual_reference=reference_readout is not None,source_policy_Q_distinct_from_carried_reference_Q=reference_readout is not None,residual_parameters=3*m,contrast_parameters=2*m,base_head_frozen=True,original_deployed_choices_certified=X.shape[0] if candidate is not None else 0,maximum_actual_logit_violation=actual_violation if candidate is not None else None,no_confidence_growth_objective=True,numerical_fallback=False,new_observations=0)
 
 
 def run(directory,bank_path,index_path,sentinel_schedule,resume_saved_basis=False):

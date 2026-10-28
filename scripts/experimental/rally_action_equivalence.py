@@ -17,7 +17,7 @@ from fly_connectome.control.policy import FrozenLinearPolicy
 
 def certify_episode(receipt, features, source_weights, candidate_weights, *,
                     source_weights_sha256, source_fingerprint,
-                    candidate_fingerprint, candidate_config,candidate_readout=None):
+                    candidate_fingerprint, candidate_config,candidate_readout=None,source_readout=None):
     def reject(reason, checked=0, index=None):
         return dict(certified=False, reason=reason, checked_rows=checked,
                     first_disagreement=index, executed_transition_cameras=0,
@@ -45,7 +45,9 @@ def certify_episode(receipt, features, source_weights, candidate_weights, *,
         return reject('incomplete_feature_trajectory')
     if np.asarray(candidate_weights).shape!=np.asarray(source_weights).shape:
         return reject('readout_shape_changed')
-    source=FrozenLinearPolicy(source_weights);candidate=FrozenLinearPolicy(candidate_weights) if candidate_readout is None else candidate_readout
+    if receipt.get('model_kind') and source_readout is None:return reject('nonlinear_source_requires_exact_source_readout')
+    if source_readout is not None and not np.array_equal(getattr(source_readout,'base',source_readout).weights,source_weights):return reject('source_readout_base_mismatch')
+    source=FrozenLinearPolicy(source_weights) if source_readout is None else source_readout;candidate=FrozenLinearPolicy(candidate_weights) if candidate_readout is None else candidate_readout
     updated=[]
     for i,record in enumerate(records):
         lo,hi=features.indptr[i:i+2];indices=features.indices[lo:hi];values=features.data[lo:hi]
