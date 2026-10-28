@@ -48,7 +48,12 @@ def native_task(directory,seed,index,deadline):
     directory=Path(directory);began=time.monotonic();W=np.load(directory/'proposal.npy')
     config=PongEvaluationConfig(seed=seed,episodes=1,max_episode_ticks=2400,opponent_speed=.65,policy_scaling=base.read(directory/'radial-cap.json'))
     random.seed(BOOKKEEPING);np.random.seed(BOOKKEEPING);torch.manual_seed(BOOKKEEPING)
-    session=FreshPongEvaluator(W,config);game=session.env.game;original=game.step;counter=ReturnCounter();records=[];events=[];raw=SparseRows()
+    model=directory/'rbf-model.npz';model_hash=base.sha(model) if model.exists() else base.sha(directory/'proposal.npy')
+    if model.exists():
+        from pong_fixed_rbf import load_readout,FreshRBFEvaluator
+        readout=load_readout(model);assert np.array_equal(readout.base.weights,W);session=FreshRBFEvaluator(readout,config)
+    else:session=FreshPongEvaluator(W,config)
+    game=session.env.game;original=game.step;counter=ReturnCounter();records=[];events=[];raw=SparseRows()
     def instrument(drive,**kwargs):
         own=counter.opportunities;opponent=counter.opponent_opportunities;tick=int(game.rally_steps[0])+1
         out=counter.step(game,original,drive,**kwargs)
@@ -65,7 +70,8 @@ def native_task(directory,seed,index,deadline):
     annotation=counter.summary(game,truncated=last['truncated'],terminated=last['terminated'],reward=last['reward'],seconds=last['seconds'])
     count_status=native_count_status(annotation,report)
     path=f'native_candidate/features/train_{index:02d}.npz';sp.save_npz(directory/path,raw.matrix())
-    result=dict(seed=seed,complete=report['complete'],config=asdict(config),weights_sha256=base.sha(directory/'proposal.npy'),report=report,annotation=annotation,annotation_count_status=count_status,records=records,opportunity_events=events,feature_file=path,feature_format='actual capped raw CSR',transitions=session.transitions,initial_cameras=session.initial_cameras,learned_contents_unchanged=True,wall_seconds=time.monotonic()-began)
+    result=dict(seed=seed,complete=report['complete'],config=asdict(config),weights_sha256=model_hash,report=report,annotation=annotation,annotation_count_status=count_status,records=records,opportunity_events=events,feature_file=path,feature_format='actual capped raw CSR',transitions=session.transitions,initial_cameras=session.initial_cameras,learned_contents_unchanged=True,wall_seconds=time.monotonic()-began)
+    if model.exists():result.update(model_kind='fixed-local-rbf-residual-v1',model_file=str(model),base_weights_sha256=base.sha(directory/'proposal.npy'))
     base.atomic_json(directory/'native_candidate'/'episodes'/f'train_{index:02d}.json',result)
     if report['complete']:assert count_status['valid_terminal_counts'],(seed,count_status,annotation,report)
     return result

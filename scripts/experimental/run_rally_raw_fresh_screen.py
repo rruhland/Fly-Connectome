@@ -8,7 +8,7 @@ from run_rally_fresh_screen import metrics
 import run_practical_pong_v2 as base
 
 
-def run(directory,baseline,candidate):
+def run(directory,baseline,candidate,absolute_deadline=None):
     directory=Path(directory);baseline=Path(baseline);candidate=Path(candidate);schedule=base.read(directory/'schedules.json');seeds=schedule['probe'];assert len(seeds)==32 and not (directory/'work-clock.json').exists()
     assert len({s%base.MODULUS for s in seeds+schedule.get('unused_reserved',[])})==len(seeds)+len(schedule.get('unused_reserved',[]))
     for source in (baseline,candidate):
@@ -18,9 +18,12 @@ def run(directory,baseline,candidate):
     for head,source in [('carry',baseline),('candidate',candidate)]:
         folder=directory/head;folder.mkdir();(folder/'native_candidate/episodes').mkdir(parents=True);(folder/'native_candidate/features').mkdir()
         for name in ('proposal.npy','radial-cap.json'):(folder/name).write_bytes((source/name).read_bytes())
+        if (source/'rbf-model.npz').exists():(folder/'rbf-model.npz').write_bytes((source/'rbf-model.npz').read_bytes())
     files={n:base.sha(Path(__file__).with_name(n)) for n in ('run_rally_raw_fresh_screen.py','run_rally_raw_optimizer.py','run_rally_fresh_screen.py')}
-    manifest=dict(source=base.source_signature(),files=files,baseline_root=str(baseline),candidate_root=str(candidate),heads={head:base.sha(directory/head/'proposal.npy') for head in ('carry','candidate')},settings='native20s/.65opponent/K1/fullgame/unchangedlegalcamera',seeds=seeds,work_seconds=300,no_fitting=True,no_retries=True)
-    base.atomic_json(directory/'manifest.json',manifest);began=time.monotonic();deadline=began+300;base.atomic_json(directory/'work-clock.json',dict(started_wall_ns=time.time_ns(),started_monotonic=began,deadline_monotonic=deadline));results={head:{} for head in ('carry','candidate')}
+    model_hash=lambda head:base.sha(directory/head/('rbf-model.npz' if (directory/head/'rbf-model.npz').exists() else 'proposal.npy'))
+    if (directory/'candidate/rbf-model.npz').exists():files['pong_fixed_rbf.py']=base.sha(Path(__file__).with_name('pong_fixed_rbf.py'))
+    manifest=dict(source=base.source_signature(),files=files,baseline_root=str(baseline),candidate_root=str(candidate),heads={head:model_hash(head) for head in ('carry','candidate')},settings='native20s/.65opponent/K1/fullgame/unchangedlegalcamera',seeds=seeds,work_seconds=300,no_fitting=True,no_retries=True)
+    base.atomic_json(directory/'manifest.json',manifest);began=time.monotonic();deadline=min(began+300,absolute_deadline) if absolute_deadline is not None else began+300;base.atomic_json(directory/'work-clock.json',dict(started_wall_ns=time.time_ns(),started_monotonic=began,deadline_monotonic=deadline));results={head:{} for head in ('carry','candidate')}
     with ProcessPoolExecutor(max_workers=4,mp_context=mp.get_context('spawn'),initializer=base.initialize) as pool:
         pending=iter((head,i,seed) for i,seed in enumerate(seeds) for head in ('carry','candidate'));active={}
         def fill():
@@ -45,7 +48,7 @@ def run(directory,baseline,candidate):
         oa=np.array([r['annotation']['own_opportunities']-int(r['annotation']['first_incoming'] is not None) for r in carry]);ob=np.array([r['annotation']['own_opportunities']-int(r['annotation']['first_incoming'] is not None) for r in learned]);la=np.maximum(ha-1,0);lb=np.maximum(hb-1,0)
         with np.errstate(divide='ignore',invalid='ignore'):delta=lb[index].sum(1)/ob[index].sum(1)-la[index].sum(1)/oa[index].sum(1)
         valid=np.isfinite(delta);paired['later_return_fraction']=dict(difference=groups['candidate']['later_return_fraction']-groups['carry']['later_return_fraction'],paired_bootstrap95=np.quantile(delta[valid],[.025,.975]).tolist(),invalid_draws=int((~valid).sum()),conditional_exposure_warning=True)
-    summary=dict(status='complete' if complete else 'bounded_partial',groups=groups,paired=paired,baseline_root=str(baseline),candidate_root=str(candidate),fresh_transition_cameras=sum(r['transitions'] for v in results.values() for r in v.values()),initial_cameras=sum(r['initial_cameras'] for v in results.values() for r in v.values()),wall_seconds=time.monotonic()-began,source_frozen=manifest['source']==base.source_signature() and files=={n:base.sha(Path(__file__).with_name(n)) for n in files},weights_frozen=manifest['heads']=={head:base.sha(directory/head/'proposal.npy') for head in ('carry','candidate')},no_fitting=True,no_automatic_promotion=True)
+    summary=dict(status='complete' if complete else 'bounded_partial',groups=groups,paired=paired,baseline_root=str(baseline),candidate_root=str(candidate),fresh_transition_cameras=sum(r['transitions'] for v in results.values() for r in v.values()),initial_cameras=sum(r['initial_cameras'] for v in results.values() for r in v.values()),wall_seconds=time.monotonic()-began,source_frozen=manifest['source']==base.source_signature() and files=={n:base.sha(Path(__file__).with_name(n)) for n in files},weights_frozen=manifest['heads']=={head:model_hash(head) for head in ('carry','candidate')},no_fitting=True,no_automatic_promotion=True)
     base.atomic_json(directory/'summary.json',summary);print(json.dumps(summary),flush=True)
 
 if __name__=='__main__':

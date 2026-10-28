@@ -17,7 +17,7 @@ from fly_connectome.control.policy import FrozenLinearPolicy
 
 def certify_episode(receipt, features, source_weights, candidate_weights, *,
                     source_weights_sha256, source_fingerprint,
-                    candidate_fingerprint, candidate_config):
+                    candidate_fingerprint, candidate_config,candidate_readout=None):
     def reject(reason, checked=0, index=None):
         return dict(certified=False, reason=reason, checked_rows=checked,
                     first_disagreement=index, executed_transition_cameras=0,
@@ -43,7 +43,7 @@ def certify_episode(receipt, features, source_weights, candidate_weights, *,
         return reject('incomplete_feature_trajectory')
     if np.asarray(candidate_weights).shape!=np.asarray(source_weights).shape:
         return reject('readout_shape_changed')
-    source=FrozenLinearPolicy(source_weights);candidate=FrozenLinearPolicy(candidate_weights)
+    source=FrozenLinearPolicy(source_weights);candidate=FrozenLinearPolicy(candidate_weights) if candidate_readout is None else candidate_readout
     updated=[]
     for i,record in enumerate(records):
         lo,hi=features.indptr[i:i+2];indices=features.indices[lo:hi];values=features.data[lo:hi]
@@ -58,4 +58,4 @@ def certify_episode(receipt, features, source_weights, candidate_weights, *,
                 records=updated,logical_transition_cameras=n,
                 reused_initial_cameras=receipt['initial_cameras'],
                 executed_transition_cameras=0,executed_initial_cameras=0,
-                proof='Same deterministic initial state and actions preserve every subsequent sensor input; exact FrozenLinearPolicy.choose used on every row.')
+                proof='Same deterministic initial state and actions preserve every subsequent sensor input; exact source and candidate choose used on every row.')

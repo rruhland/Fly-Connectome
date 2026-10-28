@@ -63,8 +63,8 @@ def check_target(step,seed,known_hits,role,phase,bank,entry,baseline):
     base.atomic_json(directory/'summary.json',result);return result,witness
 
 
-def evaluate(directory,bank,entries,baseline,head,cached_native_root=None,native_seconds=500,alternate_native_root=None):
-    directory=Path(directory);candidate=np.load(head);sourceW=np.load(bank['current_head']);candidate_hash=base.sha(head);outcomes=[];jobs=[];certificates=[]
+def evaluate(directory,bank,entries,baseline,head,cached_native_root=None,native_seconds=500,alternate_native_root=None,candidate_readout=None,candidate_hash_override=None,absolute_deadline=None):
+    directory=Path(directory);candidate=np.load(head);sourceW=np.load(bank['current_head']);candidate_hash=candidate_hash_override or base.sha(head);outcomes=[];jobs=[];certificates=[]
     for name in ('episodes','features'):(directory/'native_candidate'/name).mkdir(parents=True)
     cached={}
     if cached_native_root is not None:
@@ -85,18 +85,18 @@ def evaluate(directory,bank,entries,baseline,head,cached_native_root=None,native
         if r['seed'] in alternate:
             path,value=alternate[r['seed']];feature=Path(value['feature_file']);feature=feature if feature.is_absolute() else alternate_native_root/feature
             alternateX=sp.load_npz(feature)
-            other_cert=certify_episode(value,alternateX,alternateW,candidate,source_weights_sha256=alternate_hash,source_fingerprint=alternate_source,candidate_fingerprint=base.source_signature(),candidate_config=r['config'])
+            other_cert=certify_episode(value,alternateX,alternateW,candidate,source_weights_sha256=alternate_hash,source_fingerprint=alternate_source,candidate_fingerprint=base.source_signature(),candidate_config=r['config'],candidate_readout=candidate_readout)
             if other_cert['certified']:
                 value=dict(value,weights_sha256=candidate_hash,records=other_cert['records'],feature_file=str(feature),execution='reused_by_exact_alternate_episode',executed_transition_cameras=0,executed_initial_cameras=0,source_receipt=str(path),source_receipt_sha256=base.sha(path),source_feature_file=str(feature),source_weights_sha256=alternate_hash,action_equivalence_certificate={k:v for k,v in other_cert.items() if k!='records'})
                 base.atomic_json(directory/'native_candidate/episodes'/f'train_{i:02d}.json',value);outcomes.append(value)
                 certificates.append(dict(seed=r['seed'],alternate_source_receipt=str(path),**{k:v for k,v in other_cert.items() if k!='records'}));continue
-        X=sp.load_npz(entry['raw_feature']);cert=certify_episode(r,X,sourceW,candidate,source_weights_sha256=bank['current_head_sha256'],source_fingerprint=bank['source'],candidate_fingerprint=base.source_signature(),candidate_config=r['config'])
+        X=sp.load_npz(entry['raw_feature']);cert=certify_episode(r,X,sourceW,candidate,source_weights_sha256=bank['current_head_sha256'],source_fingerprint=bank['source'],candidate_fingerprint=base.source_signature(),candidate_config=r['config'],candidate_readout=candidate_readout)
         certificates.append(dict(seed=r['seed'],**{k:v for k,v in cert.items() if k!='records'}))
         if not cert['certified']:jobs.append((i,r['seed']));continue
         value=dict(r,weights_sha256=candidate_hash,records=cert['records'],feature_file=entry['raw_feature'],feature_format='actual capped raw CSR',execution='reused_by_exact_action_certificate',executed_transition_cameras=0,executed_initial_cameras=0,source_receipt=entry['receipt'],source_feature_file=entry['raw_feature'],source_weights_sha256=bank['current_head_sha256'],action_equivalence_certificate={k:v for k,v in cert.items() if k!='records'})
         base.atomic_json(directory/'native_candidate/episodes'/f'train_{i:02d}.json',value);outcomes.append(value)
     base.atomic_json(directory/'reuse-certificates.json',dict(certificates=certificates,reused_complete_games=len(outcomes),reused_logical_cameras=sum(r['transitions'] for r in outcomes),new_observations=0))
-    began=time.monotonic();deadline=began+native_seconds;base.atomic_json(directory/'native-clock.json',dict(started_wall_ns=time.time_ns(),started_monotonic=began,deadline_monotonic=deadline,seconds=native_seconds));new=[]
+    began=time.monotonic();deadline=min(began+native_seconds,absolute_deadline) if absolute_deadline is not None else began+native_seconds;base.atomic_json(directory/'native-clock.json',dict(started_wall_ns=time.time_ns(),started_monotonic=began,deadline_monotonic=deadline,seconds=max(0.,deadline-began)));new=[]
     with ProcessPoolExecutor(max_workers=4,mp_context=mp.get_context('spawn'),initializer=base.initialize) as pool:
         pending=iter(jobs);active={}
         def fill():
