@@ -31,4 +31,12 @@ class EarnedMergeTest(unittest.TestCase):
         with self.assertRaisesRegex(AssertionError,'undeclared non-greedy'):
             merge(ref,[case],np.ones(1),.03,time.monotonic()+3)
 
+    def test_equivalent_normalization_preserves_minimum_distance_solution(self):
+        ref=np.array([[-.1,-1.],[.1,0.],[0.,1.]])
+        source=np.array([[1.,-1.],[0.,0.],[-1.,1.]])
+        cases=[dict(X=sp.diags([.3,7.],format='csr'),actions=np.array([0,2]),source_weights=source)]
+        a,ra=merge(ref,cases,np.array([2.,.5]),.03,time.monotonic()+3)
+        b,rb=merge(ref,cases,np.array([2.,.5]),.03,time.monotonic()+3,efficient_working_set=True)
+        self.assertTrue(ra['verified']);self.assertTrue(rb['verified']);np.testing.assert_allclose(a,b,atol=1e-8)
+
 if __name__=='__main__':unittest.main()
