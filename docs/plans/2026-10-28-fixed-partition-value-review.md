@@ -1,6 +1,6 @@
 # Review: one fixed-partition value-learning pilot
 
-**Tree controller: proposed major runtime change; user approval required before implementation/native use.** Data collection below is separately parent-authorized and does not implement trees. No parameter sweep.
+**USER APPROVED. Latest instruction also temporarily waives further architecture approval until the milestone is complete or the user stops work.** Data collection below is separately parent-authorized and does not implement trees. No parameter sweep.
 
 ## Choice and limitation
 

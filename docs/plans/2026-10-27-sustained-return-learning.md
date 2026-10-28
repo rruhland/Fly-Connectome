@@ -1,6 +1,6 @@
 # Sustained return learning
 
-User authorizes ongoing orchestration until ball returns are learnably consistent throughout a match, or user stop. Bridge work belongs to another thread. No backpropagation, privileged policy inputs, or expert action labels. Major architecture changes still require user review; smaller changes and experiments are authorized.
+User authorizes ongoing orchestration until ball returns are learnably consistent throughout a match, or user stop. Bridge work belongs to another thread. No backpropagation, privileged policy inputs, or expert action labels. Latest user instruction approves the tree pilot and temporarily waives additional architecture approval until this milestone is achieved or the user stops work. Parent reviews remain required internally; no backpropagation, privileged policy inputs, or expert labels.
 
 ## Starting point and objective
 

@@ -4,12 +4,16 @@
 
 Continue orchestration until ball returns are learned consistently throughout a
 match, or the user stops work. The goal is NOT met. No backpropagation, privileged
-policy inputs or expert action labels. Major architecture changes require user
-review; smaller/medium experiments are authorized. Bridge/viewer connectivity is
+policy inputs or expert action labels. Latest user instruction APPROVES the tree
+pilot and temporarily waives further architecture approval until this milestone
+is complete or the user stops work. Parent review/bounded experiments continue. Bridge/viewer connectivity is
 another thread's work. Earlier two-hour session limits are superseded.
 
 Use parent direction/review and reused Sol6.1XHigh execution/independent challenge.
-Active worker: `/root/rally_integration`, checkout
+Previous workers unavailable at this turn (agent list only root); replacement
+Sol6.1XHigh `/root/value_execution` owns approved tree implementation in MAIN.
+Independent `/root/alternative_mechanisms` researches distinct next hypotheses.
+Prior worker: `/root/rally_integration`, checkout
 `/workspace/Fly-Connectome-m1b-pong-fast`. Reuse it via followup_task when idle.
 Old `/root/pong_one_pass_research` became unresponsive and was parked.
 Main checkout `/workspace/Fly-Connectome-m1b`, branch
@@ -61,9 +65,9 @@ and9quota partials. Complete N+1observations/rewards/timings, no model changes. 
 127f1c6c24fa5278938f5fe8b51d6eadbe8bf00ee4a9b1471987279b17e27c4b.
 
 Next major proposal: [fixed-partition value learning](../plans/2026-10-28-fixed-partition-value-review.md).
-Not approved/implemented. User explicitly wants distinct parallel hypotheses,
+User approved; implementation underway. User explicitly wants distinct parallel hypotheses,
 outside evidence, and advancing/combining promising methods instead of exhausting
-feature/actor variants. Tree controller needs user review; ordinary acquisition
+feature/actor variants. Further architecture approval temporarily waived; ordinary acquisition
 and research remain authorized. No backprop, privileged inputs or expertlabels.
 Goal remains unmet. Bridge belongs another thread.
 
