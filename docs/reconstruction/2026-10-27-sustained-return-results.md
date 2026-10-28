@@ -418,3 +418,32 @@ Fixed feature map/calibration, basehead, vision/scaler remain unchanged. Reused 
 is reviewing a same-architecture incremental output-learning pass with own-reward
 second-return exploration and retention of existing first-two-return prefixes.
 No new architecture, refit or native training has yet started for that pass.
+
+
+## Fixed pairwise historical second-return replay — mixed transfer
+
+Root `pong-rally-pairwise-second-replay-20261028-r1`; agentf06b980→main33630d9.
+Same approved512map/base/vision, delta output weights around ebcarry; historical
+3ac Q validates old actions while nonlinear carry Q defines updates.19focused tests
+passed, including this distinction. One15.20s fit certified36,774original rows/
+73,548inequalities. Selected historical161900621 recovered1→2 in native play.
+No new exploration or expert labels; this is reuse of earlier self-earned behavior.
+
+Sentinel58→61total,25first retained,14→16games≥2. A historical action conflict
+on221148912 did not prevent actual1→4 via a different trajectory: incompatibility
+of a particular old trajectory does not establish task impossibility.
+Full192:493→499total,174first retained,319/455→325/464later (70.110→70.043%),
+113→117games≥2,43→45games≥5.79newgames/57,868cameras+79initials;113complete
+certified episode reuses. Parent independently reconstructed same192original3ac:
+482total/170first/124games≥2. The new model remains7second-returngames below3ac.
+
+Unused fresh32 under the same900s clock:80→78total,31→32first,24→26games≥2,
+15→12games≥3;49/78→46/77later (62.82→59.74%). Meanreturns difference-.0625,
+paired95%CI[-.53125,.40625]; second-return fraction+6.25pp CI[0,15.625]pp;
+later-rate difference-3.08pp CI[-11.90,+5.09]pp. Fresh cost35,116cameras+64initials,
+127.07s. Full pass446.38s,98,801cameras+151initials. Sources/base/carry frozen.
+
+Candidate bundleef890acc5c553b2f4ac3e7e3b9f9157718d39eb2bb87c164443011aa9a823be1
+is retained without automatic promotion. Early-stage transfer is promising but
+sustained-rally improvement is unproven; ebcarry remains provisional. Parent/Sol
+review next mechanism rather than automatically extending guard/weight variants.

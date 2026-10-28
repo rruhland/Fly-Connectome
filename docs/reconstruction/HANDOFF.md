@@ -54,11 +54,17 @@ rather than allowing longer-rally gains to hide early losses. Parent/Sol agreed 
 prefixes, cheap conflict screening, one delta-output fit, current first-two-prefix
 retention. One900second pass; no discovery/parameter/guard sweep.
 Plan: [second-return replay](../plans/2026-10-28-second-return-replay.md).
-Implementation is active; no new fit/native execution yet. Selected historical
-recovery161900621 has214rows through its second hit and no exact conflict with
-36,560current guards; shorter than other compatible18599159(303rows).
-221148912 conflicts;138732597 has no historical second success. Generic nonlinear carry/source-Q support is required;
-do not treat pairwise source Q values as the frozen linear base's values.
+Completed second-return replay: `pong-rally-pairwise-second-replay-20261028-r1`.
+One delta fit15.20s verified36,774rows; actual selected target161900621 improved1→2.
+Full192:493→499total,174first retained,319/455→325/464later,
+113→117games with≥2returns. Original3ac on these same192had482total/170first/
+124games≥2: recovery is incomplete, not new second-return ability beyond3ac.
+Fresh32:80→78total,31→32first,24→26games≥2,49/78→46/77later.
+Candidateef890acc is retained as an unpromoted early-return scaffold; eb remains
+working carry pending parent review. No claim of improved overall fresh rallies.
+Whole pass446.38s,98,801actual transition cameras+151initials; all processes exited.
+Source main33630d9,19focused tests passed. Parent and reused Sol are reviewing
+interference and a concrete next learning mechanism; no automatic guard/weight sweep.
 
 Parent explicitly authorized admitting only32CANDIDATE fresh receipts intoTRAIN
 after evaluation; authorization is under `pong-rally-pairwise-frozen-fresh-20261028-r1/parent-admission-authorization.json`.
