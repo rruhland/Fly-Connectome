@@ -49,6 +49,42 @@ adapting the deployed policy was NOT tested. The artifact field named
 updates; `acquisition-audit.json` and `final-audit.json` state this limitation.
 The user's 95% first/later-return milestone remains unmet.
 
+## Explicit parent amendment: one reward-history comparison, no gain
+
+The parent authorized ONE causal context amendment after inspecting the measured
+opening failures, despite the earlier prohibition on uninformed guard growth.
+The prepared spec recorded this reason before native evaluation and was approved
+as `1cf3823b0dee947f9fa59efbbb3b7566b0f7926b00e83639085cf0e977077630`.
+Original implementation files from commit `1903b20` remain unchanged; separate
+`pong_reward_context_memory.py` and `run_rally_reward_context_memory.py` implement
+the comparison.
+
+The context bit is false at scene reset and becomes true only AFTER receiving an
+actual positive scalar own-hit reward. All eight stored sites have true context,
+proved by a previous earned hit before their anchors. Retrieval requires this
+context match. The same memory bytes, scenes, paired advantages, radius, baseline
+and 16-camera earned holds were reused with ZERO new acquisition or refitting.
+The parent authorized a separate 180-second evaluation clock, same screen8/32
+gates, and genuinely new conditional fresh tag63153 excluding previous schedules.
+This fixed reward-history scaffold is not a learned general temporal state or
+continuously adapting controller.
+
+Artifact: `/workspace/m1b-experiments/pong-reward-context-option-memory-20261028-r1`.
+Screen8 completed in 25.784 seconds, 5,077 transition cameras + 8 initials:
+**23→23 total returns, 7→7 first, 16/21→16/21 later**. Games with at least two
+returns increased 4→5, but games with at least four decreased 4→3. Thirteen
+earned starts and 195 held continuation cameras changed 158 primitive actions.
+All 5,077 sequential scene/action/score/context/hold rows replayed exactly, with
+context updated only after the recorded reward. Explicit comparison to saved
+40069 receipts verified 697 initial rows through each first hit exactly.
+Source/assets/memory remained frozen. The original memory SHA is unchanged.
+
+Both useful later gains remain (1→2 and 4→5), while one game now loses 5→3 after
+first diverging following its third hit. The history bit removes the opening
+regressions, but the same neighborhood still transfers a damaging action later.
+Total/later gains were absent, so the declared gate stopped after eight games.
+No screen32/fresh work, promotion, or further context/radius/duration variants.
+
 ## Ranked hypotheses
 
 1. **Local reward-trained option memory.** The failed globally fitted policies
