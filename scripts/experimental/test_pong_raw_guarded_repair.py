@@ -13,4 +13,12 @@ class GuardedRepairTest(unittest.TestCase):
         self.assertEqual(r['guard_action_changes'],0);self.assertLessEqual(r['final_objective'],r['zero_residual_objective'])
         self.assertAlmostEqual(r['final_objective'],rf['final_objective'],places=6);np.testing.assert_allclose(delta,full,atol=1e-4)
 
+    def test_early_feasible_repair_preserves_guard_actions(self):
+        W=np.array([[1.,0.],[0.,0.],[-1.,0.]])
+        g=[dict(seed=1,group='first_left',X=sp.csr_matrix([[1.,0.]]),actions=np.array([0]))]
+        p=[dict(seed=2,group='later_left',X=sp.csr_matrix([[0.,1.]]),actions=np.array([2]))]
+        d,r=fit(W,p,g,dict(input_rms=1.,kappa=.03),time.monotonic()+3,stop_on_earned_repair=True)
+        self.assertEqual(r['status'],'feasible_earned_repair_early');self.assertEqual(r['guard_action_changes'],0)
+        self.assertEqual(r['positive']['requested_action_fraction'],1.);self.assertLessEqual(r['final_objective'],r['zero_residual_objective'])
+
 if __name__=='__main__':unittest.main()

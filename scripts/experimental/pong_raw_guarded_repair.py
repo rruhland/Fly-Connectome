@@ -23,7 +23,7 @@ def contrast_rows(X,contrasts,flat_indices,scale):
     return sp.hstack([values.multiply(c[:,0,None]),values.multiply(c[:,1,None])],format='csc')
 
 
-def fit(W,positive,guards,normal,deadline,ridge=1e-6,batch=128,initial_rows=(),initial_delta=None,initial_state=None,state_path=None,initial_guard_duals=None):
+def fit(W,positive,guards,normal,deadline,ridge=1e-6,batch=128,initial_rows=(),initial_delta=None,initial_state=None,state_path=None,initial_guard_duals=None,stop_on_earned_repair=False):
     began=time.monotonic();d=W.shape[1];scale=normal['input_rms'];kappa=normal['kappa'];n=2*d
     X=sp.vstack([c['X'] for c in positive],format='csr');actions=np.concatenate([c['actions'] for c in positive]);other,old,c=pairs(X,actions,W);target=(kappa-old).reshape(-1);pair_weights=np.repeat(weights(positive)/2,2);ns=len(target)
     Xg=sp.vstack([c['X'] for c in guards],format='csr');ag=np.concatenate([c['actions'] for c in guards]);og,gap,cg=pairs(Xg,ag,W);assert gap.min()>-1e-10
@@ -43,6 +43,7 @@ def fit(W,positive,guards,normal,deadline,ridge=1e-6,batch=128,initial_rows=(),i
         z=np.asarray(initial_state['primal']).copy();assert z.shape==(n+ns,) and np.isfinite(z).all()
         working=sorted(set(map(int,initial_state['working_rows'])));base_duals=np.asarray(initial_state['base_duals']).copy()
         guard_duals={int(i):float(v) for i,v in zip(initial_state['working_rows'],initial_state['guard_duals'])}
+    early_alpha=None
     for iteration in range(30):
         remaining=deadline-time.monotonic()
         if remaining<=0:status='wall_limit_finite_iterate';break
@@ -56,6 +57,23 @@ def fit(W,positive,guards,normal,deadline,ridge=1e-6,batch=128,initial_rows=(),i
             base_duals=np.asarray(answer.y[:2*ns]).copy();guard_duals={i:float(v) for i,v in zip(working,answer.y[2*ns:])}
         delta,gdelta,violation=evaluate(z);maximum=max(0.,float(violation.max()))
         history.append(dict(round=iteration+1,working_guards=len(working),maximum_full_violation=maximum,solver_status=answer.info.status,solver_iterations=int(answer.info.iter),primal_residual=float(answer.info.prim_res),dual_residual=float(answer.info.dual_res)))
+        if stop_on_earned_repair:
+            bad=gdelta<0;candidate_alpha=min(1.,float(np.min((gap-required)[bad]/(-gdelta[bad])))) if bad.any() else 1.
+            candidate_alpha=max(0.,candidate_alpha)
+            if candidate_alpha<1.:candidate_alpha*=1-1e-9
+            candidate_delta=delta*candidate_alpha;policy=FrozenLinearPolicy(W+candidate_delta);requested=True
+            for row,action in enumerate(actions):
+                lo_,hi_=X.indptr[row:row+2];got,_=policy.choose(X.indices[lo_:hi_],X.data[lo_:hi_])
+                if got!=action:requested=False;break
+            if requested:
+                trial_z=z.copy();trial_z[:n]*=candidate_alpha;trial_z[n:]=np.maximum(target-Z@trial_z[:n],0.)
+                candidate_objective=float(.5*np.sum(diagonal*trial_z*trial_z));choices=True
+                if np.isfinite(candidate_objective) and candidate_objective<=zero+1e-8:
+                    for row,action in enumerate(ag):
+                        lo_,hi_=Xg.indptr[row:row+2];got,_=policy.choose(Xg.indices[lo_:hi_],Xg.data[lo_:hi_])
+                        if got!=action:choices=False;break
+                    if choices:
+                        z=trial_z;early_alpha=candidate_alpha;status='feasible_earned_repair_early';break
         if maximum<=1e-8:status='full_guard_feasible';break
         eligible=np.flatnonzero(violation>1e-8);existing=set(working);fresh=np.array([i for i in eligible if int(i) not in existing],dtype=int)
         if not len(fresh):status='numerical_guard_residual';break
@@ -76,7 +94,7 @@ def fit(W,positive,guards,normal,deadline,ridge=1e-6,batch=128,initial_rows=(),i
     for i,a in enumerate(ag):
         lo,hi=Xg.indptr[i:i+2];got,_=policy.choose(Xg.indices[lo:hi],Xg.data[lo:hi]);changed+=int(got!=a)
     assert changed==0, ('guard argmax changed',changed)
-    report=dict(solver='OSQP diagonal hinge-slack QP with lazy sparse guard generation',osqp_version=osqp.__version__,status=status,warm_start=initial_delta is not None or initial_state is not None,solver_state_saved=state_path is not None,variables=n+ns,raw_contrast_parameters=n,positive_rows=X.shape[0],hinge_slacks=ns,guard_rows=Xg.shape[0],all_guard_inequalities=len(lower),working_guard_inequalities=len(working),rounds=len(history),history=history,
+    report=dict(solver='OSQP diagonal hinge-slack QP with lazy sparse guard generation',osqp_version=osqp.__version__,status=status,early_stop_enabled=stop_on_earned_repair,early_stop_feasibility_alpha=early_alpha,warm_start=initial_delta is not None or initial_state is not None,solver_state_saved=state_path is not None,variables=n+ns,raw_contrast_parameters=n,positive_rows=X.shape[0],hinge_slacks=ns,guard_rows=Xg.shape[0],all_guard_inequalities=len(lower),working_guard_inequalities=len(working),rounds=len(history),history=history,
         maximum_actual_logit_guard_violation=maximum,guard_action_changes=changed,required_margin='min(kappa, half carried gap)',required_margin_min=float(required.min()),required_margin_max=float(required.max()),ridge=ridge,input_rms=scale,kappa=kappa,
         feasible_contraction=alpha,zero_residual_objective=zero,final_objective=objective,positive=diagnostics(W,delta,positive),guard_outputs=diagnostics(W,delta,guards),wall_seconds=time.monotonic()-began,
         no_hard_q_or_confidence_preservation=True,failed_suffix_guarded=False,weighting='positive equal present group/episode/segment/row; each row split between two alternative comparisons')
