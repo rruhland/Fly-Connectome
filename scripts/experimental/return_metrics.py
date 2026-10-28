@@ -2,6 +2,13 @@
 import numpy as np
 from fly_connectome.control.environment import PongCamera
 
+def native_count_status(annotation,report):
+    """A timeout may follow a missed paddle plane but precede goal termination."""
+    extra=annotation['own_opportunities']-annotation['own_returns']
+    pending=bool(report['complete'] and report['truncations'] and not report['wins'] and not report['losses'] and extra==1)
+    valid=annotation['own_returns']==report['hits'] and (extra==int(report['losses']>0) or pending)
+    return dict(valid_terminal_counts=bool(valid) if report['complete'] else None,missed_plane_opportunities=int(extra),pending_native_loss_at_timeout=pending,own_returns_match_hits=annotation['own_returns']==report['hits'])
+
 class ReturnCounter:
     def __init__(self):
         self.opportunities=self.returns=self.opponent_opportunities=self.opponent_returns=0

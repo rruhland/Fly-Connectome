@@ -13,7 +13,7 @@ import torch
 from fly_connectome.control.pong_evaluation import FreshPongEvaluator,PongEvaluationConfig
 from pong_rally_raw_margin import fit
 from rally_raw_capture import SparseRows,BOOKKEEPING,task as capture_task
-from return_metrics import ReturnCounter,aggregate
+from return_metrics import ReturnCounter,aggregate,native_count_status
 import run_practical_pong_v2 as base
 
 
@@ -63,10 +63,12 @@ def native_task(directory,seed,index,deadline):
     finally:del game.step
     session.verify_frozen();report=session.summary();last=report['rallies'][-1] if report['rallies'] else dict(truncated=False,terminated=False,reward=session.episode_return,seconds=session.episode_seconds)
     annotation=counter.summary(game,truncated=last['truncated'],terminated=last['terminated'],reward=last['reward'],seconds=last['seconds'])
-    if report['complete']:assert annotation['own_returns']==report['hits'] and annotation['own_opportunities']==report['hits']+int(report['losses']>0)
+    count_status=native_count_status(annotation,report)
     path=f'native_candidate/features/train_{index:02d}.npz';sp.save_npz(directory/path,raw.matrix())
-    result=dict(seed=seed,complete=report['complete'],config=asdict(config),weights_sha256=base.sha(directory/'proposal.npy'),report=report,annotation=annotation,records=records,opportunity_events=events,feature_file=path,feature_format='actual capped raw CSR',transitions=session.transitions,initial_cameras=session.initial_cameras,learned_contents_unchanged=True,wall_seconds=time.monotonic()-began)
-    base.atomic_json(directory/'native_candidate'/'episodes'/f'train_{index:02d}.json',result);return result
+    result=dict(seed=seed,complete=report['complete'],config=asdict(config),weights_sha256=base.sha(directory/'proposal.npy'),report=report,annotation=annotation,annotation_count_status=count_status,records=records,opportunity_events=events,feature_file=path,feature_format='actual capped raw CSR',transitions=session.transitions,initial_cameras=session.initial_cameras,learned_contents_unchanged=True,wall_seconds=time.monotonic()-began)
+    base.atomic_json(directory/'native_candidate'/'episodes'/f'train_{index:02d}.json',result)
+    if report['complete']:assert count_status['valid_terminal_counts'],(seed,count_status,annotation,report)
+    return result
 
 
 def more(values):
