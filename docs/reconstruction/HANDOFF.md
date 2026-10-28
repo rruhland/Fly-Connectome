@@ -59,9 +59,13 @@ exited. Native completion865.718s within original900s (fresh300substage exceeded
 during interruption); documented≥105,587cameras+191initials, unsaved interrupted
 work unknown. No promotion yet; current eb/r5 retained until parent review.
 
-Next if useful: small batch of compatible own-reward targets using the same joint
-solver and reusable fixed metric. Assess last-earned-hit snapshot caching to avoid
-replaying known successful prefixes, but do not change active native sources.
+Parent approved implementation of one diverse3-target batch around40069 as a
+TRAIN-proven scaffold, not a fresh-qualified replacement. Targets2667357792left
+1→2,478956070right1→2,1212947804left2→3;80,839hardrows/175cases,
+zero raw-alias conflicts. Reuse fixed metric; one60sfit/900s execution. Code review
+before launch. Full192 thennewfresh32 vs BOTH eb/40069 if budget permits;62993
+remains evaluation-only. Defer snapshotcache (~2.1pass camera breakeven).
+Plan: [joint batch learning](../plans/2026-10-28-joint-batch-learning.md).
 Goal remains reliable match-long returns, not merely passing a fitted constraint.
 
 Current TRAIN bank `pong-rally-TRAIN-bank-20261028-r5/admission.json` has192games:
@@ -81,8 +85,8 @@ Recent stopped routes (details in ledger):
   while retaining complete earned memory; no new architecture was introduced.
 
 Detailed results: [ledger](2026-10-27-sustained-return-results.md).
-Bridge remains another thread's work. Main commits after d62747c need pushing
-once current results are recorded. Disk has about1.5GB free; reuse the192MB metric.
+Bridge remains another thread's work. Main through acc6c73 pushed.
+Disk has about1.5GB free; reuse the192MB metric.
 
 ## Completed block and failed routes
 
