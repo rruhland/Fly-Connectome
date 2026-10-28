@@ -1,6 +1,6 @@
 # Review proposal: fixed pairwise visual-feature residual
 
-Status: ready for user review; NOT approved or implemented.
+Status: user explicitly approved this single bounded comparison on2026-10-28; implementation/execution in progress.
 
 ## Why this next
 
@@ -89,7 +89,8 @@ The implementation proposal above adapts that mapping, not its supervised learne
 
 This is a MAJOR architecture experiment. The user reserved such changes for review.
 The completed64-RBF approval does not authorize this512-feature construction.
-Request approval for this single bounded comparison; do not implement until granted.
+The user explicitly approved this single bounded comparison on2026-10-28.
+This is not blanket approval for feature-count/hash-seed/architecture sweeps.
 
 Independent Sol review recommends this fixed test with the asset hashing,
 equal-episode calibration and no-recap clarifications now incorporated.

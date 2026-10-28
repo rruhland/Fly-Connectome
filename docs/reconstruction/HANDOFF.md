@@ -37,7 +37,7 @@ experiment root.160existing TRAIN seeds; no recent fresh admission.
 Frozen vision, existing scaler/cap and3×4389 linear greedy K1 head remain deployed.
 Original viewer/interception export is older and is NOT the current research head.
 
-## Current — review next architecture after two rejected follow-ups
+## Active — approved pairwise residual test
 
 Fixed4-observation LS velocity pilot rejected:16TRAIN66→52total,16→16first,
 50/58→36/46later.10,819cameras+16initials,44.37s. No filter sweep/learning.
@@ -51,8 +51,9 @@ Parent and Sol recommend one fixed centered degree-two TensorSketch512 residual
 comparison. Concrete proposal: [pairwise residual review](../plans/2026-10-28-pairwise-residual-review.md).
 Independent review completed; proposal includes asset hashing, equal-episode
 calibration, unchanged base Q/cap and one absolute deadline.
-No implementation authorized; user review is required. This is not covered by
-the completed64-RBF approval. Current-turn total65,054actual transition
+User explicitly approved this512-feature comparison on2026-10-28. Reused Sol
+`/root/rally_integration` is implementing/executing the finalized proposal.
+One600second experimental clock; no feature/hash/architecture sweep. Current-turn total65,054actual transition
 cameras+91initials across velocity/credit tests; RBF test used zero cameras.
 
 ## Completed block and failed routes
