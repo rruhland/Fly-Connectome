@@ -30,8 +30,14 @@ Causal pass completed80.737s with9269cameras+11initials, no restartneeded.
 One rewardedaction learned in5.33s; target2→3, but representative32total60→57,
 first24same,second16same,later36/56→33/55. Candidate85b35d rejected; nofull/fresh.
 TAG63057unused/reserved. Sourcec9295e1/main789648b;35focusedchecks passed.
-User mandate continues; no native process active. Parent/reusedSol reconsidering
-learning rule versus representation continuity before another experiment.
+User mandate continues. Full-rally on-policy actor now launched: source20b0a078,
+main59ac9a1;15focused tests pass; plan [online actor](../plans/2026-10-28-full-rally-online-actor.md).
+Root pong-rally-full-actor-20261028-r1, session68908, one900s clock includingprep,
+max600strain/64kcameras/32batches; finalendpoint only. Fixed currentraw+512features,
+analyticoutputeligibility, noBP/noarchitecturechange/noactionlocks. FreshTAG63073.
+SpecSHA c8ea9b7fdb421ece01caa986f57d37ce66d2803b32f91bd47ae60d6b523b4572.
+Reused rally_integration owns native execution; root independently audits firstbatch
+saved credit with no new observations. No activecodechanges.
 
 
 ## Current provisional model and actual evidence

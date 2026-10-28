@@ -72,3 +72,17 @@ This is an adaptation of the analytic score-function method already examined in
 including Williams1992 and the existing paired-start reasoning. Sol proposed the
 reward-to-go version and the additional probability-movement cap; parent checked
 that equal-return pairs may still update. No new outside result is claimed.
+
+
+## Launched after review
+
+Agent20b0a078 integrated as main59ac9a1;15focused tests, compilation and diff
+checks passed. Parent reviewed the runtime actor, driver, tests and pinned spec,
+including actual-deployed coordinate/cap assertions and attainable temperature.
+Root `pong-rally-full-actor-20261028-r1`, specSHA
+`c8ea9b7fdb421ece01caa986f57d37ce66d2803b32f91bd47ae60d6b523b4572`.
+FreshTAG63073 reserved. Source frozen during execution. Implementation budget/
+estimate600s is separate; one900s experiment clock includes preparation.
+Training samples64existing TRAIN seed contexts with new on-policy action paths;
+these are not64new seed contexts. Parent will independently reconstruct first-
+batch eligibility and reward-to-go credit from saved actual data, without new games.
