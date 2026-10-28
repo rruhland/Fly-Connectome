@@ -63,19 +63,33 @@ def check_target(step,seed,known_hits,role,phase,bank,entry,baseline):
     base.atomic_json(directory/'summary.json',result);return result,witness
 
 
-def evaluate(directory,bank,entries,baseline,head,cached_native_root=None,native_seconds=500):
+def evaluate(directory,bank,entries,baseline,head,cached_native_root=None,native_seconds=500,alternate_native_root=None):
     directory=Path(directory);candidate=np.load(head);sourceW=np.load(bank['current_head']);candidate_hash=base.sha(head);outcomes=[];jobs=[];certificates=[]
     for name in ('episodes','features'):(directory/'native_candidate'/name).mkdir(parents=True)
     cached={}
     if cached_native_root is not None:
         cached_native_root=Path(cached_native_root);assert base.read(cached_native_root/'manifest.json')['source']==base.source_signature()
         cached={base.read(p)['seed']:(p,base.read(p)) for p in (cached_native_root/'native_candidate/episodes').glob('*.json')}
+    alternate={};alternateW=None;alternate_hash=None;alternate_source=None
+    if alternate_native_root is not None:
+        alternate_native_root=Path(alternate_native_root)
+        alternate_source=base.read(alternate_native_root/'manifest.json')['source'];assert alternate_source==base.source_signature()
+        alternateW=np.load(alternate_native_root/'proposal.npy');alternate_hash=base.sha(alternate_native_root/'proposal.npy')
+        alternate={base.read(p)['seed']:(p,base.read(p)) for p in (alternate_native_root/'native_candidate/episodes').glob('*.json')}
     for i,(entry,r) in enumerate(zip(entries,baseline)):
         if r['seed'] in cached:
             path,value=cached[r['seed']];assert value['complete'] and value['weights_sha256']==candidate_hash and value['config']==r['config']
             feature=Path(value['feature_file']);feature=feature if feature.is_absolute() else cached_native_root/feature
             value=dict(value,feature_file=str(feature),execution='reused_completed_native_same_head',executed_transition_cameras=0,executed_initial_cameras=0,source_receipt=str(path),source_receipt_sha256=base.sha(path),source_feature_file=str(feature))
             base.atomic_json(directory/'native_candidate/episodes'/f'train_{i:02d}.json',value);outcomes.append(value);certificates.append(dict(seed=r['seed'],certified=True,reason='previous completed actual native game under identical candidate/config/source',executed_transition_cameras=0));continue
+        if r['seed'] in alternate:
+            path,value=alternate[r['seed']];feature=Path(value['feature_file']);feature=feature if feature.is_absolute() else alternate_native_root/feature
+            alternateX=sp.load_npz(feature)
+            other_cert=certify_episode(value,alternateX,alternateW,candidate,source_weights_sha256=alternate_hash,source_fingerprint=alternate_source,candidate_fingerprint=base.source_signature(),candidate_config=r['config'])
+            if other_cert['certified']:
+                value=dict(value,weights_sha256=candidate_hash,records=other_cert['records'],feature_file=str(feature),execution='reused_by_exact_alternate_episode',executed_transition_cameras=0,executed_initial_cameras=0,source_receipt=str(path),source_receipt_sha256=base.sha(path),source_feature_file=str(feature),source_weights_sha256=alternate_hash,action_equivalence_certificate={k:v for k,v in other_cert.items() if k!='records'})
+                base.atomic_json(directory/'native_candidate/episodes'/f'train_{i:02d}.json',value);outcomes.append(value)
+                certificates.append(dict(seed=r['seed'],alternate_source_receipt=str(path),**{k:v for k,v in other_cert.items() if k!='records'}));continue
         X=sp.load_npz(entry['raw_feature']);cert=certify_episode(r,X,sourceW,candidate,source_weights_sha256=bank['current_head_sha256'],source_fingerprint=bank['source'],candidate_fingerprint=base.source_signature(),candidate_config=r['config'])
         certificates.append(dict(seed=r['seed'],**{k:v for k,v in cert.items() if k!='records'}))
         if not cert['certified']:jobs.append((i,r['seed']));continue
@@ -95,7 +109,7 @@ def evaluate(directory,bank,entries,baseline,head,cached_native_root=None,native
             done,_=wait(active,timeout=1,return_when=FIRST_COMPLETED)
             for f in done:active.pop(f);r=f.result();new.append(r);outcomes.append(r)
             base.atomic_json(directory/'progress.json',dict(phase='final_bank',logical_games=len(outcomes),new_games=len(new),new_cameras=sum(r['transitions'] for r in new)));fill()
-    return outcomes,dict(newly_executed_games=len(new),new_transition_cameras=sum(r['transitions'] for r in new),new_initials=sum(r['initial_cameras'] for r in new),reused_games=len(outcomes)-len(new),reused_completed_native_games=sum(r.get('execution')=='reused_completed_native_same_head' for r in outcomes),reused_logical_cameras=sum(r['transitions'] for r in outcomes if r.get('execution','').startswith('reused_')),wall_seconds=time.monotonic()-began)
+    return outcomes,dict(newly_executed_games=len(new),new_transition_cameras=sum(r['transitions'] for r in new),new_initials=sum(r['initial_cameras'] for r in new),reused_games=len(outcomes)-len(new),reused_completed_native_games=sum(r.get('execution')=='reused_completed_native_same_head' for r in outcomes),reused_alternate_episode_games=sum(r.get('execution')=='reused_by_exact_alternate_episode' for r in outcomes),reused_logical_cameras=sum(r['transitions'] for r in outcomes if r.get('execution','').startswith('reused_')),wall_seconds=time.monotonic()-began)
 
 
 def run(directory,bank_path,attempts=3,target_accepted=3,slot_cycle=None,skip_seeds=(),early_stop=False,resume=False,guard_margin_scale=1.,saved_acquisitions=(),cross_witness_warm=False,native_target_fallback=False,feature_metric_path=None,spatial_smoothness=False):
