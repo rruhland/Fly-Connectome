@@ -8,10 +8,15 @@ from pong_raw_guarded_repair import pairs,contrast_rows
 from fly_connectome.control.policy import FrozenLinearPolicy
 
 
-def project(reference,feasible,X,actions,scale,kappa,deadline):
+def project(reference,feasible,X,actions,scale,kappa,deadline,pair_constraints=()):
     began=time.monotonic();d=reference.shape[1];scale=np.asarray(scale);assert scale.shape==(d,)
     other,old,c=pairs(X,actions,reference);_,fgap,_=pairs(X,actions,feasible);required=np.minimum(kappa*1e-4,.5*np.maximum(fgap,0.));lower=(required-old).reshape(-1)
-    Z=contrast_rows(X,c,np.arange(len(lower)),scale);vfeasible=(CONTRAST.T@(feasible-reference)*scale).reshape(-1);assert np.min(Z@vfeasible-lower)>-1e-9
+    Z=contrast_rows(X,c,np.arange(len(lower)),scale);blocks=[Z];bounds=[lower]
+    for pair in pair_constraints:
+        row=pair['X'].tocsr();assert row.shape==(1,d);good,bad=int(pair['good']),int(pair['bad']);a=row.indices;vrow=row.data
+        rq=reference[:,a]@vrow;fq=feasible[:,a]@vrow;gap=float(fq[good]-fq[bad]);assert gap>=-1e-9
+        contrast=CONTRAST[good]-CONTRAST[bad];u=row/scale;blocks.append(sp.hstack((u*contrast[0],u*contrast[1]),format='csc'));bounds.append(np.array([min(kappa*1e-4,.5*max(gap,0.))-(rq[good]-rq[bad])]))
+    Z=sp.vstack(blocks,format='csc');lower=np.concatenate(bounds);vfeasible=(CONTRAST.T@(feasible-reference)*scale).reshape(-1);assert np.min(Z@vfeasible-lower)>-1e-9
     zero=np.zeros(2*d);v=vfeasible.copy();working=np.flatnonzero(lower>0).tolist();history=[];status='bounded_feasible_projection';P=sp.eye(2*d,format='csc')*2
     for iteration in range(30):
         remaining=deadline-time.monotonic()
@@ -34,4 +39,4 @@ def project(reference,feasible,X,actions,scale,kappa,deadline):
         if got!=a:changed.append(i)
     violation=max(0.,float(np.max(lower-Z@v)));cost=float(v@v);feasible_cost=float(vfeasible@vfeasible)
     assert np.isfinite(candidate).all() and violation<1e-8 and not changed and cost<=feasible_cost*(1+1e-6)+1e-9
-    return candidate,dict(status=status,solver='OSQP nearest linear readout in frozen activity metric; only full rewarded trajectory constrained',rows=X.shape[0],all_inequalities=len(lower),working_inequalities=len(working),rounds=len(history),history=history,whole_witness_action_changes=changed,maximum_original_logit_violation=violation,feasibility_beta=beta,projection_cost=cost,known_feasible_cost=feasible_cost,reference_action_errors=int(np.sum(np.argmax(X@reference.T,axis=1)!=actions)),wall_seconds=time.monotonic()-began,new_observations=0,no_other_game_action_locks=True)
+    return candidate,dict(status=status,solver='OSQP nearest linear readout in frozen activity metric; rewarded trajectory plus explicitly measured pairs only',rows=X.shape[0],extra_measured_pairs=len(pair_constraints),all_inequalities=len(lower),working_inequalities=len(working),rounds=len(history),history=history,whole_witness_action_changes=changed,maximum_original_logit_violation=violation,feasibility_beta=beta,projection_cost=cost,known_feasible_cost=feasible_cost,reference_action_errors=int(np.sum(np.argmax(X@reference.T,axis=1)!=actions)),wall_seconds=time.monotonic()-began,new_observations=0,no_blanket_other_game_action_locks=True)
