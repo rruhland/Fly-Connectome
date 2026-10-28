@@ -271,3 +271,32 @@ Merge replaces TWO conflicting +1-return gain prefixes with their previous one-r
 
 Same reused Sol continues bounded next learning iteration from provisional candidate: challenge current recovery-only credit, explore useful alternative actions on current misses, save complete own-reward success traces, integrate compatible earned behavior and evaluate actual games with alternate-episode reuse. Parent reviews selection and feasibility. No architecture changes, backprop, privileged labels, or bridge work. User mandate remains active until consistent learned match-long returns or explicit stop; historical paused headings below are superseded.
 
+
+### Current-policy discovery: one-action versus short bursts
+
+Parent executed `pong-rally-current-discovery-20261028-r1` (source c988bab):
+eight fixed TRAIN later misses, four recovery/four cases where current head already
+matches or exceeds the named recent heads. Both alternative actions at at most two
+reward/time-selected decisions, same current continuation. One recovery improved
+3→6 returns (768392190, action0 at row56); all four new cases had no single-action
+improvement. Exact null continuation passed.10,617 cameras+8 initials,35.925s.
+
+Rather than repeat single-frame comparisons, parent executed bounded short bursts
+on those same four new misses (`pong-rally-new-bursts-20261028-r1`, source a9aa8ec):
+holds10/20/40 camera decisions, three commands, first reward success then four
+chunk-deletion checks. All four recovered the next return:1045622924→5,
+1619006212→3,185991594→5,543912292→3. Retained forced rows10/30/15/20;
+actual source-choice changes10/29/13/20.11,598 cameras+4 initials,47.566s.
+Parent raw/record/ordinary-greedy provenance audit passed with zero new cameras.
+These are whole own-reward-earned behavioral witnesses, not per-action causal
+labels and not deployed learned success yet.
+
+The original reused Sol agent ceased responding through progress checks and two
+interrupt/restart attempts, with no code edits or active experiment. Root parked
+it, executed minimal discovery, and spawned Sol6.1XHigh `rally_integration` with a
+bounded fresh context. It acknowledged and independently reviewed discovery.
+One joint five-donor exact integration is selected, replacing each target's old
+prefix and protecting the other current earned successes. Explicit forced rows
+receive declared tiny margins; ordinary rows retain source half-gap margins.
+No fresh admission or runtime architecture change. Actual candidate evaluation
+is pending; provisional merged3ac7f87f and safe d7 remain preserved.
