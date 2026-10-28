@@ -766,3 +766,13 @@ Every actual successor observation saved (N+1 raw CSR), exact action probabiliti
 rewards, elapsed ticks and terminal flags. No model/vision/map changes, no promotion.
 This improves immediate action coverage, not proof that long corrective sequences
 or conditional coverage are solved. Tree proposal remains user-review-only.
+
+Continuous candidate mechanism caveat from saved fresh trajectories:11/12gaining
+games first diverge before the first hit; only1first diverges afterward. Losses
+split7before/2after. Improved later counters can therefore reflect altered opening
+bounces as well as later steering. This does not establish a clean later-feedback
+skill or justify automatically splicing the baseline opening with the new head.
+Final fresh audit:35,099rows exactQ/action replay; no unknown unsaved work.
+Acquisition audit:11,871rows exactQ,1571nongreedy choices(13.234%, expected13.333%).
+Combined old/new index:130,102eligible transitions, all543hit rows,90uniqueTRAIN
+starts;26old final-timeout successors unavailable and excluded.
