@@ -37,20 +37,23 @@ experiment root.160existing TRAIN seeds; no recent fresh admission.
 Frozen vision, existing scaler/cap and3×4389 linear greedy K1 head remain deployed.
 Original viewer/interception export is older and is NOT the current research head.
 
-## Active — burst credit without forced continuation
+## Current — review next architecture after two rejected follow-ups
 
-Fixed4-observation LS velocity pilot is complete and rejected:16TRAIN66→52total,
-16→16first,50/58→36/46later. Selected later misses improved18→26, but stable
-games regressed48→26.10,819cameras+16initials,44.37s. No filter sweep or learning.
-Default3ac head/transport remain selected. See [pilot plan/results](../plans/2026-10-28-velocity-cleanup-pilot.md).
+Fixed4-observation LS velocity pilot rejected:16TRAIN66→52total,16→16first,
+50/58→36/46later.10,819cameras+16initials,44.37s. No filter sweep/learning.
 
-Parent proposed next same-architecture credit experiment to reused Sol for critique:
-shortest own-reward donor104562292, protect approach through first forced action,
-learn its10reward-earned burst choices, retain known opening prefixes, but release
-ordinary post-burst action imitation. Same empirical covariance objective; actual
-target return precedes sentinel/full. Parent and Sol agreed; worker is implementing/executing this one10minute comparison.
-See [credit plan](../plans/2026-10-28-burst-continuation-credit.md).
-Compare with rejected d25620d2 first; exact unchanged outcomes need no new cameras.
+Burst-credit test learned target4→5 with94ordinary continuation choices free.
+Sentinel61→64, but full160409→394total,143→144first,266/384→250/368later.
+Rejected; no fresh/promotion.54,235cameras+75initials,223.82s.95full games reused.
+Original3ac7f87f/default transport remain selected. All runs exited.
+
+Parent and Sol recommend one fixed centered degree-two TensorSketch512 residual
+comparison. Concrete proposal: [pairwise residual review](../plans/2026-10-28-pairwise-residual-review.md).
+Independent review completed; proposal includes asset hashing, equal-episode
+calibration, unchanged base Q/cap and one absolute deadline.
+No implementation authorized; user review is required. This is not covered by
+the completed64-RBF approval. Current-turn total65,054actual transition
+cameras+91initials across velocity/credit tests; RBF test used zero cameras.
 
 ## Completed block and failed routes
 
