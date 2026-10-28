@@ -1,3 +1,7 @@
+## Active — eight-game causal retention screen
+
+Same Sol agent is authorized one8–12min block: eight deterministic harmed games from rejected target-projection candidate, prioritize later losses; branch first divergent action old-vs-new with SAME candidate continuation. Only positive actual remaining own-hit difference yields preference. If≥2 independent preferences, jointly project with the complete rewarded target trajectory, actual160 and fresh if useful. Verify null parity, no privileged labels/backprop/runtime changes. If scarce signal or no deployment, reconsider; do not silently extend one-action search. d7 remains immutable. See sustained-return plan for rationale/source and results ledger for previous failures. User goal remains active until reliable returns or stop.
+
 ## Current state — target projection rejected; mechanism reassessment
 
 Selected d7d7d872 remains unchanged (160TRAIN:407returns,143first,264/377later). Spatial-prior trial failed to learn target. Soft-memory activity fit learned late labels but missed early (3→1). Minimal full-target projection fixed that rally (3→4) but damaged the full bank (343vs407returns;61.33%vs70.03%later), so rejected without fresh. See sustained-return-results for costs and paths.
