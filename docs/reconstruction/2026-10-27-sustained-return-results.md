@@ -300,3 +300,15 @@ prefix and protecting the other current earned successes. Explicit forced rows
 receive declared tiny margins; ordinary rows retain source half-gap margins.
 No fresh admission or runtime architecture change. Actual candidate evaluation
 is pending; provisional merged3ac7f87f and safe d7 remain preserved.
+
+
+## Active — soften retention using complete empirical score geometry
+
+Current provisional learned head remains3ac7f87f (TRAIN160409hits; latest fresh50→63 againstd7). No subsequent learned head yet. Parent discovery found one single-action recovery+3 and four short-burst new returns+1 each; all are actual own-reward traces, not deployed learning. Roots `pong-rally-current-discovery-20261028-r1` and `pong-rally-new-bursts-20261028-r1`; costs10,617+8initials35.925s and11,598+4initials47.566s respectively. Parent provenance audit passed,0cameras.
+
+Joint5donor exact preservation screened out one alias between recovery768392190 and protected589817078. Recovery dropped; four-new-donor hard merge failed to verify in60.10s, no exact aliases. Shortest single new donor104562292 (4→5,10changedchoices,848earned rows) also failed60.10s. One equivalent solver optimization failed60.48s. These are bounded nonconvergences, not infeasibility proofs; no native cameras/candidate from these fits. Artifacts discovery-earned-merge-r1/r2/r3 and discovery-merge-solver-check-r1. No more hard-preserve parameter trials selected.
+
+Parent proposed and benchmarked full empirical feature covariance: preserve old score outputs softly, target whole earned trajectory hard.142other current earned prefixes61,663rows; equalepisode weights; featuremetric scaling; mean diagonal normalization+1%ridge; covariance1.741s andCholesky.685s,0cameras. Saved under `pong-rally-covariance-benchmark-20261028-r1`. Same runtime model, no architecture/backprop/privileged labels. Sol independently agrees; now implementing one bounded60s dual-QP trial, exact original target certificate then actual32TRAIN sentinel/full160/fresh onlyifnetuseful. Other old actions may change; actualreturns decide.
+
+Original Sol agent became unresponsive and was parked. Active worker `/root/rally_integration` is explicitly Sol6.1XHigh, fresh bounded context, same agent checkout `/workspace/Fly-Connectome-m1b-pong-fast`. Parent implemented discovery, owns direction and reviews. Agent source d72f775→main5261898,79107f6→main3cc3c38. Current refreshed existing160TRAIN bank r4 has409currenthead receipts, no freshadmission. Agent is correcting inherited old proof pointers in r4 metadata; rawreceipts/source/model unchanged. Usergoalactive until reliable learned match-long returns orstop. Bridgebelongsotherthread.
+
