@@ -63,8 +63,14 @@ Fresh32:80→78total,31→32first,24→26games≥2,49/78→46/77later.
 Candidateef890acc is retained as an unpromoted early-return scaffold; eb remains
 working carry pending parent review. No claim of improved overall fresh rallies.
 Whole pass446.38s,98,801actual transition cameras+151initials; all processes exited.
-Source main33630d9,19focused tests passed. Parent and reused Sol are reviewing
-interference and a concrete next learning mechanism; no automatic guard/weight sweep.
+Source main33630d9,19focused tests passed. Parent and reused Sol selected one direct full-game reward search within the
+same fixed512architecture, startingeb. Four mirrored directions/eightproposals,
+one forward-only10%behavior dose, <=12sprojection each, one900sexecutionclock.
+Protect174first/secondprefixes AND the original acquired104562292five-hitprefix
+(which ef forgot5→2). Eight common TRAIN games rank actualreward; beststrictgain
+proceeds192thenfresh. No donor labels, parameter/scale sweep or averagedninthhead.
+Implementation/review inprogress; no newcandidategames yet. Plan:
+[projected reward search](../plans/2026-10-28-projected-reward-search.md).
 
 Parent explicitly authorized admitting only32CANDIDATE fresh receipts intoTRAIN
 after evaluation; authorization is under `pong-rally-pairwise-frozen-fresh-20261028-r1/parent-admission-authorization.json`.
