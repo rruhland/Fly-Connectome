@@ -100,3 +100,19 @@ target plus a fixed uniform phase-balanced draw, then full192 and unused fresh
 qualification if useful. Parent approved implementation and will review code/tests
 before launch. Tests must cover distinct source/reference Q, nonzero carry, both
 output arrays changing, coordinate undo and an explicit small primal comparison.
+
+## Outcome
+
+Implemented main7e53729,25focused tests passed. Fit18.53s verified all74,623
+original constraint rows. Actual target1→4; full192493→523returns with no perseed
+loss,174→175first and113→123games≥2. Fresh32 was mixed/negative:73→65total,
+29→30first,21→19games≥2,later44/68→35/62. Thus integration and retention work
+on practiced games; transferable improvement is not established. Preserve this
+checkpoint as an integration scaffold, alongside all prior carries.
+
+An environment interruption left63of64fresh receipts saved. Parent recovered
+only the missing carry game under the original900s deadline. Native completion
+865.718s including interruption; fresh300s substage overrun explicitly recorded.
+At least105,587transition cameras+191initials documented; unsaved interrupted
+work unknown. Exact all-saved-action/Q audits and192TRAIN invariants passed.
+See results ledger for hashes, confidence intervals and complete accounting.

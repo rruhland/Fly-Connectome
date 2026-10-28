@@ -39,69 +39,50 @@ All relative artifact paths are under `/workspace/m1b-experiments`. Current mode
 is a reset/branch-assisted own-hit-reward scaffold, not the final continuously
 learning general agent. The original viewer export is older than these models.
 
-## Active — next target is reliable second returns
+## Active — joint existing-output learning
 
-Approved architecture test completed556.11s within original600s,92,106cameras+
-156initials,204simplementation separately. Mixedsentinel61→62total butlater-2
-was explicitly advanced by parent/Sol to full160 under SAME originalclock; no refit.
-Separate frozen fresh qualification completed123.43s,33,287cameras+64initials.
-All model/action/Q/provenance checks passed; all those processes exited.
+Root `pong-rally-joint-output-20261028-r1`, main7e53729. Learn both EXISTING
+linear and fixed512 output weights, with frozen vision/features, no backprop.
+Plan: [joint output learning](../plans/2026-10-28-joint-output-learning.md).
+One60s fit verified74,623complete-earned-prefix rows in18.53s. Sourcefc's rewarded
+201-row two-hit target4195433914 replaces its old one-hit prefix; all other earned
+prefixes retained. Actual target1→4; representative32 87→93; full192493→523,
+174→175first,113→123games≥2,later319/455→348/482. No perseed return losses.
+Both output paths contribute; no necessity ablation performed.
+New W SHA479472a37e9950246726cd90babf44f053467e3ae354783da2afbc35080ea15f;
+bundle SHA40069e2deae2b745b83b6c193389fa740450856b67443339b12f0dbb9bf3c438.
+Fresh32 TAG62993 interrupted at63games/30,923cameras. Parent recovered only the
+missing carry game within ORIGINAL900s:5hits/1,000cameras/12.62s. All64receipts
+complete:73→65returns,29→30first,21→19games≥2,later44/68→35/62.
+No demonstrated transfer gain. All saved action/Q rows audited; all processes
+exited. Native completion865.718s within original900s (fresh300substage exceeded
+during interruption); documented≥105,587cameras+191initials, unsaved interrupted
+work unknown. No promotion yet; current eb/r5 retained until parent review.
 
-Parent now continues ordinary learning within the SAME approved512map/basehead.
-No seed/dimension/basis/architecture sweep. Reused Sol is reviewing a pass focused
-on current second-return misses, protecting existing first-two-return behavior
-rather than allowing longer-rally gains to hide early losses. Parent/Sol agreed on a history-first pass: existing rewarded3ac second-return
-prefixes, cheap conflict screening, one delta-output fit, current first-two-prefix
-retention. One900second pass; no discovery/parameter/guard sweep.
-Plan: [second-return replay](../plans/2026-10-28-second-return-replay.md).
-Completed second-return replay: `pong-rally-pairwise-second-replay-20261028-r1`.
-One delta fit15.20s verified36,774rows; actual selected target161900621 improved1→2.
-Full192:493→499total,174first retained,319/455→325/464later,
-113→117games with≥2returns. Original3ac on these same192had482total/170first/
-124games≥2: recovery is incomplete, not new second-return ability beyond3ac.
-Fresh32:80→78total,31→32first,24→26games≥2,49/78→46/77later.
-Candidateef890acc is retained as an unpromoted early-return scaffold; eb remains
-working carry pending parent review. No claim of improved overall fresh rallies.
-Whole pass446.38s,98,801actual transition cameras+151initials; all processes exited.
-Source main33630d9,19focused tests passed. Parent and reused Sol selected one direct full-game reward search within the
-same fixed512architecture, startingeb. Four mirrored directions/eightproposals,
-one forward-only10%behavior dose, <=12sprojection each, one900sexecutionclock.
-Protect174first/secondprefixes AND the original acquired104562292five-hitprefix
-(which ef forgot5→2). Eight common TRAIN games rank actualreward; beststrictgain
-proceeds192thenfresh. No donor labels, parameter/scale sweep or averagedninthhead.
-Projected search source39fe237/mainc1278f0 passed21focusedtests but all8proposals
-failed bounded12sprojection verification. Root `pong-rally-pairwise-reward-search-20261028-r1`
-completed83.49s, ZERO native cameras. Not an actual reward-search failure or
-capacity/infeasibility proof. Sources stayed frozen; all runs exited.
-Parent/Sol now selected a separate direct native comparison of the SAME8saved
-rawrequests, no refit/rescale/newdirections. Check actual104562292≥5 first; only
-survivors play the same8TRAINscreen. Strict total/latergain plus earlyretention
-thenfull192/fresh, max900s. Sourcec3102c9/main747ebc1,7focusedtests+compile.
-Completed root `pong-rally-pairwise-raw-reward-20261028-r1`: eight skill outcomes
-2,4,6,1,4,5,1,2; two8gamescreens14→23/24. Selected2- fc003082 FAILED full192:
-493→404total,174→154first,113→99secondgames; later319/455→250/376.
-372.38s/101,266cameras+206initials, nofresh/nopromotion. Source/base/carryfrozen.
-Existing1+ runnerup32TRAIN check alsoFAILED:92→59total,28→22first,
-21→15games≥2;33.37s/9,051newcameras+24initials,8reuses.
-Root `pong-rally-pairwise-raw-runnerup32-20261028-r1`; allruns exited.
-Stopthis8requestfamily; none promoted. Parent/Sol next candidate mechanism is
-training BOTH EXISTING linear andfixedpairwise outputweights, frozenvision/features.
-No implementation/fit launched yet: concrete target/conditioning/sparse-dualsolve
-plan underreview. Currenteb/r5 stillselected; no freshdata admitted.
+Next if useful: small batch of compatible own-reward targets using the same joint
+solver and reusable fixed metric. Assess last-earned-hit snapshot caching to avoid
+replaying known successful prefixes, but do not change active native sources.
+Goal remains reliable match-long returns, not merely passing a fitted constraint.
 
-Exact action locks are replaced by actual outcome retention; preserve failed
-projected artifacts and report screened-out games as unevaluated. Plan:
-[projected reward search and follow-up](../plans/2026-10-28-projected-reward-search.md).
+Current TRAIN bank `pong-rally-TRAIN-bank-20261028-r5/admission.json` has192games:
+493returns/174first/113games≥2/319later of455. Earlier32fresh candidate receipts
+were explicitly admitted after evaluation; subsequent fresh sets remain evaluation
+only. Preserve old banks/checkpoints and reserved final streams.
 
-Parent explicitly authorized admitting only32CANDIDATE fresh receipts intoTRAIN
-after evaluation; authorization is under `pong-rally-pairwise-frozen-fresh-20261028-r1/parent-admission-authorization.json`.
-Build new192episode bank from pairwisefull160+candidatefresh32:493returns,
-174first,319later/455opportunities. No feature recalibration; new future evaluation
-seeds required. The oldr4bank and old checkpoints remain immutable.
+Recent stopped routes (details in ledger):
+* Residual-only historical replay improved TRAIN493→499 but fresh80→78 and
+  forgot original104562292five-hit behavior5→2; unpromoted ef890acc.
+* Eight projected random requests all failed bounded projection verification;
+  zero native games, not evidence that their actual rewards failed.
+* The SAME eight raw requests yielded two strong8game screens, but chosenfc
+  failed full192493→404. Existing runnerup1+ failed32games92→59. Search family
+  stopped; useful individual rewarded fc trajectories were retained as experience.
+* Joint learning combines existing output paths to integrate that experience
+  while retaining complete earned memory; no new architecture was introduced.
 
-Detailed results in [ledger](2026-10-27-sustained-return-results.md) and
-[pairwise proposal/results](../plans/2026-10-28-pairwise-residual-review.md).
-Bridge remains another thread's work.
+Detailed results: [ledger](2026-10-27-sustained-return-results.md).
+Bridge remains another thread's work. Main commits after d62747c need pushing
+once current results are recorded. Disk has about1.5GB free; reuse the192MB metric.
 
 ## Completed block and failed routes
 

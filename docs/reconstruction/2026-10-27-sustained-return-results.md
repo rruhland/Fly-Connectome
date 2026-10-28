@@ -509,3 +509,41 @@ Hypothesis: sparse linear coordinates can compensate global pairwise effects;
 previous linear-only and residual-only failures do not establish joint failure.
 No implementation or fit launched yet; require concrete own-reward target,
 conditioning, cumulative-skill retention and efficient dual/sparse solve first.
+
+## Joint existing-output learning — retained TRAIN gains, no demonstrated transfer
+
+Root `pong-rally-joint-output-20261028-r1`, implementation main7e53729.
+Frozen vision and fixed512 map; learn both existing linear and pairwise output
+weights. No new features or backpropagation. Source fc's own rewarded two-hit
+prefix for4195433914 (201rows) replaces that target's one-hit prefix. All other
+complete earned prefixes remain hard constraints, including104562292's five hits.
+
+Full cross-block score metric with fixed1%ridge and reversible optimizer scaling;
+one active-dual fit verified74,623originalrows/149,246inequalities in18.53s.
+Preparation35.35s including22.80s metric creation; maximum actual violation
+2.82e-15. Independent score decomposition shows both output paths contribute,
+with partially compensating score changes; this is not a necessity ablation.
+
+Actual target improved1→4returns; representative32 improved87→93 with no losses.
+Full192 improved493→523total,174→175first,113→123games with≥2returns,
+319/455→348/482later returns (70.11→72.20%),43→48games with≥5returns.
+All192 earned-outcome invariants passed;17games improved and none regressed.
+Full stage executed103newgames/59,206transition cameras plus103initials;
+89games reused, including32 completed sentinel games. Opponent returned608/608.
+The goal of reliable match-long play remains unmet.
+
+New linear SHA479472a37e9950246726cd90babf44f053467e3ae354783da2afbc35080ea15f;
+bundle SHA40069e2deae2b745b83b6c193389fa740450856b67443339b12f0dbb9bf3c438.
+Original checkpoints and feature assets unchanged. Fresh paired32 uses TAG62993;
+environment interruption left progress63games/30,923cameras. Parent recovered only
+the missing carry game (seed115783743,5hits/1,000cameras) in12.62s within the
+ORIGINAL900s deadline. All64 receipts now complete: fresh73→65returns. Reused Sol
+completed the recovered summary and exact action/Q audit of31,923saved rows.
+Fresh first29→30, games≥2 21→19, later44/68→35/62 (64.71→56.45%).
+Mean delta−.25returns/game paired95%CI[−.6883,+.1875]; later delta−8.25pp
+CI[−20.89,+3.82]. Six games gained and seven lost. No demonstrated transfer gain.
+Documented total at least105,587transition cameras+191initials; unsaved work from
+the interrupted task is unknown and NOT counted as zero. Native completion
+865.718s from original start including interruption, within original900s; fresh
+300s substage exceeded during interruption/recovery, explicitly recorded.
+All processes exited. No promotion or fresh admission yet.
