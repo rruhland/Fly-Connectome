@@ -1,6 +1,6 @@
-# Draft review: localized nonlinear policy residual
+# Approved bounded test: localized nonlinear policy residual
 
-Status: ready for user review; not approved or implemented. The opening-retention
+Status: user approved this specific bounded test on 2026-10-28; implementation and execution in progress. The opening-retention
 trial completed at403 versus409 returns, with all143 known successful openings
 preserved and one additional opening recovered. Later returns regressed by seven.
 This is interference evidence, not a proof that the current policy cannot learn.
@@ -60,7 +60,8 @@ regression or unavailable useful nonlinear variation.
 ## Approval boundary
 
 This adds a nonlinear policy branch, so it is a major architecture experiment
-reserved for user review. The earlier approval concerned a specific64-feature
+reserved for user review. The user explicitly approved this proposal on 2026-10-28.
+Approval covers this bounded comparison, not an automatic architecture sweep. The earlier approval concerned a specific64-feature
 residual test already completed; it is not treated as blanket approval for this
 new construction. The parent and independent Sol review now recommend this bounded test. The prior
 velocity diagnostic already showed a possible smoothing benefit in one case, but

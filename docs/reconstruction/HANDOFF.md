@@ -1,3 +1,7 @@
+## Active — user approved the localized residual test
+
+User explicitly approved the single 10-minute 64-feature RBF residual comparison on 2026-10-28. Reused Sol agent `/root/rally_integration` is implementing the finalized proposal; parent reviews actual retention/generalization evidence. No other architecture sweep approved. Current 3ac7f87f checkpoint remains immutable and selected until actual evaluation justifies replacement. The goal of reliable match-long learned returns remains unmet. Bridge work belongs to the other thread.
+
 Approval request is now pending in the conversation. Sol completed a zero-camera audit of all160 TRAIN seeds and92,162 retained action/Q rows;3ac7f87f and d7 match their saved hashes. Current block actual cost202,995 transition cameras+309initials. All runs stopped at the user-reserved architecture review boundary. Concrete proposal includes independent review corrections on out-of-sample TRAIN novelty and exact fitting certificates.
 
 ## Current — architecture review proposed after opening-retention result
