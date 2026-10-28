@@ -23,7 +23,7 @@ def contrast_rows(X,contrasts,flat_indices,scale):
     return sp.hstack([values.multiply(c[:,0,None]),values.multiply(c[:,1,None])],format='csc')
 
 
-def fit(W,positive,guards,normal,deadline,ridge=1e-6,batch=128,initial_rows=(),initial_delta=None,initial_state=None,state_path=None):
+def fit(W,positive,guards,normal,deadline,ridge=1e-6,batch=128,initial_rows=(),initial_delta=None,initial_state=None,state_path=None,initial_guard_duals=None):
     began=time.monotonic();d=W.shape[1];scale=normal['input_rms'];kappa=normal['kappa'];n=2*d
     X=sp.vstack([c['X'] for c in positive],format='csr');actions=np.concatenate([c['actions'] for c in positive]);other,old,c=pairs(X,actions,W);target=(kappa-old).reshape(-1);pair_weights=np.repeat(weights(positive)/2,2);ns=len(target)
     Xg=sp.vstack([c['X'] for c in guards],format='csr');ag=np.concatenate([c['actions'] for c in guards]);og,gap,cg=pairs(Xg,ag,W);assert gap.min()>-1e-10
@@ -33,7 +33,7 @@ def fit(W,positive,guards,normal,deadline,ridge=1e-6,batch=128,initial_rows=(),i
     def evaluate(v):
         delta=CONTRAST@v[:n].reshape(2,d)/scale;change=Xg@delta.T;gdelta=change[np.arange(len(ag)),ag,None]-change[np.arange(len(ag))[:,None],og]
         return delta,gdelta,lower-gdelta.reshape(-1)
-    base_duals=np.zeros(2*ns);guard_duals={}
+    base_duals=np.zeros(2*ns);guard_duals={int(i):float(v) for i,v in (initial_guard_duals or {}).items()}
     if initial_delta is not None:
         assert initial_state is None and initial_delta.shape==W.shape and np.isfinite(initial_delta).all()
         z[:n]=(CONTRAST.T@initial_delta*scale).reshape(-1);z[n:]=np.maximum(target-Z@z[:n],0.)
