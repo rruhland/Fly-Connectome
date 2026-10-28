@@ -1,4 +1,12 @@
-## Current continuation — 2026-10-28 00:42 UTC
+## Active evaluation — b9 outcome candidate
+
+Current selected carry remains d7d7d872 (323 TRAIN returns). Parent's seven-game native probe of `b9f1b98a6ee1b352897d51736b6b28bb6b2848568d878803e19dc3cee4796bd4` found target8325019400→3,3519222253 4→5,2732613884 5→4; other4 retained. Net+3 with one known regression. Root chose to evaluate overall learning outcomes rather than discard useful improvement for a self-imposed per-seed zero-loss rule. d7 retained as safer checkpoint.
+
+Same Sol agent owns active fixed128 check `/workspace/m1b-experiments/pong-rally-b9-native-check-20261028-r1`, private exec48326/PID5063, source520d11e (mainc4b63b1). Seven actual b9 games reused. Conditional32 fresh paired screen at `pong-rally-b9-fresh-screen-20261028-r1`; root gate is TOTAL gain + no FIRST count loss, tiny conditional later-rate dip is not a veto. Loaded runner has stricter later-rate gate; if it skips solely for that reason, resume agent to launch SAME declared fresh schedule manually. No fitting/admission until root reviews. Agent parks while processes run; use followup_task to wake.
+
+Prepared next learner (held pending candidate selection): empty cross-witness working sets, smaller guard confidence cap, cached reward experiences with exact conflict checks, optional actual-native-target acceptance when full exploratory-action imitation fails. Source60993b2 integrated as7e6cd6d. Fresh d7 TRAIN bank `/workspace/m1b-experiments/pong-rally-TRAIN-bank-20261028-r2/admission.json`,128contexts/323earnedsegments. Keep d7's five-return native trace for2732613884 as recovery experience if b9 selected. Goal still unmet; continue orchestration, bridge separate thread.
+
+## Current continuation — 2026-10-28
 
 Selected carry `/workspace/m1b-experiments/pong-rally-guarded-curriculum-20261028-r2/selected.npy`, SHA `d7d7d872c1acde4b34748240c2ce9bf9d37af4c65ff2cd1f25d753f19d01fe61`.128 TRAIN:113 first,210/299 later,323 hits,24 timeouts; no per-seed losses vs315-hit prior head. Goal still unmet; user asks continue until reliable returns or stop.
 
