@@ -1,3 +1,11 @@
+## Active — completing fixed consequence-sensitive candidate after counter fix
+
+Causal screen finished:5/8 beneficial decisions,7,670cameras+8initials,36.52s; source0cb980f/main6285fe1. Nine measured pairs projected in0.060s, five beneficial greedy choices and original783-action target retained. Candidate actual160 evaluation hit a valid timeout-after-missed-paddle-plane edge case; counter validation fixed e77d119/main9209863, one-physics-tick regression passed. No physics/vision/policy change.
+
+Same Sol owns exec1735, `/workspace/m1b-experiments/pong-rally-divergence-correction-native-completion-20261028-r1`: reuse52 completed receipts, run108missing. Original root/manifest/clock preserved; `technical-completion.json` charges original failed1000camera grant and1000camera diagnostic replay, plus22original actual completed games12,126cameras. Candidatebytes unchanged. Fresh only if total+later actual returns beat d7. Current selected d7 remains immutable; goal unmet and orchestration continues.
+
+Parent passive sustained-vision check found accurate inferred ball despite observed gaps in one miss, and another accurately observed ball with late paddle.2,622replaycameras+5initials total; no learnerlabels. See `pong-rally-vision-review-20261028-r1/interpretation.json`. Potential alternatives after current outcome: full positive branch trajectories rather than isolated decisions; generic velocity-noise reduction is only a hypothesis, no runtimechange authorized/implemented.
+
 ## Active — eight-game causal retention screen
 
 Same Sol agent is authorized one8–12min block: eight deterministic harmed games from rejected target-projection candidate, prioritize later losses; branch first divergent action old-vs-new with SAME candidate continuation. Only positive actual remaining own-hit difference yields preference. If≥2 independent preferences, jointly project with the complete rewarded target trajectory, actual160 and fresh if useful. Verify null parity, no privileged labels/backprop/runtime changes. If scarce signal or no deployment, reconsider; do not silently extend one-action search. d7 remains immutable. See sustained-return plan for rationale/source and results ledger for previous failures. User goal remains active until reliable returns or stop.
