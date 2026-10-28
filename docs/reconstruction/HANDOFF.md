@@ -1,3 +1,9 @@
+## Active — second selective-credit iteration from intermediate376
+
+Completed first consequence-sensitive correction:376total/138first/238of357later versus rejected parent343/140/203of331, but below safed7's407/143/264of377. No promotion/fresh. Actual+33total/+35later means mechanism has useful intermediate progress;4of5targetconditional outcomes deployed exactly. Technical completion passed with frozenmodel after counter-boundary fix.
+
+Same Sol is authorized second8 DIFFERENT harmed TRAINgames, exclude previous8; up toone openingregression perphase pluslaterloss cases. Compare oldd7 action +CURRENT376 continuation withcurrentaction+samecontinuation, thirdonlypositive; retain existing9measuredpairs/full783target, save successful fullraw/actionbranchtraces. Minimalprojection thenfixed32TRAINsentinel beforefull160; actualclear gainover376 required. Freshonlyiffullbankuseful; d7immutable. Stopthisrouteifno material improvement, reconsider alternatives. Usergoalstillactive, notpermissiontoendturn.
+
 ## Active — completing fixed consequence-sensitive candidate after counter fix
 
 Causal screen finished:5/8 beneficial decisions,7,670cameras+8initials,36.52s; source0cb980f/main6285fe1. Nine measured pairs projected in0.060s, five beneficial greedy choices and original783-action target retained. Candidate actual160 evaluation hit a valid timeout-after-missed-paddle-plane edge case; counter validation fixed e77d119/main9209863, one-physics-tick regression passed. No physics/vision/policy change.
