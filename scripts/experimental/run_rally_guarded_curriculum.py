@@ -77,7 +77,7 @@ def evaluate(directory,bank,entries,baseline,head,cached_native_root=None,native
         alternateW=np.load(alternate_native_root/'proposal.npy');alternate_hash=base.sha(alternate_native_root/'proposal.npy')
         alternate={base.read(p)['seed']:(p,base.read(p)) for p in (alternate_native_root/'native_candidate/episodes').glob('*.json')}
     for i,(entry,r) in enumerate(zip(entries,baseline)):
-        if r['seed'] in cached:
+        if r['seed'] in cached and cached[r['seed']][1].get('transport_kind','visual-transport-v1')=='visual-transport-v1':
             path,value=cached[r['seed']];assert value['complete'] and value['weights_sha256']==candidate_hash and value['config']==r['config']
             feature=Path(value['feature_file']);feature=feature if feature.is_absolute() else cached_native_root/feature
             value=dict(value,feature_file=str(feature),execution='reused_completed_native_same_head',executed_transition_cameras=0,executed_initial_cameras=0,source_receipt=str(path),source_receipt_sha256=base.sha(path),source_feature_file=str(feature))
