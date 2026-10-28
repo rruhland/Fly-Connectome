@@ -18,20 +18,24 @@ Use `PYTHONPATH=src:scripts/experimental`, one BLAS/OpenMP thread and four nativ
 
 ## Current provisional model and actual evidence
 
-Parent selected the fixed pairwise candidate as PROVISIONAL working lineage:
-`/workspace/m1b-experiments/pong-rally-pairwise-residual-20261028-r1/rbf-model.npz`
-Bundle SHA `eb2cbcf10aaaf88ee5fd0877cbc966b828286e230a0782bd91c4dce9ddce9152`.
-Despite legacy filename, this is centered degree-two TensorSketch512, frozen
-vision/original4389input transport/scaler, frozen3ac basehead, learned3×512outputs.
-No backpropagation, no feature recalibration. Only output weights may learn.
+Current practical research baseline is joint40069, not a fresh-qualified claim
+of better later-return skill:
+`/workspace/m1b-experiments/pong-rally-joint-output-20261028-r1/rbf-model.npz`
+Bundle SHA `40069e2deae2b745b83b6c193389fa740450856b67443339b12f0dbb9bf3c438`;
+W SHA `479472a37e9950246726cd90babf44f053467e3ae354783da2afbc35080ea15f`.
+Frozen vision/map/transport, existing raw4389 plus fixed512pairwise outputs; both
+output weight arrays learned without backprop. Feature assets unchanged.
 
-* TRAIN160:3ac409→pairwise412total,143→146first,266/384→266/380later.
-  All known openings retained; two-returngames103→95, five-returngames30→35.
-* Independent fresh32:73→81total,27→28first,46/69→53/75later. Later-rate
-  +4pp CI[-11.85,+18.75]pp; mean+.25returns/game CI[-.44,.97]. Uncertain.
-  Two-returngames21→18, five-returngames4→8. Reliable match-long goal NOT met.
-* Preserve fallback3ac at `pong-rally-earned-trace-merge-20261028-r1/proposal.npy`,
-  SHA `3ac7f87fbac23abab14e633b38cfe1e50986a8f03bb38b049bed8f4cc840bd5e`.
+* TRAIN192:493→523returns,174→175first,113→123games≥2,319/455→348/482later.
+* Pooled existing64fresh (descriptive after interim decision): eb145→joint151
+  returns,57→60first,39→42games≥2,later88/136→91/142. No convincing later-rate
+  improvement. First/second coverage motivates a practical baseline, not success.
+* Batch4c checkpoint retained as own-reward repertoire: TRAIN546, but fresh73
+  versus joint86 on latest32, so not selected as the general-player replacement.
+* Preserve eb at `pong-rally-pairwise-residual-20261028-r1/rbf-model.npz`, SHA
+  `eb2cbcf10aaaf88ee5fd0877cbc966b828286e230a0782bd91c4dce9ddce9152`.
+* Preserve 3ac at `pong-rally-earned-trace-merge-20261028-r1/proposal.npy`, SHA
+  `3ac7f87fbac23abab14e633b38cfe1e50986a8f03bb38b049bed8f4cc840bd5e`.
 * Preserve d7 at `pong-rally-guarded-curriculum-20261028-r2/selected.npy`, SHA
   `d7d7d872c1acde4b34748240c2ce9bf9d37af4c65ff2cd1f25d753f19d01fe61`.
 
@@ -57,7 +61,7 @@ complete:73→65returns,29→30first,21→19games≥2,later44/68→35/62.
 No demonstrated transfer gain. All saved action/Q rows audited; all processes
 exited. Native completion865.718s within original900s (fresh300substage exceeded
 during interruption); documented≥105,587cameras+191initials, unsaved interrupted
-work unknown. No promotion yet; current eb/r5 retained until parent review.
+work unknown. Joint40069 now practical research baseline as described above; oldeb/r5 preserved.
 
 Completed diverse3-target batch `pong-rally-joint-batch-20261028-r1`:
 agentdf9c09e/main3a5600a,27focused tests. One33.26sverifiedfit/80,839rows,
@@ -67,13 +71,23 @@ eb72/28first/18second/44of68later;40069 86/30/23/56of80;candidate73/28/21/45of71
 No demonstrated fresh improvement. Batch4c0b preserved as TRAIN artifact, not
 promoted. Parent/worker selected broader new TRAIN experience next. Implement minimal
 manifest collector:64newstarts32/phase, fixed40069and4c,128games/600s,
-no fitting yet; code review before launch. Existingfresh remains evaluation-only.
+no fitting yet. Sourcea3c2aee/main41d1ce6 reviewed;29focusedtests passed.
+Collector launch authorized at `pong-rally-new-TRAIN-repertoire-20261028-r1`,
+manifest at sibling `.manifest.json`, ROOT1943906127/TAG63025. Collector completed209.534s/600,63,910cameras+128initials,128complete,
+all saved action/Q/source/raw checks PASS. New64:40069 139/58first/38second,
+4c140/58/38;14better4c,16worse, same6firstmisses. Existingfresh remains out.
 Plan: [broader own-reward experience](../plans/2026-10-28-broader-earned-experience.md).
-After collection, review diverse better prefixes and a bounded joint-learning block.
+Parent approved admission of64auditedscaffold40069receipts into uniformTRAIN256:
+662returns/233first/161second/429of615later;100,069earnedrows/233cases.
+Implement bounded3-updateblock,≤3targets/update,90sfit each,one1200sclock,
+broaderGsameformulaonce.12compatiblepool; first1289501189L1→2,58405525R1→2,
+3654232341L2→3;100,586initialhardrows. No fits launched; reviewcode/tests first.
 Exact completeprefix certificates can preserve known-return LOWERBOUNDS between
 fits without fullsuffixreplay; mixedsourceprovenance required, currenttargetactual
 outcomes must be measured before replacement, full/freshqualification atblockend.
-This block is not implemented or launched yet. No more blind small oldreplayfits.
+Use fixed8correctnesssentinel incl104fivehit, finalfull256/fresh32vs40069once.
+Stopupdatesonfailedfit; preserve lastverifiedcandidate. No pruning/overrides now.
+Implementation underway, not launched. No more blind small oldreplayfits.
 No fresh62993or63009admission. Both r5eb and r6TRAIN-scaffold banks preserved.
 Batch589.36s/900,160,146cameras+271initials, no interruption/unknown work.
 Bundle4c0b6374f3e35fad8260d5bd07161f780383de99a8c536b67437169d12200811;

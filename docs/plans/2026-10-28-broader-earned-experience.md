@@ -59,3 +59,68 @@ about overusing early successes. Parent rechecked the
 outside idea. Our solver is not its actor-critic algorithm, and an earned return
 does not establish the causal value of every preceding action. The new collection
 tests coverage while preserving that distinction.
+
+## Collection outcome
+
+Source agenta3c2aee/main41d1ce6,29focused checks passed. Root
+`pong-rally-new-TRAIN-repertoire-20261028-r1`, manifest at sibling `.manifest.json`,
+ROOT1943906127/TAG63025. All128games completed in209.534s of600;
+63,910actual transition cameras+128initials, no errors or unknown work.
+Sources, weights and manifest stayed frozen. No fitting or bank admission yet.
+
+On the64new starts,40069 earned139returns/58first/38games≥2/81of133later;
+4c earned140/58/38/82of131later. Fourteen starts improved under4c and16regressed.
+Both policies missed the same six first returns. The useful new repertoire here
+is therefore for later returns, not those opening failures.
+
+A uniform40069bank combining previous192and these64would have256episodes,
+662returns/233first/161games≥2/429of615later. Exact source/raw/action audits and
+target compatibility review precede admission and learning. Existing fresh sets
+remain evaluation-only.
+
+Parent's pending block proposal: up to three updates, up to three compatible new
+targets each, one90sfit per update with no fit retry, and one1200s execution clock
+covering broader metric preparation, current-target checks, small correctness
+sentinels, final full256 and an unused fresh comparison versus40069. A later fit
+failure must preserve earlier verified checkpoints. Concrete target and code
+review is still required; this paragraph does not authorize launching that block.
+
+## Audited admission and block implementation selected
+
+`receipt-audit.json` passed all128receipts/63,910exact deployed action/Q rows,
+raw shapes and source/weight/map/cap checks. Parent authorized adding ONLY the64
+audited40069scaffold receipts to the old192uniform40069bank, making256contexts.
+The alternative4c receipts are own-reward experience; old fresh sets remain out.
+Current complete earned memory is100,069rows across233positive cases.
+
+`learning-target-screen.json` found12of14better4c prefixes compatible with that
+memory. Exclude1163974156 and3016544790 because of exact raw-action conflicts;
+do not reopen them during this block. The first three selected targets are:
+
+| Seed | Phase | Current → target | New / replaced prefix rows |
+| --- | --- | --- | --- |
+| 1289501189 | left | 1 → 2 | 214 / 41 |
+| 58405525 | right | 1 → 2 | 322 / 140 |
+| 3654232341 | left | 2 → 3 | 362 / 200 |
+
+First contract100,586rows/233cases, combined raw-action conflicts zero.
+Remaining fixed pool/order:3143732030,3614102378,1482281654,3232760599,
+1881744746,3238414060,2814548503,1601498681,403762985. Before later target
+replacement, measure its current-policy outcome. Skip a source already matched
+or exceeded; otherwise use the source's next earned-return prefix. Recheck
+compatibility against evolving memory. No new exploration or pool expansion.
+
+Parent approved implementation of at most3updates with at most3targets each,
+one90sfit per update and a single1200s execution clock. Rebuild the score metric
+once using the unchanged equal-episode earned-prefix formula,1%ridge and
+optimizer-only scaling. Vision, map assets and deployed scaling stay fixed.
+
+Use actual target games and a fixed8game correctness sentinel (including the
+original104562292five-hit skill) between fits. Add full newly earned prefixes
+from these games to memory. Explicit per-case sourceW/bundle/Q provenance is
+required; never relabel an old receipt as current-policy native execution.
+Known-return lower bounds and measured full-game outcomes must remain separate.
+No extra fit based on a noisy sentinel aggregate. A failed fit stops updates;
+qualify the last verified candidate if time permits. Full256 and unused fresh32
+versus40069 run once at the end. Review implementation and focused tests before
+launch. No action-pruning or intervention-label changes in this block.
