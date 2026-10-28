@@ -805,3 +805,26 @@ advantages for allfour options at8TRAINsites, includingfailedtrials; no maxretur
 or winner-only labels.120s/30kchargedcamerasacquisition,180sevaluation ceiling.
 No new user approval needed under latest mandate. Goal95%first/later with200+
 freshlateropportunities and replication remains unmet.
+
+## Local option memory: rescued cases, failed context transfer
+
+Source1903b20. Eight fixedlater TRAINsites, fourmisses/foursuccesses, balancedphase;
+all4options/site actuallyexecuted afterexactsharedprefix. Acquisition18.413s,
+4984cameras+8initials (2904prefix+2080suffix).24completepairedadvantages:2genuine
+miss→hit rescues,2hit→miss losses,20ties; no timing-onlypositive. Fullgame8screen
+23→19returns,7→5first,16→14later;19optionstarts/285heldcameras/267changedactions.
+Evaluation17.164s,4207cameras+8initials, fullsequentialscene/hold/Qaudit passed.
+Combined9191cameras+16initials. Reject b5c5c8 memory asgeneralplayer, preserveartifact.
+No32/fresh;TAG63137unused. This acquiredmemory thenfroze it; notliveonlineadaptation.
+
+Mechanism audit: both losinggames firstdiverged BEFOREfirsthit,5→0 and1→0,
+retrieving SAME later-miss site2793379721/action1 withonesupportingsite. Two gains
+of+1 firstdivergedAFTERfirsthit. Parent authorizes one explicit causal amendment:
+condition retrieval on whether a positive ownhitreward hasalreadybeenreceived
+sinceepisode reset. Storedsites allTrue; runtimebitfalseatreset, updatesONLYafter
+actualreward. Samefrozenmemory/radius/hold, no acquisition/refit. This tests missing
+reward-history context, not radius/threshold tuning or anexpertinterceptionlabel.
+Source/spec reviewedbefore separate180sevaluation; same8→32→conditionalfresh,
+newtag63153. Openingactions must replaybaselineexactly beforefirstreward.
+Broader OgmaNeo2 temporal-learning feasibility researched inparallel byvalue_execution;
+no hidden-gradient chainfound in inspected olderpinnedcode, adapterdetails pending.
