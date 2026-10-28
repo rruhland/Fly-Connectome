@@ -61,3 +61,16 @@ seed deterministic three-action comparisons require no repeated identical
 rollouts; this is an adaptation, not their algorithm or a proof that the current
 visual encoding is Markov. Current learning is still reset/branch-assisted
 scaffolding, not a demonstrated continuous online learner.
+
+Parent representation hypothesis (not a selected change): the current encoder
+bins entity position and adds directional velocity values within each spatial bin.
+A linear head can express position-dependent velocity effects, but more complex
+interactions among velocity components and reflected long-horizon arrival position
+may be awkward. The existing relation channels are generic, and short visual
+forecasts do not guarantee adequate long-horizon interception information. This is
+an inspection-based hypothesis, not a capacity impossibility result. Current
+single-head failures can also reflect poor reward credit and integration, so finish
+the selected discovery/integration pass before recommending a major policy change.
+The earlier redundant 64-feature residual result argues against simply repeating
+an unconditioned random-feature expansion. Any genuinely major replacement or
+extension still comes to the user for review.
