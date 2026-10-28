@@ -776,3 +776,32 @@ Final fresh audit:35,099rows exactQ/action replay; no unknown unsaved work.
 Acquisition audit:11,871rows exactQ,1571nongreedy choices(13.234%, expected13.333%).
 Combined old/new index:130,102eligible transitions, all543hit rows,90uniqueTRAIN
 starts;26old final-timeout successors unavailable and excluded.
+
+## Approved fixed-partition value pilot: rejected
+
+User approved and waived further architecture approval for this milestone.
+New Sol6.1XHigh value_execution replaced unavailable old agents. Source7d982bc,
+11focusedchecks passed. Spec8055694e1bd6b233f636adc0813813ed67d021b572e0a0cab84367fce3afcd3e.
+Artifact `pong-fixed-value-tree-20261028-r1`:12000weightedtuples,all543hits and253
+natural terminals,256Bellman sweeps,existing711features andfixed32treepartitions.
+Prep+fit+parity12.989s; native8games23→1returns,7→1first,4→0second,16→0later.
+Entire19.810s,911newcameras+8initials. All12kfitrows and911native actions/Qverified;
+no fallback decisions. Reject72d2fabc; preserve40069baseline/761secondary.
+No32/fresh; TAG63121 unusedreserved. Allsource/assetsunchanged.
+
+Interpretation limit:73leaves total across32trees,14root-onlytrees; broadgroups
+made218/219actioncells eligible without relevant local coverage. This failed
+coarse estimator does not refute valuelearning generally. Parent chose distinct
+local option memory rather than a tree parameter sweep. Newagent
+alternative_mechanisms sourcechecked episodiccontrol andolderOgmaNeo2; current
+AOgmaNeo nonlinearactor derivatives make automaticnoBPclaims unsafe.
+
+Optionmemory implementation authorized with parent amendments BEFORE acquisition:
+existing canonical6fieldanonymousscene (avoid inventedageinputs), geometryradius
+fromsaved continuouscalibration scenes16framesapart, baseline fallback reevaluates
+everycamera; learnedheldactions run16cameras. Runtimehistorymeans raw-only action
+certificates/reuse must reject this controller. Matchedbaseline-tail ownreward
+advantages for allfour options at8TRAINsites, includingfailedtrials; no maxreturn
+or winner-only labels.120s/30kchargedcamerasacquisition,180sevaluation ceiling.
+No new user approval needed under latest mandate. Goal95%first/later with200+
+freshlateropportunities and replication remains unmet.

@@ -20,6 +20,18 @@ Main checkout `/workspace/Fly-Connectome-m1b`, branch
 `reconstruction/m1b-continuation`; Python `/workspace/Fly-Connectome/.venv/bin/python`.
 Use `PYTHONPATH=src:scripts/experimental`, one BLAS/OpenMP thread and four native workers.
 
+## Latest active update
+
+Approved tree pilot completed and rejected:23→1returns on8games,19.81s,
+911cameras+8initials.73leaves/32trees too coarse,14root-only; no fallback.
+Source7d982bc;11checks pass. Preserve40069baseline/761secondary.
+`/root/alternative_mechanisms` now implementing bounded localoptionmemory in MAIN,
+newfiles only, parentreview before native. User waived architecture approval;
+DO NOT ask again. See latestledger and local-option-memory-challenger plan.
+Root amendments: canonical6fieldscene, saved16-apart calibration radius,
+baseline requeryeachcamera / learnedhold16, no raw-only runtime reuse.
+`/root/value_execution` idle reusable for independent review.
+
 ## Latest result / next action
 
 Cloud connection recovered. Final broad-block fresh32 rejected bfb: 90→69
