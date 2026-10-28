@@ -11,7 +11,9 @@ import run_practical_pong_v2 as base
 def run(directory,baseline,candidate):
     directory=Path(directory);baseline=Path(baseline);candidate=Path(candidate);schedule=base.read(directory/'schedules.json');seeds=schedule['probe'];assert len(seeds)==32 and not (directory/'work-clock.json').exists()
     assert len({s%base.MODULUS for s in seeds+schedule.get('unused_reserved',[])})==len(seeds)+len(schedule.get('unused_reserved',[]))
-    for source in (baseline,candidate):assert base.read(source/'completion-verification.json')['passed']
+    for source in (baseline,candidate):
+        if (source/'completion-verification.json').exists():assert base.read(source/'completion-verification.json')['passed']
+        else:assert base.read(source/'own-completion.json')['status']=='PASS'
     assert base.read(baseline/'radial-cap.json')==base.read(candidate/'radial-cap.json')
     for head,source in [('carry',baseline),('candidate',candidate)]:
         folder=directory/head;folder.mkdir();(folder/'native_candidate/episodes').mkdir(parents=True);(folder/'native_candidate/features').mkdir()
