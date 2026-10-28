@@ -24,6 +24,8 @@ def certify_episode(receipt, features, source_weights, candidate_weights, *,
                     executed_initial_cameras=0)
     if not source_fingerprint or source_fingerprint != candidate_fingerprint:
         return reject('engine_or_runtime_context_changed')
+    if receipt.get('transport_kind','visual-transport-v1')!='visual-transport-v1':
+        return reject('nondefault_transport_requires_explicit_context_certificate')
     config=receipt['config']
     if config != candidate_config:
         return reject('configuration_changed')
