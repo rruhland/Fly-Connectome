@@ -312,3 +312,13 @@ Parent proposed and benchmarked full empirical feature covariance: preserve old 
 
 Original Sol agent became unresponsive and was parked. Active worker `/root/rally_integration` is explicitly Sol6.1XHigh, fresh bounded context, same agent checkout `/workspace/Fly-Connectome-m1b-pong-fast`. Parent implemented discovery, owns direction and reviews. Agent source d72f775→main5261898,79107f6→main3cc3c38. Current refreshed existing160TRAIN bank r4 has409currenthead receipts, no freshadmission. Agent is correcting inherited old proof pointers in r4 metadata; rawreceipts/source/model unchanged. Usergoalactive until reliable learned match-long returns orstop. Bridgebelongsotherthread.
 
+
+
+## Active — retain the opening skill globally, learn later returns
+
+Full covariance refinement r2 failed whole-bank retention:409→391 total,143→140 first,266/384→251/365 later.43games gained73returns;41lost91. No fresh evaluation/promotion. Target4→5 andthree selected guards held, but adapted32TRAINsentinel61→68 was not representative of broader retention. Full cost69,905cameras+113initials,197.23s; including sentinel82,551+136. Candidate8f1d2b18 remains rejected. First covariance r1 had targetsuccess butsentinel61→58,12,848cameras+25initials. Numerical metric bookkeeping checked; tinyaverage scorechanges can shift outcomes substantially.
+
+Parent selected a different retention contract after independent Sol challenge: protect ALL143 successful current FIRST-return prefixes (13,420rows,40–158each), plus shortest new later target's complete848rows; retain later experience softly with the same empirical covariance. This matches stage scaffolding and preserves first-bounce trajectories on known successful starts. Many prior changes began early (113changedgames,medianfirstdiv39); prefixcachewouldsaveonly11,740cameras here, so no diversion into that optimization. Exactduplicate hard rows may be deduplicated, but every original row must pass certificate. One bounded trial, fixed32sentinel thenfull160 andfreshonlyifuseful. Current provisional3ac7f87f/r4bank409 unchanged; no freshadmission.
+
+Active reused replacement worker `/root/rally_integration` (Sol6.1XHigh) is implementing/executing this trial in `/workspace/Fly-Connectome-m1b-pong-fast`. Parent owns hypothesis/review, no new architecture/backprop/privileged input. Source528dece→maincb101eb,205bdc0→mainc4f49d4. User goal remains active; do not stop merely because a bounded trial ends.
+

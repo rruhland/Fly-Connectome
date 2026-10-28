@@ -1,3 +1,11 @@
+## Active — retain the opening skill globally, learn later returns
+
+Full covariance refinement r2 failed whole-bank retention:409→391 total,143→140 first,266/384→251/365 later.43games gained73returns;41lost91. No fresh evaluation/promotion. Target4→5 andthree selected guards held, but adapted32TRAINsentinel61→68 was not representative of broader retention. Full cost69,905cameras+113initials,197.23s; including sentinel82,551+136. Candidate8f1d2b18 remains rejected. First covariance r1 had targetsuccess butsentinel61→58,12,848cameras+25initials. Numerical metric bookkeeping checked; tinyaverage scorechanges can shift outcomes substantially.
+
+Parent selected a different retention contract after independent Sol challenge: protect ALL143 successful current FIRST-return prefixes (13,420rows,40–158each), plus shortest new later target's complete848rows; retain later experience softly with the same empirical covariance. This matches stage scaffolding and preserves first-bounce trajectories on known successful starts. Many prior changes began early (113changedgames,medianfirstdiv39); prefixcachewouldsaveonly11,740cameras here, so no diversion into that optimization. Exactduplicate hard rows may be deduplicated, but every original row must pass certificate. One bounded trial, fixed32sentinel thenfull160 andfreshonlyifuseful. Current provisional3ac7f87f/r4bank409 unchanged; no freshadmission.
+
+Active reused replacement worker `/root/rally_integration` (Sol6.1XHigh) is implementing/executing this trial in `/workspace/Fly-Connectome-m1b-pong-fast`. Parent owns hypothesis/review, no new architecture/backprop/privileged input. Source528dece→maincb101eb,205bdc0→mainc4f49d4. User goal remains active; do not stop merely because a bounded trial ends.
+
 ## Active — soften retention using complete empirical score geometry
 
 Current provisional learned head remains3ac7f87f (TRAIN160409hits; latest fresh50→63 againstd7). No subsequent learned head yet. Parent discovery found one single-action recovery+3 and four short-burst new returns+1 each; all are actual own-reward traces, not deployed learning. Roots `pong-rally-current-discovery-20261028-r1` and `pong-rally-new-bursts-20261028-r1`; costs10,617+8initials35.925s and11,598+4initials47.566s respectively. Parent provenance audit passed,0cameras.
