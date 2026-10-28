@@ -1,3 +1,11 @@
+## Active — provisional earned-trajectory merge improved fresh returns
+
+Latest completed candidate: `pong-rally-earned-trace-merge-20261028-r1/proposal.npy`, SHA `3ac7f87fbac23abab14e633b38cfe1e50986a8f03bb38b049bed8f4cc840bd5e`. Root selects this as the provisional working candidate, preserving d7 unchanged. TRAIN160:409 total/143 first/266 of384 later (69.27%), versus d7 407/143/264 of377 (70.03%). NEW paired32:50→63 total,27→27 first,23/49→36/61 later (46.94→59.02%). Six games gained/five lost; paired mean-hit difference CI[-.03125,.90625] and later-rate difference CI[-2.07,28.28]pp: promising, uncertain, far from reliable rallying. No fresh admission yet.
+
+Merge replaces TWO conflicting +1-return gain prefixes with their previous one-return prefixes (571235268 and3229351561); this makes17 actual earned trajectories/9,061 rows compatible. Exact no-anchor/no-fallback merge solved in0.645s. Sentinel70→86 hits, first28 unchanged, other15 unchanged. Full evaluation used only4 newly executed games/1,538 cameras+4 initials; sentinel9 games/6,477+9. Fresh28,687+64,79.86s. Source9d2bcf7 integrated main0cb39c6; two focused tests passed in agent checkout.
+
+Same reused Sol continues bounded next learning iteration from provisional candidate: challenge current recovery-only credit, explore useful alternative actions on current misses, save complete own-reward success traces, integrate compatible earned behavior and evaluate actual games with alternate-episode reuse. Parent reviews selection and feasibility. No architecture changes, backprop, privileged labels, or bridge work. User mandate remains active until consistent learned match-long returns or explicit stop; historical paused headings below are superseded.
+
 ## Active — integrate complete earned trajectories after third correction
 
 Selected safe carry remains d7d7d872 (160TRAIN407total/143first/264of377later). Selective causal correction intermediates progressed343→376→403, but thirdopening-focused iteration reached400: first139→143 restored, later264→257. No candidate promoted/fresh. Thirdscreen6/8positive,7,558cameras+8initials,10donors; sentinel50→63hits and+4first; full160 caught7othergames losing18returns against9gains totaling15.

@@ -261,3 +261,13 @@ The alternate-bank optimization now saves real execution: full160 ran15new games
 First17-prefix merge screen found9,484rows/9,415unique and three cross-trace conflicts, all the same raw input near startup:400gain571235268row4 requiresaction1;403loss2029997846row5,161900621row4 and2557314901row5 requireaction2. No QP or cameras spent. This proves those exact requested commands cannot coexist in this stateless head, not that returns cannot be learned.
 
 Root authorized replacing571235268's400two-return trajectory with its403one-return earnedprefix. Its requested gain was only+1, while the three conflicting losses total7returns. Preserve the remainingeight newgainprefixes, seven oldloss prefixes and originaltarget; rerun exact conflict screen, then bounded minimum-distance solve without invented feasible fallback if compatible. Replacing one low-value command trace is a practical reward tradeoff; no claim that two returns on571235268 are impossible.
+
+
+## Active — provisional earned-trajectory merge improved fresh returns
+
+Latest completed candidate: `pong-rally-earned-trace-merge-20261028-r1/proposal.npy`, SHA `3ac7f87fbac23abab14e633b38cfe1e50986a8f03bb38b049bed8f4cc840bd5e`. Root selects this as the provisional working candidate, preserving d7 unchanged. TRAIN160:409 total/143 first/266 of384 later (69.27%), versus d7 407/143/264 of377 (70.03%). NEW paired32:50→63 total,27→27 first,23/49→36/61 later (46.94→59.02%). Six games gained/five lost; paired mean-hit difference CI[-.03125,.90625] and later-rate difference CI[-2.07,28.28]pp: promising, uncertain, far from reliable rallying. No fresh admission yet.
+
+Merge replaces TWO conflicting +1-return gain prefixes with their previous one-return prefixes (571235268 and3229351561); this makes17 actual earned trajectories/9,061 rows compatible. Exact no-anchor/no-fallback merge solved in0.645s. Sentinel70→86 hits, first28 unchanged, other15 unchanged. Full evaluation used only4 newly executed games/1,538 cameras+4 initials; sentinel9 games/6,477+9. Fresh28,687+64,79.86s. Source9d2bcf7 integrated main0cb39c6; two focused tests passed in agent checkout.
+
+Same reused Sol continues bounded next learning iteration from provisional candidate: challenge current recovery-only credit, explore useful alternative actions on current misses, save complete own-reward success traces, integrate compatible earned behavior and evaluate actual games with alternate-episode reuse. Parent reviews selection and feasibility. No architecture changes, backprop, privileged labels, or bridge work. User mandate remains active until consistent learned match-long returns or explicit stop; historical paused headings below are superseded.
+
