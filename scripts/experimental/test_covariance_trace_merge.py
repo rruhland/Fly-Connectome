@@ -22,5 +22,11 @@ class CovarianceTraceMergeTest(unittest.TestCase):
         candidate,report=fit(reference,cases,np.array([2.,.5]),la.cholesky(np.array([[2.,.8],[.8,1.]]),lower=True),.03,time.monotonic()+3)
         self.assertTrue(report['verified']);self.assertEqual(report['hard_cases'],2);self.assertEqual(report['verified_exact_target_greedy_rows'],2);np.testing.assert_array_equal(np.argmax(candidate,axis=0),[0,2])
 
+    def test_deduplication_keeps_every_original_row_in_certificate(self):
+        reference=np.array([[0.,-.1],[0.,0.],[.1,.1]])
+        case=dict(X=sp.csr_matrix([[1.,0.],[1.,0.],[0.,1.]]),actions=np.array([0,0,2]),source_weights=reference,interventions=[dict(row=i,action=0,source_action=2,reward_verified=True) for i in (0,1)])
+        candidate,report=fit(reference,case,np.ones(2),np.eye(2),.03,time.monotonic()+3)
+        self.assertTrue(report['verified']);self.assertEqual(report['unique_hard_rows'],2);self.assertEqual(report['verified_exact_target_greedy_rows'],3);self.assertEqual(report['target_inequalities'],6)
+
 
 if __name__=='__main__':unittest.main()

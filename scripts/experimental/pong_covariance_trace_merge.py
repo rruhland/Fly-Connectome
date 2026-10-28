@@ -19,7 +19,11 @@ def fit(reference,case,scale,cholesky,kappa,deadline):
                 v=interventions[i];assert v['reward_verified'] and v['action']==a and v['source_action']==choice;required.append([kappa*1e-4]*2)
             else:
                 assert choice==a;required.append([min(kappa*1e-4,.5*max(q[a]-q[b],0.)) for b in range(3) if b!=a])
-    required=np.asarray(required);_,old,contrast=pairs(X,actions,reference);lower=(required-old).reshape(-1);direction=contrast.reshape(-1,2)
+    required=np.asarray(required);full_X=X;full_actions=actions;full_required=required;seen=set();keep=[]
+    for i,a in enumerate(actions):
+        lo,hi=X.indptr[i:i+2];key=(X.indices[lo:hi].tobytes(),X.data[lo:hi].tobytes(),int(a),required[i].tobytes())
+        if key not in seen:seen.add(key);keep.append(i)
+    X=X[keep].tocsr();actions=actions[keep];required=required[keep];_,old,contrast=pairs(X,actions,reference);lower=(required-old).reshape(-1);direction=contrast.reshape(-1,2)
     # G=L L^T, z=L^T u: target score row x u becomes (L^-1 x)^T z.
     whitened=la.solve_triangular(cholesky,X.multiply(1/scale).T.toarray(),lower=True,check_finite=False).T
     norm=np.sqrt(np.repeat(np.einsum('ij,ij->i',whitened,whitened),2)*np.einsum('ij,ij->i',direction,direction));assert (norm>0).all();normalized_lower=lower/norm
@@ -39,9 +43,9 @@ def fit(reference,case,scale,cholesky,kappa,deadline):
         violation=lower-norm*(columns@lam[working]);maximum=max(0.,float(violation.max()));history.append(dict(round=iteration+1,working=len(working),maximum_original_target_logit_violation=maximum,solver_status=answer.info.status,iterations=int(answer.info.iter),tolerance=tolerance,primal_residual=float(answer.info.prim_res),dual_residual=float(answer.info.dual_res)))
         if maximum<=1e-9:
             coefficients=(lam/norm).reshape(-1,2);beta=np.sum(contrast*coefficients[:,:,None],axis=1);z=beta.T@whitened;u=la.solve_triangular(cholesky.T,z.T,lower=False,check_finite=False).T;trial=reference+CONTRAST@u/scale
-            _,actual,_=pairs(X,actions,trial);actual_violation=max(0.,float(np.max(required-actual)));policy=FrozenLinearPolicy(trial);wrong=[]
-            for i,a in enumerate(actions):
-                lo,hi=X.indptr[i:i+2];got,_=policy.choose(X.indices[lo:hi],X.data[lo:hi])
+            _,actual,_=pairs(full_X,full_actions,trial);actual_violation=max(0.,float(np.max(full_required-actual)));policy=FrozenLinearPolicy(trial);wrong=[]
+            for i,a in enumerate(full_actions):
+                lo,hi=full_X.indptr[i:i+2];got,_=policy.choose(full_X.indices[lo:hi],full_X.data[lo:hi])
                 if got!=a:wrong.append(i)
             if actual_violation<=1e-9 and not wrong:candidate=trial;status='verified_full_target_covariance_merge';break
             if not tight:tight=True;continue
@@ -51,6 +55,6 @@ def fit(reference,case,scale,cholesky,kappa,deadline):
             if not tight:tight=True;continue
             status='bounded_numerical_residual_no_fallback';break
         working=sorted(existing|set(map(int,fresh[np.argsort(-violation[fresh],kind='stable')[:256]])))
-    report=dict(status=status,verified=candidate is not None,target_rows=X.shape[0],target_inequalities=len(lower),hard_cases=len(cases),working_inequalities=len(working),history=history,wall_seconds=time.monotonic()-began,known_feasible_anchor=False,numerical_fallback=False,new_observations=0,objective='minimum empirical equal-episode full score change plus fixed covariance ridge',old_actions_hard_preserved=False,hard_target_required_margin='source greedy: min(kappa*1e-4, half source gap); reward-earned forced rows: fixed kappa*1e-4',forced_rows=forced_rows,verified_exact_target_greedy_rows=X.shape[0] if candidate is not None else 0,full_kernel_materialized=False)
+    report=dict(status=status,verified=candidate is not None,target_rows=full_X.shape[0],target_inequalities=2*full_X.shape[0],unique_hard_rows=X.shape[0],unique_hard_inequalities=len(lower),hard_cases=len(cases),working_inequalities=len(working),history=history,wall_seconds=time.monotonic()-began,known_feasible_anchor=False,numerical_fallback=False,new_observations=0,objective='minimum empirical equal-episode full score change plus fixed covariance ridge',old_actions_hard_preserved=False,hard_target_required_margin='source greedy: min(kappa*1e-4, half source gap); reward-earned forced rows: fixed kappa*1e-4',forced_rows=forced_rows,verified_exact_target_greedy_rows=full_X.shape[0] if candidate is not None else 0,full_kernel_materialized=False,deduplication='exact feature/action/two-required-margins; final certificate uses every original row')
     if candidate is not None:report.update(maximum_actual_target_logit_violation=actual_violation,whitened_parameter_cost=float(np.sum(z*z)),scaled_coefficient_norm2=float(np.sum(u*u)))
     return candidate,report
