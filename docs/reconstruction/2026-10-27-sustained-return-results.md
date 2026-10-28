@@ -586,3 +586,35 @@ remain possible. Batch source prefixes differed from40069on23/205,39/321 and
 40/375actions; this does not identify which exploratory actions caused reward.
 Combining earlier causal-credit machinery with joint retention is a hypothesis,
 not a newly invented credit algorithm or an already demonstrated solution.
+
+
+## Completed block and interrupted qualification recovery
+
+Full TRAIN256 improved 662 → 686 returns with 13 improved games and zero losses.
+First returns remained 233; games with at least two returns rose 161 → 167;
+later returns rose 429/615 → 453/636. The three accepted updates retained every
+measured earned minimum. This establishes trajectory integration on practiced
+starts, not reliable general play.
+
+The cloud outage interrupted fresh TAG63041 after 58/64 saved games. The original
+1200-second deadline expired during the outage. A separately authorized 180-second
+frozen-evaluation extension completed only the six missing games in 13.575 seconds,
+using 3,690 cameras plus six initial observations. The prior 58 receipts were
+unchanged. No fitting, new seeds, or training restart occurred. Total documented
+block work is 88,284 transition cameras plus 150 initials; unsaved interrupted
+work is unknown, not zero.
+
+Fresh32 decisively rejected the candidate: 40069 → bfb had 90 → 69 returns,
+30 → 30 first returns, 21 → 19 games with at least two returns, and later success
+60/82 → 39/66 (73.17% → 59.09%). Zero games gained, eight lost returns. Paired
+mean return difference was −0.65625/game, bootstrap 95% interval
+[−1.09375, −0.28125]. Later-rate differences also reflect changed exposure.
+Artifacts: `pong-rally-joint-learning-block-20261028-r1/fresh/recovered-metrics.json`
+and `recovery-extension.json`.
+
+Do not promote bfb or repeat another identical complete-trajectory replay block.
+Keep 40069 as the practical research baseline. The fresh set stays evaluation-only.
+Next direction must reconsider incidental action retention and reward credit,
+not claim that more practiced returns alone satisfy the user's goal. Existing
+linear soft-retention and causal-credit failures must inform the next design;
+no architecture change is authorized by this decision.

@@ -135,3 +135,67 @@ constraint alongside causal credit and on-policy coverage before blaming feature
 capacity or launching another identical block. Earlier linear-only soft-retention
 failures do not establish failure for the joint learner. No such ablation is part
 of the current block.
+
+## Block launched
+
+Source agentbeb99fc/maina8a0a84 reviewed;32focused checks passed. Root
+`pong-rally-joint-learning-block-20261028-r1`; manifest SHA
+`5759fd6f36eb4c536a6fcae7c9c4a09ec41433aca8130ada76e37fb83f32cfd3`.
+Single1200s clock, implementation900s separately. Uniform256bank is revisionr7;
+fresh ROOT1943906127/TAG63041 is reserved before fitting. The fixed8controls
+exclude the target pool and cover old/new contexts, phase and return depth,
+including104562292. Later rounds precheck all remaining pool cases before
+selection, so newly observed earned prefixes cannot invalidate a previously
+selected target silently. No active code changes during execution.
+
+Preparation47.20s, including28.98s for the broader metric. All three updates were
+accepted by218.70s; fits20.62s/27.59s/28.55s verified100,586/101,837/103,318rows.
+Actual target returns were1/1/2→3/4/3, then1/1/2→3/4/5, then2/2/3→3/3/4.
+Correctness controls28→28,28→28,28→29; the last gain was9291157632→3.
+All known per-case minima passed; original104five-hit behavior retained.
+Memory lower bounds662→668→676→680returns (233first,165games≥2,447later).
+These are preserved minimum counts, not a complete current-policy measurement.
+Full256 completed:662→686returns,233first unchanged,161→167games≥2,
+later429/615→453/636 (69.76%→71.23%). Thirteen games gained and none lost
+returns; all evolving earned minima passed. Full evaluation used40,494new
+transition cameras+69initials and reused187exact episodes.
+Cloud interruption stopped fresh qualification after58of64saved games; no
+training process remained on recovery. The original allocation is not reset.
+Only missing frozen qualification games may run under a separately recorded
+180s recovery allocation. No training or schedule changes are authorized by
+that recovery; unsaved interrupted work remains unknown.
+Candidate bundle SHA
+`bfb0d2824c7eb943434f31ff5772bb1ceee48add957220bd0374f6c83e84d1f7`;
+W SHA `f90abda40c83aa4a9fa9df25efdbf04db66df6f13c03519cb857f828def048a6`.
+
+
+## Completed block and interrupted qualification recovery
+
+Full TRAIN256 improved 662 → 686 returns with 13 improved games and zero losses.
+First returns remained 233; games with at least two returns rose 161 → 167;
+later returns rose 429/615 → 453/636. The three accepted updates retained every
+measured earned minimum. This establishes trajectory integration on practiced
+starts, not reliable general play.
+
+The cloud outage interrupted fresh TAG63041 after 58/64 saved games. The original
+1200-second deadline expired during the outage. A separately authorized 180-second
+frozen-evaluation extension completed only the six missing games in 13.575 seconds,
+using 3,690 cameras plus six initial observations. The prior 58 receipts were
+unchanged. No fitting, new seeds, or training restart occurred. Total documented
+block work is 88,284 transition cameras plus 150 initials; unsaved interrupted
+work is unknown, not zero.
+
+Fresh32 decisively rejected the candidate: 40069 → bfb had 90 → 69 returns,
+30 → 30 first returns, 21 → 19 games with at least two returns, and later success
+60/82 → 39/66 (73.17% → 59.09%). Zero games gained, eight lost returns. Paired
+mean return difference was −0.65625/game, bootstrap 95% interval
+[−1.09375, −0.28125]. Later-rate differences also reflect changed exposure.
+Artifacts: `pong-rally-joint-learning-block-20261028-r1/fresh/recovered-metrics.json`
+and `recovery-extension.json`.
+
+Do not promote bfb or repeat another identical complete-trajectory replay block.
+Keep 40069 as the practical research baseline. The fresh set stays evaluation-only.
+Next direction must reconsider incidental action retention and reward credit,
+not claim that more practiced returns alone satisfy the user's goal. Existing
+linear soft-retention and causal-credit failures must inform the next design;
+no architecture change is authorized by this decision.

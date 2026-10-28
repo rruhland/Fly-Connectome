@@ -16,6 +16,17 @@ Main checkout `/workspace/Fly-Connectome-m1b`, branch
 `reconstruction/m1b-continuation`; Python `/workspace/Fly-Connectome/.venv/bin/python`.
 Use `PYTHONPATH=src:scripts/experimental`, one BLAS/OpenMP thread and four native workers.
 
+## Latest result / next action
+
+Cloud connection recovered. Final broad-block fresh32 rejected bfb: 90→69
+returns versus40069, first30 unchanged, later60/82→39/66, zero gains/eight losses.
+Only six missing evaluation games were recovered in a separate13.575s extension;
+original deadline expired, saved58 unchanged, unknown interrupted work preserved.
+No promotion. TRAIN256's662→686 gain did not transfer. Reused rally_integration
+is finishing audits and independently challenging the next learning direction.
+Do not repeat another identical hard-prefix replay block. See broader plan's
+completed-results section. User mandate continues; no training is active yet.
+
 ## Current provisional model and actual evidence
 
 Current practical research baseline is joint40069, not a fresh-qualified claim
@@ -81,13 +92,26 @@ Parent approved admission of64auditedscaffold40069receipts into uniformTRAIN256:
 662returns/233first/161second/429of615later;100,069earnedrows/233cases.
 Implement bounded3-updateblock,≤3targets/update,90sfit each,one1200sclock,
 broaderGsameformulaonce.12compatiblepool; first1289501189L1→2,58405525R1→2,
-3654232341L2→3;100,586initialhardrows. No fits launched; reviewcode/tests first.
+3654232341L2→3;100,586initialhardrows. Sourcebeb99fc/maina8a0a84 reviewed,32focusedtests PASS; launched
+`pong-rally-joint-learning-block-20261028-r1`, session98406. Single1200sclock,
+implementation900sseparate; spec5759fd6f36eb4c536a6fcae7c9c4a09ec41433aca8130ada76e37fb83f32cfd3.
+FreshTAG63041 reservedpre-fit, uniformnewbankr7. No activecodechanges.
 Exact completeprefix certificates can preserve known-return LOWERBOUNDS between
 fits without fullsuffixreplay; mixedsourceprovenance required, currenttargetactual
 outcomes must be measured before replacement, full/freshqualification atblockend.
 Use fixed8correctnesssentinel incl104fivehit, finalfull256/fresh32vs40069once.
 Stopupdatesonfailedfit; preserve lastverifiedcandidate. No pruning/overrides now.
-Implementation underway, not launched. No more blind small oldreplayfits.
+All3updates accepted by218.70s: fits20.62/27.59/28.55s verified100586/101837/103318rows.
+Actualtargetgroups4→10,4→12,7→10; controls28→28/28/29. MemoryLOWERBOUNDS
+662→668→676→680,233first/165second/447later; notfullnativecounts.
+Finalmodelbfb0d2824c7eb943434f31ff5772bb1ceee48add957220bd0374f6c83e84d1f7,
+Wf90abda40c83aa4a9fa9df25efdbf04db66df6f13c03519cb857f828def048a6.
+Full256complete:662→686returns,233first,161→167second,429/615→453/636later;
+13gains/0losses, all earned minima retained. Cloud outage left58/64freshgames
+saved and no activeprocess. Recovery authorized ONLY missing frozen games
+under separate180s allocation if originaldeadline expired; do not resetclock
+or restarttraining. Reused rally_integration recovering; no activecodechanges.
+No more blind small oldreplayfits.
 No fresh62993or63009admission. Both r5eb and r6TRAIN-scaffold banks preserved.
 Batch589.36s/900,160,146cameras+271initials, no interruption/unknown work.
 Bundle4c0b6374f3e35fad8260d5bd07161f780383de99a8c536b67437169d12200811;
@@ -112,7 +136,7 @@ Recent stopped routes (details in ledger):
   while retaining complete earned memory; no new architecture was introduced.
 
 Detailed results: [ledger](2026-10-27-sustained-return-results.md).
-Bridge remains another thread's work. Main through a73015e pushed.
+Bridge remains another thread's work. Main through2f9ddc6 pushed; a8a0a84 and currentresults pending nextpush.
 Disk has about1.5GB free; reuse the192MB metric.
 
 ## Completed block and failed routes
