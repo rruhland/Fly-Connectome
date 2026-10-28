@@ -57,7 +57,7 @@ def native_task(directory,seed,index,deadline):
         from pong_fixed_rbf import load_readout,FreshRBFEvaluator
         readout=load_readout(model);assert np.array_equal(readout.base.weights,W);session=FreshRBFEvaluator(readout,config)
     else:session=FreshPongEvaluator(W,config)
-    game=session.env.game;original=game.step;counter=ReturnCounter();records=[];events=[];raw=SparseRows()
+    game=session.env.game;original=game.step;counter=ReturnCounter();records=[];events=[];raw=SparseRows();continuous_scenes=[];structured=model.exists() and hasattr(readout,'continuous')
     def instrument(drive,**kwargs):
         own=counter.opportunities;opponent=counter.opponent_opportunities;tick=int(game.rally_steps[0])+1
         out=counter.step(game,original,drive,**kwargs)
@@ -68,6 +68,9 @@ def native_task(directory,seed,index,deadline):
     try:
         while not session.complete and time.monotonic()<deadline:
             if session.initial_cameras==session.episodes:session._begin_episode()
+            if structured:
+                from pong_continuous_visual import canonical_scene
+                continuous_scenes.append(canonical_scene(session.latest_encoded))
             raw.add(session);records.append(session.step(check_frozen=False))
     finally:del game.step
     session.verify_frozen();report=session.summary();last=report['rallies'][-1] if report['rallies'] else dict(truncated=False,terminated=False,reward=session.episode_return,seconds=session.episode_seconds)
@@ -76,6 +79,9 @@ def native_task(directory,seed,index,deadline):
     path=f'native_candidate/features/train_{index:02d}.npz';sp.save_npz(directory/path,raw.matrix())
     result=dict(seed=seed,complete=report['complete'],config=asdict(config),weights_sha256=model_hash,report=report,annotation=annotation,annotation_count_status=count_status,records=records,opportunity_events=events,feature_file=path,feature_format='actual capped raw CSR',transitions=session.transitions,initial_cameras=session.initial_cameras,learned_contents_unchanged=True,wall_seconds=time.monotonic()-began)
     if model.exists():result.update(model_kind=readout.schema,model_file=str(model),base_weights_sha256=base.sha(directory/'proposal.npy'))
+    if structured:
+        from pong_continuous_visual import save_scenes
+        scene_path=f'native_candidate/features/train_{index:02d}-continuous.npz';save_scenes(directory/scene_path,continuous_scenes);result.update(structured_feature_file=scene_path,structured_feature_schema='canonical legal normalized_position/observed_velocity/observed/velocity_known-v1')
     if velocity.exists():result.update(transport_kind='visual-transport-v1:observed-four-point-LS-velocity',transport_fingerprint=base.sha(velocity),default_transport_episode_reuse_valid=False)
     base.atomic_json(directory/'native_candidate'/'episodes'/f'train_{index:02d}.json',result)
     if report['complete']:assert count_status['valid_terminal_counts'],(seed,count_status,annotation,report)

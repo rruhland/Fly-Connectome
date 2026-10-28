@@ -22,6 +22,8 @@ def certify_episode(receipt, features, source_weights, candidate_weights, *,
         return dict(certified=False, reason=reason, checked_rows=checked,
                     first_disagreement=index, executed_transition_cameras=0,
                     executed_initial_cameras=0)
+    if any(getattr(p,'requires_structured',False) for p in (candidate_readout,source_readout)):
+        return reject('structured_visual_policy_requires_exact_structured_trajectory')
     if not source_fingerprint or source_fingerprint != candidate_fingerprint:
         return reject('engine_or_runtime_context_changed')
     if receipt.get('transport_kind','visual-transport-v1')!='visual-transport-v1':

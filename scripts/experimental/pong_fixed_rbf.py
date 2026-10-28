@@ -45,6 +45,9 @@ class FrozenRBFReadout:
 
 def load_readout(path):
     with np.load(path,allow_pickle=False) as f:
+        if 'kind' in f and str(f['kind'])=='fixed-continuous-entity-pair-rff-v1':
+            from pong_continuous_visual import from_archive
+            return from_archive(f)
         if 'kind' in f and str(f['kind'])=='fixed-centered-tensorsketch2-v1':
             from pong_fixed_pairwise import FixedPairwise,FrozenPairwiseReadout
             return FrozenPairwiseReadout(f['base'],FixedPairwise(f['hashes'],f['signs'],f['scale'],f['mean'],f['rms']),f['residual'])
@@ -63,4 +66,6 @@ class FreshRBFEvaluator(FreshPongEvaluator):
         original=super().learned_hash()
         return original if not hasattr(self,'rbf_readout') else fingerprint((original,self.rbf_readout.frozen_parameters()))
 
-    def _choose_policy(self):return self.rbf_readout.choose(*policy_features(self.latest_encoded,self.scaler))
+    def _choose_policy(self):
+        if hasattr(self.rbf_readout,'choose_encoded'):return self.rbf_readout.choose_encoded(self.latest_encoded,self.scaler)
+        return self.rbf_readout.choose(*policy_features(self.latest_encoded,self.scaler))

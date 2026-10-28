@@ -43,6 +43,8 @@ def run(directory,baseline,candidate,absolute_deadline=None,other_baselines=None
     model_hash=lambda head:base.sha(directory/head/('rbf-model.npz' if (directory/head/'rbf-model.npz').exists() else 'proposal.npy'))
     if (directory/'candidate/rbf-model.npz').exists():
         for n in ('pong_fixed_rbf.py','pong_fixed_pairwise.py'):files[n]=base.sha(Path(__file__).with_name(n))
+        from pong_fixed_rbf import load_readout
+        if hasattr(load_readout(directory/'candidate/rbf-model.npz'),'continuous'):files['pong_continuous_visual.py']=base.sha(Path(__file__).with_name('pong_continuous_visual.py'))
     base_hashes={head:base.sha(directory/head/'proposal.npy') for head in sources}
     manifest=dict(source=base.source_signature(),files=files,baseline_root=str(baseline),candidate_root=str(candidate),other_baselines={h:str(p) for h,p in sources.items() if h not in ('carry','candidate')},heads={head:model_hash(head) for head in sources},base_weights_sha256=base_hashes,settings='native20s/.65opponent/K1/fullgame/unchangedlegalcamera',seeds=seeds,work_seconds=300,no_fitting=True,no_retries=True)
     base.atomic_json(directory/'manifest.json',manifest);began=time.monotonic();deadline=min(began+300,absolute_deadline) if absolute_deadline is not None else began+300;base.atomic_json(directory/'work-clock.json',dict(started_wall_ns=time.time_ns(),started_monotonic=began,deadline_monotonic=deadline));results={head:{} for head in sources}
