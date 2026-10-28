@@ -729,3 +729,40 @@ retention, not another regularization search on this exact sparse sample.
 Independent next-direction research continues while the approved continuous
 pilot runs. Detailed spec, source hashes, sampling receipts, fit summary and
 native screen8 receipts are in the artifact root.
+
+## 2026-10-28: continuous visual residual — weak mixed transfer
+
+Approved anonymous entity/pair256fixed-feature residual, frozen40069base/map,
+new output weights only. Source5626846/df65c94 plus prefix-count repairf5abc5d.
+Artifact `pong-rally-continuous-actor-20261028-r1`. Original600s clock retained;
+bookkeeping assertion during calibration recovered8saved prefixes/2048cameras
+without replay. Repair time consumed training budget.14updates completed with
+26,219training cameras; partial15th batch cost1260more and was not applied.
+New features effective centered rank6.85, ~86.6microseconds/feature evaluation.
+Parent audit replayed2039firstbatch rows with exactQ/probability/eligibility/credit.
+
+Final76126332 (baseW unchanged): TRAIN32 total63→64,first24→22,second16same,
+later39/59→42/59. Mixed screen triggered explicit parent review, not a silentgate
+change. Parent authorized frozenendpoint fresh32pairs within SAMEoriginal600s.
+Fresh:78→81total,30→28first,18→20second,48/72→53/76later.12games gainedreturns,
+9lost. Mean pairedreturnΔ .09375, bootstrap95%[-.625,.78125]; laterfractionΔ
++.03070, bootstrap95%[-.10183,.17802]. Small sample and clear opening tradeoff:
+NOT reliable learned improvement, no baseline promotion. Preserve as secondary
+research candidate; keep40069. No actor/feature/temperature sweep follows.
+
+Calibration+training+screen43,720cameras/100initials; fresh35,099/64initials;
+combined78,819transition cameras/164initials. Fresh64games completed103.647s.
+Exact final original-clock elapsed and final audit are recorded in artifact summary.
+
+## 2026-10-28: deliberate action coverage before another value learner
+
+Parent challenged the independent tree proposal for deferring the already-known
+coverage problem. Authorized existing-policy epsilon.2 acquisition first, without
+new controller architecture or fitting: frozen40069,32uniformTRAINstarts balanced
+16/phase, primitive actions,625camera cap per start,120s total/20k ceiling.
+`pong-value-collection-20261028-r1` completed39.099s with11,871transitions+
+32initials and49actual hits.23natural ends;9quota-limited traces explicitly partial.
+Every actual successor observation saved (N+1 raw CSR), exact action probabilities,
+rewards, elapsed ticks and terminal flags. No model/vision/map changes, no promotion.
+This improves immediate action coverage, not proof that long corrective sequences
+or conditional coverage are solved. Tree proposal remains user-review-only.

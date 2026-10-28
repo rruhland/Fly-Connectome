@@ -174,3 +174,28 @@ budget. The only material pre-approval amendment was the normalization floor
 above; feature construction and test remain unimplemented. This proposal is ready
 for the user to approve or decline. Approval applies to this one bounded pilot,
 not an open-ended representation, frequency or learner sweep.
+
+## Execution amendment: bookkeeping recovery and mixed screen
+
+The original600s clock started22:43:04UTC. Calibration's prefix-hit assertion
+incorrectly compared unfinished-episode hits against a completed-rally summary.
+All8allocations/2048transitions were saved and recovered without any replay;
+source hashes before/after the engineering repair are recorded separately.
+The original300s training cutoff was retained, so14updates completed and one
+partial batch was paid but not applied. This is not24completed updates.
+Parent independently replayed2039first-batch structured rows: exact deployedQ,
+probabilities, eligibility and reward credit, zero new cameras.
+
+At341.30s, frozen76126332 screen32 was mixed: total63→64, first24→22,
+second16unchanged, later39/59→42/59. Parent explicitly amended the strict
+first-retention gate to test this SAME endpoint on the already declared32fresh
+pairs within the ORIGINAL600s deadline. No refit, checkpoint selection, new map,
+temperature change or clock reset. Preserve the first-return regression; a fresh
+comparison is evidence gathering, not automatic promotion.
+
+Final paired fresh32: total78→81,first30→28,second18→20,later48/72→53/76.
+Mean return difference .09375/game with95%paired bootstrap[-.625,.78125].
+Weak mixed transfer, not established reliable learning. Preserve76126332 as a
+secondary research candidate, keep40069baseline. Full run538.05s withinoriginal
+600s,78,819transition cameras+164initials. All35,099fresh rows replayed exactly,
+originalW/R/map unchanged, all work accounted. No further actor sweep authorized.

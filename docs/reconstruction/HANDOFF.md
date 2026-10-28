@@ -39,25 +39,33 @@ Screen128287→237returns,first106→91,second67→61,later181/262→146/222.
 Both64strata lost25returns; rejectdc33740, keep40069. No fresh63089; no process
 active. AllchecksPASS, no unknownwork. Actorfamily stopped aspredeclared.
 
-User approved the continuous visual residual pilot; implementation a8e1806 +
-c858d15 reviewed and launched in worker checkout. Artifact root:
-`/workspace/m1b-experiments/pong-rally-continuous-actor-20261028-r1`.
-One600s total clock, <=300s training, <=48k training cameras, <=2048 calibration,
-32TRAIN screen then conditional32 paired fresh. Original40069 stays frozen.
-No automatic promotion. The user explicitly requests distinct parallel hypotheses,
-outside evidence, and advancing/combining promising methods instead of exhausting
-feature/actor variants.
+Continuous residual pilot completed with a weak mixed signal, NOT a reliable
+learner.14completed updates; calibration recovery kept the original clock and
+reused all2048saved observations without replay. TRAIN32 total63→64,first24→22,
+later39/59→42/59. Parent approved SAME frozenendpoint on32predeclared freshpairs
+within original600s: total78→81,first30→28,second18→20,later48/72→53/76.
+Paired mean-return difference .09375,95%bootstrap[-.625,.78125]. Preserve76126332
+as a secondary research candidate, keep40069baseline; no automatic promotion.
+Artifacts `pong-rally-continuous-actor-20261028-r1`; source5626846/df65c94/f5abc5d.
+Parent firstbatchaudit2039rows exact Q/probability/eligibility/credit,0cameras.
 
 Fresh Sol6.1XHigh `/root/fresh_learning_directions` independently researched
-value learning, learned dynamics/planning, and temporal predictive hierarchies:
-[research note](../plans/2026-10-28-independent-learning-directions.md).
-It is running one120s zero-native LSPI feasibility calculation using saved TRAIN
-successes AND failures. This maps to existing W/R runtime; no new architecture.
-Spec bf5e8a1aa837a29cb4b67e6c1096f09e9970e3aab96a1717c8c02fb55acac227.
-Artifact root `pong-value-feasibility-20261028-r1`. Native launch requires parent
-review; sparse alternative-action coverage is the main concern. New tree,
-planning, or temporal controller architectures still require user review.
-Goal remains unmet. Do not resume actor/temperature/rank/guard sweeps.
+value learning, learned dynamics/planning, and temporal predictive hierarchies.
+LSPI existing-runtime test completed4.613s then failed actual8games23→2returns.
+Reject7195fd; no sweep. Artifact `pong-value-feasibility-20261028-r1`.
+Root authorized new existing-policy epsilon.2 acquisition to address action
+coverage BEFORE another valuelearner:32fixedTRAINstarts,16/phase,<=20kcameras,
+120s ceiling; completed39.099s/11871cameras+32initials,49hits,23natural ends
+and9quota partials. Complete N+1observations/rewards/timings, no model changes. Artifact
+`pong-value-collection-20261028-r1`, spec
+127f1c6c24fa5278938f5fe8b51d6eadbe8bf00ee4a9b1471987279b17e27c4b.
+
+Next major proposal: [fixed-partition value learning](../plans/2026-10-28-fixed-partition-value-review.md).
+Not approved/implemented. User explicitly wants distinct parallel hypotheses,
+outside evidence, and advancing/combining promising methods instead of exhausting
+feature/actor variants. Tree controller needs user review; ordinary acquisition
+and research remain authorized. No backprop, privileged inputs or expertlabels.
+Goal remains unmet. Bridge belongs another thread.
 
 
 ## Current provisional model and actual evidence
