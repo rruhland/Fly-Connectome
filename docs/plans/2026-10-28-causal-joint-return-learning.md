@@ -72,3 +72,43 @@ https://is.mpg.de/ei/publications/peters_picml_2007 . Its use of reward-informed
 regression motivates separating rewarding behavior from mandatory trajectory
 copying. Its operational-space setting does not establish effectiveness for this
 discrete Pong policy; no algorithm or performance claim is imported.
+
+
+## Fixed acquisition selection and interpretation
+
+Before intervention outcomes, select two starts per phase, prioritizing a shared
+action divergence after an earned hit, then recorded donor advantage, shorter
+roll-in and seed. Left:3238414060 (transition147, one prior hit,3→5 in saved
+policies),1482281654 (transition27, no prior hit,2→6). Right:3016544790
+(transition138, one prior hit,2→5),1601498681 (transition323, two prior hits,4→5).
+The old full-memory conflict on3016544790 is rechecked against the new first-only
+contract; it is not assumed to apply forever.
+
+A successful burst establishes a useful joint pattern, not the individual causal
+value of each action or inferiority of an unqueried third action. The fit requests
+selected successful burst actions as greedy behavior to integrate. Actual deployed
+rollouts determine whether that request improves the policy. One exact null replay
+checks baseline/context/RNG equivalence before accepting intervention evidence.
+
+The104 five-hit check is a practical safeguard, not a user-specified invariant.
+If it conflicts with a materially improved representative screen, retain results
+for parent review rather than silently discard a potentially useful policy.
+
+
+Implementation needed a separately authorized four-minute completion extension
+for the compact runner and tests after the initial ten-minute allocation. Actual
+time must be reported; the execution clock has not started. Parent reviewed the
+core solver change, intervention/replay module and runner before tests. No metric
+copy, new cache framework, or architecture change was added.
+
+
+## Launched
+
+Agentc9295e1 integrated as main789648b. Thirty-five focused tests, compilation and
+diff checks passed. Parent reviewed all four changed files and concrete manifest
+before launch. Root `pong-rally-causal-burst-20261028-r1`, sibling manifest SHA
+`c01b37f2d52457abc1ae33429ff341069bdd090f672d1842f351aecb00e62280`.
+Execution gets one900s clock; implementation840s estimated separately. Existing
+kappa0.03785729178850489 is fixed for requested burst differences; ordinary guards
+use kappa×1e−4 capped by half source gap. FreshTAG63057 reserved before acquisition.
+No active-code changes during execution.
