@@ -1,4 +1,5 @@
-import time,unittest
+import time,unittest,tempfile,json
+from pathlib import Path
 import numpy as np
 import scipy.sparse as sp
 from pong_raw_guarded_repair import fit
@@ -35,5 +36,24 @@ class GuardedRepairTest(unittest.TestCase):
         same=[dict(X=sp.csr_matrix([[1.,0.]]),actions=np.array([1]))]
         nearby=[dict(X=sp.csr_matrix([[1.+1e-12,0.]]),actions=np.array([1]))]
         self.assertFalse(conflicts(p,same)['compatible']);self.assertTrue(conflicts(p,nearby)['compatible'])
+
+    def test_target_guard_stops_at_last_actual_return(self):
+        from run_rally_guarded_curriculum import earned_target_witness
+        with tempfile.TemporaryDirectory() as path:
+            folder=Path(path);sp.save_npz(folder/'raw.npz',sp.eye(7,format='csr'))
+            receipt=dict(seed=42,feature_file='raw.npz',report=dict(hits=2),records=[dict(action=i%3,hits=int(i in (1,4))) for i in range(7)])
+            self.assertIsNone(earned_target_witness(folder,receipt,2,'later','right'))
+            witness=earned_target_witness(folder,receipt,1,'later','right')
+            self.assertEqual(witness['hit_indices'],[1,4]);self.assertEqual(witness['target_hits'],2)
+            self.assertEqual(sp.load_npz(folder/witness['path']).shape[0],5)
+            np.testing.assert_array_equal(np.load(folder/witness['actions_path']),[0,1,2,0,1])
+
+    def test_saved_witness_skips_already_earned_count(self):
+        from rally_witness_replay import select_saved
+        with tempfile.TemporaryDirectory() as path:
+            folder=Path(path);(folder/'manifest.json').write_text(json.dumps(dict(source={})))
+            (folder/'summary.json').write_text(json.dumps(dict(source_frozen=True,witnesses=[dict(seed=42,path='unused',target_hits=2)])))
+            chosen,screen=select_saved([folder],np.zeros((3,2)),[],[],set(),{},known_hits={42:2})
+            self.assertIsNone(chosen);self.assertIn('already earned',screen[0]['reason'])
 
 if __name__=='__main__':unittest.main()

@@ -38,6 +38,30 @@ def exact_actions(W,X,actions):
     return changed
 
 
+def earned_target_witness(directory,receipt,known_hits,role,phase):
+    """Keep the ACTUAL learned successful prefix; never its failed suffix."""
+    if receipt['report']['hits']<=known_hits:return None
+    ends=[i for i,r in enumerate(receipt['records']) if r['hits']];assert len(ends)==receipt['report']['hits']
+    end=ends[-1]+1;X=sp.load_npz(Path(directory)/receipt['feature_file']);assert X.shape[0]==len(receipt['records'])
+    (Path(directory)/'witnesses').mkdir();sp.save_npz(Path(directory)/'witnesses/actual.npz',X[:end]);np.save(Path(directory)/'witnesses/actions.npy',np.array([r['action'] for r in receipt['records'][:end]],dtype=np.int64))
+    return dict(seed=receipt['seed'],role=role,phase=phase,path='witnesses/actual.npz',actions_path='witnesses/actions.npy',hit_indices=ends,target_hits=receipt['report']['hits'],source='actual native learned-policy return, no forced actions',native_receipt=str(Path(directory)/'native_candidate/episodes/train_00.json'))
+
+
+def check_target(step,seed,known_hits,role,phase,bank,entry,baseline):
+    directory=step/'target-native';directory.mkdir();(directory/'proposal.npy').write_bytes((step/'proposal.npy').read_bytes());(directory/'radial-cap.json').write_bytes(Path(bank['radial_cap']).read_bytes())
+    sourceX=sp.load_npz(entry['raw_feature']);certificate=certify_episode(baseline,sourceX,np.load(bank['current_head']),np.load(directory/'proposal.npy'),source_weights_sha256=bank['current_head_sha256'],source_fingerprint=bank['source'],candidate_fingerprint=base.source_signature(),candidate_config=baseline['config'])
+    base.atomic_json(directory/'source-episode-certificate.json',{k:v for k,v in certificate.items() if k!='records'})
+    if certificate['certified'] and baseline['report']['hits']<=known_hits:
+        result=dict(accepted=False,reason='exact completed episode proves no additional known return',transition_cameras=0,initial_cameras=0,wall_seconds=0.,known_current_hits=known_hits);base.atomic_json(directory/'summary.json',result);return result,None
+    for name in ('episodes','features'):(directory/'native_candidate'/name).mkdir(parents=True)
+    began=time.monotonic();base.atomic_json(directory/'work-clock.json',dict(started_wall_ns=time.time_ns(),started_monotonic=began,deadline_monotonic=began+30,seconds=30));base.initialize();receipt=native_task(str(directory),seed,0,began+30)
+    witness=earned_target_witness(directory,receipt,known_hits,role,phase)
+    if witness is not None:
+        assert not exact_actions(np.load(directory/'proposal.npy'),sp.load_npz(directory/witness['path']),np.load(directory/witness['actions_path']))
+    result=dict(accepted=witness is not None,reason='actual additional native own return' if witness else 'no additional native own return',known_current_hits=known_hits,actual_hits=receipt['report']['hits'],native_episode_complete=receipt['complete'],transition_cameras=receipt['transitions'],initial_cameras=receipt['initial_cameras'],wall_seconds=time.monotonic()-began,witness=witness,new_guard_excludes_failed_suffix=True)
+    base.atomic_json(directory/'summary.json',result);return result,witness
+
+
 def evaluate(directory,bank,entries,baseline,head):
     directory=Path(directory);candidate=np.load(head);sourceW=np.load(bank['current_head']);candidate_hash=base.sha(head);outcomes=[];jobs=[];certificates=[]
     for name in ('episodes','features'):(directory/'native_candidate'/name).mkdir(parents=True)
@@ -64,7 +88,7 @@ def evaluate(directory,bank,entries,baseline,head):
     return outcomes,dict(newly_executed_games=len(new),new_transition_cameras=sum(r['transitions'] for r in new),new_initials=sum(r['initial_cameras'] for r in new),reused_games=len(outcomes)-len(new),reused_logical_cameras=sum(r['transitions'] for r in outcomes if r.get('execution')=='reused_by_exact_action_certificate'),wall_seconds=time.monotonic()-began)
 
 
-def run(directory,bank_path,attempts=3,target_accepted=3,slot_cycle=None,skip_seeds=(),early_stop=False,resume=False,guard_margin_scale=1.,saved_acquisitions=(),cross_witness_warm=False):
+def run(directory,bank_path,attempts=3,target_accepted=3,slot_cycle=None,skip_seeds=(),early_stop=False,resume=False,guard_margin_scale=1.,saved_acquisitions=(),cross_witness_warm=False,native_target_fallback=False):
     directory=Path(directory);bank_path=Path(bank_path);bank=base.read(bank_path);entries=bank['bank'];assert entries and len({e['seed'] for e in entries})==len(entries)
     assert bank['source']==base.source_signature() and base.sha(Path(bank['current_head']))==bank['current_head_sha256']
     baseline=[base.read(Path(e['receipt'])) for e in entries];byseed={r['seed']:r for r in baseline};assert all(r['complete'] and r['weights_sha256']==bank['current_head_sha256'] for r in baseline)
@@ -77,6 +101,10 @@ def run(directory,bank_path,attempts=3,target_accepted=3,slot_cycle=None,skip_se
     assert len(guards)==sum(r['report']['hits'] for r in baseline);files={n:base.sha(Path(__file__).with_name(n)) for n in ('run_rally_guarded_curriculum.py','rally_curriculum_acquire.py','pong_raw_guarded_repair.py','run_rally_raw_optimizer.py','rally_action_equivalence.py')}
     manifest=dict(source=base.source_signature(),files=files,bank_path=str(bank_path),bank_sha256=base.sha(bank_path),carry_sha256=base.sha(current_path),slots=slot_cycle or SLOTS,maximum_attempts=attempts,target_accepted=target_accepted,skipped_seeds=list(skip_seeds),early_feasible_stop=early_stop,acquisition_seconds_per_slot=40,solver_seconds_per_slot=90,final_native_seconds=500,planned_phase_seconds_upper=attempts*130+500,no_holdout_fitted=True,no_backprop=True,acceptance='exact all old guard choices and entire native-reward witness action sequence; no intermediate full-bank result assumed')
     manifest['cross_witness_warm_start']=cross_witness_warm
+    if native_target_fallback:
+        manifest['native_target_fallback']=dict(seconds=30,acceptance='all current earned choices retained plus actual additional own return; guard the actual successful prefix only')
+        manifest['acceptance']='exact all old earned choices AND either full rewarded-witness action certificate OR additional native target return'
+        manifest['planned_phase_seconds_upper']=attempts*160+500
     if saved_acquisitions or guard_margin_scale!=1.:
         files['rally_witness_replay.py']=base.sha(Path(__file__).with_name('rally_witness_replay.py'))
         manifest.update(guard_margin_scale=guard_margin_scale,saved_acquisitions=list(map(str,saved_acquisitions)),exact_conflict_screen=True,cached_witnesses_prioritized_by='fewest current-contrasting actions, remaining forced commands, seed; actual whole trajectory certificate required')
@@ -91,7 +119,7 @@ def run(directory,bank_path,attempts=3,target_accepted=3,slot_cycle=None,skip_se
     if not resume:base.atomic_json(directory/'curriculum-clock.json',dict(started_wall_ns=time.time_ns(),started_monotonic=time.monotonic()))
     original_clock=base.read(directory/'curriculum-clock.json');began=time.monotonic()-(time.time_ns()-original_clock['started_wall_ns'])/1e9
     steps=[];accepted=[];excluded=list(skip_seeds);warm_rows=[];warm_duals={};normal0=base.read(base.EXPERIMENTS/'pong-action-credit-soft-preserve-20261025-r1/fit-report.json');normal={k:normal0[k] for k in ('input_rms','kappa')}
-    plan=slot_cycle or SLOTS;used_saved=set()
+    plan=slot_cycle or SLOTS;used_saved=set();known_hits={seed:r['report']['hits'] for seed,r in byseed.items()};entry_byseed={e['seed']:e for e in entries}
     for number in range(1,attempts+1):
         if len(accepted)>=target_accepted:break
         role,phase=plan[(number-1)%len(plan)]
@@ -101,7 +129,7 @@ def run(directory,bank_path,attempts=3,target_accepted=3,slot_cycle=None,skip_se
         if (acqdir/'summary.json').exists():
             am=base.read(acqdir/'manifest.json');assert am['current_head_sha256']==base.sha(current_path) and am['bank_sha256']==base.sha(bank_path);acquisition=base.read(acqdir/'summary.json')
         else:
-            saved,screen=select_saved(saved_acquisitions,W,guards,excluded,used_saved,base.source_signature()) if saved_acquisitions else (None,[])
+            saved,screen=select_saved(saved_acquisitions,W,guards,excluded,used_saved,base.source_signature(),known_hits) if saved_acquisitions else (None,[])
             base.atomic_json(step/'cached-witness-screen.json',dict(screen=screen,new_observations=0))
             if saved is not None:acquisition=save_replay(acqdir,*saved,current_path,bank_path)
             else:acquisition=acquire(acqdir,bank_path,current_path,role,phase,40,excluded)
@@ -112,9 +140,9 @@ def run(directory,bank_path,attempts=3,target_accepted=3,slot_cycle=None,skip_se
         # head. Preserve those actual extra earned segments, even if no fit follows.
         for r in acquisition['results']:
             if r['rollin_origin']=='new current-head native roll-in':
-                receipt=base.read(Path(r['rollin_receipt']));guards+=earned_cases(receipt,r['rollin_raw_feature'],minimum_hits=byseed[r['seed']]['report']['hits'])
+                receipt=base.read(Path(r['rollin_receipt']));guards+=earned_cases(receipt,r['rollin_raw_feature'],minimum_hits=byseed[r['seed']]['report']['hits']);known_hits[r['seed']]=max(known_hits[r['seed']],receipt['report']['hits'])
         if saved_acquisitions and not acquisition.get('off_policy_own_reward_replay'):
-            chosen,screen=select_saved([acqdir],W,guards,excluded,used_saved,base.source_signature());base.atomic_json(step/'new-witness-screen.json',dict(screen=screen,new_observations=0));acquisition=dict(acquisition,selected_witness=chosen[1] if chosen else None)
+            chosen,screen=select_saved([acqdir],W,guards,excluded,used_saved,base.source_signature(),known_hits);base.atomic_json(step/'new-witness-screen.json',dict(screen=screen,new_observations=0));acquisition=dict(acquisition,selected_witness=chosen[1] if chosen else None)
         witness=acquisition['selected_witness']
         if witness is not None:role,phase=witness['role'],witness['phase']
         record=dict(step=number,role=role,phase=phase,acquisition_cameras=acquisition['transition_cameras'],acquisition_initials=acquisition['initial_cameras'],acquisition_seconds=acquisition['wall_seconds'],accepted=False,reward_witness_reused=acquisition.get('off_policy_own_reward_replay',False))
@@ -126,9 +154,10 @@ def run(directory,bank_path,attempts=3,target_accepted=3,slot_cycle=None,skip_se
                     use=state['working_rows']<2*stable_rows;warm_rows=state['working_rows'][use].astype(int).tolist();warm_duals={int(i):float(y) for i,y in zip(state['working_rows'][use],state['guard_duals'][use])}
                 excluded.append(witness['seed'])
                 if record['accepted']:
-                    X=sp.load_npz(acqdir/witness['path']);actions=np.load(acqdir/witness['actions_path']);current_path=step/'proposal.npy';W=np.load(current_path)
+                    actual=record.get('target_native',{}).get('witness');accepted_root=step/'target-native' if actual else acqdir;accepted_witness=actual or witness
+                    X=sp.load_npz(accepted_root/accepted_witness['path']);actions=np.load(accepted_root/accepted_witness['actions_path']);current_path=step/'proposal.npy';W=np.load(current_path)
                     assert not exact_actions(W,X,actions)
-                    guards.append(dict(seed=witness['seed'],group=role+'_'+phase,X=X,actions=actions));accepted.append(dict(step=number,seed=witness['seed'],target_hits=witness['target_hits'],witness_root=str(acqdir),witness=witness,head=str(current_path)))
+                    guards.append(dict(seed=witness['seed'],group=role+'_'+phase,X=X,actions=actions));accepted.append(dict(step=number,seed=witness['seed'],target_hits=accepted_witness['target_hits'],witness_root=str(accepted_root),witness=accepted_witness,head=str(current_path)));known_hits[witness['seed']]=max(known_hits[witness['seed']],accepted_witness['target_hits'])
             print(json.dumps(dict(reused_completed_step=number,accepted=record['accepted'])),flush=True);continue
         if witness is None:record['reason']='no rewarded current-head recovery within acquisition budget';steps.append(record);base.atomic_json(step/'summary.json',record);continue
         positive,unused,matching=dataset(acqdir,W,[],[witness]);assert sum(c['X'].shape[0] for c in positive)>0
@@ -143,21 +172,27 @@ def run(directory,bank_path,attempts=3,target_accepted=3,slot_cycle=None,skip_se
         with np.load(step/'solver-state.npz') as state:
             use=state['working_rows']<2*stable_rows;warm_rows=state['working_rows'][use].astype(int).tolist();warm_duals={int(i):float(y) for i,y in zip(state['working_rows'][use],state['guard_duals'][use])}
         record.update(witness_seed=witness['seed'],positive_rows=report['positive_rows'],fit_seconds=report['wall_seconds'],fit_status=report['status'],requested_actions_fraction=report['positive']['requested_action_fraction'],full_witness_certified=certificate['certified'])
-        if certificate['certified']:
-            record['accepted']=True;current_path=step/'proposal.npy';W=np.load(current_path);guards.append(dict(seed=witness['seed'],group=role+'_'+phase,X=X,actions=actions));accepted.append(dict(step=number,seed=witness['seed'],target_hits=witness['target_hits'],witness_root=str(acqdir),witness=witness,head=str(current_path)));excluded.append(witness['seed'])
+        accepted_witness=witness;accepted_root=acqdir;accepted_by='whole rewarded witness action certificate' if certificate['certified'] else None
+        if not certificate['certified'] and native_target_fallback:
+            assert report['guard_action_changes']==0
+            target,actual_witness=check_target(step,witness['seed'],known_hits[witness['seed']],role,phase,bank,entry_byseed[witness['seed']],byseed[witness['seed']]);record.update(target_native=target)
+            if actual_witness is not None:
+                accepted_witness=actual_witness;accepted_root=step/'target-native';X=sp.load_npz(accepted_root/actual_witness['path']);actions=np.load(accepted_root/actual_witness['actions_path']);accepted_by='actual additional native return with exact old earned choices'
+        if accepted_by is not None:
+            record['accepted']=True;record['accepted_by']=accepted_by;current_path=step/'proposal.npy';W=np.load(current_path);guards.append(dict(seed=accepted_witness['seed'],group=role+'_'+phase,X=X,actions=actions));accepted.append(dict(step=number,seed=accepted_witness['seed'],target_hits=accepted_witness['target_hits'],witness_root=str(accepted_root),witness=accepted_witness,head=str(current_path)));known_hits[witness['seed']]=max(known_hits[witness['seed']],accepted_witness['target_hits']);excluded.append(witness['seed'])
         else:
             record['reason']='bounded QP did not reproduce whole recovery; carried head unchanged'
             excluded.append(witness['seed'])
         steps.append(record);base.atomic_json(step/'summary.json',record);base.atomic_json(directory/'learning-steps.json',dict(steps=steps,accepted=accepted,current_head=str(current_path),whole_bank_not_yet_evaluated=True));print(json.dumps(dict(step_result=record)),flush=True)
     if not accepted:
-        base.atomic_json(directory/'summary.json',dict(status='no_accepted_updates',steps=steps,carry_unchanged=True,accepted_steps=0,whole_bank_skipped=True,wall_seconds=time.monotonic()-began));return
+        base.atomic_json(directory/'summary.json',dict(status='no_accepted_updates',steps=steps,carry_unchanged=True,accepted_steps=0,whole_bank_skipped=True,wall_seconds=time.monotonic()-began,acquisition_transition_cameras=sum(s['acquisition_cameras'] for s in steps),acquisition_initials=sum(s['acquisition_initials'] for s in steps),target_transition_cameras=sum(s.get('target_native',{}).get('transition_cameras',0) for s in steps),target_initials=sum(s.get('target_native',{}).get('initial_cameras',0) for s in steps)));return
     (directory/'proposal.npy').write_bytes(current_path.read_bytes());outcomes,native=evaluate(directory,bank,entries,baseline,directory/'proposal.npy');result_byseed={r['seed']:r for r in outcomes};violations=[r['seed'] for r in outcomes if r['complete'] and r['report']['hits']<byseed[r['seed']]['report']['hits']]
     first_acq=base.read(directory/'step_1/acquisition/work-clock.json')['started_monotonic']
     summary=dict(status='complete' if len(outcomes)==len(entries) and all(r['complete'] for r in outcomes) else 'bounded_partial',steps=steps,accepted_steps=len(accepted),baseline=aggregate([r['annotation'] for r in baseline]),candidate=aggregate([r['annotation'] for r in outcomes]),baseline_more=more(baseline),candidate_more=more(outcomes),guarded_native_return_violations=violations,restart_record=str(directory/'restart-record.json') if resume else None,
         targeted_native_outcomes=[dict(seed=w['seed'],at_least_earned_hits=w['target_hits'],baseline_hits=byseed[w['seed']]['report']['hits'],candidate_hits=result_byseed[w['seed']]['report']['hits'] if w['seed'] in result_byseed else None) for w in accepted],
-        acquisition_transition_cameras=sum(s['acquisition_cameras'] for s in steps),acquisition_initials=sum(s['acquisition_initials'] for s in steps),native=native,wall_seconds_since_curriculum_start=time.monotonic()-began,wall_seconds_since_first_acquisition=time.monotonic()-first_acq,
-        timed_phase_seconds=sum(s['acquisition_seconds']+s.get('fit_seconds',0) for s in steps)+native['wall_seconds'],carry_immutable=base.sha(directory/'carry.npy')==manifest['carry_sha256'],source_frozen=manifest['source']==base.source_signature() and files=={n:base.sha(Path(__file__).with_name(n)) for n in files},proposal_sha256=base.sha(directory/'proposal.npy'),historical_evaluation_now_training=True,no_fresh_evaluation=True,no_automatic_promotion=True)
+        acquisition_transition_cameras=sum(s['acquisition_cameras'] for s in steps),acquisition_initials=sum(s['acquisition_initials'] for s in steps),target_transition_cameras=sum(s.get('target_native',{}).get('transition_cameras',0) for s in steps),target_initials=sum(s.get('target_native',{}).get('initial_cameras',0) for s in steps),native=native,wall_seconds_since_curriculum_start=time.monotonic()-began,wall_seconds_since_first_acquisition=time.monotonic()-first_acq,
+        timed_phase_seconds=sum(s['acquisition_seconds']+s.get('fit_seconds',0)+s.get('target_native',{}).get('wall_seconds',0) for s in steps)+native['wall_seconds'],carry_immutable=base.sha(directory/'carry.npy')==manifest['carry_sha256'],source_frozen=manifest['source']==base.source_signature() and files=={n:base.sha(Path(__file__).with_name(n)) for n in files},proposal_sha256=base.sha(directory/'proposal.npy'),historical_evaluation_now_training=True,no_fresh_evaluation=True,no_automatic_promotion=True)
     base.atomic_json(directory/'summary.json',summary);print(json.dumps(summary),flush=True)
 
 if __name__=='__main__':
-    p=argparse.ArgumentParser();p.add_argument('directory');p.add_argument('--bank',required=True);p.add_argument('--attempts',type=int,default=3);p.add_argument('--target-accepted',type=int,default=3);p.add_argument('--larger-rotation',action='store_true');p.add_argument('--skip-seed',type=int,action='append',default=[]);p.add_argument('--early-stop',action='store_true');p.add_argument('--resume',action='store_true');p.add_argument('--guard-margin-scale',type=float,default=1.);p.add_argument('--saved-acquisition',action='append',default=[]);p.add_argument('--cross-witness-warm',action='store_true',help='legacy opt-in; default starts each new witness with an empty constraint set and zero duals');a=p.parse_args();assert 1<=a.target_accepted<=a.attempts<=8;run(a.directory,a.bank,a.attempts,a.target_accepted,[('opening','left'),('later','right'),('opening','right'),('later','left')] if a.larger_rotation else None,a.skip_seed,a.early_stop,a.resume,a.guard_margin_scale,a.saved_acquisition,a.cross_witness_warm)
+    p=argparse.ArgumentParser();p.add_argument('directory');p.add_argument('--bank',required=True);p.add_argument('--attempts',type=int,default=3);p.add_argument('--target-accepted',type=int,default=3);p.add_argument('--larger-rotation',action='store_true');p.add_argument('--skip-seed',type=int,action='append',default=[]);p.add_argument('--early-stop',action='store_true');p.add_argument('--resume',action='store_true');p.add_argument('--guard-margin-scale',type=float,default=1.);p.add_argument('--saved-acquisition',action='append',default=[]);p.add_argument('--cross-witness-warm',action='store_true',help='legacy opt-in; default starts each new witness with an empty constraint set and zero duals');p.add_argument('--native-target-fallback',action='store_true');a=p.parse_args();assert 1<=a.target_accepted<=a.attempts<=8;run(a.directory,a.bank,a.attempts,a.target_accepted,[('opening','left'),('later','right'),('opening','right'),('later','left')] if a.larger_rotation else None,a.skip_seed,a.early_stop,a.resume,a.guard_margin_scale,a.saved_acquisition,a.cross_witness_warm,a.native_target_fallback)

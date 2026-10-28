@@ -26,7 +26,7 @@ def conflicts(positive,guards):
     return dict(positive_rows=count,exact_positive_conflict_groups=len(inconsistent),exact_guard_conflict_groups=len(guard_conflicts),compatible=not inconsistent and not guard_conflicts)
 
 
-def select_saved(sources,W,guards,excluded,used,source_signature):
+def select_saved(sources,W,guards,excluded,used,source_signature,known_hits=None):
     choices=[];screen=[]
     for source in map(Path,sources):
         manifest=base.read(source/'manifest.json');assert manifest['source']==source_signature
@@ -34,6 +34,8 @@ def select_saved(sources,W,guards,excluded,used,source_signature):
         for witness in summary['witnesses']:
             key=(str(source),witness['seed'],witness['path'])
             if key in used or witness['seed'] in excluded:continue
+            if witness['target_hits']<=(known_hits or {}).get(witness['seed'],-1):
+                used.add(key);screen.append(dict(source=str(source),seed=witness['seed'],reason='rewarded return count already earned by current carry',target_hits=witness['target_hits'],known_current_hits=known_hits[witness['seed']]));continue
             p,_,m=dataset(source,W,[],[witness]);report=conflicts(p,guards+m);screen.append(dict(source=str(source),seed=witness['seed'],**report))
             if report['compatible'] and report['positive_rows']:
                 choices.append((report['positive_rows'],witness['remaining_forced'],witness['seed'],str(source),witness))
