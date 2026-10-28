@@ -22,15 +22,29 @@ Use `PYTHONPATH=src:scripts/experimental`, one BLAS/OpenMP thread and four nativ
 
 ## Latest active update
 
-Approved tree pilot completed and rejected:23→1returns on8games,19.81s,
-911cameras+8initials.73leaves/32trees too coarse,14root-only; no fallback.
-Source7d982bc;11checks pass. Preserve40069baseline/761secondary.
-`/root/alternative_mechanisms` now implementing bounded localoptionmemory in MAIN,
-newfiles only, parentreview before native. User waived architecture approval;
-DO NOT ask again. See latestledger and local-option-memory-challenger plan.
-Root amendments: canonical6fieldscene, saved16-apart calibration radius,
-baseline requeryeachcamera / learnedhold16, no raw-only runtime reuse.
-`/root/value_execution` idle reusable for independent review.
+Tree failed23→1 (source7d982bc); localoptionmemory acquired2rescues butfailed
+23→19 (1903b20); rewardhistorycontext removedopeningloss butonly23→23
+(59c5423). Keep40069baseline,761secondary, no milestoneclaim. Detailsinledger.
+
+`/root/value_execution` now implements olderpinnedOgmaNeo2 temporalrepresentation
+pluszero-initializedlocalactor correction onfixed40069logitprior. Scratch
+`/workspace/ogmaneo2-feasibility-c5be9`, pinnedc5be9ec41d26aeeb2fc805961140781c851542cf.
+Inspectedlocalencoder/predictor/linearactor paths show nohiddenbackpropagation;
+currentAOgmaNeo successor isNOTsubstitutable. Preserve CC BY-NC-SA4.0 attribution.
+Parent approved fasterextraencoder onexisting7currentvisionplanes, hierarchy,
+90s observationpredictionwarmup thenfreeze representationparameters,300s actual
+onlineactorlearning,remaining qualification within600s total. Fix terminalbootstrap,
+reset runtimehistory eachrally, exactelapseddiscount, zeroTD→zeroactionupdate,
+actualpreviousactions/probability alignedtohistory. Actorpriorbaseq/T withTfixed
+.008161197682294006; evaluatefloat64greedy withliteralbasechooser atzero correction.
+No expertlabels or offpolicy actor warmup. Checkpointsinitial/intermediate/final,
+finalonlyqualification. DedicatedPython/CABI experimental files; parentreview
+before native launch. No native Ogma experiment launched yet.
+
+`/root/alternative_mechanisms` idle/reusable. User has waived further architecture
+approval until milestone complete orstop; DO NOT askagain. Existing constraints
+noBP/privilegedinputs/expertlabels remain. Goal95%first/later onfresh200+later
+opportunities withreplication; notjustselected20srallyscreen. Bridgeelsewhere.
 
 ## Latest result / next action
 
