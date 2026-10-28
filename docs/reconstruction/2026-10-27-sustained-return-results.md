@@ -391,3 +391,30 @@ or a reset of the completed600s test. Same weights/features, no fitting/admissio
 no architecture sweep. Motivation: qualify modest gain before any further training.
 Use the originally planned unconsumed fresh seed schedule and exclude prior/reserved
 streams. Current selected model remains3ac until independent outcomes reviewed.
+
+## Pairwise frozen fresh follow-up — provisional working candidate selected
+
+Separate root `pong-rally-pairwise-frozen-fresh-20261028-r1`, helper `paired32`.
+Actual32paired new games:3ac→pairwise73→81total,27→28first,46/69→53/75later
+(66.67→70.67%). Mean gain+.25returns/game paired95%CI[-.44,.97]; later-rate
++4pp CI[-11.85,+18.75]pp.12games gained/11lost. Two-returngames21→18,
+five-returngames4→8, timeouts4→6. Positive but uncertain; not consistent learning.
+
+123.43s,33,287cameras+64initials. All64complete receipts/33,287saved rows passed
+exact model action/Q audit. Seed exclusions checked against65prior schedules,
+36exclusionfiles, TRAIN160 and reserved FINAL streams. Source/weightsfrozen;
+original556.11s architecture-test summary andr4bank unchanged. No fitting.
+
+Parent selects bundleeb2cbcf1 as the PROVISIONAL working model, preserving3ac/d7
+fallbacks. This is practical advancement on modest TRAIN and independent-game
+gains, not statistical confirmation. Next target is SECOND-return reliability: both
+TRAIN and fresh gained long rallies while fewer games reached two returns.
+
+Parent explicitly authorized admitting ONLY the32candidate fresh receipts after
+the completed evaluation, with new future qualification seeds. Authorization saved
+in the follow-up root as `parent-admission-authorization.json`. Candidate160+32
+receipts imply192TRAINepisodes493returns/174first/319later of455opportunities.
+Fixed feature map/calibration, basehead, vision/scaler remain unchanged. Reused Sol
+is reviewing a same-architecture incremental output-learning pass with own-reward
+second-return exploration and retention of existing first-two-return prefixes.
+No new architecture, refit or native training has yet started for that pass.

@@ -16,46 +16,59 @@ Main checkout `/workspace/Fly-Connectome-m1b`, branch
 `reconstruction/m1b-continuation`; Python `/workspace/Fly-Connectome/.venv/bin/python`.
 Use `PYTHONPATH=src:scripts/experimental`, one BLAS/OpenMP thread and four native workers.
 
-## Current selected model and actual evidence
+## Current provisional model and actual evidence
 
-Retained provisional head:
-`/workspace/m1b-experiments/pong-rally-earned-trace-merge-20261028-r1/proposal.npy`
-SHA256 `3ac7f87fbac23abab14e633b38cfe1e50986a8f03bb38b049bed8f4cc840bd5e`.
-Current bank: `pong-rally-TRAIN-bank-20261028-r4/admission.json` under the same
-experiment root.160existing TRAIN seeds; no recent fresh admission.
+Parent selected the fixed pairwise candidate as PROVISIONAL working lineage:
+`/workspace/m1b-experiments/pong-rally-pairwise-residual-20261028-r1/rbf-model.npz`
+Bundle SHA `eb2cbcf10aaaf88ee5fd0877cbc966b828286e230a0782bd91c4dce9ddce9152`.
+Despite legacy filename, this is centered degree-two TensorSketch512, frozen
+vision/original4389input transport/scaler, frozen3ac basehead, learned3×512outputs.
+No backpropagation, no feature recalibration. Only output weights may learn.
 
-* TRAIN160:409total returns,143first,266/384later (69.27%),26timeouts.
-* Paired new32 vs preserved d7:50→63total,27→27first,23/49→36/61later
-  (46.94→59.02%). Confidence intervals include no improvement. Promising and
-  uncertain; far from reliable match-long returns.
-* Preserved d7 checkpoint:
-  `pong-rally-guarded-curriculum-20261028-r2/selected.npy`, SHA
+* TRAIN160:3ac409→pairwise412total,143→146first,266/384→266/380later.
+  All known openings retained; two-returngames103→95, five-returngames30→35.
+* Independent fresh32:73→81total,27→28first,46/69→53/75later. Later-rate
+  +4pp CI[-11.85,+18.75]pp; mean+.25returns/game CI[-.44,.97]. Uncertain.
+  Two-returngames21→18, five-returngames4→8. Reliable match-long goal NOT met.
+* Preserve fallback3ac at `pong-rally-earned-trace-merge-20261028-r1/proposal.npy`,
+  SHA `3ac7f87fbac23abab14e633b38cfe1e50986a8f03bb38b049bed8f4cc840bd5e`.
+* Preserve d7 at `pong-rally-guarded-curriculum-20261028-r2/selected.npy`, SHA
   `d7d7d872c1acde4b34748240c2ce9bf9d37af4c65ff2cd1f25d753f19d01fe61`.
-* Current scaffold uses reset/branch-assisted own-hit rewards; this is not yet a
-  demonstrated continuously learning general online RL agent.
 
-Frozen vision, existing scaler/cap and3×4389 linear greedy K1 head remain deployed.
-Original viewer/interception export is older and is NOT the current research head.
+All relative artifact paths are under `/workspace/m1b-experiments`. Current model
+is a reset/branch-assisted own-hit-reward scaffold, not the final continuously
+learning general agent. The original viewer export is older than these models.
 
-## Active — separate frozen qualification after approved pairwise test
+## Active — next target is reliable second returns
 
-Approved pairwise test completed556.11s within original600s budget. Fixed512
-map fit7.77s and actual target4→5; full160409→412total,143→146first,
-266/384→266/380later. All143known openings retained, but later count unchanged;
-40games gained81returns/44lost78. Bundleeb2cbcf10aaaf88ee5fd0877cbc966b828286e230a0782bd91c4dce9ddce9152
-at `pong-rally-pairwise-residual-20261028-r1/rbf-model.npz`. All160receipt actions/Q
-verified.92,106newcameras+156initials;204simplementation separately.
+Approved architecture test completed556.11s within original600s,92,106cameras+
+156initials,204simplementation separately. Mixedsentinel61→62total butlater-2
+was explicitly advanced by parent/Sol to full160 under SAME originalclock; no refit.
+Separate frozen fresh qualification completed123.43s,33,287cameras+64initials.
+All model/action/Q/provenance checks passed; all those processes exited.
 
-Current selected model remains3ac. Parent selected SEPARATE at-most180s frozen
-paired32fresh-game comparison under user's standing continuation mandate, explicitly
-communicated to user. It is not a reset/extension hidden inside the approved600s
-test. No fitting, feature changes, admission or architecture sweep. Reused Sol
-is executing; use originally planned unusedROOT1943906127/TAG62945 and exclude
-all prior/reserved schedules. Review independent first/later/total outcomes before
-promotion or moretraining. See [proposal/results](../plans/2026-10-28-pairwise-residual-review.md).
+Parent now continues ordinary learning within the SAME approved512map/basehead.
+No seed/dimension/basis/architecture sweep. Reused Sol is reviewing a pass focused
+on current second-return misses, protecting existing first-two-return behavior
+rather than allowing longer-rally gains to hide early losses. Parent/Sol agreed on a history-first pass: existing rewarded3ac second-return
+prefixes, cheap conflict screening, one delta-output fit, current first-two-prefix
+retention. One900second pass; no discovery/parameter/guard sweep.
+Plan: [second-return replay](../plans/2026-10-28-second-return-replay.md).
+Implementation is active; no new fit/native execution yet. Selected historical
+recovery161900621 has214rows through its second hit and no exact conflict with
+36,560current guards; shorter than other compatible18599159(303rows).
+221148912 conflicts;138732597 has no historical second success. Generic nonlinear carry/source-Q support is required;
+do not treat pairwise source Q values as the frozen linear base's values.
 
-Prior velocity cleanup66→52 and free-continuation linear update409→394 rejected;
-no parameter/guard/filter sweeps. Bridge belongs to other thread.
+Parent explicitly authorized admitting only32CANDIDATE fresh receipts intoTRAIN
+after evaluation; authorization is under `pong-rally-pairwise-frozen-fresh-20261028-r1/parent-admission-authorization.json`.
+Build new192episode bank from pairwisefull160+candidatefresh32:493returns,
+174first,319later/455opportunities. No feature recalibration; new future evaluation
+seeds required. The oldr4bank and old checkpoints remain immutable.
+
+Detailed results in [ledger](2026-10-27-sustained-return-results.md) and
+[pairwise proposal/results](../plans/2026-10-28-pairwise-residual-review.md).
+Bridge remains another thread's work.
 
 ## Completed block and failed routes
 
