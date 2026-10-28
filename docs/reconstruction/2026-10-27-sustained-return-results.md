@@ -254,3 +254,10 @@ Thirdscreen `pong-rally-divergence-credit-20261028-r3` targeted allfive remainin
 Nine games gained15returns; seven OTHER games lost18:2029997846(6→2),2113801479(5→4),450825289(4→3),2165783928(6→1),161900621(2→1),1713392949(6→2),2557314901(4→2). Earlier beneficial measured-decision cases were not these losses. Root selects complete-behavior integration as the next hypothesis, using existing native earnedprefixes from403 and400 rather than another blind action-credit pass. Exact trace conflicts would not prove inability to learn returns through other trajectories.
 
 The alternate-bank optimization now saves real execution: full160 ran15new games/8,752cameras+15initials,29.53s native (38.55s includingcertification), reused32sentinel and113exact preceding-policy episodes. Reports still compareagainst d7; no rollout/provenance approximation.
+
+
+## Earned-trajectory merge: exact conflict and practical relaxation
+
+First17-prefix merge screen found9,484rows/9,415unique and three cross-trace conflicts, all the same raw input near startup:400gain571235268row4 requiresaction1;403loss2029997846row5,161900621row4 and2557314901row5 requireaction2. No QP or cameras spent. This proves those exact requested commands cannot coexist in this stateless head, not that returns cannot be learned.
+
+Root authorized replacing571235268's400two-return trajectory with its403one-return earnedprefix. Its requested gain was only+1, while the three conflicting losses total7returns. Preserve the remainingeight newgainprefixes, seven oldloss prefixes and originaltarget; rerun exact conflict screen, then bounded minimum-distance solve without invented feasible fallback if compatible. Replacing one low-value command trace is a practical reward tradeoff; no claim that two returns on571235268 are impossible.
