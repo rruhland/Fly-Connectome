@@ -1,3 +1,11 @@
+## Current run — one spatial-prior trial
+
+Selected carry remains d7d7d872. Expanded TRAIN160 has407returns/143first/264of377later. Input-activity metric candidate54097 learned one later repair quickly and TRAIN416, but NEW32 fresh76→66hits and66.7→61.9%later versusd7; rejected. No fresh data from this latest comparison admitted.
+
+Same Sol agent within root-authorized30min goal block is running ONE different fixed spatial-smoothness trial at `pong-rally-spatial-prior-20261028-r1`, private exec13772, sourcebe5d45f (main95beb41). Same d7/data/later192561332, activitymetric plus within-channel neighbor penalty, no runtime/vision changes. Eight focused tests pass. Native160 and fresh if useful; no further ridge/margin/spatialweight sweep after this outcome. Root continues until reliable returns or user stop; goal still unmet.
+
+Parent independently proved one saved-prefix cache prototype (603 reused cameras of827, exact rawfeatures/records/summaries acrosssame/new heads;1.4MBsnapshot), at `pong-prefix-cache-prototype-20261028-r1`. Not production-integrated. Candidate throughput improvement after current result, not reason to alter active collector. Defer unchanged failed138732597/104562292 later sequences. Bridge stays separate.
+
 ## Active learning goal — b9 rejected, d7 retained
 
 Latest fresh result: b9 TRAIN330vs323, but NEW32 fresh61vs84 returns and54.24%vs69.23% later rate. Root rejects b9. Current selected model remains d7d7d872 at `pong-rally-guarded-curriculum-20261028-r2/selected.npy`.
