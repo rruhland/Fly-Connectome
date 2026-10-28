@@ -67,3 +67,31 @@ Parent independently verified all raw observations/actions/probabilities/hits
 bit-for-bit and projected old full-space eligibility/credit into the new198basis;
 maximum error9.1e−13. Zero extra observations,0.038s computation. Artifact
 `parent-first-batch-projection-audit.json`. No performance claim before evaluation.
+
+
+## Completed outcome — rejected; actor family stopped
+
+All32batches completed in275.19s with59,420training cameras+128initials. Final
+reference-cache movement was0.0245939RMS (3.07%initial),104/2048greedy choices
+changed. R remained byte-identical, nongrid weights exact, all coordinate/cap
+checks passed. No partial training batch.
+
+The128screen regressed287→237returns,106→91first,67→61games≥2,
+later181/262→146/222 (69.08%→65.77%). Each64-game stratum lost25returns:
+trained151→126 (first56→49,second34unchanged), other136→111
+(first50→42,second33→27). Seed104562292 improved5→6 despite the aggregate
+regression, confirming why that single example should not control acceptance.
+
+Normal completion435.28s; total114,966new transition cameras+250initials.
+Screen122new games/55,546cameras+122initials, six exact episodes reused.
+All128training and128screen receipts complete; final audit passed, no unknown
+work. No fresh63089or full256 evaluation, no promotion. Candidate bundle
+`dc33740b1c4a3471264df162772c596fa742fda0018f9ff295c43d7edc6c47f0`,
+W `d56950cf629f03e3cf492ceefcf96645b0c43bdbdcf9072c9148436b12c90fab`.
+
+Keep40069 and stop this actor-variant family. Next work is a concrete generic
+continuous entity/pair representation proposal, requiring the user's major-change
+approval before implementation. These failures do not prove a capacity limit:
+credit variance and stochastic-training versus greedy-deployment mismatch remain
+plausible. No architecture implementation or native experiment is authorized by
+preparing that review document.
