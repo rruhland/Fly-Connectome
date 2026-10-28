@@ -17,4 +17,18 @@ class EarnedMergeTest(unittest.TestCase):
         candidate,r=merge(ref,cases,np.ones(1),.03,time.monotonic()+3)
         self.assertIsNone(candidate);self.assertFalse(r['verified']);self.assertFalse(r['numerical_fallback'])
 
+    def test_declared_reward_verified_override_gets_positive_margin(self):
+        ref=np.array([[0.],[0.],[.1]])
+        case=dict(seed=7,X=sp.csr_matrix([[1.]]),actions=np.array([0]),source_weights=ref,interventions=[dict(row=0,action=0,source_action=2,reward_verified=True)])
+        candidate,r=merge(ref,[case],np.ones(1),.03,time.monotonic()+3)
+        self.assertTrue(r['verified']);self.assertEqual(r['verified_exact_greedy_rows'],1)
+        self.assertGreater(candidate[0,0]-candidate[2,0],2.9e-6)
+        self.assertEqual(r['intervention_rows'][0]['source_action'],2)
+
+    def test_undeclared_non_greedy_action_is_rejected(self):
+        ref=np.array([[0.],[0.],[.1]])
+        case=dict(X=sp.csr_matrix([[1.]]),actions=np.array([0]),source_weights=ref)
+        with self.assertRaisesRegex(AssertionError,'undeclared non-greedy'):
+            merge(ref,[case],np.ones(1),.03,time.monotonic()+3)
+
 if __name__=='__main__':unittest.main()

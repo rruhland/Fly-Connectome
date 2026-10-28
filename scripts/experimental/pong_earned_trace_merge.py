@@ -13,13 +13,26 @@ from pong_raw_guarded_repair import pairs,contrast_rows
 
 
 def merge(reference,cases,scale,kappa,deadline):
-    began=time.monotonic();d=reference.shape[1];scale=np.asarray(scale);X=sp.vstack([c['X'] for c in cases],format='csr');actions=np.concatenate([c['actions'] for c in cases]);required=[]
+    began=time.monotonic();d=reference.shape[1];scale=np.asarray(scale);X=sp.vstack([c['X'] for c in cases],format='csr');actions=np.concatenate([c['actions'] for c in cases]);required=[];intervention_rows=[];seen={};conflicts=[]
     for case in cases:
-        policy=FrozenLinearPolicy(case['source_weights']);margins=[]
+        policy=FrozenLinearPolicy(case['source_weights']);margins=[];interventions={v['row']:v for v in case.get('interventions',[])}
+        assert len(interventions)==len(case.get('interventions',[]))
+        assert all(0<=i<len(case['actions']) for i in interventions)
         for i,a in enumerate(case['actions']):
-            lo,hi=case['X'].indptr[i:i+2];choice,q=policy.choose(case['X'].indices[lo:hi],case['X'].data[lo:hi]);assert choice==a
-            margins.append([q[a]-q[b] for b in range(3) if b!=a])
-        required.append(np.minimum(kappa*1e-4,.5*np.maximum(margins,0.)))
+            lo,hi=case['X'].indptr[i:i+2];ix=case['X'].indices[lo:hi];val=case['X'].data[lo:hi];choice,q=policy.choose(ix,val)
+            if i in interventions:
+                intervention=interventions[i];assert intervention['reward_verified'] and intervention['action']==a and intervention['source_action']==choice
+                margins.append([kappa*1e-4]*2);intervention_rows.append(dict(seed=case.get('seed'),row=i,action=int(a),source_action=int(choice),required_margin=kappa*1e-4))
+            else:
+                assert choice==a, f"undeclared non-greedy source action at seed={case.get('seed')} row={i}"
+                margins.append([min(kappa*1e-4,.5*max(q[a]-q[b],0.)) for b in range(3) if b!=a])
+            key=(ix.tobytes(),val.tobytes());entry=dict(seed=case.get('seed'),row=i,action=int(a))
+            if key in seen and seen[key]['action']!=a:
+                if len(conflicts)<12:conflicts.append(dict(first=seen[key],second=entry))
+            else:seen[key]=entry
+        required.append(np.asarray(margins))
+    if conflicts:
+        return None,dict(status='incompatible_exact_input_actions',verified=False,rows=X.shape[0],cases=len(cases),exact_input_conflicts=conflicts,known_feasible_anchor=False,numerical_fallback=False,intervention_rows=intervention_rows,wall_seconds=time.monotonic()-began,new_observations=0)
     required=np.concatenate(required);_,old,c=pairs(X,actions,reference);lower=(required-old).reshape(-1);Z=contrast_rows(X,c,np.arange(len(lower)),scale);working=np.flatnonzero(lower>0).tolist();v=np.zeros(2*d);P=2*sp.eye(2*d,format='csc');history=[];candidate=None;status='bounded_no_verified_merge'
     for iteration in range(30):
         remaining=deadline-time.monotonic()
@@ -39,5 +52,5 @@ def merge(reference,cases,scale,kappa,deadline):
         existing=set(working);fresh=np.array([i for i in np.flatnonzero(violation>1e-9) if int(i) not in existing],dtype=int)
         if not len(fresh):status='bounded_numerical_residual_no_fallback';break
         working=sorted(existing|set(map(int,fresh[np.argsort(-violation[fresh],kind='stable')[:256]])))
-    report=dict(status=status,verified=candidate is not None,rows=X.shape[0],cases=len(cases),all_inequalities=len(lower),working_inequalities=len(working),history=history,projection_cost=float(v@v),wall_seconds=time.monotonic()-began,known_feasible_anchor=False,numerical_fallback=False,required_margin='min(kappa*1e-4, half each actual source-head gap)',no_confidence_growth_objective=True,new_observations=0)
+    report=dict(status=status,verified=candidate is not None,rows=X.shape[0],cases=len(cases),all_inequalities=len(lower),working_inequalities=len(working),history=history,projection_cost=float(v@v),wall_seconds=time.monotonic()-began,known_feasible_anchor=False,numerical_fallback=False,required_margin='source greedy: min(kappa*1e-4, half actual source-head gap); declared reward-verified override: fixed kappa*1e-4',intervention_rows=intervention_rows,verified_exact_greedy_rows=len(actions) if candidate is not None else 0,exact_input_conflicts=[],no_confidence_growth_objective=True,new_observations=0)
     return candidate,report
