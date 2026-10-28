@@ -86,3 +86,63 @@ estimate600s is separate; one900s experiment clock includes preparation.
 Training samples64existing TRAIN seed contexts with new on-policy action paths;
 these are not64new seed contexts. Parent will independently reconstruct first-
 batch eligibility and reward-to-go credit from saved actual data, without new games.
+
+
+Initial calibration: temperature0.008161197682294006, centered-Q RMS0.800332956301049,
+exact expected nongreedy rate5%. Parent independently reconstructed firstbatch
+Q/probabilities, terminal eligibility and reward-to-go credit from all2,039saved
+actual rows. Matrix reconstruction agreed within4.6e−12; zero new observations,
+0.070s computation. Artifact `parent-first-batch-credit-audit.json`.
+At eight batches/14,570cameras/88s, all eight updates were nonzero; reference-cache
+cumulative RMS movement0.01761 (2.2% initial),119/2048greedy decisions changed.
+This demonstrates effective policy movement, not improved game performance.
+
+
+## Final endpoint and explicit evaluation-gate amendment
+
+Training completed all32batches in302.67s:58,837cameras+128initials, no partial
+batch. All32updates nonzero;39/64pairs differed in total reward,56/64had nonzero
+reward-to-go credit. Cumulative reference RMS movement0.0348719 (4.36%initial),
+165/2048greedy choices changed. Final endpoint bundle
+`4a30c52437bbed7abfaa34abae3b82329663ab071362ac386d3ecde441c20b42`;
+W `44371955920938801c82bd17d9434a3d3a0342e59a5d738676f21db8961e0491`.
+
+The fixed32screen completed63→65returns,24→25first,16→15games≥2,
+later39/58→40/62;12gains/11losses. It is mixed, not a reliable learning claim.
+The driver exited normally at357.54s/74,001cameras+160initials because its second-
+return safeguard failed. Source/assets/spec unchanged; no missing work.
+
+Sol recommended evaluating the SAME frozen final endpoint on full256 before
+another fit or representation change. Parent explicitly amended the TRAIN screen
+gate: the mixed small sample is insufficient to decide practical usefulness.
+The full check uses the ORIGINAL900s deadline, with no refit, checkpoint selection,
+new training, or reset clock. Preserve the initial screen result. Report first,
+second, total and later counts/rates plus individual tradeoffs. Parent reviews full
+results before any fresh evaluation. FreshTAG63073 remains untouched.
+
+
+## Completed full evaluation — rejected
+
+The unchanged actor endpoint completed full256 at786.97s within the original900s:
+662→566totalreturns,233→214first,161→144games≥2,later429/615→352/535
+(69.76%→65.79%). No fresh evaluation. Total execution190,265cameras+384initials;
+all128trainingreceipts and256evaluationreceipts complete, sources/assets frozen,
+no missing or unknown work. Final audit passed.
+
+On the64starts actually used during training, greedy returns fell151→141 and
+first56→48 (second34→35). Other192starts fell511→425, first177→166,
+second127→109. Failure therefore includes training-start deployment, not only
+unfamiliar starts. Retain40069; reliable sustained-return learning remains unmet.
+
+Parent's saved-gradient diagnostic used no new observations or alternate fitted
+models:25/64pairs had equal total reward;17still produced reward-to-go gradients.
+They account13.66%of summed pair energy in the inverse-G metric. Among39discordant
+pairs, median alignment with terminal paired credit was.627 and six opposed.
+These describe gradients across different policies/states; they are not variance
+estimates or proof that terminal credit would perform better. Equal-reward noise
+alone is not a sufficient explanation. No credit/temperature sweep is selected.
+
+Next selected mechanism is a lower-dimensional, smooth correction within the
+EXISTING output weights, not a new input or architecture. See the smooth-correction
+plan. If that also regresses broadly, stop this actor family and prepare a concrete
+continuous-representation proposal for user review rather than more variants.

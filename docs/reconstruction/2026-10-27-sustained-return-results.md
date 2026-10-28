@@ -646,3 +646,30 @@ sustained-return learning is not. Do not automatically expand one-witness repair
 or margin variants. Parent/reusedSol are reconsidering on-policy learning versus
 representation continuity, taking earlier actor, smoothing and credit failures
 into account. FreshTAG63057 remains unused and reserved.
+
+
+## Completed full evaluation — rejected
+
+The unchanged actor endpoint completed full256 at786.97s within the original900s:
+662→566totalreturns,233→214first,161→144games≥2,later429/615→352/535
+(69.76%→65.79%). No fresh evaluation. Total execution190,265cameras+384initials;
+all128trainingreceipts and256evaluationreceipts complete, sources/assets frozen,
+no missing or unknown work. Final audit passed.
+
+On the64starts actually used during training, greedy returns fell151→141 and
+first56→48 (second34→35). Other192starts fell511→425, first177→166,
+second127→109. Failure therefore includes training-start deployment, not only
+unfamiliar starts. Retain40069; reliable sustained-return learning remains unmet.
+
+Parent's saved-gradient diagnostic used no new observations or alternate fitted
+models:25/64pairs had equal total reward;17still produced reward-to-go gradients.
+They account13.66%of summed pair energy in the inverse-G metric. Among39discordant
+pairs, median alignment with terminal paired credit was.627 and six opposed.
+These describe gradients across different policies/states; they are not variance
+estimates or proof that terminal credit would perform better. Equal-reward noise
+alone is not a sufficient explanation. No credit/temperature sweep is selected.
+
+Next selected mechanism is a lower-dimensional, smooth correction within the
+EXISTING output weights, not a new input or architecture. See the smooth-correction
+plan. If that also regresses broadly, stop this actor family and prepare a concrete
+continuous-representation proposal for user review rather than more variants.
