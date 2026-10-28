@@ -26,11 +26,13 @@ No promotion. TRAIN256's662→686 gain did not transfer. Final audit passed35,04
 returns, with6losses first diverging after an earned hit. No identical hard-prefix
 replay block. Reused rally_integration is implementing one bounded causal-burst
 plus joint-output pass; see [plan](../plans/2026-10-28-causal-joint-return-learning.md).
-Reviewed sourcec9295e1/main789648b;35focused checks pass. Single900s causal
-pass launched at pong-rally-causal-burst-20261028-r1, specSHA
-c01b37f2d52457abc1ae33429ff341069bdd090f672d1842f351aecb00e62280.
-Implementation840s separate. TAG63057fresh reserved; no activecodechanges.
-User mandate continues. Reused rally_integration owns execution.
+Causal pass completed80.737s with9269cameras+11initials, no restartneeded.
+One rewardedaction learned in5.33s; target2→3, but representative32total60→57,
+first24same,second16same,later36/56→33/55. Candidate85b35d rejected; nofull/fresh.
+TAG63057unused/reserved. Sourcec9295e1/main789648b;35focusedchecks passed.
+User mandate continues; no native process active. Parent/reusedSol reconsidering
+learning rule versus representation continuity before another experiment.
+
 
 ## Current provisional model and actual evidence
 

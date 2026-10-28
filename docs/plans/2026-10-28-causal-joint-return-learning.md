@@ -112,3 +112,31 @@ Execution gets one900s clock; implementation840s estimated separately. Existing
 kappa0.03785729178850489 is fixed for requested burst differences; ordinary guards
 use kappa×1e−4 capped by half source gap. FreshTAG63057 reserved before acquisition.
 No active-code changes during execution.
+
+
+## Completed causal-burst outcome — rejected
+
+The pass completed in80.737s, before the brief workspace restart; no recovery or
+repeated execution was needed. It used9,269transition cameras+11initials. Source,
+models, metric, bank and specification stayed unchanged. No full-bank or fresh
+qualification was launched after the negative screen.
+
+Acquisition used4,607cameras+4initials. Three interventions failed to improve
+returns (3→2,2→2,4→4); seed1482281654 improved2→3. Pruning retained only one
+changed action at transition27. The exact null replay passed. This was an
+experimentally successful action pattern, not a fabricated expert label.
+
+One joint fit took5.332s and certified21,152rows, with232other first-return
+contracts, the target roll-in and one explicit exploratory request. Actual target
+play retained the2→3gain, but104562292 fell5→3. The representative32screen
+finished60→57returns,24first unchanged,16games≥2 unchanged, later36/56→33/55.
+There were two gains of one return and losses of two and three returns. The
+candidate is rejected for broader performance, not merely its104tradeoff.
+
+Candidate bundle85b35d652d64b7e62597985ac40adb43b44df46acd986a3b267cadfe464bf686,
+W e5cab6a844c124119c05ea50a27d4de467444d4d57c9d7cf00fa757910f92d95.
+Keep40069. Fast fitting and local deployed improvement are demonstrated; reliable
+sustained-return learning is not. Do not automatically expand one-witness repair
+or margin variants. Parent/reusedSol are reconsidering on-policy learning versus
+representation continuity, taking earlier actor, smoothing and credit failures
+into account. FreshTAG63057 remains unused and reserved.
