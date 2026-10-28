@@ -828,3 +828,23 @@ Source/spec reviewedbefore separate180sevaluation; same8→32→conditionalfresh
 newtag63153. Openingactions must replaybaselineexactly beforefirstreward.
 Broader OgmaNeo2 temporal-learning feasibility researched inparallel byvalue_execution;
 no hidden-gradient chainfound in inspected olderpinnedcode, adapterdetails pending.
+
+## Reward-history amendment: causal correction, no net improvement
+
+Spec1cf3823b0dee947f9fa59efbbb3b7566b0f7926b00e83639085cf0e977077630,
+`pong-reward-context-option-memory-20261028-r1`. Samefrozenmemory, zeroacquisition
+orrefit. Actual8screen23→23total,7→7first,16/21→16/21later;≥2games4→5 but≥4games
+4→3.25.784s,5077newcameras+8initials. Opening697rows actions/Q/hits exactlymatch
+40069 throughfirsthit; fullsequentialcontextaudit5077rows passed.13learnedstarts,
+195heldcameras,158changedactions. No32/fresh;TAG63153unusedreserved.
+The hypothesized openingcontext error was corrected, but usefulrescuesstilltrade
+off againstlaterlosses. No promotion or additionalmemory radius/hold/context sweep.
+
+Next distinctdirection: older pinnedOgmaNeo2 predictive temporal representation.
+value_execution auditedencoder/sparsecoder/predictor/linearactor paths withnohidden
+errorchain; directC++14buildworks. Source needs explicitterminalbootstrapmask and
+runtimehistoryreset; defaultAPI crossesepisodes. Frozenexistingvision feedslearned
+extraencoder (7currentplanes), notnewsemanticobjectinputs. Synthetic1000steps2.736s
+fastconfiguration vs11.096s directquantizedplanes. Parent selectedfasterpath,
+90spredictionwarmup/300sonline/remainingqualificationwithin600total provisional.
+Actor preservationas40069logitprior+zeroresidual underreview; no native launched.
