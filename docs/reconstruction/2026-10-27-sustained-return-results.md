@@ -466,3 +466,46 @@ Sol will cheaply estimate feasible carry-ray changes from saved proposals withou
 refitting or new games; parent proposes direct native scoring of the SAME eight
 requests with outcome retention gates, awaiting independent critique. That would
 be an explicitly separate follow-up, not a reset of this completed pass.
+
+## Direct raw-request reward test — small-screen gain rejected by full bank
+
+Root `pong-rally-pairwise-raw-reward-20261028-r1`, sourcec3102c9→main747ebc1;
+7focusedtests and compile passed. No projection/refit/scale change: the exact eight
+saved requested coefficients were hashed before any games. Actual five-return
+skill outcomes in fixed order:2,4,6,1,4,5,1,2. Six candidates were ineligible;
+their other eight games were explicitly UNEVALUATED.
+
+Two eligible candidates improved the shared eight-game screen: direction1+14→23,
+direction2-14→24. Selected2- retained6first and improved≥2games4→6,
+later8/14→18/22, with4gainedgames/0lost. It retained the earlier five-return skill.
+Nevertheless FULL192 rejected it:493→404total,174→154first,113→99games≥2,
+319/455→250/376later (70.11→66.49%).28timeouts; opponent returned every
+opportunity in this candidate run. This is broad within-TRAIN failure of the
+small-screen-selected proposal, not a fresh-distribution or capacity proof.
+
+Full candidate SHAfc003082feaacbab12f61f481167a166354f9d2ee4ccd1069948fc8e765a7093.
+Whole follow-up372.38s,101,266actual cameras+206initials. Sources/base/carry/bank/
+saved requests and prior83.49s summary unchanged. No freshgames or promotion.
+Parent/Sol now review whether existing runnerup1+ deserves one broader32screen
+before stopping this raw-search route; no new directions or noise sweep selected.
+
+## Existing raw runner-up32 — search family stopped
+
+Root `pong-rally-pairwise-raw-runnerup32-20261028-r1`. Same fixed direction1+
+model, original8plus12uniformadditional TRAIN starts perphase using fixedseed
+1976835129; no fitting/new directions/noise tuning. Existing104six-hit receipt
+recertified exactly without recapture.32games92→59total,28→22first,
+21→15games≥2,later64/86→37/55. Same32fc candidate from existing full receipts:
+77total/26first/20games≥2,51/72later (zero additional cameras).
+
+24newgames9,051cameras+24initials,8reuses,33.37s. No full runner-up orfresh.
+Direction1+ gained9on the old8 butlost42on the new24; fc gained10onold8 butlost25
+onnew24. This is within-TRAIN screening failure and broadly disruptive proposals,
+not a proof that the representation cannot learn. Stop this eight-request family.
+
+Parent/Sol now investigate joint training of BOTH EXISTING linear and fixed512
+output weights. Frozen vision/features and immutable source checkpoints remain.
+Hypothesis: sparse linear coordinates can compensate global pairwise effects;
+previous linear-only and residual-only failures do not establish joint failure.
+No implementation or fit launched yet; require concrete own-reward target,
+conditioning, cumulative-skill retention and efficient dual/sparse solve first.

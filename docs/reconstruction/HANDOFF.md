@@ -76,7 +76,19 @@ capacity/infeasibility proof. Sources stayed frozen; all runs exited.
 Parent/Sol now selected a separate direct native comparison of the SAME8saved
 rawrequests, no refit/rescale/newdirections. Check actual104562292≥5 first; only
 survivors play the same8TRAINscreen. Strict total/latergain plus earlyretention
-thenfull192/fresh, max900s; implementation active, no newcameraexecutionyet.
+thenfull192/fresh, max900s. Sourcec3102c9/main747ebc1,7focusedtests+compile.
+Completed root `pong-rally-pairwise-raw-reward-20261028-r1`: eight skill outcomes
+2,4,6,1,4,5,1,2; two8gamescreens14→23/24. Selected2- fc003082 FAILED full192:
+493→404total,174→154first,113→99secondgames; later319/455→250/376.
+372.38s/101,266cameras+206initials, nofresh/nopromotion. Source/base/carryfrozen.
+Existing1+ runnerup32TRAIN check alsoFAILED:92→59total,28→22first,
+21→15games≥2;33.37s/9,051newcameras+24initials,8reuses.
+Root `pong-rally-pairwise-raw-runnerup32-20261028-r1`; allruns exited.
+Stopthis8requestfamily; none promoted. Parent/Sol next candidate mechanism is
+training BOTH EXISTING linear andfixedpairwise outputweights, frozenvision/features.
+No implementation/fit launched yet: concrete target/conditioning/sparse-dualsolve
+plan underreview. Currenteb/r5 stillselected; no freshdata admitted.
+
 Exact action locks are replaced by actual outcome retention; preserve failed
 projected artifacts and report screened-out games as unevaluated. Plan:
 [projected reward search and follow-up](../plans/2026-10-28-projected-reward-search.md).
