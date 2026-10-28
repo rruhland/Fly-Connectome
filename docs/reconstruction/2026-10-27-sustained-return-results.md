@@ -341,3 +341,11 @@ Initial diagnostic screen stopped at4.81s. Parent challenged treating low effect
 
 Implementation416.4s recorded separately. Eleven focused tests passed. Agent7bb1847/191bde6 integrated main1baf03a/2ad26e7. Current3ac7f87f/r4bank409 remains selected and immutable; reliable learned match-long returns remain unmet. Parent/Sol now reconsider a smaller velocity-estimation or reward-credit mechanism; no further RBF sweep authorized. Bridge remains other thread's work.
 
+
+## Fixed four-observation velocity pilot — rejected
+
+Root `pong-rally-velocity-ls-20261028-r1`, agentdc5d29a→main0d8f6b6. Experimental generic LS estimator used only observed tracked positions and nominal sample times, changing existing velocity/relative-velocity slots. Frozen3ac head, vision/scaler unchanged; no new inputs/learning. Thirteen focused tests passed; synthetic constant motion exact, scene/new-track reset correct, sharp reversal one-sample direction lag. Implementation192.4s separately.
+
+All16 predeclared phase-balanced TRAIN cases actually executed:66→52total,16→16first,50/58→36/46later (86.21→78.26%). Eight selected later-miss games improved18→26; eight previously strong games fell48→26. Four gains/eight losses/fourunchanged. Cost10,819transition cameras+16initials,44.37s, source/base frozen. Reject estimator under the unchanged head and stop this pilot; no window/reset/bounce-rule sweep or filtered-input learning. This is not proof that no learner could adapt to filtered inputs. No checkpoint promotion.
+
+Parent next hypothesis: keep original transport and relax incidental post-burst imitation, while retaining the target's approach and own-reward burst choices plus known successful openings. Await independent Sol critique before implementation.
