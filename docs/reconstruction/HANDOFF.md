@@ -65,8 +65,15 @@ actualtargets1/1/2→3/6/6; full192523→546total,175→176first,123→129second
 later348/482→370/501. All192retained;11gains/no losses. But newfresh32:
 eb72/28first/18second/44of68later;40069 86/30/23/56of80;candidate73/28/21/45of71.
 No demonstrated fresh improvement. Batch4c0b preserved as TRAIN artifact, not
-promoted. Root/worker now reconsider broader new TRAIN experience versus causal
-credit/pruning with joint solver. Do not continue small old replay batches blindly.
+promoted. Parent/worker selected broader new TRAIN experience next. Implement minimal
+manifest collector:64newstarts32/phase, fixed40069and4c,128games/600s,
+no fitting yet; code review before launch. Existingfresh remains evaluation-only.
+Plan: [broader own-reward experience](../plans/2026-10-28-broader-earned-experience.md).
+After collection, review diverse better prefixes and a bounded joint-learning block.
+Exact completeprefix certificates can preserve known-return LOWERBOUNDS between
+fits without fullsuffixreplay; mixedsourceprovenance required, currenttargetactual
+outcomes must be measured before replacement, full/freshqualification atblockend.
+This block is not implemented or launched yet. No more blind small oldreplayfits.
 No fresh62993or63009admission. Both r5eb and r6TRAIN-scaffold banks preserved.
 Batch589.36s/900,160,146cameras+271initials, no interruption/unknown work.
 Bundle4c0b6374f3e35fad8260d5bd07161f780383de99a8c536b67437169d12200811;
@@ -91,7 +98,7 @@ Recent stopped routes (details in ledger):
   while retaining complete earned memory; no new architecture was introduced.
 
 Detailed results: [ledger](2026-10-27-sustained-return-results.md).
-Bridge remains another thread's work. Main through acc6c73 pushed.
+Bridge remains another thread's work. Main through a73015e pushed.
 Disk has about1.5GB free; reuse the192MB metric.
 
 ## Completed block and failed routes
