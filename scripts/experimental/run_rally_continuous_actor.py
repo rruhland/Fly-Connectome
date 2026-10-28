@@ -6,7 +6,7 @@ import numpy as np
 import scipy.linalg as la
 import scipy.sparse as sp
 from pong_continuous_actor import task
-from pong_continuous_visual import fit_basis,ContinuousReadout,save_readout
+from pong_continuous_visual import fit_basis,ContinuousReadout,save_readout,load_scenes
 from pong_fixed_rbf import load_readout
 from pong_full_rally_actor import paired_gradient,capped_step,probabilities
 from pong_constrained_residual import CONTRAST
@@ -18,17 +18,35 @@ import run_practical_pong_v2 as base
 FILES=('run_rally_continuous_actor.py','pong_continuous_actor.py','pong_continuous_visual.py','pong_full_rally_actor.py','pong_fixed_rbf.py','pong_fixed_pairwise.py','run_rally_fixed_bank_check.py','run_rally_guarded_curriculum.py','rally_action_equivalence.py','run_rally_raw_optimizer.py','run_rally_raw_fresh_screen.py','run_rally_repertoire_collection.py','rally_raw_capture.py')
 
 
-def run(directory,spec_path):
-    directory=Path(directory);spec_path=Path(spec_path);assert not directory.exists();directory.mkdir();began=time.monotonic();deadline=began+600;train_deadline=began+300;spec=base.read(spec_path);base.atomic_json(directory/'work-clock.json',dict(started_wall_ns=time.time_ns(),started_monotonic=began,deadline_monotonic=deadline,training_deadline_monotonic=train_deadline,seconds=600,implementation_seconds_separate_estimate=spec['implementation_seconds_separate_estimate']));(directory/'spec.json').write_bytes(spec_path.read_bytes());source=base.source_signature();files={n:base.sha(Path(__file__).with_name(n)) for n in FILES};bank=base.read(spec['bank']);assert base.sha(spec['bank'])==spec['bank_sha256'] and bank['source']==source
+def run(directory,spec_path,resume_calibration=False):
+    directory=Path(directory);spec_path=Path(spec_path);assert directory.exists() if resume_calibration else not directory.exists();directory.mkdir(exist_ok=resume_calibration);oldclock=base.read(directory/'work-clock.json') if resume_calibration else None;began=oldclock['started_monotonic'] if oldclock else time.monotonic();deadline=began+600;train_deadline=began+300;spec=base.read(spec_path)
+    if not resume_calibration:
+        base.atomic_json(directory/'work-clock.json',dict(started_wall_ns=time.time_ns(),started_monotonic=began,deadline_monotonic=deadline,training_deadline_monotonic=train_deadline,seconds=600,implementation_seconds_separate_estimate=spec['implementation_seconds_separate_estimate']));(directory/'spec.json').write_bytes(spec_path.read_bytes())
+    else:
+        assert oldclock['deadline_monotonic']==deadline and base.sha(directory/'spec.json')==base.sha(spec_path) and not (directory/'training').exists();(directory/'calibration-source-manifest.json').write_bytes((directory/'manifest.json').read_bytes())
+    source=base.source_signature();files={n:base.sha(Path(__file__).with_name(n)) for n in FILES};bank=base.read(spec['bank']);assert base.sha(spec['bank'])==spec['bank_sha256'] and bank['source']==source
     for p,digest in spec['pinned_assets'].items():assert base.sha(p)==digest
-    original=load_readout(bank['current_model_bundle']);original_root=directory/'original';original_root.mkdir()
+    original=load_readout(bank['current_model_bundle']);original_root=directory/'original';original_root.mkdir(exist_ok=resume_calibration)
     for src,name in [(bank['current_head'],'proposal.npy'),(bank['current_model_bundle'],'rbf-model.npz'),(bank['radial_cap'],'radial-cap.json')]:(original_root/name).write_bytes(Path(src).read_bytes())
-    manifest=dict(source=source,files=files,spec_sha256=base.sha(spec_path),approved_major_change=True,normalization_floor_fraction=.1,initial_policy_sha256=bank['current_policy_sha256'],initial_base_weights_sha256=bank['current_head_sha256'],new_output_features=256,new_output_parameters=768,contrast_coordinates=512,base_W_R_vision_frozen=True,raw_only_certificates_disabled_for_nonzero_branch=True,no_backprop=True,no_sweep=True,endpoint='FINAL completed batch only');base.atomic_json(directory/'manifest.json',manifest);summary=dict(status='calibrating',new_transition_cameras=0,new_initial_cameras=0,calibration_transition_cameras=0,calibration_initials=0,training_transition_cameras=0,training_initials=0,accepted_batches=0)
+    manifest=dict(source=source,files=files,spec_sha256=base.sha(spec_path),approved_major_change=True,normalization_floor_fraction=.1,initial_policy_sha256=bank['current_policy_sha256'],initial_base_weights_sha256=bank['current_head_sha256'],new_output_features=256,new_output_parameters=768,contrast_coordinates=512,base_W_R_vision_frozen=True,raw_only_certificates_disabled_for_nonzero_branch=True,no_backprop=True,no_sweep=True,endpoint='FINAL completed batch only');
+    if resume_calibration:base.atomic_json(directory/'source-amendment.json',dict(recorded_wall_ns=time.time_ns(),recorded_monotonic=time.monotonic(),reason='calibration prefix ownhits vs completed-rally summary assertion repair; no new parameter or cameras',calibration_source_manifest_sha256=base.sha(directory/'calibration-source-manifest.json'),calibration_files=base.read(directory/'calibration-source-manifest.json')['files'],resumed_files=files,original_clock_preserved=True))
+    base.atomic_json(directory/'manifest.json',manifest);summary=dict(status='calibrating',new_transition_cameras=0,new_initial_cameras=0,calibration_transition_cameras=0,calibration_initials=0,training_transition_cameras=0,training_initials=0,accepted_batches=0)
     def finish():
         summary.update(wall_seconds=time.monotonic()-began,source_frozen=source==base.source_signature() and files=={n:base.sha(Path(__file__).with_name(n)) for n in FILES},assets_unchanged=all(base.sha(p)==h for p,h in spec['pinned_assets'].items()),bank_unchanged=base.sha(spec['bank'])==spec['bank_sha256'],spec_unchanged=base.sha(spec_path)==manifest['spec_sha256'],no_automatic_promotion=True);base.atomic_json(directory/'summary.json',summary);print(json.dumps(dict(status=summary['status'],batches=summary['accepted_batches'],calibration_cameras=summary['calibration_transition_cameras'],training_cameras=summary['training_transition_cameras'],cameras=summary['new_transition_cameras'],initials=summary['new_initial_cameras'],elapsed=summary['wall_seconds'])),flush=True)
-    fresh=directory/'fresh';fresh.mkdir();drawn=select_starts(spec['fresh_root'],spec['fresh_tag'],exclusions(directory),32);seeds=drawn.pop('TRAIN');drawn.update(probe=seeds[:32],unused_reserved=seeds[32:],purpose='new paired greedy qualification; no admission');base.atomic_json(fresh/'schedules.json',drawn);calib_dir=directory/'calibration';calib_dir.mkdir();history=[];temperature=.008161197682294006;initial_rms=.800332956301049
+    fresh=directory/'fresh';fresh.mkdir(exist_ok=resume_calibration)
+    if not resume_calibration:
+        drawn=select_starts(spec['fresh_root'],spec['fresh_tag'],exclusions(directory),32);seeds=drawn.pop('TRAIN');drawn.update(probe=seeds[:32],unused_reserved=seeds[32:],purpose='new paired greedy qualification; no admission');base.atomic_json(fresh/'schedules.json',drawn)
+    calib_dir=directory/'calibration';calib_dir.mkdir(exist_ok=resume_calibration);history=[];temperature=.008161197682294006;initial_rms=.800332956301049
     with ProcessPoolExecutor(max_workers=4,mp_context=mp.get_context('spawn'),initializer=base.initialize) as pool:
-        futures=[pool.submit(task,str(calib_dir),str(original_root),dict(seed=s,tag=f'calibration_{i:02d}'),min(train_deadline,time.monotonic()+90),256) for i,s in enumerate(spec['calibration_seeds'])];calibration=[f.result() for f in futures];summary['calibration_transition_cameras']=sum(r['transitions'] for r in calibration);summary['calibration_initials']=sum(r['initials'] for r in calibration);summary['new_transition_cameras']+=summary['calibration_transition_cameras'];summary['new_initial_cameras']+=summary['calibration_initials'];assert summary['calibration_transition_cameras']<=2048
+        if resume_calibration:
+            calibration=[]
+            for i in range(8):
+                r=base.read(calib_dir/f'calibration_{i:02d}.json')
+                with np.load(r['scores_file']) as scores:q=scores['q'].copy()
+                calibration.append(dict(r,scenes=load_scenes(r['scenes_file']),q=q))
+        else:
+            futures=[pool.submit(task,str(calib_dir),str(original_root),dict(seed=s,tag=f'calibration_{i:02d}'),min(train_deadline,time.monotonic()+90),256) for i,s in enumerate(spec['calibration_seeds'])];calibration=[f.result() for f in futures]
+        summary['calibration_transition_cameras']=sum(r['transitions'] for r in calibration);summary['calibration_initials']=sum(r['initials'] for r in calibration);summary['new_transition_cameras']+=summary['calibration_transition_cameras'];summary['new_initial_cameras']+=summary['calibration_initials'];assert summary['calibration_transition_cameras']<=2048
         if not all(r['allocation_complete'] and r['transitions']>0 for r in calibration):summary['status']='calibration_budget_partial';finish();return
         episodes=[r['scenes'] for r in calibration];scenes=[s for e in episodes for s in e];q0=np.concatenate([r['q'] for r in calibration]);X=sp.vstack([sp.load_npz(r['raw_feature_file']) for r in calibration],format='csr')
         try:basis,F,G,weights,report=fit_basis(episodes)
@@ -56,4 +74,4 @@ def run(directory,spec_path):
 
 
 if __name__=='__main__':
-    p=argparse.ArgumentParser();p.add_argument('directory');p.add_argument('--manifest',required=True);a=p.parse_args();run(a.directory,a.manifest)
+    p=argparse.ArgumentParser();p.add_argument('directory');p.add_argument('--manifest',required=True);p.add_argument('--resume-calibration',action='store_true');a=p.parse_args();run(a.directory,a.manifest,a.resume_calibration)
