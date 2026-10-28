@@ -1,8 +1,53 @@
 # Independent challenger: local option memory after the tree pilot
 
-Research only. This worker changed only this note; no implementation, fitting,
-native camera work, or promotion. The latest user mandate already waives further
-architecture approval. The tree pilot remains a separate worker's experiment.
+Original research note followed by an authorized completed pilot. The latest user
+mandate already waives further architecture approval. The separate tree pilot
+failed its actual eight-game screen, 23→1 returns, before this pilot began.
+
+## Completed pilot: rejected, no sweep follows
+
+Parent approved one implementation and the prepared native spec
+`f3cf81f06fdd43dc89c9c7c47b1b2a6d345309a926b7c644375bba91eac718d2`.
+Runtime uses the exact existing SIX canonical entity fields, with no age or
+camera-context addition. The assignment metric alone uses the fixed median
+16-camera calibration radius 0.0039341945374085875, obtained from 256 predeclared
+pairs in the 2,048 saved continuous-calibration scenes. Baseline actions are
+reconsidered every camera; earned commands actually hold 16 cameras.
+
+Artifact root: `/workspace/m1b-experiments/pong-local-option-memory-20261028-r1`.
+Eight distinct TRAIN sites, four later misses and four later successes, were
+available as specified. All 32 actual option branches completed. Acquisition
+cost 4,984 transition cameras + 8 initials, comprising 2,904 once-per-site exact
+prefix cameras and 2,080 actual cloned suffix cameras, in 18.413 seconds. The
+24 completed paired advantages include TWO genuine miss→hit rescues, TWO
+hit→miss losses, and 20 zeros. No positive came only from reaching an already
+successful hit earlier. Both negative outcomes remain in the learned memory.
+Memory SHA: `b5c5c8bcb73318c6ab83b07b70b065820524ad359624fd2f907c974f24986fb4`.
+
+Immediate frozen full-game screen8: **23→19 total returns, 7→5 first returns,
+16→14 later returns**. Later fraction 16/21→14/17 rises because the candidate
+loses opening coverage and changes exposure; this is not a sustained-return gain.
+Eight complete games cost 4,207 transition cameras + 8 initials, 17.164 seconds.
+Nineteen earned options produced 285 held continuation cameras and 267 changed
+primitive actions. Sequential replay of all 4,207 actual pre-action scenes, raw
+features, baseline scores, choices and hold histories passed exactly at zero
+additional camera cost. No raw-only certificate reuse occurred. Source, assets,
+and memory stayed frozen. No screen32 or fresh work was launched and no model
+was promoted. Combined cost: **9,191 transition cameras + 16 initials**, 35.576
+seconds across the separately bounded acquisition/evaluation clocks.
+
+The strongest observed failure is inappropriate transfer into openings: both
+losing games first changed before their first hit (one loses 5→0 returns, the
+other 1→0), and both retrieve the same single supporting site from a later miss.
+Two games gain one return each after their first hit. Thus the mechanism acquired
+useful actual reward evidence but the declared neighborhood/deployment rule did
+not transfer it safely. Do not respond with a radius/duration/guard sweep.
+
+The memory was assembled once from matched own-reward trials; continuously
+adapting the deployed policy was NOT tested. The artifact field named
+`online_acquisition_updates` records paired learning evidence, not live policy
+updates; `acquisition-audit.json` and `final-audit.json` state this limitation.
+The user's 95% first/later-return milestone remains unmet.
 
 ## Ranked hypotheses
 
