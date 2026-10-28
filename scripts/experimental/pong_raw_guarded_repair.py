@@ -23,8 +23,9 @@ def contrast_rows(X,contrasts,flat_indices,scale):
     return sp.hstack([values.multiply(c[:,0,None]),values.multiply(c[:,1,None])],format='csc')
 
 
-def fit(W,positive,guards,normal,deadline,ridge=1e-6,batch=128,initial_rows=(),initial_delta=None,initial_state=None,state_path=None,initial_guard_duals=None,stop_on_earned_repair=False,guard_margin_scale=1.):
-    began=time.monotonic();d=W.shape[1];scale=normal['input_rms'];kappa=normal['kappa'];n=2*d
+def fit(W,positive,guards,normal,deadline,ridge=1e-6,batch=128,initial_rows=(),initial_delta=None,initial_state=None,state_path=None,initial_guard_duals=None,stop_on_earned_repair=False,guard_margin_scale=1.,feature_scale=None):
+    began=time.monotonic();d=W.shape[1];scale=normal['input_rms'] if feature_scale is None else np.asarray(feature_scale,dtype=np.float64);kappa=normal['kappa'];n=2*d
+    if feature_scale is not None:assert scale.shape==(d,) and np.isfinite(scale).all() and (scale>0).all()
     X=sp.vstack([c['X'] for c in positive],format='csr');actions=np.concatenate([c['actions'] for c in positive]);other,old,c=pairs(X,actions,W);target=(kappa-old).reshape(-1);pair_weights=np.repeat(weights(positive)/2,2);ns=len(target)
     Xg=sp.vstack([c['X'] for c in guards],format='csr');ag=np.concatenate([c['actions'] for c in guards]);og,gap,cg=pairs(Xg,ag,W);assert gap.min()>-1e-10
     assert 0<guard_margin_scale<=1
@@ -96,7 +97,7 @@ def fit(W,positive,guards,normal,deadline,ridge=1e-6,batch=128,initial_rows=(),i
         lo,hi=Xg.indptr[i:i+2];got,_=policy.choose(Xg.indices[lo:hi],Xg.data[lo:hi]);changed+=int(got!=a)
     assert changed==0, ('guard argmax changed',changed)
     report=dict(solver='OSQP diagonal hinge-slack QP with lazy sparse guard generation',osqp_version=osqp.__version__,status=status,early_stop_enabled=stop_on_earned_repair,early_stop_feasibility_alpha=early_alpha,warm_start=initial_delta is not None or initial_state is not None,solver_state_saved=state_path is not None,variables=n+ns,raw_contrast_parameters=n,positive_rows=X.shape[0],hinge_slacks=ns,guard_rows=Xg.shape[0],all_guard_inequalities=len(lower),working_guard_inequalities=len(working),rounds=len(history),history=history,
-        maximum_actual_logit_guard_violation=maximum,guard_action_changes=changed,required_margin='min(kappa * guard_margin_scale, half carried gap)',guard_margin_scale=guard_margin_scale,required_margin_min=float(required.min()),required_margin_max=float(required.max()),ridge=ridge,input_rms=scale,kappa=kappa,
+        maximum_actual_logit_guard_violation=maximum,guard_action_changes=changed,required_margin='min(kappa * guard_margin_scale, half carried gap)',guard_margin_scale=guard_margin_scale,required_margin_min=float(required.min()),required_margin_max=float(required.max()),ridge=ridge,input_rms=normal['input_rms'],feature_metric='uniform raw coefficient ridge' if feature_scale is None else 'frozen diagonal TRAIN input-second-moment metric',feature_scale_min=float(np.min(scale)),feature_scale_max=float(np.max(scale)),feature_scale_mean_squared=float(np.mean(np.asarray(scale)**2)),kappa=kappa,
         feasible_contraction=alpha,zero_residual_objective=zero,final_objective=objective,positive=diagnostics(W,delta,positive),guard_outputs=diagnostics(W,delta,guards),wall_seconds=time.monotonic()-began,
         no_hard_q_or_confidence_preservation=True,failed_suffix_guarded=False,weighting='positive equal present group/episode/segment/row; each row split between two alternative comparisons')
     return delta,report

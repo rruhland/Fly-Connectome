@@ -56,4 +56,12 @@ class GuardedRepairTest(unittest.TestCase):
             chosen,screen=select_saved([folder],np.zeros((3,2)),[],[],set(),{},known_hits={42:2})
             self.assertIsNone(chosen);self.assertIn('already earned',screen[0]['reason'])
 
+    def test_vector_metric_changes_training_coordinates_not_policy_inputs(self):
+        W=np.array([[1.,0.],[0.,0.],[-1.,0.]])
+        g=[dict(seed=1,group='first_left',X=sp.csr_matrix([[1.,0.]]),actions=np.array([0]))]
+        p=[dict(seed=2,group='later_right',X=sp.csr_matrix([[0.,1.]]),actions=np.array([2]))]
+        d,r=fit(W,p,g,dict(input_rms=1.,kappa=.03),time.monotonic()+3,stop_on_earned_repair=True,guard_margin_scale=1e-4,feature_scale=np.array([3.,.2]))
+        self.assertEqual(r['guard_action_changes'],0);self.assertEqual(r['positive']['requested_action_fraction'],1.)
+        np.testing.assert_allclose(d.sum(0),0,atol=1e-15);self.assertAlmostEqual(r['feature_scale_max'],3.)
+
 if __name__=='__main__':unittest.main()

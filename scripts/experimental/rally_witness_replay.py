@@ -26,12 +26,13 @@ def conflicts(positive,guards):
     return dict(positive_rows=count,exact_positive_conflict_groups=len(inconsistent),exact_guard_conflict_groups=len(guard_conflicts),compatible=not inconsistent and not guard_conflicts)
 
 
-def select_saved(sources,W,guards,excluded,used,source_signature,known_hits=None):
+def select_saved(sources,W,guards,excluded,used,source_signature,known_hits=None,allowed_roles=None):
     choices=[];screen=[]
     for source in map(Path,sources):
         manifest=base.read(source/'manifest.json');assert manifest['source']==source_signature
         summary=base.read(source/'summary.json');assert summary['source_frozen']
         for witness in summary['witnesses']:
+            if allowed_roles is not None and witness['role'] not in allowed_roles:continue
             key=(str(source),witness['seed'],witness['path'])
             if key in used or witness['seed'] in excluded:continue
             if witness['target_hits']<=(known_hits or {}).get(witness['seed'],-1):
