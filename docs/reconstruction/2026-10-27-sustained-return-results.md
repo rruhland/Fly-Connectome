@@ -547,3 +547,42 @@ the interrupted task is unknown and NOT counted as zero. Native completion
 865.718s from original start including interruption, within original900s; fresh
 300s substage exceeded during interruption/recovery, explicitly recorded.
 All processes exited. No promotion or fresh admission yet.
+
+## Diverse joint replay batch — TRAIN gain, transfer strategy reconsidered
+
+Root `pong-rally-joint-batch-20261028-r1`, agentdf9c09e/main3a5600a;27focused
+tests passed. Saved metric reused without192MBcopy/rebuild;14.14spreparation,
+33.26sfit verified80,839rows/161,678inequalities, maxactualviolation4.04e-15.
+Targets2667357792/478956070/1212947804 earned3/6/6returns versus1/1/2, exceeding
+their hard2/2/3prefixes. Representative32 64→80total,24→25first,16→19games≥2.
+Full192523→546total,175→176first,123→129games≥2,348/482→370/501later (73.85%).
+All192earned-outcome invariants passed;11gains/no losses. Full145newgames,
+90,604cameras+145initials;47reuses including10eb alternatives.
+
+Three-way fresh32TAG63009, all policies on identical starts:
+
+| Policy | Returns | First | Games ≥2 | Later |
+| --- | ---: | ---: | ---: | ---: |
+| Original eb | 72 | 28 | 18 | 44/68 |
+| Joint40069 | 86 | 30 | 23 | 56/80 |
+| Batch4c0b | 73 | 28 | 21 | 45/71 |
+
+Batch versus40069:−13returns, mean−.40625/game paired95%CI[−.96875,+.15625];
+later−6.62pp CI[−16.95,+3.80]. Vseb+1return and+3games≥2, firstsame, but
+later fraction−1.33pp. No demonstrated transfer improvement. Preserve batch
+checkpoint as a TRAIN integration artifact; no general-player promotion or
+fresh admission. Stop repeated old small replay batches and reconsider broader
+experience/causal credit before another fit. Goal still unmet.
+
+Whole pass589.36s/900,160,146actual transition cameras+271initials; no interruption
+or unknown work. Source, maps, old checkpoints and saved metric stayed frozen.
+Bundle SHA4c0b6374f3e35fad8260d5bd07161f780383de99a8c536b67437169d12200811;
+W SHA3f2e4958de960c32d0ba30b61d25449e1d60d1344fe9c5bf669b12d08f1419aa.
+
+Parent read-only checks: all fresh62993raw input columns were already seen in
+TRAIN (4,348of4,389columns covered), ruling out entirely new activated channels
+as the sole explanation. Novel combinations/values and trajectory distributions
+remain possible. Batch source prefixes differed from40069on23/205,39/321 and
+40/375actions; this does not identify which exploratory actions caused reward.
+Combining earlier causal-credit machinery with joint retention is a hypothesis,
+not a newly invented credit algorithm or an already demonstrated solution.

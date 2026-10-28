@@ -59,13 +59,19 @@ exited. Native completion865.718s within original900s (fresh300substage exceeded
 during interruption); documented≥105,587cameras+191initials, unsaved interrupted
 work unknown. No promotion yet; current eb/r5 retained until parent review.
 
-Parent approved implementation of one diverse3-target batch around40069 as a
-TRAIN-proven scaffold, not a fresh-qualified replacement. Targets2667357792left
-1→2,478956070right1→2,1212947804left2→3;80,839hardrows/175cases,
-zero raw-alias conflicts. Reuse fixed metric; one60sfit/900s execution. Code review
-before launch. Full192 thennewfresh32 vs BOTH eb/40069 if budget permits;62993
-remains evaluation-only. Defer snapshotcache (~2.1pass camera breakeven).
-Plan: [joint batch learning](../plans/2026-10-28-joint-batch-learning.md).
+Completed diverse3-target batch `pong-rally-joint-batch-20261028-r1`:
+agentdf9c09e/main3a5600a,27focused tests. One33.26sverifiedfit/80,839rows,
+actualtargets1/1/2→3/6/6; full192523→546total,175→176first,123→129second,
+later348/482→370/501. All192retained;11gains/no losses. But newfresh32:
+eb72/28first/18second/44of68later;40069 86/30/23/56of80;candidate73/28/21/45of71.
+No demonstrated fresh improvement. Batch4c0b preserved as TRAIN artifact, not
+promoted. Root/worker now reconsider broader new TRAIN experience versus causal
+credit/pruning with joint solver. Do not continue small old replay batches blindly.
+No fresh62993or63009admission. Both r5eb and r6TRAIN-scaffold banks preserved.
+Batch589.36s/900,160,146cameras+271initials, no interruption/unknown work.
+Bundle4c0b6374f3e35fad8260d5bd07161f780383de99a8c536b67437169d12200811;
+W3f2e4958de960c32d0ba30b61d25449e1d60d1344fe9c5bf669b12d08f1419aa.
+All runs exited. Plan/results: [joint batch learning](../plans/2026-10-28-joint-batch-learning.md).
 Goal remains reliable match-long returns, not merely passing a fitted constraint.
 
 Current TRAIN bank `pong-rally-TRAIN-bank-20261028-r5/admission.json` has192games:

@@ -87,3 +87,31 @@ if the remaining budget permits, with partial work reported honestly.
 Defer production prefix caching: an eager build would reexecute 80,333 frames
 and needs roughly 2.1 comparable passes just to repay camera work, before code
 and storage costs. Whole-episode reuse remains enabled.
+
+## Completed outcome
+
+Source agentdf9c09e/main3a5600a reviewed;27focused tests, compile and diff checks
+passed. Root `pong-rally-joint-batch-20261028-r1`, implementation estimate420s
+separate. Preparation14.14s; fit33.26s verified all80,839original choices with
+maximum actual margin violation4.04e-15. No fallback or retry.
+
+Actual targets earned3,6,6returns versus1,1,2; trained prefixes required2,2,3.
+Representative32 improved64→80total,24→25first,16→19games≥2,40/59→55/72later.
+Six gains, no losses, including three non-target gains. Full192 completed:
+523→546total,175→176first,123→129games≥2,348/482→370/501later (73.85%).
+All192earned-outcome invariants passed;11gains and no losses, original104five-hit
+skill retained. Native full stage145newgames/90,604cameras+145initials,47reuses
+including10eb alternatives. Cumulative before fresh108,049cameras+175initials.
+Three-way fresh63009 completed96games: eb72returns/28first/18games≥2/44of68later;
+40069scaffold86/30/23/56of80later; candidate73/28/21/45of71later.
+Candidate versus scaffold−13returns, mean−.40625/game paired95%CI[−.96875,+.15625],
+later−6.62pp CI[−16.95,+3.80]. Against eb+1return but later fraction−1.33pp.
+This does not establish transferable improvement. Do not promote the batch as
+a better general player. Stop more old small replay batches pending a review
+of broader on-policy experience and selective action credit. No fresh admission.
+
+Entire pass589.36s/900,160,146actual transition cameras+271initials. No interruption,
+unknown work, refit or active source change; source/maps/weights frozen checks pass.
+
+New bundle SHA4c0b6374f3e35fad8260d5bd07161f780383de99a8c536b67437169d12200811;
+new W SHA3f2e4958de960c32d0ba30b61d25449e1d60d1344fe9c5bf669b12d08f1419aa.
