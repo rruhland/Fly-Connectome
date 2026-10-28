@@ -1,3 +1,11 @@
+## Active learning goal — b9 rejected, d7 retained
+
+Latest fresh result: b9 TRAIN330vs323, but NEW32 fresh61vs84 returns and54.24%vs69.23% later rate. Root rejects b9. Current selected model remains d7d7d872 at `pong-rally-guarded-curriculum-20261028-r2/selected.npy`.
+
+Same Sol agent `/root/pong_one_pass_research` now authorized up to30min goal-directed later-return improvement: confirm prior EXIT; preserve fresh evidence; admit32 **d7/carry** trajectories from `pong-rally-b9-fresh-screen-20261028-r1` to TRAIN (160cases/407earnedreturns); use new seeds for future qualification. Root admission authorization JSON is saved there. Agent may choose smaller/medium implementation and experiments without approval; no backprop/privileged inputs/major architecture change. Focus actual later returns, control unseen-state regression, use empty solver working sets and native-target acceptance, reuse experiences, avoid endless failing variants. Parent reviews and steers; user requested continued work until reliable learned returns, so do not finish after allocation.
+
+Current candidate avenue: investigate why coefficient-space fitting causes unseen policy changes; feature-RMS/function-change or spatial regularization are parent hypotheses, not mandated implementation. Stable d7 fallback retained. Bridge remains another thread's task. Historical updates below superseded.
+
 ## Active evaluation — b9 outcome candidate
 
 Current selected carry remains d7d7d872 (323 TRAIN returns). Parent's seven-game native probe of `b9f1b98a6ee1b352897d51736b6b28bb6b2848568d878803e19dc3cee4796bd4` found target8325019400→3,3519222253 4→5,2732613884 5→4; other4 retained. Net+3 with one known regression. Root chose to evaluate overall learning outcomes rather than discard useful improvement for a self-imposed per-seed zero-loss rule. d7 retained as safer checkpoint.
