@@ -41,19 +41,35 @@ receipts+166-row orphan. Separate120s recovery completed15missing in46.586s,
 interruptedwork. No fresh63185, no more temporalinput/Tvariants. Artifacts under
 `pong-ogma-prior-20261028-r1/empty-current-correction/recovery-20261029-r1`.
 
-Active: reused `/root/value_execution` implementing paired option-advantage
-ExtraTrees,48distinctTRAINsites16miss/16success/16uniformposthit. Actual binary
-hit-within160-camera outcomes for matched baseline/16-camera actionholds; learns
-three paired advantage functions, no Bellman recursion/expertlabels/backprop.
-Generic horizontal-first scene sorting (input[y,x]), fixedcapacity from2048calib,
-plus baselineQcontext. Atleast32complete actionbalanced sites withanynonzerotarget
-permitONEfit+screen, no arbitrary fourrescue gate.64trees/depth5/minleaf2 fixed.
-Parent reviews before180sacquisition/180sevaluation. No native work launched yet.
-See `docs/plans/2026-10-29-paired-option-regression-challenge.md`.
+Pairedforest9f282c6 REJECTED: all48sites acquired86.056s,28,139cameras+48initials;
+16rescuepairs/12sites,19losthitpairs/15sites,109ties. Singlefit0.269s/exact2096row
+sklearnparity. Actual8games23→9total,7firstunchanged,4→1second,16/21→2/9later;
+114optionstarts/1656heldcams/1319changedactions.2590evalrows exact. Combined
+30,729newcams+56initials; no32/fresh63201, no parametersweep. Source/forestfrozen.
+Artifact `pong-paired-option-forest-20261029-r1`. Root requested<=3minoffline
+mechanismreview fromvalue_execution, no newnative. Preserve compactN+1suffixdata.
 
-Earlier independent agent unavailable after refresh; new `/root/learning_challenge`
-Sol6.1XHigh researches distinct dense-transition alternatives/challenges assumptions.
-No native runs assigned to that agent. Userwaiver persists; bridgeelsewhere.
+Forestmechanismreview:18/21all-zero training sites stillpositive;37selectedholds
+include12actualrescues+25ties.107/114deployedstartsrepeatwithin160cams(median16).
+Root acceptedSol'schallenge: no fixedweights tailcorrection, stopforestfamily.
+
+Active graph: `/root/learning_challenge` firstactualofflinefit converged13.56s,
+1012iterations, residual9.966e-9/errorbound5.526e-6.27471eligibleobservations,
+118hits,52naturalends;8censoredfinalsomitted.65capacityoverflows unsupported,
+nohit/end evidence lost.20,080/22,233posthitrows baseline+alternative supported;
+674/27301unknownsuccessorboundaries;13,343savedchoiceschanged (notperformance).
+Graph4067f033ec767fa072ab4e9342d0d95b9f27b030cbcda536e16261fd7bdccb75 at
+`pong-kernel-transition-graph-20261029-r1-recovery/graph.npz`.
+Original60ssetupfailedbeforeanylearning(importpath,overflow); explicitseparate60s
+recovery preservedoldreceipts/specs. Sevenfocusedtests+64queryserializationchecks.
+
+`/root/value_execution` now builds ONE180s frozen graph nativecomparison:
+exactpubliccameraordinal%5/pastactualhit, baselineuntilhit andfallback whenbaseor
+alternative unsupported; strictlearnedvaluegain, primitiveactioneverycamera.
+8TRAIN→conditional32→conditional32freshTAG63217; no refit/radius/supportsweep.
+Dedicatedstatefulaudit; parentreviewsbeforelaunch. learning_challenge checksactual
+neighborgeometry offline, no native. Userwaiverpersists; no permissionaskneeded.
+See `docs/plans/2026-10-29-kernel-transition-graph.md`.
 
 Disk headroom: removed147MB completed unit-test temporaries, then hardlinked125
 SHA-identical frozen transform copies, recovering1.267GB. All research paths/bytes,

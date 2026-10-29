@@ -920,3 +920,68 @@ SHA256-verified frozen `search-transform.npy`, `old-transform.npy` and
 no receipts or checkpoints removed. These shared immutable transforms must be
 copied before any future in-place modification. Manifest:
 `/workspace/m1b-experiments/storage-deduplication-20261029.json`.
+
+## October29: paired reward-trained option forest acquired real rescues, failed deployment
+
+Source9f282c6; approvedspec4b8d8aa2664e56a5b947770417bb5f5930f0045f1fb9d1d7d59581bc2a944abb.
+All48distinctsites completed,8in eachof6strata, no censor/overflow. Acquisition
+86.056s/180,28,139transition cameras+48initials. Actual matched binary160-camera
+window effects:16rescue pairs across12sites,19lost-hit pairs across15sites,
+109zero pairs. These are genuine executed interventions with baseline tails,
+not predicted rescue labels. Full suffix float64N+1scenes/Q and compact actual
+transition records were retained at no additional native camera cost.
+
+One64tree/depth5/minleaf2ExtraTrees fit took0.269s. Export matched sklearn exactly
+on48training+2048calibration rows, including choices. Frozenforest9e06f33d rejected:
+actual8games23→9total,7→7first,4→1second,16/21→2/9later.114earned-option starts,
+1656held cameras,1319changed actions. All2590stateful evaluation rows audited
+exactly; sources/forest unchanged. Evaluation14.934s; combinednewwork30,729cameras
++56initials. No32/fresh63201, no promotion or parameter sweep. First-return
+protection worked; learned later control did not. Artifact:
+`pong-paired-option-forest-20261029-r1/summary.json`.
+
+Root assigned a <=3minute saved-data review to separate false positive training
+predictions from repeated-intervention/baseline-tail mismatch. In parallel,
+independent Sol implements one60s offline structured kernel transition graph on
+27,471existing eligible observations:27,419interiors+52verifiednaturalterminal
+finals,118hit events;8censoredfinals without successor excluded. No new native
+observations or privileged inputs. Nonnegative local averages and elapsed-time
+discounted backups avoid the prior LSPI inverse and random coarse partitions,
+but geometry and conditional action coverage remain unproven. No native graph
+run authorized before parent reviews actual support/convergence.
+
+Saved-data forest review separated two concrete problems. At its48training sites,
+the fitted policy chooses37holds:12genuine rescues,25zero-effect choices and0
+selected lost-hit choices.18/21all-zero target sites still predict a positive
+advantage; all523positive leaf contributions there mix rescue and zero samples.
+In deployment107/114option starts receive another intervention within160cameras,
+median gap16, contradicting the baseline continuation used for acquisition.
+Everyhit-enabledgame first intervenes1–3cameras afteritsfirsthit. Root considered
+one fixed-weight baseline-tail correction; Sol challenged it because false
+positives already exist at the original training sites. Root accepted that
+challenge and STOPPED the forest family rather than tuning holds/thresholds.
+Diagnostics: `mechanism-review.json`, `tail-mismatch-diagnostic.json` in forestroot.
+
+## October29: kernel transition graph offline fit converged; native qualification next
+
+Original60s setup stopped twice before neighbors/learning: missingPYTHONPATH,
+then65five-entity scenes exceeding the fixedcapacity4. Preserveoriginal receipts;
+no learned fit occurred. Explicit separate60s recovery corrected unsupported
+handling without increasingcapacity: sourceoverflow cannot supply neighbors,
+queryoverflow fallsback, successoroverflow forms an unknownmodelboundary.
+All65overflow rows retained in data accounting;0hits/0naturalends losttosourceoverflow.
+Sevenfocusedtests passed. Firstactualfit converged in13.56s,1012iterations,
+residual9.966e-9,reported fixedpoint errorbound5.526e-6. Retained27,471observations,
+118hits,52verifiednaturalends.64save/load/query rows matched;0nativecameras,
+1.21MBartifacts. GraphSHA:
+4067f033ec767fa072ab4e9342d0d95b9f27b030cbcda536e16261fd7bdccb75.
+Artifact `pong-kernel-transition-graph-20261029-r1-recovery`.
+
+20,080/22,233post-hit source rows support baseline+atleastonealternative (90.316%);
+674/27,301continuations lack any successor action support.13,343saved-source
+choices change. These are fitted-data diagnostics, not improvement. Fixedp95
+unlabeledradius.7568188 may admit overlybroad neighborhoods; independentagent
+checks actualselected distances before native. Root assigned value_execution a
+separate180s frozen native comparison with exactstatefulquery/historyaudit:
+8TRAIN→conditional32TRAIN→conditionalfresh32TAG63217. No graphrefit or radius/
+coverage/discount sweep. No promotion unless actual returns justify advancement.
