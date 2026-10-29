@@ -1,8 +1,10 @@
 # M1B research handoff — 2026-10-29
 
-## Current position — relational feedback search running
+## Current position — learned feedback qualified; reliability still incomplete
 
-The milestone is **not met**. Baseline `40069` remains the primary checkpoint.
+The milestone is **not met**, but the compact feedback learner has now produced
+a substantial fresh-game improvement. Preserve `40069` as the historical baseline;
+carry the new relational endpoint for further scaffold development.
 The user has authorized continuing without further architecture approval until
 reliable learned match-long returns are achieved or they stop work. Preserve the
 no-backpropagation, camera-input and no-expert-label constraints.
@@ -12,7 +14,7 @@ failed the frozen fresh comparison: **74 to 68 returns**, with first returns
 unchanged at 26 and later returns falling from 48/69 to 42/64. No promotion.
 Stop the symbolic grammar family; see the symbolic archive and fresh outcome notes.
 
-One compact relational feedback search is now running in
+The compact relational feedback search completed in
 `/workspace/m1b-experiments/pong-relational-search-20261029-r1` under spec
 `aa9b357ca0c2f354f1f078bcf41d25614024bd7cc25942d257dcd9da73c557c7`.
 It learns anonymous object-pair binding, axis/polarity and five feedback
@@ -21,7 +23,28 @@ are retained. This is a stronger controller prior with a smaller search space,
 not a new optimization algorithm. Fixed nested 4/8/16-game training cohorts avoid
 the previous rotating-fitness problem; only complete 16-game fitness can replace
 the incumbent. Total allocation: 900 seconds and 320,000 transition cameras,
-including a final 32-game comparison reserve. Fresh cohort 63313 remains reserved.
+including a final 32-game comparison reserve. Actual cost was 632.38 seconds,
+231,307 transition cameras and 448 initial observations.
+
+The selected controller learned choices `(3, 0, 1, 0, -1)`; all five numeric
+coefficients remained zero. Its learned mechanism is position feedback between a
+reward-selected anonymous visual pair. TRAIN32 improved **83 to 130 returns**,
+with later returns **54/76 to 101/110**. Frozen fresh cohort 63313 improved
+**90 to 131 returns**, with first returns unchanged at 30/32 and later returns
+**60/84 to 101/113 (71.4% to 89.4%)**. Games reaching five returns rose from 8 to
+18; the opponent missed no returns. All candidate decisions replayed exactly.
+Sources/assets stayed frozen; the 32 fresh starts were independently checked
+against all 86,815 declared exclusions. This is real improvement, not yet the
+95% reliability target or independently replicated learning.
+
+Endpoint `models/final-policy.npz` has SHA
+`026ff8da73457238209708a03060bcaf10a5f94bbb83805d9f7a60c0644beedf`.
+Next: compare the same learned controller from the first supported observation
+against its current baseline-until-first-hit gate. Separately, a new persistent-ID
+adapter will test using the existing vision system's carried entities during
+brief observation gaps. No additional fits or coefficient sweep are selected.
+Both changes require new runtime identities and fresh qualification; 63313 must
+not be reused as an untouched evaluation cohort.
 
 The new fitness runner uses an exact encoder-copy optimization. A paired native
 proof reproduced every action, feature, encoded observation and runtime-state hash.
@@ -29,7 +52,7 @@ One timing pair suggests modest savings, not a general speedup percentage. Origi
 pinned runners are untouched. Helper commit `3e9081d`; search commits `7238313`
 and `e144648`. The old unlaunched spec is preserved in the run directory.
 
-Reused Sol 6.1 XHigh agents: `value_execution` owns the running search;
+Reused Sol 6.1 XHigh agents: `value_execution` owns execution and opening-gate comparison;
 `learning_challenge` independently reviews the mechanism and next direction;
 `runtime_efficiency` completed the exact-copy proof; `symbolic_control_challenge`
 completed the negative fresh result. Parent owns synthesis, review and direction.
