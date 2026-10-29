@@ -14,7 +14,10 @@ The memory controller reanchors the learned horizontal pair whenever the require
 
 Cost was 61,261 transitions and 64 initials in 188.119 seconds, within 300 seconds / 64,000 transitions. Every policy decision replayed exactly after reloading all public metadata and raw baseline inputs. Source, original weights and assets remained frozen. The ungated arm made 6,570 decisions using retained visual identities; 309 decisions used baseline fallback because no binding was available or a selected ID disappeared.
 
+The subsequent candidate-only fresh cohort at tag 63345 returned 179/180 (99.44%), with first returns 32/32 and later returns 147/148 (99.32%). All games reached two returns, 31 reached three returns, and 31 reached the 20-second limit. This meets the short-cohort point targets; independent acquisition and longer-duration validation remain separate requirements. Cost was 31,478 transitions and 32 initials in 96.401 seconds. Every public-input decision replayed exactly, with all source and model hashes unchanged. No baseline rerun or refit occurred.
+
 - Experiment: `/workspace/m1b-experiments/pong-relational-memory-20261029-r1/summary.json`.
 - Ungated model SHA256 `75530410f2c985a3037e9aa264447b8d172e5e9297a9e556bbb74d2c511dc7cc`; gated model SHA256 `5466b30c0de02f5774aa8cd3bd9b6c1bf31356b3ca1036f27286073fd10d9f13`.
 - Spec SHA256 `1df9f58476d6d01845ca7b053df2c891e08175af70d8855a4b2ce56628c708be`; prior unlaunched spec preserved as `spec.pre-exact-copy.json`.
 - Core `cb38dcf`; public harness `a9a2cb0`, `9473571`. Twenty focused tests passed before launch. Fresh 63345 was reserved for the selected ungated procedure; 63329 remained unused.
+- Fresh outcome: `/workspace/m1b-experiments/pong-relational-memory-fresh-20261029-r1/summary.json`; spec SHA256 `136fbefca2bfef0435fae97311cea8f5b2038fd85d57c6c6b7d6b0be13167bb2`, wrapper `7b5b2bf`.
