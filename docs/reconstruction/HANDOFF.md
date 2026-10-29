@@ -9,8 +9,11 @@ Both new memory arms passed full serialized public-input/action replay (61,261
 decisions). Current continuation artifact:
 `/workspace/m1b-experiments/pong-relational-memory-20261029-r1/models/ungated.npz`,
 SHA `75530410f2c985a3037e9aa264447b8d172e5e9297a9e556bbb74d2c511dc7cc`.
-This is not yet fresh/long-match qualification. `value_execution` owns the approved
-fresh63345 candidate-only check and a compact streaming-audit worker;
+Frozen fresh63345 also passed: **179/180 returns**, first32/32 and later147/148;
+31/32 games lasted20 seconds. All31,478 public-input decisions replayed exactly,
+with source/assets frozen. Cost96.40 seconds. This is not yet long-match or
+independent-acquisition qualification. `value_execution` owns a compact
+streaming-audit worker and the final longer-play validation coordinator;
 `learning_challenge` owns two new independent categorical acquisitions. Neither
 acquisition nor final long validation is authorized to launch before parent source
 review. See `docs/plans/2026-10-29-feedback-replication-next.md`. No further
