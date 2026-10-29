@@ -166,6 +166,7 @@ def evaluate(model_path,seed,max_episode_ticks,artifact_directory,deadline_monot
     model_frozen=model_path is None or sha(model_path)==model_sha
     complete &= model_frozen
     if complete:
+        assert session.checked_rows==session.transitions==len(rows)
         assert native_count_status(annotation,report)['valid_terminal_counts']
         assert len(events)==annotation['own_opportunities'] and sum(e['hit'] for e in events)==report['hits']
     tape=directory/(key+'-events.npz')
@@ -174,6 +175,7 @@ def evaluate(model_path,seed,max_episode_ticks,artifact_directory,deadline_monot
         terminated=np.array([r['terminated'] for r in rows],bool),truncated=np.array([r['truncated'] for r in rows],bool),
         opportunity_tick=np.array([e['tick'] for e in events],np.int32),opportunity_hit=np.array([e['hit'] for e in events],bool),
         opportunity_first=np.array([e['first'] for e in events],bool))
+    if complete:assert int(data['hits'].sum())==int(report['hits'])
     np.savez_compressed(tape,**data)
     tail_files=None
     if tail:
