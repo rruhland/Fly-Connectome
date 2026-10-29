@@ -112,15 +112,33 @@ later9/15→6/13. Baseline still23total/16later. All3,270 rows audited exactly;
 3,270 new transition cameras +8 initials in16.508s. Source/assets frozen.
 No remaining24 or fresh63265 games; no promotion. Stop data-only SMDP cycles.
 
-Current direction: learned one-step visual scene changes plus short primitive-action
-receding-horizon planning. Frozen C1 option3 supplies a value tail; new learned
-hit/end predictions supply immediate outcomes. Execute one command, observe again,
-then replan. No blind16-frame hold, simulator lookahead, object-role labels or
-hand-coded geometry costs. Baseline remains active until first actual own hit.
-learning_challenge owns fixed specification/model/planner; value_execution owns
-existing-data inventory and native adapter/evaluation. Parent reviews before the
-single bounded fit/native pilot. User waiver persists; no approval question.
-Bridge belongs to another thread.
+Learned-dynamics pilot completed and was rejected. Source18f09cb: ridge visual
+changes +8 residual trees,16 event trees, H8/W8 primitive replanning, previous16
+actual commands, frozenC1option3 tail. Prepared114,229 unique transitions from452
+traces/206starts in25.04s; retained visibility/cardinality changes and actualprefixes.
+One fit39.131s,1.47MB new model; model
+171b9acabd3c4abc4b446b9f8c83a373bd36816aedfc8f96cebda80a075a189d.
+Compiled exports2048rows/head and32 serialized beam plans exact; mean9.145ms/query.
+Actual8 baseline23→11total, first7same, later16/21→4/11, second4same, max6→2.
+2958transitioncameras+8initials in21.307s. AllrawQ/historyrows checked;402planner
+queries replayed includingonecompletegame. Sources/assets frozen. No32/fresh63281.
+Artifact `pong-delta-native-20261029-r1/summary.json`. Stop model/planner variants.
+
+CURRENT: one compact structural arithmetic/conditional policy search. Independent
+Sol `/root/symbolic_control_challenge` owns grammar/mutation/tests; reused
+`/root/value_execution` owns reward-only nativefitness/coordinator/exactcache and
+qualification. Root reviews fixedsource/spec before launch. Zero-residual40069
+incumbent, baseline until actual firsthit; actual own-hit counts fitness, noexpert
+labels orlookahead. Proposedfixed900s/320kcamera envelope, max16generations×8
+challengers with4phasebalancedrotatingTRAINstarts. Reserve150s/40k forfinal32;
+40k corrected BEFOREtraining because32successfulgamescanexceed30k. Freshonlyif
+sufficientremainingbudget; otherwiseparentcanallocatefreshafterrealTRAINgain.
+No search/native has launched yet. Smallprogram doesnot implycheapacquisition;
+see independent symbolic-policy research note and inspect actual transfer.
+
+learning_challenge performs atmost3min savedtrace critique of failedworldplanner,
+no fit/native/variants. User waiver persists; continue to reliablelearnedreturns
+oruserstop. Bridge belongs to another thread.
 
 Disk headroom: removed147MB completed unit-test temporaries, then hardlinked125
 SHA-identical frozen transform copies, recovering1.267GB. All research paths/bytes,

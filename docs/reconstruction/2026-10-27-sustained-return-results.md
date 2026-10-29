@@ -1178,3 +1178,40 @@ identifies policy inconsistency in approximate greedy backups as another possibl
 failure mechanism; that cause is not established in our results. A frozen single
 option tail avoids another max across its four noisy outputs, but remains an
 approximate fitted value and can still be exploited by a planner.
+
+
+### Learned visual dynamics + primitive planning: actual failure
+
+Dataset extraction25.04s:452traces/114229transitions/206TRAINstarts.114097successors;
+481ownhits328naturalends.29712pairedmaskchanges comprise664cardinalitychanges and
+29048same-cardinality observed/known flips; retain these observations. Prefix
+history for all48paired sites preserved. No new acquisition cameras.
+Data69a126e0385f75c45617813cacf859e53cdf7108e08e17e20a2536b0f8d9fd20.
+
+Source18f09cb, fixedspecf517411e53aad34a549501f0a0dbe0c6ad1e3ddad0395ee05e2f3f0db18c1017.
+Fit39.131s: ridge+8tree visualdelta predictor,16tree competingevent head;
+112655world/113479eventrows, all481hits/328ends retained. No class balancing,
+privileged geometry/hiddenactivation, simulator lookahead or teacher labels.
+Exact exports2048/head and32 serialized fullplans; model1.47MB. H8/W8 primitive
+beam averaged9.145ms/max18.501ms across32posthit probes, each156expandednodes.
+Model171b9acabd3c4abc4b446b9f8c83a373bd36816aedfc8f96cebda80a075a189d.
+Training delta error is not performance evidence. Tail remainsfrozenC1option3.
+
+Actualnative8 **23→11total**,first7same,later16/21→4/11,second4same,max6→2;
+no thirdreturn.1346actions changed. Cost2958transitioncameras+8initials/21.307s.
+All2958rawbaselineQ/publichistoryrows checked;402plannerdecisions replayed,
+includingonecompletechronologicalgame andfixedspots elsewhere. This is deliberately
+not described as full policy replay on every row. Sources/assets frozen.
+Native specf08ff375b2434fefbe4d2e784e50e9521691eccc3e09c45f8a5e60af3ecac5b7.
+No remaining24/fresh63281; no promotion or plannerparameter variants. Baseline40069
+remainsprimary. Artifact `pong-delta-native-20261029-r1`.
+
+Nextselecteddifferentroute: compact structurally evolved arithmetic/conditional
+controller, judgeddirectlybyactualownhits. SeparateSolresearchsupports feasibility,
+not minutes-scale acquisition. Coreagent ownsgrammar; valueagent reward-only
+fitness/persistentworkers/exactcache. Proposed900s/320kcamera cap,16×8challengers,
+4rotatingphasebalancedTRAINseeds; final32reserved150s/40k. Camerareserve increased
+from30k BEFOREsearch because32fullsuccessfulralliescanconsume32kcameras. Conditional
+freshrequiresenoughremainingbudget or a separateparentallocationafterqualification.
+No training launched at this entry. Briefsavedtraceworldmodelcritique may inform
+future decisions, but doesnotauthorize variants.
