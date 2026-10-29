@@ -61,3 +61,54 @@ The new data offers deliberate option coverage in candidate-induced states. It
 does not guarantee adequate conditional support or cure partial observability.
 Actual candidate1 comparisons must include both candidate0 and the baseline;
 recovering partway toward baseline is not promotion or the user's milestone.
+
+## Completed append and offline refit
+
+The completed collection summary verified frozen sources/assets, all 64 started
+receipts and camera counts, candidate0 model identity, receipt hashes and each
+scene/transition hash before ingestion. The original plan remains preserved as
+`cycle-plan.before-collection-guard.json`; guarded plan SHA:
+`0d285bd11098a8b13374494689cfae21d7a21151c05025e88ff938ff53fcd3a5`.
+Collection spec SHA:
+`4428646edb4c832c6bce9b6754915e5651db655b26286f00a0d8e9a8c6d08ccf`.
+The guard changes were committed as `b7d5c18`; the original adapter is `e4007b3`.
+Five focused append/guard tests passed, alongside the seven previously passed
+unchanged learner tests.
+
+All eight candidate0 TRAIN evaluations contributed 3,150 already-recorded cameras
+and 2,836 SMDP windows. All 64 newly collected trajectories contributed 22,876
+cameras, 86 actual hits and 18,035 windows. Every old prepared array remains a
+byte-identical prefix of the combined dataset. There are 139 distinct starts and
+65,726 actual option windows, of which 65,409 have supported source scenes.
+
+| Option | Eligible rows | Distinct starts | Known MC labels | Unknown MC tails |
+| --- | ---: | ---: | ---: | ---: |
+| Held 0 | 4,160 | 133 | 3,789 | 371 |
+| Held 1 | 3,712 | 130 | 3,695 | 17 |
+| Held 2 | 2,558 | 129 | 2,510 | 48 |
+| Baseline 1 camera | 54,979 | 139 | 51,702 | 3,277 |
+
+The unchanged weight formula gives each option 25% total mass. The final combined
+data spec SHA is
+`53629b2ed3e527224895bbbf75f7048cc23b19ea6a14d366573088187b9b1208`.
+The prepared dataset occupies 1.26 MB.
+
+The one refit completed in 166.942 seconds, with all export/parity work charged.
+Initial MC fitting took 7.594 seconds using 61,696 known labels, omitting 3,713
+unknown tails only from MC initialization. Sixteen FQI updates completed; another
+complete update did not fit the remaining allocation. This time-based final
+iteration differs from candidate0's 26 updates under the same envelope; no native
+or training outcome selected it, and neither endpoint is claimed converged.
+
+The exported final model matched sklearn exactly on all 65,409 training inputs.
+Serialized values/support also matched all four options on 512 saved states,
+2,048 queries. The final forest has 798,878 nodes. New artifacts occupy 22.67 MB,
+below the 50 MB bound. No new native comparisons ran in the learner task.
+
+Artifacts: `/workspace/m1b-experiments/pong-smdp-closed-loop-refit-20261029-r1`.
+Final `final-forest.npz` SHA:
+`e58a73f8ba9fe695aa7e1815fc268aaf43bef0759f8a65760fa58bcf8009f2cd`.
+Initial `initial-mc.npz` SHA:
+`29216b0319d24efa79780db563e0030b4e54b70d4acce32924ef2bc44e8d7cb9`.
+Candidate0 remains unchanged. The final hash and stable API were sent to the
+evaluation worker for parent review before candidate1 comparison.
