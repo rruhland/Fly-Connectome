@@ -20,31 +20,44 @@ Main checkout `/workspace/Fly-Connectome-m1b`, branch
 `reconstruction/m1b-continuation`; Python `/workspace/Fly-Connectome/.venv/bin/python`.
 Use `PYTHONPATH=src:scripts/experimental`, one BLAS/OpenMP thread and four native workers.
 
-## Latest active update
+## Latest active update — October29
 
-Tree failed23→1 (source7d982bc); localoptionmemory acquired2rescues butfailed
-23→19 (1903b20); rewardhistorycontext removedopeningloss butonly23→23
-(59c5423). Keep40069baseline,761secondary, no milestoneclaim. Detailsinledger.
+User has waived further architecture approval through this milestone; do not ask
+again. No backpropagation, privileged inputs or expert action labels. Goal remains
+95% first/later returns on fresh games with200+ later opportunities and independent
+training replication. Current40069baseline remains primary;761secondary is unpromoted.
 
-`/root/value_execution` now implements olderpinnedOgmaNeo2 temporalrepresentation
-pluszero-initializedlocalactor correction onfixed40069logitprior. Scratch
-`/workspace/ogmaneo2-feasibility-c5be9`, pinnedc5be9ec41d26aeeb2fc805961140781c851542cf.
-Inspectedlocalencoder/predictor/linearactor paths show nohiddenbackpropagation;
-currentAOgmaNeo successor isNOTsubstitutable. Preserve CC BY-NC-SA4.0 attribution.
-Parent approved fasterextraencoder onexisting7currentvisionplanes, hierarchy,
-90s observationpredictionwarmup thenfreeze representationparameters,300s actual
-onlineactorlearning,remaining qualification within600s total. Fix terminalbootstrap,
-reset runtimehistory eachrally, exactelapseddiscount, zeroTD→zeroactionupdate,
-actualpreviousactions/probability alignedtohistory. Actorpriorbaseq/T withTfixed
-.008161197682294006; evaluatefloat64greedy withliteralbasechooser atzero correction.
-No expertlabels or offpolicy actor warmup. Checkpointsinitial/intermediate/final,
-finalonlyqualification. DedicatedPython/CABI experimental files; parentreview
-before native launch. No native Ogma experiment launched yet.
+Completed pilots: fixed-treeFQI23→1; local option memory found2actual rescues but
+23→19 deployed; past-reward context correction23→23. Original Ogma temporal/local
+actor23→10, rejected. Its first changes all occurred on empty selected current
+visual planes, while the baseline still had other camera context.
 
-`/root/alternative_mechanisms` idle/reusable. User has waived further architecture
-approval until milestone complete orstop; DO NOT askagain. Existing constraints
-noBP/privilegedinputs/expertlabels remain. Goal95%first/later onfresh200+later
-opportunities withreplication; notjustselected20srallyscreen. Bridgeelsewhere.
+Guarded SAME Ogma weights also REJECTED on32games:82→74total,29→24first,
+18→15second,53/76→50/67later. Source19c8bdf; recovery85f2b5b.
+Screen8+1did not transfer. All16,441completed candidate rows replay exact;
+64initial empty-prefix rows matchbaseline. Original180s interruption left17complete
+receipts+166-row orphan. Separate120s recovery completed15missing in46.586s,
+6167cameras+15initials. Saved work lowerbound16,607cameras+33initials PLUSunknown
+interruptedwork. No fresh63185, no more temporalinput/Tvariants. Artifacts under
+`pong-ogma-prior-20261028-r1/empty-current-correction/recovery-20261029-r1`.
+
+Active: reused `/root/value_execution` implementing paired option-advantage
+ExtraTrees,48distinctTRAINsites16miss/16success/16uniformposthit. Actual binary
+hit-within160-camera outcomes for matched baseline/16-camera actionholds; learns
+three paired advantage functions, no Bellman recursion/expertlabels/backprop.
+Generic horizontal-first scene sorting (input[y,x]), fixedcapacity from2048calib,
+plus baselineQcontext. Atleast32complete actionbalanced sites withanynonzerotarget
+permitONEfit+screen, no arbitrary fourrescue gate.64trees/depth5/minleaf2 fixed.
+Parent reviews before180sacquisition/180sevaluation. No native work launched yet.
+See `docs/plans/2026-10-29-paired-option-regression-challenge.md`.
+
+Earlier independent agent unavailable after refresh; new `/root/learning_challenge`
+Sol6.1XHigh researches distinct dense-transition alternatives/challenges assumptions.
+No native runs assigned to that agent. Userwaiver persists; bridgeelsewhere.
+
+Disk headroom recovered by deleting only147MB of completed unit-test temporary
+models under `/tmp/pytest-of-agent`; all research checkpoints/receipts preserved.
+Do not duplicate large metrics or checkpoints. Bridge belongs to another thread.
 
 ## Latest result / next action
 

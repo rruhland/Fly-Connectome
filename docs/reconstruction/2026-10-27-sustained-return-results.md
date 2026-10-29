@@ -879,3 +879,37 @@ execute exactbaselineaction/Q and feedactualaction to nextstep. No newtraining,
 refit,warmup orhyperparameterchanges. Newpolicyidentity includesguardcontract;
 separate180sevaluation8→32→conditionalfreshTAG63185. Originalsourcespreserved.
 Ifneutral/negative, stopcorrectedbranch ratherthanfurtherinput/temperaturevariants.
+
+## October29: empty-current temporal correction rejected on32 games
+
+The same45fe2d trained Ogma endpoint advanced temporal state every camera but used
+exact40069action/Q whenever its selected1792current visual inputs were empty.
+No warmup, learning or refit. Guard source19c8bdf; policy identity
+34e9c65ce6610d98a5d35b79db4d96806d6c46bf8788918056f4cd38d18846c1.
+Screen8 improved23→24returns,7first unchanged,16/21→17/22later.
+An environment interruption then left17complete receipts plus an orphan166-row
+raw observation file. Original180s clock was not reset; unsaved interrupted work
+is unknown. Explicit120s recovery reran only15missing games, preserving all17
+completed receipts and the orphan. Recovery source85f2b5b,46.586s,6167transition
+cameras+15initials. Known saved work lower bound16,607transition cameras+33initials,
+plus unknown interrupted work. These bounds are not a complete compute total.
+
+Full TRAIN32 rejected:82→74total returns,29→24first,18→15games≥2,
+53/76→50/67later. The rising conditional later fraction(.697→.746) is misleading
+when fewer games reach those opportunities. All16,441completed candidate rows
+replayed exactly;64initial empty-prefix action/Q/hit rows matched40069. Sources,
+assets, original receipts and orphan remain unchanged. No fresh63185 evaluations,
+no promotion, no more input/temperature variants. Artifact:
+`pong-ogma-prior-20261028-r1/empty-current-correction/recovery-20261029-r1/summary.json`.
+
+Next selected prototype combines real paired action consequences with reward-trained
+ExtraTrees partitions over structured visual scenes, instead of fixed scene-distance
+retrieval.48distinct TRAIN sites include16uniform post-hit positions to cover
+outgoing states as well as outcome-aligned anchors. Binary hit-within160-camera
+window targets exclude timing-only positives. Parent amended generic sort to
+horizontal-first (the existing normalized_position is[y,x]), and removed the
+arbitrary four-rescue prerequisite:32complete balanced sites and any nonzero target
+permit one cheap fit/screen. No sweeping or automatic promotion. Existing40069
+remains primary. A separate Sol6.1XHigh challenger investigates dense-transition
+alternatives from outside sources; implementation and independent challenge run
+in parallel. Proposal: `docs/plans/2026-10-29-paired-option-regression-challenge.md`.
