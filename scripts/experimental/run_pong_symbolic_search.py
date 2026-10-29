@@ -17,6 +17,8 @@ from run_rally_option_memory import ROOT, MODEL, BANK, EXPECTED, read, write, sh
 from run_rally_repertoire_collection import select_starts, exclusions
 from stateful_pong_comparison import native_task, comparison
 from run_rally_raw_fresh_screen import paired_metrics
+from return_metrics import aggregate
+from run_rally_raw_optimizer import more
 import run_practical_pong_v2 as base
 
 DEST=ROOT/'pong-symbolic-search-20261029-r1'
@@ -84,7 +86,7 @@ def prepare():
         fitness_cache='ONLYexactactiveprogramhash+seed+frozenruntimeidentity;completedgamesonly;zeroexactbaselinecachedbank',
         runtime='exact40069untilactualownhit;thenprogramresidualeachcamera;normalfullgame;notrewardfilledprefix',
         fitness_archives='compactactualaction/hit/dt/endtapewithdecisiondigest;nochallengerraw/scenecapture;digestnotreplaycertificate',
-        final='ONEselectedfrozenendpoint32completeTRAINgamesfullrawcapture/replayvscached40069;total/latergainfirstparitysecond/laterfractionnotworse',
+        final='ONEselectedfrozenendpoint32completeTRAINgamesfullrawcapture/replayvscached40069;LITERALzeroactivehashreusesexactcachedbaseline32withoutnewnative;total/latergainfirstparitysecond/laterfractionnotworse',
         fresh='conditional32pairsONLYifTRAINqualifiesANDremainingtransitionbudget>=64000ANDremainingwall>=90s;elseTRAINqualifiedawaitseparateallocation',
         fresh_tag=63297,source=base.source_signature(),files={str(p):sha(p) for p in files},
         assets={str(p):sha(p) for p in assets},no_backprop=True,no_expert_labels=True,no_runtime_simulator_lookahead=True,
@@ -213,13 +215,23 @@ def run(approved):
         summary.update(status='endpoint_frozen',selected=incumbent.to_dict(),search_elapsed_seconds=time.monotonic()-began,search_cost=budget.state())
         endpoint=DEST/'programs/final.json';write(endpoint,incumbent.to_dict())
         seeds=[e['seed'] for e in spec['bank']]
-        results=endpoint_dispatch(pool,endpoint,seeds,DEST/'final32',budget,deadline)
-        complete=len(results)==32 and all(r['complete'] for r in results)
-        stats=dict(complete=complete)
-        if complete:
-            byseed={r['seed']:r for r in results};stats.update(comparison([read(e['receipt']) for e in spec['bank']],[byseed[s] for s in seeds]))
-            stats['qualified']=qualifies(stats)
-        write(DEST/'final32/summary.json',stats);summary.update(final32=stats,status='TRAIN32_complete' if complete else 'TRAIN32_partial')
+        literal_zero=incumbent.active_hash()==Program.zero().active_hash()
+        if literal_zero:
+            baseline=[read(e['receipt']) for e in spec['bank']]
+            outcome=aggregate([r['annotation'] for r in baseline]);tail=more(baseline)
+            stats=dict(complete=True,baseline=outcome,candidate=outcome,baseline_more=tail,candidate_more=tail,
+                qualified=False,literal_zero_active_hash_reuse=True,cached_complete_games=32,
+                new_transition_cameras=0,new_initial_cameras=0,no_new_policy_replay_claim=True)
+            complete=True
+        else:
+            results=endpoint_dispatch(pool,endpoint,seeds,DEST/'final32',budget,deadline)
+            complete=len(results)==32 and all(r['complete'] for r in results)
+            stats=dict(complete=complete)
+            if complete:
+                byseed={r['seed']:r for r in results};stats.update(comparison([read(e['receipt']) for e in spec['bank']],[byseed[s] for s in seeds]))
+                stats['qualified']=qualifies(stats)
+        write(DEST/'final32/summary.json',stats);summary.update(final32=stats,
+            status='unchanged_literal_zero' if literal_zero else 'TRAIN32_complete' if complete else 'TRAIN32_partial')
         print(dict(stage='final32',**stats),flush=True)
         if complete and stats['qualified']:
             enough=spec['transition_camera_cap']-budget.used>=64000 and deadline-time.monotonic()>=90
