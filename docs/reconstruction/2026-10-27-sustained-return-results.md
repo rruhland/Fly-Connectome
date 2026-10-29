@@ -1285,3 +1285,52 @@ Budget: 900 seconds / 320,000 transition cameras, with 150 seconds / 40,000
 reserved for final TRAIN32 qualification. Only complete TRAIN16 fitness can
 replace the incumbent. Fresh 63313 is conditional on qualification. Twelve
 focused tests passed before launch. No performance result is claimed here.
+
+### Relational learning: substantial fresh improvement
+
+The search completed in 632.38 seconds, using 231,307 transition cameras and
+448 initial observations. Its reward-selected binding was `(3, 0, 1, 0, -1)`;
+all five numeric coefficients stayed zero. TRAIN32 improved **83 to 130 returns**
+and later-return success **54/76 to 101/110**. Fresh cohort 63313 improved
+**90 to 131 returns**, with first returns unchanged at 30/32 and later returns
+**60/84 to 101/113 (71.4% to 89.4%)**. Games reaching five returns rose from 8 to
+18. The opponent returned every ball. The fresh mean-hit gain was 1.281/game,
+with paired bootstrap interval [0.656, 1.906]. Candidate decisions replayed exactly;
+all source and asset pins held. This establishes a useful scaffold improvement,
+not reliable long-match play or general game learning.
+
+### Opening and visual-memory integration: all training opportunities returned
+
+Using the same observed-only rule from the opening raised TRAIN32 returns from
+130 to 144, first returns from 29 to 31, and games reaching a second return from
+23 to 31. Later success slipped from 101/110 to 113/125, so it failed the declared
+non-worse-later-rate gate. This was retained as an experimental branch; no fresh
+63329 evaluation or promotion followed.
+
+TRAIN-only analysis found that the controller discarded useful existing visual
+memory when the observed entity count dropped. Public identity continuity allowed
+a specific representation change: bind the learned pair on full observations,
+then continue the same published IDs through gaps. No new motion model, object
+roles, teacher actions or policy coefficients were added. Exact full-observation
+parity and public-ID/serialization behavior were tested before native execution.
+
+The fixed opening-gate × visual-memory comparison produced:
+
+| Procedure | First returns | Later returns | Total returns | Full 20-second games |
+|---|---:|---:|---:|---:|
+| Observed only, baseline opening | 29/32 | 101/110 | 130 | 20/32 |
+| Observed only, learned opening | 31/32 | 113/125 | 144 | 19/32 |
+| Public memory, baseline opening | 29/32 | 130/130 | 159 | 29/32 |
+| Public memory, learned opening | **32/32** | **148/148** | **180** | **32/32** |
+
+All 61,261 public-metadata/raw-Q decisions in the two new arms replayed exactly.
+Cost: 188.12 seconds, 61,261 transition cameras and 64 initials. Source/model/asset
+pins remained unchanged. Select the ungated memory procedure for further work,
+without claiming that these TRAIN results establish fresh reliability.
+
+Selected artifact:
+`/workspace/m1b-experiments/pong-relational-memory-20261029-r1/models/ungated.npz`,
+SHA `75530410f2c985a3037e9aa264447b8d172e5e9297a9e556bbb74d2c511dc7cc`.
+Next: frozen fresh63345 qualification, followed by two independently acquired
+controllers and duration-stratified longer-play validation. The acquisition and
+validation plan is `docs/plans/2026-10-29-feedback-replication-next.md`.

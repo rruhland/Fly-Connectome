@@ -58,6 +58,14 @@ Reused Sol 6.1 XHigh agents: `value_execution` owns execution and opening-gate c
 completed the negative fresh result. Parent owns synthesis, review and direction.
 Older entries below are historical and must not override this current position.
 
+Storage: two verified exact-byte hardlink passes preserve all artifact paths and
+contents. The latest manifest is
+`/workspace/m1b-experiments/storage-deduplication-20261029-r2.json`; it recovered
+236,535,808 allocated bytes across 1,530 aliases, excluding active relational
+artifacts. Treat completed artifacts as immutable. **Copy a linked file to a new
+inode before editing it; never overwrite a shared artifact in place.** No SQLite
+files were compacted and no unique experimental evidence was deleted.
+
 ## Active mandate
 
 Continue orchestration until ball returns are learned consistently throughout a
