@@ -55,6 +55,38 @@ def admitted_traces():
             files=[dict(path=str(p), sha256=sha(p)) for p in (path, scene_path)])
 
 
+def validate_completed_collection():
+    summary_path = COLLECTION / 'summary.json'
+    if not summary_path.exists():
+        raise RuntimeError('collection is still active or has no completed summary')
+    summary = json.loads(summary_path.read_text())
+    if (summary.get('source_frozen') is not True or summary.get('assets_frozen') is not True
+            or summary.get('status') not in ('all64complete', 'bounded_partial')):
+        raise ValueError('completed collection must verify frozen sources and assets')
+    started = [r for r in summary['traces'] if r['initial_cameras'] > 0]
+    paths = sorted((COLLECTION / 'traces').glob('site_??.json'))
+    if (len(started) != summary['started'] or len(paths) != len(started)
+            or {p.resolve() for p in paths} != {Path(r['receipt_file']).resolve() for r in started}):
+        raise ValueError('ingested receipt set differs from every started collection trace')
+    total = 0
+    for entry in started:
+        receipt_path = Path(entry['receipt_file'])
+        if sha(receipt_path) != entry['receipt_sha256']:
+            raise ValueError('collection receipt hash changed')
+        receipt = json.loads(receipt_path.read_text())
+        if receipt['model_sha256'] != C0_SHA or entry['model_sha256'] != C0_SHA:
+            raise ValueError('collection receipt used another model')
+        if (sha(receipt['scene_file']) != receipt['scene_sha256']
+                or sha(receipt['transition_file']) != receipt['transition_sha256']):
+            raise ValueError('collected scene or transition hash changed')
+        if receipt['transitions'] != entry['transitions']:
+            raise ValueError('collection receipt camera counts disagree')
+        total += receipt['transitions']
+    if total != summary['transition_cameras']:
+        raise ValueError('started collection trace cameras do not match summary')
+    return summary
+
+
 def collection_traces():
     paths = sorted((COLLECTION / 'traces').glob('site_??.json'))
     for path in paths:
@@ -68,6 +100,8 @@ def collection_traces():
         with np.load(data_path, allow_pickle=False) as saved:
             data = {key:saved[key].copy() for key in saved.files}
         n = len(data['action'])
+        if n != receipt['transitions']:
+            raise ValueError('transition array length disagrees with completed receipt')
         if not n:
             continue
         visual = scenes(scene_path)
@@ -185,6 +219,7 @@ def prepare(output):
         refit='one observed BEHAVIOR-tail MC initialization plus up to32FQI;180s allcharged;lastcompleteonly',
         no_new_native_in_learner=True, no_fresh_data=True, fresh63233_remains_unseen=True,
         no_hyperparameter_sweep=True,
+        collection_completion_guard='completed frozen-source/assets summary; every started receipt and camera; model/receipt/scene/transition hashes',
         source_files=[dict(path=str(Path(__file__)), sha256=sha(__file__)),
             *json.loads((OLD / 'spec.json').read_text())['source_files']])
     assert sha(OLD / 'final-forest.npz') == C0_SHA
@@ -204,10 +239,14 @@ def append(output, approved_plan, approved_collection):
     assert all(sha(f['path']) == f['sha256'] for f in plan['source_files'])
     assert sha(OLD / 'smdp-data.npz') == plan['old_data_sha256']
     assert all(sha(f['path']) == f['sha256'] for f in plan['admission_files'])
+    collection_summary = validate_completed_collection()
     with np.load(OLD / 'smdp-data.npz', allow_pickle=False) as saved:
         old = {key:saved[key].copy() for key in saved.files}
     appender = Appender(old, old_seed_map())
     admission = list(admitted_traces()); collected = list(collection_traces())
+    if (len(collected) != collection_summary['started']
+            or sum(len(t['actions']) for t in collected) != collection_summary['transition_cameras']):
+        raise ValueError('not every started collection trace and camera was ingested')
     collected_seeds = {t['seed'] for t in collected}
     if len(collected_seeds) != len(collected) or collected_seeds & set(appender.seed_map):
         raise ValueError('new collected TRAIN starts must be distinct and exclude all old/admitted starts')
@@ -235,6 +274,7 @@ def append(output, approved_plan, approved_collection):
             no_initial_policy_replacement=True))
     write(output / 'spec.json', spec)
     manifest = dict(old_manifest_path=str(OLD / 'data-manifest.json'), old_manifest_sha256=sha(OLD / 'data-manifest.json'),
+        collection_summary_path=str(COLLECTION / 'summary.json'), collection_summary_sha256=sha(COLLECTION / 'summary.json'),
         added_traces=appender.receipts, start_id_to_seed={value:key for key,value in appender.seed_map.items()})
     write(output / 'data-manifest.json', manifest)
     summary = dict(status='appended_no_fit', old_rows=len(old['source']), combined_rows=len(data['source']),

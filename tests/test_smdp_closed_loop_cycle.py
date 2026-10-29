@@ -1,11 +1,13 @@
 """The append operation preserves prior data, actual windows and unknown tails."""
 from pathlib import Path
 import sys
+import json
 
 import numpy as np
 import pytest
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'scripts' / 'experimental'))
+import run_smdp_closed_loop_cycle as cycle
 from run_smdp_closed_loop_cycle import Appender
 from pong_smdp_adaptive_forest import state_features, discount
 
@@ -75,3 +77,24 @@ def test_tick_timing_mismatch_is_rejected():
     actual['elapsed'][0] = .1
     with pytest.raises(ValueError, match='tick'):
         appender.add(actual)
+
+
+def test_collection_must_finish_and_all_receipts_and_data_must_match(tmp_path, monkeypatch):
+    monkeypatch.setattr(cycle, 'COLLECTION', tmp_path)
+    with pytest.raises(RuntimeError, match='active'):
+        cycle.validate_completed_collection()
+    folder = tmp_path / 'traces'; folder.mkdir()
+    scene_path = folder / 'site_00-raw-scenes.npz'; scene_path.write_bytes(b'scene')
+    data_path = folder / 'site_00-transitions.npz'; data_path.write_bytes(b'data')
+    receipt = dict(model_sha256=cycle.C0_SHA, transitions=3, scene_file=str(scene_path),
+        transition_file=str(data_path), scene_sha256=cycle.sha(scene_path), transition_sha256=cycle.sha(data_path))
+    receipt_path = folder / 'site_00.json'; receipt_path.write_text(json.dumps(receipt))
+    entry = dict(model_sha256=cycle.C0_SHA, initial_cameras=1, transitions=3,
+        receipt_file=str(receipt_path), receipt_sha256=cycle.sha(receipt_path))
+    summary = dict(status='all64complete', source_frozen=True, assets_frozen=True,
+        traces=[entry], started=1, transition_cameras=3)
+    (tmp_path / 'summary.json').write_text(json.dumps(summary))
+    assert cycle.validate_completed_collection()['transition_cameras'] == 3
+    data_path.write_bytes(b'changed')
+    with pytest.raises(ValueError, match='hash'):
+        cycle.validate_completed_collection()
