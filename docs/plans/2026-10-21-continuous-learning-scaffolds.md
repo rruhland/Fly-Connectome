@@ -1,5 +1,21 @@
 # Scaffolding a continuous non-backpropagation learner
 
+## Current authorization — 2026-10-29
+
+The user now approves continued work without further architecture approval until
+the current reliable-return milestone is complete or they stop work. This
+supersedes the older approval requirements below, while retaining no backpropagation,
+no privileged policy inputs and no expert action labels. The broader continuous
+learner and connectome goals are not satisfied by a successful Pong controller alone.
+
+Current research favors actual learned behavior over repeated surrogate fits.
+Following failed value, rollout and broad program-search pilots, the active test
+uses a compact generic feedback prior whose object binding and parameters are
+selected by actual rewards. Treat a successful result as a scaffold: document the
+prior explicitly, qualify it on unseen play, then test learning replication and
+longer rallies. Preserve useful learning and investigate concrete remaining failure
+mechanisms instead of automatically switching algorithms or sweeping parameters.
+
 ## Current direction agreed with the user
 
 Discover what can learn each component, then integrate the successful mechanisms
