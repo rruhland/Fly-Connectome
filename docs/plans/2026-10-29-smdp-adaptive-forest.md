@@ -117,3 +117,37 @@ support the methodological distinction: output-adaptive partitions resisted adde
 irrelevant variables better than fixed kernels in their control problems, and
 both model building and target prediction cost time. Their experiments do not
 establish Pong performance or convergence of this changing-partition estimator.
+
+## Completed offline sequence
+
+Parent approved final spec
+`7c4cd62eea3a7d0d0a0d9060b44405cc7d9045ea8afe662ab89960b52f8e221c`.
+Implementation and tests were committed as `3d156b9` before launch, and their
+source hashes stayed unchanged. Seven focused tests passed.
+
+The one sequence completed in 168.313 seconds of its original 180-second clock,
+including export and parity checks. Initial MC fitting took 4.667 seconds, using
+41,115 known observed-return labels and omitting 3,584 unknown tails. Twenty-six
+FQI updates completed. Iteration 26 is the final endpoint because another complete
+update would not fit the remaining allocation; no outcome was used for selection.
+This is not a convergence claim.
+
+Exact exported predictions matched sklearn on all 44,699 training inputs. The
+serialized model also matched all four option values/support on 512 saved states,
+2,048 queries. The final forest has 551,958 nodes. All new artifacts occupy
+15.48 MB, below the 50 MB bound. No native cameras were used.
+
+Artifacts are under
+`/workspace/m1b-experiments/pong-smdp-adaptive-forest-20261029-r1`:
+
+- Final `final-forest.npz`: SHA
+  `ca99b349d1ea26a2036214e37d04e58a2d39a59cf26b44d5aeed7e18484df295`.
+- Initial `initial-mc.npz`: SHA
+  `8eb52c1d2a54a7aed255b143de85e64f85426a938bf0ca57bf7b004a9c1d8c85`.
+- `fit-summary.json`, `iterations.json`, `fit-clock.json`, `inventory.json`,
+  `data-manifest.json` and the pinned `spec.json` preserve the sequence and data.
+
+Diagnostic support on the 512 saved audit states is 65.0%/63.1%/76.2%/99.8% by
+option. These are saved-state support statistics, not confidence bounds or native
+performance. The final API and hash were sent to the evaluation worker for parent
+review before any complete-game comparison.
