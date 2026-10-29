@@ -63,13 +63,21 @@ Graph4067f033ec767fa072ab4e9342d0d95b9f27b030cbcda536e16261fd7bdccb75 at
 Original60ssetupfailedbeforeanylearning(importpath,overflow); explicitseparate60s
 recovery preservedoldreceipts/specs. Sevenfocusedtests+64queryserializationchecks.
 
-`/root/value_execution` now builds ONE180s frozen graph nativecomparison:
-exactpubliccameraordinal%5/pastactualhit, baselineuntilhit andfallback whenbaseor
-alternative unsupported; strictlearnedvaluegain, primitiveactioneverycamera.
-8TRAIN→conditional32→conditional32freshTAG63217; no refit/radius/supportsweep.
-Dedicatedstatefulaudit; parentreviewsbeforelaunch. learning_challenge checksactual
-neighborgeometry offline, no native. Userwaiverpersists; no permissionaskneeded.
-See `docs/plans/2026-10-29-kernel-transition-graph.md`.
+Frozen graphnative69ea13a REJECTED23→10total,7firstsame,4→2second,16→3later.
+2717cameras+8initials,10.913s;allchronologicalrows exact,1020changedactions,
+1611/2020posthitrows supported. No32/fresh63217/radius/supportvariants.
+Artifact `pong-kernel-graph-native-20261029-r1/summary.json`.
+
+Active: learning_challenge builds ONE adaptiveExtraTrees SMDP-FQI fromreal saved
+16-camera constant-command windows plus1-camera40069baselineoption. Ownhit or
+naturaltermination endmacroearly; no switchingactions relabeledasholds. Targets
+next-ownhit withactualelapseddiscount; runtimeholds/terminationmatchtraining.
+32sharedactionconditionaltrees,minleaf4,nocap,32Bellmanrefits proposed;one180sfit
+sequence finalonly. Inventoryindependentmacrocoverage+fixedspec reviewedBEFOREfit.
+No newnative/acquisitionyet. value_execution independentlychallengessupport/
+contract. Rootselectedthis withSol toaddress tinyprimitiveactiongaps andtailmismatch;
+no hyperparametersweep. Userwaiverpersists, no permissionaskneeded.
+Sources/limitations loggedinresultsledger. Current40069/761stillunchanged.
 
 Disk headroom: removed147MB completed unit-test temporaries, then hardlinked125
 SHA-identical frozen transform copies, recovering1.267GB. All research paths/bytes,

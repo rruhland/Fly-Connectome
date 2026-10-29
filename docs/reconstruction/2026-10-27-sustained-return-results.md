@@ -985,3 +985,43 @@ checks actualselected distances before native. Root assigned value_execution a
 separate180s frozen native comparison with exactstatefulquery/historyaudit:
 8TRAIN→conditional32TRAIN→conditionalfresh32TAG63217. No graphrefit or radius/
 coverage/discount sweep. No promotion unless actual returns justify advancement.
+
+## October29: frozen transition graph rejected in actual play
+
+Nativeadapter69ea13a; spec5778911f3ac8a6450ab56f9aafb547997082ccf7b6d5ca39250670f570bcec61.
+Eight games23→10totalreturns,7→7first,4→2second,16/21→3/10later.
+2717transitioncameras+8initials,10.913s/180. Every2717chronological scene/action/
+baselineQ/support/strictgain/cadence row audited;1020actions changed,
+1611/2020posthitrows supported baseline+alternative. Graph/source/baseline frozen.
+No32/fresh63217 or radius/discount/support variants. Convergent interpolation and
+nominal coverage did not produce useful control. Artifact:
+`pong-kernel-graph-native-20261029-r1/summary.json`.
+
+Before native, actual changed alternatives had mediannearestdistance/radius.440,
+p90.723; mediannearestotherstart.460, median8th.600. Median5independentstarts,
+range2–8. Baseline nearest was exactlyself in96.7%eligiblequeries. Only14/13,343
+changed saved decisions were within twice the solvererror bound; this was not
+mostly numerical convergence noise. These observations motivate changing the
+learning problem rather than shrinking a radius after seeing results.
+
+Next hypothesis: primitive50Hz actionvalue differences are small relative to
+approximation error. Root and independentSol selected ONE adaptive-tree SMDP-FQI
+prototype on real sustained-command sequences already recorded:16camera constant
+command options, endingearlyonownhit/naturalend; and a1camera frozenbaselineoption.
+Only actualmatchingcontiguouscommands count; no changingactions relabeled as a
+hold, no expertlabels.32shared actionconditional ExtraTrees Bellmanrefits planned,
+actualelapseddiscount and next-hit target. Deployment must execute the same
+optiontermination used in learning, avoiding the earlier baseline-tail mismatch.
+Inventory independentmacrocoverage beforefit; rootreviews fixedspec. No newnative
+or parameter sweep authorized yet. learning_challenge implements; value_execution
+independentlychallenges data/support/contract.
+
+Root consulted Ernst,Geurts,Wehenkel2005, sections4and5.3.5:
+https://jmlr.org/papers/volume6/ernst05a/ernst05a.pdf . Their experiments distinguish
+reward-adaptive tree partitions from fixedkernels under irrelevant inputs.
+The earlier73-leaf randomtree and48-contextoptionforest do not establish that a
+proper dense adaptive-tree SMDP learner fails. Conversely, this source provides
+no Pong or current-vision guarantee. A Pong Q-learning thesis abstract was also
+checked (https://digitalcommons.wcupa.edu/all_theses/226/); it explicitly uses
+known custom-environment constraints, and its PDF was inaccessible, so it is not
+used as evidence for this unprivileged visual learner.
