@@ -39,7 +39,7 @@ def prepare():
     schedule=select_starts(1943906127,63345,exclusions(DEST),32);fresh=schedule.pop('TRAIN')
     schedule.update(probe=fresh[:32],unused_reserved=fresh[32:],purpose='reserved memory-branch qualification;never fitting')
     write(DEST/'fresh/schedules.json',schedule)
-    names=('run_relational_memory_comparison.py','public_entity_pong_native.py','pong_relational_persistent_adapter.py',
+    names=('run_relational_memory_comparison.py','public_entity_pong_native.py','exact_visual_transport_copy.py','pong_relational_persistent_adapter.py',
         'pong_relational_persistent_binding.py','pong_relational_feedback.py','stateful_pong_comparison.py',
         'pong_fixed_rbf.py','pong_fixed_pairwise.py','pong_continuous_visual.py','run_rally_option_memory.py',
         'pong_option_memory.py','rally_raw_capture.py','return_metrics.py','run_rally_raw_optimizer.py',
@@ -49,14 +49,14 @@ def prepare():
         OPENING/'spec.json',OPENING/'summary.json',DEST/'models/gated.npz',DEST/'models/ungated.npz']
     assets += [Path(e['receipt']) for e in prior['bank']]+[Path(p) for paths in cached.values() for p in paths.values()]
     spec=dict(seconds=300,transition_camera_cap=64000,initial_camera_cap=64,workers=4,seeds=seeds,
-        arms=['gated','ungated'],dispatch='interleavedgated/ungatedforeachfixedTRAINseed',
+        arms=['gated','ungated'],dispatch='Interleave gated and ungated games for each fixed TRAIN seed.',
         model_paths={a:str(DEST/'models'/f'{a}.npz') for a in cached},
         model_hashes={a:sha(DEST/'models'/f'{a}.npz') for a in cached},original_path=str(ORIGINAL),original_sha256=ORIGINAL_SHA,
         cached_observed=cached,baseline_bank=prior['bank'],
-        public_input='exactexistingencodedentities:id,normalized_position,observed_velocity,observed,velocity_known,observation_age_seconds,velocity_age_seconds,association_strength',
-        input_archive='float64sixfields+int64publicids+float64ages/strength+explicitNonevalidity;Npreactioninputs;allpolicydecisionsreplayed',
-        rule='reanchorlearnedranksoneveryexactnobservedscene;carrysamepublishedIDson<n;clearselectedIDabsent/invalid/>n;existingtrackertimeonly',
-        comparison='eachmemoryarmvsitsmatchingcachedobservedarmand40069;alsomemorygatedvsungated;inspectabsolutefirst/laterfractions,tails/timeoutsbeforechoosingfreshbranch',
+        public_input='Existing encoded entities: id, normalized_position, observed_velocity, observed, velocity_known, observation_age_seconds, velocity_age_seconds, association_strength.',
+        input_archive='Six float64 fields, int64 public IDs, float64 ages and strength, explicit None validity; N inputs before actions; replay every policy decision.',
+        rule='Reanchor learned ranks on every exact-n observed scene; carry the same published IDs below n; clear on absent selected ID, invalid input or excess observations. Use only the existing tracker lifetime.',
+        comparison='Compare each memory arm with its matching cached observed arm and baseline 40069; also compare memory gated with ungated. Inspect absolute first/later fractions, tails and timeouts before choosing a fresh branch.',
         fresh_tag=63345,fresh_reserved_only=True,no_automatic_fresh_launch=True,
         earlier_fresh63329_unused=True,no_refit=True,no_new_numeric_or_binding_choices=True,no_automatic_promotion=True,
         source=base.source_signature(),files={str(p):sha(p) for p in files},assets={str(p):sha(p) for p in assets})

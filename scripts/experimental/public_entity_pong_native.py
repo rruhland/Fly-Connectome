@@ -16,6 +16,7 @@ import pong_relational_persistent_adapter as adapter
 from run_rally_option_memory import MODEL,EXPECTED,read,write,sha,seed_rngs
 from return_metrics import ReturnCounter,native_count_status
 from rally_raw_capture import SparseRows
+from exact_visual_transport_copy import install_exact_transport_copy
 
 
 def snapshot(entities):
@@ -83,6 +84,7 @@ def native_task(model_path,directory,seed,index,deadline):
     baseline=load_readout(MODEL/'rbf-model.npz');model=adapter.load_model(model_path)
     session=PublicEntityEvaluator(baseline,model,adapter,PongEvaluationConfig(seed=int(seed),episodes=1,
         max_episode_ticks=2400,opponent_speed=.65,policy_scaling=read(MODEL/'radial-cap.json')))
+    transport_copy=install_exact_transport_copy(session)
     if time.monotonic()>=deadline:return dict(seed=seed,complete=False,not_started=True,transitions=0,initial_cameras=0)
     session._begin_episode();game=session.env.game;original=game.step;counter=ReturnCounter();raw=SparseRows();records=[]
     def instrument(drive,**kwargs):return counter.step(game,original,drive,**kwargs)
@@ -102,6 +104,7 @@ def native_task(model_path,directory,seed,index,deadline):
         annotation=annotation,full_stateful_audit=audit,transitions=session.transitions,initial_cameras=session.initial_cameras,
         model_sha256=sha(model_path),baseline_sha256=EXPECTED,transport_kind=adapter.CONTRACT,
         require_first_hit=model.require_first_hit,feature_file=str(stem)+'-raw.npz',
+        transport_copy=transport_copy,
         public_feature_file=str(public_path),structured_feature_file=str(public_path),
         public_metadata_schema='exact-public-visual-entities-float64-int64-validity-v1',
         public_metadata_sha256=sha(public_path),wall_seconds=time.monotonic()-began)
