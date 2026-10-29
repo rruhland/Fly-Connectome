@@ -1,5 +1,33 @@
 # M1B research handoff — 2026-10-29
 
+## Paused at user request — 2026-10-29
+
+Stopped cleanly after both independent reward-based acquisitions completed.
+No experiment or agent is running. Final longer-play validation has NOT started;
+its fresh cohorts remain unused. Resume only when the user requests it.
+
+Both acquisitions selected `structure_04` independently on disjoint 16-game
+training cohorts: **90 returns vs baseline 39** (initial random control 29), and
+**90 vs baseline 44** (initial control 1). Both model, endpoint and summary hashes
+were independently checked at pause. The selected model SHA is
+`75530410f2c985a3037e9aa264447b8d172e5e9297a9e556bbb74d2c511dc7cc`.
+Artifacts: `/workspace/m1b-experiments/pong-relational-categorical-replication-20261029-r1`;
+`endpoints-frozen.json` records the completed freeze barrier.
+
+Earlier fresh short-game validation achieved **179/180 returns**, including
+32/32 first returns and 147/148 later returns. This is promising replicated
+reward-based selection over a strong relational-controller prior and inherited
+frozen vision, not learning from scratch or proof of long-match reliability.
+
+Next on resumption: use the reviewed
+`scripts/experimental/run_relational_replication_validation.py` to prepare and
+pin the final spec, then run its fixed 128-game comparison (32 sixty-second and
+32 twenty-second games per replica). Budget: 1,200 seconds, 256,000 transition
+cameras, four workers. Inspect first/later returns and late time bins. Do not
+refit, choose models from validation, or extend the fixed cohorts. The sustained
+return milestone remains unconfirmed until this longer validation passes.
+This pause supersedes the running-task descriptions below.
+
 ## Current position — learned feedback qualified; reliability still incomplete
 
 **Newest result:** integrating the learned feedback with existing public-ID visual
