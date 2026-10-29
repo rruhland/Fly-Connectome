@@ -2,6 +2,21 @@
 
 ## Current position — learned feedback qualified; reliability still incomplete
 
+**Newest result:** integrating the learned feedback with existing public-ID visual
+memory, and using it from the opening, returned **180/180 TRAIN32 opportunities**:
+32/32 first and 148/148 later returns; every game reached its 20-second limit.
+Both new memory arms passed full serialized public-input/action replay (61,261
+decisions). Current continuation artifact:
+`/workspace/m1b-experiments/pong-relational-memory-20261029-r1/models/ungated.npz`,
+SHA `75530410f2c985a3037e9aa264447b8d172e5e9297a9e556bbb74d2c511dc7cc`.
+This is not yet fresh/long-match qualification. `value_execution` owns the approved
+fresh63345 candidate-only check and a compact streaming-audit worker;
+`learning_challenge` owns two new independent categorical acquisitions. Neither
+acquisition nor final long validation is authorized to launch before parent source
+review. See `docs/plans/2026-10-29-feedback-replication-next.md`. No further
+gate/age/coefficient variations are selected. The historical result below explains
+the learned binding and the preceding fresh improvement.
+
 The milestone is **not met**, but the compact feedback learner has now produced
 a substantial fresh-game improvement. Preserve `40069` as the historical baseline;
 carry the new relational endpoint for further scaffold development.
