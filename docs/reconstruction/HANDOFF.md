@@ -78,16 +78,28 @@ Initialnative201f517genericnewharness:23→12returns,7firstsame,4→2second,16�
 3150cams+8initials/18.591s. Allrowsauditexact. Onegain1→2andone5hitretained,
 threebiglosses. No32/fresh63233/promotion. Artifact `pong-smdp-native-20261029-r1`.
 
-Active: ONEclosed-loop collect→refit correction withsamealgorithm/settings.
-value_execution buildscollector; learning_challenge buildsappenddata/refitadapter
-inNEWfiles, oldpinnedcoreunchanged.64fixedphasebalancedTRAINstarts bank256 excluding
-old75; baselineuntilhit then.75greedy+.25uniform4macrooptions, actual16hold/1base,
-earlystopownhit/naturalend.180s/64000cams+64initials,N+1compactscenes/Q/action/dt/
-reward/terminal/option/p. All8existingcandidate0TRAINevaltraces admittedtoo(3150cams,
-12hits), zeroextra nativework; all8alreadyold75, nofreshinput. Preserveolddata,
-appendallvalidnew+all8, sameMC+upto32FQI180s final-completedrule. Rootreviewsfixed
-collectionspec beforelaunch. Futurecomparisoncandidate1vscandidate0AND40069;
-recoverybelowbaselineisadaptationonly. No hyperparameterretry. Userwaiverpersists.
+Closed-loop C1 improvedMATCHED32 C0→C1:44→50total,29firstsame,7→13second,
+15/42→21/49later. Baseline40069still82total/53later/18second. No63249fresh or
+promotion; thisisTRAINadaptationonly. Comparison77.661s,21664newcams+56initials,
+C0eightcachedreused; allaudits/frozenchecks passed. Artifact
+`pong-smdp-cycle-comparison-20261029-r1/summary.json`.
+Collectionall64complete71.734s,22876cams+64initials,86hits; exactmacroexploration.
+C1refitdata65409usable/139starts;MC+16FQI166.942s(same180budget,C0had26updates).
+Finale58a73f8ba9fe695aa7e1815fc268aaf43bef0759f8a65760fa58bcf8009f2cd;C0unchanged.
+Exact65409+2048parity; notconverged. Olddataprefixes byteidentical. Seeledger/plan.
+
+Active: ONEsecondfeedbackcycle authorizedinintent, fixedspecbeforelaunch.
+value_execution ownscollector2 frozenC1ε.25same1baseline/16hold/earlyhitcontract,
+64newphasebalancedTRAIN excludingprior139+newadmittedcomparisonstarts; firstcheck
+32eachavailable. ALL56newcomparisontraces(C0new24+C1all32) admittedwithoutnewcameras;
+doNOTduplicateC0eightalreadyintraining. learning_challenge ownsappend/refit2 and
+EXACTperformanceoptimization: fastactualoptionpresencecounting insteadofperupdate
+independence(unique) and reuseCtreeleafroutingforQ. Scores/support/updatesmustmatch
+exactly, oldpinnedsourceimmutable. Samealgorithm/targets/weights/180fitbudget,
+finalcompletediteration, nohyperparametersweep. No newcollection/fitlaunchedyet.
+C2comparisonwillreuseC1cached32; first8progressgatevs16total/9later,then32vs50/21,
+freshonlyifbeats40069withfirstparity+second/laterfractionnotworse.
+Userwaiverpersists;continueuntilreliablelearnedreturnsoruserstop; bridgeelsewhere.
 
 Disk headroom: removed147MB completed unit-test temporaries, then hardlinked125
 SHA-identical frozen transform copies, recovering1.267GB. All research paths/bytes,

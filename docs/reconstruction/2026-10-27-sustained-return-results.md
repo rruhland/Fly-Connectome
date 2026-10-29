@@ -1076,3 +1076,48 @@ No depth/discount/support/hold tweaks. Assesscandidate1againstbothcandidate0and
 40069; partialrecoverybelowbaseline isadaptationevidence, notpromotion. Collector
 value_execution and learneradapter learning_challenge coordinate; rootspecreview
 beforecollection. This cycle has not launched atthis entry.
+
+### Closed-loop cycle1: actual matched32 learning gain, still below baseline
+
+Collector spec4428646edb4c832c6bce9b6754915e5651db655b26286f00a0d8e9a8c6d08ccf:
+all64newTRAINgames completed71.734s,22,876transitioncameras+64initials,86actualhits.
+2783posthitoptionboundaries/552nongreedychoices(19.83%;mixtureexpectation18.75%).
+Allchronologicalscene/Q/option/RNGaudits passed;N+1float64data retained;C0/source/
+assets frozen. No partial/fresh traces. Collector artifact
+`pong-smdp-onpolicy-collection-20261029-r1`.
+
+Appendguards require completedcollectionsummary and matchingmodels/hashes/counts.
+Cycleplan0d285bd11098a8b13374494689cfae21d7a21151c05025e88ff938ff53fcd3a5;
+previousplan preserved. Refitdataspec53629b2ed3e527224895bbbf75f7048cc23b19ea6a14d366573088187b9b1208.
+Alloldarrayprefixes byte-identical. Addedall8admittedC0traces(2836SMDProws) andall64
+newtraces(18,035SMDProws). Combined65,726rows/65,409usable/139starts. Usableoptions
+4160/3712/2558/54979 across133/130/129/139starts. Same.25optionmass; actualFQIdata
+massold49.94%,admitted3.93%,new46.13%, notarbitrarynewdataboosting.
+
+OneC1fit166.942s: MC7.594s/61,696knownlabels,3713unknownomittedonlyfromMC;
+16FQIupdates completedversusC0's26undertheSAME180s envelope. Modelselectionby
+finalcompletediterationonly. Exact65,409training+2048serializedqueryparity.
+798,878nodes/22.67MBartifacts. Notconverged(RMSmovement.01319/max.24361,
+RMSEtarget.02854). C1e58a73f8ba9fe695aa7e1815fc268aaf43bef0759f8a65760fa58bcf8009f2cd;
+C0preserved. Artifacts `pong-smdp-closed-loop-refit-20261029-r1`.
+
+Predeclared comparison spec127ed1ba31dd3e8a6ae9dd9ca2c18823b7fa1393ae639517732c66056405f826
+used the learning-progress gate, explicitlydistinctfrombaselinepromotion. First8
+C0→C1 12→16total,7firstsame,2→5second,5/11→9/15later;baseline23total/16later.
+Matched32 thenconfirmed44→50total,29firstsame,7→13second,15/42→21/49later.
+40069baseline remains82total/53later/18second. This ismodestTRAINadaptation,
+notreliableinterception, freshgeneralization orpromotion. No63249fresh launched.
+Comparison77.661s/180,21,664NEWtransitioncameras+56initials;C0eightcachedreused.
+Allchronologicalaudits andfrozenassets passed. Artifact
+`pong-smdp-cycle-comparison-20261029-r1/summary.json`.
+
+Root chose ONEsecondclosed-loopcycle becauseactuallearningprogress survived32,
+notbecauseoflowerfittingerror. Samealgorithm/reward/options/exploration/weights.
+AdmitALL56newcomparisontraces(C0missing24+C1all32); do notduplicatealreadyadmitted
+C0eight. FreezeC1for64newphasebalancedTRAINstarts excludingallprior139+newadmitted
+starts; inventoryavailabilitybeforecollection. Ifinsufficient32perphase, report
+ratherthansilentlyreuse. Same180scollection/64kcamera envelope. Learneragent also
+optimizes identical computations (optionpresencecounts and Ctree queryreuse),
+with exactparity required beforelearning. Oldpinnedfiles immutable; finalcompleted
+updates within180s mayincrease dueefficiency. Rootreviewsbeforelaunch. CompareC2
+against cachedC1and40069, no repeatC1games; freshonlyafterbaselinequalification.
