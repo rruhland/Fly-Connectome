@@ -50,6 +50,15 @@ def proposals(round_index,center,scales,rng):
     order=rng.permutation(len(result));return [result[int(i)] for i in order]
 
 
+def unique_population(population,seen):
+    result=[]
+    for payload in population:
+        h=model_hash(payload)
+        if h not in seen:
+            seen.add(h);result.append(payload)
+    return result
+
+
 def prepare():
     assert not DEST.exists() and sha(MODEL/'rbf-model.npz')==EXPECTED
     scales=load_calibration_scales(CALIBRATION);bank=read(BANK);assert bank['source']==base.source_signature()
@@ -62,7 +71,7 @@ def prepare():
     schedule=select_starts(1943906127,63313,exclusions(DEST),32);seeds=schedule.pop('TRAIN')
     schedule.update(probe=seeds[:32],unused_reserved=seeds[32:],purpose='frozen relational endpoint fresh qualification;never training')
     write(DEST/'fresh/schedules.json',schedule)
-    names=('run_pong_relational_search.py','stateful_reward_fitness.py','pong_relational_policy_adapter.py',
+    names=('run_pong_relational_search.py','stateful_reward_fitness.py','exact_visual_transport_copy.py','pong_relational_policy_adapter.py',
         'pong_relational_feedback.py','stateful_pong_comparison.py','run_pong_symbolic_search.py',
         'pong_symbolic_fitness.py','pong_symbolic_program.py','pong_fixed_rbf.py','pong_fixed_pairwise.py',
         'pong_continuous_visual.py','run_rally_option_memory.py','pong_option_memory.py','rally_raw_capture.py',
@@ -159,8 +168,7 @@ def run(approved):
         for round_index in range(spec['rounds']):
             if time.monotonic()>=search_deadline-2:break
             population=proposals(round_index,center,spec['scales'],rng)
-            population=[p for p in population if model_hash(p) not in seen]
-            seen.update(model_hash(p) for p in population)
+            population=unique_population(population,seen)
             write(DEST/f'round{round_index}-proposals.json',dict(population=population,incumbent=incumbent,rng_state=rng.bit_generator.state))
             stages=[];scored=[]
             for size,survivors in zip(spec['stages'],(8,2,None)):

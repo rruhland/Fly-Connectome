@@ -3,7 +3,7 @@ import numpy as np
 from pong_relational_policy_adapter import from_payload,to_payload,model_hash,new_controller,choose,observe
 from pong_relational_feedback import RelationalPolicy,structural_choices
 from stateful_reward_fitness import CameraBudget,fitness_key,evaluate
-from run_pong_relational_search import proposals,complete_score,rank_complete,BASELINE_ID
+from run_pong_relational_search import proposals,complete_score,rank_complete,BASELINE_ID,unique_population
 
 
 def test_first_population_covers_all_supported_bindings_and_screen_ties_are_stable():
@@ -47,3 +47,27 @@ def test_expired_generic_job_has_no_camera_and_budget_keeps_inflight_grants(tmp_
     assert r['not_started'] and r['transitions']==r['initial_cameras']==0
     b=CameraBudget(2000);assert b.reserve(1000) and b.reserve(1000) and not b.reserve(1000)
     b.finish(1000,dict(transitions=123,initial_cameras=1));assert b.used+b.reserved==1123
+
+
+def test_round_dedup_preserves_first_priority_and_previous_round_exclusions():
+    population=proposals(0,None,np.ones(4),np.random.default_rng(2));a,b,c=population[:3]
+    seen={model_hash(c)}
+    assert unique_population([a,b,a,c,b],seen)==[a,b]
+    assert model_hash(a) in seen and model_hash(b) in seen
+
+
+def test_exact_copy_installs_only_before_camera_and_preserves_frozen_fields():
+    from exact_visual_transport_copy import install_exact_transport_copy,ExactCopyEncoder
+    from fly_connectome.vision.interface import VisualStateEncoder
+    from fly_connectome.control.codec import fingerprint
+    class Session:
+        transitions=0;initial_cameras=0
+        def __init__(self):
+            self.encoder=VisualStateEncoder(64,64,.02);self.initial_learned_hash=self.learned_hash()
+        def learned_hash(self):return fingerprint(vars(self.encoder))
+    session=Session();before=session.learned_hash();r=install_exact_transport_copy(session)
+    assert type(session.encoder) is ExactCopyEncoder and session.learned_hash()==before
+    assert r['identical_encoder_code_object'] and r['frozen_hash_before']==r['frozen_hash_after']
+    late=Session();late.transitions=1
+    import pytest
+    with pytest.raises(ValueError):install_exact_transport_copy(late)

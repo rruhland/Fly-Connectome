@@ -13,6 +13,7 @@ from fly_connectome.control.scaling import policy_features
 from pong_fixed_rbf import FreshRBFEvaluator,load_readout
 from pong_continuous_visual import canonical_scene
 from run_rally_option_memory import MODEL,EXPECTED,seed_rngs,sha,write,read
+from exact_visual_transport_copy import install_exact_transport_copy
 
 CONTRACT='stateful-legal-scene-fullgame-ownhit-fitness-v1'
 _BASELINE=None
@@ -79,6 +80,7 @@ def evaluate(adapter_name,payload,seed,directory,deadline,max_transitions,identi
         assert sha(MODEL/'rbf-model.npz')==EXPECTED;_BASELINE=load_readout(MODEL/'rbf-model.npz')
     session=RewardEvaluator(_BASELINE,model,adapter,PongEvaluationConfig(seed=int(seed),episodes=1,
         max_episode_ticks=2400,opponent_speed=.65,policy_scaling=read(MODEL/'radial-cap.json')))
+    transport_copy=install_exact_transport_copy(session)
     rows=[];attempted=0;begin_attempted=False;error=None;stop='complete';frozen=False
     try:
         if time.monotonic()>=deadline:stop='deadline_before_initial'
@@ -105,6 +107,7 @@ def evaluate(adapter_name,payload,seed,directory,deadline,max_transitions,identi
         attempted_transition_cameras=attempted,ambiguous_last_step=attempted>session.transitions,
         stop_reason=stop,frozen_parameters_checked=frozen,observations_exact=error is None,
         decision_digest=session.digest.hexdigest(),digest_is_not_replay_audit=True,
+        transport_copy=transport_copy,
         transition_file=str(tape),transition_sha256=sha(tape),baseline_sha256=EXPECTED,
         raw_features_retained=False,scenes_retained=False,error=error,wall_seconds=time.monotonic()-began)
     receipt=directory/(key+'.json');write(receipt,result);result['receipt_file']=str(receipt);return result
