@@ -1215,3 +1215,35 @@ from30k BEFOREsearch because32fullsuccessfulralliescanconsume32kcameras. Conditi
 freshrequiresenoughremainingbudget or a separateparentallocationafterqualification.
 No training launched at this entry. Briefsavedtraceworldmodelcritique may inform
 future decisions, but doesnotauthorize variants.
+
+
+### Structural search: local gains, final zero; inspect two archived candidates
+
+Fixedspecfdc6b3b81e6398dca97f0c861c68fc2794fc5658c5e86803a16ff45a636ea949;
+source27222fdcore,1ddfa7c+e45a582search. Completed749.693s,169402transitioncameras+
+400initials.399completegames/1partial(noerrors),94completechallengerfour-game
+fitnesses,11fullgenerations+partial12th. Finalexactzero policy, no fullqualification
+rerun becausezero-activehash contract reproducescachedbaseline. Ownbank32result
+83total/29first/54of76later; no63297fresh/no promotion. Compactfitnessarchives1.78MB,
+totalartifact10.71MB. See `2026-10-29-symbolic-policy-outcome.md` forlimitations.
+
+Localgainexamples: generation3baseline12→13, generation4priorwinner7vsbaseline11
+andnew12, generation5baseline4→9, generation6baseline9→10;generation7prior9vs
+baseline15revertedzero. Thesearechangingbatches, notamonotoniclearningcurve.
+
+Parent'spost-runarchiveaudit foundexactlytwo historicalincumbents stillpositive
+acrossALLtheir8alreadyobservedmatchedstarts: a43dc09a175c...18vs15,
+f85f6d53fcda...16vs13. Other nonzerochampions netnegative. Ratherthanequatefinal
+rotatingbatchzero withallarchivedcandidatesfailing, allocateoneposthocTRAIN32
+qualification for thesetwofrozenmodels. All64gamescapturefullraw andchronological
+replay; no refit/parameterchanges. Sameoriginalbank83baseline.300s/64ktransitioncap
+fixedbeforelaunch (measuredsearchthroughput226cams/s means64fullgamescouldrequire
+283s;180scouldcensorbestmodels). Spec168d489cc9ff5a2e56f94fb5c9ea58ffedcc4a56e33464c62ebfc112da195acc.
+No fresh/promotion inthisallocation. Thisisposthocarchivequalification, not a
+retroactivechange tothecompletedsearch protocol.
+
+Inparallel, prepare(nottrain) acompactgenericrelationalfeedbackservo with10learned
+choices/parameters andstablefixednested4→8→16fitness. Thisretains derivative-free
+optimization butreducescontrollerclass andremovesrotating-objective instability;
+it mustnotbeclaimedasanewoptimizer. Separateone-gamebaselinecProfile allocation
+willidentifyactualruntimehotspotsbeforeanyEXACTspeedup proposal.

@@ -124,21 +124,42 @@ Actual8 baseline23→11total, first7same, later16/21→4/11, second4same, max6�
 queries replayed includingonecompletegame. Sources/assets frozen. No32/fresh63281.
 Artifact `pong-delta-native-20261029-r1/summary.json`. Stop model/planner variants.
 
-CURRENT: one compact structural arithmetic/conditional policy search. Independent
-Sol `/root/symbolic_control_challenge` owns grammar/mutation/tests; reused
-`/root/value_execution` owns reward-only nativefitness/coordinator/exactcache and
-qualification. Root reviews fixedsource/spec before launch. Zero-residual40069
-incumbent, baseline until actual firsthit; actual own-hit counts fitness, noexpert
-labels orlookahead. Proposedfixed900s/320kcamera envelope, max16generations×8
-challengers with4phasebalancedrotatingTRAINstarts. Reserve150s/40k forfinal32;
-40k corrected BEFOREtraining because32successfulgamescanexceed30k. Freshonlyif
-sufficientremainingbudget; otherwiseparentcanallocatefreshafterrealTRAINgain.
-No search/native has launched yet. Smallprogram doesnot implycheapacquisition;
-see independent symbolic-policy research note and inspect actual transfer.
+Symbolic search completed at literal zero: 749.693s,169402transitioncameras+
+400initials,399completegames+1partial;94completechallengerfour-game evaluations,
+11fullgenerations+partial12th. OwnTRAIN32bank baseline83total/29first/54of76later;
+NOT the earlier82-returnbank. Localwinners failednewrotations andzerowasrestored.
+Literalzero endpoint reusedexactcachedbaseline, noadditionalqualificationgames.
+No fresh63297/no promotion. Spec fdc6b3b81e6398dca97f0c861c68fc2794fc5658c5e86803a16ff45a636ea949.
+Resultnote `2026-10-29-symbolic-policy-outcome.md`, commitbac94e5.
 
-learning_challenge performs atmost3min savedtrace critique of failedworldplanner,
-no fit/native/variants. User waiver persists; continue to reliablelearnedreturns
-oruserstop. Bridge belongs to another thread.
+CURRENT parallel tasks:
+1. Posthoc frozenarchivequalification: root found exactlytwo previousincumbents
+withnet+3hits across8actualmatchedfitnessseeds each, so lastrotationzero isnotproof
+allarchivedpoliciesbad. a43dc09a175c...18vs15; f85f6d53fcda...16vs13.
+`/root/symbolic_control_challenge` ownsapprovednewwrapper/source/spec
+168d489cc9ff5a2e56f94fb5c9ea58ffedcc4a56e33464c62ebfc112da195acc,
+artifact `pong-symbolic-archive-comparison-20261029-r1`. 300s/64ktransitioncap,
+64newfullrawgamesinterleaved2policies/seed, sameown32bank, nofit/parameterchanges.
+Budget300correctedBEFOREnativefrom180 usingmeasured226cams/s toavoidcensoring
+best64×1000gameoutcomes. No fresh; parentallocatesifonequalifies. Rootreviewdone,
+launchauthorized. This isseparateposthocselection, notchangedoriginalsearch.
+2. Compactrelationalfeedbackservo implementation: `/root/learning_challenge` core,
+`/root/value_execution` search. Five discretechoices n/i/j/axis/sign; five numeric
+ci,cj,b,deadzone,hysteresis. Anonymousrelativeposition+velocityfeedback, rolesonly
+selectedthroughactualreturns. Explicitgenericservo prior, notdiscoveredgeneral
+control ornewoptimizer. Usefixednested4→8→16TRAINfitness withsameaccumulatedseeds;
+stoprotating4singlechampion objective. Implementationonly, nolearningauthorizedyet.
+3. `/root/runtime_efficiency` ONEactualzero-baselineprofilegame authorized≤1000
+transitions+1initial at `pong-runtime-profile-20261029-r1`. Profilebeforeproposing
+EXACTspeedups; noexistingpinnedsource edits. CurrentCPUquota4cores/16GBRAM.
+
+One0.58s savedtraceworldplannerreview found stable-maskone-stepmotionreasonably
+predicted, but8-step tailerror exceededchosenrootadvantages. Sol independently
+advised NO-GO event-onlyH8variant: finaleventpredictiondoesnotproveearlyuseful
+actionranking. Rootacceptedstop; preservelearnedmodelsforfuturefeatures/proposals,
+notmoregreedyplannerparameter variants. Notesinlearned-delta-pilot.md(b2fcc33).
+Userwaiverpersists; noarchitectureapprovalquestions. Continueuntilmilestoneorstop.
+Bridge belongs toanotherthread.
 
 Disk headroom: removed147MB completed unit-test temporaries, then hardlinked125
 SHA-identical frozen transform copies, recovering1.267GB. All research paths/bytes,
