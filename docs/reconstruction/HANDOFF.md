@@ -1,5 +1,19 @@
 # M1B research handoff — 2026-10-29
 
+## Latest result — longer frozen validation passed
+
+User requested the longer evaluation after the clean pause. Completed all 128
+fixed games in 11m23s: **1,436/1,437 returns**, including **1,075/1,076** in the
+64 one-minute games. 63/64 long games reached the cap; late-bin returns were
+354/354 across those 63 surviving games. Both independent endpoints passed their
+predeclared first/later reliability targets. Source/assets stayed frozen.
+
+See `2026-10-29-sustained-return-validation.md` and its committed JSON summary.
+This establishes tested sustained frozen control, **not learning during games**
+or full M1B completion. Next target: continuous online acquisition and retention
+across games. No further experiment is running. Historical pause/status notes
+below are superseded by this result.
+
 ## Paused at user request — 2026-10-29
 
 Stopped cleanly after both independent reward-based acquisitions completed.

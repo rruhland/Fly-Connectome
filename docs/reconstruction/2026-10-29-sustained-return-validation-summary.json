@@ -1,0 +1,363 @@
+{
+  "status": "validation_complete",
+  "replicas": {
+    "0": {
+      "complete": true,
+      "strata": {
+        "long60": {
+          "complete": true,
+          "games": 32,
+          "metrics": {
+            "rallies": 32,
+            "own_opportunities": 543,
+            "own_returns": 543,
+            "return_fraction": 1.0,
+            "first_incoming_opportunities": 32,
+            "first_incoming_returns": 32,
+            "first_incoming_return_fraction": 1.0,
+            "rallies_with_at_least_two_returns": 32,
+            "maximum_consecutive_returns": 18,
+            "returns_per_physical_second": 0.2828125000000105,
+            "physics_seconds": 1919.9999999999286,
+            "unfinished_incoming_approaches": 15,
+            "opponent_opportunities": 542,
+            "opponent_returns": 542,
+            "opponent_return_fraction": 1.0,
+            "natural_serve_wins": 0,
+            "post_own_opponent_opportunities": 526,
+            "post_own_opponent_returns": 526
+          },
+          "later_returns": 511,
+          "later_opportunities": 511,
+          "later_fraction": 1.0,
+          "timeouts": 32,
+          "tail_counts": {
+            "1": 32,
+            "2": 32,
+            "3": 32,
+            "5": 32,
+            "10": 32,
+            "15": 32,
+            "20": 0
+          },
+          "time_bins": [
+            {
+              "exposure_seconds": 640.0,
+              "own_opportunities": 184,
+              "own_returns": 184,
+              "first_opportunities": 32,
+              "first_returns": 32,
+              "later_opportunities": 152,
+              "later_returns": 152,
+              "start_seconds": 0,
+              "end_seconds": 20,
+              "games_with_exposure": 32,
+              "later_fraction": 1.0
+            },
+            {
+              "exposure_seconds": 640.0,
+              "own_opportunities": 179,
+              "own_returns": 179,
+              "first_opportunities": 0,
+              "first_returns": 0,
+              "later_opportunities": 179,
+              "later_returns": 179,
+              "start_seconds": 20,
+              "end_seconds": 40,
+              "games_with_exposure": 32,
+              "later_fraction": 1.0
+            },
+            {
+              "exposure_seconds": 639.9999999999286,
+              "own_opportunities": 180,
+              "own_returns": 180,
+              "first_opportunities": 0,
+              "first_returns": 0,
+              "later_opportunities": 180,
+              "later_returns": 180,
+              "start_seconds": 40,
+              "end_seconds": 60,
+              "games_with_exposure": 32,
+              "later_fraction": 1.0
+            }
+          ],
+          "streaming_checked_rows": 96000,
+          "full_archived_replay": false
+        },
+        "standard20": {
+          "complete": true,
+          "games": 32,
+          "metrics": {
+            "rallies": 32,
+            "own_opportunities": 180,
+            "own_returns": 180,
+            "return_fraction": 1.0,
+            "first_incoming_opportunities": 32,
+            "first_incoming_returns": 32,
+            "first_incoming_return_fraction": 1.0,
+            "rallies_with_at_least_two_returns": 32,
+            "maximum_consecutive_returns": 6,
+            "returns_per_physical_second": 0.28124999999999944,
+            "physics_seconds": 640.0000000000013,
+            "unfinished_incoming_approaches": 14,
+            "opponent_opportunities": 178,
+            "opponent_returns": 178,
+            "opponent_return_fraction": 1.0,
+            "natural_serve_wins": 0,
+            "post_own_opponent_opportunities": 162,
+            "post_own_opponent_returns": 162
+          },
+          "later_returns": 148,
+          "later_opportunities": 148,
+          "later_fraction": 1.0,
+          "timeouts": 32,
+          "tail_counts": {
+            "1": 32,
+            "2": 32,
+            "3": 32,
+            "5": 32,
+            "10": 0,
+            "15": 0,
+            "20": 0
+          },
+          "time_bins": [
+            {
+              "exposure_seconds": 640.0,
+              "own_opportunities": 180,
+              "own_returns": 180,
+              "first_opportunities": 32,
+              "first_returns": 32,
+              "later_opportunities": 148,
+              "later_returns": 148,
+              "start_seconds": 0,
+              "end_seconds": 20,
+              "games_with_exposure": 32,
+              "later_fraction": 1.0
+            },
+            {
+              "exposure_seconds": 0.0,
+              "own_opportunities": 0,
+              "own_returns": 0,
+              "first_opportunities": 0,
+              "first_returns": 0,
+              "later_opportunities": 0,
+              "later_returns": 0,
+              "start_seconds": 20,
+              "end_seconds": 40,
+              "games_with_exposure": 0,
+              "later_fraction": null
+            },
+            {
+              "exposure_seconds": 0.0,
+              "own_opportunities": 0,
+              "own_returns": 0,
+              "first_opportunities": 0,
+              "first_returns": 0,
+              "later_opportunities": 0,
+              "later_returns": 0,
+              "start_seconds": 40,
+              "end_seconds": 60,
+              "games_with_exposure": 0,
+              "later_fraction": null
+            }
+          ],
+          "streaming_checked_rows": 32000,
+          "full_archived_replay": false
+        }
+      },
+      "combined_first_returns": 64,
+      "combined_first_opportunities": 64,
+      "combined_first_fraction": 1.0,
+      "long_later_exposure_sufficient": true,
+      "meets_declared_point_targets": true,
+      "interpretation": "Inspect late-bin rates and exposure separately; pooled success does not establish consistent late play."
+    },
+    "1": {
+      "complete": true,
+      "strata": {
+        "long60": {
+          "complete": true,
+          "games": 32,
+          "metrics": {
+            "rallies": 32,
+            "own_opportunities": 533,
+            "own_returns": 532,
+            "return_fraction": 0.99812382739212,
+            "first_incoming_opportunities": 32,
+            "first_incoming_returns": 32,
+            "first_incoming_return_fraction": 1.0,
+            "rallies_with_at_least_two_returns": 32,
+            "maximum_consecutive_returns": 18,
+            "returns_per_physical_second": 0.28074249000647483,
+            "physics_seconds": 1894.97499999993,
+            "unfinished_incoming_approaches": 18,
+            "opponent_opportunities": 535,
+            "opponent_returns": 535,
+            "opponent_return_fraction": 1.0,
+            "natural_serve_wins": 0,
+            "post_own_opponent_opportunities": 519,
+            "post_own_opponent_returns": 519
+          },
+          "later_returns": 500,
+          "later_opportunities": 501,
+          "later_fraction": 0.998003992015968,
+          "timeouts": 31,
+          "tail_counts": {
+            "1": 32,
+            "2": 32,
+            "3": 32,
+            "5": 32,
+            "10": 31,
+            "15": 31,
+            "20": 0
+          },
+          "time_bins": [
+            {
+              "exposure_seconds": 640.0,
+              "own_opportunities": 183,
+              "own_returns": 183,
+              "first_opportunities": 32,
+              "first_returns": 32,
+              "later_opportunities": 151,
+              "later_returns": 151,
+              "start_seconds": 0,
+              "end_seconds": 20,
+              "games_with_exposure": 32,
+              "later_fraction": 1.0
+            },
+            {
+              "exposure_seconds": 634.9749999999992,
+              "own_opportunities": 176,
+              "own_returns": 175,
+              "first_opportunities": 0,
+              "first_returns": 0,
+              "later_opportunities": 176,
+              "later_returns": 175,
+              "start_seconds": 20,
+              "end_seconds": 40,
+              "games_with_exposure": 32,
+              "later_fraction": 0.9943181818181818
+            },
+            {
+              "exposure_seconds": 619.9999999999309,
+              "own_opportunities": 174,
+              "own_returns": 174,
+              "first_opportunities": 0,
+              "first_returns": 0,
+              "later_opportunities": 174,
+              "later_returns": 174,
+              "start_seconds": 40,
+              "end_seconds": 60,
+              "games_with_exposure": 31,
+              "later_fraction": 1.0
+            }
+          ],
+          "streaming_checked_rows": 94749,
+          "full_archived_replay": false
+        },
+        "standard20": {
+          "complete": true,
+          "games": 32,
+          "metrics": {
+            "rallies": 32,
+            "own_opportunities": 181,
+            "own_returns": 181,
+            "return_fraction": 1.0,
+            "first_incoming_opportunities": 32,
+            "first_incoming_returns": 32,
+            "first_incoming_return_fraction": 1.0,
+            "rallies_with_at_least_two_returns": 32,
+            "maximum_consecutive_returns": 6,
+            "returns_per_physical_second": 0.28281249999999947,
+            "physics_seconds": 640.0000000000013,
+            "unfinished_incoming_approaches": 20,
+            "opponent_opportunities": 185,
+            "opponent_returns": 185,
+            "opponent_return_fraction": 1.0,
+            "natural_serve_wins": 0,
+            "post_own_opponent_opportunities": 169,
+            "post_own_opponent_returns": 169
+          },
+          "later_returns": 149,
+          "later_opportunities": 149,
+          "later_fraction": 1.0,
+          "timeouts": 32,
+          "tail_counts": {
+            "1": 32,
+            "2": 32,
+            "3": 32,
+            "5": 32,
+            "10": 0,
+            "15": 0,
+            "20": 0
+          },
+          "time_bins": [
+            {
+              "exposure_seconds": 640.0,
+              "own_opportunities": 181,
+              "own_returns": 181,
+              "first_opportunities": 32,
+              "first_returns": 32,
+              "later_opportunities": 149,
+              "later_returns": 149,
+              "start_seconds": 0,
+              "end_seconds": 20,
+              "games_with_exposure": 32,
+              "later_fraction": 1.0
+            },
+            {
+              "exposure_seconds": 0.0,
+              "own_opportunities": 0,
+              "own_returns": 0,
+              "first_opportunities": 0,
+              "first_returns": 0,
+              "later_opportunities": 0,
+              "later_returns": 0,
+              "start_seconds": 20,
+              "end_seconds": 40,
+              "games_with_exposure": 0,
+              "later_fraction": null
+            },
+            {
+              "exposure_seconds": 0.0,
+              "own_opportunities": 0,
+              "own_returns": 0,
+              "first_opportunities": 0,
+              "first_returns": 0,
+              "later_opportunities": 0,
+              "later_returns": 0,
+              "start_seconds": 40,
+              "end_seconds": 60,
+              "games_with_exposure": 0,
+              "later_fraction": null
+            }
+          ],
+          "streaming_checked_rows": 32000,
+          "full_archived_replay": false
+        }
+      },
+      "combined_first_returns": 64,
+      "combined_first_opportunities": 64,
+      "combined_first_fraction": 1.0,
+      "long_later_exposure_sufficient": true,
+      "meets_declared_point_targets": true,
+      "interpretation": "Inspect late-bin rates and exposure separately; pooled success does not establish consistent late play."
+    }
+  },
+  "both_meet_declared_point_targets": true,
+  "cost": {
+    "transition_upper_bound": 254749,
+    "inflight_transition_grants": 0,
+    "initial_camera_upper_bound": 128,
+    "transition_limit": 256000
+  },
+  "started_jobs": 128,
+  "wall_seconds": 682.6740150600017,
+  "post_deadline_cleanup_seconds": 0,
+  "source_frozen": true,
+  "assets_frozen": true,
+  "no_model_selection": true,
+  "no_refit": true,
+  "no_outcome_dependent_extension": true,
+  "no_automatic_promotion": true
+}
