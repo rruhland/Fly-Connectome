@@ -1,4 +1,39 @@
-# M1B research handoff — 2026-10-28
+# M1B research handoff — 2026-10-29
+
+## Current position — relational feedback search running
+
+The milestone is **not met**. Baseline `40069` remains the primary checkpoint.
+The user has authorized continuing without further architecture approval until
+reliable learned match-long returns are achieved or they stop work. Preserve the
+no-backpropagation, camera-input and no-expert-label constraints.
+
+The latest symbolic archive candidate improved TRAIN returns from 83 to 86, but
+failed the frozen fresh comparison: **74 to 68 returns**, with first returns
+unchanged at 26 and later returns falling from 48/69 to 42/64. No promotion.
+Stop the symbolic grammar family; see the symbolic archive and fresh outcome notes.
+
+One compact relational feedback search is now running in
+`/workspace/m1b-experiments/pong-relational-search-20261029-r1` under spec
+`aa9b357ca0c2f354f1f078bcf41d25614024bd7cc25942d257dcd9da73c557c7`.
+It learns anonymous object-pair binding, axis/polarity and five feedback
+coefficients from actual own-hit rewards. Existing vision and the baseline opening
+are retained. This is a stronger controller prior with a smaller search space,
+not a new optimization algorithm. Fixed nested 4/8/16-game training cohorts avoid
+the previous rotating-fitness problem; only complete 16-game fitness can replace
+the incumbent. Total allocation: 900 seconds and 320,000 transition cameras,
+including a final 32-game comparison reserve. Fresh cohort 63313 remains reserved.
+
+The new fitness runner uses an exact encoder-copy optimization. A paired native
+proof reproduced every action, feature, encoded observation and runtime-state hash.
+One timing pair suggests modest savings, not a general speedup percentage. Original
+pinned runners are untouched. Helper commit `3e9081d`; search commits `7238313`
+and `e144648`. The old unlaunched spec is preserved in the run directory.
+
+Reused Sol 6.1 XHigh agents: `value_execution` owns the running search;
+`learning_challenge` independently reviews the mechanism and next direction;
+`runtime_efficiency` completed the exact-copy proof; `symbolic_control_challenge`
+completed the negative fresh result. Parent owns synthesis, review and direction.
+Older entries below are historical and must not override this current position.
 
 ## Active mandate
 

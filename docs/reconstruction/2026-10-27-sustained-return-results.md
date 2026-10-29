@@ -1247,3 +1247,41 @@ choices/parameters andstablefixednested4→8→16fitness. Thisretains derivative
 optimization butreducescontrollerclass andremovesrotating-objective instability;
 it mustnotbeclaimedasanewoptimizer. Separateone-gamebaselinecProfile allocation
 willidentifyactualruntimehotspotsbeforeanyEXACTspeedup proposal.
+
+### Symbolic archive qualification: training gain did not transfer
+
+The two frozen archived candidates received complete TRAIN32 comparisons, without
+fitting. Candidate a43 improved 83 to 86 returns, with first returns unchanged at
+29 and later returns improving from 54/76 to 57/78. Candidate f85 failed, 83 to 53.
+Both simplified largely to action biases, not learned interception relationships.
+
+Frozen a43 then failed fresh cohort 63297: **74 to 68 returns**, first returns
+26 to 26, later returns 48/69 to 42/64, and games reaching a third return 13 to 10.
+All 32 paired games completed; all 15,752 candidate decisions replayed exactly.
+Cost: 97.40 seconds, 32,403 transition cameras and 64 initial observations.
+No promotion; the symbolic grammar family is stopped. Details and uncertainty:
+`docs/plans/2026-10-29-symbolic-fresh-outcome.md`.
+
+### Exact-copy optimization and compact feedback search
+
+An encoder-copy helper conservatively clones supported plain tensor transports
+and falls back to ordinary deepcopy otherwise. It executes the original encoder
+function code unchanged. The native proof reproduced every action, feature,
+scene, encoded state and normalized runtime state for both complete games.
+Profiling plus proof cost 855 camera observations. One fixed-order timing pair
+showed lower runtime; warmup effects prevent treating its percentage as general.
+Only the new fitness worker adopts the helper; prior pinned runners are unchanged.
+
+The next search is a generic two-entity feedback controller with ten learned
+choices/parameters, including action hysteresis. It learns from actual own-hit
+rewards, retains the baseline until the first actual hit, and uses anonymous
+observed visual entities without object roles or privileged coordinates. This
+changes the controller prior and search dimension, not the derivative-free
+optimization family. Stable nested cohorts address the earlier rotating fitness.
+
+Run `pong-relational-search-20261029-r1` launched under spec
+`aa9b357ca0c2f354f1f078bcf41d25614024bd7cc25942d257dcd9da73c557c7`.
+Budget: 900 seconds / 320,000 transition cameras, with 150 seconds / 40,000
+reserved for final TRAIN32 qualification. Only complete TRAIN16 fitness can
+replace the incumbent. Fresh 63313 is conditional on qualification. Twelve
+focused tests passed before launch. No performance result is claimed here.
