@@ -913,3 +913,10 @@ permit one cheap fit/screen. No sweeping or automatic promotion. Existing40069
 remains primary. A separate Sol6.1XHigh challenger investigates dense-transition
 alternatives from outside sources; implementation and independent challenge run
 in parallel. Proposal: `docs/plans/2026-10-29-paired-option-regression-challenge.md`.
+
+Storage maintenance: recovered1,266,646,288bytes by hardlinking125 byte-identical,
+SHA256-verified frozen `search-transform.npy`, `old-transform.npy` and
+`extra-transform.npy` copies. Every pathname/content hash remains unchanged;
+no receipts or checkpoints removed. These shared immutable transforms must be
+copied before any future in-place modification. Manifest:
+`/workspace/m1b-experiments/storage-deduplication-20261029.json`.

@@ -55,9 +55,11 @@ Earlier independent agent unavailable after refresh; new `/root/learning_challen
 Sol6.1XHigh researches distinct dense-transition alternatives/challenges assumptions.
 No native runs assigned to that agent. Userwaiver persists; bridgeelsewhere.
 
-Disk headroom recovered by deleting only147MB of completed unit-test temporary
-models under `/tmp/pytest-of-agent`; all research checkpoints/receipts preserved.
-Do not duplicate large metrics or checkpoints. Bridge belongs to another thread.
+Disk headroom: removed147MB completed unit-test temporaries, then hardlinked125
+SHA-identical frozen transform copies, recovering1.267GB. All research paths/bytes,
+checkpoints and receipts preserved. Manifest `storage-deduplication-20261029.json`
+in experimentroot. Copy shared transforms before future in-place modifications.
+Do not duplicate large metrics/checkpoints. Bridge belongs to another thread.
 
 ## Latest result / next action
 
