@@ -848,3 +848,34 @@ extraencoder (7currentplanes), notnewsemanticobjectinputs. Synthetic1000steps2.7
 fastconfiguration vs11.096s directquantizedplanes. Parent selectedfasterpath,
 90spredictionwarmup/300sonline/remainingqualificationwithin600total provisional.
 Actor preservationas40069logitprior+zeroresidual underreview; no native launched.
+
+## Ogma temporal prior: online updates, harmful empty-input opening bias
+
+Sourceecb7350, spec30ddfb996eec73511672b57a5ae0c070116c0ebb8e877023d1e66b23be184067.
+Artifact `pong-ogma-prior-20261028-r1`. Warmup90.022s traversed32,041savedobservations,
+70executions(69complete/1partial),134hitrows observed forpredictiononly,0actorupdates
+and0newcameras. Onecarriedmodel then learnedonline:43games(42complete/1partial),
+24,020cameras,106ownhits. Representationfrozen; value/actionparameters changed.
+175actualnongreedychoices,114recordedgreedychanges,23,837nonzeroresidualqueries;
+20,166pmaxrounded1 and6149exactzero scorevectors. Maxabsolute learnedlogit2.804.
+
+Final45fe2d54:8nativegames23→10returns,7→6first,4→3second,16/21→4/10later.
+Only30/2806actions differedbaseline-shadow, fivegameslost/zerogained. Reject,
+no32/fresh(TAG63169reservedunused). Entire408.950s,26,826newcameras+51initials.
+All2806evaluation temporal/action/Qrows replayexact. Approvedadditionalzero-native
+first2traininggames replayed997rows including4hits andactualsuccessorflush, exact
+actorparametertrajectory;1.656sauditfinishedat458.31s originalclock.
+
+Crucialmechanism: ALL8games firstdivergedatcamera0(7) or1(1), beforeanyhit.
+Sharedcold-state correction favorsaction0overbaseline1 by5.196logits (7starts).
+Selectedcurrent7planes areEXACTLYZERO forfirst2cameras inall8games; baseline
+retains67otherfullraw/context coordinates. Newbranchhadnousefulvisualinputthere.
+This is an input-validity/integration flaw, not evidence temporalfeaturescan
+separate those starts. Confidencecapping wouldnotaddressit andisNOTlaunched.
+
+Parent authorized ONE separateinference-only empty-input correction using SAME
+finalweights/library: temporalstateadvances normally; ifselected1792inputsallzero,
+execute exactbaselineaction/Q and feedactualaction to nextstep. No newtraining,
+refit,warmup orhyperparameterchanges. Newpolicyidentity includesguardcontract;
+separate180sevaluation8→32→conditionalfreshTAG63185. Originalsourcespreserved.
+Ifneutral/negative, stopcorrectedbranch ratherthanfurtherinput/temperaturevariants.
