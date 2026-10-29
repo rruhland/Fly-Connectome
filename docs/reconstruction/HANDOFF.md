@@ -68,16 +68,26 @@ Frozen graphnative69ea13a REJECTED23→10total,7firstsame,4→2second,16→3late
 1611/2020posthitrows supported. No32/fresh63217/radius/supportvariants.
 Artifact `pong-kernel-graph-native-20261029-r1/summary.json`.
 
-Active: learning_challenge builds ONE adaptiveExtraTrees SMDP-FQI fromreal saved
-16-camera constant-command windows plus1-camera40069baselineoption. Ownhit or
-naturaltermination endmacroearly; no switchingactions relabeledasholds. Targets
-next-ownhit withactualelapseddiscount; runtimeholds/terminationmatchtraining.
-32sharedactionconditionaltrees,minleaf4,nocap,32Bellmanrefits proposed;one180sfit
-sequence finalonly. Inventoryindependentmacrocoverage+fixedspec reviewedBEFOREfit.
-No newnative/acquisitionyet. value_execution independentlychallengessupport/
-contract. Rootselectedthis withSol toaddress tinyprimitiveactiongaps andtailmismatch;
-no hyperparametersweep. Userwaiverpersists, no permissionaskneeded.
-Sources/limitations loggedinresultsledger. Current40069/761stillunchanged.
+AdaptiveSMDPsource3d156b9 complete: physicalelapsedgroupinginvariant reward,
+MCobserved-returnwarmstart+26FQIupdates168.313s, finalca99b349... selectedbyclock.
+Notconverged; exact44,699training+2048serializedqueryparity. Heldmacros stopon
+actualhit/naturalend/16; baselineoption1.17/32actualoptionleafpresenceguard,
+independencediagnosticonly. Allsettingsfixedbeforefit; seeplan/resultsledger.
+
+Initialnative201f517genericnewharness:23→12returns,7firstsame,4→2second,16→5later,
+3150cams+8initials/18.591s. Allrowsauditexact. Onegain1→2andone5hitretained,
+threebiglosses. No32/fresh63233/promotion. Artifact `pong-smdp-native-20261029-r1`.
+
+Active: ONEclosed-loop collect→refit correction withsamealgorithm/settings.
+value_execution buildscollector; learning_challenge buildsappenddata/refitadapter
+inNEWfiles, oldpinnedcoreunchanged.64fixedphasebalancedTRAINstarts bank256 excluding
+old75; baselineuntilhit then.75greedy+.25uniform4macrooptions, actual16hold/1base,
+earlystopownhit/naturalend.180s/64000cams+64initials,N+1compactscenes/Q/action/dt/
+reward/terminal/option/p. All8existingcandidate0TRAINevaltraces admittedtoo(3150cams,
+12hits), zeroextra nativework; all8alreadyold75, nofreshinput. Preserveolddata,
+appendallvalidnew+all8, sameMC+upto32FQI180s final-completedrule. Rootreviewsfixed
+collectionspec beforelaunch. Futurecomparisoncandidate1vscandidate0AND40069;
+recoverybelowbaselineisadaptationonly. No hyperparameterretry. Userwaiverpersists.
 
 Disk headroom: removed147MB completed unit-test temporaries, then hardlinked125
 SHA-identical frozen transform copies, recovering1.267GB. All research paths/bytes,

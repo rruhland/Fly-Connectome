@@ -1025,3 +1025,54 @@ no Pong or current-vision guarantee. A Pong Q-learning thesis abstract was also
 checked (https://digitalcommons.wcupa.edu/all_theses/226/); it explicitly uses
 known custom-environment constraints, and its PDF was inaccessible, so it is not
 used as evidence for this unprivileged visual learner.
+
+## October29: duration-consistent adaptive SMDP initial fit, then closed-loop correction
+
+Cross-review caught a critical packaging bias beforefit: awarding1to a16camera
+macrohit while discounting16baseline steps invents an advantage. Alloptions now
+predict the samephysical `E[2^(-time-through-next-hit/3.2)]`; hit targets discount
+THROUGHthehit, nohit continuation discountsfullmacrotime. Sevenfocusedchecks
+include identicalheld-vs-groupedbaseline trajectories. Root also selected ONE
+actualobserved-return MCwarmstart toavoidzero-initialized32baseline-step horizon
+being unfairlyshort relative to512possiblemacrosteps. UnknownMCtails omitted;
+allvalidSMDPtuples retained forFQI. These were BEFOREOUTCOME corrections.
+
+Inventory252traces/43,271cameras produced44,855actualSMDPtuples:4160constantcommand
+holds and40,695exact40069baseline-camera steps.38,990changing-action starts were
+excluded,119shortcensoredmacros,2missingmacro successors,8missingbaseline successors.
+Union75TRAINstarts; macrooptioncounts1750/1453/957 across70/70/71starts.156empty/
+overflowsource tuples excludedfromfit (15overlappinghitwindowlabels,0naturalends),
+leaving44,699. Fixedweights equalizefouroptions, thenstartIDswithinoption. Root
+andindependentreview deliberately chose a light17/32queriedleaf actualoption
+presencecheck; independentstartcounts remain diagnostics, notconfidenceclaims.
+
+Source3d156b9; spec7c4cd62eea3a7d0d0a0d9060b44405cc7d9045ea8afe662ab89960b52f8e221c.
+One MCfit4.667s/41,115knownlabels(3584unknownomitted), then26completedFQIupdates
+within168.313s total. Finaliteration26 chosenbytime only; nooutcome selection.
+Notconverged: finalmovementRMS.01526/max.27999, targetRMSE.02387. Exactexportchecks
+passed44,699training+2048serializedalloptionqueries.551,958nodes,15.48MBartifacts,
+0nativefitcameras. Finalca99b349d1ea26a2036214e37d04e58a2d39a59cf26b44d5aeed7e18484df295;
+initialMC8eb52c1d2a54a7aed255b143de85e64f85426a938bf0ca57bf7b004a9c1d8c85.
+
+Reusable NEWstatefulcomparisonharness201f517 avoidsrepeatedbespokerunners.
+Native spec502e6ada1c852bf68ca2901512e463235a02bb794585231120b54684a57fe639:
+8games23→12returns,7firstsame,4→2second,16/21→5/11later.3150cameras+8initials,
+18.591s.111macrostarts/1613heldcameras/1074differentactions;everychronological
+rowauditedexact. No32/fresh63233; model/sourcefrozen. Actualonegain3351729059
+1→2; retained2165783928 fivehits5→5; large losses2573868772 5→1,
+307650864 4→1,534683382 6→1. Initialendpointunpromoted. Results:
+`pong-smdp-native-20261029-r1/summary.json`.
+
+Root selected ONE closed-loop data correction ratherthan aparameterretry: frozen
+candidate0ca99,64fixedphasebalancedTRAINstarts frombank256 excludingold75. Baseline
+untilfirstactualhit; thereafter .75greedyoption+.25uniform4option exploration
+(greedyprob.8125,others.0625), executeactual1baseline/16command option, stoponhit/
+naturalend.180scollection/64,000transitioncap+64initials; saveN+1compactscenes,
+actualactions/elapsed/rewards/termination/selectedoption/p. Admit ALL8alreadyrun
+candidate0TRAINevaluationtraces(3150cams/12hits) atzeroextra nativecost; all8seeds
+alreadyinold75. This isexplicitTRAINDATAadmission, nofreshinput. Appendold+all8+
+allvalidnewdata, SAMEweights/physicaltargets/MC+FQI180ssettings/final-completedrule.
+No depth/discount/support/hold tweaks. Assesscandidate1againstbothcandidate0and
+40069; partialrecoverybelowbaseline isadaptationevidence, notpromotion. Collector
+value_execution and learneradapter learning_challenge coordinate; rootspecreview
+beforecollection. This cycle has not launched atthis entry.
