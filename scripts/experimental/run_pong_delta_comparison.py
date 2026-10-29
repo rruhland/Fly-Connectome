@@ -10,7 +10,7 @@ from run_rally_raw_fresh_screen import paired_metrics
 import run_practical_pong_v2 as base
 
 DEST = ROOT / 'pong-delta-native-20261029-r1'
-MODEL = ROOT / 'pong-learned-delta-planner-20261029-r1/model.npz'
+MODEL = ROOT / 'pong-learned-delta-planner-20261029-r1/planner-model.npz'
 ADAPTER = 'pong_delta_policy_adapter'
 
 
@@ -34,8 +34,12 @@ def passed(stats, size):
 def prepare(model_path, seconds):
     model_path=Path(model_path)
     fit=read(model_path.parent/'fit-summary.json')
-    if fit.get('model_sha256',fit.get('final_sha256')) != sha(model_path):
+    fit_spec=read(model_path.parent/'spec.json')
+    if (fit.get('status')!='fitted' or not fit.get('within_180_seconds')
+            or fit.get('model_sha256',fit.get('final_sha256')) != sha(model_path)):
         raise ValueError('fit receipt must identify exact frozen endpoint')
+    if not all(sha(s['path'])==s['sha256'] for s in fit_spec['source_files']):
+        raise ValueError('fit sources changed before inference comparison')
     extra=[Path(__file__),Path(__file__).with_name('pong_delta_native.py'),
         Path(__file__).with_name('pong_learned_delta_planner.py'),
         Path(__file__).with_name('pong_smdp_adaptive_forest.py'),
