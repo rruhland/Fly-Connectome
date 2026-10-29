@@ -1121,3 +1121,60 @@ optimizes identical computations (optionpresencecounts and Ctree queryreuse),
 with exactparity required beforelearning. Oldpinnedfiles immutable; finalcompleted
 updates within180s mayincrease dueefficiency. Rootreviewsbeforelaunch. CompareC2
 against cachedC1and40069, no repeatC1games; freshonlyafterbaselinequalification.
+
+
+### Second feedback cycle: collection and fit complete, evaluation pending
+
+Collection2 completed all 64 new phase-balanced TRAIN games in 62.941s, with
+19,998 transition cameras +64 initial cameras and 73 own hits. Frozen C1 acted
+with the unchanged .25 uniform-option exploration mixture; 445/2354 post-hit
+boundaries chose a non-greedy option (18.90%, expected18.75%). All N+1 scene/Q,
+chronological controller/RNG and frozen-asset checks passed. Artifact:
+`pong-smdp-onpolicy-collection-20261029-r2`, spec d1c5a8243ae2446f93ba150124820841b5d3e779bb9ae50acebc073da44336e6.
+
+Refit2 admitted ALL56 new C0/C1 comparison traces (21,664 cameras) and ALL64 new
+collection traces. Original C1 prefixes and start IDs remain byte-identical;
+previously admitted C0 eight were not duplicated. Dataset: 100,947 observed
+windows, 100,286 usable, 206 distinct starts; usable option rows
+7925/6921/5079/80361. The same option/start-balanced weights assign each option .25.
+Plan 8e198234fa9e5813ef5311cbfab9be6d7adb3adaea8baafa9862a9492c77796c;
+data spec d590d036b673bb099efe9c309cec799aceaa81ce97274d9109177718ae203a56.
+
+One 168.054s fit completed MC initialization (13.717s; 96,313 known returns,
+3,973 unknown tails excluded only from MC) and 12 FQI updates. Final completed
+iteration selected by time, not game results. Final model
+785d35d48814633f253073f2e6f7804cb98b4293e99dadc632375ba2f4c7b43d;
+initial MC 73cdc0f438a2821c75c8f65df5228766018da13715a1b505abae2d1b871dc17c.
+All 100,286 training and 2,048 serialized queries exactly match sklearn; the
+faster training query path also exactly matches the original path. 1,210,768 nodes,
+34.87MB artifacts, zero native training cameras. Final RMS value movement .01454,
+max .21427: not converged. Despite exact optimization, the larger dataset costs
+more per update; C2 completed12 versus C1's16 under the same180s envelope.
+Artifact `pong-smdp-feedback2-refit-20261029-r1`. No model promoted.
+
+Comparison2 is running with all32 C1 results cached, one180s C2 comparison and
+conditional fresh qualification. Spec92ae13da91aaf38de4a6d58e20ec7a85212492ee4f678ed99a93c7560c4f1481;
+sourcea86d89c, fresh63265 reserved. Actual game results pending.
+
+
+C2 actual result: **rejected at eight games**, C1 16→13 total, first7 unchanged,
+second5→2, later9/15→6/13. Baseline23total/16later. All3,270 chronological rows
+exact, 3,270 new cameras+8 initials in16.508s. No remaining24 or fresh63265.
+Root stops data-only SMDP cycles; C1's modest32-game gain did not continue.
+
+Parent and Sol independently agreed to a genuinely different mechanism next:
+learn one-step visual state changes from every actual transition, then plan short
+primitive-action sequences using learned hit/end outcomes and frozenC1option3
+value tail. Execute only the first command and replan from the next actual image.
+This tests dense dynamics learning and closed-loop action timing together. It
+cannot isolate either cause; actual game improvement is the practical objective.
+No simulator dynamics, semantic object identities or geometric intercept targets.
+
+Outside evidence consulted by parent: [Black-DROPS](https://arxiv.org/html/1703.07261v2)
+shows uncertain learned-dynamics models with black-box policy optimization on
+robotics tasks, including learned rewards. It supports the mechanism, not a claim
+of camera-only Pong performance. [Non-delusional Q-learning](https://research.google/pubs/non-delusional-q-learning-and-value-iteration/)
+identifies policy inconsistency in approximate greedy backups as another possible
+failure mechanism; that cause is not established in our results. A frozen single
+option tail avoids another max across its four noisy outputs, but remains an
+approximate fitted value and can still be exploited by a planner.

@@ -88,18 +88,39 @@ C1refitdata65409usable/139starts;MC+16FQI166.942s(same180budget,C0had26updates).
 Finale58a73f8ba9fe695aa7e1815fc268aaf43bef0759f8a65760fa58bcf8009f2cd;C0unchanged.
 Exact65409+2048parity; notconverged. Olddataprefixes byteidentical. Seeledger/plan.
 
-Active: ONEsecondfeedbackcycle authorizedinintent, fixedspecbeforelaunch.
-value_execution ownscollector2 frozenC1ε.25same1baseline/16hold/earlyhitcontract,
-64newphasebalancedTRAIN excludingprior139+newadmittedcomparisonstarts; firstcheck
-32eachavailable. ALL56newcomparisontraces(C0new24+C1all32) admittedwithoutnewcameras;
-doNOTduplicateC0eightalreadyintraining. learning_challenge ownsappend/refit2 and
-EXACTperformanceoptimization: fastactualoptionpresencecounting insteadofperupdate
-independence(unique) and reuseCtreeleafroutingforQ. Scores/support/updatesmustmatch
-exactly, oldpinnedsourceimmutable. Samealgorithm/targets/weights/180fitbudget,
-finalcompletediteration, nohyperparametersweep. No newcollection/fitlaunchedyet.
-C2comparisonwillreuseC1cached32; first8progressgatevs16total/9later,then32vs50/21,
-freshonlyifbeats40069withfirstparity+second/laterfractionnotworse.
-Userwaiverpersists;continueuntilreliablelearnedreturnsoruserstop; bridgeelsewhere.
+Second feedback cycle is complete and rejected; switching to learned dynamics/planning.
+Collector2 used frozen C1 with unchanged exploration/options on 64 new TRAIN starts
+(32 per phase), excluding all 142 prior/admitted starts. All games completed in
+62.941s: 19,998 transition cameras +64 initials, 73 hits. These collection hit totals
+are not paired performance because collection1 and collection2 use different starts.
+All 56 new comparison traces (21,664 already-paid cameras) plus all 64 collector2
+traces were appended; cached C0 eight were not duplicated. Prior array prefixes
+and start IDs are byte-identical. Combined 100,286 usable windows across 206 starts.
+
+C2 fitted in 168.054s, MC plus 12 completed FQI updates; endpoint
+`785d35d48814633f253073f2e6f7804cb98b4293e99dadc632375ba2f4c7b43d`.
+Exact query optimization preserves targets/support/scores; all 100,286 training
+inputs and 2,048 serialized queries passed parity. More data still costs more:
+C1 completed 16 updates, C2 12 in the same 180s limit. Neither is converged.
+No settings, reward, exploration or action-duration changes. Sources c31de46.
+Artifact: `pong-smdp-feedback2-refit-20261029-r1`; data spec d590d036b673bb099efe9c309cec799aceaa81ce97274d9109177718ae203a56.
+
+Comparison2 (source a86d89c) used cached C1 games; only C2 played. Spec
+92ae13da91aaf38de4a6d58e20ec7a85212492ee4f678ed99a93c7560c4f1481.
+C2 failed the first-eight gate: C1 16→13 total, first7 unchanged, second5→2,
+later9/15→6/13. Baseline still23total/16later. All3,270 rows audited exactly;
+3,270 new transition cameras +8 initials in16.508s. Source/assets frozen.
+No remaining24 or fresh63265 games; no promotion. Stop data-only SMDP cycles.
+
+Current direction: learned one-step visual scene changes plus short primitive-action
+receding-horizon planning. Frozen C1 option3 supplies a value tail; new learned
+hit/end predictions supply immediate outcomes. Execute one command, observe again,
+then replan. No blind16-frame hold, simulator lookahead, object-role labels or
+hand-coded geometry costs. Baseline remains active until first actual own hit.
+learning_challenge owns fixed specification/model/planner; value_execution owns
+existing-data inventory and native adapter/evaluation. Parent reviews before the
+single bounded fit/native pilot. User waiver persists; no approval question.
+Bridge belongs to another thread.
 
 Disk headroom: removed147MB completed unit-test temporaries, then hardlinked125
 SHA-identical frozen transform copies, recovering1.267GB. All research paths/bytes,
