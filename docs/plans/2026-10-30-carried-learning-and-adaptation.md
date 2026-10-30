@@ -30,7 +30,9 @@ score. Positive terminal score and time caps do not invent misses. Existing visu
 tracking resets per game; the learner and its random state do not.
 
 Pilot: two sequential streams,48 games per phase,A→B→A,20-second caps,
-maximum144,000 cameras and600 wall seconds per stream,two workers. Freeze start
+maximum144,000 cameras and1,200 wall seconds per stream,two workers.
+The wall limit was increased before launch using measured native throughput;
+600 seconds could censor successful streams. Game/camera budgets are unchanged. Freeze start
 schedules and hyperparameters before running. Report every exploratory game.
 No outcome-dependent extension of an incomplete pilot. Prepare control support
 but run controls after identifying a promising route, rather than spending full
