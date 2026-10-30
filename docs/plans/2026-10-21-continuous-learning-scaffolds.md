@@ -173,3 +173,16 @@ The bounded2026-10-23 session then rejected the fixed mixture via unchanged-alph
 The selected next trial confirms each combined mean-balanced search proposal on fresh training games from both phases before accepting it. This preserves the existing policy class and original search scale; it explicitly tests whether unconfirmed updates cause avoidable phase sacrifice. Every rejected/partial observation remains charged. A no-accepted-update run stops without redundant heldout evaluation. The current batch allows one primary experiment and, only after interpreting it, at most one justified follow-up inside the user's two-hour ceiling. [Selection, outside evidence and blind alternatives](2026-10-23-fresh-confirmation-selection.md). Reuse the established Sol XHigh agent for implementation and independent challenges; Astra owns selection, source synthesis and separate result reconstruction.
 
 The resumed batch completed both weighted-proposal and executed-child confirmation trials: six cycles each, zero accepted updates in either, unchanged RIGHTtheta6,319648new TRAIN transitions and0DEV under registered futility. No new learning gain. Stop acceptance-rule variations for this batch. Next recommended question: joint balanced acquisition from the earlier DIRECT scaffold before RIGHT specialization, requiring genuine RIGHT acquisition plus LEFT and ordinary-game retention and explicit comparison to the preserved RIGHT candidate. This separate lineage is not silently substituted for accumulated learning. No next allocation or architecture change is selected by this note. [Evidence and costs](../reconstruction/2026-10-23-continuation-session-results.md).
+
+### 2026-10-30 carried-learning scaffold completed
+
+The inherited visual relational-controller family now has a qualified persistent
+online selector. Two fresh streams acquired reliable returns, preserved learned
+state across game resets, and adapted through hidden normal/reversed/normal
+controls. Fixed late windows:1,063/1,071 returns; full live streams with exploration:
+1,719/1,815. Matched reset and frozen controls support the learning/adaptation claim.
+[Results, scope and curves](../reconstruction/2026-10-30-carried-learning-and-adaptation-results.md).
+This is reward-based structural selection among16existing feedback primitives,
+not general game learning or fullM1B. Next extension should increase what is
+learned online (numeric feedback or sensorimotor association), not endlessly
+polish frozen return rates. No additional run is launched after qualification.

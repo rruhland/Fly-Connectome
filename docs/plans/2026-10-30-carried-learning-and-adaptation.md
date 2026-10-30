@@ -112,3 +112,14 @@ lifts, the frozen acquired A controller must itself retain>=95% first/later with
 The earlier 'wait for completed pilot' selection condition cannot be fulfilled
 after the external interruption; selection is explicitly based on the audited
 completed prefix, with confirmation untouched.
+
+## Closed outcome
+
+Fresh confirmation passed all planned criteria and independent audits. All544
+games completed; two live streams retained state across A→B→A, with1,063/1,071
+returns in the six fixed last32 windows. Whole live streams including exploration
+returned1,719/1,815. Paired reset/frozen controls established knowledge-retention
+and adaptation effects on replica0. No next native experiment is selected.
+See [complete report](../reconstruction/2026-10-30-carried-learning-and-adaptation-results.md).
+This closes the structural-selection/motor-remapping scaffold, not fullM1B or
+general continuous policy learning.

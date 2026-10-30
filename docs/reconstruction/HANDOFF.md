@@ -1,5 +1,25 @@
 # M1B research handoff — 2026-10-29
 
+## Latest completed scaffold — carried learning and motor adaptation passed
+
+2026-10-30: two fresh chronological learners passed A→B→A with no learned-state
+reset, no phase input and no backpropagation. Fixed last32 windows total
+**1,063/1,071 returns**, first192/192; all384 live learning games including
+exploration/recovery total1,719/1,815. One matched control pair: resetA11/43;
+frozen acquired controller reversed0/32 and normal-again179/180. All544 planned
+games completed; independent61source/assets and all receipt/tape/continuity audits
+passed. Current process state: **no experiments running; stop at completed scaffold**.
+
+Read `2026-10-30-carried-learning-and-adaptation-results.md` for the plot, exact
+scope, controls and costs. Artifacts/checkpoints in
+`/workspace/m1b-experiments/pong-carried-qualification-20261030-r1`.
+The learner updates reward evidence during games and selects from16 inherited
+feedback structures between games. This is not raw-pixel learning from scratch,
+within-rally policy adaptation, arbitrary-game learning, winning or fullM1B.
+Potential next target: learn numerical feedback/sensorimotor associations online
+rather than only select existing structures. No next allocation is launched.
+Historical running-task notes below are superseded.
+
 ## Active carried-learning work — 2026-10-30
 
 User requests continued orchestration until carried learning/adaptation shown or

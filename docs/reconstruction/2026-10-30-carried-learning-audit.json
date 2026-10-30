@@ -1,0 +1,468 @@
+{
+  "status": "final_independent_audit_passed",
+  "spec_sha256": "fb058e6c8b71ee83e711b4c2bec766d5e1e423ff4227e04c25707cf8d578be4e",
+  "source_files_assets_checked": 61,
+  "all_receipts": 544,
+  "all_stream_audits_passed": true,
+  "two_fresh_live_replicas_all_phase_fixed32_criteria_passed": true,
+  "all_explicit_control_pairs_complete_and_valid": true,
+  "same_arm_Areturn_exact_execution_pairs": [
+    {
+      "live_index": 160,
+      "frozen_index": 32,
+      "same_tape_bytes": true,
+      "transitions": 1000,
+      "command_digest": "b5fd943da0c95d408e75570791d89705675db987a7e2071079decc266c46bc78"
+    },
+    {
+      "live_index": 161,
+      "frozen_index": 33,
+      "same_tape_bytes": true,
+      "transitions": 1000,
+      "command_digest": "8eab0b994748f82273268cdbeef0b93044f25c6200a4eeab03b2dc4ab31e79fe"
+    },
+    {
+      "live_index": 162,
+      "frozen_index": 34,
+      "same_tape_bytes": true,
+      "transitions": 1000,
+      "command_digest": "c87eb380062f827d529ba9e92b2497927ea5e8bab400de86a22e5aea8a40c7c3"
+    },
+    {
+      "live_index": 163,
+      "frozen_index": 35,
+      "same_tape_bytes": true,
+      "transitions": 1000,
+      "command_digest": "e40a663ca6d97dd808213729257f28c79837c89bca4f90b165385d94da6bdaad"
+    },
+    {
+      "live_index": 164,
+      "frozen_index": 36,
+      "same_tape_bytes": true,
+      "transitions": 1000,
+      "command_digest": "ba50cfd9d674c95f574941b442fee3da71d73e189e62ced5bf2f3915a090d4fa"
+    },
+    {
+      "live_index": 165,
+      "frozen_index": 37,
+      "same_tape_bytes": true,
+      "transitions": 1000,
+      "command_digest": "b9ebf18c98d7092011bbff53dee8eec7d7972baa970799432c093177ebc9dde4"
+    },
+    {
+      "live_index": 166,
+      "frozen_index": 38,
+      "same_tape_bytes": true,
+      "transitions": 1000,
+      "command_digest": "2607c1dc867593b91ee0338aa5b6c6556f2dd206a389cb82a73566fbb77b2883"
+    },
+    {
+      "live_index": 167,
+      "frozen_index": 39,
+      "same_tape_bytes": true,
+      "transitions": 466,
+      "command_digest": "f13c68b23c140db518ed1d93e31d45220b6abf5532b9745e268953d8390d1f40"
+    },
+    {
+      "live_index": 168,
+      "frozen_index": 40,
+      "same_tape_bytes": true,
+      "transitions": 1000,
+      "command_digest": "fbdb02a35f380e62ade127eb7f190727765cc2022126a3f3be9731afae2e15ae"
+    },
+    {
+      "live_index": 169,
+      "frozen_index": 41,
+      "same_tape_bytes": true,
+      "transitions": 1000,
+      "command_digest": "e41a9900bd015f2a198155bd587cef04418e09121ee0ef96244d3aaa05d64e96"
+    },
+    {
+      "live_index": 170,
+      "frozen_index": 42,
+      "same_tape_bytes": true,
+      "transitions": 1000,
+      "command_digest": "153dcb6cd8d1f27f97dab7cceba8b10c8e6a64060981aae511d84b7f88413327"
+    },
+    {
+      "live_index": 171,
+      "frozen_index": 43,
+      "same_tape_bytes": true,
+      "transitions": 1000,
+      "command_digest": "d2e4609af4f1d3d50e61a4e85a5083ccf30160c554640695c262491d7c5d4b86"
+    },
+    {
+      "live_index": 172,
+      "frozen_index": 44,
+      "same_tape_bytes": true,
+      "transitions": 1000,
+      "command_digest": "e49f4e7ee136b367f8ffd1a17539bc1c8ccf49d397ba244b81271de6659192f8"
+    },
+    {
+      "live_index": 173,
+      "frozen_index": 45,
+      "same_tape_bytes": true,
+      "transitions": 1000,
+      "command_digest": "b0214fc5b0486d6b6eb2e2989e721e26ba8c2dda9af646b4af59ebc9b46e97c3"
+    },
+    {
+      "live_index": 174,
+      "frozen_index": 46,
+      "same_tape_bytes": true,
+      "transitions": 1000,
+      "command_digest": "b73551a7a7766346bdd610622c9def134d95aa992bc0b29301c5ec09738ced19"
+    },
+    {
+      "live_index": 175,
+      "frozen_index": 47,
+      "same_tape_bytes": true,
+      "transitions": 1000,
+      "command_digest": "e5eb9c50fb411fc59dd1ecbd6504f5bbc5dd15d03c0e67655fd44e50f1135137"
+    },
+    {
+      "live_index": 176,
+      "frozen_index": 48,
+      "same_tape_bytes": true,
+      "transitions": 1000,
+      "command_digest": "89b0410a96e17d3b8149538e452b8c41fe82bd3f3105619cda9abe62f6a03bfd"
+    },
+    {
+      "live_index": 177,
+      "frozen_index": 49,
+      "same_tape_bytes": true,
+      "transitions": 1000,
+      "command_digest": "ad05229325db385f0a240310c5a0deca67fee6b42f2b085383c228f59ccf41ce"
+    },
+    {
+      "live_index": 178,
+      "frozen_index": 50,
+      "same_tape_bytes": true,
+      "transitions": 1000,
+      "command_digest": "76672a72c0916f74d87a55058c88f996ed14d95f059f96a64318ae07da4eabb4"
+    },
+    {
+      "live_index": 179,
+      "frozen_index": 51,
+      "same_tape_bytes": true,
+      "transitions": 1000,
+      "command_digest": "cec69e698fea4326cd7f8791ceb7c96181359ffa412bd1c244a1e2be1118fe5d"
+    },
+    {
+      "live_index": 180,
+      "frozen_index": 52,
+      "same_tape_bytes": true,
+      "transitions": 1000,
+      "command_digest": "9c14731871f687ae32c525dcecffd5af559e822350ca598af2eb8947c3ed91fb"
+    },
+    {
+      "live_index": 181,
+      "frozen_index": 53,
+      "same_tape_bytes": true,
+      "transitions": 1000,
+      "command_digest": "ea09e9ea5c688c6290550e295f3c2446294e5eee4684195709d393a4fa3685ff"
+    },
+    {
+      "live_index": 182,
+      "frozen_index": 54,
+      "same_tape_bytes": true,
+      "transitions": 1000,
+      "command_digest": "4ea879f495e37453c46cf02e18517fbbc9c7e78940f81f352f59620ff4a8a99f"
+    },
+    {
+      "live_index": 183,
+      "frozen_index": 55,
+      "same_tape_bytes": true,
+      "transitions": 1000,
+      "command_digest": "8503eaf85c331ea3007b5daa3fc4c709f6004488158f85e4abaa99a2ad6ebb6a"
+    },
+    {
+      "live_index": 184,
+      "frozen_index": 56,
+      "same_tape_bytes": true,
+      "transitions": 1000,
+      "command_digest": "0ac9acffb8e1b15c38fda0a68932b0df6d83dda56c65fe26f3c1efb99673ae66"
+    },
+    {
+      "live_index": 185,
+      "frozen_index": 57,
+      "same_tape_bytes": true,
+      "transitions": 1000,
+      "command_digest": "c7b431ec4ca564288e27597b403431dd731dbe06d14e3292e7b3c805c641f7c1"
+    },
+    {
+      "live_index": 186,
+      "frozen_index": 58,
+      "same_tape_bytes": true,
+      "transitions": 1000,
+      "command_digest": "717f45e3c312e4423e33dffa2df5c83e4b1b0000dac59077d8c0e06529a1f913"
+    },
+    {
+      "live_index": 187,
+      "frozen_index": 59,
+      "same_tape_bytes": true,
+      "transitions": 1000,
+      "command_digest": "69c68a5d22d4bb4255b4b4ca1c5e98db147349107dfff331c1cf29e0c1f78b4c"
+    },
+    {
+      "live_index": 188,
+      "frozen_index": 60,
+      "same_tape_bytes": true,
+      "transitions": 1000,
+      "command_digest": "0d6a3348968f0e5f69b4cfd25b3b10d96b7402b704b092897ec23e55b8974ff5"
+    },
+    {
+      "live_index": 189,
+      "frozen_index": 61,
+      "same_tape_bytes": true,
+      "transitions": 1000,
+      "command_digest": "f03e960d5d4bc693ae38b94c276dfb3178d9714cced7090c3e5cb7b05b08d5b5"
+    },
+    {
+      "live_index": 190,
+      "frozen_index": 62,
+      "same_tape_bytes": true,
+      "transitions": 1000,
+      "command_digest": "587d409959ee3221fd9ab4be91535325eed38b7d24df601906688815fdf62516"
+    },
+    {
+      "live_index": 191,
+      "frozen_index": 63,
+      "same_tape_bytes": true,
+      "transitions": 1000,
+      "command_digest": "d195c41671ee432ed65a6d7ef16b7b49e1fd15ebbd8307ef7863771649945096"
+    }
+  ],
+  "same_arm_Areturn_all_tape_bytes_identical": true,
+  "qualification_passed": true,
+  "scope": "Carried finite structural selection and hidden motor polarity remapping over inherited frozen vision. Controls onlyreplica0. Not fullM1B.",
+  "frozen_acquisition_provenance_verified": {
+    "actual_acquired_arm": 4,
+    "parent_checkpoint_sha256": "4a998eadd7dcfc60937f5db8419be621bd78b4e9433f8ea843a65cd75e1b74c7",
+    "final_A_receipt_sha256": "9b3cd97e46147b70736cb2f40945d8b05ef63088c4213de8c0119b04ffc07f70",
+    "ready_barrier_sha256": "fec53c916efe11d1195bd64f4386f47ecc42b2576bb6f0989cb25a55632e9d85",
+    "retained_evidence_and_rng_copied_exactly": true,
+    "updates_disabled_in_frozen_control": true
+  },
+  "live_phase_final32": {
+    "replica0-live": {
+      "A_acquire": {
+        "games": 32,
+        "completed_games": 32,
+        "all_returns": 181,
+        "all_opportunities": 181,
+        "all_rate": 1.0,
+        "first_returns": 32,
+        "first_opportunities": 32,
+        "first_rate": 1.0,
+        "later_returns": 149,
+        "later_opportunities": 149,
+        "later_rate": 1.0
+      },
+      "B_reverse": {
+        "games": 32,
+        "completed_games": 32,
+        "all_returns": 178,
+        "all_opportunities": 180,
+        "all_rate": 0.9888888888888889,
+        "first_returns": 32,
+        "first_opportunities": 32,
+        "first_rate": 1.0,
+        "later_returns": 146,
+        "later_opportunities": 148,
+        "later_rate": 0.9864864864864865
+      },
+      "A_return": {
+        "games": 32,
+        "completed_games": 32,
+        "all_returns": 179,
+        "all_opportunities": 180,
+        "all_rate": 0.9944444444444445,
+        "first_returns": 32,
+        "first_opportunities": 32,
+        "first_rate": 1.0,
+        "later_returns": 147,
+        "later_opportunities": 148,
+        "later_rate": 0.9932432432432432
+      }
+    },
+    "replica1-live": {
+      "A_acquire": {
+        "games": 32,
+        "completed_games": 32,
+        "all_returns": 176,
+        "all_opportunities": 177,
+        "all_rate": 0.9943502824858758,
+        "first_returns": 32,
+        "first_opportunities": 32,
+        "first_rate": 1.0,
+        "later_returns": 144,
+        "later_opportunities": 145,
+        "later_rate": 0.993103448275862
+      },
+      "B_reverse": {
+        "games": 32,
+        "completed_games": 32,
+        "all_returns": 175,
+        "all_opportunities": 176,
+        "all_rate": 0.9943181818181818,
+        "first_returns": 32,
+        "first_opportunities": 32,
+        "first_rate": 1.0,
+        "later_returns": 143,
+        "later_opportunities": 144,
+        "later_rate": 0.9930555555555556
+      },
+      "A_return": {
+        "games": 32,
+        "completed_games": 32,
+        "all_returns": 174,
+        "all_opportunities": 177,
+        "all_rate": 0.9830508474576272,
+        "first_returns": 32,
+        "first_opportunities": 32,
+        "first_rate": 1.0,
+        "later_returns": 142,
+        "later_opportunities": 145,
+        "later_rate": 0.9793103448275862
+      }
+    }
+  },
+  "recovery25plus25": {
+    "replica0-live": {
+      "A_acquire": {
+        "confirmation_opportunity": 100,
+        "confirmation": {
+          "hit": true,
+          "first": false,
+          "game": 28,
+          "phase_game": 28,
+          "phase_seconds": 324.3500000000009,
+          "phase_transition_cameras": 16225,
+          "phase_initial_cameras": 28
+        }
+      },
+      "B_reverse": {
+        "confirmation_opportunity": 75,
+        "confirmation": {
+          "hit": true,
+          "first": false,
+          "game": 86,
+          "phase_game": 22,
+          "phase_seconds": 246.22500000000048,
+          "phase_transition_cameras": 12316,
+          "phase_initial_cameras": 22
+        }
+      },
+      "A_return": {
+        "confirmation_opportunity": 125,
+        "confirmation": {
+          "hit": true,
+          "first": true,
+          "game": 163,
+          "phase_game": 35,
+          "phase_seconds": 393.0250000000014,
+          "phase_transition_cameras": 19661,
+          "phase_initial_cameras": 35
+        }
+      }
+    },
+    "replica1-live": {
+      "A_acquire": {
+        "confirmation_opportunity": 100,
+        "confirmation": {
+          "hit": true,
+          "first": false,
+          "game": 28,
+          "phase_game": 28,
+          "phase_seconds": 328.22500000000076,
+          "phase_transition_cameras": 16419,
+          "phase_initial_cameras": 28
+        }
+      },
+      "B_reverse": {
+        "confirmation_opportunity": 75,
+        "confirmation": {
+          "hit": true,
+          "first": false,
+          "game": 83,
+          "phase_game": 19,
+          "phase_seconds": 247.24166666666704,
+          "phase_transition_cameras": 12367,
+          "phase_initial_cameras": 19
+        }
+      },
+      "A_return": {
+        "confirmation_opportunity": 75,
+        "confirmation": {
+          "hit": true,
+          "first": false,
+          "game": 155,
+          "phase_game": 27,
+          "phase_seconds": 228.1333333333337,
+          "phase_transition_cameras": 11417,
+          "phase_initial_cameras": 27
+        }
+      }
+    }
+  },
+  "all_qualification_costs": {
+    "transition_cameras": 369799,
+    "initial_cameras": 544,
+    "physical_seconds": 7393.933333333351,
+    "per_stream_wall_seconds": {
+      "replica0-live": 1884.1481727350001,
+      "replica1-live": 1871.5878578439997,
+      "replica0-reset": 305.62977247000003,
+      "replica0-frozen": 428.50772520600003
+    },
+    "all_planned_games_completed": true,
+    "unknown_qualification_camera_cost": false
+  },
+  "plot_caveat": "Trailing20game windows cross phase boundaries. Frozen-control A-return curve rises as oldB misses leave the window, despite zero learning.",
+  "fresh_live_initialization_verified": {
+    "replica0-live": {
+      "zero_reward_evidence": true,
+      "initial_incumbent": 3,
+      "initial_priority": [
+        3,
+        9,
+        2,
+        14,
+        5,
+        13,
+        7,
+        6,
+        8,
+        10,
+        4,
+        11,
+        15,
+        1,
+        12,
+        0
+      ]
+    },
+    "replica1-live": {
+      "zero_reward_evidence": true,
+      "initial_incumbent": 5,
+      "initial_priority": [
+        5,
+        2,
+        14,
+        3,
+        0,
+        6,
+        9,
+        11,
+        13,
+        1,
+        15,
+        10,
+        8,
+        4,
+        7,
+        12
+      ]
+    }
+  }
+}
