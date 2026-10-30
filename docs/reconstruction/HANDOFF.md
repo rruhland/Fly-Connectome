@@ -9,7 +9,12 @@ cloud restart at142/144 and137/144games; all279 completed receipts audited clean
 Both learned across games and adapted to reversal; capped-evidence false alarms
 caused costly repeated exploration. Unchanged discounted learner selected for
 fresh confirmation:2new streams64games/phase A→B→A, paired tail-only reset/frozen
-controls onreplica0. This confirmation has not launched at this handoff update.
+controls onreplica0. Confirmation is now running in `/workspace/m1b-experiments/pong-carried-qualification-20261030-r1`,
+spec SHA `fb058e6c8b71ee83e711b4c2bec766d5e1e423ff4227e04c25707cf8d578be4e`.
+Fixed544games/544,000maximum transition cameras; live budgets2,760seconds each,
+reset1,380seconds, frozen960seconds;4workers maximum. Both parent and independent
+reviewer verified code/assets and384new distinct live starts plus matched controls.
+Do not modify the pinned runner/learner or extend any started stream.
 No pilot retry or silent extension. No milestone completion claimed yet.
 
 Current source: `run_pong_carried_learning.py`,
