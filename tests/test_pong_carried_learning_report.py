@@ -5,7 +5,7 @@ from pathlib import Path
 import numpy as np
 
 from report_pong_carried_learning import (
-    costs, digest, load_receipts, rates, recovery, report_experiment, state_digest,
+    costs, digest, load_receipts, paired_controls, rates, recovery, report_experiment, state_digest,
 )
 
 
@@ -13,7 +13,7 @@ def write(path, data):
     path.write_text(json.dumps(data))
 
 
-def make_experiment(tmp_path, games=36, missing=(), failed_plane_game=None):
+def make_experiment(tmp_path, games=36, missing=(), failed_plane_game=None, phase_start=0):
     root = tmp_path / 'run'
     directory = root / 'capped_beta'
     directory.mkdir(parents=True)
@@ -23,7 +23,7 @@ def make_experiment(tmp_path, games=36, missing=(), failed_plane_game=None):
     asset = tmp_path / 'asset.bin'
     asset.write_bytes(b'fixed prior')
     scripts = Path(__file__).parents[1] / 'scripts/experimental'
-    assignments = [dict(index=i, phase='A_acquire', phase_index=i,
+    assignments = [dict(index=i, phase='A_acquire', phase_index=i + phase_start,
         seed=i + 101, reverse=False, max_episode_ticks=2400,
         max_transition_cameras=1000) for i in range(games)]
     write(root / 'schedules.json', {'capped_beta': assignments})
@@ -183,3 +183,30 @@ def test_phase_boundaries_carry_evidence_and_reset_only_latency_clock(tmp_path):
     for phase in result['phases'].values():
         assert phase['recovery']['confirmation_opportunity'] == 50
         assert phase['recovery']['confirmation']['phase_game'] == 10
+
+
+def test_tail_only_control_has_fixed_metrics_but_no_onset_recovery_latency(tmp_path):
+    root, source = make_experiment(tmp_path, games=32, phase_start=32)
+    phase = report_experiment(root, source)['streams']['capped_beta']['phases']['A_acquire']
+    assert phase['scheduled_phase_index_start'] == 32
+    assert phase['fixed_tail']['conditions']['exact_fixed_tail_complete']
+    assert phase['recovery']['confirmed'] is None
+
+
+def test_paired_controls_join_explicit_live_indices_and_reject_wrong_starts():
+    common = dict(phase='B_reverse', phase_index=32, seed=123, reverse=True,
+        max_episode_ticks=2400, max_transition_cameras=1000)
+    left_assignment = dict(common, index=96)
+    right_assignment = dict(common, index=0, matched_live_index=96,
+        matched_live_stream='replica0-live')
+    left = dict(assignment=left_assignment, events=[dict(hit=True, first=True)],
+        complete=True, report=dict(hits=1))
+    right = dict(assignment=right_assignment, events=[dict(hit=False, first=True)],
+        complete=True, report=dict(hits=0))
+    schedules = {'replica0-live': [left_assignment], 'replica0-frozen': [right_assignment]}
+    rows = {'replica0-live': [left], 'replica0-frozen': [right]}
+    report = paired_controls(rows, schedules)['replica0-frozen']
+    assert report['matching_valid']
+    assert report['phases']['B_reverse']['paired_mean_own_hit_difference'] == 1
+    right_assignment['seed'] = 999
+    assert not paired_controls(rows, schedules)['replica0-frozen']['matching_valid']

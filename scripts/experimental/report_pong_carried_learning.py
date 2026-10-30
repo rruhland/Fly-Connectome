@@ -268,17 +268,59 @@ def recovery(events, threshold=.95, window=25):
         no_endpoint_or_window_selection_for_acceptance=True)
 
 
+def paired_controls(receipts, schedules):
+    """Join only explicitly paired control assignments; never infer a pairing."""
+    comparisons = {}
+    lookup = {name: {row['assignment']['index']: row for row in rows}
+        for name, rows in receipts.items()}
+    for name, assignments in schedules.items():
+        matched = [assignment for assignment in assignments if 'matched_live_index' in assignment]
+        if not matched:
+            continue
+        phases, problems = {}, []
+        for phase in dict.fromkeys(assignment['phase'] for assignment in matched):
+            expected = [assignment for assignment in matched if assignment['phase'] == phase]
+            live, control, differences = [], [], []
+            for assignment in expected:
+                target = assignment.get('matched_live_stream')
+                if target is None:
+                    problems.append('paired assignment does not name its matched_live_stream')
+                    continue
+                left = lookup.get(target, {}).get(assignment['matched_live_index'])
+                right = lookup.get(name, {}).get(assignment['index'])
+                if left is None or right is None:
+                    continue
+                keys = ('seed', 'reverse', 'max_episode_ticks', 'max_transition_cameras')
+                if right['assignment'] != assignment or any(
+                        left['assignment'][key] != assignment[key] for key in keys):
+                    problems.append(f"{name} game {assignment['index']}: paired start/duration mismatch")
+                live.append(left)
+                control.append(right)
+                differences.append(left['report']['hits'] - right['report']['hits'])
+            phases[phase] = dict(scheduled_pairs=len(expected), observed_pairs=len(differences),
+                complete=len(differences) == len(expected) and all(
+                    row['complete'] for row in live + control), live=rates(live), control=rates(control),
+                paired_mean_own_hit_difference=sum(differences) / len(differences) if differences else None,
+                live_more_hits=sum(value > 0 for value in differences),
+                control_more_hits=sum(value < 0 for value in differences),
+                ties=sum(value == 0 for value in differences))
+        comparisons[name] = dict(problems=problems, matching_valid=not problems, phases=phases,
+            uncertainty='Descriptive paired games; no independent-contact confidence interval asserted.')
+    return comparisons
+
+
 def report_experiment(root, source_root=None, tail_games=32, min_later=100, threshold=.95):
     root = Path(root)
     spec, schedules = read(root / 'spec.json'), read(root / 'schedules.json')
     source_root = Path(source_root) if source_root else Path(__file__).parents[2] / 'src/fly_connectome'
     source = check_source(spec, root, source_root)
-    streams = {}
+    streams, receipts = {}, {}
     for kind, assignments in schedules.items():
         directory = root / kind
         if not directory.is_dir():
             continue
         rows = load_receipts(directory)
+        receipts[kind] = rows
         audit, opportunities = audit_stream(rows, assignments, spec, directory)
         phases = {}
         for phase in dict.fromkeys(assignment['phase'] for assignment in assignments):
@@ -295,11 +337,15 @@ def report_experiment(root, source_root=None, tail_games=32, min_later=100, thre
                 later_return_rate=metrics['later_rate'] is not None and metrics['later_rate'] >= threshold)
             phase_events = [event for row in selected
                 for event in opportunities[row['assignment']['index']]]
+            onset_present = bool(expected) and expected[0]['phase_index'] == 0
+            latency = recovery(phase_events, threshold) if onset_present else dict(
+                confirmed=None, reason='Phase prefix deliberately absent; onset recovery latency is unavailable.')
             phases[phase] = dict(scheduled_games=len(expected), all_started=rates(selected),
+                scheduled_phase_index_start=expected[0]['phase_index'] if expected else None,
                 costs=costs(selected), fixed_tail=dict(games_requested=tail_games,
                     scheduled_indices=sorted(tail_indices), metrics=metrics, conditions=conditions,
                     descriptive_window_conditions_met=all(conditions.values())),
-                recovery=recovery(phase_events, threshold),
+                recovery=latency,
                 selected_arms=dict(Counter(str(row['arm']) for row in selected)),
                 selection_modes=dict(Counter(row['selection_mode'] for row in selected)))
         summary_path = directory / 'summary.json'
@@ -322,6 +368,7 @@ def report_experiment(root, source_root=None, tail_games=32, min_later=100, thre
     return dict(schema='independent-carried-learning-report-v1', directory=str(root),
         reporter_source_sha256=digest(__file__),
         spec_sha256=digest(root / 'spec.json'), source_audit=source, streams=streams,
+        matched_control_comparisons=paired_controls(receipts, schedules),
         criteria=dict(fixed_tail_games=tail_games, min_later_opportunities=min_later,
             first_and_later_threshold=threshold, includes_all_exploration=True),
         qualification_declared=False,
