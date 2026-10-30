@@ -109,3 +109,26 @@ acquisition and B recovery in its bounded pilot, preserve the traces and switch
 mechanism rather than sweep discounts/exploration constants. If a route is
 promising, qualify the same pinned implementation on new independent streams
 and controls before any completion claim.
+
+## Initial implementation audit (no native games)
+
+Reviewed `pong_carried_structure_learner.py` and `run_pong_carried_learning.py`.
+The learner receives only own hits, public terminal score/status and elapsed
+time; its game choice receives no arguments. Phase/seed/mapping stay on the
+environment/reporting side. Whole-game ownership and per-game JSON restore are
+implemented. Independent synthetic checks passed exact future continuation
+including surprise-sweep RNG, midgame restore, and deterministic arm relabeling.
+Learned sufficient statistics persist through all144 synthetic A/B/A games.
+
+A perfect synthetic one-good-arm test (five hits and cap for the good arm;
+zero hits and negative termination for others) gave final32 good-arm selections
+32/30/30 for capped evidence and32/32/29 for discounted evidence over48-game
+phases. This illustrates why the pilot's fixed last16 is a diagnostic, not final
+qualification: the two-loss trigger plus full16 sweep can extend into a last32
+window. Freeze longer qualification phases before collecting those data.
+
+Prepared control streams currently have distinct start cohorts, so they support
+unpaired comparisons. Prospectively shared exogenous starts are needed before
+calling a later control comparison matched. Counterfactual starts are not
+queried by the live learner; separately run reporting controls are compatible
+with that boundary.
