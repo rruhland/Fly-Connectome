@@ -1,5 +1,24 @@
 # M1B research handoff — 2026-10-29
 
+## Active carried-learning work — 2026-10-30
+
+User requests continued orchestration until carried learning/adaptation shown or
+stop. See `../plans/2026-10-30-carried-learning-and-adaptation.md` for current
+prospective decisions and exact interruption accounting. r2 pilot interrupted by
+cloud restart at142/144 and137/144games; all279 completed receipts audited clean.
+Both learned across games and adapted to reversal; capped-evidence false alarms
+caused costly repeated exploration. Unchanged discounted learner selected for
+fresh confirmation:2new streams64games/phase A→B→A, paired tail-only reset/frozen
+controls onreplica0. This confirmation has not launched at this handoff update.
+No pilot retry or silent extension. No milestone completion claimed yet.
+
+Current source: `run_pong_carried_learning.py`,
+`pong_carried_structure_learner.py`, `run_pong_carried_qualification.py`,
+`report_pong_carried_learning.py` under `scripts/experimental`.
+Pilot artifacts: `/workspace/m1b-experiments/pong-carried-learning-20261030-r2`;
+`interrupted-report.json` audits source, reward tapes and carried phase boundaries.
+
+
 ## Latest result — longer frozen validation passed
 
 User requested the longer evaluation after the clean pause. Completed all 128

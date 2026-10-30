@@ -45,7 +45,7 @@ learned evidence but continues RNG, avoiding a constant first-arm artifact.
 ## Qualification, before declaring completion
 
 Freeze a promising implementation and use independent new learning streams.
-Proposed final assessment: at least3 initializations, fixed phase boundaries and
+Final confirmation will use two new independent live initializations, fixed phase boundaries and
 last32-game windows with at least100 later opportunities per phase; >=95% first
 and later return rates INCLUDING exploration in every final window. Report all
 acquisition/adaptation losses, physical time, wall time and recovery latency, not
@@ -71,3 +71,44 @@ bandit guarantees are not asserted for our temporally correlated, variable-lengt
 Pong outcomes. Continual uncertainty-driven exploration may be too costly for95%
 online reliability. Web search connector failed; direct primary project source
 was accessible. Independent challenge is researching additional sources.
+
+## Prospective confirmation efficiency decision
+
+After initial pilot acquisition and reversal recovery, parent and independent
+reviewer agreed on two fresh qualification streams, with one matched reset/frozen
+control pair on replica0. Pilot remains development evidence, not a third untouched
+qualification stream. Controls use only the same fixed final32 starts per relevant
+phase: reset-every-game has no learning history, frozen has fixed acquired weights,
+and both reset transient vision each game, so simulating unused prefixes adds no
+necessary controlled evidence. Report the scope as one controlled replication and
+two new learning streams. Live phase length64or80 is chosen from completed pilot
+recovery before qualification starts; all final windows/thresholds remain fixed.
+Budget uses worst-case cameras/measured84cameras persecond perworker plus20%margin,
+set before execution. No outcome-dependent extensions.
+
+## Infrastructure interruption and selection decision
+
+Cloud restart interrupted the fixed r2 pilot at142/144 capped-evidence games and
+137/144 discounted-evidence games. No process survived; all279 completed receipts,
+checkpoints and event tapes passed independent audit, with no orphan tapes.
+178,913 transition cameras and279 initial observations are saved. Charge up to
+one additional unsaved1000-camera game and one initial per stream; do not treat
+missing work as zero. Neither pilot is complete or qualified. No missing pilot
+starts will be replayed or its clock extended.
+
+Choose the unchanged discounted-UCB-like learner for fresh confirmation. Both
+methods acquired and adapted, but the capped method launched a second unnecessary
+16-arm sweep after ordinary B losses; its B endpoint is poor. Discounted learner
+held reliable B behavior and recovered A again before the interruption. The
+independent reporter confirmed two consecutive phase-anchored25-opportunity
+windows at>=95% in each observed phase (confirmation atA28/B36/A-return33),
+which is descriptive development evidence, not the unfinished fixed-tail pass.
+
+Prospective confirmation: two new initializations,64games per phase, unchanged
+learner/parameters, fixed last32 first/later targets and100later minimum. One paired
+reset/frozen control pair on replica0. In addition to>=20percentage-point control
+lifts, the frozen acquired A controller must itself retain>=95% first/later with
+100later in A-return. This is a new independent confirmation, not a pilot retry.
+The earlier 'wait for completed pilot' selection condition cannot be fulfilled
+after the external interruption; selection is explicitly based on the audited
+completed prefix, with confirmation untouched.
