@@ -418,3 +418,31 @@ below 40% of the actually acquired frozen model's error, in 4.02 seconds. No lea
 source or parameter changed between these synthetic checks. These focused tests
 clear causal plumbing and feasibility for the chosen zero-added-delay test; they
 do not qualify adaptation under delayed cyclic controls or replace native evidence.
+
+## Pausing point: completed categorical pilot
+
+The fixed pilot completed all 48 games: initial A 41/42 returns (first 7/8,
+later 34/34); changed cycle B 78/82 (first 15/16, later 63/66), versus acquired-A
+frozen control 0/16; restored A 30/33 (first 5/8, later 25/25). Restoration began
+with three first-return losses, followed by five games with six returns each.
+This is substantive development evidence of new within-game response association
+learning, carried adaptation and recovery, while independent fresh qualification
+and its prospective reliability criteria remain pending.
+
+Final read-only review checked all 48 receipts, 31 live and 15 frozen carried-state
+boundaries, 34 pinned files/assets, state and archive hashes, tape/public lengths,
+hit counts, matched B assignments and unchanged frozen coefficients/covariance.
+No discrepancy was found. Every saved exact public replay passed; 3,817 live
+pre-probe choices differ from a game-start frozen model on the same actual public
+history. This is descriptive within-game action attribution, alongside the
+separate matched native frozen-control performance evidence.
+
+The learned empty-history 0.32-second displacement forecasts for requests 0/1/2
+changed from approximately `[+0.066, -0.001, -0.071]` after A to
+`[+0.014, -0.021, +0.094]` after B. The changed association appears in continuous
+coefficients; these are local predictive approximations, not uniquely identified
+true physical responses. Restored control also should not be described as exact
+restoration of the old model. Cost was 27,328 transition and 48 initial cameras,
+319.81 seconds, with no unknown unsaved native cost. User requested a pausing
+point; no additional experiment, implementation or qualification was started by
+this worker after that instruction.

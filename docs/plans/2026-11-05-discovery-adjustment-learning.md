@@ -195,3 +195,12 @@ movement. This is an explicit horizon/exploration limitation. Do not silently
 remove it or imply broad remapping-under-delay competence. Proceed unchanged
 on the selected no-added-delay native cycle case; add an exploration recovery
 mechanism only if the corresponding failure actually appears there.
+
+## User-requested pause
+
+Finished only the already active categorical pilot, then stopped all workers.
+All48 games completed: A41/42, B78/82 versus frozen0/16, restoredA30/33.
+Fullpublic replay, carried continuity and independent audit passed. This is
+promising development evidence, not qualification. No further allocation is
+prepared or running. See `../reconstruction/2026-11-05-discovery-learning-pilot.md`.
+Resume only after user instruction; next target is independent confirmation.

@@ -1,18 +1,21 @@
 # M1B research handoff — 2026-10-29
 
-## Active discovery/adjustment milestone — 2026-11-05
+## Paused at user request — 2026-11-05
 
-User requests continued orchestration until numerical discovery/adjustment is
-proven on a chosen test or they stop work. See
-`../plans/2026-11-05-discovery-adjustment-learning.md` for live decisions.
-New scalar visual motor-response learning acquired useful control and transferred
-to delay/gain/drift, but frozen acquired models were also robust: do not claim
-these as necessary change-specific adjustment. Next development route learns a
-separate continuous response history for each of three commands, testing a hidden
-cycle that also changes which command is neutral. Existing vision and acquired
-relational feedback remain explicit priors. No backpropagation or hidden
-physics inputs. Work ongoing; prior completion/stop language below refers only
-to the previous structural-selection milestone.
+All experiments stopped after the completed categorical motor-response pilot.
+Read `2026-11-05-discovery-learning-pilot.md` for the result and next step.
+Fresh online numerical learner: normal41/42, hidden three-action cycle78/82,
+normal-restored30/33 (three initial losses then30/30). Acquired coefficient-frozen
+control0/16 on matched cycle starts. All48 public replays, carried state boundaries,
+source/assets and frozen controls checked clean. This is one promising development
+stream, NOT independently qualified reliability or fullM1B.
+
+Saved artifacts/checkpoints:
+`/workspace/m1b-experiments/pong-categorical-motor-learning-20261105-r1`.
+No qualification has been prepared or launched. Resume only on user instruction;
+next is fresh replicated confirmation with fixed reliability/recovery criteria.
+The active research plan is `../plans/2026-11-05-discovery-adjustment-learning.md`.
+Historical completed scaffold and running notes below refer to older work.
 
 ## Latest completed scaffold — carried learning and motor adaptation passed
 
