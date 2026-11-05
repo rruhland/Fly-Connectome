@@ -1,5 +1,19 @@
 # M1B research handoff — 2026-10-29
 
+## Active discovery/adjustment milestone — 2026-11-05
+
+User requests continued orchestration until numerical discovery/adjustment is
+proven on a chosen test or they stop work. See
+`../plans/2026-11-05-discovery-adjustment-learning.md` for live decisions.
+New scalar visual motor-response learning acquired useful control and transferred
+to delay/gain/drift, but frozen acquired models were also robust: do not claim
+these as necessary change-specific adjustment. Next development route learns a
+separate continuous response history for each of three commands, testing a hidden
+cycle that also changes which command is neutral. Existing vision and acquired
+relational feedback remain explicit priors. No backpropagation or hidden
+physics inputs. Work ongoing; prior completion/stop language below refers only
+to the previous structural-selection milestone.
+
 ## Latest completed scaffold — carried learning and motor adaptation passed
 
 2026-10-30: two fresh chronological learners passed A→B→A with no learned-state

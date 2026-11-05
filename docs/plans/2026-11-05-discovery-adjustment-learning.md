@@ -163,3 +163,35 @@ confirmation before this route shows actual competence. Keep the control support
 gate unchanged initially; do not bundle a visual-tracking repair with the new
 representation. The batched forecast optimization is available with exact saved
 public-stream equivalence already checked for the scalar model.
+
+### Categorical response pilot authorization
+
+Fresh numerical evidence uses 3 command channels x32 lag taps (96 real-valued
+coefficients), with no global intercept and all-zero unissued history. This
+avoids conflating an actual requested neutral button with absence of previous
+commands. Keep 4-interval observed displacement targets, supported-exposure
+20-second forgetting and 16-step forecast. A generic four-frame probe hold
+replaces single-frame random probes so action effects can rise above raster
+quantization; initial/continuing probe-start probabilities remain10%/1%, with
+actual probe exposure reported. No change flag triggers probing or updates.
+
+Authorized development schedule: A8 normal -> B16 hidden3-action cycle -> A8
+normal, plus16matched acquired-A coefficient-frozen B games. At most48,000
+transition +48initial cameras, 600seconds. Requested0 executes physical1,
+requested1 executes physical2, requested2 executes physical0; this permutation
+is entirely outside the learner. FreshA numeric evidence is intentionally not
+misrepresented as continuation of the obsolete scalar basis. Prior vision,
+relational feedback and scaffold learning history are retained and declared.
+After causal tests and review, pin and run without another approval round.
+
+Categorical synthetic check: three focused tests passed (3.87 seconds parent
+run): arbitrary nonmonotonic command responses and absent history, exact held
+probe/RNG checkpoint continuation with frozen coefficients, and normal-to-cycle
+relearning on a quantized synthetic plant with no additional FIFO delay. An
+initial, harder combined six-frame-delay + cycle case failed: the model's
+short-horizon response fell below its readiness gate, inherited fallback mostly
+requested the newly neutral action, and active probes supplied insufficient
+movement. This is an explicit horizon/exploration limitation. Do not silently
+remove it or imply broad remapping-under-delay competence. Proceed unchanged
+on the selected no-added-delay native cycle case; add an exploration recovery
+mechanism only if the corresponding failure actually appears there.

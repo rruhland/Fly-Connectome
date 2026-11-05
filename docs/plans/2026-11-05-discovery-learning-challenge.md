@@ -377,3 +377,44 @@ disabled on 18 of the final 21 cameras because its target was unobserved, with
 zero target lead throughout; requests were already maximal in the needed
 direction. Different earlier rally trajectories mean this isolated live loss
 cannot establish estimator instability or a general harmful effect of learning.
+
+## Categorical action-response extension preflight
+
+Parent orchestration selected the three-action cycle as the sole next changed
+test case. Execution implemented a fresh 96-coefficient model: three anonymous
+requested-action channels times 32 temporal taps, with all-zero features before
+any actual request. It learns A before the cycle, then carries that newly acquired
+state through the intervention and restoration. Old FIR experiments and their
+checkpoints remain preserved. No action permutation is stored or selected by the
+learner; its fixed prior is a general separate response channel for each discrete
+request. A global-intercept-only representation would conflate an actual request
+that used to be neutral with nonexistent pre-game history, whereas this basis
+represents their different startup responses.
+
+The added excitation prior is a fixed four-frame held random request, with the
+same initial 10% and continuing 1% probe-start probabilities. Holds cancel when
+the public relation is unsupported. Probe state and RNG are serialized. There is
+no intervention flag, phase-triggered exploration or error detector. The readiness
+gate uses the full predicted response range over all three requests, so the newly
+active formerly neutral request can establish control support.
+
+Added three focused independent tests in
+`tests/test_pong_categorical_motor_fir.py`. Arbitrary nonmonotonic three-request
+response fitting, absent-history/actual-neutral distinction, and exact held-probe
+JSON continuation with frozen numerical arrays passed. A synthetic carried cycle
+check initially failed when using the earlier helper motor's **additional six-frame
+command delay**: late RMS tracking error was 0.285, and only 165/3,800 post-change
+choices passed the response-gain readiness gate. The inherited fallback repeatedly
+chose the newly neutral request (3,576/3,800 requests), starving response support
+and spending 1,242 frames at the synthetic wall. Channel response signs eventually
+became correct, but the short-horizon gain remained too small. The initial A model
+fit had pre-update/zero-model squared-error ratio 0.107. This is a documented
+combined lag/support failure, not omitted evidence or a native result.
+
+One follow-up used the **same** synthetic motor, numerical settings, A/B lengths
+and acceptance thresholds with that extra delay removed, matching the chosen
+native cycle's zero-added-latency scope. It passed: late RMS error below 0.06 and
+below 40% of the actually acquired frozen model's error, in 4.02 seconds. No learner
+source or parameter changed between these synthetic checks. These focused tests
+clear causal plumbing and feasibility for the chosen zero-added-delay test; they
+do not qualify adaptation under delayed cyclic controls or replace native evidence.
