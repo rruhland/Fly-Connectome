@@ -294,3 +294,86 @@ test passed (1.35 seconds, other eight tests deselected), preserving both a queu
 transition in its camera upper bound. The prepared r1 specification and source
 were preserved, and execution repinned r2 before launch. No model/controller
 change was required by the independent audit.
+
+## First native pilot: interpretation and next hypotheses
+
+Saved r2 receipts showed A acquisition 48/48 returns over eight games. B delay8
+finished with live 80/83, frozen acquired A 70/76, and inherited-only 29/44. Thus
+the learned numerical controller substantially transfers to delay8, while the
+continued B-update gain is only about 4.3 percentage points. This is useful
+development evidence, not sufficient material adaptation/reliability evidence.
+The live first-return count is 15/16, below a 95% first-return criterion for that
+phase. No completion claim follows from these pilot counts.
+
+Read actual public trajectories for two representative failures, without native
+queries. Game 12's late miss followed more than 20 cameras with the selected
+target unobserved. Valid carried public target coordinates remained available,
+but the numeric controller's observed-target gate disabled it and the inherited
+servo controlled this interval. This is a control-support issue rather than
+evidence that the numerical estimator failed. Game 16's initial public scene was
+empty; commands were `[neutral, neutral, 0, 0, ... 0]` through the first missed
+plane at physics tick 106, approximately 0.883 seconds. Once observations became
+available, every command requested maximum motion in the needed direction. Public
+own/target coordinates near contact were approximately 0.289/0.430, a gap of
+0.141. That case appears constrained by sensor startup plus delayed actuation;
+changing its post-observation control choice cannot improve on an already maximal
+correct-direction request. This supports preserving early reachability in the
+next challenge rather than simply increasing FIFO delay.
+
+The independent challenge worker proposed two next mechanisms, with no native
+work launched by this worker:
+
+1. Increase positive actuator response gain while retaining polarity. Acquired A
+   predictions then underestimate displacement from requested commands. The
+   unchanged estimator can learn a continuous response scale, rather than choose
+   another sign. Velocity saturation can weaken the effective gain change, so
+   actual frozen-versus-live task performance must discriminate it.
+2. Add neutral-drive drift while preserving both extreme-direction capacities.
+   A pure +0.4 drive bias weakens one direction and can recreate short-serve
+   reachability failures. The capacity-preserving affine transformation
+   `physical_drive = 1.4 * requested_drive + 0.4` instead maps requests
+   `[-1, 0, +1]` into `[-1, +0.4, +1.8]`. One extreme force is unchanged and the
+   other increases; neutral now moves. The existing FIR plus intercept can learn
+   this continuous offset/response change locally. The acquired A model assumes
+   zero neutral response, making an intercept adjustment a concrete hypothesis.
+
+Parent orchestration adopted the affine refinement for a bounded subsequent
+diagnostic alongside the gain change. These external transformations are held by
+the environment; their numbers or labels must not enter the learner. They are
+mechanistically chosen diagnostic cases, not successful adaptation claims. The
+decision rule remains actual reliable play and material improvement over the
+acquired coefficient-frozen controller. If prediction improves while returns
+remain poor, inspect support and the control horizon/objective; do not sweep
+estimator constants. If both live and frozen succeed, report transferable
+robustness. Native prediction failure instead motivates examination of identity,
+wall saturation and excitation. Preserve normal-condition retention when choosing
+any continuation.
+
+The completed r2 pilot subsequently confirmed normal-condition restoration at
+48/48 over eight A-return games. All 64 planned games completed, using 49,049
+transition and 64 initial cameras in 402.95 seconds. Saved source/assets remained
+pinned and all numeric full-public replays passed. These checks support the
+integrity of the observed acquisition and transfer result; they do not supply
+the missing material adaptation gap.
+
+One further distinguishing hypothesis, proposed before any associated execution,
+is a three-action cycle that moves which requested command is neutral while
+preserving all three native physical responses. The current linear requested-drive
+FIR cannot represent an arbitrary nonmonotonic map over three commands; adding
+requested-drive-squared taps, or one-hot requested-action taps, permits continuous
+coefficients to discover their separate responses. No controller catalogue or
+physical mapping label would be supplied. Unlike a polarity reversal, the existing
+16 fixed sign servos cannot generally implement a request that was neutral becoming
+the active response in one direction. This would be an explicit representation
+extension and a sensorimotor-association test, rather than another nearby gain
+setting. It is a proposal pending parent orchestration, not an executed result.
+
+The gain/intercept diagnostic completed all 32 games: gain2 live 48/48 and frozen
+46/46; affine live 42/43 and frozen 45/45. It used 31,258 transition and 32 initial
+cameras in 112.49 seconds, with pinned assets and full-public replays passing.
+These targets also show transfer/robustness of the acquired A controller, not
+required new adaptation. The one affine live miss had the numeric controller
+disabled on 18 of the final 21 cameras because its target was unobserved, with
+zero target lead throughout; requests were already maximal in the needed
+direction. Different earlier rally trajectories mean this isolated live loss
+cannot establish estimator instability or a general harmful effect of learning.

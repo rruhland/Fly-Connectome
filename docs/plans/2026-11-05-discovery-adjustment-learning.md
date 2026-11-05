@@ -105,3 +105,61 @@ mechanistically justified correction, a second clear failure should trigger a
 different route (e.g. reward-driven low-dimensional damping) rather than RLS
 parameter tuning. Normal-condition performance is a retention requirement, not
 an optional extra to discard after delayed play improves.
+
+## First learner pilot result and next allocation
+
+Pilot r2 (`ce37f57612ea9a462501ede46a566fb35f9d1bf1197f1b2da301e2a26d8a6e75`)
+completed all 64 games: normal 48/48, delayed live 80/83, normal-return 48/48;
+matched acquired-coefficient-frozen delay 70/76; inherited servo 29/44. Total
+49,049 transition and 64 initial cameras, 402.95 seconds. Every numerical game
+passed complete public-input replay. This supports numerical acquisition and
+transfer, with only a modest continued-update advantage under delay. It is not
+final proof of reliably necessary adjustment after a change.
+
+A single follow-up allocation tests gain2*u and affine1.4*u+.4, each with eight
+fresh matched live/frozen games from the exact acquired A checkpoint. The
+challenge worker proposed the affine variant to retain native extreme motor
+force in both directions while changing neutral response; parent adopted it
+before pinning. No coefficient/horizon/exploration settings change. At most
+32,000 transitions +32 initial cameras, 600 seconds, four workers. Spec:
+`cd77d360aaf639cc7a3c3056a20c8cbb92f6741ed0eb92e915cf62f932e045ca`.
+If neither needs continued adjustment, do not search increasingly extreme
+changes indefinitely: assess cold numerical acquisition under a chosen challenge
+and label any transferred competence as robustness rather than change-specific
+learning.
+
+### Parent performance improvement (not installed into a running allocation)
+
+`pong_visual_motor_fir_fast.py` batches candidate forecast features, preserving
+exact chronological floating-point addition order via cumulative sums and the
+same individual dot products. Five hundred random candidate comparisons were
+bit-identical. Full public replay of r2 games 0,8,12,16,24,31 reproduced every
+action, decision, update and final state exactly with the fast subclass. No new
+native observations were used. A 1,000-call forecast microbenchmark measured
+0.3590 s original vs 0.0297 s batched (~12x for this component, not total
+training). Complete 1,000-step replay took 2.5–2.8 s with the fast implementation.
+It may be used in a newly pinned run; active source pins remain unchanged.
+
+## Follow-up result and substantive hypothesis change
+
+Gain/intercept follow-up completed all 32 games: gain2 live48/48 vs frozen46/46;
+affine1.4u+.4 live42/43 vs frozen45/45. Cost31,258 transition +32 initial cameras,
+112.49 seconds. Neither demonstrates a needed continued adjustment. Preserve
+these positive robustness results without calling them adaptation.
+
+Independent Sol challenge proposed a different representational hypothesis:
+the scalar-u response model presupposes an ordered up/neutral/down command map.
+A three-action cycle that also moves the neutral command breaks that assumption,
+while preserving every physical action and adding no reaction delay. Parent
+selected categorical/quadratic command-response learning as the next route,
+rather than trying increasingly extreme gain, bias or delay values. The learner
+will estimate continuous response coefficients for each command, not select
+from precomputed mappings. The intervention mapping remains execution-only.
+Existing 16 polarity/axis structures cannot express the same full remapping.
+
+First inspect feasibility and causal tests, then pin a short actual A-to-cycle
+learning comparison against acquired coefficients frozen. Do not launch a large
+confirmation before this route shows actual competence. Keep the control support
+gate unchanged initially; do not bundle a visual-tracking repair with the new
+representation. The batched forecast optimization is available with exact saved
+public-stream equivalence already checked for the scalar model.
