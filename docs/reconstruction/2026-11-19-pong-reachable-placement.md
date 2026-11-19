@@ -31,4 +31,10 @@ Sharp score-ranked placements cost first and later returns against the .65 oppon
 
 A separate evaluator-only replay reproduced all four selected aimed misses with identical action hashes and contact clocks. At the missed ordinary opening, the ball and paddle center differed by 0.114 image units. The three delayed-remap misses were later arrivals with gaps of 0.140, 0.217 and 0.212. In the latter two cases the preceding shot had been aimed and the missed approach had no new aim commitment. The resulting opponent return can raise the cost of the next interception, independently of whether the current shot was itself within reach. These private contact measurements served only the replay audit.
 
+## Moving before the opponent's return
+
+An optional controller forecast where an imminent detected opponent rebound would reach the own paddle. It began moving during the outbound flight when two plausible opponent models both predicted a rebound and agreed on its crossing. It required a previously observed own approach and used the frozen score ranking for incoming shots.
+
+On the same six delayed-remap development starts, both controllers returned 4/6 first balls and 1/4 later balls. The paired request prefixes matched through every first contact. The forecast path changed later requests in three games and produced the same later contact clocks and outcomes. An earlier version also anticipated replies to direct serves and exchanged one later success between games. The test gives no measured advantage for this prepositioner.
+
 The archive includes the fit, exact ordinary and carried timing checkpoints, the frozen score state, condition schedules, action hashes and compact receipts. [Development archive](../../artifacts/m1b/2026-11-19-pong-reachable-placement.zip)

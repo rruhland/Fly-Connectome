@@ -174,23 +174,9 @@ class ReachablePlacement:
 
     def _clearance(self, offsets, intercept, duration, ball_y, ball_velocity, opponent):
         geometry = self.geometry
-        opponent_y, opponent_velocity = opponent
-        slow, fast = geometry.opponent_speeds
-        speed = np.clip(self.opponent_speed_seen * 1.06, slow, fast)
-        # Forecast a family of plausible speeds and prefer shots whose
-        # clearance survives the remaining ambiguity about the opponent.
-        caps = np.array([speed, min(max(speed, slow) + .13, fast)])[:, None]
-        position = np.full((len(caps), len(offsets)), opponent_y)
-        velocity = np.full_like(position, opponent_velocity)
-
-        def advance(target, elapsed):
-            desired = np.clip(geometry.chase_gain * (target - position), -caps, caps)
-            velocity[:] += min(1., elapsed / .13) * (desired - velocity)
-            position[:] = np.clip(position + elapsed * velocity, -POSITION_LIMIT, POSITION_LIMIT)
-
+        caps, position, velocity = self._opponent_at_crossing(
+            ball_y, ball_velocity, duration, opponent, columns=len(offsets))
         step = .045
-        for elapsed in np.arange(0., duration, step):
-            advance(reflect(ball_y + elapsed * ball_velocity, geometry.boundary), min(step, duration - elapsed))
         angles = -offsets * geometry.angle_per_offset
         speed_y = geometry.ball_speed * np.sin(angles)
         crossing = (geometry.opposing_plane - geometry.own_plane) / (geometry.ball_speed * np.cos(angles))
@@ -202,6 +188,27 @@ class ReachablePlacement:
             position = np.clip(position + active * velocity, -POSITION_LIMIT, POSITION_LIMIT)
         incoming = reflect(intercept + crossing * speed_y, geometry.boundary)
         return np.min(abs(position - incoming), axis=0) - .06 * abs(offsets)
+
+    def _opponent_at_crossing(self, ball_y, ball_velocity, duration, opponent, *, columns=1):
+        geometry = self.geometry
+        opponent_y, opponent_velocity = opponent
+        slow, fast = geometry.opponent_speeds
+        speed = np.clip(self.opponent_speed_seen * 1.06, slow, fast)
+        # Forecast a family of plausible speeds and prefer shots whose
+        # clearance survives the remaining ambiguity about the opponent.
+        caps = np.array([speed, min(max(speed, slow) + .13, fast)])[:, None]
+        position = np.full((len(caps), columns), opponent_y)
+        velocity = np.full_like(position, opponent_velocity)
+
+        def advance(target, elapsed):
+            desired = np.clip(geometry.chase_gain * (target - position), -caps, caps)
+            velocity[:] += min(1., elapsed / .13) * (desired - velocity)
+            position[:] = np.clip(position + elapsed * velocity, -POSITION_LIMIT, POSITION_LIMIT)
+
+        step = .045
+        for elapsed in np.arange(0., duration, step):
+            advance(reflect(ball_y + elapsed * ball_velocity, geometry.boundary), min(step, duration - elapsed))
+        return caps, position, velocity
 
 
 class GuardedScorePlacement(ReachablePlacement):
@@ -224,3 +231,52 @@ class GuardedScorePlacement(ReachablePlacement):
         if choices and choices[-1].approach == self.approach:
             return offset, None
         return None
+
+
+class OutboundReplyPlacement(GuardedScorePlacement):
+    """Use a predicted opponent rebound to move during an outbound flight."""
+
+    def __init__(self, timing, geometry, placement):
+        super().__init__(timing, geometry, placement)
+        self.reply_moves = 0
+
+    def _offset(self, context):
+        if context is not None:
+            return super()._offset(context)
+        if (not self.timing.delay_commands or self.arrival_at is None
+                or self.timing.seconds < self.arrival_at):
+            return 0.
+        history = self.timing.inherited.history
+        if len(history) < 5:
+            return 0.
+        first, last = history[0], history[-1]
+        duration = last[0] - first[0]
+        stale = self.timing.seconds - last[0]
+        if duration <= 0. or stale > .065:
+            return 0.
+        vertical, horizontal = (last[1] - first[1]) / duration, (last[2] - first[2]) / duration
+        if not .20 < horizontal < .75:
+            return 0.
+        geometry = self.geometry
+        through_paddle = (geometry.opposing_plane - last[2]) / horizontal - stale
+        if not .085 <= through_paddle <= .62:
+            return 0.
+        opponent = self._visual_motion()
+        if opponent is None:
+            return 0.
+        current_ball = reflect(last[1] + stale * vertical, geometry.boundary)
+        _, paddle, _ = self._opponent_at_crossing(current_ball, vertical, through_paddle, opponent)
+        ball_contact = reflect(current_ball + through_paddle * vertical, geometry.boundary)
+        gap = ball_contact - paddle[:, 0]
+        if np.any(abs(gap) > .103):
+            return 0.
+        angle = np.clip(gap * geometry.angle_per_offset, -.91, .91)
+        reply = reflect(ball_contact + (geometry.opposing_plane - geometry.own_plane) * np.tan(angle),
+                        geometry.boundary)
+        if np.ptp(reply) > .24:
+            return 0.
+        target = .70 * float(np.mean(reply)) + .30 * current_ball
+        target = float(np.clip(target, -POSITION_LIMIT, POSITION_LIMIT))
+        self.reply_moves += 1
+        lead = self.timing.delay_commands * self.timing.camera_seconds
+        return target - current_ball - vertical * lead
