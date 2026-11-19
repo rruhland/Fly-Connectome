@@ -21,6 +21,7 @@ SCORING_OPPONENT = .35
 RETENTION_OPPONENT = .65
 EPISODE_SECONDS = 12.
 BOOTSTRAP_DRAWS = 10_000
+POLICY_RNG_ENTROPY = 3070771140478503531
 
 
 def read(path):
@@ -59,7 +60,20 @@ def make_schedule(used, counts, rng_seed):
     return verify_schedule(schedule)
 
 
-def build_controller(seed, motor_state, timing_state, score_policy, exploration=0., *,
+def policy_rng_schedule(schedule):
+    """Generate one exploration stream per chronological start, independent of play."""
+    streams = {}
+    index = 0
+    for phase in ('practice', 'scoring', 'retention'):
+        streams[phase] = []
+        for _ in schedule[phase]:
+            stream = np.random.SeedSequence(POLICY_RNG_ENTROPY, spawn_key=(index,))
+            streams[phase].append(int(stream.generate_state(1, dtype=np.uint64)[0]))
+            index += 1
+    return streams
+
+
+def build_controller(policy_seed, motor_state, timing_state, score_policy, exploration=0., *,
                      timing_updates=False, forecast_center=False):
     if motor_state['schema'] == 'public-visual-motor-order-memory-v1':
         learner = RapidMotorMemory.from_state(motor_state)
@@ -67,17 +81,18 @@ def build_controller(seed, motor_state, timing_state, score_policy, exploration=
         learner = VisualButtonEffects.from_state(motor_state)
     timing = TimedMotorController(interception_policy(), learner,
                                  timing_state=timing_state, timing_updates=timing_updates)
-    episode = score_policy.episode(seed, exploration=exploration)
+    episode = score_policy.episode(policy_seed, exploration=exploration)
     return ScorePlacementController(timing, episode, forecast_center=forecast_center)
 
 
 def run_episode(seed, opponent, motor_state, timing_state, score_policy, *,
-                exploration=0., forecast_center=False, alternative=None):
-    controller = build_controller(seed, motor_state, timing_state, score_policy, exploration,
+                policy_seed, exploration=0., forecast_center=False, alternative=None):
+    controller = build_controller(policy_seed, motor_state, timing_state, score_policy, exploration,
                                   forecast_center=forecast_center)
     configuration = {} if alternative is None else alternative
     row = play(controller, seed, opponent_speed=opponent, duration=EPISODE_SECONDS,
                **configuration)
+    row['policy_seed'] = policy_seed
     row['choices'] = [asdict(choice) for choice in controller.placement.choices]
     row['natural_serve_win'] = int(row['score'] == 1 and row['hits'] == 0)
     row['loss'] = int(row['score'] == -1)
@@ -86,11 +101,13 @@ def run_episode(seed, opponent, motor_state, timing_state, score_policy, *,
 
 
 def evaluate(job):
-    arm, seed, opponent, motor_state, timing_state, score_state, exploration, forecast_center = job
+    (arm, seed, policy_seed, opponent, motor_state, timing_state,
+     score_state, exploration, forecast_center) = job
     torch.set_num_threads(1)
     policy = ScorePlacement(**score_state, updates_enabled=False)
     row = run_episode(seed, opponent, motor_state, timing_state, policy,
-                      exploration=exploration, forecast_center=forecast_center)
+                      policy_seed=policy_seed, exploration=exploration,
+                      forecast_center=forecast_center)
     return arm, row
 
 
@@ -122,15 +139,15 @@ def paired_difference(learned, control):
                 improved=int((differences > 0).sum()), regressed=int((differences < 0).sum()))
 
 
-def practice_sequential(out, schedule, motor_state, timing_state, initial):
+def practice_sequential(out, schedule, policy_seeds, motor_state, timing_state, initial):
     policy = ScorePlacement(**initial)
     rows = []
-    for index, seed in enumerate(schedule):
+    for index, (seed, policy_seed) in enumerate(zip(schedule, policy_seeds, strict=True)):
         # Encounter fresh starts in order and update immediately after each rally.
         exploration = .80 - .35 * index / len(schedule)
         before = int(policy.visits.sum())
         row = run_episode(seed, SCORING_OPPONENT, motor_state, timing_state, policy,
-                          exploration=exploration)
+                          policy_seed=policy_seed, exploration=exploration)
         row.update(exploration=exploration, assignment_updated=int(policy.visits.sum()) != before)
         rows.append(row)
         write(out / 'practice.json', rows)
@@ -140,7 +157,7 @@ def practice_sequential(out, schedule, motor_state, timing_state, initial):
     return policy, rows
 
 
-def frozen_comparison(schedule, motor_state, timing_state, initial, endpoint, workers):
+def frozen_comparison(schedule, policy_seeds, motor_state, timing_state, initial, endpoint, workers):
     jobs = []
     for task, opponent, arms in (
             ('scoring', SCORING_OPPONENT,
@@ -148,9 +165,9 @@ def frozen_comparison(schedule, motor_state, timing_state, initial, endpoint, wo
               ('explore', initial, 1., False), ('forecast_center', initial, 0., True)]),
             ('retention', RETENTION_OPPONENT,
              [('trained', endpoint, 0., False), ('cold', initial, 0., False)])):
-        for seed in schedule[task]:
+        for seed, policy_seed in zip(schedule[task], policy_seeds[task], strict=True):
             for arm, state, exploration, forecast_center in arms:
-                jobs.append(((task, arm), seed, opponent, motor_state, timing_state,
+                jobs.append(((task, arm), seed, policy_seed, opponent, motor_state, timing_state,
                              state, exploration, forecast_center))
     rows = {}
     with ProcessPoolExecutor(max_workers=workers) as pool:
@@ -186,13 +203,17 @@ def main():
                                             retention=args.retention), 913851731)
     args.out.mkdir(parents=True, exist_ok=False)
     initial = ScorePlacement().to_state()
+    policy_seeds = policy_rng_schedule(schedule)
     write(args.out / 'schedule.json', schedule)
+    write(args.out / 'policy-rng.json', dict(entropy=POLICY_RNG_ENTROPY, streams=policy_seeds))
     write(args.out / 'input.json', dict(motor_state=motor_state, timing_state=timing_state,
           score_state=initial, candidate_offsets=OFFSETS, episode_seconds=EPISODE_SECONDS))
-    policy, practice = practice_sequential(args.out, schedule['practice'],
+    policy, practice = practice_sequential(args.out, schedule['practice'], policy_seeds['practice'],
                                           motor_state, timing_state, initial)
     endpoint = policy.frozen_branch().to_state()
-    rows = frozen_comparison(schedule, motor_state, timing_state, initial, endpoint, args.workers)
+    write(args.out / 'score-state-frozen.json', endpoint)
+    rows = frozen_comparison(schedule, policy_seeds, motor_state, timing_state, initial,
+                             endpoint, args.workers)
     write(args.out / 'frozen.json', rows)
     write(args.out / 'summary.json', dict(practice=summarize(practice),
           scoring={arm: summarize(group) for arm, group in rows['scoring'].items()},

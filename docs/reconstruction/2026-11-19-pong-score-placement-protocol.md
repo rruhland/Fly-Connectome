@@ -32,6 +32,8 @@ Use disjoint practice, scoring and retention starts. On every scoring start
 compare the same controller with frozen trained scores, frozen initial scores
 with the inherited center, frozen initial scores with equal placement
 exploration, and a centered forecast and braking control.
+Policy exploration uses separately generated random streams keyed to trial
+ordinal. Paired arms share the same exploration stream for each trial.
 On retention starts compare frozen trained scores and the inherited center. Use
 a 12-second cap. Count wins after an own return, natural-serve wins, losses,
 timeouts, first returns and all return opportunities. Estimate paired own-return
