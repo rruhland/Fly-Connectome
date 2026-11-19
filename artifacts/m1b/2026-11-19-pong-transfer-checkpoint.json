@@ -149,13 +149,22 @@
       "scripts/experimental/run_pong_score_placement.py": "59272dc0202750601f755656f319d4c9e9fa320cbe8d42632b80a3b0077d6591",
       "scripts/experimental/pong_timing_controller.py": "91a5e45b7b77ee53380d0b152a659800b90e5ede42e92668f1091ea6d09fa510",
       "scripts/experimental/pong_rapid_motor_recovery.py": "7399f574d7ad1120095953d71d3f88a00ab3197f26e30ec46e87cd473596c9e2",
-      "scripts/experimental/pong_transfer_arena.py": "c2932a86099c900a9461686ee3c89fb8a5802fbcc33f227f2ed094e09ae4255f",
+      "scripts/experimental/pong_transfer_arena.py": "8728f4db166ee555fa5035a043e23c16790e3764e145a7377294ad3418d1e484",
       "src/fly_connectome/control/environment.py": "c12120f179dbc85d5ae8672427ec906e8e515bee55de3cef8febe50b8e113391",
       "src/fly_connectome/pong.py": "087ec0f512706d403d145f8439d52f6cc921a99e69c20a26b0879faa72010206",
       "scripts/experimental/pong_risk_aware_placement.py": "52819308f61bafada00c97b39d0afff84a165c9102dbd1823eb9f9b6244c7312"
     },
     "native_practice_starts": 96,
-    "training_source_commit": "6477a976946c7d0c0d6849f6b3512d262fbbe5e3"
+    "training_source_commit": "6477a976946c7d0c0d6849f6b3512d262fbbe5e3",
+    "training_code": {
+      "scripts/experimental/pong_score_placement.py": "1fd82042ff8a29da94cc53c5d57ab785a13fd98b9d4632572b10f3ac14e2b3d3",
+      "scripts/experimental/run_pong_score_placement.py": "59272dc0202750601f755656f319d4c9e9fa320cbe8d42632b80a3b0077d6591",
+      "scripts/experimental/pong_timing_controller.py": "91a5e45b7b77ee53380d0b152a659800b90e5ede42e92668f1091ea6d09fa510",
+      "scripts/experimental/pong_rapid_motor_recovery.py": "7399f574d7ad1120095953d71d3f88a00ab3197f26e30ec46e87cd473596c9e2",
+      "scripts/experimental/pong_transfer_arena.py": "c2932a86099c900a9461686ee3c89fb8a5802fbcc33f227f2ed094e09ae4255f",
+      "src/fly_connectome/control/environment.py": "c12120f179dbc85d5ae8672427ec906e8e515bee55de3cef8febe50b8e113391",
+      "src/fly_connectome/pong.py": "087ec0f512706d403d145f8439d52f6cc921a99e69c20a26b0879faa72010206"
+    }
   },
   "interception": {
     "choices": [
