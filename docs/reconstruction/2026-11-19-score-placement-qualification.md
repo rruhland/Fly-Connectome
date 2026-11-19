@@ -1,5 +1,7 @@
 # Qualifying score-trained Pong placement
 
+The guarded score policy passed both the scoring and interception criteria on fresh starts. It won 18/32 points after an own return against the slower opponent and preserved 32/32 first and 65/66 later returns against the stronger opponent. [Portable confirmation receipts and training lineage](../../artifacts/m1b/2026-11-19-score-placement-confirmation.zip)
+
 The first score-trained policy won 24/32 points after its own return, compared with 3/32 for inherited center aim and 14/32 for fixed exploration. It passed the scoring gain criterion and fell short of the later-return criterion against the stronger opponent. [Portable v1 evaluation receipts](../../artifacts/m1b/2026-11-19-score-placement-qualification.zip)
 
 This comparison is prepared for a scoring policy trained from terminal game scores after timing qualification. Each score policy receives the same actual carried motor and timing checkpoint. Motor and timing updates stay live, and scoring updates stay frozen throughout qualification. The environment keeps the actuator settings constant during each score and retention game.
@@ -25,3 +27,24 @@ The trained policy gained 21 paired own-hit wins and lost none against center ai
 Against the opponent at speed 0.65, the trained policy returned 19/20 first and 30/33 later balls. Center aim returned 20/20 first and 49/49 later balls. The trained policy passed the first-return criterion and its 90.9% later-return rate fell below the 95% criterion. Four trained episodes ended in a loss. Neither arm scored or received a natural-serve win in this cohort.
 
 The independent comparison used 136 native games and took 273.608 seconds. The locked spec SHA-256 is `b7fb9cf12a45f8f2d0bede7c0eb7bc4962bb7f6523bf71f66776c1afb8ca0834`, and the frozen score checkpoint SHA-256 is `484059d03112dc06b18c946d8da244e0d229d5e63ee3da08ebef20fd94c762eb`. The archive contains the exact evaluation runtime and paired game receipts.
+
+The follow-up registers 32 fresh starts at each opponent speed, with the same score, first-return, and later-return thresholds. Its locked spec SHA-256 is `5b17fef333c3fe14664cc142744c1dac92775543c9a42765c538e8d21144c73c`.
+
+Before dispatch, an addendum pinned the public pursuit guard and carried forward the byte-identical score array and timing state. The guard uses camera observations to estimate a lower bound on the opposing paddle’s pursuit speed. It cancels an edge placement when the observed pursuit or approach makes the shot risky. Trained, center and fixed-exploration arms all use the same guard. The addendum leaves the original schedule and thresholds intact. Its SHA-256 is `6c57ef5269831051b93f77eb4cb3a79be2e08bf37223800c7d8d2645a2d45023`.
+
+## Fresh guarded confirmation
+
+| Policy at opponent speed 0.35 | Points won after an own return | Natural-serve wins | First returns | Later returns |
+|---|---:|---:|---:|---:|
+| Trained score policy | **18/32** | 5 | 26/27 | 24/24 |
+| Center aim | 0/32 | 5 | 27/27 | 65/66 |
+| Fixed exploration | 9/32 | 5 | 27/27 | 41/44 |
+
+The guarded, frozen score policy gained 18 paired own-hit wins against center aim and nine against fixed exploration, with no lost paired wins. One-sided exact paired p-values were 0.00000381 and 0.00195, respectively. All matched first-contact clocks agreed, and each arm received the same five natural-serve wins. The guard canceled no placements in the scoring cohort.
+
+| Policy at opponent speed 0.65 | First returns | Later returns | Losses |
+|---|---:|---:|---:|
+| Trained score policy | **32/32** | **65/66** | 1 |
+| Center aim | 32/32 | 76/76 | 0 |
+
+The guard canceled 54 attempted trained placements in the stronger-opponent cohort. The trained policy retained an opening return rate of 100% and a later return rate of 98.5%. Neither arm scored at this opponent speed. The held-out run used 160 native games in 221.259 seconds. The archive includes each game, the original score-training receipts and frozen array, the restored timing state and its lineage, and the exact guarded runtime.

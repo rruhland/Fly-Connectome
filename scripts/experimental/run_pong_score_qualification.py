@@ -29,12 +29,15 @@ SCORE_RUNTIME = ('pong_score_placement.py', 'pong_transfer_arena.py', 'run_pong_
                  'pong_timing_controller.py', 'pong_rapid_motor_recovery.py', 'pong_rapid_motor_memory.py')
 
 
-def prepare(directory, prior):
+def prepare(directory, prior, retention_starts):
     model_bytes()
+    if retention_starts < 2 or retention_starts % 2:
+        raise ValueError('retention starts must be a positive even count')
+    tasks = TASKS | {'retention': TASKS['retention'] | {'starts': retention_starts}}
     used, exclusions_metadata = exclusions(prior)
     rng = np.random.default_rng(secrets.randbits(128))
     schedules = {}
-    for task, config in TASKS.items():
+    for task, config in tasks.items():
         seeds = []
         while len(seeds) < config['starts']:
             seed = int(rng.integers(1, MODULUS))
@@ -48,7 +51,7 @@ def prepare(directory, prior):
     save(schedule, schedules)
     spec = dict(contract='fresh-paired-score-only-learned-placement-v1', sources=source_signature(),
                 dependencies=runtime_dependencies(), harness_sha256=sha(Path(__file__)),
-                schedule_sha256=sha(schedule), excluded_schedules=exclusions_metadata, tasks=TASKS,
+                schedule_sha256=sha(schedule), excluded_schedules=exclusions_metadata, tasks=tasks,
                 episode_seconds=DURATION, gates=GATES, workers=WORKERS, wall_seconds=WALL_SECONDS,
                 scoring_endpoint='player scores after at least one own hit, divided by all planned starts',
                 natural_serve_wins='reported separately and contribute zero own-hit wins',
@@ -69,13 +72,20 @@ def verify(directory, digest):
             or spec['harness_sha256'] != sha(Path(__file__))
             or spec['schedule_sha256'] != sha(directory / 'schedules.json')):
         raise ValueError('prepared environment or schedules changed')
+    if spec.get('risk_aware') and spec['lineage_sha256'] != sha(directory / 'candidate-lineage.json'):
+        raise ValueError('guarded candidate lineage changed')
     return spec
 
 
-def play(output, task, arm, seed, policy_seed, score_state, motor_state, timing_state, deadline):
+def play(output, task, arm, seed, policy_seed, score_state, motor_state, timing_state, risk_aware, deadline):
     from pong_score_placement import ScorePlacement
     from pong_transfer_arena import play as play_native
     from run_pong_score_placement import build_controller
+
+    if risk_aware:
+        from pong_risk_aware_placement import build_risk_aware_controller
+
+        build_controller = build_risk_aware_controller
 
     remaining = deadline-time.monotonic()
     if remaining <= 0:
@@ -96,6 +106,8 @@ def play(output, task, arm, seed, policy_seed, score_state, motor_state, timing_
     row.update(arm=arm, task=task, natural_serve_win=bool(row['score'] > 0 and not row['hits']),
                aimed_contacts=sum(choice.offset != 0 for choice in controller.placement.choices),
                score_choices=len(controller.placement.choices))
+    if risk_aware:
+        row['guarded_contacts'] = controller.cancelled
     save(output / task / arm / f'{seed}.json', row)
     return True
 
@@ -152,29 +164,38 @@ def assess(stats, evidence, complete):
 def run(directory, digest, score_checkpoint, motor_checkpoint, timing_checkpoint):
     import pong_score_placement
 
-    verify(directory, digest)
+    spec = verify(directory, digest)
+    tasks = spec['tasks']
+    risk_aware = spec.get('risk_aware', False)
     runtime_root = Path(pong_score_placement.__file__).parent
-    runtime = {name: sha(runtime_root / name) for name in SCORE_RUNTIME}
+    runtime_files = (*SCORE_RUNTIME, 'pong_risk_aware_placement.py') if risk_aware else SCORE_RUNTIME
+    runtime = {name: sha(runtime_root / name) for name in runtime_files}
     input_paths = dict(score=score_checkpoint, motor=motor_checkpoint, timing=timing_checkpoint)
     inputs = {name: sha(path) for name, path in input_paths.items()}
+    if risk_aware:
+        lineage = read(directory / 'candidate-lineage.json')
+        if runtime != lineage['qualification_runtime'] or inputs != lineage['evaluation_checkpoints']:
+            raise ValueError('guarded runtime or checkpoint differs from candidate lineage')
     score, motor, timing = (read(path) for path in input_paths.values())
     if not any(score['visits']):
         raise ValueError('the candidate checkpoint has no score-feedback updates')
     schedules = read(directory / 'schedules.json')
+    if any(len(schedules[task]) != config['starts'] for task, config in tasks.items()):
+        raise ValueError('schedule does not match the registered allocation')
     output = directory / 'run'
     output.mkdir(exist_ok=False)
-    for task, config in TASKS.items():
+    for task, config in tasks.items():
         for arm in config['arms']:
             (output / task / arm).mkdir(parents=True)
     started = time.monotonic()
     deadline = started+WALL_SECONDS
-    save(output / 'dispatch.json', dict(spec_sha256=digest, runtime_sha256=runtime,
+    save(output / 'dispatch.json', dict(spec_sha256=digest, runtime_sha256=runtime, risk_aware=risk_aware,
          checkpoints_sha256=inputs, deadline=deadline))
     errors = []
     with ProcessPoolExecutor(max_workers=WORKERS, mp_context=mp.get_context('spawn'), initializer=worker_init) as pool:
-        jobs = {pool.submit(play, output, task, arm, seed, 1245 + index, score, motor, timing,
+        jobs = {pool.submit(play, output, task, arm, seed, 1245 + index, score, motor, timing, risk_aware,
                             deadline): (task, arm, seed)
-                for task, config in TASKS.items() for index, seed in enumerate(schedules[task])
+                for task, config in tasks.items() for index, seed in enumerate(schedules[task])
                 for arm in config['arms']}
         for future in as_completed(jobs):
             try:
@@ -183,12 +204,12 @@ def run(directory, digest, score_checkpoint, motor_checkpoint, timing_checkpoint
             except Exception as error:
                 errors.append((jobs[future], repr(error)))
     verify(directory, digest)
-    if ({name: sha(runtime_root / name) for name in SCORE_RUNTIME} != runtime
+    if ({name: sha(runtime_root / name) for name in runtime_files} != runtime
             or {name: sha(path) for name, path in input_paths.items()} != inputs):
         raise ValueError('frozen evaluation source or checkpoint changed')
     receipts = {task: {arm: {row['seed']: row for row in
                 (read(path) for path in (output / task / arm).glob('*.json'))} for arm in config['arms']}
-                for task, config in TASKS.items()}
+                for task, config in tasks.items()}
     complete = not errors and all(set(schedules[task]) == set(rows)
                                   for task, arms in receipts.items() for rows in arms.values())
     stats = {task: {arm: metrics(list(rows.values())) for arm, rows in arms.items()} for task, arms in receipts.items()}
@@ -206,6 +227,7 @@ if __name__ == '__main__':
     planning = commands.add_parser('prepare')
     planning.add_argument('directory', type=Path)
     planning.add_argument('prior_experiments', type=Path)
+    planning.add_argument('--retention-starts', type=int, default=TASKS['retention']['starts'])
     running = commands.add_parser('run')
     running.add_argument('directory', type=Path)
     running.add_argument('--score-checkpoint', type=Path, required=True)
@@ -214,7 +236,7 @@ if __name__ == '__main__':
     running.add_argument('--spec-sha256', required=True)
     args = parser.parse_args()
     if args.command == 'prepare':
-        print(prepare(args.directory.resolve(), args.prior_experiments.resolve()))
+        print(prepare(args.directory.resolve(), args.prior_experiments.resolve(), args.retention_starts))
     else:
         report = run(args.directory.resolve(), args.spec_sha256, args.score_checkpoint.resolve(),
                      args.motor_checkpoint.resolve(), args.timing_checkpoint.resolve())
