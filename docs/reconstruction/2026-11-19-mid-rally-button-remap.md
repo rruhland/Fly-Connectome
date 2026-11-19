@@ -25,3 +25,16 @@ A single follow-up ran a shorter calibration on the same twelve starts. It kept 
 All normal prefixes and first changed-contact clocks matched. The two added first returns followed correct ordering at 1.033 and 1.100 seconds, before contacts at 1.583 and 2.108 seconds. The third successful calibration finished at 1.417 seconds after the first changed contact. The shorter controller used 277 post-change probe frames across all starts, compared with 263 for the standard controller. The reused starts make this a development comparison.
 
 The runner is `scripts/experimental/run_pong_fast_mid_rally_scout.py`. Results and pinned inputs are in `/workspace/m1b-experiments/pong-fast-mid-rally-scout-20261119-r1`, with 5,878 transition cameras, 12 initial cameras and 24.884 seconds of wall time. The summary SHA-256 is `7a9968316e281cfa1a0e21500e6956a6cfe0853a7a2f542e1efa5bc5366f9944`.
+
+## Fresh head-to-head comparison
+
+The unchanged standard and shorter controllers then ran 24 new matched starts. All 48 trials switched at four seconds, with exact pairwise normal-prefix and first changed-contact parity. Each trial independently loaded the same end-normal scout checkpoint.
+
+| Controller | First changed return | Later changed returns | Correct ordering in the same game | Correct ordering before first changed contact |
+|---|---:|---:|---:|---:|
+| Standard | 8/24 | 15/19 | 5/24 | 3/24 |
+| Shorter probes | 10/24 | 22/26 | 6/24 | 3/24 |
+
+The shorter controller gained two first returns and lost none. One gain followed an earlier valid calibration. The other occurred without completing a valid calibration. On the three starts where both controllers found the right order, the shorter probes gained 0.717, 0.725 and 1.000 seconds. Across all starts they used 572 probe frames compared with 475 for the standard controller. The fresh comparison supports faster successful recalibration and a modest return improvement. Most starts still ended without finding the correct order.
+
+The runner is `scripts/experimental/run_pong_mid_rally_head_to_head.py`. The detailed results are in `/workspace/m1b-experiments/pong-mid-rally-head-to-head-20261119-r1`. The comparison used 22,263 transition cameras and 48 initial cameras in 50.480 seconds. The spec SHA-256 is `1e1b271c9b802bb0e29e4bcd4fd0d4103e80b49e38490dfe311695df215f3e2e`. The summary SHA-256 is `dd5db6b90ddc7ea4d92ebbc729cfb03f30daf948b903cfe2037b88166eb219a9`.
