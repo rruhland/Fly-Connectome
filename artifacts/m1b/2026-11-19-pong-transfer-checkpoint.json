@@ -1,0 +1,194 @@
+{
+  "schema": "pong-carried-transfer-v1",
+  "source_commit": "bbd7f2fe9db6f3ef631dd1347e8a1d8e4fa508df",
+  "camera": {
+    "width": 64,
+    "height": 64,
+    "seconds": 0.02,
+    "asset": "src/fly_connectome/vision/data/default.pt",
+    "sha256": "a899338c94278854dc9a790c21e3cba746658abb7ac91fc3f85c84754f253173"
+  },
+  "motor": {
+    "calibrations": 1,
+    "completed_calibrations": 1,
+    "contradictions": 0,
+    "dither_count": 72,
+    "effects": [
+      0.109375,
+      0.046875,
+      -0.1015625
+    ],
+    "measurements": [
+      0.109375,
+      0.046875,
+      -0.1015625
+    ],
+    "probe_queue": [],
+    "recalibration_requested": false,
+    "rng_state": {
+      "bit_generator": "PCG64",
+      "has_uint32": 0,
+      "state": {
+        "inc": 83992538145820801261827813915998819613,
+        "state": 195711699569140573933108019189112694035
+      },
+      "uinteger": 3191616377
+    },
+    "schema": "public-visual-inverse-button-effects-v1",
+    "updates": 3,
+    "updates_enabled": true
+  },
+  "timing": {
+    "delay_commands": 0,
+    "motor_order": [
+      0,
+      1,
+      2
+    ],
+    "motor_probabilities": [
+      0.9870171057977157,
+      0.007719073609284541,
+      0.001555882673334791,
+      0.0010783688558453808,
+      0.001551016316778616,
+      0.0010785527470408927
+    ],
+    "schema": "public-visual-pong-timing-v1"
+  },
+  "score": {
+    "counts": [
+      [
+        0.0029485460286820444,
+        0.23871363792305722,
+        1.7583378160482608
+      ],
+      [
+        0.7723865483904534,
+        0.22428439949095544,
+        0.0033290521185910184
+      ],
+      [
+        1.774701626035785,
+        2.9811331655543127,
+        4.244165208409903
+      ],
+      [
+        2.093788308644283,
+        1.6573542908648673,
+        0.2488574004908495
+      ],
+      [
+        12.337371185971877,
+        13.14700802849955,
+        8.515620785528569
+      ],
+      [
+        2.4477165903077776,
+        1.4583104521112225,
+        0.09397295758100019
+      ],
+      [
+        2.983154378745528,
+        7.142277110550952,
+        13.874568510703517
+      ]
+    ],
+    "totals": [
+      [
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        -0.3860847592760788,
+        -0.2829707635378105,
+        2.6690555228138892
+      ],
+      [
+        1.1435524955384149,
+        0.7802415983485201,
+        0.07620590611306484
+      ],
+      [
+        9.018673500449706,
+        9.79291195823118,
+        5.188414541319112
+      ],
+      [
+        2.4477165903077776,
+        1.4583104521112225,
+        0.09397295758100019
+      ],
+      [
+        2.106385955027882,
+        4.935029932376788,
+        11.958584112595327
+      ]
+    ],
+    "visits": [
+      2,
+      1,
+      9,
+      4,
+      34,
+      4,
+      24
+    ]
+  },
+  "provenance": {
+    "motor_sha": "49ced930202483e63322c15bfd5c54e5d2ea0a7ad121a8fe84ffca82b4dfae3a",
+    "timing_sha": "ea156aadd3fb86401e19ceaf1483815538743b72396f1d0d5dd1ba8d49c722dd",
+    "score_sha": "484059d03112dc06b18c946d8da244e0d229d5e63ee3da08ebef20fd94c762eb",
+    "code": {
+      "scripts/experimental/pong_score_placement.py": "1fd82042ff8a29da94cc53c5d57ab785a13fd98b9d4632572b10f3ac14e2b3d3",
+      "scripts/experimental/run_pong_score_placement.py": "59272dc0202750601f755656f319d4c9e9fa320cbe8d42632b80a3b0077d6591",
+      "scripts/experimental/pong_timing_controller.py": "91a5e45b7b77ee53380d0b152a659800b90e5ede42e92668f1091ea6d09fa510",
+      "scripts/experimental/pong_rapid_motor_recovery.py": "7399f574d7ad1120095953d71d3f88a00ab3197f26e30ec46e87cd473596c9e2",
+      "scripts/experimental/pong_transfer_arena.py": "c2932a86099c900a9461686ee3c89fb8a5802fbcc33f227f2ed094e09ae4255f",
+      "src/fly_connectome/control/environment.py": "c12120f179dbc85d5ae8672427ec906e8e515bee55de3cef8febe50b8e113391",
+      "src/fly_connectome/pong.py": "087ec0f512706d403d145f8439d52f6cc921a99e69c20a26b0879faa72010206",
+      "scripts/experimental/pong_risk_aware_placement.py": "52819308f61bafada00c97b39d0afff84a165c9102dbd1823eb9f9b6244c7312"
+    },
+    "native_practice_starts": 96,
+    "training_source_commit": "6477a976946c7d0c0d6849f6b3512d262fbbe5e3"
+  },
+  "interception": {
+    "choices": [
+      3,
+      0,
+      1,
+      0,
+      -1
+    ],
+    "coefficients": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "scales": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+    ],
+    "require_first_hit": false,
+    "unsupported_fallback": 1
+  },
+  "signed_score_offsets": [
+    0.0,
+    0.079,
+    -0.079,
+    0.091,
+    -0.091,
+    0.103,
+    -0.103
+  ],
+  "builder": "pong_risk_aware_placement.build_risk_aware_controller"
+}

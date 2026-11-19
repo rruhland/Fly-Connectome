@@ -1,11 +1,17 @@
 # M1B research handoff
 
 
+## Pong remapping, timing and score learning on November 19
+
+The three independent qualifications passed. The rapid controller returned 27/30 first balls after hidden mid-rally remaps. With hidden actuator delays, the timing learner returned 21/32 first balls versus 6/32 with the timing estimate frozen. The score-trained policy with the visual safety rule won 18/32 after an own return versus 0/32 centered, and maintained 65/66 later returns against the stronger opponent. Its camera and learned interception relation are inherited. Its score values come from 96 chronological practice points. Training used no backpropagation.
+
+Read the [progression report](2026-11-19-pong-transfer-progression.md) for the separate interventions, multi-state course, actual-game replay and limits. The [checkpoint and loading example](../../artifacts/m1b/README.md) and [transfer plan](../plans/2026-11-19-pong-skill-progression.md) identify what carries into the proposed Breakout experiment.
+
 ## Online button discovery qualified on November 19
 
 Two independent learners each carried state through 128 games of normal, reassigned, differently reassigned, and restored controls. The visual button-effect controller passed all eight predefined late-opening and later-return checks. It returned 1,398/1,411 balls including every discovery loss. In the matched first remapping, learning returned 170/173 versus 3/35 frozen. One additional asymmetric-force test returned 129/131 versus 0/24 frozen. The model inherits its visual interception objective and learns the current button effects online without backpropagation.
 
-The current target is faster recovery when a change happens mid-rally. On 24 new matched switches the standard controller returned 8/24 next balls and a shorter-probe candidate returned 10/24. Both identified the new controls before that ball on 3/24 starts. Try acting on the first informative motion before completing a three-button calibration. Keep the qualified controller as the comparison and score the first incoming ball, simulated time, and ordinary-game reliability. Use Sol 6.2 XHigh for delegated research and independent challenge.
+At this earlier checkpoint the target was faster recovery when a change happens mid-rally. On 24 new matched switches the standard controller returned 8/24 next balls and a shorter-probe candidate returned 10/24. Both identified the new controls before that ball on 3/24 starts. Try acting on the first informative motion before completing a three-button calibration. Keep the qualified controller as the comparison and score the first incoming ball, simulated time, and ordinary-game reliability. Use Sol 6.2 XHigh for delegated research and independent challenge.
 
 [Full results and game-by-game figure](2026-11-19-motor-discovery-results.md) · [Portable checkpoints and receipts](../../artifacts/m1b/README.md) · [Research plan](../plans/2026-11-19-replicated-motor-learning.md)
 
