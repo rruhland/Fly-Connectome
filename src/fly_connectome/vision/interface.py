@@ -62,19 +62,7 @@ class VisualStateEncoder:
     def _bin(position, side):
         return ((position+.5)*side).floor().long().clamp(0, side-1)
 
-    @torch.no_grad()
-    def encode(self, state, frame):
-        sample = state['sample']
-        if self.sample is not None and sample <= self.sample:
-            raise ValueError('samples must increase; call reset_state for a new scene')
-        if frame is not None and (frame.device.type != 'cpu' or frame.shape != (self.height, self.width)
-                                  or not torch.isfinite(frame).all()):
-            raise ValueError('frame must be a finite CPU image matching encoder dimensions')
-        if any(not 1 <= f['horizon_samples'] <= 8 for f in state['forecasts']):
-            raise ValueError('transport v1 supports horizons 1 through 8 samples')
-        elapsed = self.period if self.sample is None else (sample-self.sample)*self.period
-        self.sample = sample
-        entities, forecasts = copy.deepcopy(state['entities']), copy.deepcopy(state['forecasts'])
+    def _annotate_entities(self, sample, entities):
         active = {e['id'] for e in entities}
         self.history = {k: v for k, v in self.history.items() if k in active}
         for entity in entities:
@@ -91,6 +79,31 @@ class VisualStateEncoder:
                           velocity_known=velocity is not None,
                           velocity_age_seconds=None if velocity_sample is None else (sample-velocity_sample)*self.period,
                           observation_age_seconds=entity['observation_age']*self.period)
+
+    @torch.no_grad()
+    def encode_entities(self, sample, entities):
+        """Return public positions and velocity histories for an entity-only stream."""
+        if self.sample is not None and sample <= self.sample:
+            raise ValueError('samples must increase; reset the encoder between scenes')
+        self.sample = sample
+        result = [dict(entity) for entity in entities]
+        self._annotate_entities(sample, result)
+        return result
+
+    @torch.no_grad()
+    def encode(self, state, frame):
+        sample = state['sample']
+        if self.sample is not None and sample <= self.sample:
+            raise ValueError('samples must increase; call reset_state for a new scene')
+        if frame is not None and (frame.device.type != 'cpu' or frame.shape != (self.height, self.width)
+                                  or not torch.isfinite(frame).all()):
+            raise ValueError('frame must be a finite CPU image matching encoder dimensions')
+        if any(not 1 <= f['horizon_samples'] <= 8 for f in state['forecasts']):
+            raise ValueError('transport v1 supports horizons 1 through 8 samples')
+        elapsed = self.period if self.sample is None else (sample-self.sample)*self.period
+        self.sample = sample
+        entities, forecasts = copy.deepcopy(state['entities']), copy.deepcopy(state['forecasts'])
+        self._annotate_entities(sample, entities)
         for forecast in forecasts:
             forecast.update(normalized_centers=self._normalize(forecast['mixture_centers']),
                             normalized_position=self._normalize(forecast['position']),
