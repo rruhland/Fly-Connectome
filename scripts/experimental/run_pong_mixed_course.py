@@ -32,23 +32,28 @@ def summarize(rows):
                 score_updates=sum(row['updates'] for row in rows))
 
 
-def arm_run(root, arm, schedules, motor, timing, learned_score):
+def arm_run(root, arm, schedules, motor, timing, learned_score, guarded):
     torch.set_num_threads(1)
     score = ScorePlacement(**learned_score) if arm == 'scoring' else ScorePlacement(updates_enabled=False)
+    builder = build_controller
+    if guarded:
+        from pong_risk_aware_placement import build_risk_aware_controller
+        builder = build_risk_aware_controller
     rows = []
     totals = {}
     for phase, opponent, mapping, lag in PHASES:
         phase_rows = []
         for case in schedules[phase]:
             # Only the arena receives the current opponent, map and delay.
-            controller = build_controller(case['policy'], motor, timing, score, timing_updates=True)
+            controller = builder(case['policy'], motor, timing, score, timing_updates=True)
             initial = controller.timing.state()
             visits = int(score.visits.sum())
             row = play(controller, case['serve'], opponent_speed=opponent, duration=20.,
                        delay_frames=lag, mapping=mapping)
             timing = controller.timing.state()
             row.update(phase=phase, initial_timing=initial, final_timing=timing,
-                       updates=int(score.visits.sum()) - visits)
+                       updates=int(score.visits.sum()) - visits,
+                       guarded_approaches=getattr(controller, 'cancelled', {}))
             rows.append(row)
             phase_rows.append(row)
             save(root / f'{arm}.json', rows)
@@ -57,7 +62,7 @@ def arm_run(root, arm, schedules, motor, timing, learned_score):
     return totals
 
 
-def run(root, motor_file, timing_file, score_file, games, schedule_seed):
+def run(root, motor_file, timing_file, score_file, games, schedule_seed, guarded=False):
     if games <= 0:
         raise ValueError('each phase needs at least one game')
     root.mkdir(parents=True, exist_ok=False)
@@ -74,13 +79,13 @@ def run(root, motor_file, timing_file, score_file, games, schedule_seed):
             used.add(seed)
             cases.append(dict(serve=seed, policy=int(policy_rng.integers(1, 2147483647))))
         schedules[phase] = cases
-    save(root / 'spec.json', dict(phases=PHASES, schedules=schedules, games_per_phase=games, schedule_seed=schedule_seed,
+    save(root / 'spec.json', dict(phases=PHASES, schedules=schedules, games_per_phase=games, schedule_seed=schedule_seed, guarded=guarded,
          motor_sha=sha(motor_file), timing_sha=sha(timing_file), score_sha=sha(score_file),
          script_sha=sha(Path(__file__)), measure='All returns, opening returns and wins after '
          'an own hit. Chronological center and scoring streams carry delay and button belief.'))
     data = [json.loads(f.read_text()) for f in (motor_file, timing_file, score_file)]
     with ProcessPoolExecutor(2) as pool:
-        jobs = {arm: pool.submit(arm_run, root, arm, schedules, *data) for arm in ('center', 'scoring')}
+        jobs = {arm: pool.submit(arm_run, root, arm, schedules, *data, guarded) for arm in ('center', 'scoring')}
         save(root / 'summary.json', {arm: job.result() for arm, job in jobs.items()})
 
 
@@ -90,5 +95,6 @@ if __name__ == '__main__':
         parser.add_argument(arg, type=Path)
     parser.add_argument('--games', type=int, default=12)
     parser.add_argument('--schedule-seed', type=int, default=54728034)
+    parser.add_argument('--guarded', action='store_true')
     args = parser.parse_args()
-    run(args.output, args.motor, args.timing, args.score, args.games, args.schedule_seed)
+    run(args.output, args.motor, args.timing, args.score, args.games, args.schedule_seed, args.guarded)
