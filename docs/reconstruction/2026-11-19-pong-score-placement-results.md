@@ -45,3 +45,24 @@ an audit script that reconstructs the terminal-score state without new camera
 observations. The audit passed after a fresh extraction, and every content
 hash matched the archive manifest.
 [Portable receipts](../../artifacts/m1b/2026-11-19-pong-score-placement.zip)
+
+## Camera facing-edge projection development check
+
+The optional contact estimate fits the ball's recent public visual motion
+and projects to the facing edge of the rendered paddle. A separate option
+shrinks the offset when the trajectory fit or its agreement with the inherited
+projection is weak. Each active variant used the frozen first score table.
+There were eight fresh paired starts per condition and no score updates.
+
+| Variant | .35 own-hit wins | .35 returns | .65 returns | Mixed first after switch | Mixed later after switch |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| Original placement | 5/8 | 12/13 | 20/22 | 5/6 | 4/7 |
+| Camera facing-edge projection | 5/8 | 13/13 | 23/23 | 5/6 | 4/7 |
+| Projection with uncertainty shrinkage | 5/8 | 14/14 | 21/22 | 5/6 | 4/7 |
+| Inherited interception | — | — | 27/27 | 5/6 | 12/12 |
+
+The mixed starts carried the learned 12-request delay, started with ordinary
+buttons, and changed their order at 2.4 seconds. Two starts per arm ended
+before any post-switch opportunity. Camera projection preserved wins in this
+small scoring sample and failed to improve mixed retention. Source
+`65211df`. [Development receipts](/workspace/m1b-experiments/pong-contact-geometry-dev-20261119-r1/)
