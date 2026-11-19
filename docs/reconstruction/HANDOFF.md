@@ -1,6 +1,15 @@
-# M1B research handoff — 2026-10-29
+# M1B research handoff
 
-## Paused at user request — 2026-11-05
+
+## Online button discovery qualified on November 19
+
+Two independent learners each carried state through 128 games of normal, reassigned, differently reassigned, and restored controls. The visual button-effect controller passed all eight predefined late-opening and later-return checks. It returned 1,398/1,411 balls including every discovery loss. In the matched first remapping, learning returned 170/173 versus 3/35 frozen. One additional asymmetric-force test returned 129/131 versus 0/24 frozen. The model inherits its visual interception objective and learns the current button effects online without backpropagation.
+
+The current target is faster recovery when a change happens mid-rally. On 24 new matched switches the standard controller returned 8/24 next balls and a shorter-probe candidate returned 10/24. Both identified the new controls before that ball on 3/24 starts. Try acting on the first informative motion before completing a three-button calibration. Keep the qualified controller as the comparison and score the first incoming ball, simulated time, and ordinary-game reliability. Use Sol 6.2 XHigh for delegated research and independent challenge.
+
+[Full results and game-by-game figure](2026-11-19-motor-discovery-results.md) · [Portable checkpoints and receipts](../../artifacts/m1b/README.md) · [Research plan](../plans/2026-11-19-replicated-motor-learning.md)
+
+## Previous pause on November 5
 
 All experiments stopped after the completed categorical motor-response pilot.
 Read `2026-11-05-discovery-learning-pilot.md` for the result and next step.
