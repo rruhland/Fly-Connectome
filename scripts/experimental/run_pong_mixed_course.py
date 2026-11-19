@@ -57,11 +57,11 @@ def arm_run(root, arm, schedules, motor, timing, learned_score):
     return totals
 
 
-def run(root, motor_file, timing_file, score_file, games):
+def run(root, motor_file, timing_file, score_file, games, schedule_seed):
     if games <= 0:
         raise ValueError('each phase needs at least one game')
     root.mkdir(parents=True, exist_ok=False)
-    environment_rng = np.random.default_rng(54728034)
+    environment_rng = np.random.default_rng(schedule_seed)
     policy_rng = np.random.default_rng(67227996)
     schedules = {}
     used = set()
@@ -74,7 +74,7 @@ def run(root, motor_file, timing_file, score_file, games):
             used.add(seed)
             cases.append(dict(serve=seed, policy=int(policy_rng.integers(1, 2147483647))))
         schedules[phase] = cases
-    save(root / 'spec.json', dict(phases=PHASES, schedules=schedules, games_per_phase=games,
+    save(root / 'spec.json', dict(phases=PHASES, schedules=schedules, games_per_phase=games, schedule_seed=schedule_seed,
          motor_sha=sha(motor_file), timing_sha=sha(timing_file), score_sha=sha(score_file),
          script_sha=sha(Path(__file__)), measure='All returns, opening returns and wins after '
          'an own hit. Chronological center and scoring streams carry delay and button belief.'))
@@ -89,5 +89,6 @@ if __name__ == '__main__':
     for arg in ('output', 'motor', 'timing', 'score'):
         parser.add_argument(arg, type=Path)
     parser.add_argument('--games', type=int, default=12)
+    parser.add_argument('--schedule-seed', type=int, default=54728034)
     args = parser.parse_args()
-    run(args.output, args.motor, args.timing, args.score, args.games)
+    run(args.output, args.motor, args.timing, args.score, args.games, args.schedule_seed)
