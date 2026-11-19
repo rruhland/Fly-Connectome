@@ -32,6 +32,8 @@ The live arm gained three first returns at the 12-camera delay and eight at the 
 
 The live arm selected the exact delay during 15/16 mid-rally episodes, with a 0.817-second median among those 15. It selected the exact delay by the end of the second game in all 16 streams. When the delay was removed, live play returned 11/16 openings and 44/45 later balls. Five starts ended before the fresh remap. It returned 10/16 planned first balls after the remap, including 10/11 that became available, and 34/34 later balls. Stage 1 returned 16/16 restored openings and 13/16 first balls after the same remap. The live controller passed the sustained and matched delayed-control gates, and fell short of the absolute first-return and restoration-opening gates.
 
+An environment-side reach check applied neutral until the first fresh request could take effect, then held one of the two extreme drives until the first incoming contact. Five of the 16 carried-delay openings fell outside the resulting paddle reach interval, including the contact margin. Inside that interval, live returned 9/11 and timing frozen returned 3/11. All 16 starts still count toward the primary criterion. [Opening reach diagnostic](../../scripts/experimental/check_pong_delayed_opening_reach.py)
+
 The complete comparison used 98,677 transition cameras and 144 initial cameras in 146.811 seconds. The archive includes the exact carried state from the lowest eligible stream for each held delay and for restored original controls. The locked spec SHA-256 is `c9b86a7635a50c9470a5f170957b184747273ce97cd7f228083acf48efb6aad0`.
 
 ## Reproduction
