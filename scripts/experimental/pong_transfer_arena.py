@@ -38,17 +38,22 @@ def play(controller, seed, *, opponent_speed=.65, duration=20., delay_frames=0,
 
     frame = game.render(64, 64)[0].clone()
     public = observe(frame, torch.zeros_like(frame))
+    if type(delay_frames) is not int or delay_frames < 0:
+        raise ValueError("delay must be a nonnegative number of camera commands")
+    # Empty queue slots apply zero physical drive, including under remapped buttons.
     history = deque([1] * delay_frames)
+    switch_tick = round(switch_seconds * 120)
     requests = bytearray()
     contacts = []
     elapsed = 0.
     while True:
         requested, _ = controller.choose(public, 1)
         requests.append(requested)
-        history.append(requested)
+        physical = mapping[requested] if camera.total_ticks >= switch_tick else requested
+        history.append(physical)
         executed = history.popleft()
         before = counts.opportunities
-        result = camera.step(mapping[executed] if elapsed >= switch_seconds else executed)
+        result = camera.step(executed)
         public = observe(result.frame, frame)
         frame = result.frame
         controller.observe(public_entities=public, own_hits=result.hits, reward=result.reward,
