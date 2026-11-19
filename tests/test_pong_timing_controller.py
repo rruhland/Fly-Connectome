@@ -6,6 +6,7 @@ from pathlib import Path
 import sys
 
 import numpy as np
+import pytest
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'scripts' / 'experimental'))
 
@@ -68,3 +69,20 @@ def test_observed_delay_and_motor_belief_can_be_carried_then_restored():
     assert frozen.belief.states is None
     assert frozen.lags == (12,)
     assert frozen.effective_requests == controller.effective_requests
+
+
+@pytest.mark.parametrize('live', (True, False))
+def test_movement_before_carried_queue_matures_reconsiders_delay(live):
+    learner = calibrated((.11, .04, -.13))
+    state = TimedMotorController(model(), learner).state()
+    state['delay_commands'] = 12
+    controller = TimedMotorController(model(), learner, timing_state=state, timing_updates=live)
+
+    def scene(position):
+        return [entity(10, position, -.3), entity(11, -.25, 0.), entity(12, 0., .3)]
+
+    action, _ = controller.choose(scene(0.), 1)
+    assert action == 2
+    controller.observe(own_hits=0, reward=0., terminated=False, truncated=False,
+                       elapsed_seconds=.02, public_entities=scene(-.02))
+    assert controller.delay_commands == (0 if live else 12)

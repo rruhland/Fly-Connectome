@@ -20,6 +20,7 @@ EVIDENCE_DECAY_SECONDS = .65
 EVIDENCE_MARGIN = 4.5
 EVIDENCE_MEMORY_LIMIT = 7.
 EVIDENCE_CONFIRM_CAMERAS = 4
+EARLY_MOVEMENT = 1 / 64
 SCHEMA = 'public-visual-pong-timing-v1'
 
 
@@ -164,6 +165,10 @@ class TimedMotorController(RapidMotorController):
         self.candidate = None
         self.candidate_dwell = 0
         self.delay_changes = 0
+        self.carried_delay = self.delay_commands
+        self.initial_idle = self.belief.order[1]
+        self.first_motion_request = None
+        self.initial_position = None
         self.requests = deque(maxlen=max(DELAYS) + 1)
         self.camera_intervals = deque(maxlen=5)
         self.seconds = 0.
@@ -230,13 +235,18 @@ class TimedMotorController(RapidMotorController):
             raise ValueError('a requested action and positive public elapsed time are required')
         self.inherited.observe(own_hits, terminated)
         self.requests.append(self.pending)
+        ordinal = self.inherited.ordinal - 1
+        if self.first_motion_request is None and self.pending != self.initial_idle:
+            self.first_motion_request = ordinal
         self.pending = None
         self.camera_intervals.append(elapsed_seconds)
         self.seconds += elapsed_seconds
         if self.belief.states is None:
             return
-        position = self._position(public_entities)
         start_position = float(self.belief.states[self.belief.confirmed, 0])
+        if self.initial_position is None:
+            self.initial_position = (self.motor_id, start_position)
+        position = self._position(public_entities)
         observations = []
         for lag, belief in self.shadows.items():
             if belief.states is None:
@@ -246,6 +256,29 @@ class TimedMotorController(RapidMotorController):
             observations.append(belief.observe(request, elapsed_seconds, position))
         if self.timing_updates and position is not None:
             self._adapt_delay(np.asarray(observations), elapsed_seconds)
+            self._check_early_motion(ordinal, position)
+
+    def _check_early_motion(self, ordinal, position):
+        """Reconsider carried lag when fresh paddle motion precedes any queued drive."""
+        if (not self.carried_delay or self.delay_commands != self.carried_delay
+                or self.first_motion_request is None):
+            return
+        age = ordinal - self.first_motion_request
+        identity, origin = self.initial_position
+        if (age < self.carried_delay and self.motor_id == identity
+                and abs(position - origin) >= EARLY_MOVEMENT):
+            # Its complete observed request history contains no matured movement
+            # at the carried lag. Use the immediate model provisionally while
+            # the bank continues comparing every candidate from camera motion.
+            self.evidence[self.lags.index(self.carried_delay)] = -EVIDENCE_MEMORY_LIMIT
+            self._select_delay(0)
+            self.carried_delay = 0
+
+    def _select_delay(self, candidate):
+        self.delay_commands = candidate
+        self.belief = self.shadows[candidate]
+        self.delay_changes += 1
+        self.candidate, self.candidate_dwell = None, 0
 
     def _adapt_delay(self, observations, elapsed):
         self.evidence *= math.exp(-elapsed / EVIDENCE_DECAY_SECONDS)
@@ -264,7 +297,4 @@ class TimedMotorController(RapidMotorController):
         self.candidate_dwell = self.candidate_dwell + 1 if candidate == self.candidate else 1
         self.candidate = candidate
         if self.candidate_dwell >= EVIDENCE_CONFIRM_CAMERAS:
-            self.delay_commands = candidate
-            self.belief = self.shadows[candidate]
-            self.delay_changes += 1
-            self.candidate, self.candidate_dwell = None, 0
+            self._select_delay(candidate)
