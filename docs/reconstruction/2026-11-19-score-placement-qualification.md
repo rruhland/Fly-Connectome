@@ -25,3 +25,5 @@ The trained policy gained 21 paired own-hit wins and lost none against center ai
 Against the opponent at speed 0.65, the trained policy returned 19/20 first and 30/33 later balls. Center aim returned 20/20 first and 49/49 later balls. The trained policy passed the first-return criterion and its 90.9% later-return rate fell below the 95% criterion. Four trained episodes ended in a loss. Neither arm scored or received a natural-serve win in this cohort.
 
 The independent comparison used 136 native games and took 273.608 seconds. The locked spec SHA-256 is `b7fb9cf12a45f8f2d0bede7c0eb7bc4962bb7f6523bf71f66776c1afb8ca0834`, and the frozen score checkpoint SHA-256 is `484059d03112dc06b18c946d8da244e0d229d5e63ee3da08ebef20fd94c762eb`. The archive contains the exact evaluation runtime and paired game receipts.
+
+The follow-up registers 32 fresh starts at each opponent speed, with the same score, first-return, and later-return thresholds. Its locked spec SHA-256 is `5b17fef333c3fe14664cc142744c1dac92775543c9a42765c538e8d21144c73c`.
