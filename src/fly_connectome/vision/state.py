@@ -67,7 +67,7 @@ class StreamingVisualState:
         return positions[missing[-1]+1:] if missing else positions
 
     @torch.no_grad()
-    def step(self, events, visible_frame, *, learn=False):
+    def _track(self, events, visible_frame, learn):
         shape = (self.observer.height, self.observer.width)
         for value, expected in ((events, (2, *shape)), (visible_frame, shape)):
             if value is None and expected == shape:
@@ -120,6 +120,20 @@ class StreamingVisualState:
             entities.append(row)
             if age == 0:
                 observed[identity] = row['position']
+        return field, entities, observed
+
+    @torch.no_grad()
+    def track_entities(self, events, visible_frame):
+        """Track public entities on a dedicated frozen stream without issuing forecasts."""
+        _, entities, _ = self._track(events, visible_frame, False)
+        self.compact()
+        return self.state.tracker.frame, entities
+
+    @torch.no_grad()
+    def step(self, events, visible_frame, *, learn=False):
+        field, entities, observed = self._track(events, visible_frame, learn)
+        tracker = self.state.tracker
+        available = visible_frame is not None
         # Current sensor endpoints settle only forecasts made in the past.
         batchable = (all(type(model) is ContextBelief for model in self.dynamics.values()) and
                      len({id(model) for model in self.dynamics.values()}) == len(self.dynamics))
