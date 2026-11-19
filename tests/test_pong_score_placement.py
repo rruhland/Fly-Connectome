@@ -60,3 +60,13 @@ def test_timing_hook_preserves_zero_offset_and_limits_nonzero_paddle_target():
     context.intercept = .35
     assert timing.contact_offset(context) == pytest.approx(.05)
     assert controller.placement.choices[0].offset == .079
+
+
+def test_centered_forecast_control_activates_only_when_placement_is_eligible():
+    timing = SimpleNamespace(seconds=.30, delay_commands=0, camera_seconds=.02)
+    policy = ScorePlacement(updates_enabled=False)
+    controller = ScorePlacementController(timing, policy.episode(1), forecast_center=True)
+    context = SimpleNamespace(intercept=.25, seconds=.6, paddle=.15, lower=-.4, upper=.4)
+    assert timing.contact_offset(None) == 0.
+    assert 0. < timing.contact_offset(context) < 1e-8
+    assert controller.placement.choices[0].offset == 0.

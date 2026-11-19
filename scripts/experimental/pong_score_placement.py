@@ -126,9 +126,10 @@ class PlacementEpisode:
 class ScorePlacementController:
     """Apply the score policy through the carried timing controller's aim hook."""
 
-    def __init__(self, timing, placement):
+    def __init__(self, timing, placement, *, forecast_center=False):
         self.timing = timing
         self.placement = placement
+        self.forecast_center = forecast_center
         self.approach = 0
         self.arrival_at = None
         timing.contact_offset = self._offset
@@ -155,6 +156,11 @@ class ScorePlacementController:
             return 0.
         offset = self.placement.offset(self.approach, context.intercept,
                                        context.seconds, reachable)
+        if not offset and self.forecast_center and self.placement.choices:
+            if self.placement.choices[-1].approach == self.approach:
+                # Activate the same forecast and braking path with a negligible
+                # shift so the control isolates the effect of shot placement.
+                offset = 1e-9
         if not offset:
             return 0.
         target = context.intercept + offset
