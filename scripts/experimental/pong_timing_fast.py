@@ -80,27 +80,37 @@ class BatchedTimedMotorController(TimedMotorController):
     """Run the original lag bank in one batch when timing inference is enabled."""
 
     def observe(self, *, own_hits, reward, terminated, truncated, elapsed_seconds, public_entities):
-        if len(self.shadows) == 1:
-            return super().observe(own_hits=own_hits, reward=reward, terminated=terminated,
-                truncated=truncated, elapsed_seconds=elapsed_seconds, public_entities=public_entities)
         if self.pending is None or not math.isfinite(elapsed_seconds) or elapsed_seconds <= 0:
             raise ValueError('a requested action and positive public elapsed time are required')
         self.inherited.observe(own_hits, terminated)
         self.requests.append(self.pending)
+        ordinal = self.inherited.ordinal - 1
+        if self.first_motion_request is None and self.pending != self.initial_idle:
+            self.first_motion_request = ordinal
         self.pending = None
         self.camera_intervals.append(elapsed_seconds)
         self.seconds += elapsed_seconds
         if self.belief.states is None:
             return
 
-        position = self._position(public_entities)
         start_position = float(self.belief.states[self.belief.confirmed, 0])
+        if self.initial_position is None:
+            self.initial_position = (self.motor_id, start_position)
+        position = self._position(public_entities)
+        self._observe_shadows(elapsed_seconds, position, start_position)
+        if self.timing_updates and position is not None:
+            self._check_early_motion(ordinal, position)
+
+    def _observe_shadows(self, elapsed_seconds, position, start_position):
         shadows = list(self.shadows.values())
         requests = []
         for lag, belief in self.shadows.items():
             if belief.states is None:
                 belief.initialize(start_position)
             requests.append(self.requests[-lag - 1] if len(self.requests) > lag else belief.order[1])
+        if len(shadows) == 1:
+            shadows[0].observe(requests[0], elapsed_seconds, position)
+            return
         evidence = observe_shadow_bank(shadows, requests, elapsed_seconds, position)
         if self.timing_updates and position is not None:
             self._adapt_delay(evidence, elapsed_seconds)

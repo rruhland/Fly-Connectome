@@ -11,9 +11,9 @@ from pong_rapid_motor_recovery import (
 )
 from pong_timing_controller import (
     EVIDENCE_CONFIRM_CAMERAS, EVIDENCE_DECAY_SECONDS, EVIDENCE_MARGIN,
-    EVIDENCE_MEMORY_LIMIT, TimedMotorController, TimingMotorBelief,
+    EVIDENCE_MEMORY_LIMIT, TimingMotorBelief,
 )
-from pong_timing_fast import observe_shadow_bank
+from pong_timing_fast import BatchedTimedMotorController, observe_shadow_bank
 
 
 RESPONSE_TIMES = (RESPONSE_SECONDS, .125, .18, .28, .42, .63)
@@ -59,7 +59,7 @@ def motor_projection(state, request_speed, duration, response_seconds):
     return projected
 
 
-class ActuatorResponseController(TimedMotorController):
+class ActuatorResponseController(BatchedTimedMotorController):
     """Compare both delivery delays and actuator rise times using camera innovations."""
 
     def __init__(self, policy, learner, *, timing_state=None, timing_updates=True,
@@ -94,19 +94,7 @@ class ActuatorResponseController(TimedMotorController):
                      response_seconds=self.response_seconds)
         return state
 
-    def observe(self, *, own_hits, reward, terminated, truncated, elapsed_seconds, public_entities):
-        if self.pending is None or not math.isfinite(elapsed_seconds) or elapsed_seconds <= 0:
-            raise ValueError('a requested action and positive public elapsed time are required')
-        self.inherited.observe(own_hits, terminated)
-        self.requests.append(self.pending)
-        self.pending = None
-        self.camera_intervals.append(elapsed_seconds)
-        self.seconds += elapsed_seconds
-        if self.belief.states is None:
-            return
-
-        position = self._position(public_entities)
-        start_position = float(self.belief.states[self.belief.confirmed, 0])
+    def _observe_shadows(self, elapsed_seconds, position, start_position):
         shadows = []
         requests = []
         for response, lag in self.hypotheses:
@@ -119,6 +107,16 @@ class ActuatorResponseController(TimedMotorController):
             dynamics=response_bank_dynamics(elapsed_seconds, self.hypotheses))
         if position is not None and len(self.hypotheses) > 1:
             self._adapt_response(observations, elapsed_seconds)
+
+    def _check_early_motion(self, ordinal, position):
+        carried = self.delay_commands
+        super()._check_early_motion(ordinal, position)
+        if self.delay_commands != carried:
+            # Early motion refutes this delay across every rise-time hypothesis.
+            column = self.lags.index(carried)
+            self.evidence[column::len(self.lags)] = -EVIDENCE_MEMORY_LIMIT
+            self.candidate_response = None
+            self._update_response_estimate()
 
     def _adapt_response(self, observations, elapsed):
         self.evidence *= math.exp(-elapsed / EVIDENCE_DECAY_SECONDS)
@@ -145,6 +143,9 @@ class ActuatorResponseController(TimedMotorController):
                 self.response_changes += int(current[0] != self.response_hypothesis)
                 self.delay_changes += int(current[1] != self.delay_commands)
                 self.candidate_response, self.candidate_dwell = None, 0
+        self._update_response_estimate()
+
+    def _update_response_estimate(self):
         # Read a continuous response estimate from nearby hypotheses. Keep the
         # acquired fast model exact when it is the confirmed explanation.
         if not self.response_updates:
