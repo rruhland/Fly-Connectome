@@ -11,9 +11,13 @@ from pong_rapid_motor_recovery import (
 from pong_timing_controller import TimedMotorController
 
 
-def observe_shadow_bank(shadows, requests, elapsed, position):
+def observe_shadow_bank(shadows, requests, elapsed, position, *, dynamics=None):
     """Update each lag's motor belief, preserving its separate likelihood."""
-    transition, response = motor_dynamics(elapsed)
+    if dynamics is None:
+        transition, response = motor_dynamics(elapsed)
+    else:
+        transition, response = dynamics
+        response = response[:, None, :]
     probabilities = np.stack([belief.probabilities for belief in shadows])
     states = np.stack([belief.states for belief in shadows])
     covariances = np.stack([belief.covariances for belief in shadows])
@@ -29,12 +33,14 @@ def observe_shadow_bank(shadows, requests, elapsed, position):
 
     orders = INVERSE_ORDERS[np.arange(len(ORDERS))[None, :], np.asarray(requests)[:, None]]
     speeds = RESPONSE_SPEEDS[orders]
-    states = starting_states @ transition.T + speeds[:, :, None] * response
+    states = starting_states @ transition.swapaxes(-1, -2) + speeds[:, :, None] * response
     np.clip(states[:, :, 1], -SPEED_LIMIT, SPEED_LIMIT, out=states[:, :, 1])
     stopped = abs(states[:, :, 0]) > POSITION_LIMIT
     states[stopped, 1] = 0.
     np.clip(states[:, :, 0], -POSITION_LIMIT, POSITION_LIMIT, out=states[:, :, 0])
-    covariances = transition @ starting_covariances @ transition.T + PROCESS_NOISE
+    if dynamics is not None:
+        transition = transition[:, None, :, :]
+    covariances = transition @ starting_covariances @ transition.swapaxes(-1, -2) + PROCESS_NOISE
     covariances[stopped, 1, :] = 0.
     covariances[stopped, :, 1] = 0.
     covariances[stopped, 1, 1] = PROCESS_NOISE[1, 1]
