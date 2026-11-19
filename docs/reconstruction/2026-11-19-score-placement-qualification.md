@@ -1,0 +1,9 @@
+# Qualifying score-trained Pong placement
+
+This comparison is prepared for a scoring policy trained from terminal game scores after timing qualification. Each score policy receives the same actual carried motor and timing checkpoint. Motor and timing updates stay live, and scoring updates stay frozen throughout qualification. The environment keeps the actuator settings constant during each score and retention game.
+
+The independent schedule pairs 32 starts against the opponent at speed 0.35 and 20 starts against the opponent at speed 0.65. Each cohort balances the opening serve direction. The score-focused cohort compares the frozen trained score policy, the inherited center policy, and a frozen untrained policy with fixed exploration. The retention cohort compares the trained policy with the inherited center policy. All games end at a score or 12 seconds. The runner assigns policy randomness independently of each native serve seed and shares it between matched arms.
+
+The score endpoint is a point won after at least one own return. A point won by a natural serve contributes zero and remains in the planned denominator. On the same starts, the trained policy must improve on inherited center by at least 15 percentage points with a one-sided exact paired p-value of at most 0.05. The report shows the comparison with fixed exploration separately. The stronger opponent measures ordinary interception. First returns must reach at least 90%, and later returns must reach at least 95% on 30 or more opportunities. Both rates must be within five percentage points of the matched center policy.
+
+Preparation pins fresh schedules before exposure to the candidate. The evaluation records the frozen source and checkpoint hashes, every game receipt, natural serve wins and the first-contact clock parity of each pair. [Independent qualification runner](../../scripts/experimental/run_pong_score_qualification.py)
