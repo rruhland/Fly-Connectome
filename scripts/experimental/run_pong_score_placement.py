@@ -3,6 +3,7 @@
 import argparse
 from concurrent.futures import ProcessPoolExecutor
 from dataclasses import asdict
+import hashlib
 import json
 from pathlib import Path
 
@@ -26,6 +27,10 @@ POLICY_RNG_ENTROPY = 3070771140478503531
 
 def read(path):
     return json.loads(path.read_text())
+
+
+def pin(path):
+    return dict(path=str(path.resolve()), sha256=hashlib.sha256(path.read_bytes()).hexdigest())
 
 
 def write(path, value):
@@ -207,7 +212,9 @@ def main():
     write(args.out / 'schedule.json', schedule)
     write(args.out / 'policy-rng.json', dict(entropy=POLICY_RNG_ENTROPY, streams=policy_seeds))
     write(args.out / 'input.json', dict(motor_state=motor_state, timing_state=timing_state,
-          score_state=initial, candidate_offsets=OFFSETS, episode_seconds=EPISODE_SECONDS))
+          motor_checkpoint=pin(args.motor_state), timing_checkpoint=pin(args.timing_state),
+          score_state=initial, candidate_offsets=OFFSETS, episode_seconds=EPISODE_SECONDS,
+          scoring_opponent=SCORING_OPPONENT, retention_opponent=RETENTION_OPPONENT))
     policy, practice = practice_sequential(args.out, schedule['practice'], policy_seeds['practice'],
                                           motor_state, timing_state, initial)
     endpoint = policy.frozen_branch().to_state()
