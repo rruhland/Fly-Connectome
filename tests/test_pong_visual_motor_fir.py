@@ -256,7 +256,9 @@ def test_cold_continuous_learning_improves_quantized_delayed_synthetic_tracking(
     assert np.isfinite(learner.theta).all() and np.isfinite(learner.covariance).all()
 
 
-def test_full_public_replay_reconstructs_numeric_choices_and_updates_without_native(tmp_path, monkeypatch):
+@pytest.mark.parametrize('with_annotated_timing', (False, True))
+def test_full_public_replay_reconstructs_numeric_choices_and_updates_without_native(
+        tmp_path, monkeypatch, with_annotated_timing):
     learner = VisualMotorFIR(413)
     before = learner.state()
     controller = VisualMotorController(inherited(), learner)
@@ -277,12 +279,16 @@ def test_full_public_replay_reconstructs_numeric_choices_and_updates_without_nat
         feedbacks.append(public)
     public_path, tape_path = tmp_path / 'public.npz', tmp_path / 'events.npz'
     save_public_entities(public_path, inputs)
+    timing = {}
+    if with_annotated_timing:
+        ticks = np.resize([2, 2, 3, 2, 3], len(actions))
+        timing = dict(physics_ticks=ticks, opportunity_tick=np.cumsum(ticks)[[125, 340]])
     np.savez_compressed(tape_path, action=np.array(actions), baseline_action=np.ones(len(actions), int),
         hits=np.array([p['own_hits'] for p in feedbacks]),
         reward=np.array([p['reward'] for p in feedbacks]),
         elapsed_seconds=np.array([p['elapsed_seconds'] for p in feedbacks]),
         terminated=np.array([p['terminated'] for p in feedbacks]),
-        truncated=np.array([p['truncated'] for p in feedbacks]))
+        truncated=np.array([p['truncated'] for p in feedbacks]), **timing)
     receipt = dict(learner_before=before, learner_after_sha256=runner.state_hash(learner.state()),
         public_file=public_path, tape_file=tape_path, transitions=len(actions),
         public_decision_update_digest=digest.hexdigest())
@@ -295,6 +301,14 @@ def test_full_public_replay_reconstructs_numeric_choices_and_updates_without_nat
     assert result['passed'] and result['native_cameras'] == 0
     assert result['exact_actions_decisions_updates_and_final_state']
     assert result['within_game_update_changed_unperturbed_actions'] > 50
+    first_change = result['first_within_game_change']
+    if with_annotated_timing:
+        assert first_change['elapsed_ticks'] == int(ticks[:first_change['camera_index']].sum())
+        assert 0 < result['within_game_changes_before_first_opportunity'] <= (
+            result['within_game_update_changed_unperturbed_actions'])
+    else:
+        assert first_change['elapsed_ticks'] is None
+        assert result['within_game_changes_before_first_opportunity'] is None
     damaged = dict(receipt, learner_after_sha256='0' * 64)
     with pytest.raises(AssertionError):
         runner.replay(damaged, inherited())

@@ -75,7 +75,7 @@ class NumericEvaluator(FreshRBFEvaluator):
         self.public_inputs.append(snapshot(self.latest_encoded['entities']))
 
     def _choose_policy(self):
-        baseline, q = self.rbf_readout.choose(*policy_features(self.latest_encoded, self.scaler))
+        baseline, q = self._baseline_choice()
         entities = snapshot(self.latest_encoded['entities'])
         action, decision = self.controller.choose(entities, int(baseline))
         other, other_decision = self.shadow_controller.choose(snapshot(entities), int(baseline))
@@ -84,6 +84,9 @@ class NumericEvaluator(FreshRBFEvaluator):
         self.pending = (int(baseline), int(action), decision)
         self.baseline_actions.append(int(baseline))
         return int(action), q
+
+    def _baseline_choice(self):
+        return self.rbf_readout.choose(*policy_features(self.latest_encoded, self.scaler))
 
     def step(self, **kwargs):
         row = super().step(**kwargs)
@@ -109,48 +112,64 @@ def replay(receipt, policy):
     controller = VisualMotorController(policy, learner)
     game_start_model = learner.frozen_branch()
     game_start_controller = VisualMotorController(policy, game_start_model)
-    within_game_changed = 0
+    changed_rows = []
     inputs = load_public_entities(receipt['public_file'])
-    with np.load(receipt['tape_file'], allow_pickle=False) as data:
-        assert len(inputs) == len(data['action']) + 1
-        digest = hashlib.sha256()
-        for i, action in enumerate(data['action']):
-            chosen, decision = controller.choose(inputs[i], int(data['baseline_action'][i]))
-            assert chosen == int(action), ('archived numeric action mismatch', i)
-            _, start_decision = game_start_controller.choose(inputs[i], int(data['baseline_action'][i]))
-            def before_dither(value):
-                return min((1, 0, 2), key=lambda a: value['costs'][a]) if value['ready'] else value['inherited_action']
-            within_game_changed += int(learner.updates > receipt['learner_before']['updates']
-                and before_dither(decision) != before_dither(start_decision))
-            feedback = dict(own_hits=int(data['hits'][i]), reward=float(data['reward'][i]),
-                terminated=bool(data['terminated'][i]), truncated=bool(data['truncated'][i]),
-                elapsed_seconds=float(data['elapsed_seconds'][i]))
-            update = controller.observe(**feedback, public_entities=inputs[i + 1])
-            # This comparison receives the same ACTUAL command history, never
-            # a second imagined trajectory or another game query. Its choices
-            # are reporting only and do not enter the live controller.
-            game_start_controller.pending_action = chosen
-            game_start_controller.inherited.pending_action = chosen
-            game_start_controller.observe(**feedback, public_entities=inputs[i + 1])
-            digest_row(digest, int(data['baseline_action'][i]), chosen, decision, feedback, update)
+    with np.load(receipt['tape_file'], allow_pickle=False) as archive:
+        data = {key: archive[key] for key in ('action', 'baseline_action', 'hits', 'reward',
+            'terminated', 'truncated', 'elapsed_seconds')}
+        timing = {key: archive[key] for key in ('physics_ticks', 'opportunity_tick') if key in archive}
+    physics_ticks = timing.get('physics_ticks')
+    opportunity_ticks = timing.get('opportunity_tick')
+    assert len(inputs) == len(data['action']) + 1
+    digest = hashlib.sha256()
+    tick = 0
+    for i, action in enumerate(data['action']):
+        baseline = int(data['baseline_action'][i])
+        chosen, decision = controller.choose(inputs[i], baseline)
+        assert chosen == int(action), ('archived numeric action mismatch', i)
+        _, start_decision = game_start_controller.choose(inputs[i], baseline)
+        def before_dither(value):
+            return min((1, 0, 2), key=lambda a: value['costs'][a]) if value['ready'] else value['inherited_action']
+        if (learner.updates > receipt['learner_before']['updates']
+                and before_dither(decision) != before_dither(start_decision)):
+            changed_rows.append((i, tick, float(controller.seconds)))
+        feedback = dict(own_hits=int(data['hits'][i]), reward=float(data['reward'][i]),
+            terminated=bool(data['terminated'][i]), truncated=bool(data['truncated'][i]),
+            elapsed_seconds=float(data['elapsed_seconds'][i]))
+        update = controller.observe(**feedback, public_entities=inputs[i + 1])
+        # The comparison uses actual command history, without querying a second trajectory.
+        game_start_controller.pending_action = chosen
+        game_start_controller.inherited.pending_action = chosen
+        game_start_controller.observe(**feedback, public_entities=inputs[i + 1])
+        digest_row(digest, baseline, chosen, decision, feedback, update)
+        if physics_ticks is not None:
+            tick += int(physics_ticks[i])
     assert digest.hexdigest() == receipt['public_decision_update_digest']
     assert state_hash(learner.state()) == receipt['learner_after_sha256']
     return dict(passed=True, rows=receipt['transitions'], native_cameras=0,
         public_inputs='all exact public visual entities, inherited baseline commands and actual public feedback',
         exact_actions_decisions_updates_and_final_state=True,
-        within_game_update_changed_unperturbed_actions=within_game_changed,
+        within_game_update_changed_unperturbed_actions=len(changed_rows),
+        within_game_changes_before_first_opportunity=sum(
+            bool(len(opportunity_ticks) and t < opportunity_ticks[0]) for _, t, _ in changed_rows)
+            if physics_ticks is not None and opportunity_ticks is not None else None,
+        first_within_game_change=dict(camera_index=changed_rows[0][0],
+            elapsed_ticks=changed_rows[0][1] if physics_ticks is not None else None,
+            elapsed_seconds=changed_rows[0][2]) if changed_rows else None,
         within_game_comparison='game-start coefficients and gate, same actual public observations/request history; descriptive action effect, not performance')
 
 
-def evaluate_game(baseline, policy, learner, shadow, assignment, directory, deadline):
+def evaluate_game(baseline, policy, learner, shadow, assignment, directory, deadline, *,
+                  evaluator_class=None, use_policy_scaling=True, max_episode_ticks=2400):
     directory = Path(directory)
     directory.mkdir(parents=True, exist_ok=True)
     began = time.monotonic()
     before = learner.state()
-    session = NumericEvaluator(baseline, policy, learner, shadow,
+    evaluator = NumericEvaluator if evaluator_class is None else evaluator_class
+    session = evaluator(baseline, policy, learner, shadow,
         PongEvaluationConfig(seed=int(assignment['seed']), episodes=1,
-            max_episode_ticks=2400, opponent_speed=.65,
-            policy_scaling=read(MODEL / 'radial-cap.json')))
+            max_episode_ticks=max_episode_ticks, opponent_speed=.65,
+            policy_scaling=read(MODEL / 'radial-cap.json') if use_policy_scaling else None))
     install_exact_transport_copy(session)
     install_intervention(session.env, assignment['intervention'])
     counter, events = ReturnCounter(), []
