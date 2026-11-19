@@ -5,6 +5,8 @@
 
 The three independent qualifications passed. The rapid controller returned 27/30 first balls after hidden mid-rally remaps. With hidden actuator delays, the timing learner returned 21/32 first balls versus 6/32 with the timing estimate frozen. The score-trained policy with the visual safety rule won 18/32 after an own return versus 0/32 centered, and maintained 65/66 later returns against the stronger opponent. Its camera and learned interception relation are inherited. Its score values come from 96 chronological practice points. Training used no backpropagation.
 
+On two fresh 64-point courses the final controller carried shot values, motor and timing beliefs, and shot-risk estimates across all state changes. It won 56/96 scorable points after an own return versus 7/96 centered and saved 86/95 later balls in the strongest combined condition versus 94/101. All pooled criteria passed. Course A alone saved 44/50 later balls in that condition. The next milestone is to discover the paddle, ball and axis among distractors before testing transfer to Breakout.
+
 Read the [progression report](2026-11-19-pong-transfer-progression.md) for the separate interventions, multi-state course, actual-game replay and limits. The [checkpoint and loading example](../../artifacts/m1b/README.md) and [transfer plan](../plans/2026-11-19-pong-skill-progression.md) identify what carries into the proposed Breakout experiment.
 
 ## Online button discovery qualified on November 19

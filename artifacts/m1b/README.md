@@ -41,3 +41,29 @@ print(point["hits"], point["score"])
 ```
 
 For another point, construct a fresh controller with the same scorer object and `controller.timing.state()` in place of `state["timing"]`. That carries the learned order, lag, and score values while clearing the camera and physical queue for the new serve.
+
+## Checkpoint after continuous adaptation
+
+[The post-course checkpoint](2026-11-19-pong-after-mixed-course.json) is the first predetermined learner after 64 additional points. It includes its updated shot values, actual final motor and timing belief, and decaying evidence about opponent pursuit and attempted delayed shots. Its parent is the [post-practice checkpoint](2026-11-19-pong-transfer-checkpoint.json). To start from either its final state or the 96-point parent, use the matching builder named in that JSON.
+
+```python
+import json
+import sys
+from pathlib import Path
+
+sys.path[:0] = ["src", "scripts/experimental"]
+from pong_carried_shot_value import ShotMemory, build_carried_shot_controller
+from pong_score_placement import ScorePlacement
+from pong_transfer_arena import play
+
+state = json.loads(Path("artifacts/m1b/2026-11-19-pong-after-mixed-course.json").read_text())
+scorer = ScorePlacement(**state["score"])
+timing = state["timing"]
+memory = ShotMemory(**state["shot_memory"])
+for serve_seed in (1114851470, 134563330):
+    controller = build_carried_shot_controller(123, state["motor"], timing, scorer,
+                                               memory=memory, timing_updates=True)
+    point = play(controller, serve_seed, opponent_speed=.35, duration=12.)
+    timing, memory = controller.timing.state(), controller.shot_memory
+    print(point["hits"], point["score"])
+```
