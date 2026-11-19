@@ -60,7 +60,7 @@ def make_schedule(used, counts, rng_seed):
 
 
 def build_controller(seed, motor_state, timing_state, score_policy, exploration=0., *,
-                     timing_updates=False):
+                     timing_updates=False, forecast_center=False):
     if motor_state['schema'] == 'public-visual-motor-order-memory-v1':
         learner = RapidMotorMemory.from_state(motor_state)
     else:
@@ -68,12 +68,13 @@ def build_controller(seed, motor_state, timing_state, score_policy, exploration=
     timing = TimedMotorController(interception_policy(), learner,
                                  timing_state=timing_state, timing_updates=timing_updates)
     episode = score_policy.episode(seed, exploration=exploration)
-    return ScorePlacementController(timing, episode)
+    return ScorePlacementController(timing, episode, forecast_center=forecast_center)
 
 
 def run_episode(seed, opponent, motor_state, timing_state, score_policy, *,
-                exploration=0., alternative=None):
-    controller = build_controller(seed, motor_state, timing_state, score_policy, exploration)
+                exploration=0., forecast_center=False, alternative=None):
+    controller = build_controller(seed, motor_state, timing_state, score_policy, exploration,
+                                  forecast_center=forecast_center)
     configuration = {} if alternative is None else alternative
     row = play(controller, seed, opponent_speed=opponent, duration=EPISODE_SECONDS,
                **configuration)
@@ -85,11 +86,11 @@ def run_episode(seed, opponent, motor_state, timing_state, score_policy, *,
 
 
 def evaluate(job):
-    arm, seed, opponent, motor_state, timing_state, score_state, exploration = job
+    arm, seed, opponent, motor_state, timing_state, score_state, exploration, forecast_center = job
     torch.set_num_threads(1)
     policy = ScorePlacement(**score_state, updates_enabled=False)
     row = run_episode(seed, opponent, motor_state, timing_state, policy,
-                      exploration=exploration)
+                      exploration=exploration, forecast_center=forecast_center)
     return arm, row
 
 
@@ -143,11 +144,14 @@ def frozen_comparison(schedule, motor_state, timing_state, initial, endpoint, wo
     jobs = []
     for task, opponent, arms in (
             ('scoring', SCORING_OPPONENT,
-             [('trained', endpoint, 0.), ('cold', initial, 0.), ('explore', initial, .65)]),
-            ('retention', RETENTION_OPPONENT, [('trained', endpoint, 0.), ('cold', initial, 0.)])):
+             [('trained', endpoint, 0., False), ('cold', initial, 0., False),
+              ('explore', initial, 1., False), ('forecast_center', initial, 0., True)]),
+            ('retention', RETENTION_OPPONENT,
+             [('trained', endpoint, 0., False), ('cold', initial, 0., False)])):
         for seed in schedule[task]:
-            for arm, state, exploration in arms:
-                jobs.append(((task, arm), seed, opponent, motor_state, timing_state, state, exploration))
+            for arm, state, exploration, forecast_center in arms:
+                jobs.append(((task, arm), seed, opponent, motor_state, timing_state,
+                             state, exploration, forecast_center))
     rows = {}
     with ProcessPoolExecutor(max_workers=workers) as pool:
         for (task, arm), row in pool.map(evaluate, jobs):
@@ -194,7 +198,7 @@ def main():
           scoring={arm: summarize(group) for arm, group in rows['scoring'].items()},
           retention={arm: summarize(group) for arm, group in rows['retention'].items()},
           score_difference={arm: paired_difference(rows['scoring']['trained'], rows['scoring'][arm])
-                            for arm in ('cold', 'explore')}))
+                            for arm in ('cold', 'explore', 'forecast_center')}))
 
 
 if __name__ == '__main__':
