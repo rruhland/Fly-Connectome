@@ -38,3 +38,10 @@ SHA-256 is `484059d03112dc06b18c946d8da244e0d229d5e63ee3da08ebef20fd94c762eb`.
 Stage 2 timing updates were held fixed for this experiment. The visual motor
 observer still tracked paddle motion.
 [Input pins](/workspace/m1b-experiments/pong-score-placement-20261119-r1/input.json)
+
+The portable archive contains all 96 practice and 240 paired evaluation
+receipts, the frozen score table, upstream checkpoint copies and lineage, and
+an audit script that reconstructs the terminal-score state without new camera
+observations. The audit passed after a fresh extraction, and every content
+hash matched the archive manifest.
+[Portable receipts](../../artifacts/m1b/2026-11-19-pong-score-placement.zip)
