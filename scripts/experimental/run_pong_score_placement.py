@@ -144,6 +144,36 @@ def paired_difference(learned, control):
                 improved=int((differences > 0).sum()), regressed=int((differences < 0).sum()))
 
 
+def retention_difference(learned, control):
+    """Resample paired whole rallies to estimate the return-rate change."""
+    if [row['seed'] for row in learned] != [row['seed'] for row in control]:
+        raise ValueError('paired starts must have identical ordered seeds')
+    rng = np.random.default_rng(83851)
+    samples = rng.integers(len(learned), size=(BOOTSTRAP_DRAWS, len(learned)))
+    differences = {}
+    for metric, numerator, denominator in (
+            ('first_returns', lambda r: bool(r['contacts']) and bool(r['contacts'][0][1]),
+             lambda r: bool(r['contacts'])),
+            ('all_returns', lambda r: r['hits'], lambda r: r['opportunities'])):
+        rates = []
+        draws = []
+        for group in (learned, control):
+            successes = np.array([numerator(r) for r in group])
+            attempts = np.array([denominator(r) for r in group])
+            sampled_attempts = attempts[samples].sum(axis=1)
+            sampled_successes = successes[samples].sum(axis=1)
+            draws.append(np.divide(sampled_successes, sampled_attempts,
+                                   out=np.full(BOOTSTRAP_DRAWS, np.nan),
+                                   where=sampled_attempts != 0))
+            rates.append(successes.sum() / attempts.sum() if attempts.sum() else np.nan)
+        delta = draws[0] - draws[1]
+        valid = delta[np.isfinite(delta)]
+        differences[metric] = dict(point_estimate=float(rates[0] - rates[1]) if valid.size else None,
+                                   confidence_interval=(np.quantile(valid, [.025, .975]).tolist()
+                                                        if valid.size else None))
+    return differences
+
+
 def practice_sequential(out, schedule, policy_seeds, motor_state, timing_state, initial):
     policy = ScorePlacement(**initial)
     rows = []
@@ -225,6 +255,8 @@ def main():
     write(args.out / 'summary.json', dict(practice=summarize(practice),
           scoring={arm: summarize(group) for arm, group in rows['scoring'].items()},
           retention={arm: summarize(group) for arm, group in rows['retention'].items()},
+          retention_difference=retention_difference(rows['retention']['trained'],
+                                                    rows['retention']['cold']),
           score_difference={arm: paired_difference(rows['scoring']['trained'], rows['scoring'][arm])
                             for arm in ('cold', 'explore', 'forecast_center')}))
 
