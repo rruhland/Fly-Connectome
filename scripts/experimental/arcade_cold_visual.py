@@ -271,7 +271,9 @@ class _ColdVisualActor:
             # progress direction until a fresh ball separates again.
             return
         position = observed[pair[1]]
-        gap = abs(position[1] - self.paddle[1])
+        # The role adapter puts the controlled rail on the negative across
+        # side. A miss continues past that rail instead of turning outbound.
+        gap = position[1] - self.paddle[1]
         if self.ball and (pair[1] != self.ball_id or self.roles.seconds - self.ball[-1][0] > 4 * dt):
             self.ball.clear()
             self.closing = None
@@ -286,14 +288,14 @@ class _ColdVisualActor:
                     # room for public score earned during the outbound flight.
                     if self.visual_return or self.trial_score:
                         self.finish_trial()
-                elif not closing and self.closing and min(gap, preceding_gap) <= 4 * PIXEL + change:
+                elif not closing and self.closing and 0 <= min(gap, preceding_gap) <= 4 * PIXEL + change:
                     self.visual_return = True
                 self.closing = closing
         self.ball.append((self.roles.seconds, *position, gap))
 
     def _projected_ball(self):
         _, along, _, gap = self.ball[-1]
-        if len(self.ball) < 2 or not self.closing:
+        if len(self.ball) < 2 or not self.closing or gap <= 0:
             return along
 
         time, _, _, _ = self.ball[-1]
