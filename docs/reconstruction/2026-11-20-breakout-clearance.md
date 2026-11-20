@@ -1,0 +1,15 @@
+# Full-board Breakout clearance after twelve practice lives
+
+The practiced visual rebound model cleared all 12 unseen nine-brick boards in one life each. The same model with its initial parameters cleared six and lost six lives. The forecast-center control cleared three and timed out on nine. Every practiced clearance took between 22.8 and 46.5 simulated seconds, with all 108 bricks removed after a paddle return. [Evaluation and practice records](../../artifacts/m2/2026-11-20-breakout-clearance.zip)
+
+| Shot controller | Boards cleared | Lives lost | Timeouts | Post-return bricks per life | Post-return bricks per simulated minute | Paddle returns | Mean capped seconds to clear |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| Practiced rebound model | 12/12 | 0 | 0 | 9.00 | 17.10 | 124/124 | 31.58 |
+| Same model at initialization | 6/12 | 6 | 0 | 8.08 | 11.54 | 142/148 | 56.65 |
+| Forecast center | 3/12 | 0 | 9 | 5.58 | 4.72 | 259/259 | 70.91 |
+
+The practiced model cleared six more paired boards than the initialized model, a 50-percentage-point gain with a paired 95% bootstrap interval of 25 to 75 points and exact two-sided sign-flip `p = 0.03125`. It cleared nine more than forecast center, a 75-point gain with a paired interval of 50 to 100 points and `p = 0.00391`. Using 75 seconds for each unsuccessful board, it saved 25.1 seconds versus the initialized model and 39.3 seconds versus forecast center. Brick rates use actual elapsed play across all 12 lives per arm. The practiced and center controllers both returned every incoming opportunity they encountered. [Paired outcome and timing records](../../artifacts/m2/2026-11-20-breakout-clearance.zip)
+
+The evaluation used ordinary native control and independent held-out layouts of three bricks per row across three rows, with six left and six right serves. The three arms began each life with the same carried Pong motor and arrival controller and matched layout, launch, and policy seeds. The practiced model had accumulated 29 visual rebound updates and 27 public score updates on separate practice boards. That model and its initialized control both used the same target geometry and had shot learning disabled throughout evaluation. Forecast center used the inherited arrival forecast with an effectively zero contact offset. Each life ended at clearance, ball loss, or a fixed 75 seconds. [Registration](../../artifacts/m2/2026-11-20-breakout-clearance-registration.json) · [Runner](../../scripts/experimental/run_breakout_clearance.py) · [Visual rebound model](../../scripts/experimental/breakout_visual_rebound.py)
+
+An independent audit checked all 36 lives against matching initial ball trajectories, registered seeds and layouts, frozen shot-state digests, native brick and return counts, and clearance or loss times. The archive includes the pre-run registration, the exact practice summary and state, the candidate source and checkpoint hashes, all board-by-arm receipts, and the analysis. [Portable archive](../../artifacts/m2/2026-11-20-breakout-clearance.zip)
