@@ -1,0 +1,22 @@
+# Why the carried controller lost early Breakout returns under stress
+
+Across the four sealed stress courses, the full Pong transfer, motor-and-arrival transfer, and reset learner using the same model family each saved 17/48 opening balls. The early trajectories differed. The first five opportunities per course yielded 4/20 returns for full transfer, 6/20 for motor-and-arrival transfer, and 10/20 for the reset learner. Across all later opportunities, full transfer saved 21/29, motor-and-arrival saved 30/35, and reset saved 29/34. The full and motor-and-arrival arms agreed on whether the opening was returned in 46/48 matched lives. Carrying Pong shot values therefore explains little of the difference in opening returns. [Sealed course schedule](../../artifacts/m2/2026-11-20-breakout-sealed-schedule.json)
+
+## One matched replay
+
+This development diagnostic selected the first stress course after inspecting its large early deficit. In that course the full transfer lost all of the first eight openings and the reset learner saved its first opening on life two. Both replay branches used the same 12 environments, original checkpoint and 10-second life cap. The reference branch reproduced all 12 original action hashes and both boundary state hashes for all 12 lives. The second branch held the original signed pursuit relation after each life and ran the same motor, timing and shot updates. The change in pursuit necessarily changes the requests available for later learning. The effect estimates apply to this selected course. [Replay source](../../scripts/experimental/replay_breakout_stress_polarity.py) · [Instrumented traces and checksums](../../artifacts/m2/2026-11-20-breakout-stress-diagnostic.zip)
+
+| Stress course 1 | Original | Original pursuit sign held |
+|---|---:|---:|
+| First saved opening, life | 9 | 2 |
+| Opening returns | 2/12 | 5/12 |
+| Total returns | 2 | 13 |
+| Longest rally of own returns | 1 | 4 |
+
+The original flipped pursuit direction after the first short, scoreless life and kept the reversed sign for lives 2–12. Holding the original sign recovered openings on lives 2, 4, 5, 6 and 7 and lost two openings that the reference returned on lives 9 and 10. Six of the ten misses in the original had the wrong selected button order at the crossing. Five of the ten had an estimated delay at least two camera commands from the actual delay. The lag model uses a grid with three-command spacing, so this comparison allows one command of error. The first loss occurred before any polarity change. On that life the controller initially used the inherited button map, found the correct map by camera 27, and missed at camera 45 with a lateral error of 0.165 arena units. Several late misses remained with pursuit held fixed.
+
+Both branches found the correct rail by camera 13 on the first life and used it by camera 4 or 5 on subsequent lives. In the original replay, the published lateral positions of the paddle and ball were within two pixels of their physical positions in all 108 sampled pre-contact decisions and all 12 opening crossing decisions. All 12 openings in each branch were within the evaluator's reach bound at the first policy decision. The evaluator propagated the actual paddle position, velocity, activation and queued controls under maximum physical drive in both directions, preserving camera timing until the recorded collision tick. Late discovery and physically impossible openings do not explain the observed early gap in this course.
+
+The original code uses short, scoreless lives as evidence against the pursuit relation even when its actuator interpretation is stale. The replay shows how reversing a preserved relation can compound a change in what the buttons do. The errors with the original relation held show that actuator and delay adaptation still matter. This motivates comparing separate visual evidence for actuator changes and target selection on a new course.
+
+The replay used the exact frozen candidate at `54903c9f18c161024fb1dfa568a479eb3185a69f`. To replay, set `PYTHONPATH` to that checkout's `src` and `scripts/experimental`, then use `python -P` to run the linked script with the sealed schedule and original `full-stress-01.json` reference. The script checks the source revision, checkpoint, schedule and reference hashes before play. The packaged rows contain matched life IDs, decisions and physics annotations. The evaluator uses those privileged annotations for attribution and reach checks only.
