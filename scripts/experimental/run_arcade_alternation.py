@@ -13,7 +13,7 @@ import torch
 
 from arcade_alternation import AlternatingSession
 from arcade_transfer_session import CHECKPOINT
-from breakout_arena import BreakoutEpisode, breakout_schedule
+from breakout_arena import BreakoutEpisode, BreakoutLayout, breakout_schedule
 from fly_connectome.control.environment import PongCamera
 from return_metrics import ReturnCounter
 
@@ -111,6 +111,45 @@ def hash_public_transition(public, result):
     public.update(result.frame.numpy().tobytes())
     public.update(struct.pack('!dd??', result.reward, result.elapsed_seconds,
                               result.terminated, result.truncated))
+
+
+def identify_board(camera):
+    return dict(layout=camera.layout.cells,
+                initial_frame_sha256=hashlib.sha256(camera.frame().numpy().tobytes()).hexdigest())
+
+
+def practice_boards(spec):
+    if 'phase_cases' in spec:
+        practice = spec['phase_cases']['practice']
+        episodes = [row['episode'] for row in practice]
+        layouts = [row['layout']['cells'] for row in practice]
+    else:
+        practice = spec['schedules']['practice']
+        episodes = practice['environment']
+        layouts = practice['custom_layouts']
+    return [identify_board(BreakoutEpisode(**episode).camera(
+        layout=None if layout is None else BreakoutLayout(layout)))
+        for episode, layout in zip(episodes, layouts, strict=True)]
+
+
+def verify_boards(practice_spec, games_per_block):
+    practice = practice_boards(json.loads(practice_spec.read_text()))
+    if not practice:
+        raise ValueError('the trained brick state needs its practice schedule')
+    seen = {key: {row[key] for row in practice} for key in ('layout', 'initial_frame_sha256')}
+    evaluations = {}
+    for course in COURSE_SEEDS:
+        evaluations[course] = []
+        for case in schedule(course, games_per_block):
+            if case['game'] != 'breakout':
+                continue
+            board = identify_board(native_arena(case, MAX_TICKS))
+            if any(board[key] in entries for key, entries in seen.items()):
+                raise ValueError('a qualification board or opening frame repeats a known board')
+            for key, entries in seen.items():
+                entries.add(board[key])
+            evaluations[course].append(dict(case=case['case'], **board))
+    return dict(practice_spec_sha256=source_digest(practice_spec), practice=practice, evaluations=evaluations)
 
 
 def play(session, case, max_ticks):
@@ -273,12 +312,14 @@ def comparison(cases, traces):
     return result
 
 
-def run(output, *, course, games_per_block, brick_path, checkpoint, max_ticks, workers, context_recall=False):
+def run(output, *, course, games_per_block, brick_path, practice_spec, checkpoint, max_ticks, workers,
+        context_recall=False):
     cases = schedule(course, games_per_block)
     arms = (*ARMS, 'context_recall') if context_recall else ARMS
     checkpoint = checkpoint.resolve()
     brick_path = brick_path.resolve()
     brick_state = json.loads(brick_path.read_text())
+    boards = verify_boards(practice_spec, games_per_block)
     output.mkdir(parents=True, exist_ok=False)
     scripts = Path(__file__).resolve().parent
     implementation = ('arcade_alternation.py', 'arcade_transfer_session.py', 'breakout_arena.py',
@@ -294,6 +335,7 @@ def run(output, *, course, games_per_block, brick_path, checkpoint, max_ticks, w
                                     brick_checkpoint_schema=brick_state['schema'],
                                     vision_model_sha256=source_digest(vision_model),
                                     source_sha256={name: source_digest(scripts / name) for name in implementation}))
+    save(output / 'board-provenance.json', boards)
     with ProcessPoolExecutor(max_workers=workers) as pool:
         runs = {arm: pool.submit(run_arm, output, arm, cases, checkpoint, brick_state, max_ticks) for arm in arms}
         traces = {arm: future.result() for arm, future in runs.items()}
@@ -304,6 +346,8 @@ def audit_recorded_requests(output):
     """Replay saved requests through native physics and check the complete public trajectory."""
     torch.set_num_threads(1)
     plan = json.loads((output / 'plan.json').read_text())
+    boards = json.loads((output / 'board-provenance.json').read_text())
+    planned_boards = {row['case']: row for row in boards['evaluations'][plan['course']]}
     traces = {}
     audit = {}
     for arm in plan['arms']:
@@ -323,6 +367,9 @@ def audit_recorded_requests(output):
             public = hashlib.sha256(arena.frame().numpy().tobytes())
             if public.hexdigest() != row['initial_frame_sha256']:
                 raise AssertionError('the native opening frame differs from the matched receipt')
+            if case['game'] == 'breakout' and digest(dict(case=case['case'], **identify_board(arena))) != digest(
+                    planned_boards[case['case']]):
+                raise AssertionError('the native board differs from the reserved held-out board')
             requests = bytes.fromhex(row['legal_requests_hex'])
             if not requests:
                 raise AssertionError('a native life must include a recorded request')
@@ -351,6 +398,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('output', type=Path)
     parser.add_argument('brick_state', type=Path)
+    parser.add_argument('--practice-spec', type=Path, required=True)
     parser.add_argument('--course', choices=COURSE_SEEDS, required=True)
     parser.add_argument('--games-per-block', type=int, default=6)
     parser.add_argument('--max-ticks', type=int, default=MAX_TICKS)
@@ -359,7 +407,7 @@ def main():
     parser.add_argument('--context-recall', action='store_true', help='also test visually retrieved timing priors')
     options = parser.parse_args()
     run(options.output, course=options.course, games_per_block=options.games_per_block,
-        brick_path=options.brick_state, checkpoint=options.checkpoint,
+        brick_path=options.brick_state, practice_spec=options.practice_spec, checkpoint=options.checkpoint,
         max_ticks=options.max_ticks, workers=options.workers, context_recall=options.context_recall)
 
 
