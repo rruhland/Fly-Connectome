@@ -2,7 +2,7 @@
 
 import argparse
 from concurrent.futures import ProcessPoolExecutor
-from dataclasses import asdict
+from dataclasses import asdict, replace
 import hashlib
 import json
 from pathlib import Path
@@ -24,7 +24,7 @@ ARMS = ('shared', 'role_recall', 'isolated')
 GAMES = ('pong', 'breakout')
 NEUTRAL_MAPPING = (0, 1, 2)
 BRICK_MAP_CONFLICT = (2, 1, 0)
-MAX_TICKS = 1800
+MAX_TICKS = 2400
 
 
 def save(path, value):
@@ -100,14 +100,25 @@ class _PongLife:
                     natural_serve_win=bool(last.reward > 0 and not self.counter.returns))
 
 
+def native_arena(case, max_ticks):
+    if case['game'] == 'pong':
+        return _PongLife(**case['parameters'], max_ticks=max_ticks)
+    return BreakoutEpisode(**case['parameters']).camera(
+        max_episode_ticks=max_ticks, mapping=case['mapping'], delay_frames=case['delay'])
+
+
+def hash_public_transition(public, result):
+    public.update(result.frame.numpy().tobytes())
+    public.update(struct.pack('!dd??', result.reward, result.elapsed_seconds,
+                              result.terminated, result.truncated))
+
+
 def play(session, case, max_ticks):
     """Deliver the same camera and reward interface regardless of the arena."""
-    if case['game'] == 'pong':
-        arena = _PongLife(**case['parameters'], max_ticks=max_ticks)
-    else:
-        arena = BreakoutEpisode(**case['parameters']).camera(
-            max_episode_ticks=max_ticks, mapping=case['mapping'], delay_frames=case['delay'])
+    arena = native_arena(case, max_ticks)
     initial_state = session.state()
+    initial_brick_updates = session.brick_policy.updates
+    initial_visual_updates = getattr(session.brick_policy, 'visual_updates', 0)
     life = session.begin_life()
     frame = arena.frame()
     initial_frame_hash = hashlib.sha256(frame.numpy().tobytes()).hexdigest()
@@ -122,11 +133,9 @@ def play(session, case, max_ticks):
     while True:
         action, _ = life.choose()
         result = arena.step(action)
-        life.observe(result)
+        life.observe(replace(result, physics_ticks=0, hits=0))
         requests.append(action)
-        public.update(result.frame.numpy().tobytes())
-        public.update(struct.pack('!dd??II', result.reward, result.elapsed_seconds,
-                                  result.terminated, result.truncated, result.physics_ticks, result.hits))
+        hash_public_transition(public, result)
         public_hits += result.hits
         public_score += result.reward
         if life.detector.ready and ready_camera is None:
@@ -160,7 +169,7 @@ def play(session, case, max_ticks):
             initial_state['core'][key] != final_state['core'][key] for key in ('score', 'shot_memory')):
         raise AssertionError('opponent score memory was updated outside a matching visual scene')
     return dict(case=case, native=board, appearance=asdict(life.evidence),
-                recalled_role=life.recalled_role, ready_camera=ready_camera,
+                recalled_role=life.recalled_role, recalled_timing=life.recalled_timing, ready_camera=ready_camera,
                 correct_role_camera=correct_role_camera,
                 role_binding_seconds=life.detector.binding_seconds,
                 role_probes=life.detector.probe_count, first_motor_camera=first_motor,
@@ -168,18 +177,22 @@ def play(session, case, max_ticks):
                 initial_frame_sha256=initial_frame_hash, public_sha256=public.hexdigest(),
                 legal_requests_hex=requests.hex(), action_sha256=hashlib.sha256(requests).hexdigest(),
                 initial_state_sha256=digest(initial_state), final_state_sha256=digest(final_state),
-                initial_timing=initial_state['core']['timing'], final_timing=final_state['core']['timing'],
+                initial_timing=initial_state['core']['timing'], effective_initial_timing=life.start_timing,
+                final_timing=final_state['core']['timing'],
                 initial_binding=initial_state['core']['binding'], final_binding=final_state['core']['binding'],
+                initial_polarity=initial_state['core']['polarity'], final_polarity=final_state['core']['polarity'],
                 score_updates=sum(final_state['core']['score']['visits']) - sum(initial_state['core']['score']['visits']),
-                initial_brick_updates=initial_state['brick_policy']['updates'],
-                brick_updates=final_state['brick_policy']['updates'] - initial_state['brick_policy']['updates'])
+                initial_brick_updates=initial_brick_updates,
+                brick_updates=session.brick_policy.updates - initial_brick_updates,
+                visual_brick_updates=getattr(session.brick_policy, 'visual_updates', 0) - initial_visual_updates)
 
 
 def run_arm(out, arm, cases, checkpoint, brick_state, max_ticks):
     torch.set_num_threads(1)
     references = GAMES if arm == 'isolated' else ('shared',)
     sessions = {game: AlternatingSession(POLICY_SEED, checkpoint=checkpoint, brick_state=brick_state,
-                                         recall_roles=arm == 'role_recall') for game in references}
+                                         recall_roles=arm == 'role_recall', recall_timing=arm == 'context_recall')
+                for game in references}
     save(out / f'{arm}-initial.json', {key: session.state() for key, session in sessions.items()})
     rows = []
     last = {}
@@ -218,10 +231,12 @@ def summarize(rows):
                   first_five_incoming=len(first_five), first_five_returns=sum(contact['success'] for contact in first_five),
                   first_return_camera=first_return, first_sustained_camera=sustained,
                   role_recall_lives=sum(row['recalled_role'] for row in rows),
+                  timing_recall_lives=sum(row['recalled_timing'] for row in rows),
                   ready_cameras=[row['correct_role_camera'] for row in rows],
                   joint_recovery_cameras=[row['first_joint_camera'] for row in rows],
                   score_updates=sum(row['score_updates'] for row in rows),
-                  brick_updates=sum(row['brick_updates'] for row in rows))
+                  brick_updates=sum(row['brick_updates'] for row in rows),
+                  visual_brick_updates=sum(row['visual_brick_updates'] for row in rows))
     if rows[0]['case']['game'] == 'pong':
         native.update(own_hit_wins=sum(board['own_hit_win'] for board in boards),
                       natural_serve_wins=sum(board['natural_serve_win'] for board in boards))
@@ -237,16 +252,11 @@ def comparison(cases, traces):
         matched = [rows[case['case']] for rows in traces.values()]
         if len({row['initial_frame_sha256'] for row in matched}) != 1:
             raise AssertionError('matched policy arms have different opening camera frames')
-        for row in matched:
-            first = row['native']['first_incoming']
-            if first is None:
-                continue
-            # The first own return cannot causally change the pre-contact ball.
-            others = [other['native']['first_incoming'] for other in matched]
-            for other in others:
-                keys = ('tick', 'pre_ball', 'pre_velocity') if case['game'] == 'pong' else ('tick', 'ball', 'velocity')
-                if other is None or any(first[key] != other[key] for key in keys):
-                    raise AssertionError('first incoming geometry differs across matched arms')
+        keys = ('tick', 'pre_ball', 'pre_velocity') if case['game'] == 'pong' else ('tick', 'ball', 'velocity')
+        first = [row['native']['first_incoming'] for row in matched]
+        geometry = [None if row is None else [row[key] for key in keys] for row in first]
+        if any(row != geometry[0] for row in geometry):
+            raise AssertionError('first incoming geometry differs across matched arms')
     result = {}
     for arm, rows in traces.items():
         blocks = [[row for row in rows if row['case']['block'] == block] for block in range(6)]
@@ -259,25 +269,78 @@ def comparison(cases, traces):
     return result
 
 
-def run(output, *, course, games_per_block, brick_path, checkpoint, max_ticks, workers):
+def run(output, *, course, games_per_block, brick_path, checkpoint, max_ticks, workers, context_recall=False):
     cases = schedule(course, games_per_block)
+    arms = (*ARMS, 'context_recall') if context_recall else ARMS
     checkpoint = checkpoint.resolve()
     brick_path = brick_path.resolve()
     brick_state = json.loads(brick_path.read_text())
     output.mkdir(parents=True, exist_ok=False)
     scripts = Path(__file__).resolve().parent
     implementation = ('arcade_alternation.py', 'arcade_transfer_session.py', 'breakout_arena.py',
-                      'breakout_brick_placement.py', 'pong_role_transfer.py', 'pong_timing_controller.py',
+                      'breakout_brick_placement.py', 'breakout_visual_rebound.py', 'pong_role_transfer.py', 'return_metrics.py',
+                      'pong_carried_shot_value.py', 'pong_timing_controller.py',
+                      'pong_rapid_motor_recovery.py', 'pong_relational_persistent_binding.py',
                       'run_arcade_alternation.py')
-    save(output / 'plan.json', dict(course=course, arms=ARMS, cases=cases, max_ticks=max_ticks,
+    vision_model = scripts.parents[1] / 'src/fly_connectome/vision/data/default.pt'
+    save(output / 'plan.json', dict(course=course, arms=arms, cases=cases, max_ticks=max_ticks,
                                     environment_seed=COURSE_SEEDS[course], policy_seed=POLICY_SEED,
                                     checkpoint_sha256=source_digest(checkpoint),
                                     brick_checkpoint_sha256=source_digest(brick_path),
+                                    brick_checkpoint_schema=brick_state['schema'],
+                                    vision_model_sha256=source_digest(vision_model),
                                     source_sha256={name: source_digest(scripts / name) for name in implementation}))
     with ProcessPoolExecutor(max_workers=workers) as pool:
-        runs = {arm: pool.submit(run_arm, output, arm, cases, checkpoint, brick_state, max_ticks) for arm in ARMS}
+        runs = {arm: pool.submit(run_arm, output, arm, cases, checkpoint, brick_state, max_ticks) for arm in arms}
         traces = {arm: future.result() for arm, future in runs.items()}
     save(output / 'summary.json', comparison(cases, traces))
+
+
+def audit_recorded_requests(output):
+    """Replay saved requests through native physics and check the complete public trajectory."""
+    torch.set_num_threads(1)
+    plan = json.loads((output / 'plan.json').read_text())
+    traces = {}
+    audit = {}
+    for arm in plan['arms']:
+        rows = json.loads((output / f'{arm}-lives.json').read_text())
+        initial = json.loads((output / f'{arm}-initial.json').read_text())
+        final = json.loads((output / f'{arm}-final.json').read_text())
+        last = {key: digest(value) for key, value in initial.items()}
+        boundaries = 0
+        cameras = 0
+        for case, row in zip(plan['cases'], rows, strict=True):
+            key = case['game'] if arm == 'isolated' else 'shared'
+            if case != row['case'] or row['initial_state_sha256'] != last[key]:
+                raise AssertionError('the saved lives break the registered schedule or learned state chain')
+            last[key] = row['final_state_sha256']
+            boundaries += 1
+            arena = native_arena(case, plan['max_ticks'])
+            public = hashlib.sha256(arena.frame().numpy().tobytes())
+            if public.hexdigest() != row['initial_frame_sha256']:
+                raise AssertionError('the native opening frame differs from the matched receipt')
+            requests = bytes.fromhex(row['legal_requests_hex'])
+            if not requests:
+                raise AssertionError('a native life must include a recorded request')
+            for camera, action in enumerate(requests, 1):
+                result = arena.step(action)
+                hash_public_transition(public, result)
+                if (result.terminated or result.truncated) != (camera == len(requests)):
+                    raise AssertionError('native completion differs from the recorded action trace')
+            board = arena.summary(result) if case['game'] == 'pong' else arena.summary()
+            if (board != row['native'] or public.hexdigest() != row['public_sha256']
+                    or hashlib.sha256(requests).hexdigest() != row['action_sha256']):
+                raise AssertionError('public replay or native outcome differs from the receipt')
+            cameras += len(requests)
+        if last != {key: digest(value) for key, value in final.items()}:
+            raise AssertionError('the final saved states differ from the last played lives')
+        audit[arm] = dict(lives=len(rows), transitions=cameras, initial_or_carried_boundaries=boundaries,
+                          exact_public_replay=True)
+        traces[arm] = rows
+    if comparison(plan['cases'], traces) != json.loads((output / 'summary.json').read_text()):
+        raise AssertionError('the summary differs from the paired receipts')
+    save(output / 'native-replay.json', audit)
+    return audit
 
 
 def main():
@@ -288,11 +351,12 @@ def main():
     parser.add_argument('--games-per-block', type=int, default=6)
     parser.add_argument('--max-ticks', type=int, default=MAX_TICKS)
     parser.add_argument('--checkpoint', type=Path, default=CHECKPOINT)
-    parser.add_argument('--workers', type=int, default=3, choices=(1, 2, 3))
+    parser.add_argument('--workers', type=int, default=3, choices=(1, 2, 3, 4))
+    parser.add_argument('--context-recall', action='store_true', help='also test visually retrieved timing priors')
     options = parser.parse_args()
     run(options.output, course=options.course, games_per_block=options.games_per_block,
         brick_path=options.brick_state, checkpoint=options.checkpoint,
-        max_ticks=options.max_ticks, workers=options.workers)
+        max_ticks=options.max_ticks, workers=options.workers, context_recall=options.context_recall)
 
 
 if __name__ == '__main__':
