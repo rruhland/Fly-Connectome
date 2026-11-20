@@ -53,7 +53,7 @@ def select_rate(blocks, anchor):
     return dict(rate=RATES[int(np.argmin(losses))], mse=losses, visible_bounces=len(observed))
 
 
-def batched_life(models, timing, seeds, coefficient, ordinary):
+def batched_life(models, timing, seeds, coefficient, ordinary, *, view=None, bank_side=None):
     # Physics runs the native Pong body and collision equations for every lane.
     # Independent stored learners keep only the wall estimate between points.
     config = replace(Physics(), opponent_speed=.55, wall_restitution=coefficient,
@@ -66,11 +66,15 @@ def batched_life(models, timing, seeds, coefficient, ordinary):
             angle = rng.uniform(.62, .99)
             x = rng.uniform(.72, .89)
             y = rng.uniform(.30, .43)
-            sign = rng.choice((-1., 1.))
+            sign = rng.choice((-1., 1.)) if bank_side is None else bank_side
             env.ball[lane] = torch.tensor([x, y if sign < 0 else 1-y])
             env.ball_velocity[lane] = torch.tensor([-math.cos(angle), sign * math.sin(angle)])
     actors = [PongFlightActor(timing, model) for model in models]
-    for actor, frame in zip(actors, env.render(64, 64), strict=True):
+    def camera_frame():
+        pixels = env.render(64, 64)
+        return pixels if view is None else view(pixels)
+
+    for actor, frame in zip(actors, camera_frame(), strict=True):
         actor.start(frame)
     active = np.ones(n, dtype=bool)
     seen = [len(model.observations) for model in models]
@@ -106,7 +110,7 @@ def batched_life(models, timing, seeds, coefficient, ordinary):
             ticks += 1
         # An earlier substep can have ended this lane. Its terminal image is
         # omitted because it can contain post-goal motion in a batched rollout.
-        frames = env.render(64,64)
+        frames = camera_frame()
         for lane in np.flatnonzero(active & before_frame):
             actors[lane].observe(frames[lane], elapsed[lane])
         frame_index += 1
