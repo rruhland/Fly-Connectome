@@ -1,0 +1,8 @@
+{
+  "schema": "arcade-transfer-qualification-v1",
+  "checkpoint_sha256": "d09f1050ad2e5f04fbe12572d506b55cc30bb765db040720607633076c8ecb0e",
+  "schedules": {
+    "rotated-pong": "cd780b3364bcc8cc2d551a316322094541b3bbe82617bc53d3bf85bdde2219c3",
+    "breakout": "a6db895ceb2bcea20b1cac1b9f74ed0f5344caec105d823e72388c4136ca41bf"
+  }
+}

@@ -18,6 +18,17 @@ CHECKPOINT = Path(__file__).resolve().parents[2] / 'artifacts/m1b/2026-11-19-pon
 ARMS = ('full', 'motor_arrival', 'frozen', 'frozen_orientation', 'fresh', 'fresh_visual', 'passive', 'center')
 
 
+class _FixedMappingTiming(TimedMotorController):
+    """Track current velocity without updating the inherited motor identity."""
+
+    def observe(self, **transition):
+        order = self.belief.confirmed
+        probabilities = self.belief.probabilities.copy()
+        super().observe(**transition)
+        self.belief.confirmed = order
+        self.belief.probabilities = probabilities
+
+
 class _Passive:
     def reset(self, frame):
         pass
@@ -115,8 +126,10 @@ class TransferSession:
             relation = RelationalPolicy(*choices, self.policy['coefficients'], self.policy['scales'])
             policy = PersistentRelationalPolicy(relation, self.policy['require_first_hit'])
             motor = VisualButtonEffects.from_state(self.motor)
-            motor.updates_enabled = not self.frozen
-            timing = TimedMotorController(policy, motor, timing_state=self.timing, timing_updates=not self.frozen)
+            # All arms observe current paddle motion, including a frozen policy.
+            motor.updates_enabled = True
+            timing_type = _FixedMappingTiming if self.frozen else TimedMotorController
+            timing = timing_type(policy, motor, timing_state=self.timing, timing_updates=not self.frozen)
             core = CarriedShotPlacement(timing, self.score.episode(int(self.rng.integers(2**31))),
                                         self.shot_memory)
             fixed = self.arm == 'frozen_orientation'
