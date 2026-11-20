@@ -100,13 +100,22 @@ class _PongLife:
                     natural_serve_win=bool(last.reward > 0 and not self.counter.returns))
 
 
+def native_arena(case, max_ticks):
+    if case['game'] == 'pong':
+        return _PongLife(**case['parameters'], max_ticks=max_ticks)
+    return BreakoutEpisode(**case['parameters']).camera(
+        max_episode_ticks=max_ticks, mapping=case['mapping'], delay_frames=case['delay'])
+
+
+def hash_public_transition(public, result):
+    public.update(result.frame.numpy().tobytes())
+    public.update(struct.pack('!dd??II', result.reward, result.elapsed_seconds,
+                              result.terminated, result.truncated, result.physics_ticks, result.hits))
+
+
 def play(session, case, max_ticks):
     """Deliver the same camera and reward interface regardless of the arena."""
-    if case['game'] == 'pong':
-        arena = _PongLife(**case['parameters'], max_ticks=max_ticks)
-    else:
-        arena = BreakoutEpisode(**case['parameters']).camera(
-            max_episode_ticks=max_ticks, mapping=case['mapping'], delay_frames=case['delay'])
+    arena = native_arena(case, max_ticks)
     initial_state = session.state()
     life = session.begin_life()
     frame = arena.frame()
@@ -124,9 +133,7 @@ def play(session, case, max_ticks):
         result = arena.step(action)
         life.observe(result)
         requests.append(action)
-        public.update(result.frame.numpy().tobytes())
-        public.update(struct.pack('!dd??II', result.reward, result.elapsed_seconds,
-                                  result.terminated, result.truncated, result.physics_ticks, result.hits))
+        hash_public_transition(public, result)
         public_hits += result.hits
         public_score += result.reward
         if life.detector.ready and ready_camera is None:
@@ -278,6 +285,53 @@ def run(output, *, course, games_per_block, brick_path, checkpoint, max_ticks, w
         runs = {arm: pool.submit(run_arm, output, arm, cases, checkpoint, brick_state, max_ticks) for arm in ARMS}
         traces = {arm: future.result() for arm, future in runs.items()}
     save(output / 'summary.json', comparison(cases, traces))
+
+
+def audit_recorded_requests(output):
+    """Replay saved requests through native physics and check the complete public trajectory."""
+    torch.set_num_threads(1)
+    plan = json.loads((output / 'plan.json').read_text())
+    traces = {}
+    audit = {}
+    for arm in plan['arms']:
+        rows = json.loads((output / f'{arm}-lives.json').read_text())
+        initial = json.loads((output / f'{arm}-initial.json').read_text())
+        final = json.loads((output / f'{arm}-final.json').read_text())
+        last = {key: digest(value) for key, value in initial.items()}
+        boundaries = 0
+        cameras = 0
+        for case, row in zip(plan['cases'], rows, strict=True):
+            key = case['game'] if arm == 'isolated' else 'shared'
+            if case != row['case'] or row['initial_state_sha256'] != last[key]:
+                raise AssertionError('the saved lives break the registered schedule or learned state chain')
+            last[key] = row['final_state_sha256']
+            boundaries += 1
+            arena = native_arena(case, plan['max_ticks'])
+            public = hashlib.sha256(arena.frame().numpy().tobytes())
+            if public.hexdigest() != row['initial_frame_sha256']:
+                raise AssertionError('the native opening frame differs from the matched receipt')
+            requests = bytes.fromhex(row['legal_requests_hex'])
+            if not requests:
+                raise AssertionError('a native life must include a recorded request')
+            for camera, action in enumerate(requests, 1):
+                result = arena.step(action)
+                hash_public_transition(public, result)
+                if (result.terminated or result.truncated) != (camera == len(requests)):
+                    raise AssertionError('native completion differs from the recorded action trace')
+            board = arena.summary(result) if case['game'] == 'pong' else arena.summary()
+            if (board != row['native'] or public.hexdigest() != row['public_sha256']
+                    or hashlib.sha256(requests).hexdigest() != row['action_sha256']):
+                raise AssertionError('public replay or native outcome differs from the receipt')
+            cameras += len(requests)
+        if last != {key: digest(value) for key, value in final.items()}:
+            raise AssertionError('the final saved states differ from the last played lives')
+        audit[arm] = dict(lives=len(rows), transitions=cameras, initial_or_carried_boundaries=boundaries,
+                          exact_public_replay=True)
+        traces[arm] = rows
+    if comparison(plan['cases'], traces) != json.loads((output / 'summary.json').read_text()):
+        raise AssertionError('the summary differs from the paired receipts')
+    save(output / 'native-replay.json', audit)
+    return audit
 
 
 def main():
