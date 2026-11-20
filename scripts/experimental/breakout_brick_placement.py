@@ -201,7 +201,7 @@ class BrickPlacement:
         """Accumulate public brick reward. Close a flight at the next approach."""
         if not math.isfinite(score) or score < 0.:
             raise ValueError('nonnegative public brick score required')
-        if self.shot is not None:
+        if self.shot is not None and self.timing.seconds >= self.shot.predicted_contact_seconds - .12:
             self.shot.score += score
         if terminated or truncated:
             self._finish(scored_only=True)

@@ -55,6 +55,8 @@ def test_credit_is_once_per_flight_and_excludes_unfinished_terminal_zero():
     timing.contact_offset(approach)
     assert placement.shot is not None
     placement.observe_score(1.)
+    timing.seconds = .85
+    placement.observe_score(1.)
     placement.observe_score(1.)
     timing.seconds = 1.5
     timing.contact_offset(approach)
