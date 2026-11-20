@@ -27,7 +27,8 @@ COHORT_SEEDS = {
 }
 PHASE_LAGS = {'practice': 0, 'heldout': 0, 'heldout_delay': 12}
 PRACTICE_ARMS = ('brick_live', 'brick_prior', 'center', 'pong')
-TEST_ARMS = ('brick_trained', 'brick_prior', 'center', 'pong')
+TEST_COMPARATORS = ('brick_prior', 'center', 'center_forecast', 'pong')
+TEST_ARMS = ('brick_trained', *TEST_COMPARATORS)
 
 
 def save(path, result):
@@ -59,7 +60,7 @@ def summarize(lives):
     returns = sum(row['own_returns'] for row in lives)
     opportunities = sum(row['own_opportunities'] for row in lives)
     setup = [row['controller_started_seconds'] for row in lives
-             if row['controller_started_seconds'] is not None]
+             if row.get('controller_started_seconds') is not None]
     first_scores = [min(event['time_seconds'] for event in row['brick_events'] if event['after_return'])
                     for row in lives if row['post_own_bricks']]
     return dict(lives=len(lives), bricks=score, bricks_after_own_return=own_score,
@@ -92,7 +93,7 @@ def play_life(case, layout, checkpoint, timing, detector, arm, policy, seed, *, 
     brick = None
     if arm == 'center':
         controller.timing.contact_offset = 0.
-    elif policy is not None:
+    elif policy is not None or arm == 'center_forecast':
         brick = BrickPlacement(controller.timing, policy, seed)
     bridge = RoleController(controller, detector)
     frame = camera.frame()
@@ -112,9 +113,9 @@ def play_life(case, layout, checkpoint, timing, detector, arm, policy, seed, *, 
         requests.append(action)
         elapsed += result.elapsed_seconds
         score += result.reward
+        bridge.observe(result)
         if brick is not None:
             brick.observe_score(result.reward, terminated=result.terminated, truncated=result.truncated)
-        bridge.observe(result)
         frame = result.frame
         if result.terminated or result.truncated:
             row = camera.summary()
@@ -173,7 +174,7 @@ def matched_differences(root, phase):
         return np.array([row[metric] for row in rows], dtype=float)
 
     differences = {}
-    for arm in ('brick_prior', 'center', 'pong'):
+    for arm in TEST_COMPARATORS:
         base = json.loads((root / f'{phase}-{arm}.json').read_text())
         if [row['case'] for row in trained] != [row['case'] for row in base]:
             raise ValueError('held-out comparisons require matched environment cases')
