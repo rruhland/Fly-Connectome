@@ -154,9 +154,13 @@ def verify_boards(practice_spec, games_per_block, *, cohort='initial'):
                     for key, entries in seen.items():
                         entries.add(board[key])
     evaluations = {}
+    resumes = {}
     for course in COURSE_SEEDS:
         evaluations[course] = []
-        for case in schedule(course, games_per_block, cohort=cohort):
+        resumes[course] = []
+        main = [(case, evaluations[course]) for case in schedule(course, games_per_block, cohort=cohort)]
+        extra = [(case, resumes[course]) for case in continuation_schedule(course, games_per_block)] if cohort == 'confirmation' else []
+        for case, group in (*main, *extra):
             if case['game'] != 'breakout':
                 continue
             board = identify_board(native_arena(case, MAX_TICKS))
@@ -164,9 +168,10 @@ def verify_boards(practice_spec, games_per_block, *, cohort='initial'):
                 raise ValueError('a qualification board or opening frame repeats a known board')
             for key, entries in seen.items():
                 entries.add(board[key])
-            evaluations[course].append(dict(case=case['case'], **board))
+            group.append(dict(case=case['case'], **board))
     return dict(practice_spec_sha256=source_digest(practice_spec), practice=practice,
-                distinct_from_initial_cohort=cohort == 'confirmation', evaluations=evaluations)
+                distinct_from_initial_cohort=cohort == 'confirmation', evaluations=evaluations,
+                continuation=resumes)
 
 
 def play(session, case, max_ticks):
@@ -237,6 +242,7 @@ def play(session, case, max_ticks):
                 final_timing=final_state['core']['timing'],
                 initial_binding=initial_state['core']['binding'], final_binding=final_state['core']['binding'],
                 initial_polarity=initial_state['core']['polarity'], final_polarity=final_state['core']['polarity'],
+                pursuit_credit=final_state['core'].get('pursuit_credit'),
                 score_updates=sum(final_state['core']['score']['visits']) - sum(initial_state['core']['score']['visits']),
                 initial_brick_updates=initial_brick_updates,
                 brick_updates=session.brick_policy.updates - initial_brick_updates,
@@ -266,7 +272,8 @@ def run_arm(out, arm, cases, checkpoint, brick_state, max_ticks, *, cohort, cont
     save(out / f'{arm}-final.json', {key: session.state() for key, session in sessions.items()})
     if arm == 'guarded':
         live = sessions['shared']
-        restored = AlternatingSession.from_state(live.state())
+        persisted = json.loads((out / f'{arm}-final.json').read_text())['shared']
+        restored = AlternatingSession.from_state(persisted)
         if restored.state() != live.state():
             raise AssertionError('reloading changed the continued learning state')
         resume_rows = []
@@ -380,7 +387,7 @@ def run(output, *, course, games_per_block, brick_path, practice_spec, checkpoin
     scripts = Path(__file__).resolve().parent
     implementation = ('arcade_alternation.py', 'arcade_transfer_session.py', 'breakout_arena.py',
                       'breakout_brick_placement.py', 'breakout_visual_rebound.py', 'pong_role_transfer.py', 'return_metrics.py',
-                      'pong_carried_shot_value.py', 'pong_timing_controller.py',
+                      'arcade_pursuit_credit.py', 'pong_carried_shot_value.py', 'pong_timing_controller.py',
                       'pong_rapid_motor_recovery.py', 'pong_relational_persistent_binding.py',
                       'run_arcade_alternation.py')
     vision_model = scripts.parents[1] / 'src/fly_connectome/vision/data/default.pt'
