@@ -66,3 +66,17 @@ def test_credit_is_once_per_flight_and_excludes_unfinished_terminal_zero():
     assert len(placement.shots) == 2
     assert placement.shots[0]['credited'] and not placement.shots[1]['credited']
     assert policy.updates == 1
+
+
+def test_center_forecast_requires_reachable_center_and_uses_the_same_braking_hook():
+    timing = SimpleNamespace(seconds=0., delay_commands=0, camera_seconds=.02)
+    placement = BrickPlacement(timing, None, 32)
+    placement.camera(camera(), -.45)
+    unreachable = ArrivalContext(.39, .40, .20, -.40, .40, .19)
+    assert timing.contact_offset(unreachable) == 0.
+    assert placement.shot is None
+    eligible = ArrivalContext(.08, .55, .04, -.40, .40, .04)
+    assert 0. < timing.contact_offset(eligible) < 1e-8
+    assert placement.shot.offset == 0.
+    placement.observe_score(0., truncated=True)
+    assert placement.shots[0]['predicted_value'] is None
