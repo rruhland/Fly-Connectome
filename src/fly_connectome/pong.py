@@ -18,6 +18,11 @@ class Physics:
     max_velocity: float = .7
     opponent_acceleration: float = 2.
     opponent_speed: float = .45
+    wall_restitution: float = 1.
+
+    def __post_init__(self):
+        if not math.isfinite(self.wall_restitution) or not 0. < self.wall_restitution <= 1.:
+            raise ValueError('wall restitution must be in (0, 1]')
 
 
 class Body:
@@ -100,7 +105,13 @@ class Pong:
         high = self.ball[:, 1] > 1 - p.ball_radius
         self.ball[low, 1] = 2 * p.ball_radius - self.ball[low, 1]
         self.ball[high, 1] = 2 * (1 - p.ball_radius) - self.ball[high, 1]
-        self.ball_velocity[:, 1] = torch.where(low | high, -self.ball_velocity[:, 1], self.ball_velocity[:, 1])
+        restitution = p.wall_restitution
+        if restitution != 1.:
+            self.ball[low, 1] = p.ball_radius + restitution * (self.ball[low, 1] - p.ball_radius)
+            top = 1 - p.ball_radius
+            self.ball[high, 1] = top + restitution * (self.ball[high, 1] - top)
+        self.ball_velocity[:, 1] = torch.where(low | high, -restitution * self.ball_velocity[:, 1],
+                                                self.ball_velocity[:, 1])
         left_plane, right_plane = p.paddle_x + p.ball_radius, 1 - p.paddle_x - p.ball_radius
         left = ((old_x >= left_plane) & (self.ball[:, 0] <= left_plane)
                 & (self.ball_velocity[:, 0] < 0)
