@@ -1,6 +1,10 @@
 # M1B research handoff
 
 
+## Air hockey, changed Pong and an RGB camera on November 20
+
+Four hundred air-hockey practice points improved final-touch goals from 166 to 228 on 288 held-out starts. A further 360 points against equally mobile rivals took held-out goals–concessions from 14–22 to 40–9, with 143/192 timeouts. Pong-derived wall estimates improved hockey trajectory forecasts. Varied hockey practice also taught a faster adjustment rate that helped actual native Pong when a camera cover hid an incoming rebound. Two independent changed-wall tests saved 225/256 and 222/256 first balls versus 21/256 and 10/256 after ordinary Pong practice. Diverse Pong walls also helped. Clear-camera game outcomes largely tied. On the arm, online RGB recalibration reached 191/192 physical goals after camera and actuator changes, compared with 34/192 under a stale calibration. The next major question for the arm is a realistic calibrated joint-target interface with depth and occlusion. [Full report and replays](2026-11-20-air-hockey-and-camera.md) · [Playable recordings, learned states and evidence](../../artifacts/air-hockey-camera/README.md)
+
 ## Cross-body learning on November 20
 
 The latest milestone moved beyond paddle games. In simulation, five coefficients learned from scalar reward on an XY carriage let a fresh three-joint arm hold the paying marker first on 57/64 trials versus 27/64 from scratch. A separate 64-stream course reached 53/64 after eight carriage practice reaches. A source motor map helped a related arm with new actuator dynamics. Copying it across the carriage-to-arm body change and importing a source-selected exploration schedule showed no clear benefit.
