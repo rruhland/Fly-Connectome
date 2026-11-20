@@ -5,6 +5,7 @@ from concurrent.futures import ProcessPoolExecutor
 from dataclasses import asdict, replace
 import hashlib
 import json
+from multiprocessing import get_context
 from pathlib import Path
 import struct
 
@@ -336,7 +337,7 @@ def run(output, *, course, games_per_block, brick_path, practice_spec, checkpoin
                                     vision_model_sha256=source_digest(vision_model),
                                     source_sha256={name: source_digest(scripts / name) for name in implementation}))
     save(output / 'board-provenance.json', boards)
-    with ProcessPoolExecutor(max_workers=workers) as pool:
+    with ProcessPoolExecutor(max_workers=workers, mp_context=get_context('spawn')) as pool:
         runs = {arm: pool.submit(run_arm, output, arm, cases, checkpoint, brick_state, max_ticks) for arm in arms}
         traces = {arm: future.result() for arm, future in runs.items()}
     save(output / 'summary.json', comparison(cases, traces))
