@@ -57,7 +57,7 @@ def schedule(course, games_per_block):
                 while True:
                     seed = int(rng.integers(1, 2147483647))
                     direction = ((seed * 48271 + 1) % 2147483647) % 2
-                    if seed not in used and direction == index % 2:
+                    if seed not in used and direction == (index + 1) % 2:
                         used.add(seed)
                         break
                 parameters = dict(seed=seed, opponent_speed=.35)
@@ -225,11 +225,15 @@ def summarize(rows):
                 sustained = cameras + contact['camera']
         cameras += board['cameras']
     elapsed = sum(board['elapsed'] for board in boards)
+    game = rows[0]['case']['game']
+    expected_appearance = 'opposing_rails' if game == 'pong' else 'target_array'
     native = dict(lives=len(rows), cameras=cameras, elapsed=elapsed,
+                  timeouts=sum(board['truncated'] for board in boards),
                   incoming=len(contacts), returns=sum(contact['success'] for contact in contacts),
                   opening_incoming=len(first), opening_returns=sum(contact['success'] for contact in first),
                   first_five_incoming=len(first_five), first_five_returns=sum(contact['success'] for contact in first_five),
                   first_return_camera=first_return, first_sustained_camera=sustained,
+                  matching_appearance_lives=sum(row['appearance']['appearance'] == expected_appearance for row in rows),
                   role_recall_lives=sum(row['recalled_role'] for row in rows),
                   timing_recall_lives=sum(row['recalled_timing'] for row in rows),
                   ready_cameras=[row['correct_role_camera'] for row in rows],
@@ -237,13 +241,13 @@ def summarize(rows):
                   score_updates=sum(row['score_updates'] for row in rows),
                   brick_updates=sum(row['brick_updates'] for row in rows),
                   visual_brick_updates=sum(row['visual_brick_updates'] for row in rows))
-    if rows[0]['case']['game'] == 'pong':
+    if game == 'pong':
         native.update(own_hit_wins=sum(board['own_hit_win'] for board in boards),
                       natural_serve_wins=sum(board['natural_serve_win'] for board in boards))
     else:
         bricks = sum(board['post_own_bricks'] for board in boards)
         native.update(bricks=bricks, bricks_per_life=bricks / len(boards),
-                      bricks_per_second=bricks / elapsed, boards_cleared=sum(board['cleared'] for board in boards))
+                      bricks_per_minute=60 * bricks / elapsed, boards_cleared=sum(board['cleared'] for board in boards))
     return native
 
 
