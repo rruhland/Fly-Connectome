@@ -5,6 +5,7 @@ from concurrent.futures import ProcessPoolExecutor
 from dataclasses import asdict, replace
 import hashlib
 import json
+from multiprocessing import get_context
 from pathlib import Path
 import struct
 
@@ -19,6 +20,8 @@ from return_metrics import ReturnCounter
 
 
 COURSE_SEEDS = {'ordinary': 265049027, 'conflicting': 1327633107}
+CONFIRMATION_SEEDS = {'ordinary': 1958120401, 'conflicting': 706290303}
+COHORTS = {'initial': COURSE_SEEDS, 'confirmation': CONFIRMATION_SEEDS}
 POLICY_SEED = 85217841
 ARMS = ('shared', 'role_recall', 'isolated')
 GAMES = ('pong', 'breakout')
@@ -41,10 +44,10 @@ def source_digest(path):
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
-def schedule(course, games_per_block):
+def schedule(course, games_per_block, *, cohort='initial'):
     if games_per_block < 2 or games_per_block % 2:
         raise ValueError('an even number of games supports balanced starts in each block')
-    pong_rng, breakout_rng = np.random.SeedSequence(COURSE_SEEDS[course]).spawn(2)
+    pong_rng, breakout_rng = np.random.SeedSequence(COHORTS[cohort][course]).spawn(2)
     rng = np.random.default_rng(pong_rng)
     breakout = iter(breakout_schedule(int(breakout_rng.generate_state(1)[0]), games_per_block * 3))
     used = set()
@@ -132,15 +135,22 @@ def practice_boards(spec):
         for episode, layout in zip(episodes, layouts, strict=True)]
 
 
-def verify_boards(practice_spec, games_per_block):
+def verify_boards(practice_spec, games_per_block, *, cohort='initial'):
     practice = practice_boards(json.loads(practice_spec.read_text()))
     if not practice:
         raise ValueError('the trained brick state needs its practice schedule')
     seen = {key: {row[key] for row in practice} for key in ('layout', 'initial_frame_sha256')}
+    if cohort == 'confirmation':
+        for course in COURSE_SEEDS:
+            for case in schedule(course, games_per_block):
+                if case['game'] == 'breakout':
+                    board = identify_board(native_arena(case, MAX_TICKS))
+                    for key, entries in seen.items():
+                        entries.add(board[key])
     evaluations = {}
     for course in COURSE_SEEDS:
         evaluations[course] = []
-        for case in schedule(course, games_per_block):
+        for case in schedule(course, games_per_block, cohort=cohort):
             if case['game'] != 'breakout':
                 continue
             board = identify_board(native_arena(case, MAX_TICKS))
@@ -149,7 +159,8 @@ def verify_boards(practice_spec, games_per_block):
             for key, entries in seen.items():
                 entries.add(board[key])
             evaluations[course].append(dict(case=case['case'], **board))
-    return dict(practice_spec_sha256=source_digest(practice_spec), practice=practice, evaluations=evaluations)
+    return dict(practice_spec_sha256=source_digest(practice_spec), practice=practice,
+                distinct_from_initial_cohort=cohort == 'confirmation', evaluations=evaluations)
 
 
 def play(session, case, max_ticks):
@@ -313,13 +324,13 @@ def comparison(cases, traces):
 
 
 def run(output, *, course, games_per_block, brick_path, practice_spec, checkpoint, max_ticks, workers,
-        context_recall=False):
-    cases = schedule(course, games_per_block)
+        context_recall=False, cohort='initial'):
+    cases = schedule(course, games_per_block, cohort=cohort)
     arms = (*ARMS, 'context_recall') if context_recall else ARMS
     checkpoint = checkpoint.resolve()
     brick_path = brick_path.resolve()
     brick_state = json.loads(brick_path.read_text())
-    boards = verify_boards(practice_spec, games_per_block)
+    boards = verify_boards(practice_spec, games_per_block, cohort=cohort)
     output.mkdir(parents=True, exist_ok=False)
     scripts = Path(__file__).resolve().parent
     implementation = ('arcade_alternation.py', 'arcade_transfer_session.py', 'breakout_arena.py',
@@ -328,15 +339,15 @@ def run(output, *, course, games_per_block, brick_path, practice_spec, checkpoin
                       'pong_rapid_motor_recovery.py', 'pong_relational_persistent_binding.py',
                       'run_arcade_alternation.py')
     vision_model = scripts.parents[1] / 'src/fly_connectome/vision/data/default.pt'
-    save(output / 'plan.json', dict(course=course, arms=arms, cases=cases, max_ticks=max_ticks,
-                                    environment_seed=COURSE_SEEDS[course], policy_seed=POLICY_SEED,
+    save(output / 'plan.json', dict(course=course, cohort=cohort, arms=arms, cases=cases, max_ticks=max_ticks,
+                                    environment_seed=COHORTS[cohort][course], policy_seed=POLICY_SEED,
                                     checkpoint_sha256=source_digest(checkpoint),
                                     brick_checkpoint_sha256=source_digest(brick_path),
                                     brick_checkpoint_schema=brick_state['schema'],
                                     vision_model_sha256=source_digest(vision_model),
                                     source_sha256={name: source_digest(scripts / name) for name in implementation}))
     save(output / 'board-provenance.json', boards)
-    with ProcessPoolExecutor(max_workers=workers) as pool:
+    with ProcessPoolExecutor(max_workers=workers, mp_context=get_context('spawn')) as pool:
         runs = {arm: pool.submit(run_arm, output, arm, cases, checkpoint, brick_state, max_ticks) for arm in arms}
         traces = {arm: future.result() for arm, future in runs.items()}
     save(output / 'summary.json', comparison(cases, traces))
@@ -400,6 +411,7 @@ def main():
     parser.add_argument('brick_state', type=Path)
     parser.add_argument('--practice-spec', type=Path, required=True)
     parser.add_argument('--course', choices=COURSE_SEEDS, required=True)
+    parser.add_argument('--cohort', choices=COHORTS, default='initial')
     parser.add_argument('--games-per-block', type=int, default=6)
     parser.add_argument('--max-ticks', type=int, default=MAX_TICKS)
     parser.add_argument('--checkpoint', type=Path, default=CHECKPOINT)
@@ -408,7 +420,8 @@ def main():
     options = parser.parse_args()
     run(options.output, course=options.course, games_per_block=options.games_per_block,
         brick_path=options.brick_state, practice_spec=options.practice_spec, checkpoint=options.checkpoint,
-        max_ticks=options.max_ticks, workers=options.workers, context_recall=options.context_recall)
+        max_ticks=options.max_ticks, workers=options.workers, context_recall=options.context_recall,
+        cohort=options.cohort)
 
 
 if __name__ == '__main__':
