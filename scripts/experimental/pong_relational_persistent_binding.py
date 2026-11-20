@@ -104,6 +104,13 @@ class PersistentRelationalController:
         self.pending_action = None
         self.ordinal = 0
         self.bound_ids = None
+        self.use_supplied_binding = False
+        self.supplied_binding = None
+
+    def bind_public_pair(self, pair):
+        """Use an externally resolved pair of IDs from this same public camera."""
+        self.use_supplied_binding = True
+        self.supplied_binding = pair
 
     def _feedback(self, entities):
         original = self.policy.original
@@ -118,7 +125,10 @@ class PersistentRelationalController:
         observed = np.flatnonzero(rows[:, 4] == 1)
         count = len(observed)
         mode = 'persistent_visual_carry'
-        if count == original.n:
+        if self.use_supplied_binding:
+            self.bound_ids = self.supplied_binding
+            mode = 'supplied_public_binding'
+        elif count == original.n:
             ordered = observed[np.lexsort(rows[observed][:, [5, 4, 3, 2, 0, 1]].T)]
             self.bound_ids = (metadata[ordered[original.i]]['id'],
                               metadata[ordered[original.j]]['id'])
