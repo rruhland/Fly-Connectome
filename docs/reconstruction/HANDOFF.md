@@ -1,6 +1,12 @@
 # M1B research handoff
 
 
+## Cross-body learning on November 20
+
+The latest milestone moved beyond paddle games. In simulation, five coefficients learned from scalar reward on an XY carriage let a fresh three-joint arm hold the paying marker first on 57/64 trials versus 27/64 from scratch. A separate 64-stream course reached 53/64 after eight carriage practice reaches. A source motor map helped a related arm with new actuator dynamics. Copying it across the carriage-to-arm body change and importing a source-selected exploration schedule showed no clear benefit.
+
+A follow-up detector that discards strongly contradicted reward estimates improved recovery from a full inversion, with no false resets on the stable courses. Its advantage on independent replacement rules was inconclusive. The current controller uses segmented marker images, learns within a supplied degree-two visual feature family and starts the receiving arm with fresh motors. The next hardware-facing target is a simulated SO-101-style position interface with delayed and degraded observations and hidden actuator changes, before considering real-arm operation. [Research report and replays](2026-11-20-cross-body-transfer.md) · [Trained states and experiment records](../../artifacts/body-transfer/README.md)
+
 ## Pong to Breakout and back on November 20
 
 The carried Pong interception skill returned 153/153 incoming balls on an independent ordinary Breakout follow-up when offensive aiming was reserved for a visible opponent. After 12 Breakout practice lives, a visual-rebound learner cleared 12/12 new full boards versus 6/12 for the same model before practice. A single continuously updating controller then passed two 36-life alternating-game courses, including opposite button meanings and an extra six-command delay in Breakout. On re-entry to that conflicting course it saved 21/21 Pong and 82/82 Breakout balls, with nine own-return Pong wins and 80 bricks.

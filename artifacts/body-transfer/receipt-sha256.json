@@ -1,0 +1,22 @@
+{
+  "archive_sha256": "c49426c71b7aee9b362e12fb0193028fc7069e2465c77027e8dc111e0d74aae4",
+  "members_sha256": {
+    "body-strategy-held-event-final.json": "2e00e2e9e49dc4afb3d5824188a4725093b0b7b2b1b32eb8ca705bddd78ea75c",
+    "body-strategy-scalar-final.json": "0755c598f7b160be628beeb85b72dbf3e151f46c274a24e56794983bfedcfddd",
+    "motor-alignment-holdout.json": "cc4c7a4fd3b24a75dffbd6c8b6e3cfd6abeb8d342bfd0c83cec55673fc66db69",
+    "motor-alignment-replication.json": "f5d6648a8064291b7baf102f1f320c56f2e2e63855e43ff5596da5301776befd",
+    "motor-alignment-summary.json": "2bf87a06285f2b6222fab8276a6e56428c1da2f261355a06a1e903d1cb709d14",
+    "motor-holdout.json": "434adc66ae861b7df1c9f9b5e703a19d0c9a9c0cf870b33f5c2739b88f80cf03",
+    "position-holdout.json": "9f9589466b14fff4c02fa66e68bd8e63d955bf1adfa5de47347f490c30245887",
+    "practice-curve.json": "86d80ce89c415cd3559c60ec1f458867d532158cdc79c2a8565c2d1b06b819ad",
+    "probe-strategy/frozen.json": "4749c6118194061e5aed61c68be6e478a49433cfe848b28ea1935f0c5ff77bf8",
+    "probe-strategy/source.json": "48dfc2262d51d9fb630ca5d1760b585e05fdde2f69729267776fa9b05a380d50",
+    "probe-strategy/target.json": "da2caa4a36013fcc937781047d4c100bdb35690493bc3bcf06e06df5930b00a4",
+    "visual-utility/frozen.json": "d977df33cfc104f2d9f3a6642995d116353f6dfa412fe2d87552a0972f9a5766",
+    "visual-utility/source.json": "bf753a26ae92e2a054e36b6d228abf78e45b7b2a2d608341525e261400cea73e",
+    "visual-utility/target.json": "a375b5bf0abb1081cb0247887b68e634b4bc82f43e89fadd991be9c826da04d8",
+    "utility-surprise/frozen.json": "657b459fd4534323e441f3033027d90bffcee403ec998ad465b9502dd1c6b9e4",
+    "utility-surprise/source.json": "f98c7368354d615a876da13635e8ef6a6ab91ab22b8389ecc785092bb260543f",
+    "utility-surprise/target.json": "0d16c841e58d5ef17728865653e944c6beafc054ab62633aff35d84286c00e19"
+  }
+}
