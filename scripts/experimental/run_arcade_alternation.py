@@ -24,7 +24,7 @@ ARMS = ('shared', 'role_recall', 'isolated')
 GAMES = ('pong', 'breakout')
 NEUTRAL_MAPPING = (0, 1, 2)
 BRICK_MAP_CONFLICT = (2, 1, 0)
-MAX_TICKS = 1800
+MAX_TICKS = 2400
 
 
 def save(path, value):
@@ -170,6 +170,7 @@ def play(session, case, max_ticks):
                 initial_state_sha256=digest(initial_state), final_state_sha256=digest(final_state),
                 initial_timing=initial_state['core']['timing'], final_timing=final_state['core']['timing'],
                 initial_binding=initial_state['core']['binding'], final_binding=final_state['core']['binding'],
+                initial_polarity=initial_state['core']['polarity'], final_polarity=final_state['core']['polarity'],
                 score_updates=sum(final_state['core']['score']['visits']) - sum(initial_state['core']['score']['visits']),
                 initial_brick_updates=initial_state['brick_policy']['updates'],
                 brick_updates=final_state['brick_policy']['updates'] - initial_state['brick_policy']['updates'])
@@ -237,16 +238,11 @@ def comparison(cases, traces):
         matched = [rows[case['case']] for rows in traces.values()]
         if len({row['initial_frame_sha256'] for row in matched}) != 1:
             raise AssertionError('matched policy arms have different opening camera frames')
-        for row in matched:
-            first = row['native']['first_incoming']
-            if first is None:
-                continue
-            # The first own return cannot causally change the pre-contact ball.
-            others = [other['native']['first_incoming'] for other in matched]
-            for other in others:
-                keys = ('tick', 'pre_ball', 'pre_velocity') if case['game'] == 'pong' else ('tick', 'ball', 'velocity')
-                if other is None or any(first[key] != other[key] for key in keys):
-                    raise AssertionError('first incoming geometry differs across matched arms')
+        keys = ('tick', 'pre_ball', 'pre_velocity') if case['game'] == 'pong' else ('tick', 'ball', 'velocity')
+        first = [row['native']['first_incoming'] for row in matched]
+        geometry = [None if row is None else [row[key] for key in keys] for row in first]
+        if any(row != geometry[0] for row in geometry):
+            raise AssertionError('first incoming geometry differs across matched arms')
     result = {}
     for arm, rows in traces.items():
         blocks = [[row for row in rows if row['case']['block'] == block] for block in range(6)]
@@ -267,12 +263,16 @@ def run(output, *, course, games_per_block, brick_path, checkpoint, max_ticks, w
     output.mkdir(parents=True, exist_ok=False)
     scripts = Path(__file__).resolve().parent
     implementation = ('arcade_alternation.py', 'arcade_transfer_session.py', 'breakout_arena.py',
-                      'breakout_brick_placement.py', 'pong_role_transfer.py', 'pong_timing_controller.py',
+                      'breakout_brick_placement.py', 'pong_role_transfer.py', 'return_metrics.py',
+                      'pong_carried_shot_value.py', 'pong_timing_controller.py',
+                      'pong_rapid_motor_recovery.py', 'pong_relational_persistent_binding.py',
                       'run_arcade_alternation.py')
+    vision_model = scripts.parents[1] / 'src/fly_connectome/vision/data/default.pt'
     save(output / 'plan.json', dict(course=course, arms=ARMS, cases=cases, max_ticks=max_ticks,
                                     environment_seed=COURSE_SEEDS[course], policy_seed=POLICY_SEED,
                                     checkpoint_sha256=source_digest(checkpoint),
                                     brick_checkpoint_sha256=source_digest(brick_path),
+                                    vision_model_sha256=source_digest(vision_model),
                                     source_sha256={name: source_digest(scripts / name) for name in implementation}))
     with ProcessPoolExecutor(max_workers=workers) as pool:
         runs = {arm: pool.submit(run_arm, output, arm, cases, checkpoint, brick_state, max_ticks) for arm in ARMS}
