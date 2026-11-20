@@ -6,6 +6,7 @@ from pathlib import Path
 
 import numpy as np
 
+from arcade_pursuit_credit import PursuitEvidence
 from pong_carried_shot_value import CarriedShotPlacement, ShotMemory
 from pong_rapid_motor_recovery import ORDERS
 from pong_relational_feedback import RelationalPolicy
@@ -41,22 +42,29 @@ class _Passive:
 
 
 class _Life:
-    def __init__(self, bridge):
+    def __init__(self, bridge, *, causal_pursuit=False):
         self.bridge = bridge
         self.seconds = 0.
         self.earned = 0.
         self.ended = False
+        self.terminated = False
+        self.pursuit = PursuitEvidence() if causal_pursuit else None
 
     def reset(self, frame):
         self.bridge.reset(frame)
 
     def choose(self, baseline_action=1):
-        return self.bridge.choose(baseline_action)
+        action, decision = self.bridge.choose(baseline_action)
+        if self.pursuit is not None:
+            self.pursuit.record(self.seconds, self.detector, self.controller.timing,
+                                action, decision.get('intended'))
+        return action, decision
 
     def observe(self, transition):
         self.seconds += transition.elapsed_seconds
         self.earned += max(0., transition.reward)
         self.ended = transition.terminated or transition.truncated
+        self.terminated = transition.terminated
         self.bridge.observe(transition)
 
     @property
@@ -71,7 +79,7 @@ class _Life:
 class TransferSession:
     """Warm and reset views of a public visual relation, motor map and shot learner."""
 
-    def __init__(self, arm, policy_seed, checkpoint=None):
+    def __init__(self, arm, policy_seed, checkpoint=None, *, causal_pursuit=False):
         if arm not in ARMS:
             raise ValueError(f'unknown transfer arm {arm!r}')
         self.arm = arm
@@ -86,6 +94,9 @@ class TransferSession:
             return
 
         self.frozen = arm in ('frozen', 'frozen_orientation')
+        self.causal_pursuit = bool(causal_pursuit) and not self.frozen
+        self.pursuit_failures = 0
+        self.pursuit_receipt = None
         self.relation_evidence = [[], []]
         self.binding = None
         if arm == 'fresh':
@@ -135,8 +146,23 @@ class TransferSession:
             fixed = self.arm == 'frozen_orientation'
             binding = RoleBinding(0, 1, 1, -.45) if fixed else self.binding
             adapter = RoleAdapter(mode='frozen' if fixed else 'online', binding=binding)
-            self.life = _Life(RoleController(core, adapter))
+            self.life = _Life(RoleController(core, adapter), causal_pursuit=self.causal_pursuit)
         return self.life
+
+    def _credit_pursuit(self):
+        life = self.life
+        witness = life.pursuit.terminal_witness(life.seconds) if life.terminated else None
+        revised = False
+        if life.earned > 0 or witness is not None and witness['direction'] == 'toward':
+            self.pursuit_failures = 0
+        elif witness is not None:
+            self.pursuit_failures += 1
+            # A source-trained relation carries one prior unit of support.
+            if self.pursuit_failures >= (1 if self.arm == 'fresh' else 2):
+                self.polarity *= -1
+                self.pursuit_failures = 0
+                revised = True
+        self.pursuit_receipt = dict(witness=witness, revised=revised)
 
     def end_life(self):
         if self.life is None:
@@ -151,17 +177,19 @@ class TransferSession:
                 self.timing = core.timing.state()
                 self.shot_memory = core.shot_memory
                 self.binding = self.life.detector.binding
-                # A rewardless short life provides evidence against the active
-                # relation. Try an untested polarity, then use recent outcomes.
-                index = int(self.polarity > 0)
-                value = min(1., self.life.seconds / 5.) + min(1., self.life.earned)
-                evidence = self.relation_evidence[index]
-                evidence.append(value)
-                del evidence[:-8]
-                if value < .8:
-                    other = self.relation_evidence[1 - index]
-                    if not other or np.mean(other) >= np.mean(evidence):
-                        self.polarity *= -1
+                if self.causal_pursuit:
+                    self._credit_pursuit()
+                else:
+                    # Preserve the historical comparison for existing sessions.
+                    index = int(self.polarity > 0)
+                    value = min(1., self.life.seconds / 5.) + min(1., self.life.earned)
+                    evidence = self.relation_evidence[index]
+                    evidence.append(value)
+                    del evidence[:-8]
+                    if value < .8:
+                        other = self.relation_evidence[1 - index]
+                        if not other or np.mean(other) >= np.mean(evidence):
+                            self.polarity *= -1
         self.life = None
         self.lives += 1
 
@@ -170,12 +198,16 @@ class TransferSession:
             return self.cold.state()
         if self.arm == 'passive':
             return dict(arm=self.arm, lives=self.lives)
-        return dict(arm=self.arm, lives=self.lives, timing=copy.deepcopy(self.timing),
-                    motor=copy.deepcopy(self.motor), policy=copy.deepcopy(self.policy),
-                    score=self.score.to_state(), shot_memory=self.shot_memory.to_state(),
-                    binding=asdict(self.binding) if self.binding is not None else None,
-                    polarity=self.polarity, relation_evidence=copy.deepcopy(self.relation_evidence),
-                    rng_state=copy.deepcopy(self.rng.bit_generator.state))
+        result = dict(arm=self.arm, lives=self.lives, timing=copy.deepcopy(self.timing),
+                      motor=copy.deepcopy(self.motor), policy=copy.deepcopy(self.policy),
+                      score=self.score.to_state(), shot_memory=self.shot_memory.to_state(),
+                      binding=asdict(self.binding) if self.binding is not None else None,
+                      polarity=self.polarity, relation_evidence=copy.deepcopy(self.relation_evidence),
+                      rng_state=copy.deepcopy(self.rng.bit_generator.state))
+        if self.causal_pursuit:
+            result['pursuit_credit'] = dict(failures=self.pursuit_failures,
+                                            last=copy.deepcopy(self.pursuit_receipt))
+        return result
 
 
     @classmethod
@@ -186,7 +218,8 @@ class TransferSession:
         arm = values['arm']
         if arm in ('fresh_visual', 'passive'):
             raise ValueError('an ordinary sensorimotor session state is required')
-        session = cls(arm, 0)
+        credit = values.get('pursuit_credit')
+        session = cls(arm, 0, causal_pursuit=credit is not None)
         session.lives = values['lives']
         session.motor = values['motor']
         session.timing = values['timing']
@@ -197,4 +230,7 @@ class TransferSession:
         session.shot_memory = ShotMemory(**values['shot_memory'])
         session.binding = RoleBinding(**values['binding']) if values['binding'] is not None else None
         session.rng.bit_generator.state = values['rng_state']
+        if credit is not None:
+            session.pursuit_failures = credit['failures']
+            session.pursuit_receipt = credit['last']
         return session
