@@ -33,3 +33,20 @@ The seven-arm comparison completed 1,232 lives and 357,093 camera decisions, rep
 ### Why the changed controls fooled the learner
 
 We replayed one difficult stress course where the learner started missing immediately. The unmodified run reproduced all 12 action sequences and state hashes. After one short, scoreless life, it reversed its belief about which direction to chase the incoming ball and kept that reversal for the remaining eleven lives. Holding only that direction fixed between lives raised the total from 2 to 13 returns and rescued the first ball in five lives, while losing two openings the original had saved. In the original, both visible roles were localized to within two pixels on all 108 sampled pre-contact decisions. The active button order was wrong on six of the ten missed openings. This selected course gives a concrete hypothesis for future work: use observed movement to diagnose the buttons and timing before changing a previously successful pursuit relation. [Exact replay, reachability and intervention](2026-11-20-breakout-stress-diagnostic.md)
+
+## Learning to score against bricks
+
+We tested two ways to use the carried interception skill. The reward-only learner estimated which contact offsets broke visible bricks. The second learner also watched the incoming and outgoing ball paths at its paddle. It used those observations to estimate how a contact offset changes the rebound angle. Both learners started with a geometry model that proposes visible rectangles as targets and reflects candidate trajectories off the walls. Each learned policy was compared with its own identical untrained geometry model on matched new boards. Only the evaluator received the true collision and brick identities.
+
+| Frozen test on new boards | Practiced | Same model before practice | Centered aim |
+|---|---:|---:|---:|
+| Reward only, 16 ordinary full boards, 16 s limit | 82 bricks | 73 | 74 with raw pursuit, 27 with forecasting |
+| Reward only, 32 more full boards, 12 s limit | 123 bricks | 112 | 120 with raw pursuit, 57 with forecasting |
+| Visual rebound and reward, 12 full/sparse boards, 12 s limit | 36 bricks | 26 | 17 with forecasting |
+| Visual rebound and reward, 32 more full/sparse boards, 12 s limit | 92 bricks | 79 | 31 with forecasting |
+
+The reward-only learner played 20 practice lives. Its ordinary gain over the blank geometry model was 20 bricks across 48 held-out lives, and both arms made every return. Its gain over raw centered pursuit was smaller. In a separate cohort with twelve commands of hidden delay, the trained model scored 52 bricks versus 56 for its prior. Training on ordinary controls gave little evidence for better scoring under delay.
+
+The visual rebound learner played 12 practice lives, totaling 124.44 seconds of game time. It observed 29 rebounds and received 27 shot-score updates. All 29 detections matched real paddle contacts on independent evaluation. On the 32-life confirmation it produced 17.06 post-return bricks per game minute versus 13.33 before practice and 4.94 for forecast-centered aim. It made 110/110 returns. Its paired advantage over its own prior was 0.41 bricks per life, with a 95% paired bootstrap interval of +0.06 to +0.78. The full boards accounted for 66 versus 54 bricks. On the two-brick endgames the totals were 26 versus 25; the large sparse-board gain in the initial scout did not repeat. This is a learnt calibration from public motion and score. The code still supplies the candidate targets and ray geometry.
+
+![Early interception in the blind courses and independently confirmed brick scoring](assets/2026-11-20-pong-breakout-skills.png)
