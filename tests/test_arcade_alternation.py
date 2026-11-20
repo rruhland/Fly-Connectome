@@ -1,11 +1,15 @@
 from pathlib import Path
 import sys
 
+import pytest
 import torch
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'scripts' / 'experimental'))
 
 from arcade_alternation import AlternatingSession, scene_evidence
+from breakout_brick_placement import BrickShotPolicy
+from breakout_visual_rebound import VisualReboundPolicy
+from pong_role_transfer import RoleBinding
 
 
 def _board():
@@ -34,9 +38,23 @@ def test_visible_scene_routes_across_camera_rotations():
     assert scene_evidence(board).appearance == 'unresolved'
 
 
-def test_session_checkpoint_preserves_both_placement_memories():
-    session = AlternatingSession(27, recall_roles=True)
-    session.brick_policy.observe_score(session.brick_policy.probabilities, 1.)
+@pytest.mark.parametrize('policy, evidence', [(BrickShotPolicy, [0.7] * 24), (VisualReboundPolicy, 0.7)])
+def test_session_checkpoint_preserves_both_placement_memories(policy, evidence):
+    session = AlternatingSession(27, brick_state=policy().to_state(), recall_roles=True)
+    session.brick_policy.observe_score(evidence, 1.)
     session.core.score.observe_score(0, 0., -1.)
     state = session.state()
     assert AlternatingSession.from_state(state).state() == state
+
+
+def test_matching_appearance_can_retrieve_saved_timing_prior():
+    session = AlternatingSession(27, recall_timing=True)
+    session.roles['target_array'] = RoleBinding.from_station(1, .453125)
+    session.timings['target_array'] = dict(session.core.timing, delay_commands=6)
+    session.previous_appearance = 'opposing_rails'
+    restarted = AlternatingSession.from_state(session.state())
+    life = restarted.begin_life()
+    life.reset(_board())
+    assert life.recalled_role and life.recalled_timing
+    assert life.timing.delay_commands == 6
+    assert life.timing.timing_updates
