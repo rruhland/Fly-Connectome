@@ -2,6 +2,26 @@
 
 The [source Pong checkpoint](../m1b/2026-11-19-pong-after-mixed-course.json) comes from 96 score-practice points followed by a 64-point mixed course. Its SHA-256 digest is `d09f1050ad2e5f04fbe12572d506b55cc30bb765db040720607633076c8ecb0e`. The transfer experiment used a separate instance of that saved state for each course. State continued across all lives within a course.
 
+## Resume the tested two-game controller
+
+The [continued session](2026-11-20-arcade-continued-session.json) contains the full learned state after the 36-life ordinary alternating course. It already includes the visual rebound learner, Pong scoring memory, learned motor/role state and the camera-based pursuit check. The continuation demonstration loaded this file, cleared a fresh nine-brick board and won the next Pong point. Run the example from the repository root with the project and data dependencies installed.
+
+```python
+import json
+import sys
+from pathlib import Path
+
+sys.path[:0] = ["src", "scripts/experimental"]
+from arcade_alternation import AlternatingSession
+from breakout_arena import play_breakout
+
+path = Path("artifacts/m2/2026-11-20-arcade-continued-session.json")
+session = AlternatingSession.from_state(json.loads(path.read_text()))
+receipt = play_breakout(session.begin_life(), seed=907, layout_seed=909, max_episode_ticks=9000)
+session.end_life()
+print(receipt["cleared"], receipt["post_own_bricks"], session.core.lives)
+```
+
 ## Play two consecutive Breakout lives
 
 Run this from the repository root with the project and its data dependencies installed. The first life begins in the state acquired in Pong. The second resumes the resulting state on a different board. The paddle and ball move in a 64×64 binary camera and bricks disappear when struck.

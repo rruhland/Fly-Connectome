@@ -1,6 +1,12 @@
 # M1B research handoff
 
 
+## Pong to Breakout and back on November 20
+
+The carried Pong interception skill returned 153/153 incoming balls on an independent ordinary Breakout follow-up when offensive aiming was reserved for a visible opponent. After 12 Breakout practice lives, a visual-rebound learner cleared 12/12 new full boards versus 6/12 for the same model before practice. A single continuously updating controller then passed two 36-life alternating-game courses, including opposite button meanings and an extra six-command delay in Breakout. On re-entry to that conflicting course it saved 21/21 Pong and 82/82 Breakout balls, with nine own-return Pong wins and 80 bricks.
+
+The practical next milestone is learning the scoring objective from disappearing objects and score changes. Today’s system still contains a hand-designed visual scene rule and target proposal. Start with an identical-looking board where the paying target bank changes. [Progression report and real-game replays](2026-11-20-pong-breakout-transfer.md) · [Checkpoints and loading examples](../../artifacts/m2/README.md)
+
 ## Pong remapping, timing and score learning on November 19
 
 The three independent qualifications passed. The rapid controller returned 27/30 first balls after hidden mid-rally remaps. With hidden actuator delays, the timing learner returned 21/32 first balls versus 6/32 with the timing estimate frozen. The score-trained policy with the visual safety rule won 18/32 after an own return versus 0/32 centered, and maintained 65/66 later returns against the stronger opponent. Its camera and learned interception relation are inherited. Its score values come from 96 chronological practice points. Training used no backpropagation.
