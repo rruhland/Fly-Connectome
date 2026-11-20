@@ -1,5 +1,6 @@
 """Carry the same sensorimotor learner through unlabeled paddle-game lives."""
 import copy
+from dataclasses import asdict
 import json
 from pathlib import Path
 
@@ -159,6 +160,28 @@ class TransferSession:
         return dict(arm=self.arm, lives=self.lives, timing=copy.deepcopy(self.timing),
                     motor=copy.deepcopy(self.motor), policy=copy.deepcopy(self.policy),
                     score=self.score.to_state(), shot_memory=self.shot_memory.to_state(),
-                    binding=self.binding.state() if self.binding is not None else None,
+                    binding=asdict(self.binding) if self.binding is not None else None,
                     polarity=self.polarity, relation_evidence=copy.deepcopy(self.relation_evidence),
                     rng_state=copy.deepcopy(self.rng.bit_generator.state))
+
+
+    @classmethod
+    def from_state(cls, saved):
+        """Resume a completed core learner on a fresh camera and physical life."""
+        from pong_role_transfer import RoleBinding
+        values = copy.deepcopy(saved)
+        arm = values['arm']
+        if arm in ('fresh_visual', 'passive'):
+            raise ValueError('an ordinary sensorimotor session state is required')
+        session = cls(arm, 0)
+        session.lives = values['lives']
+        session.motor = values['motor']
+        session.timing = values['timing']
+        session.policy = values['policy']
+        session.polarity = values['polarity']
+        session.relation_evidence = values['relation_evidence']
+        session.score = ScorePlacement(**values['score'], updates_enabled=not session.frozen and arm != 'center')
+        session.shot_memory = ShotMemory(**values['shot_memory'])
+        session.binding = RoleBinding(**values['binding']) if values['binding'] is not None else None
+        session.rng.bit_generator.state = values['rng_state']
+        return session
