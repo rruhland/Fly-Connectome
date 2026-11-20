@@ -7,6 +7,7 @@ import hashlib
 import json
 from multiprocessing import get_context
 from pathlib import Path
+from time import process_time
 from types import SimpleNamespace
 
 import numpy as np
@@ -26,13 +27,17 @@ TEST_ARMS = ('visual_trained', 'visual_empty', 'center')
 
 def schedules(practice_lives, test_lives):
     """Construct distinct boards before any controller sees a camera."""
-    agent_rng = np.random.default_rng(AGENT_SEED)
-    seen = set()
+    return board_cases((('practice', practice_lives), ('test', test_lives)), ENVIRONMENT_SEEDS,
+                       agent_seed=AGENT_SEED, seen=set())
+
+
+def board_cases(phase_counts, environment_seeds, *, agent_seed, seen):
+    agent_rng = np.random.default_rng(agent_seed)
     result = {}
-    for phase, count in (('practice', practice_lives), ('test', test_lives)):
+    for phase, count in phase_counts:
         split = 'practice' if phase == 'practice' else 'heldout'
         groups = []
-        for board, seed in zip(('full', 'sparse'), ENVIRONMENT_SEEDS[phase], strict=True):
+        for board, seed in zip(('full', 'sparse'), environment_seeds[phase], strict=True):
             cases = []
             for case in breakout_schedule(seed, count // 2, split=split):
                 layout_seed = case.layout_seed
@@ -52,11 +57,11 @@ def schedules(practice_lives, test_lives):
     return result
 
 
-def play(case, checkpoint, policy, duration):
+def play(case, checkpoint, policy, duration, lag_frames=0):
     from pong_role_transfer import RoleAdapter, RoleController
 
     episode = case['episode']
-    camera = episode.camera(max_episode_ticks=round(duration * 120), layout=case['layout'])
+    camera = episode.camera(max_episode_ticks=round(duration * 120), layout=case['layout'], delay_frames=lag_frames)
     seed = case['agent_seed']
     pong_score = ScorePlacement(**checkpoint['score'], updates_enabled=False)
     controller = build_carried_shot_controller(
@@ -110,7 +115,8 @@ def play(case, checkpoint, policy, duration):
                 action_sha256=hashlib.sha256(requests).hexdigest())
 
 
-def run_arm(output, checkpoint, phase, arm, cases, duration, trained=None):
+def run_arm(output, checkpoint, phase, arm, cases, duration, trained=None, lag_frames=0):
+    began = process_time()
     torch.set_num_threads(1)
     policies = {'visual_live': lambda: VisualReboundPolicy(),
                 'visual_trained': lambda: VisualReboundPolicy.from_state(trained, updates_enabled=False),
@@ -119,7 +125,7 @@ def run_arm(output, checkpoint, phase, arm, cases, duration, trained=None):
     initial = None if policy is None else policy.to_state()
     rows = []
     for case in cases:
-        rows.append(play(case, checkpoint, policy, duration))
+        rows.append(play(case, checkpoint, policy, duration, lag_frames))
         save(output / f'{phase}-{arm}.json', rows)
     report = {}
     for board in ('all', 'full', 'sparse'):
@@ -129,9 +135,9 @@ def run_arm(output, checkpoint, phase, arm, cases, duration, trained=None):
                              matched_rebounds=len(matches), offset_rmse=None if not matches else float(
                                  np.sqrt(np.mean([match['offset_error']**2 for match in matches]))))
     final = None if policy is None else policy.to_state()
-    if phase == 'test' and final != initial:
+    if arm != 'visual_live' and final != initial:
         raise ValueError('test shot-state updates are disabled')
-    return dict(report, initial_state=initial, final_state=final)
+    return dict(report, initial_state=initial, final_state=final, cpu_seconds=process_time() - began)
 
 
 def paired_lifts(output):

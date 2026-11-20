@@ -15,6 +15,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'scripts' / 'experi
 from breakout_brick_placement import OFFSETS, Shot
 from breakout_visual_rebound import (GAINS, Rebound, VisualReboundPlacement, VisualReboundPolicy,
                                      VisualRebounds, centered_forecast)
+from confirm_breakout_visual_rebound import matched_effects
 import run_breakout_visual_rebound as pilot
 
 
@@ -121,7 +122,7 @@ def test_pilot_aggregation_with_synthetic_life_receipts(monkeypatch, tmp_path):
             future.set_result(task(*args))
             return future
 
-    def mock_play(case, checkpoint, policy, duration):
+    def mock_play(case, checkpoint, policy, duration, lag_frames):
         if policy is not None and policy.updates_enabled:
             policy.observe_rebound(Rebound(.4, .06, .54))
         score = int(policy is not None and policy.visual_updates > 0)
@@ -148,3 +149,9 @@ def test_pilot_aggregation_with_synthetic_life_receipts(monkeypatch, tmp_path):
     assert report['matched_lifts']['visual_empty']['all'] == {
         'bricks_per_life': 1., 'bricks_per_minute': 5., 'return_fraction': 0.}
     assert report['test']['visual_trained']['initial_state'] == report['test']['visual_trained']['final_state']
+    trained = json.loads((output / 'test-visual_trained.json').read_text())
+    empty = json.loads((output / 'test-visual_empty.json').read_text())
+    ordinary = matched_effects(trained, empty)['all']
+    assert (ordinary['ahead'], ordinary['tied'], ordinary['behind']) == (4, 0, 0)
+    assert ordinary['bricks_per_life_ci95'] == [1., 1.]
+    assert ordinary['bricks_per_minute_ci95'] == [5., 5.]
