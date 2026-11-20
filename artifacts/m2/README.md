@@ -33,7 +33,7 @@ The role and transfer comparisons have separate schedules. Each schedule can be 
 
 ## Start the combined scoring learner
 
-This example combines the Pong checkpoint and the brick policy acquired during 20 lives of score-only practice. Both the opponent-placement and brick-placement memories live in the same session. A rule applied to the opening image chooses which memory to update. Its inputs include the geometry of the small rectangles and the paddle rails. Save the whole session between lives to retain motor belief, tracking orientation, pursuit evidence and both scoring memories.
+This example combines the Pong checkpoint and the brick policy acquired during 12 lives of visual rebound and score practice. It enables the camera check on pursuit-direction changes and the retrieval of previously verified actuator settings. Both the opponent-placement and brick-placement memories live in the same session. A rule applied to the opening image chooses which memory to update. Its inputs include the geometry of the small rectangles and the paddle rails. Save the whole session between lives to retain motor belief, tracking orientation, pursuit evidence and both scoring memories.
 
 ```python
 import json
@@ -44,8 +44,8 @@ sys.path[:0] = ["src", "scripts/experimental"]
 from arcade_alternation import AlternatingSession
 from breakout_arena import play_breakout
 
-bricks = json.loads(Path("artifacts/m2/2026-11-20-breakout-brick-checkpoint.json").read_text())
-session = AlternatingSession(42, brick_state=bricks, recall_roles=True)
+bricks = json.loads(Path("artifacts/m2/2026-11-20-breakout-visual-rebound-checkpoint.json").read_text())
+session = AlternatingSession(42, brick_state=bricks, recall_timing=True, causal_pursuit=True)
 life = session.begin_life()
 result = play_breakout(life, 907, layout_seed=909, max_episode_ticks=1200)
 session.end_life()
@@ -53,4 +53,4 @@ resumed = AlternatingSession.from_state(json.loads(json.dumps(session.state())))
 print(result["own_returns"], result["post_own_bricks"])
 ```
 
-The original Breakout comparison spans 1,232 life records. The first scheduled life can also be watched as a side-by-side replay. [Audited blind receipts](2026-11-20-breakout-blind-results.zip) · [First-life replay](../../docs/reconstruction/assets/2026-11-20-first-breakout-life.gif) · [Score-only checkpoint](2026-11-20-breakout-brick-checkpoint.json)
+The original Breakout comparison spans 1,232 life records. The first scheduled life can also be watched as a side-by-side replay. [Audited blind receipts](2026-11-20-breakout-blind-results.zip) · [First-life replay](../../docs/reconstruction/assets/2026-11-20-first-breakout-life.gif) · [Visual rebound checkpoint](2026-11-20-breakout-visual-rebound-checkpoint.json) · [Score-only comparison](2026-11-20-breakout-brick-checkpoint.json)
