@@ -1,0 +1,444 @@
+{
+  "carried_checkpoint_sha256": "d09f1050ad2e5f04fbe12572d506b55cc30bb765db040720607633076c8ecb0e",
+  "cases": [
+    {
+      "agent_seed": 540779697,
+      "board": "full",
+      "episode": {
+        "layout_seed": 13302404858412711147,
+        "layout_split": "practice",
+        "seed": 18426293060819214781,
+        "serve_side": -1
+      },
+      "layout": {
+        "cells": [
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            4
+          ],
+          [
+            0,
+            5
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            1,
+            7
+          ],
+          [
+            2,
+            0
+          ],
+          [
+            2,
+            6
+          ],
+          [
+            2,
+            7
+          ]
+        ]
+      }
+    },
+    {
+      "agent_seed": 77095564,
+      "board": "sparse",
+      "episode": {
+        "layout_seed": 9402733264971376223,
+        "layout_split": "practice",
+        "seed": 18102624555522093764,
+        "serve_side": 1
+      },
+      "layout": {
+        "cells": [
+          [
+            0,
+            0
+          ],
+          [
+            2,
+            6
+          ]
+        ]
+      }
+    },
+    {
+      "agent_seed": 1314956420,
+      "board": "full",
+      "episode": {
+        "layout_seed": 2131112398988816887,
+        "layout_split": "practice",
+        "seed": 14039248511313997466,
+        "serve_side": 1
+      },
+      "layout": {
+        "cells": [
+          [
+            0,
+            1
+          ],
+          [
+            0,
+            2
+          ],
+          [
+            0,
+            3
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            1,
+            4
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            2,
+            6
+          ]
+        ]
+      }
+    },
+    {
+      "agent_seed": 2102701795,
+      "board": "sparse",
+      "episode": {
+        "layout_seed": 10919741076259007092,
+        "layout_split": "practice",
+        "seed": 14668580197662044857,
+        "serve_side": -1
+      },
+      "layout": {
+        "cells": [
+          [
+            2,
+            5
+          ],
+          [
+            2,
+            6
+          ]
+        ]
+      }
+    },
+    {
+      "agent_seed": 559343758,
+      "board": "full",
+      "episode": {
+        "layout_seed": 4663494508680714467,
+        "layout_split": "practice",
+        "seed": 7191794178267510232,
+        "serve_side": 1
+      },
+      "layout": {
+        "cells": [
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            4
+          ],
+          [
+            0,
+            7
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            2,
+            0
+          ],
+          [
+            2,
+            6
+          ],
+          [
+            2,
+            7
+          ]
+        ]
+      }
+    },
+    {
+      "agent_seed": 531179550,
+      "board": "sparse",
+      "episode": {
+        "layout_seed": 8226729054311125280,
+        "layout_split": "practice",
+        "seed": 18236611054391781720,
+        "serve_side": 1
+      },
+      "layout": {
+        "cells": [
+          [
+            0,
+            0
+          ],
+          [
+            1,
+            3
+          ]
+        ]
+      }
+    },
+    {
+      "agent_seed": 1534536410,
+      "board": "full",
+      "episode": {
+        "layout_seed": 5326127678496196466,
+        "layout_split": "practice",
+        "seed": 6921142897331680893,
+        "serve_side": -1
+      },
+      "layout": {
+        "cells": [
+          [
+            0,
+            2
+          ],
+          [
+            0,
+            3
+          ],
+          [
+            0,
+            7
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            4
+          ],
+          [
+            1,
+            7
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            2,
+            6
+          ],
+          [
+            2,
+            7
+          ]
+        ]
+      }
+    },
+    {
+      "agent_seed": 163788567,
+      "board": "sparse",
+      "episode": {
+        "layout_seed": 12399402232902728060,
+        "layout_split": "practice",
+        "seed": 14799754169641155905,
+        "serve_side": -1
+      },
+      "layout": {
+        "cells": [
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            4
+          ]
+        ]
+      }
+    },
+    {
+      "agent_seed": 101381525,
+      "board": "full",
+      "episode": {
+        "layout_seed": 16045230855246568938,
+        "layout_split": "practice",
+        "seed": 2684385970445530169,
+        "serve_side": -1
+      },
+      "layout": {
+        "cells": [
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            4
+          ],
+          [
+            0,
+            6
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            7
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            2,
+            7
+          ]
+        ]
+      }
+    },
+    {
+      "agent_seed": 1370839897,
+      "board": "sparse",
+      "episode": {
+        "layout_seed": 10873750102567630884,
+        "layout_split": "practice",
+        "seed": 13084720918394217747,
+        "serve_side": -1
+      },
+      "layout": {
+        "cells": [
+          [
+            2,
+            4
+          ],
+          [
+            2,
+            5
+          ]
+        ]
+      }
+    },
+    {
+      "agent_seed": 2001438399,
+      "board": "full",
+      "episode": {
+        "layout_seed": 10185334828959116243,
+        "layout_split": "practice",
+        "seed": 14384782014104188403,
+        "serve_side": 1
+      },
+      "layout": {
+        "cells": [
+          [
+            0,
+            3
+          ],
+          [
+            0,
+            4
+          ],
+          [
+            0,
+            6
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            6
+          ],
+          [
+            2,
+            0
+          ],
+          [
+            2,
+            6
+          ],
+          [
+            2,
+            7
+          ]
+        ]
+      }
+    },
+    {
+      "agent_seed": 1754092952,
+      "board": "sparse",
+      "episode": {
+        "layout_seed": 2060399527652717002,
+        "layout_split": "practice",
+        "seed": 5734261317561789995,
+        "serve_side": 1
+      },
+      "layout": {
+        "cells": [
+          [
+            0,
+            3
+          ],
+          [
+            0,
+            4
+          ]
+        ]
+      }
+    }
+  ],
+  "centered_forecast": true,
+  "duration_seconds": 12.0,
+  "public_only_transition": true,
+  "selected_endpoint": "after all 12 chronological practice lives",
+  "source_code": "1b360d8",
+  "source_spec_sha256": "6745fbebe911ce89ddbac2058f3ab09963e41478df14a977e7687bba51412715",
+  "train_on": "visible inbound/outbound paddle-rail turns and public brick score"
+}
