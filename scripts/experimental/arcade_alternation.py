@@ -151,9 +151,11 @@ class _SceneLife:
 class AlternatingSession:
     """Carry one online motor model and two sensor-selected placement memories."""
 
-    def __init__(self, policy_seed, *, checkpoint=None, brick_state=None, recall_roles=False, recall_timing=False):
+    def __init__(self, policy_seed, *, checkpoint=None, brick_state=None, recall_roles=False,
+                 recall_timing=False, causal_pursuit=False):
         core_rng, brick_rng = np.random.SeedSequence(policy_seed).spawn(2)
-        self.core = TransferSession('full', core_rng, checkpoint)
+        relation = {'causal_pursuit': True} if causal_pursuit else {}
+        self.core = TransferSession('full', core_rng, checkpoint, **relation)
         self.brick_rng = np.random.default_rng(brick_rng)
         if brick_state is None:
             self.brick_policy = BrickShotPolicy()

@@ -24,6 +24,7 @@ CONFIRMATION_SEEDS = {'ordinary': 1958120401, 'conflicting': 706290303}
 COHORTS = {'initial': COURSE_SEEDS, 'confirmation': CONFIRMATION_SEEDS}
 POLICY_SEED = 85217841
 ARMS = ('shared', 'role_recall', 'isolated')
+CONFIRMATION_ARMS = ('guarded', 'unguarded', 'isolated')
 GAMES = ('pong', 'breakout')
 NEUTRAL_MAPPING = (0, 1, 2)
 BRICK_MAP_CONFLICT = (2, 1, 0)
@@ -71,6 +72,11 @@ def schedule(course, games_per_block, *, cohort='initial'):
             cases.append(dict(case=len(cases), block=block, index=index, game=game,
                               parameters=parameters, mapping=mapping, delay=delay))
     return cases
+
+
+def continuation_schedule(course, games_per_block):
+    extra = schedule(course, games_per_block + 2, cohort='confirmation')
+    return [case for case in extra if case['block'] >= 4 and case['index'] == games_per_block]
 
 
 class _PongLife:
@@ -122,8 +128,8 @@ def identify_board(camera):
 
 
 def practice_boards(spec):
-    if 'phase_cases' in spec:
-        practice = spec['phase_cases']['practice']
+    if 'cases' in spec or 'phase_cases' in spec:
+        practice = spec['cases'] if 'cases' in spec else spec['phase_cases']['practice']
         episodes = [row['episode'] for row in practice]
         layouts = [row['layout']['cells'] for row in practice]
     else:
@@ -237,11 +243,14 @@ def play(session, case, max_ticks):
                 visual_brick_updates=getattr(session.brick_policy, 'visual_updates', 0) - initial_visual_updates)
 
 
-def run_arm(out, arm, cases, checkpoint, brick_state, max_ticks):
+def run_arm(out, arm, cases, checkpoint, brick_state, max_ticks, *, cohort, context_recall, continuation):
     torch.set_num_threads(1)
     references = GAMES if arm == 'isolated' else ('shared',)
+    confirmation = cohort == 'confirmation'
     sessions = {game: AlternatingSession(POLICY_SEED, checkpoint=checkpoint, brick_state=brick_state,
-                                         recall_roles=arm == 'role_recall', recall_timing=arm == 'context_recall')
+                                         recall_roles=confirmation or arm == 'role_recall',
+                                         recall_timing=(confirmation and context_recall) or arm == 'context_recall',
+                                         causal_pursuit=confirmation and arm != 'unguarded')
                 for game in references}
     save(out / f'{arm}-initial.json', {key: session.state() for key, session in sessions.items()})
     rows = []
@@ -255,6 +264,19 @@ def run_arm(out, arm, cases, checkpoint, brick_state, max_ticks):
         rows.append(row)
         save(out / f'{arm}-lives.json', rows)
     save(out / f'{arm}-final.json', {key: session.state() for key, session in sessions.items()})
+    if arm == 'guarded':
+        live = sessions['shared']
+        restored = AlternatingSession.from_state(live.state())
+        if restored.state() != live.state():
+            raise AssertionError('reloading changed the continued learning state')
+        resume_rows = []
+        for case in continuation:
+            row = play(live, case, max_ticks)
+            replay = play(restored, case, max_ticks)
+            if row != replay:
+                raise AssertionError('the loaded learner differs from the in-memory session')
+            resume_rows.append(row)
+        save(out / f'{arm}-resumed.json', dict(exact_actions_and_final_state=True, lives=resume_rows))
     return rows
 
 
@@ -323,10 +345,33 @@ def comparison(cases, traces):
     return result
 
 
+def retention_decision(summary, course):
+    guarded = summary['guarded']['reentry_by_game']
+    isolated = summary['isolated']['reentry_by_game']
+    floor = .9 if course == 'ordinary' else .75
+    metrics = {}
+    for game in GAMES:
+        row, comparator = guarded[game], isolated[game]
+        rate = row['returns'] / row['incoming'] if row['incoming'] else None
+        paired_rate = comparator['returns'] / comparator['incoming'] if comparator['incoming'] else None
+        difference = None if rate is None or paired_rate is None else rate - paired_rate
+        metrics[game] = dict(return_rate=rate, isolated_return_rate=paired_rate, rate_difference=difference,
+                             rate_pass=rate is not None and rate >= floor,
+                             isolated_distance_pass=difference is not None and difference >= -.10)
+    scores = dict(pong_wins_after_return=guarded['pong']['own_hit_wins'],
+                  breakout_bricks_after_return=guarded['breakout']['bricks'])
+    useful = all(scores.values()) and all(row['rate_pass'] for row in metrics.values())
+    if course == 'ordinary':
+        useful = useful and all(row['isolated_distance_pass'] for row in metrics.values())
+    return dict(reentry=metrics, scores=scores, useful_retention=bool(useful))
+
+
 def run(output, *, course, games_per_block, brick_path, practice_spec, checkpoint, max_ticks, workers,
         context_recall=False, cohort='initial'):
     cases = schedule(course, games_per_block, cohort=cohort)
-    arms = (*ARMS, 'context_recall') if context_recall else ARMS
+    confirmation = cohort == 'confirmation'
+    arms = CONFIRMATION_ARMS if confirmation else (*ARMS, 'context_recall') if context_recall else ARMS
+    continuation = continuation_schedule(course, games_per_block) if confirmation else []
     checkpoint = checkpoint.resolve()
     brick_path = brick_path.resolve()
     brick_state = json.loads(brick_path.read_text())
@@ -340,6 +385,7 @@ def run(output, *, course, games_per_block, brick_path, practice_spec, checkpoin
                       'run_arcade_alternation.py')
     vision_model = scripts.parents[1] / 'src/fly_connectome/vision/data/default.pt'
     save(output / 'plan.json', dict(course=course, cohort=cohort, arms=arms, cases=cases, max_ticks=max_ticks,
+                                    continuation=continuation, context_recall=context_recall,
                                     environment_seed=COHORTS[cohort][course], policy_seed=POLICY_SEED,
                                     checkpoint_sha256=source_digest(checkpoint),
                                     brick_checkpoint_sha256=source_digest(brick_path),
@@ -348,9 +394,14 @@ def run(output, *, course, games_per_block, brick_path, practice_spec, checkpoin
                                     source_sha256={name: source_digest(scripts / name) for name in implementation}))
     save(output / 'board-provenance.json', boards)
     with ProcessPoolExecutor(max_workers=workers, mp_context=get_context('spawn')) as pool:
-        runs = {arm: pool.submit(run_arm, output, arm, cases, checkpoint, brick_state, max_ticks) for arm in arms}
+        runs = {arm: pool.submit(run_arm, output, arm, cases, checkpoint, brick_state, max_ticks,
+                                 cohort=cohort, context_recall=context_recall, continuation=continuation)
+                for arm in arms}
         traces = {arm: future.result() for arm, future in runs.items()}
-    save(output / 'summary.json', comparison(cases, traces))
+    summary = comparison(cases, traces)
+    save(output / 'summary.json', summary)
+    if confirmation:
+        save(output / 'retention.json', retention_decision(summary, course))
 
 
 def audit_recorded_requests(output):
