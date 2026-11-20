@@ -6,6 +6,8 @@ from dataclasses import asdict
 import hashlib
 import json
 from pathlib import Path
+from statistics import median
+import time
 
 import numpy as np
 import torch
@@ -17,10 +19,16 @@ from pong_score_placement import ScorePlacement
 
 ROOT = Path(__file__).resolve().parents[2]
 CHECKPOINT = ROOT / 'artifacts/m1b/2026-11-19-pong-after-mixed-course.json'
-SCHEDULES = {'practice': (194740131, 0), 'heldout': (981405461, 0),
-             'heldout_delay': (478271173, 12)}
+COHORT_SEEDS = {
+    'scout': (194740131, 981405461, 478271173),
+    'confirmation': (106614372, 1870902747, 987619053),
+    'sparse_scout': (1543127129, 409127581, 488329155),
+    'sparse_confirmation': (1214870524, 1904671314, 821470177),
+}
+PHASE_LAGS = {'practice': 0, 'heldout': 0, 'heldout_delay': 12}
 PRACTICE_ARMS = ('brick_live', 'brick_prior', 'center', 'pong')
-TEST_ARMS = ('brick_trained', 'brick_prior', 'center', 'pong')
+TEST_COMPARATORS = ('brick_prior', 'center', 'center_forecast', 'pong')
+TEST_ARMS = ('brick_trained', *TEST_COMPARATORS)
 
 
 def save(path, result):
@@ -51,8 +59,16 @@ def summarize(lives):
     own_score = sum(row['post_own_bricks'] for row in lives)
     returns = sum(row['own_returns'] for row in lives)
     opportunities = sum(row['own_opportunities'] for row in lives)
+    setup = [row['controller_started_seconds'] for row in lives
+             if row.get('controller_started_seconds') is not None]
+    first_scores = [min(event['time_seconds'] for event in row['brick_events'] if event['after_return'])
+                    for row in lives if row['post_own_bricks']]
     return dict(lives=len(lives), bricks=score, bricks_after_own_return=own_score,
                 serve_bricks=sum(row['serve_bricks'] for row in lives),
+                cameras=sum(row['cameras'] for row in lives), controller_starts=len(setup),
+                median_setup_seconds=median(setup) if setup else None,
+                scored_lives=len(first_scores),
+                median_first_own_brick_seconds=median(first_scores) if first_scores else None,
                 seconds=seconds, bricks_per_life=score / len(lives),
                 bricks_after_own_return_per_life=own_score / len(lives),
                 bricks_per_minute=60. * score / seconds,
@@ -77,7 +93,7 @@ def play_life(case, layout, checkpoint, timing, detector, arm, policy, seed, *, 
     brick = None
     if arm == 'center':
         controller.timing.contact_offset = 0.
-    elif policy is not None:
+    elif policy is not None or arm == 'center_forecast':
         brick = BrickPlacement(controller.timing, policy, seed)
     bridge = RoleController(controller, detector)
     frame = camera.frame()
@@ -97,9 +113,9 @@ def play_life(case, layout, checkpoint, timing, detector, arm, policy, seed, *, 
         requests.append(action)
         elapsed += result.elapsed_seconds
         score += result.reward
+        bridge.observe(result)
         if brick is not None:
             brick.observe_score(result.reward, terminated=result.terminated, truncated=result.truncated)
-        bridge.observe(result)
         frame = result.frame
         if result.terminated or result.truncated:
             row = camera.summary()
@@ -117,6 +133,7 @@ def run_arm(root, phase, cases, layouts, agent_seeds, cap, lag, checkpoint, trai
     from pong_role_transfer import RoleAdapter
 
     torch.set_num_threads(1)
+    began = time.monotonic()
     policy = None
     if arm == 'brick_live':
         policy = BrickShotPolicy()
@@ -141,6 +158,7 @@ def run_arm(root, phase, cases, layouts, agent_seeds, cap, lag, checkpoint, trai
     state = None if policy is None else policy.to_state()
     report = dict(total=summarize(rows), chronology=[summarize(rows[i:i + 12])
                    for i in range(0, len(rows), 12)], final_shot_state=state,
+                  wall_seconds=time.monotonic() - began,
                   initial_shot_sha256=initial_shot_state,
                   final_shot_sha256=None if state is None else score_digest(state))
     save(root / f'{phase}-{arm}-summary.json', report)
@@ -156,7 +174,7 @@ def matched_differences(root, phase):
         return np.array([row[metric] for row in rows], dtype=float)
 
     differences = {}
-    for arm in ('brick_prior', 'center', 'pong'):
+    for arm in TEST_COMPARATORS:
         base = json.loads((root / f'{phase}-{arm}.json').read_text())
         if [row['case'] for row in trained] != [row['case'] for row in base]:
             raise ValueError('held-out comparisons require matched environment cases')
@@ -175,7 +193,7 @@ def matched_differences(root, phase):
 
 
 def run(root, checkpoint_path, *, practice_lives, heldout_lives, duration,
-        workers, mode, trained_path=None, bricks=None):
+        workers, mode, trained_path=None, bricks=None, cohort='scout'):
     import breakout_arena
     import breakout_brick_placement
     import pong_role_transfer
@@ -189,39 +207,41 @@ def run(root, checkpoint_path, *, practice_lives, heldout_lives, duration,
     phases = {'practice': ('practice', practice_lives, PRACTICE_ARMS),
               'heldout': ('heldout', heldout_lives, TEST_ARMS),
               'heldout_delay': ('heldout', heldout_lives, TEST_ARMS)}
+    schedule_seeds = dict(zip(phases, COHORT_SEEDS[cohort], strict=True))
     chosen = tuple(phase for phase in phases if mode in ('all', phases[phase][0]))
     root.mkdir(parents=True, exist_ok=False)
     environments = {
-        phase: breakout_arena.breakout_schedule(SCHEDULES[phase][0], phases[phase][1],
+        phase: breakout_arena.breakout_schedule(schedule_seeds[phase], phases[phase][1],
                                                 split=phases[phase][0])
         for phase in chosen
     }
     layouts = {phase: [None if bricks is None else sparse_layout(case, bricks) for case in cases]
                for phase, cases in environments.items()}
     seeds = {
-        phase: np.random.default_rng([715952263, SCHEDULES[phase][0]])
+        phase: np.random.default_rng([715952263, schedule_seeds[phase]])
                  .integers(1, 2**31, size=len(cases)).tolist()
         for phase, cases in environments.items()
     }
     source_paths = [Path(__file__), Path(breakout_arena.__file__),
                     Path(breakout_brick_placement.__file__), Path(pong_role_transfer.__file__)]
+    state = None if trained_path is None else json.loads(trained_path.read_text())
     save(root / 'spec.json', dict(
-        checkpoint_sha256=hashlib.sha256(checkpoint_bytes).hexdigest(), duration=duration,
+        cohort=cohort, checkpoint_sha256=hashlib.sha256(checkpoint_bytes).hexdigest(), duration=duration,
+        initial_brick_sha256=None if state is None else score_digest(state),
         source_sha256={path.name: hashlib.sha256(path.read_bytes()).hexdigest() for path in source_paths},
         schedules={phase: dict(environment=[asdict(case) for case in cases],
-                               environment_seed=SCHEDULES[phase][0], delay_frames=SCHEDULES[phase][1],
+                               environment_seed=schedule_seeds[phase], delay_frames=PHASE_LAGS[phase],
                                custom_layouts=[None if layout is None else layout.cells
                                                for layout in layouts[phase]],
                                agent_seeds=seeds[phase], arms=phases[phase][2])
                    for phase, cases in environments.items()},
         heldout_policy_frozen=True, heldout_timing_starts_shared=True,
         primary='bricks after an own return per matched life and minute of camera time'))
-    state = None if trained_path is None else json.loads(trained_path.read_text())
     reports = {}
     with ProcessPoolExecutor(max_workers=workers) as workers_pool:
         for phase, cases in environments.items():
             jobs = {arm: workers_pool.submit(run_arm, root, phase, cases, layouts[phase],
-                                             seeds[phase], duration, SCHEDULES[phase][1],
+                                             seeds[phase], duration, PHASE_LAGS[phase],
                                              checkpoint, state, arm)
                     for arm in phases[phase][2]}
             reports[phase] = {arm: task.result() for arm, task in jobs.items()}
@@ -243,8 +263,10 @@ if __name__ == '__main__':
     parser.add_argument('--duration', type=float, default=18.)
     parser.add_argument('--workers', type=int, default=4)
     parser.add_argument('--bricks-per-layout', type=int, choices=range(2, 9))
+    parser.add_argument('--cohort', choices=tuple(COHORT_SEEDS), default='scout')
     parser.add_argument('--mode', choices=('all', 'practice', 'heldout'), default='all')
     args = parser.parse_args()
     run(args.output, args.pong_checkpoint, practice_lives=args.practice_lives,
         heldout_lives=args.heldout_lives, duration=args.duration, workers=args.workers,
-        mode=args.mode, trained_path=args.brick_checkpoint, bricks=args.bricks_per_layout)
+        mode=args.mode, trained_path=args.brick_checkpoint, bricks=args.bricks_per_layout,
+        cohort=args.cohort)

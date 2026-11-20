@@ -132,7 +132,7 @@ class Shot:
     predicted_contact_seconds: float
     intercept: float
     offset: float
-    predicted_value: float
+    predicted_value: float | None
     visible_targets: int
     score: float = 0.
     credited: bool = False
@@ -193,8 +193,15 @@ class BrickPlacement:
         targets = visible_targets(self.frame, self.paddle_cross)
         if not len(targets):
             return
-        arm, self.likelihood, value = self.policy.choose(
-            context.intercept, self.paddle_cross, targets, eligible, self.rng)
+        if self.policy is None:
+            # The matched forecast control follows the same public support,
+            # reach and braking conditions while always choosing center.
+            if 0 not in eligible:
+                return
+            arm, value = 0, None
+        else:
+            arm, self.likelihood, value = self.policy.choose(
+                context.intercept, self.paddle_cross, targets, eligible, self.rng)
         self.shot = Shot(now, arrival, context.intercept, float(OFFSETS[arm]), value, len(targets))
 
     def observe_score(self, score, *, terminated=False, truncated=False):
@@ -213,7 +220,7 @@ class BrickPlacement:
         # An unexplained zero on termination could be a failed interception
         # or a time cap. A zero between two approaches is a completed flight.
         shot.credited = bool(shot.score or not scored_only)
-        if shot.credited:
+        if shot.credited and self.policy is not None:
             self.policy.observe_score(self.likelihood, shot.score)
         self.shots.append(asdict(shot))
         self.shot = self.likelihood = None
