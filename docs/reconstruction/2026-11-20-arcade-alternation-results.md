@@ -55,3 +55,18 @@ session = AlternatingSession.from_state(json.loads(path.read_text()))
 ```
 
 For each new life, call `session.begin_life()` and reset the returned life with the opening camera frame. Call `choose()` before each camera transition and `observe(transition)` afterward. At termination or timeout, call `session.end_life()`. Reuse the session for the next game and call `session.state()` between lives to save further learning. [Continued session JSON](../../artifacts/m2/2026-11-20-arcade-continued-session.json) · [Complete native receipts and checksums](../../artifacts/m2/2026-11-20-arcade-alternation.zip)
+
+## Fixed learner under unannounced control changes
+
+A single session used the actual conflicting-course final state throughout six more alternating blocks. Its guarded direction and both recall options stayed enabled. Pong used ordinary controls throughout. Breakout began with ordinary controls, switched to reversed outer buttons and six commands of lag, then returned to ordinary controls. All three Breakout blocks had the same visual scene type. Each block used four fresh lives, a 20-second limit, and balanced serve directions. The exact twelve Breakout brick masks and opening frame hashes were distinct from the earlier alternation, practice and clearance boards. [Registration](../../artifacts/m2/2026-11-20-arcade-deployment-stress-plan.json)
+
+| Block | Returns | First incoming ball | Wins after a return or bricks after a return | First life’s correct map and delay |
+|---|---:|---|---:|---:|
+| Pong | 7/7 | Returned | 3 wins | Camera 4 |
+| Breakout, normal | 19/20 | Missed | 19 bricks | Camera 30 |
+| Pong | 10/10 | Returned | 4 wins | Camera 4 |
+| Breakout, reversed with lag | 21/22 | Missed | 14 bricks | Camera 25 |
+| Pong | 10/10 | Returned | 4 wins | Camera 4 |
+| Breakout, normal restored | 21/22 | Missed | 18 bricks | Camera 30 |
+
+The learned timing prior was stale on entry to each Breakout block. The learner identified the current button order and lag during the first life, missed its first ball, and returned every later ball in the block. It returned 61/64 in Breakout, with 51 bricks after a return, and 27/27 in Pong, with 11 wins after a return. One pass through 24 lives yielded 14,803 camera transitions and a continuous state hash chain. The archived fixed-policy endpoint includes these additional updates and uses the same loading API. [Fixed-policy session JSON](../../artifacts/m2/2026-11-20-arcade-fixed-policy-session.json) · [Native receipts](../../artifacts/m2/2026-11-20-arcade-deployment-stress.zip)
