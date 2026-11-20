@@ -83,6 +83,7 @@ def play_life(case, layout, checkpoint, timing, detector, arm, policy, seed, *, 
     frame = camera.frame()
     bridge.reset(frame)
     elapsed = 0.
+    controller_started = None
     score = 0.
     requests = bytearray()
     previous_updates = policy.updates if policy is not None else 0
@@ -90,6 +91,8 @@ def play_life(case, layout, checkpoint, timing, detector, arm, policy, seed, *, 
         if brick is not None:
             brick.camera(*canonical_camera(frame, detector))
         action, _ = bridge.choose()
+        if controller_started is None and bridge.engaged:
+            controller_started = elapsed
         result = camera.step(int(action))
         requests.append(action)
         elapsed += result.elapsed_seconds
@@ -100,8 +103,11 @@ def play_life(case, layout, checkpoint, timing, detector, arm, policy, seed, *, 
         frame = result.frame
         if result.terminated or result.truncated:
             row = camera.summary()
+            if row['score'] != score or row['own_returns'] > row['own_opportunities']:
+                raise ValueError('native Breakout scoring and contact receipts are inconsistent')
             row.update(score=int(score), elapsed_seconds=elapsed, cameras=len(requests),
                        truncated=result.truncated, shots=[] if brick is None else brick.shots,
+                       controller_started_seconds=controller_started,
                        score_updates=0 if policy is None else policy.updates - previous_updates,
                        action_sha256=hashlib.sha256(requests).hexdigest())
             return row, controller.timing.state()
