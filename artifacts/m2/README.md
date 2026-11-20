@@ -22,6 +22,8 @@ session.end_life()
 print(receipt["cleared"], receipt["post_own_bricks"], session.core.lives)
 ```
 
+To resume the learner that used one fixed configuration across normal, reversed/delayed and restored Breakout controls, load the [60-life fixed-configuration session](2026-11-20-arcade-fixed-policy-session.json) with the same `AlternatingSession.from_state` call. It continues from the end of the 24-life deployment check. [Deployment receipts](2026-11-20-arcade-deployment-stress.zip)
+
 ## Play two consecutive Breakout lives
 
 Run this from the repository root with the project and its data dependencies installed. The first life begins in the state acquired in Pong. The second resumes the resulting state on a different board. The paddle and ball move in a 64×64 binary camera and bricks disappear when struck.

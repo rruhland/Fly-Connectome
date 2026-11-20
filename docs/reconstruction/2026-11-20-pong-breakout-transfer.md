@@ -88,6 +88,18 @@ Both courses met the prospective retention criteria. Across the opening five opp
 
 During the conflicting course, the Pong shot table gained 15 visits, the brick model gained 104 observed-rebound updates and 100 score updates, and the shared controller retained its pursuit direction. The updates continued on the corresponding game lives. Finally, we loaded the saved ordinary mixed controller, gave it a new full board, and then switched it to a Pong point. It cleared all nine bricks in 35.65 seconds with 11/11 returns, then won the next Pong point after a return in 3.56 seconds. Independent reloads produced identical action and state hashes on both lives. [Alternation results](2026-11-20-arcade-alternation-results.md) · [Load the continued controller](../../artifacts/m2/README.md)
 
+### Keeping one configuration when the visible game stops predicting the controls
+
+The two original confirmation courses used different settings for actuator-memory recall. We therefore continued the *actual conflicting-course endpoint* for another 24 lives with its settings fixed. Pong always used ordinary controls. The Breakout blocks used normal controls, then reversed buttons with six commands of lag, then normal controls again. The paddle and board used the same visual conventions throughout, and each board was new.
+
+| Four-life Breakout block | Returns | Bricks after an own return | Camera frame when the new mapping and lag were first selected |
+|---|---:|---:|---:|
+| Normal | 19/20 | 19 | 30 |
+| Reversed and delayed | 21/22 | 14 | 25 |
+| Normal again | 21/22 | 18 | 30 |
+
+On this stream, the old actuator expectation cost the opening ball on **each** change. The controller returned all later opportunities. Across the interleaved Pong blocks it returned 27/27 balls and won 11 of the 12 points after an own return. This was one additional deployment stream. The 60-life mixed endpoint contains the 36-life conflicting course followed by all 24 of these lives, without restarting learned state or changing settings. [60-life checkpoint](../../artifacts/m2/2026-11-20-arcade-fixed-policy-session.json) · [Deployment receipts](../../artifacts/m2/2026-11-20-arcade-deployment-stress.zip)
+
 ## Next milestones
 
 1. **Learn which visible changes earn reward.** The current program proposes rectangles as brick targets and uses a hand-written rule to distinguish opposing rails from target arrays. Keep the qualified motor and rebound skills, put two banks of targets on the same board, and silently change which bank pays. A learner that discovers the objective should redirect its shots after observing the score consequences and remember the previous rule when it returns. Compare shots and rewards per opportunity against the frozen former objective on unseen layouts.
