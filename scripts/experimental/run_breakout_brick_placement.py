@@ -156,11 +156,14 @@ def run_arm(root, phase, cases, layouts, agent_seeds, cap, lag, checkpoint, trai
         rows.append(row)
         save(root / f'{phase}-{arm}.json', rows)
     state = None if policy is None else policy.to_state()
+    final_shot_state = None if state is None else score_digest(state)
+    if phase != 'practice' and initial_shot_state != final_shot_state:
+        raise ValueError('held-out shot state must stay frozen for the full cohort')
     report = dict(total=summarize(rows), chronology=[summarize(rows[i:i + 12])
                    for i in range(0, len(rows), 12)], final_shot_state=state,
                   wall_seconds=time.monotonic() - began,
                   initial_shot_sha256=initial_shot_state,
-                  final_shot_sha256=None if state is None else score_digest(state))
+                  final_shot_sha256=final_shot_state)
     save(root / f'{phase}-{arm}-summary.json', report)
     return report
 
@@ -200,7 +203,7 @@ def run(root, checkpoint_path, *, practice_lives, heldout_lives, duration,
 
     if (practice_lives < 1 or heldout_lives < 1 or not np.isfinite(duration) or duration < 1.
             or workers < 1 or (bricks is not None and not 2 <= bricks <= 8)
-            or mode == 'heldout' and trained_path is None):
+            or mode in ('heldout', 'ordinary') and trained_path is None):
         raise ValueError('a positive experiment budget and a trained state for held-out mode are required')
     checkpoint_bytes = checkpoint_path.read_bytes()
     checkpoint = json.loads(checkpoint_bytes)
@@ -208,7 +211,8 @@ def run(root, checkpoint_path, *, practice_lives, heldout_lives, duration,
               'heldout': ('heldout', heldout_lives, TEST_ARMS),
               'heldout_delay': ('heldout', heldout_lives, TEST_ARMS)}
     schedule_seeds = dict(zip(phases, COHORT_SEEDS[cohort], strict=True))
-    chosen = tuple(phase for phase in phases if mode in ('all', phases[phase][0]))
+    chosen = (('heldout',) if mode == 'ordinary'
+              else tuple(phase for phase in phases if mode in ('all', phases[phase][0])))
     root.mkdir(parents=True, exist_ok=False)
     environments = {
         phase: breakout_arena.breakout_schedule(schedule_seeds[phase], phases[phase][1],
@@ -264,7 +268,7 @@ if __name__ == '__main__':
     parser.add_argument('--workers', type=int, default=4)
     parser.add_argument('--bricks-per-layout', type=int, choices=range(2, 9))
     parser.add_argument('--cohort', choices=tuple(COHORT_SEEDS), default='scout')
-    parser.add_argument('--mode', choices=('all', 'practice', 'heldout'), default='all')
+    parser.add_argument('--mode', choices=('all', 'practice', 'heldout', 'ordinary'), default='all')
     args = parser.parse_args()
     run(args.output, args.pong_checkpoint, practice_lives=args.practice_lives,
         heldout_lives=args.heldout_lives, duration=args.duration, workers=args.workers,
