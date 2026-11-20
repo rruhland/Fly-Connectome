@@ -47,13 +47,12 @@ def visible_targets(frame, paddle_cross):
     return np.asarray(bounds, float).reshape(-1, 3)
 
 
-def predicted_scores(intercept, paddle_cross, targets, offsets):
-    """Estimate score chance under each uncalibrated visual rebound hypothesis."""
+def target_coverage(intercept, paddle_cross, targets, slopes):
+    """Score how closely each visual ray passes through any visible target."""
     if len(targets) == 0:
-        return np.full((len(offsets), len(ANGLE_GAINS)), .12)
+        return np.zeros_like(slopes, dtype=float)
     along, cross, half_width = targets.T
-    angles = np.clip((CONTACT_BIASES - offsets[:, None]) * ANGLE_GAINS, -.97, .97)
-    slopes = np.tan(angles)[:, :, None]
+    slopes = slopes[..., None]
     distance = cross - paddle_cross
     outgoing = reflect(intercept + slopes * distance, .5 - PIXEL)
     inbound = reflect(intercept + slopes * (1. - paddle_cross - cross), .5 - PIXEL)
@@ -64,7 +63,14 @@ def predicted_scores(intercept, paddle_cross, targets, offsets):
         return np.exp(-.5 * np.square(miss / uncertainty))
 
     match = np.maximum(coverage(outgoing), .84 * coverage(inbound))
-    return .12 + .76 * match.max(axis=-1)
+    return match.max(axis=-1)
+
+
+def predicted_scores(intercept, paddle_cross, targets, offsets):
+    """Estimate score chance under each uncalibrated visual rebound hypothesis."""
+    angles = np.clip((CONTACT_BIASES - offsets[:, None]) * ANGLE_GAINS, -.97, .97)
+    coverage = target_coverage(intercept, paddle_cross, targets, np.tan(angles))
+    return .12 + .76 * coverage
 
 
 class BrickShotPolicy:
