@@ -10,6 +10,7 @@ from pong_role_transfer import PIXEL, RoleAdapter
 
 ACTIONS = (0, 1, 2)
 RELATIONS = ('toward', 'away')
+MOTOR_HISTORY = 16
 
 
 @dataclass
@@ -18,14 +19,17 @@ class _MotorSamples:
     prior_mean: float = 0.
     response_mean: float = 0.
     prior_variation: float = 0.
+    response_variation: float = 0.
     covariance: float = 0.
 
     def add(self, prior, response):
         self.count += 1
         prior_residual = prior - self.prior_mean
+        response_residual = response - self.response_mean
         self.prior_mean += prior_residual / self.count
-        self.response_mean += (response - self.response_mean) / self.count
+        self.response_mean += response_residual / self.count
         self.prior_variation += prior_residual * (prior - self.prior_mean)
+        self.response_variation += response_residual * (response - self.response_mean)
         self.covariance += prior_residual * (response - self.response_mean)
 
 
@@ -33,23 +37,50 @@ class _VisualMotor:
     """Fit one shared velocity persistence and one impulse per action online."""
 
     def __init__(self):
-        self.samples = [_MotorSamples() for _ in ACTIONS]
+        self.bank = [[_MotorSamples() for _ in ACTIONS] for _ in range(MOTOR_HISTORY)]
 
-    def add(self, action, prior, response):
-        self.samples[action].add(prior, response)
+    def add(self, history, prior, response):
+        for samples, action in zip(self.bank, reversed(history)):
+            samples[action].add(prior, response)
 
-    def estimate(self):
-        variation = sum(sample.prior_variation for sample in self.samples)
-        covariance = sum(sample.covariance for sample in self.samples)
+    @staticmethod
+    def _fit(samples):
+        variation = sum(sample.prior_variation for sample in samples)
+        covariance = sum(sample.covariance for sample in samples)
         inertia = max(-1., min(1., covariance / variation)) if variation > 0 else 0.
-        impulses = [s.response_mean - inertia * s.prior_mean for s in self.samples]
+        impulses = [s.response_mean - inertia * s.prior_mean for s in samples]
         return inertia, impulses
 
-    def choose(self, rng, along, target, speed, elapsed):
-        smallest_count = min(sample.count for sample in self.samples)
-        inertia, impulses = self.estimate()
+    def estimate(self):
+        best = -1.
+        estimate = (0, *self._fit(self.bank[0]))
+        for lag, samples in enumerate(self.bank):
+            if min(s.count for s in samples) < 2:
+                continue
+            count = sum(s.count for s in samples)
+            inertia, impulses = self._fit(samples)
+            mean = sum(s.count * u for s, u in zip(samples, impulses)) / count
+            signal = sum(s.count * (u - mean)**2 for s, u in zip(samples, impulses))
+            noise = sum(s.response_variation - 2 * inertia * s.covariance
+                        + inertia**2 * s.prior_variation for s in samples)
+            # Discount estimates with few differentiated requests. Additional
+            # lag is useful only when it explains a clearer camera response.
+            quality = signal / (signal + max(1e-12, noise)) * count / (count + 2 * (lag + 1))
+            if quality > best:
+                best = quality
+                estimate = (lag, inertia, impulses)
+        return estimate
+
+    def choose(self, rng, along, target, speed, elapsed, history):
+        samples = self.bank[0]
+        smallest_count = min(sample.count for sample in samples)
+        lag, inertia, impulses = self.estimate()
         if smallest_count == 0 or max(impulses) == min(impulses):
-            return rng.choice([a for a in ACTIONS if self.samples[a].count == smallest_count]), True
+            return rng.choice([a for a in ACTIONS if samples[a].count == smallest_count]), True
+
+        for action in list(history)[-lag:] if lag else ():
+            speed = inertia * speed + impulses[action]
+            along = max(-.5, min(.5, along + elapsed * speed))
 
         next_velocity = [inertia * speed + impulse for impulse in impulses]
         # Choose the request whose next position is closest to the target.
@@ -62,9 +93,10 @@ class _VisualMotor:
         return rng.choice([a for a in ACTIONS if costs[a] == min(costs)]), False
 
     def state(self):
-        inertia, impulses = self.estimate()
+        lag, inertia, impulses = self.estimate()
         return {
-            'samples_per_action': [sample.count for sample in self.samples],
+            'samples_per_action': [sample.count for sample in self.bank[0]],
+            'delay_frames': lag,
             'velocity_persistence': inertia,
             'velocity_impulse_per_action': impulses,
         }
@@ -153,6 +185,7 @@ class _ColdVisualActor:
         self.paddle_speed = 0.
         self.elapsed = 0.
         self.last_action = None
+        self.requests = deque(maxlen=MOTOR_HISTORY)
         self.ball = deque(maxlen=3)
         self.ball_id = None
         self.closing = None
@@ -186,10 +219,11 @@ class _ColdVisualActor:
                 forecast = self._projected_ball()
                 target = forecast if self.relation == 'toward' else -forecast
             action, probing = self.session.motor.choose(
-                self.session.rng, self.paddle[0], target, self.paddle_speed, self.elapsed)
+                self.session.rng, self.paddle[0], target, self.paddle_speed, self.elapsed, self.requests)
             mode = 'motor_probe' if probing else 'relation'
 
         self.last_action = action
+        self.requests.append(action)
         return action, {'action': action, 'mode': mode, 'relation': self.relation,
                         'visual_target': target}
 
@@ -227,7 +261,7 @@ class _ColdVisualActor:
         if (previous_paddle is not None and self.paddle is not None
                 and self.paddle_id == previous_id and dt > 0):
             displacement = (self.paddle[0] - previous_paddle[0]) / dt
-            self.session.motor.add(self.last_action, self.paddle_speed, displacement)
+            self.session.motor.add(self.requests, self.paddle_speed, displacement)
             self.paddle_speed = displacement
         else:
             self.paddle_speed = 0.
