@@ -1,0 +1,913 @@
+{
+  "checkpoint": "confirmation/conflicting/guarded-final.json",
+  "checkpoint_sha256": "717530006f7ce2fa30670aea3372f01cdc98b7bf07adae2c5309ef7bd4def0b3",
+  "archive_sha256": "7f22ddd39d5d588e4d719a1d711defc1da57d4a34502654f0edf4a5bf1d405ee",
+  "max_ticks": 2400,
+  "cases": [
+    {
+      "case": 0,
+      "block": 0,
+      "index": 0,
+      "game": "pong",
+      "parameters": {
+        "seed": 1520265702,
+        "opponent_speed": 0.35
+      },
+      "mapping": [
+        0,
+        1,
+        2
+      ],
+      "delay": 0
+    },
+    {
+      "case": 1,
+      "block": 0,
+      "index": 1,
+      "game": "pong",
+      "parameters": {
+        "seed": 1796502916,
+        "opponent_speed": 0.35
+      },
+      "mapping": [
+        0,
+        1,
+        2
+      ],
+      "delay": 0
+    },
+    {
+      "case": 2,
+      "block": 0,
+      "index": 2,
+      "game": "pong",
+      "parameters": {
+        "seed": 1975937576,
+        "opponent_speed": 0.35
+      },
+      "mapping": [
+        0,
+        1,
+        2
+      ],
+      "delay": 0
+    },
+    {
+      "case": 3,
+      "block": 0,
+      "index": 3,
+      "game": "pong",
+      "parameters": {
+        "seed": 450925476,
+        "opponent_speed": 0.35
+      },
+      "mapping": [
+        0,
+        1,
+        2
+      ],
+      "delay": 0
+    },
+    {
+      "case": 4,
+      "block": 1,
+      "index": 0,
+      "game": "breakout",
+      "parameters": {
+        "seed": 12380009309115565058,
+        "layout_seed": 13138610221326909990,
+        "serve_side": 1,
+        "layout_split": "heldout"
+      },
+      "mapping": [
+        0,
+        1,
+        2
+      ],
+      "delay": 0,
+      "reserved_board": {
+        "layout": [
+          [
+            0,
+            1
+          ],
+          [
+            0,
+            2
+          ],
+          [
+            0,
+            3
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            1,
+            5
+          ],
+          [
+            1,
+            6
+          ],
+          [
+            2,
+            0
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            2,
+            7
+          ]
+        ],
+        "initial_frame_sha256": "f6e54e1154531951bc84c01a6706e73bcd2d270dcabbbde305c0a1168c6cedb4"
+      }
+    },
+    {
+      "case": 5,
+      "block": 1,
+      "index": 1,
+      "game": "breakout",
+      "parameters": {
+        "seed": 4487365546849132432,
+        "layout_seed": 11503286779941798111,
+        "serve_side": -1,
+        "layout_split": "heldout"
+      },
+      "mapping": [
+        0,
+        1,
+        2
+      ],
+      "delay": 0,
+      "reserved_board": {
+        "layout": [
+          [
+            0,
+            3
+          ],
+          [
+            0,
+            5
+          ],
+          [
+            0,
+            6
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            1,
+            7
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            2,
+            6
+          ]
+        ],
+        "initial_frame_sha256": "f959ce3eda9d95041f8401772f506d5988cbd8a41a963a9ac877e22c52d4c7ff"
+      }
+    },
+    {
+      "case": 6,
+      "block": 1,
+      "index": 2,
+      "game": "breakout",
+      "parameters": {
+        "seed": 3072257133734266440,
+        "layout_seed": 16539331049371954507,
+        "serve_side": 1,
+        "layout_split": "heldout"
+      },
+      "mapping": [
+        0,
+        1,
+        2
+      ],
+      "delay": 0,
+      "reserved_board": {
+        "layout": [
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            2
+          ],
+          [
+            0,
+            7
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            4
+          ],
+          [
+            1,
+            7
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            2,
+            7
+          ]
+        ],
+        "initial_frame_sha256": "bfef38192b27fd9c1e6f873af04d2cff94d5b415ad494ce3f8bc1ed2d349457b"
+      }
+    },
+    {
+      "case": 7,
+      "block": 1,
+      "index": 3,
+      "game": "breakout",
+      "parameters": {
+        "seed": 17806919115177821516,
+        "layout_seed": 1316367000325959365,
+        "serve_side": -1,
+        "layout_split": "heldout"
+      },
+      "mapping": [
+        0,
+        1,
+        2
+      ],
+      "delay": 0,
+      "reserved_board": {
+        "layout": [
+          [
+            0,
+            1
+          ],
+          [
+            0,
+            4
+          ],
+          [
+            0,
+            7
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            2,
+            0
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            2,
+            7
+          ]
+        ],
+        "initial_frame_sha256": "0efd12daf5d7e69de309dda9922158854ac40fa6a90f774f441e37f2eec116e5"
+      }
+    },
+    {
+      "case": 8,
+      "block": 2,
+      "index": 0,
+      "game": "pong",
+      "parameters": {
+        "seed": 602497220,
+        "opponent_speed": 0.35
+      },
+      "mapping": [
+        0,
+        1,
+        2
+      ],
+      "delay": 0
+    },
+    {
+      "case": 9,
+      "block": 2,
+      "index": 1,
+      "game": "pong",
+      "parameters": {
+        "seed": 517906056,
+        "opponent_speed": 0.35
+      },
+      "mapping": [
+        0,
+        1,
+        2
+      ],
+      "delay": 0
+    },
+    {
+      "case": 10,
+      "block": 2,
+      "index": 2,
+      "game": "pong",
+      "parameters": {
+        "seed": 114107026,
+        "opponent_speed": 0.35
+      },
+      "mapping": [
+        0,
+        1,
+        2
+      ],
+      "delay": 0
+    },
+    {
+      "case": 11,
+      "block": 2,
+      "index": 3,
+      "game": "pong",
+      "parameters": {
+        "seed": 626383896,
+        "opponent_speed": 0.35
+      },
+      "mapping": [
+        0,
+        1,
+        2
+      ],
+      "delay": 0
+    },
+    {
+      "case": 12,
+      "block": 3,
+      "index": 0,
+      "game": "breakout",
+      "parameters": {
+        "seed": 12239589848582550328,
+        "layout_seed": 13979532030598301459,
+        "serve_side": 1,
+        "layout_split": "heldout"
+      },
+      "mapping": [
+        2,
+        1,
+        0
+      ],
+      "delay": 6,
+      "reserved_board": {
+        "layout": [
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            5
+          ],
+          [
+            0,
+            6
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            6
+          ],
+          [
+            2,
+            0
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            2,
+            7
+          ]
+        ],
+        "initial_frame_sha256": "778a178cd9be820a5fe4b3299ebef96ac0f9765820d5ee5e49c9608e1ad23047"
+      }
+    },
+    {
+      "case": 13,
+      "block": 3,
+      "index": 1,
+      "game": "breakout",
+      "parameters": {
+        "seed": 14037460006196688056,
+        "layout_seed": 4527897056824870469,
+        "serve_side": -1,
+        "layout_split": "heldout"
+      },
+      "mapping": [
+        2,
+        1,
+        0
+      ],
+      "delay": 6,
+      "reserved_board": {
+        "layout": [
+          [
+            0,
+            5
+          ],
+          [
+            0,
+            6
+          ],
+          [
+            0,
+            7
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            2,
+            6
+          ],
+          [
+            2,
+            7
+          ]
+        ],
+        "initial_frame_sha256": "e7a1be4fffd75cb8629a5a572c07bbb093cd9681389c92fc519dc5eada1c34b0"
+      }
+    },
+    {
+      "case": 14,
+      "block": 3,
+      "index": 2,
+      "game": "breakout",
+      "parameters": {
+        "seed": 2688654961487940339,
+        "layout_seed": 11638992524516083840,
+        "serve_side": -1,
+        "layout_split": "heldout"
+      },
+      "mapping": [
+        2,
+        1,
+        0
+      ],
+      "delay": 6,
+      "reserved_board": {
+        "layout": [
+          [
+            0,
+            2
+          ],
+          [
+            0,
+            3
+          ],
+          [
+            0,
+            4
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            1,
+            4
+          ],
+          [
+            2,
+            0
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            2
+          ]
+        ],
+        "initial_frame_sha256": "5e7353431f06d4837cc942da7565cffd42a6736371840deaac95269ea7397c04"
+      }
+    },
+    {
+      "case": 15,
+      "block": 3,
+      "index": 3,
+      "game": "breakout",
+      "parameters": {
+        "seed": 17742097378067866020,
+        "layout_seed": 14651525103946603034,
+        "serve_side": 1,
+        "layout_split": "heldout"
+      },
+      "mapping": [
+        2,
+        1,
+        0
+      ],
+      "delay": 6,
+      "reserved_board": {
+        "layout": [
+          [
+            0,
+            1
+          ],
+          [
+            0,
+            2
+          ],
+          [
+            0,
+            3
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            1,
+            4
+          ],
+          [
+            2,
+            0
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            2,
+            7
+          ]
+        ],
+        "initial_frame_sha256": "f8ad189b80285f56a24bd49af2dd3567da68398fff4858979ff7cf0b847df200"
+      }
+    },
+    {
+      "case": 16,
+      "block": 4,
+      "index": 0,
+      "game": "pong",
+      "parameters": {
+        "seed": 1073948680,
+        "opponent_speed": 0.35
+      },
+      "mapping": [
+        0,
+        1,
+        2
+      ],
+      "delay": 0
+    },
+    {
+      "case": 17,
+      "block": 4,
+      "index": 1,
+      "game": "pong",
+      "parameters": {
+        "seed": 1783570259,
+        "opponent_speed": 0.35
+      },
+      "mapping": [
+        0,
+        1,
+        2
+      ],
+      "delay": 0
+    },
+    {
+      "case": 18,
+      "block": 4,
+      "index": 2,
+      "game": "pong",
+      "parameters": {
+        "seed": 920408406,
+        "opponent_speed": 0.35
+      },
+      "mapping": [
+        0,
+        1,
+        2
+      ],
+      "delay": 0
+    },
+    {
+      "case": 19,
+      "block": 4,
+      "index": 3,
+      "game": "pong",
+      "parameters": {
+        "seed": 1372249864,
+        "opponent_speed": 0.35
+      },
+      "mapping": [
+        0,
+        1,
+        2
+      ],
+      "delay": 0
+    },
+    {
+      "case": 20,
+      "block": 5,
+      "index": 0,
+      "game": "breakout",
+      "parameters": {
+        "seed": 14613800685790284885,
+        "layout_seed": 9598811692768667400,
+        "serve_side": -1,
+        "layout_split": "heldout"
+      },
+      "mapping": [
+        0,
+        1,
+        2
+      ],
+      "delay": 0,
+      "reserved_board": {
+        "layout": [
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            5
+          ],
+          [
+            0,
+            6
+          ],
+          [
+            1,
+            4
+          ],
+          [
+            1,
+            5
+          ],
+          [
+            1,
+            6
+          ],
+          [
+            2,
+            0
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            2,
+            5
+          ]
+        ],
+        "initial_frame_sha256": "7a43da20a44382c9059f447ad43719fc81c717f9d58a858bc50b05af4022fe12"
+      }
+    },
+    {
+      "case": 21,
+      "block": 5,
+      "index": 1,
+      "game": "breakout",
+      "parameters": {
+        "seed": 12996796677106420346,
+        "layout_seed": 5336890419901899002,
+        "serve_side": 1,
+        "layout_split": "heldout"
+      },
+      "mapping": [
+        0,
+        1,
+        2
+      ],
+      "delay": 0,
+      "reserved_board": {
+        "layout": [
+          [
+            0,
+            1
+          ],
+          [
+            0,
+            2
+          ],
+          [
+            0,
+            4
+          ],
+          [
+            1,
+            0
+          ],
+          [
+            1,
+            3
+          ],
+          [
+            1,
+            4
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            5
+          ],
+          [
+            2,
+            7
+          ]
+        ],
+        "initial_frame_sha256": "f1f6329a8901bd4874b1d08f14678ce41c0398bf11706f2131b6856317224637"
+      }
+    },
+    {
+      "case": 22,
+      "block": 5,
+      "index": 2,
+      "game": "breakout",
+      "parameters": {
+        "seed": 4056751548724989734,
+        "layout_seed": 11105741246153156376,
+        "serve_side": 1,
+        "layout_split": "heldout"
+      },
+      "mapping": [
+        0,
+        1,
+        2
+      ],
+      "delay": 0,
+      "reserved_board": {
+        "layout": [
+          [
+            0,
+            1
+          ],
+          [
+            0,
+            3
+          ],
+          [
+            0,
+            6
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            6
+          ],
+          [
+            1,
+            7
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            2,
+            4
+          ]
+        ],
+        "initial_frame_sha256": "d13c85c5b352783805af999a79e4c3690fb44368e55617ba834db7230f9ab1f6"
+      }
+    },
+    {
+      "case": 23,
+      "block": 5,
+      "index": 3,
+      "game": "breakout",
+      "parameters": {
+        "seed": 16887739439618319997,
+        "layout_seed": 16358100325986211503,
+        "serve_side": -1,
+        "layout_split": "heldout"
+      },
+      "mapping": [
+        0,
+        1,
+        2
+      ],
+      "delay": 0,
+      "reserved_board": {
+        "layout": [
+          [
+            0,
+            3
+          ],
+          [
+            0,
+            4
+          ],
+          [
+            0,
+            7
+          ],
+          [
+            1,
+            4
+          ],
+          [
+            1,
+            5
+          ],
+          [
+            1,
+            7
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            2,
+            6
+          ],
+          [
+            2,
+            7
+          ]
+        ],
+        "initial_frame_sha256": "66f91a552270e89bb14cd03869de44887e53252c42f394689c349389b1eefa2b"
+      }
+    }
+  ],
+  "fixed_options": {
+    "recall_roles": true,
+    "recall_timing": true,
+    "causal_pursuit": true
+  }
+}
