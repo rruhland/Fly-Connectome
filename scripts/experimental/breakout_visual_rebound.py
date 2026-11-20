@@ -15,6 +15,11 @@ ANGLE_LIMIT = .97
 WINDOW = 9
 
 
+def centered_forecast(context):
+    """Enable the carried arrival forecast with effectively zero shot offset."""
+    return 1e-9 if context is not None else 0.
+
+
 @dataclass(frozen=True)
 class Rebound:
     seconds: float
@@ -109,6 +114,9 @@ class VisualReboundPolicy:
         policy.payoff_hits = np.asarray(state['payoff_hits'], dtype=float).copy()
         if (policy.probabilities.shape != GAINS.shape or not np.all(policy.probabilities > 0.)
                 or not np.isclose(policy.probabilities.sum(), 1.) or not abs(policy.execution_bias) <= .04
+                or any(type(count) is not int or count < 0
+                       for count in (policy.visual_updates, policy.updates, policy.scored))
+                or policy.scored > policy.updates
                 or policy.payoff_mass.shape != (2,) or policy.payoff_hits.shape != (2,)
                 or not np.all(np.isfinite(policy.payoff_mass)) or not np.all(policy.payoff_mass > 0.)
                 or not np.all((policy.payoff_hits >= 0.) & (policy.payoff_hits <= policy.payoff_mass))):
@@ -168,6 +176,9 @@ class VisualReboundPlacement(BrickPlacement):
     def camera(self, frame, detector):
         super().camera(*canonical_camera(frame, detector))
         self.clock_offset = detector.seconds - self.timing.seconds
+
+    def offset(self, context):
+        return super().offset(context) or centered_forecast(context)
 
     def observe(self, seconds, entities, pair, score, *, terminated=False, truncated=False):
         if not math.isfinite(score) or score < 0.:

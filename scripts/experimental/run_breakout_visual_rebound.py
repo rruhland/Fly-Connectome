@@ -5,13 +5,15 @@ from concurrent.futures import ProcessPoolExecutor
 from dataclasses import asdict
 import hashlib
 import json
+from multiprocessing import get_context
 from pathlib import Path
+from types import SimpleNamespace
 
 import numpy as np
 import torch
 
 from breakout_arena import BreakoutLayout, breakout_schedule
-from breakout_visual_rebound import VisualReboundPlacement, VisualReboundPolicy
+from breakout_visual_rebound import VisualReboundPlacement, VisualReboundPolicy, centered_forecast
 from pong_carried_shot_value import ShotMemory, build_carried_shot_controller
 from pong_score_placement import ScorePlacement
 from run_breakout_brick_placement import CHECKPOINT, save, summarize
@@ -61,7 +63,7 @@ def play(case, checkpoint, policy, duration):
         seed, checkpoint['motor'], checkpoint['timing'], pong_score,
         memory=ShotMemory(**checkpoint['shot_memory']), timing_updates=True)
     if policy is None:
-        controller.timing.contact_offset = 0.
+        controller.timing.contact_offset = centered_forecast
         placement = None
     else:
         placement = VisualReboundPlacement(controller.timing, policy, seed)
@@ -69,19 +71,25 @@ def play(case, checkpoint, policy, duration):
     bridge = RoleController(controller, detector)
     frame = camera.frame()
     bridge.reset(frame)
+    controller_started = None
     requests = bytearray()
     start_updates = 0 if policy is None else policy.updates
     while not camera.needs_reset:
         if placement is not None:
             placement.camera(frame, detector)
         request, _ = bridge.choose()
+        if bridge.engaged and controller_started is None:
+            controller_started = detector.seconds
         transition = camera.step(int(request))
         requests.append(request)
-        bridge.observe(transition)
-        frame = transition.frame
+        public = SimpleNamespace(frame=transition.frame, reward=transition.reward,
+                                 elapsed_seconds=transition.elapsed_seconds,
+                                 terminated=transition.terminated, truncated=transition.truncated)
+        bridge.observe(public)
+        frame = public.frame
         if placement is not None:
             placement.observe(detector.seconds, detector.canonical_entities, detector.pair_ids,
-                              transition.reward, terminated=transition.terminated, truncated=transition.truncated)
+                              public.reward, terminated=public.terminated, truncated=public.truncated)
     result = camera.summary()
     rebounds = [] if placement is None else placement.observed_rebounds
     # Reconcile the visual estimator only after the life ends. These labels
@@ -96,6 +104,7 @@ def play(case, checkpoint, policy, duration):
                                 offset_error=rebound['contact_offset'] - matched['offset']))
     return dict(result, elapsed_seconds=result['elapsed'], case=asdict(episode), board=case['board'],
                 layout=asdict(case['layout']), agent_seed=seed, visual_rebounds=rebounds, matches=matches,
+                controller_started_seconds=controller_started,
                 score_updates=0 if policy is None else policy.updates - start_updates,
                 shots=[] if placement is None else placement.shots,
                 action_sha256=hashlib.sha256(requests).hexdigest())
@@ -125,9 +134,31 @@ def run_arm(output, checkpoint, phase, arm, cases, duration, trained=None):
     return dict(report, initial_state=initial, final_state=final)
 
 
-def run(output, checkpoint_path, practice_lives, test_lives, duration):
-    if any(count < 4 or count % 4 for count in (practice_lives, test_lives)) or duration <= 0.:
-        raise ValueError('each phase requires a positive multiple of four lives and a positive duration')
+def paired_lifts(output):
+    rows = {arm: json.loads((output / f'test-{arm}.json').read_text()) for arm in TEST_ARMS}
+    result = {}
+    for control in TEST_ARMS[1:]:
+        matched = tuple(zip(rows['visual_trained'], rows[control], strict=True))
+        if any(a['case'] != b['case'] or a['layout'] != b['layout'] or a['agent_seed'] != b['agent_seed']
+               for a, b in matched):
+            raise ValueError('pilot arms require identical matched cases and agent seeds')
+        result[control] = {}
+        for board in ('all', 'full', 'sparse'):
+            pairs = [(a, b) for a, b in matched if board in ('all', a['board'])]
+            a, b = (summarize(group) for group in zip(*pairs, strict=True))
+            result[control][board] = {
+                output_key: a[input_key] - b[input_key] if a[input_key] is not None
+                and b[input_key] is not None else None
+                for output_key, input_key in (
+                    ('bricks_per_life', 'bricks_after_own_return_per_life'),
+                    ('bricks_per_minute', 'bricks_after_own_return_per_minute'),
+                    ('return_fraction', 'return_fraction'))}
+    return result
+
+
+def run(output, checkpoint_path, practice_lives, test_lives, duration, workers=2):
+    if any(count < 4 or count % 4 for count in (practice_lives, test_lives)) or duration <= 0. or workers < 1:
+        raise ValueError('each phase requires a positive multiple of four lives, duration and worker count')
     checkpoint_data = checkpoint_path.read_bytes()
     checkpoint = json.loads(checkpoint_data)
     cases = schedules(practice_lives, test_lives)
@@ -137,14 +168,15 @@ def run(output, checkpoint_path, practice_lives, test_lives, duration):
         phase_cases={phase: [dict(case, episode=asdict(case['episode']), layout=asdict(case['layout']))
                              for case in rows] for phase, rows in cases.items()},
         test_arms=TEST_ARMS, train_on='visible inbound/outbound paddle-rail turns and public brick score',
-        primary='post-return bricks per life and minute on matched fresh boards'))
+        primary='visual_trained vs visual_empty on post-return bricks per life and minute',
+        centered_forecast=True, public_only_transition=True))
     practice = run_arm(output, checkpoint, 'practice', 'visual_live', cases['practice'], duration)
     save(output / 'practice-summary.json', practice)
-    with ProcessPoolExecutor(max_workers=len(TEST_ARMS)) as pool:
+    with ProcessPoolExecutor(max_workers=min(workers, len(TEST_ARMS)), mp_context=get_context('spawn')) as pool:
         jobs = {arm: pool.submit(run_arm, output, checkpoint, 'test', arm, cases['test'], duration,
                                  practice['final_state']) for arm in TEST_ARMS}
         test = {arm: task.result() for arm, task in jobs.items()}
-    save(output / 'summary.json', dict(practice=practice, test=test))
+    save(output / 'summary.json', dict(practice=practice, test=test, matched_lifts=paired_lifts(output)))
 
 
 if __name__ == '__main__':
@@ -154,5 +186,6 @@ if __name__ == '__main__':
     parser.add_argument('--practice-lives', type=int, default=12)
     parser.add_argument('--test-lives', type=int, default=12)
     parser.add_argument('--duration', type=float, default=12.)
+    parser.add_argument('--workers', type=int, default=2)
     args = parser.parse_args()
-    run(args.output, args.checkpoint, args.practice_lives, args.test_lives, args.duration)
+    run(args.output, args.checkpoint, args.practice_lives, args.test_lives, args.duration, args.workers)

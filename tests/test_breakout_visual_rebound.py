@@ -1,6 +1,8 @@
 """Exercise visual rebound estimation without playing native Breakout."""
 
 import math
+import json
+from concurrent.futures import Future
 from pathlib import Path
 import sys
 from types import SimpleNamespace
@@ -11,7 +13,9 @@ import pytest
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'scripts' / 'experimental'))
 
 from breakout_brick_placement import OFFSETS, Shot
-from breakout_visual_rebound import GAINS, Rebound, VisualReboundPlacement, VisualReboundPolicy, VisualRebounds
+from breakout_visual_rebound import (GAINS, Rebound, VisualReboundPlacement, VisualReboundPolicy,
+                                     VisualRebounds, centered_forecast)
+import run_breakout_visual_rebound as pilot
 
 
 def camera_track(angle=.4, offset=.05):
@@ -92,3 +96,55 @@ def test_terminated_miss_does_not_train_score():
     placement.observe(.4, [], None, 0., terminated=True)
     assert not placement.shots[0]['credited']
     assert policy.updates == policy.visual_updates == 0
+
+
+def test_all_arms_get_same_arrival_forecast_when_no_shot_is_available():
+    timing = SimpleNamespace(seconds=0.)
+    placement = VisualReboundPlacement(timing, VisualReboundPolicy(), 18)
+    for context in (None, SimpleNamespace(seconds=.5), SimpleNamespace(seconds=1.5)):
+        assert placement.offset(context) == centered_forecast(context)
+
+
+def test_pilot_aggregation_with_synthetic_life_receipts(monkeypatch, tmp_path):
+    class LocalExecutor:
+        def __init__(self, max_workers, mp_context):
+            pass
+
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *exc):
+            pass
+
+        def submit(self, task, *args):
+            future = Future()
+            future.set_result(task(*args))
+            return future
+
+    def mock_play(case, checkpoint, policy, duration):
+        if policy is not None and policy.updates_enabled:
+            policy.observe_rebound(Rebound(.4, .06, .54))
+        score = int(policy is not None and policy.visual_updates > 0)
+        return dict(case=pilot.asdict(case['episode']), board=case['board'],
+                    layout=pilot.asdict(case['layout']), agent_seed=case['agent_seed'],
+                    score=score, post_own_bricks=score, serve_bricks=0, own_opportunities=2,
+                    brick_events=[dict(time_seconds=2., after_return=True)] if score else [],
+                    own_returns=1, elapsed_seconds=duration, cameras=600, controller_started_seconds=.14,
+                    life_lost=True, cleared=False, truncated=False, score_updates=0, shots=[],
+                    visual_rebounds=[], matches=[])
+
+    monkeypatch.setattr(pilot, 'ProcessPoolExecutor', LocalExecutor)
+    monkeypatch.setattr(pilot, 'play', mock_play)
+    monkeypatch.setattr(pilot.torch, 'set_num_threads', lambda threads: None)
+    checkpoint = tmp_path / 'checkpoint.json'
+    checkpoint.write_text('{}')
+    output = tmp_path / 'pilot'
+    pilot.run(output, checkpoint, 4, 4, 12.)
+    report = json.loads((output / 'summary.json').read_text())
+    spec = json.loads((output / 'spec.json').read_text())
+    layouts = [tuple(map(tuple, row['layout']['cells'])) for rows in spec['phase_cases'].values()
+               for row in rows]
+    assert len(layouts) == len(set(layouts)) == 8
+    assert report['matched_lifts']['visual_empty']['all'] == {
+        'bricks_per_life': 1., 'bricks_per_minute': 5., 'return_fraction': 0.}
+    assert report['test']['visual_trained']['initial_state'] == report['test']['visual_trained']['final_state']
