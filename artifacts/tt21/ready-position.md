@@ -1,5 +1,7 @@
 # Anticipating where to wait for the next stroke
 
+[Watch the 9.8-second comparison](ready-position-rally.mp4) · [Live camera, control and scoring checks](ready-position-rally.json)
+
 The learner fitted the lateral position of the next incoming ball from 15 previously recorded real exchanges, using the RGB tracks from two fixed cameras. Its teaching target was a later optical observation projected to the strike depth. The simulation's true ball positions, opponent intentions, and referee labels were excluded. It used a three-coefficient ridge fit with a bias. One version predicted from the outgoing stroke. A second waited for the first few frames of the opponent's actual reply and predicted from its observed track. [Optical training samples and controller](../../scripts/experimental/tt21_ready_position.py) · [Original practice exposures](recovery-practice.json.gz)
 
 On leave-one-point-out evaluation of those 15 tracks, median lateral error was 94.8 mm from the outgoing ball, 12.9 mm from the incoming ball, and 220.1 mm for always predicting the center. The body physically panned the shoulder only if the predicted offset exceeded 105 mm. Its existing stroke shortlist was rotated about the shoulder; actual candidate ranking used the separate nominal arm driven by its issued controls. Both versions kept the original receiving and serving software on the opening.

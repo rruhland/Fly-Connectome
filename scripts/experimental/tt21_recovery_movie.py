@@ -56,12 +56,14 @@ def _frame(arena, spectator, digest=None):
                                     for key in STREAMS)
 
 
-def replay(arena, spectator, row):
+def replay(arena, spectator, row, *, measure=None):
     arena.reset(seed=row['seed'], server=row['role'], render=False)
     rgb = sha256()
     frames = []
     for tick, action in enumerate(row['actions']):
         frames.append(_frame(arena, spectator, rgb))
+        if measure is not None:
+            measure(tick, arena)
         _, reward, ended, capped, _ = arena.step(action, render=False)
         if bool(ended or capped) != (tick == len(row['actions']) - 1):
             raise ValueError(f'point ended on the wrong control step at {tick}')
@@ -71,6 +73,8 @@ def replay(arena, spectator, row):
     # The final post-command frame is displayed after the point ends. The
     # verified camera digest contains only the policy-observed pre-action frames.
     frames.append(_frame(arena, spectator))
+    if measure is not None:
+        measure(len(row['actions']), arena)
     return frames
 
 
@@ -99,6 +103,17 @@ def _status(row, tick):
     return 'Opponent serves', 0
 
 
+def paint_views(canvas, draw, x, frame):
+    watch, left, right = frame
+    canvas.paste(watch, (x, 151))
+    draw.rounded_rectangle((x+8, 159, x+207, 184), radius=4, fill=BG)
+    _line(draw, (x+17, 162), 'Spectator · replay only', size=14, color=INK, bold=True)
+    _line(draw, (x, 489), 'Policy RGB · left camera', size=14, color=INK)
+    _line(draw, (x+254, 489), 'Policy RGB · right camera', size=14, color=INK)
+    canvas.paste(left, (x, 512))
+    canvas.paste(right, (x+254, 512))
+
+
 def decorate(rows, frames, tick, *, training_count, rate):
     canvas = Image.new('RGB', SIZE, BG)
     draw = ImageDraw.Draw(canvas)
@@ -114,14 +129,7 @@ def decorate(rows, frames, tick, *, training_count, rate):
         _line(draw, (x, 125), detail, size=16)
         draw.rounded_rectangle((x+344, 94, x+499, 129), radius=7, fill=CHIP)
         _line(draw, (x+356, 102), f'{count} legal return{"s" if count != 1 else ""}', size=16, color=accent, bold=True)
-        watch, left, right = frames[mode][min(tick, len(frames[mode]) - 1)]
-        canvas.paste(watch, (x, 151))
-        draw.rounded_rectangle((x+8, 159, x+207, 184), radius=4, fill=BG)
-        _line(draw, (x+17, 162), 'Spectator · replay only', size=14, color=INK, bold=True)
-        _line(draw, (x, 489), 'Policy RGB · left camera', size=14, color=INK)
-        _line(draw, (x+254, 489), 'Policy RGB · right camera', size=14, color=INK)
-        canvas.paste(left, (x, 512))
-        canvas.paste(right, (x+254, 512))
+        paint_views(canvas, draw, x, frames[mode][min(tick, len(frames[mode]) - 1)])
         draw.rounded_rectangle((x, 704, x+499, 737), radius=5, fill=CHIP)
         _line(draw, (x+10, 711), status, size=16, color=accent, bold=True)
     _line(draw, (20, 749), f'Timing learned from {training_count} practice points using RGB and point reward.', size=15)
@@ -129,7 +137,7 @@ def decorate(rows, frames, tick, *, training_count, rate):
     return canvas
 
 
-def encode(path, rows, frames, *, training_count, rate):
+def encode(path, rows, frames, *, training_count, rate, compose=decorate):
     total = max(len(branch) for branch in frames.values())
     opening, closing = rate * 2, rate * 2
     with subprocess.Popen(['ffmpeg', '-nostdin', '-v', 'error', '-y', '-f', 'rawvideo', '-pix_fmt', 'rgb24',
@@ -137,7 +145,7 @@ def encode(path, rows, frames, *, training_count, rate):
                            '-preset', 'fast', '-threads', '1', '-crf', '20', '-pix_fmt', 'yuv420p',
                            '-movflags', '+faststart', str(path)], stdin=subprocess.PIPE) as encoder:
         for tick in range(total):
-            pixels = decorate(rows, frames, tick, training_count=training_count, rate=rate).tobytes()
+            pixels = compose(rows, frames, tick, training_count=training_count, rate=rate).tobytes()
             repeats = opening if tick == 0 else closing if tick == total - 1 else 2
             for _ in range(repeats):
                 encoder.stdin.write(pixels)
