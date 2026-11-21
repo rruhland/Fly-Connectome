@@ -186,7 +186,8 @@ def _rank(arena, centers, speeds, lane):
     reverse = ((speeds[:, 3:, 1] < -.26) & (speeds[:, :-3, 1] > .18)
                & (centers[:, 2:-1, 1] > .50) & (centers[:, 2:-1, 2] > TABLE_HEIGHT + .024))
     crossing = (centers[:, :-1, 1] >= 0.) & (centers[:, 1:, 1] < 0.)
-    target_x, target_y, target_z, target_v = lane
+    target_x, target_y, target_z, target_v = lane[:4]
+    phase = lane[4:]
     records = []
     for index, hits in enumerate(reverse):
         hit = np.flatnonzero(hits)
@@ -220,9 +221,13 @@ def _rank(arena, centers, speeds, lane):
             velocity_y = speed[use, 1]
             loss = (5.5 * abs(xyz[:, 0] - target_x) + 5.0 * abs(xyz[:, 1] - target_y)
                     + 4.0 * abs(xyz[:, 2] - target_z) + .42 * abs(velocity_y + target_v))
+            if phase:
+                loss += .42 * abs(speed[use, 0] - phase[0]) + .78 * abs(speed[use, 2] - phase[1])
             picked = int(np.argmin(loss))
             cost = float(loss[picked]) + .10 * max(0., 1. - len(use) / 20.)
             reach = [*xyz[picked].tolist(), float(-velocity_y[picked])]
+            if phase:
+                reach += [float(speed[use[picked], axis]) for axis in (0, 2)]
         cost += 2.4 * max(0., NET_HEIGHT + BALL_RADIUS + .048 - net)
         records.append(dict(index=index, cost=float(cost), strike_micro=strike,
                             landing=position[index, land, :2].tolist(), net=net, reachable=reach,
@@ -302,7 +307,8 @@ class RallyOpponent(RivalSearch):
         steering = len(self.axes) == 5
         best = None
         target = np.asarray(self.target())
-        weights = np.array([5.8, 4.9, 4., .42])
+        phase = len(target) == 6
+        weights = np.array([5.8, 4.9, 4., .42, .42, .78] if phase else [5.8, 4.9, 4., .42])
         for candidate in ranked[:EXACT_CHECKS]:
             record['exact_trials'] += 1
             mujoco.mj_copyData(check.data, arena.model, arena.data)
@@ -325,7 +331,8 @@ class RallyOpponent(RivalSearch):
                     x, y, z = check.ball - [0., 0., TABLE_HEIGHT]
                     vy = -check.velocity[1]
                     if -.1 + target[1] < y < -.72 and .055 < z < .46 and abs(x) < .40 and vy > .45:
-                        sample = np.asarray((x, y, z, vy))
+                        sample = np.asarray((x, y, z, vy, check.velocity[0], check.velocity[2])
+                                            if phase else (x, y, z, vy))
                         error = float(weights @ np.abs(sample - target))
                         if error < cost:
                             choice, cost = sample.tolist(), error
@@ -348,8 +355,8 @@ def install_rally_opponent(arena, lane='anchor', *, target_profile=None):
         raise ValueError('expected anchor or varied rally targets')
     if target_profile is not None:
         target_profile = tuple(map(float, target_profile))
-        if len(target_profile) != 4 or not all(np.isfinite(target_profile)):
-            raise ValueError('expected a finite x, depth, height and incoming speed')
+        if len(target_profile) not in (4, 6) or not all(np.isfinite(target_profile)):
+            raise ValueError('expected four position/pace values with optional lateral and vertical velocities')
     inherited = arena._aim
     response = arena._choose_rival_response
     reset = arena.reset
