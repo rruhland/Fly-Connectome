@@ -109,7 +109,53 @@ def visual_result(trace, expected):
                 departure_speed=speed.tolist(), sightings=list(ticks))
 
 
-class ContactTimingPlayer(ContactPlayer):
+class ReceivingTiming:
+    """Shape an incoming stroke and update its phase from optical flight and point reward."""
+
+    def shape_contact(self, estimate, goals, fixed):
+        goal, lead, pitch, horizon = goals
+        if horizon is None:
+            return goal, lead, pitch, horizon
+        tick = self.scene.tick
+        attempt = self.receives[-1] if self.receives else None
+        if horizon < 6.5 and (attempt is None or tick - attempt['expected'] > 19.):
+            position, velocity = estimate
+            lag = self.servo.observer.delay
+            cues = np.clip(np.array([1., (abs(position[0]) - .16) / .22, (goal[2] - .27) / .14,
+                                     (-velocity[1] - .079) / .045, (lag - 1.) / 2.]), -1.5, 1.5)
+            choice = fixed if fixed is not None else self.contact_memory.choose(cues, exploration=self.explore_contact)
+            attempt = dict(tick=tick, expected=tick + horizon, profile=choice, cues=cues.tolist(),
+                           anchor_updates=0, shaped_frames=0)
+            self.receives.append(attempt)
+        if attempt is None or tick - attempt['expected'] > 6.:
+            return goal, lead, pitch, horizon
+        if horizon > 0.:
+            attempt['expected'] = tick + horizon
+            attempt['anchor_updates'] += 1
+        shape = self.timings[attempt['profile']]
+        if isinstance(shape, RateTiming) and horizon < 3.8 and 'rate_start' not in attempt:
+            attempt['rate_start'] = round(tick + horizon) - shape.lead
+        if isinstance(shape, LiftTiming) and horizon < 6.5:
+            lag = self.servo.observer.delay
+            goal = goal + (0., 0., shape.offset(horizon - lag))
+            lead = lead + (0., 0., shape.offset(horizon - lag - 1.))
+            attempt['shaped_frames'] += 1
+        return goal, lead, pitch, horizon
+
+    def score_contacts(self, reward, fixed):
+        for index, attempt in enumerate(self.receives):
+            visual = visual_result(self.trace, attempt['expected'])
+            point_score = (1. + reward) / 2. if index == len(self.receives) - 1 else .5
+            if visual is None:
+                score, weight = point_score, .50
+            else:
+                score, weight = .78 * visual['quality'] + .22 * point_score, 1.
+            if fixed is None and self.explore_contact:
+                self.contact_memory.observe(attempt['profile'], np.asarray(attempt['cues']), score, weight)
+            attempt.update(visual=visual, score=float(score), weight=weight)
+
+
+class ContactTimingPlayer(ReceivingTiming, ContactPlayer):
     """Choose the phase of a rising visual stroke for each receiving opportunity."""
 
     def __init__(self, adapter, prior, tracker_factory, *, contact_memory=None, fixed=None, explore=True,
@@ -163,34 +209,7 @@ class ContactTimingPlayer(ContactPlayer):
 
     def _stroke_goals(self, estimate):
         estimate = self._coast(estimate)
-        goal, lead, pitch, horizon = super()._stroke_goals(estimate)
-        if horizon is None:
-            return goal, lead, pitch, horizon
-        tick = self.scene.tick
-        attempt = self.receives[-1] if self.receives else None
-        if horizon < 6.5 and (attempt is None or tick - attempt['expected'] > 19.):
-            position, velocity = estimate
-            lag = self.servo.observer.delay
-            cues = np.clip(np.array([1., (abs(position[0]) - .16) / .22, (goal[2] - .27) / .14,
-                                     (-velocity[1] - .079) / .045, (lag - 1.) / 2.]), -1.5, 1.5)
-            choice = self.fixed if self.fixed is not None else self.contact_memory.choose(cues, exploration=self.explore_contact)
-            attempt = dict(tick=tick, expected=tick + horizon, profile=choice, cues=cues.tolist(),
-                           anchor_updates=0, shaped_frames=0)
-            self.receives.append(attempt)
-        if attempt is None or tick - attempt['expected'] > 6.:
-            return goal, lead, pitch, horizon
-        if horizon > 0.:
-            attempt['expected'] = tick + horizon
-            attempt['anchor_updates'] += 1
-        shape = self.timings[attempt['profile']]
-        if isinstance(shape, RateTiming) and horizon < 3.8 and 'rate_start' not in attempt:
-            attempt['rate_start'] = round(tick + horizon) - shape.lead
-        if isinstance(shape, LiftTiming) and horizon < 6.5:
-            lag = self.servo.observer.delay
-            goal = goal + (0., 0., shape.offset(horizon - lag))
-            lead = lead + (0., 0., shape.offset(horizon - lag - 1.))
-            attempt['shaped_frames'] += 1
-        return goal, lead, pitch, horizon
+        return self.shape_contact(estimate, super()._stroke_goals(estimate), self.fixed)
 
     def update(self, frames, preceding=None):
         action = super().update(frames, preceding)
@@ -210,15 +229,6 @@ class ContactTimingPlayer(ContactPlayer):
 
     def finish(self, reward):
         result = super().finish(reward)
-        for index, attempt in enumerate(self.receives):
-            visual = visual_result(self.trace, attempt['expected'])
-            point_score = (1. + reward) / 2. if index == len(self.receives) - 1 else .5
-            if visual is None:
-                score, weight = point_score, .50
-            else:
-                score, weight = .78 * visual['quality'] + .22 * point_score, 1.
-            if self.fixed is None and self.explore_contact:
-                self.contact_memory.observe(attempt['profile'], np.asarray(attempt['cues']), score, weight)
-            attempt.update(visual=visual, score=float(score), weight=weight)
+        self.score_contacts(reward, self.fixed)
         result.update(contact_timing=self.receives, rescued_approach_frames=self.coast_ticks)
         return result

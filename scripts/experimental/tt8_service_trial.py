@@ -72,6 +72,21 @@ def run(args):
         if args.receiver_only or args.fixed is not None or args.service_in is not None:
             raise ValueError('a drive checkpoint uses its stored serving policy')
         drive = ServiceDrive(**(drive_state or {}))
+    lift_state = checkpoint.get('receiving_lift')
+    lift = None
+    lift_mode = args.receive_lift or (lift_state['mode'] if lift_state else None)
+    if lift_mode is not None:
+        from .tt8_contact import PairedTimingMemory, practice_samples
+        from .tt9_receiving_lift import LiftServicePlayer
+
+        if drive is not None or args.receiver_only:
+            raise ValueError('receiving lift uses the toss-recognizing service player')
+        if args.receive_practice:
+            lift = PairedTimingMemory(practice_samples(_read(args.receive_practice)))
+        elif lift_state:
+            lift = PairedTimingMemory(**lift_state['memory'])
+        else:
+            lift = PairedTimingMemory()
     scoreboard = ServiceScore(target=args.race_to, first_server=args.first_server)
     phases = match_phases(args.phases, args.limit, [args.seed, 7919])
     try:
@@ -83,6 +98,10 @@ def run(args):
         if drive is not None:
             player = DrivePlayer(fit, prior, factory, response, timing, predictive=True, flight_memory=flight,
                                  drive=drive, learn=args.drive != 'frozen')
+        elif lift is not None:
+            player = LiftServicePlayer(fit, prior, factory, response, timing, predictive=True, flight_memory=flight,
+                                       service_memory=memory, fixed=args.fixed, contact_memory=lift,
+                                       fixed_lift=1 if lift_mode == 'early' else None)
         elif args.receiver_only:
             player = FlightPlayer(fit, prior, factory, response, timing, predictive=True, flight_memory=flight)
         else:
@@ -93,6 +112,9 @@ def run(args):
                       practice=args.practice, race_to=args.race_to, first_server=args.first_server,
                       receiver_only=args.receiver_only, fixed=args.fixed, points=[], schedule=schedule,
                       probes=probes, attempts=attempts, before=memory.state())
+        if lift is not None:
+            report.update(receiving_lift_mode=lift_mode, receiving_lift_before=lift.state(),
+                          receiving_practice_sha256=_hash(args.receive_practice) if args.receive_practice else None)
         if drive is not None:
             report.update(drive_mode=args.drive or 'online', drive_before=asdict(drive),
                           drive_practice_sha256=_hash(args.drive_from) if args.drive_from else None)
@@ -108,6 +130,8 @@ def run(args):
             if not args.practice:
                 scoreboard.record(row['evaluator'])
             report.update(score=scoreboard.score, finished=scoreboard.finished, service_state=memory.state())
+            if lift is not None:
+                report['receiving_lift_after'] = lift.state()
             if drive is not None:
                 report['drive_after'] = asdict(drive)
             _write(args.output, report)
@@ -115,7 +139,8 @@ def run(args):
             if scoreboard.finished:
                 break
         if args.checkpoint:
-            save(args.checkpoint, library, prior, response, timing, service_memory=memory, service_drive=drive)
+            save(args.checkpoint, library, prior, response, timing, service_memory=memory, service_drive=drive,
+                 receiving_lift=None if lift is None else dict(mode=lift_mode, memory=lift.state()))
         if args.service_out:
             _write(args.service_out, memory.state())
     finally:
@@ -142,12 +167,16 @@ if __name__ == '__main__':
     p.add_argument('--compiled-geometry', action=argparse.BooleanOptionalAction, default=False,
                    help='reuse native GL geometry lists in the reflective renderer')
     p.add_argument('--trace', action='store_true')
+    p.add_argument('--receive-lift', choices=('online', 'early'), help='use matched visual lift timing on incoming strokes')
+    p.add_argument('--receive-practice', type=Path, help='initialize lift timing from separate matched practice')
     p.add_argument('--drive-from', type=Path, help='initialize rate from a scored optical drive practice receipt')
     policy = p.add_mutually_exclusive_group()
     policy.add_argument('--drive', choices=('online', 'frozen'))
     policy.add_argument('--receiver-only', action='store_true')
     policy.add_argument('--fixed', type=int, choices=range(len(STROKES)))
     args = p.parse_args()
+    if args.receive_practice and args.receive_lift != 'online':
+        p.error('use --receive-lift online to initialize from practice')
     if args.limit <= 0:
         p.error('the point limit must be positive')
     run(args)
