@@ -1,0 +1,288 @@
+{
+  "external": {
+    "view": "external",
+    "seed": 93714422,
+    "points": 20,
+    "source": [
+      {
+        "file": "discovered-role-model.json",
+        "sha256": "0c9bdb58c7713218edbf281bb360d9af2871c7a07575aa591e999841a8b33020"
+      },
+      {
+        "file": "discovered-numeric-source.json",
+        "sha256": "82163e89ae1fc0b843a513c27878817e8d69629bcac05f936fd984448f53bbe1"
+      },
+      {
+        "file": "discovered-reward-clock.json",
+        "sha256": "c34d05d71f33d2bb4d254e0aad44b84b243a1d4a01bf799742c820c521188e2a"
+      }
+    ],
+    "archive_sha256": "274156122a0c28fb8fa0852bde478c1ceb6bea2e4b6bfa1e7a0fb360b13528ab",
+    "samples": [
+      {
+        "point": 0,
+        "tick": 31,
+        "ratio": 0.9094903339191556
+      },
+      {
+        "point": 2,
+        "tick": 29,
+        "ratio": 0.818964062763622
+      },
+      {
+        "point": 3,
+        "tick": 27,
+        "ratio": 0.8526367668802348
+      },
+      {
+        "point": 4,
+        "tick": 28,
+        "ratio": 0.9054100620261881
+      },
+      {
+        "point": 5,
+        "tick": 30,
+        "ratio": 0.79201539201539
+      },
+      {
+        "point": 5,
+        "tick": 98,
+        "ratio": 0.7586206896551742
+      },
+      {
+        "point": 5,
+        "tick": 180,
+        "ratio": 0.8323357560210911
+      },
+      {
+        "point": 6,
+        "tick": 33,
+        "ratio": 0.9054270666361339
+      },
+      {
+        "point": 7,
+        "tick": 31,
+        "ratio": 0.9563604625790972
+      },
+      {
+        "point": 8,
+        "tick": 30,
+        "ratio": 1.0874856109192574
+      },
+      {
+        "point": 9,
+        "tick": 26,
+        "ratio": 0.8981583503856405
+      },
+      {
+        "point": 10,
+        "tick": 28,
+        "ratio": 0.8927095387667358
+      },
+      {
+        "point": 11,
+        "tick": 34,
+        "ratio": 0.8934042553191488
+      },
+      {
+        "point": 12,
+        "tick": 28,
+        "ratio": 0.8303236797274278
+      },
+      {
+        "point": 13,
+        "tick": 26,
+        "ratio": 0.8868893473203691
+      },
+      {
+        "point": 13,
+        "tick": 106,
+        "ratio": 0.4679108591227664
+      },
+      {
+        "point": 14,
+        "tick": 33,
+        "ratio": 0.8677539791707602
+      },
+      {
+        "point": 14,
+        "tick": 97,
+        "ratio": 0.6673815740395384
+      },
+      {
+        "point": 14,
+        "tick": 176,
+        "ratio": 0.5333731026711738
+      },
+      {
+        "point": 15,
+        "tick": 26,
+        "ratio": 0.8872192344194875
+      },
+      {
+        "point": 15,
+        "tick": 93,
+        "ratio": 0.668225806451612
+      },
+      {
+        "point": 16,
+        "tick": 27,
+        "ratio": 0.9680668140506018
+      },
+      {
+        "point": 17,
+        "tick": 28,
+        "ratio": 0.9227188081936685
+      },
+      {
+        "point": 18,
+        "tick": 31,
+        "ratio": 0.8879310344827579
+      },
+      {
+        "point": 19,
+        "tick": 30,
+        "ratio": 0.9254598257502404
+      },
+      {
+        "point": 19,
+        "tick": 106,
+        "ratio": 0.660605335566456
+      },
+      {
+        "point": 19,
+        "tick": 187,
+        "ratio": 0.6898761354252726
+      }
+    ],
+    "restitution": 0.8868893473203691
+  },
+  "first_person": {
+    "view": "first_person",
+    "seed": 93714422,
+    "points": 20,
+    "source": [
+      {
+        "file": "discovered-role-model.json",
+        "sha256": "0c9bdb58c7713218edbf281bb360d9af2871c7a07575aa591e999841a8b33020"
+      },
+      {
+        "file": "discovered-numeric-source.json",
+        "sha256": "82163e89ae1fc0b843a513c27878817e8d69629bcac05f936fd984448f53bbe1"
+      },
+      {
+        "file": "discovered-reward-clock.json",
+        "sha256": "c34d05d71f33d2bb4d254e0aad44b84b243a1d4a01bf799742c820c521188e2a"
+      }
+    ],
+    "archive_sha256": "274156122a0c28fb8fa0852bde478c1ceb6bea2e4b6bfa1e7a0fb360b13528ab",
+    "samples": [
+      {
+        "point": 0,
+        "tick": 31,
+        "ratio": 1.0974743417498605
+      },
+      {
+        "point": 2,
+        "tick": 28,
+        "ratio": 0.8138160958114339
+      },
+      {
+        "point": 3,
+        "tick": 28,
+        "ratio": 1.1692319465528045
+      },
+      {
+        "point": 4,
+        "tick": 28,
+        "ratio": 0.8263373963158273
+      },
+      {
+        "point": 5,
+        "tick": 30,
+        "ratio": 1.0021806016081285
+      },
+      {
+        "point": 5,
+        "tick": 100,
+        "ratio": 1.0122900072618766
+      },
+      {
+        "point": 7,
+        "tick": 31,
+        "ratio": 0.7236298992211264
+      },
+      {
+        "point": 8,
+        "tick": 30,
+        "ratio": 0.9670983553157377
+      },
+      {
+        "point": 9,
+        "tick": 25,
+        "ratio": 0.7291588942045432
+      },
+      {
+        "point": 10,
+        "tick": 28,
+        "ratio": 1.0125865852570126
+      },
+      {
+        "point": 11,
+        "tick": 33,
+        "ratio": 0.7619195850413932
+      },
+      {
+        "point": 12,
+        "tick": 28,
+        "ratio": 1.422256357811882
+      },
+      {
+        "point": 13,
+        "tick": 26,
+        "ratio": 0.9478883582472891
+      },
+      {
+        "point": 13,
+        "tick": 102,
+        "ratio": 0.8194104017039769
+      },
+      {
+        "point": 14,
+        "tick": 33,
+        "ratio": 0.8625230587635809
+      },
+      {
+        "point": 14,
+        "tick": 96,
+        "ratio": 0.8313028473210242
+      },
+      {
+        "point": 15,
+        "tick": 26,
+        "ratio": 0.8761391106612813
+      },
+      {
+        "point": 17,
+        "tick": 28,
+        "ratio": 0.8034153903769269
+      },
+      {
+        "point": 18,
+        "tick": 30,
+        "ratio": 0.8077623155162418
+      },
+      {
+        "point": 19,
+        "tick": 30,
+        "ratio": 0.7936526572517376
+      },
+      {
+        "point": 19,
+        "tick": 102,
+        "ratio": 1.044996836190316
+      }
+    ],
+    "restitution": 0.8625230587635809
+  }
+}
