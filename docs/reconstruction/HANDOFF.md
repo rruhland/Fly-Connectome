@@ -1,5 +1,9 @@
 # M1B research handoff
 
+## Pong through a three-joint arm on November 21
+
+The carried player won 24/24 first-to-three simulated Pong matches through two physical touch buttons, saving 93/100 incoming balls and earning 56 points after a return. With the same arm and timing rule, a fresh Pong learner won 12/24 and reached the 90-second cap on the other 12. The successful arm controller uses the estimated time of ball arrival and continued paddle travel while a finger is leaving a switch. In a separate challenge the learner independently identified both button effects in 0.73 s and recovered from a hidden reversal in 1.18 s (medians, 16 streams). On 12 additional starts, the practiced arm won 11 with 120 Hz arm control and 10 when both cameras and control ran at 30 Hz. The fresh Pong learner won four at 30 Hz. The historical scoring checkpoint had no measurable scoring advantage on its small arm course. All results are in simulation. [Research report and two-camera replays](2026-11-21-pong-through-an-arm.md) · [Checkpoints and game records](../../artifacts/arm-pong/README.md)
+
 
 ## Air hockey, changed Pong and an RGB camera on November 20
 

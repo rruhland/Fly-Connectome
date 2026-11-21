@@ -1,0 +1,122 @@
+{
+  "practice": {
+    "interception": {
+      "points": 72,
+      "native_seconds": 754.15,
+      "own_hit_wins": 8,
+      "natural_wins": 10,
+      "losses": 7,
+      "timeouts": 47,
+      "returns": 221,
+      "opportunities": 228,
+      "first_returns": 55,
+      "first_opportunities": 62,
+      "camera_crossing_estimates": 642,
+      "mean_absolute_camera_crossing_error": 0.008031422779615615
+    },
+    "placement": {
+      "points": 288,
+      "native_seconds": 1671.9083333333333,
+      "own_hit_wins": 149,
+      "natural_wins": 53,
+      "losses": 53,
+      "timeouts": 33,
+      "returns": 367,
+      "opportunities": 420,
+      "first_returns": 183,
+      "first_opportunities": 235,
+      "camera_crossing_estimates": 1127,
+      "mean_absolute_camera_crossing_error": 0.008368017876427764
+    }
+  },
+  "held_out": {
+    "cold": {
+      "points": 96,
+      "native_seconds": 800.3916666666667,
+      "own_hit_wins": 27,
+      "natural_wins": 9,
+      "losses": 40,
+      "timeouts": 20,
+      "returns": 198,
+      "opportunities": 239,
+      "first_returns": 74,
+      "first_opportunities": 87,
+      "camera_crossing_estimates": 660,
+      "mean_absolute_camera_crossing_error": 0.12285648993656806
+    },
+    "trained_interception": {
+      "points": 96,
+      "native_seconds": 1138.8083333333334,
+      "own_hit_wins": 6,
+      "natural_wins": 9,
+      "losses": 9,
+      "timeouts": 72,
+      "returns": 340,
+      "opportunities": 349,
+      "first_returns": 78,
+      "first_opportunities": 87,
+      "camera_crossing_estimates": 990,
+      "mean_absolute_camera_crossing_error": 0.005482628035257796
+    },
+    "trained": {
+      "points": 96,
+      "native_seconds": 423.51666666666665,
+      "own_hit_wins": 64,
+      "natural_wins": 9,
+      "losses": 21,
+      "timeouts": 2,
+      "returns": 92,
+      "opportunities": 113,
+      "first_returns": 66,
+      "first_opportunities": 87,
+      "camera_crossing_estimates": 282,
+      "mean_absolute_camera_crossing_error": 0.006771573479601318
+    }
+  },
+  "crossing_lead": 1.0,
+  "crossing_training_samples": 648,
+  "offset_visits": {
+    "0.0": 10,
+    "0.079": 3,
+    "-0.079": 54,
+    "0.091": 2,
+    "-0.091": 133,
+    "0.103": 3,
+    "-0.103": 30
+  },
+  "trained_minus_cold": {
+    "difference": 0.38541666666666663,
+    "interval95": [
+      0.2604166666666667,
+      0.5104166666666666
+    ]
+  },
+  "trained_minus_interception": {
+    "difference": 0.6041666666666666,
+    "interval95": [
+      0.4895833333333333,
+      0.7083333333333334
+    ]
+  },
+  "interception_minus_cold_first_return": {
+    "difference": 0.04597701149425293,
+    "interval95": [
+      0.0,
+      0.10344827586206895
+    ]
+  },
+  "interception_minus_cold_all_returns": {
+    "difference": 0.14576015153876587,
+    "interval95": [
+      0.1057416525815534,
+      0.19110064484868866
+    ]
+  },
+  "interception_minus_cold_crossing_error": {
+    "difference": -0.11737386190131026,
+    "interval95": [
+      -0.13154056454173813,
+      -0.10434232535135005
+    ]
+  }
+}

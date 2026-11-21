@@ -1,0 +1,71 @@
+{
+  "totals": {
+    "baseline": {
+      "points_won": 49,
+      "points_lost": 48,
+      "scored_after_own_return": 32,
+      "own_returns": 106,
+      "own_opportunities": 154,
+      "wins": 13,
+      "losses": 11,
+      "caps": 0,
+      "median_seconds": 15.162500000000001
+    },
+    "release": {
+      "points_won": 72,
+      "points_lost": 7,
+      "scored_after_own_return": 56,
+      "own_returns": 93,
+      "own_opportunities": 100,
+      "wins": 24,
+      "losses": 0,
+      "caps": 0,
+      "median_seconds": 16.083333333333336
+    },
+    "release_fresh": {
+      "points_won": 53,
+      "points_lost": 19,
+      "scored_after_own_return": 37,
+      "own_returns": 446,
+      "own_opportunities": 465,
+      "wins": 12,
+      "losses": 0,
+      "caps": 12,
+      "median_seconds": 79.0875
+    }
+  },
+  "release_minus": {
+    "baseline": {
+      "win_fraction": {
+        "mean": 0.4583333333333333,
+        "ci95": [
+          0.25,
+          0.6666666666666666
+        ]
+      },
+      "earned_goals": {
+        "mean": 1.0,
+        "ci95": [
+          0.5416666666666666,
+          1.4583333333333333
+        ]
+      }
+    },
+    "release_fresh": {
+      "win_fraction": {
+        "mean": 0.5,
+        "ci95": [
+          0.2916666666666667,
+          0.7083333333333334
+        ]
+      },
+      "earned_goals": {
+        "mean": 0.7916666666666666,
+        "ci95": [
+          0.4583333333333333,
+          1.125
+        ]
+      }
+    }
+  }
+}

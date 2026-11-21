@@ -1,0 +1,15 @@
+# Transfer from direct Pong to two physical buttons
+
+First play Pong with ordinary up/down controls and retain the acquired game policy. Separately, let the simulated three-joint arm practice reaching visually marked targets. The transfer device is a pair of unlabeled button positions. The learner sees the Pong screen and an RGB view of the arm and panel. The only output from the deployed learner is bounded joint commands. Only an actual sustained fingertip contact can generate a Pong drive. The puck and opponent continue at the normal game rate throughout exploration and travel.
+
+The completed report includes the results for the original-speed rig and a further timing correction tested on 24 separately sampled matches. [Report and replays](../reconstruction/2026-11-21-pong-through-an-arm.md)
+
+## Questions and comparisons
+
+* Did direct play teach a reusable game skill? On the receiving device compare prior Pong practice with the same update rules starting without that practice. Keep arm practice and wiring paired. Include a visually reactive or other strong unpracticed baseline. Isolate learned coefficients from geometric or control rules supplied by the program.
+* Did earlier arm practice help with this device? Compare practiced and fresh arm motors under the same trained Pong policy. Charge all probes, button travel, failed points and timeouts. Record pretraining cost separately.
+* How quickly can the learner find a physical button’s meaning? Balance both wirings and keep it hidden. Measure elapsed game seconds to the first correct inference and sustained correct play, first actual return and returns throughout matches. A control that disconnects the physical switches should prevent any arm effect on the paddle.
+* Does the behavior persist beyond a single opening? Run held-out continuous games. On a separate set of cases, change the wiring without notifying the controller and measure how it corrects its mapping. Check an ordinary-speed three-joint arm alongside any faster diagnostic gearing.
+* Score actual incoming opportunities, physical returns, goals after an own return, opposing goals and time caps. Record enough information to reproduce a synchronized arm and Pong replay. The original arm is planar and the table uses visible markers. All experiments remain in simulation and all learning uses methods without backpropagation.
+
+For the independent wiring challenge use 16 paired environments from seed 416027 (Pong seeds between 1.8 and 2.1 billion), eight of each cable orientation, original joint gearing, one shared 80-tick reaching practice, and the retained direct Pong strategy. Play 22 seconds per environment, allowing points to finish normally or reach the clock, switching the wiring at exactly 7 seconds. Compare a controller that keeps learning button effects with an identical one whose button-effect estimates are locked after initial acquisition. Score all incoming balls and points before and after the switch and verify the action tape in fresh physics. Use the first scheduled adaptive case for the replay. The two button effects should each be established by observations of that button.
