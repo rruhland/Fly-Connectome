@@ -3,6 +3,7 @@ import argparse
 from contextlib import ExitStack
 from pathlib import Path
 
+from .tt4_camera import PerspectiveCamera
 from .tt4_replay import caption, recording
 from .tt4_transfer_trial import _read
 from .tt6_body_arena import TT6Wiring
@@ -30,6 +31,8 @@ def movie(receipt, path, section=None, game_number=None):
     if game['practice']:
         raise ValueError('a full game receipt is required')
     arena = TT8ServiceArena(**game['arena'])
+    if 'camera' in game:
+        arena._rig = tuple(PerspectiveCamera(**eye) for eye in game['camera'])
     scoreboard = ServiceScore(game['race_to'], game['first_server'])
     try:
         with ExitStack() as context:
@@ -43,7 +46,10 @@ def movie(receipt, path, section=None, game_number=None):
                 interface = PointInterface(wiring, prepare_point(arena, row['phase']), server=server, seed=game['seed'])
                 frames = interface.reset(seed=row['seed'])
                 header = 'First-person table tennis'
-                if 'model_used' in row:
+                calibration = game.get('preparation', {}).get('calibration')
+                if calibration:
+                    header = f"Calibrated from {calibration['frames']} commands"
+                elif 'model_used' in row:
                     ports = 'Original' if installation == game['arena']['seed'] else 'Rewired'
                     header = f"{ports} controls, model {row['model_used']}"
                 title = f"{header}   |   Arm {scoreboard.score[0]}   Opponent {scoreboard.score[1]}"
