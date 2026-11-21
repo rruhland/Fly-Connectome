@@ -21,6 +21,8 @@ def movie(receipt, path, section=None, game_number=None):
             game['seed'] = played['seed']
         else:
             played = game['sections'][section]
+        if game_number is not None and 'new_ports' in game and 'mode' in game:
+            played = dict(played, first_server=-1, race_to=11, finished=True)
         if not played.get('finished'):
             raise ValueError('select a completed full game')
         game = dict(game, **{k: played[k] for k in ('points', 'race_to', 'first_server', 'score', 'finished')},
@@ -28,7 +30,6 @@ def movie(receipt, path, section=None, game_number=None):
     if game['practice']:
         raise ValueError('a full game receipt is required')
     arena = TT8ServiceArena(**game['arena'])
-    wiring = TT6Wiring(arena, game['installation_seed'])
     scoreboard = ServiceScore(game['race_to'], game['first_server'])
     try:
         with ExitStack() as context:
@@ -37,9 +38,15 @@ def movie(receipt, path, section=None, game_number=None):
                 server = scoreboard.server
                 if server != row['server']:
                     raise ValueError('server does not match the game score')
+                installation = row.get('installation', game.get('installation_seed'))
+                wiring = TT6Wiring(arena, installation)
                 interface = PointInterface(wiring, prepare_point(arena, row['phase']), server=server, seed=game['seed'])
                 frames = interface.reset(seed=row['seed'])
-                title = f"First-person table tennis   |   Arm {scoreboard.score[0]}   Opponent {scoreboard.score[1]}"
+                header = 'First-person table tennis'
+                if 'model_used' in row:
+                    ports = 'Original' if installation == game['arena']['seed'] else 'Rewired'
+                    header = f"{ports} controls, model {row['model_used']}"
+                title = f"{header}   |   Arm {scoreboard.score[0]}   Opponent {scoreboard.score[1]}"
                 status = 'Arm serves' if server == 1 else 'Opponent serves'
                 image = caption(frames[0], title, status, 0)
                 if append is None:
@@ -57,7 +64,7 @@ def movie(receipt, path, section=None, game_number=None):
                             status = 'Arm lands a return' if event['side'] == 1 else 'Opponent lands a return'
                     if ended or capped:
                         scoreboard.record(arena.point_result())
-                        title = f"First-person table tennis   |   Arm {scoreboard.score[0]}   Opponent {scoreboard.score[1]}"
+                        title = f"{header}   |   Arm {scoreboard.score[0]}   Opponent {scoreboard.score[1]}"
                         status = ('Arm wins the point' if info['points_for'] else 'Opponent wins the point'
                                   if info['points_against'] else 'Let' if info['serve_let'] else 'Time limit')
                     image = caption(frames[0], title, status, arena.legal_returns)
