@@ -142,12 +142,7 @@ class TT4Arena:
         self.render_mode, self.view, self.venue = render_mode, view, venue
         self.baseline = baseline
         self.distractor = distractor
-        if venue == 'hall':
-            from .tt4_hall import hall_model
-
-            self.model = hall_model(MODEL_PATH)
-        else:
-            self.model = mujoco.MjModel.from_xml_path(str(MODEL_PATH))
+        self.model = self._load_model()
         self.data = mujoco.MjData(self.model)
         self._ball_joint = self.model.jnt_qposadr[self.model.joint('ball_free').id]
         self._ball_dof = self.model.jnt_dofadr[self.model.joint('ball_free').id]
@@ -156,25 +151,44 @@ class TT4Arena:
         self._geom_ids = {name: self.model.geom(name).id for name in
                           ('ball', 'table', 'net', 'floor', 'learner_racket', 'rival_racket')}
         self._collider_names = {idx: name for name, idx in self._geom_ids.items()}
-        self._joint_low = np.tile(JOINT_LIMITS[:, 0], 2)
-        self._joint_high = np.tile(JOINT_LIMITS[:, 1], 2)
-        self._joint_increments = np.tile(JOINT_RATES * self.model.opt.timestep, 2)
+        self._joint_low = np.empty(self.model.nu)
+        self._joint_high = np.empty(self.model.nu)
+        self._joint_increments = np.empty(self.model.nu)
         self._racket_ids = {1: self._geom_ids['learner_racket'], -1: self._geom_ids['rival_racket']}
         self._arm_ids = {}
         self._renderer = None
         self._rig = None
         for side, player in ((1, 'learner'), (-1, 'rival')):
+            axes, passive_axes, rates = self._arm_axes(side)
+            joints = [self.model.joint(f'{player}_{axis}').id for axis in axes]
+            actuators = np.array([self.model.actuator(f'{player}_{axis}').id for axis in axes])
             self._arm_ids[side] = (
-                np.array([self.model.jnt_qposadr[self.model.joint(f'{player}_{axis}').id]
-                          for axis in ARM_AXES]),
+                self.model.jnt_qposadr[joints],
                 np.array([self.model.jnt_qposadr[self.model.joint(f'{player}_{axis}_link').id]
-                          for axis in ('pitch', 'yaw')]),
-                np.array([self.model.actuator(f'{player}_{axis}').id for axis in ARM_AXES]),
+                          for axis in passive_axes], dtype=int),
+                actuators,
                 self.model.body(f'{player}_base').id,
                 self.model.body(f'{player}_elbow').id,
             )
+            self._joint_low[actuators], self._joint_high[actuators] = self.model.jnt_range[joints].T
+            self._joint_increments[actuators] = rates * self.model.opt.timestep
+        self.action_size = len(self._arm_ids[1][0])
         self._point = -1
         self.reset(render=False)
+
+    def _load_model(self):
+        if self.venue == 'hall':
+            from .tt4_hall import hall_model
+
+            return hall_model(MODEL_PATH)
+        return mujoco.MjModel.from_xml_path(str(MODEL_PATH))
+
+    def _arm_axes(self, side):
+        return ARM_AXES, ('pitch', 'yaw'), JOINT_RATES
+
+    def _arm_home(self, side):
+        home = HOME if side == 1 else RIVAL_SERVE_HOME
+        return home, (-home[1] - home[2], -home[0])
 
     @property
     def ball(self):
@@ -243,9 +257,9 @@ class TT4Arena:
         mujoco.mj_resetData(self.model, self.data)
         self._opening()
         for side, (qpos, passive, actuator, _, _) in self._arm_ids.items():
-            home = HOME if side == 1 else RIVAL_SERVE_HOME
+            home, passive_home = self._arm_home(side)
             self.data.qpos[qpos] = home
-            self.data.qpos[passive] = (-home[1] - home[2], -home[0])
+            self.data.qpos[passive] = passive_home
             self.data.ctrl[actuator] = home
         self.steps = self.contacts = self.legal_returns = self.rival_returns = self.rival_contacts = 0
         self._last_hitter, self._received_bounce = -1, False
@@ -409,11 +423,15 @@ class TT4Arena:
         if self.terminated or self.truncated:
             raise RuntimeError('reset after a point ends')
         command = np.asarray(action, dtype=float)
-        if command.shape != (4,) or not np.isfinite(command).all():
-            raise ValueError('expected four finite joint rates')
+        if command.shape != (self.action_size,) or not np.isfinite(command).all():
+            count = 'four' if self.action_size == 4 else str(self.action_size)
+            raise ValueError(f'expected {count} finite joint rates')
         rival = self._aim(-1, self._rival_bias, self._rival_target, .87) if self._rival_attempt else (
             self._command_to(-1, HOME, .72))
-        increments = np.concatenate((np.clip(command, -1., 1.), rival)) * self._joint_increments
+        increments = np.empty(self.model.nu)
+        increments[self._arm_ids[1][2]] = np.clip(command, -1., 1.)
+        increments[self._arm_ids[-1][2]] = rival
+        increments *= self._joint_increments
         prior_events = len(self.events)
         for _ in range(self.frameskip * SOLVER_SUBSTEPS):
             control = self.data.ctrl

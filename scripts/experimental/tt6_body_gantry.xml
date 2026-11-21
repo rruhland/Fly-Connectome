@@ -1,0 +1,32 @@
+<arm>
+  <body name="learner_base" pos="0 -1.48 .79">
+    <geom type="cylinder" pos="0 0 -.395" size=".065 .395" rgba=".23 .29 .35 1"/>
+    <geom class="link" fromto="-.57 0 0 .57 0 0"/>
+    <body name="learner_bridge">
+      <joint name="learner_lateral" type="slide" axis="1 0 0" range="-.76 .76"/>
+      <geom class="pivot"/>
+      <geom class="link" fromto="0 -.25 0 0 .16 0"/>
+      <body name="learner_elbow">
+        <joint name="learner_depth" type="slide" axis="0 1 0" range="-.44 .28"/>
+        <geom class="pivot"/>
+        <geom class="link" fromto="0 0 -.20 0 0 .12"/>
+        <body name="learner_lift_stage">
+          <joint name="learner_lift" type="slide" axis="0 0 1" range="-.34 .53"/>
+          <geom class="pivot"/>
+          <geom class="link" fromto="0 0 0 0 0 .166" size=".013"/>
+          <body name="learner_wrist" pos="0 0 .20">
+            <joint name="learner_wrist" axis="1 0 0" range="-.73 .89"/>
+            <geom name="learner_racket" class="racket_collision" type="cylinder" size=".076 .006"
+                  mass=".13" quat=".70710678 -.70710678 0 0" rgba=".89 .25 .19 1"/>
+          </body>
+        </body>
+      </body>
+    </body>
+  </body>
+  <actuator>
+    <position name="learner_lateral" joint="learner_lateral" kp="175" kv="8" forcerange="-26 26"/>
+    <position name="learner_depth" joint="learner_depth" kp="168" kv="6" forcerange="-23 23"/>
+    <position name="learner_lift" joint="learner_lift" kp="156" kv="6" forcerange="-22 22"/>
+    <position name="learner_wrist" joint="learner_wrist" kp="39" kv="1.5" forcerange="-5 5"/>
+  </actuator>
+</arm>

@@ -24,7 +24,10 @@ def hall_states(receipt, donor, installation):
     points = run['points']
     if [row['seed'] for row in points] != course['schedule']['tests']:
         raise ValueError('hall course does not contain all scheduled points in order')
-    initial, final = run['initial_prior'], run['final_prior']
+    return scored_states(run['initial_prior'], run['final_prior'], points, donor, course['schedule'])
+
+
+def scored_states(initial, final, points, donor, schedule):
     before, after = initial['numeric'], final['numeric']
     if before != donor['memory']['shared'] or before['coefficients'] != after['coefficients']:
         raise ValueError('hall entry or candidate coefficients differ from the carried mini state')
@@ -45,7 +48,7 @@ def hall_states(receipt, donor, installation):
         raise ValueError('no numeric state change to evaluate')
     states = dict(before=dict(memory=before, roles=roles), after=dict(memory=after, roles=roles),
                   count_only=dict(memory={**after, 'totals': before['totals']}, roles=roles))
-    ledger = dict(schedule=course['schedule'], credited_choices=counts.tolist(), credited_scores=totals.tolist(),
+    ledger = dict(schedule=schedule, credited_choices=counts.tolist(), credited_scores=totals.tolist(),
                   points=[{key: row[key] for key in ('seed', 'option', 'public_reward', 'opportunity',
                                                     'player_returns', 'rival_returns')} for row in points])
     return states, ledger
@@ -57,11 +60,35 @@ def _evaluate(job):
     return name, output
 
 
-def run(qualification_path, donor_path, pong_path, output_path, *, installation=0, workers=3):
+def run(qualification_path, donor_path, pong_path, output_path, *, installation=0, workers=3, continuation_path=None):
     qualification = _read(qualification_path)
-    if qualification['inputs_sha256']['legacy_mini'] != _hash(donor_path):
+    multi_body = 'visits' in qualification
+    if continuation_path is not None and not multi_body:
+        raise ValueError('expected a multi-arm course before continuation')
+    expected = (qualification['source_sha256'].get('first_person_mini') if multi_body
+                else qualification['inputs_sha256']['legacy_mini'])
+    if expected != _hash(donor_path):
         raise ValueError('mini checkpoint does not match the hall experiment input digest')
-    states, hall = hall_states(qualification, _read(donor_path), installation)
+    donor = _read(donor_path)
+    if multi_body:
+        visits = qualification['visits']
+        if qualification['mode'] != 'carry' or not visits:
+            raise ValueError('expected a continuously carried table course')
+        if continuation_path is not None:
+            continued = _read(continuation_path)
+            if continued['mode'] != 'carry' or not continued['visits']:
+                raise ValueError('expected a nonempty continuation with carried state')
+            visits = [*visits, *continued['visits']]
+        for previous, following in zip(visits, visits[1:]):
+            if previous['after'] != following['before']:
+                raise ValueError('non-contiguous prior state across arm installations')
+        if any([r['seed'] for r in v['points']] != v['schedule']['tests'] for v in visits):
+            raise ValueError('incomplete multi-body course')
+        states, hall = scored_states(visits[0]['before'], visits[-1]['after'],
+                                     [p for v in visits for p in v['points']], donor,
+                                     [v['schedule'] for v in visits])
+    else:
+        states, hall = hall_states(qualification, donor, installation)
     canonical = _read(pong_path)
     schedule = canonical['schedule']
     if (len(schedule['evaluation']), schedule['evaluation_points']) != (36, 5):
@@ -85,6 +112,8 @@ def run(qualification_path, donor_path, pong_path, output_path, *, installation=
                    after_count_only_action_changes=control_changes, implementation_sha256=implementation,
                    inputs_sha256=dict(qualification=_hash(qualification_path), donor=_hash(donor_path),
                                       native_schedule=_hash(pong_path)))
+    if continuation_path is not None:
+        receipt['inputs_sha256']['continuation'] = _hash(continuation_path)
     _write(output_path, receipt)
     print(json.dumps(dict(hall_updates=hall['credited_choices'], native={key: row['summary']
                      for key, row in evaluated.items()}, retained=retention['established'],
@@ -98,6 +127,7 @@ def main():
     parser.add_argument('output', type=Path)
     parser.add_argument('--donor', type=Path, default=LEGACY_MINI)
     parser.add_argument('--pong-schedule', type=Path, default=ARTIFACTS / 'pong-source-receipt.json.gz')
+    parser.add_argument('--continuation', type=Path, help='include a second course with contiguous learned state')
     parser.add_argument('--installation', type=int, default=0)
     parser.add_argument('--workers', type=int, default=3)
     args = parser.parse_args()
@@ -105,7 +135,7 @@ def main():
         parser.error('workers must be positive')
     torch.set_num_threads(1)
     run(args.qualification, args.donor, args.pong_schedule, args.output,
-        installation=args.installation, workers=args.workers)
+        installation=args.installation, workers=args.workers, continuation_path=args.continuation)
 
 
 if __name__ == '__main__':

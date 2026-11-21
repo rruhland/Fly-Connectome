@@ -6,7 +6,7 @@ import numpy as np
 
 
 def hall_model(path):
-    doc = ET.parse(path).getroot()
+    doc = path if isinstance(path, ET.Element) else ET.parse(path).getroot()
     world = doc.find("worldbody")
     asset = doc.find("asset")
     ET.SubElement(asset, "texture", name="maple_boards", type="2d", builtin="flat",

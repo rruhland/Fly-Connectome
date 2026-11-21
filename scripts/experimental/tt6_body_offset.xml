@@ -1,0 +1,50 @@
+<arm>
+  <body name="learner_base" pos=".035 -1.795 .80">
+    <geom type="cylinder" pos="0 0 -.40" size=".075 .40" rgba=".22 .27 .34 1"/>
+    <geom class="link" fromto="-.39 0 -.142 .39 0 .142"/>
+    <body name="learner_carriage">
+      <joint name="learner_carriage" type="slide" axis=".9397 0 .342" range="-.54 .54"/>
+      <geom class="pivot"/>
+      <geom class="link" fromto="0 -.05 -.23 0 .04 .085"/>
+      <body name="learner_lift_stage">
+        <joint name="learner_lift" type="slide" axis="0 .21 .978" range="-.41 .50"/>
+        <geom class="pivot"/>
+        <body name="learner_elbow">
+          <joint name="learner_sweep" axis="0 -.208 -.978" range="-1.08 1.08"/>
+          <geom class="pivot"/>
+          <geom class="link" fromto="0 0 0 0 .315 0"/>
+          <body name="learner_extension" pos="0 .315 0">
+            <joint name="learner_depth" type="slide" axis=".11 .983 -.145" range="-.39 .31"/>
+            <geom class="pivot"/>
+            <body name="learner_yaw_link">
+              <joint name="learner_yaw_link" axis="0 -.208 -.978" damping=".03" armature=".0002"/>
+              <inertial pos="0 0 0" mass=".024" diaginertia=".00002 .00002 .00002"/>
+              <geom class="link" fromto="0 0 0 0 0 .157" size=".013" mass="0"/>
+              <body name="learner_wrist" pos="0 0 .19">
+                <joint name="learner_wrist" axis="1 0 0" range="-.73 .89"/>
+                <geom name="learner_racket" class="racket_collision" type="cylinder" size=".076 .006"
+                      mass=".13" quat=".70710678 -.70710678 0 0" rgba=".89 .25 .19 1"/>
+              </body>
+            </body>
+          </body>
+        </body>
+      </body>
+    </body>
+  </body>
+  <tendon>
+    <fixed name="learner_counter_yaw">
+      <joint joint="learner_sweep" coef="1"/>
+      <joint joint="learner_yaw_link" coef="1"/>
+    </fixed>
+  </tendon>
+  <equality>
+    <tendon tendon1="learner_counter_yaw" polycoef="0 0 0 0 0" solref=".008 1"/>
+  </equality>
+  <actuator>
+    <position name="learner_carriage" joint="learner_carriage" kp="199" kv="10.5" forcerange="-30 30"/>
+    <position name="learner_lift" joint="learner_lift" kp="181" kv="7" forcerange="-25 25"/>
+    <position name="learner_sweep" joint="learner_sweep" kp="125" kv="5" forcerange="-16 16"/>
+    <position name="learner_depth" joint="learner_depth" kp="154" kv="6" forcerange="-22 22"/>
+    <position name="learner_wrist" joint="learner_wrist" kp="39" kv="1.5" forcerange="-5 5"/>
+  </actuator>
+</arm>

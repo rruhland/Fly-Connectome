@@ -180,7 +180,7 @@ class RallyPlayer(TransferPlayer):
 
     def reset(self):
         super().reset()
-        self.servo = BodyServo(self.adapter)
+        self.servo = self._make_servo()
         self.flight = BallFlight()
         self.plan = None
         self.release = -100
@@ -191,6 +191,18 @@ class RallyPlayer(TransferPlayer):
         self.stats['apparent_hits'] = 0
         if self.adjuster is not None:
             self.adjuster.reset()
+
+    def _make_servo(self):
+        return BodyServo(self.adapter)
+
+    def _reachable_plane(self, plane, ball):
+        geometry = self.adapter.geometry
+        radial = math.sqrt(max(.14, (1.82 * geometry[3])**2 - (ball[0] - geometry[0])**2
+                               - (ball[2] - geometry[2])**2))
+        return min(plane, geometry[1] + radial - .021)
+
+    def _wrist_available(self):
+        return self.adapter.gains[3] != 0.
 
     def _actor(self, tracks):
         if hasattr(self.scene.tracker, 'actor'):
@@ -244,10 +256,7 @@ class RallyPlayer(TransferPlayer):
         horizon, ball, speed = self.flight.crossing(position, velocity, plane, restitution)
         if not -2.8 < horizon < 26.:
             return ready, ready, self.adapter.home[3], None
-        geometry = self.adapter.geometry
-        radial = math.sqrt(max(.14, (1.82 * geometry[3])**2 - (ball[0] - geometry[0])**2
-                               - (ball[2] - geometry[2])**2))
-        corrected_plane = min(plane, geometry[1] + radial - .021)
+        corrected_plane = self._reachable_plane(plane, ball)
         if abs(corrected_plane - plane) > .019:
             plane = corrected_plane
             horizon, ball, speed = self.flight.crossing(position, velocity, plane, restitution)
@@ -261,7 +270,7 @@ class RallyPlayer(TransferPlayer):
                                                   + .12 * (lead - 1.) * (ball[0] - position[0]) + .035 * bias)
         projected[2] = np.clip(projected[2], .080, .61)
         pitch = _launch_pitch(projected, speed, self.stroke_speed, self.impact_restitution)
-        if self.adapter.gains[3] == 0.:
+        if not self._wrist_available():
             pitch = self.adapter.home[3]
         next_plan = np.array([tick + horizon, projected[0], plane, projected[2], pitch])
         if self.plan is None or tick - self.plan[0] > 5.:
