@@ -49,6 +49,9 @@ class ServiceDriveServo(PredictiveServo):
 class DrivePlayer(FlightPlayer):
     """Keep a toss-specific stroke through the velocity window near impact."""
 
+    serve_height = .45
+    serve_pitch = .19
+
     def __init__(self, *args, drive, learn=True, **kwargs):
         self.drive = drive
         self.learn_drive = learn
@@ -72,7 +75,7 @@ class DrivePlayer(FlightPlayer):
             self.toss.append((tick, seen.position))
             if (len(self.toss) >= 3 and max(row[1][2] for row in self.toss) > self.toss[0][1][2] + .05
                     and np.ptp([row[1][1] for row in self.toss]) < .11):
-                crossing = falling_crossing(self.toss[-9:], .45)
+                crossing = falling_crossing(self.toss[-9:], self.serve_height)
                 if crossing is not None and tick + 1 <= crossing[0] <= tick + 22:
                     self.serve_plan = crossing
         if self.serve_plan is None or tick > self.serve_plan[0] + 3:
@@ -80,8 +83,8 @@ class DrivePlayer(FlightPlayer):
 
         deadline, xy = self.serve_plan
         horizon = deadline - tick
-        pitch = .19
-        centre = np.array([*xy, .45]) - .024 * np.array([0., np.cos(pitch), np.sin(pitch)])
+        pitch = self.serve_pitch
+        centre = np.array([*xy, self.serve_height]) - .024 * np.array([0., np.cos(pitch), np.sin(pitch)])
         goal = centre.copy()
         goal[1] -= np.clip(self.serve_rate * horizon, -.107, .185)
         lead = centre.copy()

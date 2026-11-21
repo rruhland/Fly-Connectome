@@ -51,12 +51,13 @@ def _save(path, previous, library, player, entry, completed):
     _write(path, portable)
 
 
-def _restore(path, arena):
+def _restore(path, arena=None, *, tracker_factory=None):
     state = _read(path)
     entry = state['series']
     library, prior, response, timing = load(path)
     fit = library.models[entry['model']]
-    factory = _restore_tracker(arena.cameras, entry['optics'])
+    factory = (tracker_factory if tracker_factory is not None
+               else _restore_tracker(arena.cameras, entry['optics']))
     player = _player('fixed', fit, factory, prior, response, timing, state)
     # The constructor initializes/reset-samples a new player. Restore the exact
     # between-point choice stream and existing installation assignment.

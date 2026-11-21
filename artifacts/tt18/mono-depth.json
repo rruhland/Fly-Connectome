@@ -1,0 +1,3525 @@
+{
+  "schema": "tt18-monocular-depth-v1",
+  "resolution": [
+    256,
+    192
+  ],
+  "calibration_motor_commands": 0,
+  "summary": {
+    "frames": 24,
+    "methods": {
+      "abstain": {
+        "frames": 24,
+        "coverage": 0,
+        "median_3d_mm": null,
+        "p95_3d_mm": null,
+        "median_range_mm": null,
+        "median_range_half_width_mm": null,
+        "range_inside": null
+      },
+      "median_depth": {
+        "frames": 24,
+        "coverage": 24,
+        "median_3d_mm": 170.00445141526757,
+        "p95_3d_mm": 237.6092269649289,
+        "median_range_mm": 169.9125857914445,
+        "median_range_half_width_mm": null,
+        "range_inside": null
+      },
+      "appearance": {
+        "frames": 24,
+        "coverage": 24,
+        "median_3d_mm": 598.884181153725,
+        "p95_3d_mm": 1735.3065811516199,
+        "median_range_mm": 598.7697326694323,
+        "median_range_half_width_mm": 2350.6998150502827,
+        "range_inside": 24
+      },
+      "qualified_appearance": {
+        "frames": 24,
+        "coverage": 0,
+        "median_3d_mm": null,
+        "p95_3d_mm": null,
+        "median_range_mm": null,
+        "median_range_half_width_mm": null,
+        "range_inside": null
+      },
+      "last_point": {
+        "frames": 24,
+        "coverage": 24,
+        "median_3d_mm": 259.5717798803767,
+        "p95_3d_mm": 419.3120265573903,
+        "median_range_mm": 129.98159803257875,
+        "median_range_half_width_mm": null,
+        "range_inside": null
+      },
+      "linear": {
+        "frames": 24,
+        "coverage": 24,
+        "median_3d_mm": 57.04270962306856,
+        "p95_3d_mm": 151.551519699742,
+        "median_range_mm": 38.64264252338027,
+        "median_range_half_width_mm": null,
+        "range_inside": null
+      },
+      "linear_on_ray": {
+        "frames": 24,
+        "coverage": 24,
+        "median_3d_mm": 38.790299071157364,
+        "p95_3d_mm": 96.56867004284831,
+        "median_range_mm": 38.64264252338022,
+        "median_range_half_width_mm": null,
+        "range_inside": null
+      },
+      "gravity": {
+        "frames": 24,
+        "coverage": 24,
+        "median_3d_mm": 14.057923586952414,
+        "p95_3d_mm": 233.4849994165816,
+        "median_range_mm": 6.657705597259424,
+        "median_range_half_width_mm": null,
+        "range_inside": null
+      },
+      "stereo_ray": {
+        "frames": 24,
+        "coverage": 19,
+        "median_3d_mm": 8.628101396713307,
+        "p95_3d_mm": 27.45699468187251,
+        "median_range_mm": 4.694922595272749,
+        "median_range_half_width_mm": 53.33333333333333,
+        "range_inside": 19
+      }
+    },
+    "matched": {
+      "appearance": {
+        "appearance": {
+          "frames": 24,
+          "coverage": 24,
+          "median_3d_mm": 598.884181153725,
+          "p95_3d_mm": 1735.3065811516199,
+          "median_range_mm": 598.7697326694323,
+          "median_range_half_width_mm": 2350.6998150502827,
+          "range_inside": 24
+        },
+        "median_depth": {
+          "frames": 24,
+          "coverage": 24,
+          "median_3d_mm": 170.00445141526757,
+          "p95_3d_mm": 237.6092269649289,
+          "median_range_mm": 169.9125857914445,
+          "median_range_half_width_mm": null,
+          "range_inside": null
+        }
+      },
+      "qualified_appearance": {
+        "qualified_appearance": {
+          "frames": 0,
+          "coverage": 0,
+          "median_3d_mm": null,
+          "p95_3d_mm": null,
+          "median_range_mm": null,
+          "median_range_half_width_mm": null,
+          "range_inside": null
+        },
+        "median_depth": {
+          "frames": 0,
+          "coverage": 0,
+          "median_3d_mm": null,
+          "p95_3d_mm": null,
+          "median_range_mm": null,
+          "median_range_half_width_mm": null,
+          "range_inside": null
+        },
+        "appearance": {
+          "frames": 0,
+          "coverage": 0,
+          "median_3d_mm": null,
+          "p95_3d_mm": null,
+          "median_range_mm": null,
+          "median_range_half_width_mm": null,
+          "range_inside": null
+        }
+      },
+      "stereo_ray": {
+        "stereo_ray": {
+          "frames": 19,
+          "coverage": 19,
+          "median_3d_mm": 8.628101396713307,
+          "p95_3d_mm": 27.45699468187251,
+          "median_range_mm": 4.694922595272749,
+          "median_range_half_width_mm": 53.33333333333333,
+          "range_inside": 19
+        },
+        "last_point": {
+          "frames": 19,
+          "coverage": 19,
+          "median_3d_mm": 232.60256988251328,
+          "p95_3d_mm": 423.96948162917323,
+          "median_range_mm": 129.89344492844373,
+          "median_range_half_width_mm": null,
+          "range_inside": null
+        },
+        "linear": {
+          "frames": 19,
+          "coverage": 19,
+          "median_3d_mm": 56.058855309106605,
+          "p95_3d_mm": 138.8160320744459,
+          "median_range_mm": 35.369890947926365,
+          "median_range_half_width_mm": null,
+          "range_inside": null
+        },
+        "linear_on_ray": {
+          "frames": 19,
+          "coverage": 19,
+          "median_3d_mm": 35.79608243776074,
+          "p95_3d_mm": 94.70386812931001,
+          "median_range_mm": 35.36989094792664,
+          "median_range_half_width_mm": null,
+          "range_inside": null
+        },
+        "gravity": {
+          "frames": 19,
+          "coverage": 19,
+          "median_3d_mm": 11.63008312002879,
+          "p95_3d_mm": 34.86958915975881,
+          "median_range_mm": 4.69492259527208,
+          "median_range_half_width_mm": null,
+          "range_inside": null
+        },
+        "median_depth": {
+          "frames": 19,
+          "coverage": 19,
+          "median_3d_mm": 177.65434941658506,
+          "p95_3d_mm": 242.57421087526458,
+          "median_range_mm": 177.50228381222118,
+          "median_range_half_width_mm": null,
+          "range_inside": null
+        }
+      }
+    }
+  },
+  "by_drop_frame": {
+    "1": {
+      "frames": 6,
+      "methods": {
+        "abstain": {
+          "frames": 6,
+          "coverage": 0,
+          "median_3d_mm": null,
+          "p95_3d_mm": null,
+          "median_range_mm": null,
+          "median_range_half_width_mm": null,
+          "range_inside": null
+        },
+        "median_depth": {
+          "frames": 6,
+          "coverage": 6,
+          "median_3d_mm": 120.1179455931753,
+          "p95_3d_mm": 168.92817166308774,
+          "median_range_mm": 119.70371978183327,
+          "median_range_half_width_mm": null,
+          "range_inside": null
+        },
+        "appearance": {
+          "frames": 6,
+          "coverage": 6,
+          "median_3d_mm": 449.8625238213001,
+          "p95_3d_mm": 1920.2012325977528,
+          "median_range_mm": 449.856633107922,
+          "median_range_half_width_mm": 1621.90958264636,
+          "range_inside": 6
+        },
+        "qualified_appearance": {
+          "frames": 6,
+          "coverage": 0,
+          "median_3d_mm": null,
+          "p95_3d_mm": null,
+          "median_range_mm": null,
+          "median_range_half_width_mm": null,
+          "range_inside": null
+        },
+        "last_point": {
+          "frames": 6,
+          "coverage": 6,
+          "median_3d_mm": 113.48587950410291,
+          "p95_3d_mm": 117.79306667980885,
+          "median_range_mm": 57.05851548089567,
+          "median_range_half_width_mm": null,
+          "range_inside": null
+        },
+        "linear": {
+          "frames": 6,
+          "coverage": 6,
+          "median_3d_mm": 27.612967554653665,
+          "p95_3d_mm": 30.53199076037516,
+          "median_range_mm": 17.69685761970602,
+          "median_range_half_width_mm": null,
+          "range_inside": null
+        },
+        "linear_on_ray": {
+          "frames": 6,
+          "coverage": 6,
+          "median_3d_mm": 19.49994088262526,
+          "p95_3d_mm": 24.736704383232457,
+          "median_range_mm": 17.6968576197055,
+          "median_range_half_width_mm": null,
+          "range_inside": null
+        },
+        "gravity": {
+          "frames": 6,
+          "coverage": 6,
+          "median_3d_mm": 5.781321887017167,
+          "p95_3d_mm": 9.962629243166067,
+          "median_range_mm": 2.137642496154476,
+          "median_range_half_width_mm": null,
+          "range_inside": null
+        },
+        "stereo_ray": {
+          "frames": 6,
+          "coverage": 6,
+          "median_3d_mm": 6.835275443457668,
+          "p95_3d_mm": 12.928466816475199,
+          "median_range_mm": 2.137642496153884,
+          "median_range_half_width_mm": 35.333333333333336,
+          "range_inside": 6
+        }
+      },
+      "matched": {
+        "appearance": {
+          "appearance": {
+            "frames": 6,
+            "coverage": 6,
+            "median_3d_mm": 449.8625238213001,
+            "p95_3d_mm": 1920.2012325977528,
+            "median_range_mm": 449.856633107922,
+            "median_range_half_width_mm": 1621.90958264636,
+            "range_inside": 6
+          },
+          "median_depth": {
+            "frames": 6,
+            "coverage": 6,
+            "median_3d_mm": 120.1179455931753,
+            "p95_3d_mm": 168.92817166308774,
+            "median_range_mm": 119.70371978183327,
+            "median_range_half_width_mm": null,
+            "range_inside": null
+          }
+        },
+        "qualified_appearance": {
+          "qualified_appearance": {
+            "frames": 0,
+            "coverage": 0,
+            "median_3d_mm": null,
+            "p95_3d_mm": null,
+            "median_range_mm": null,
+            "median_range_half_width_mm": null,
+            "range_inside": null
+          },
+          "median_depth": {
+            "frames": 0,
+            "coverage": 0,
+            "median_3d_mm": null,
+            "p95_3d_mm": null,
+            "median_range_mm": null,
+            "median_range_half_width_mm": null,
+            "range_inside": null
+          },
+          "appearance": {
+            "frames": 0,
+            "coverage": 0,
+            "median_3d_mm": null,
+            "p95_3d_mm": null,
+            "median_range_mm": null,
+            "median_range_half_width_mm": null,
+            "range_inside": null
+          }
+        },
+        "stereo_ray": {
+          "stereo_ray": {
+            "frames": 6,
+            "coverage": 6,
+            "median_3d_mm": 6.835275443457668,
+            "p95_3d_mm": 12.928466816475199,
+            "median_range_mm": 2.137642496153884,
+            "median_range_half_width_mm": 35.333333333333336,
+            "range_inside": 6
+          },
+          "last_point": {
+            "frames": 6,
+            "coverage": 6,
+            "median_3d_mm": 113.48587950410291,
+            "p95_3d_mm": 117.79306667980885,
+            "median_range_mm": 57.05851548089567,
+            "median_range_half_width_mm": null,
+            "range_inside": null
+          },
+          "linear": {
+            "frames": 6,
+            "coverage": 6,
+            "median_3d_mm": 27.612967554653665,
+            "p95_3d_mm": 30.53199076037516,
+            "median_range_mm": 17.69685761970602,
+            "median_range_half_width_mm": null,
+            "range_inside": null
+          },
+          "linear_on_ray": {
+            "frames": 6,
+            "coverage": 6,
+            "median_3d_mm": 19.49994088262526,
+            "p95_3d_mm": 24.736704383232457,
+            "median_range_mm": 17.6968576197055,
+            "median_range_half_width_mm": null,
+            "range_inside": null
+          },
+          "gravity": {
+            "frames": 6,
+            "coverage": 6,
+            "median_3d_mm": 5.781321887017167,
+            "p95_3d_mm": 9.962629243166067,
+            "median_range_mm": 2.137642496154476,
+            "median_range_half_width_mm": null,
+            "range_inside": null
+          },
+          "median_depth": {
+            "frames": 6,
+            "coverage": 6,
+            "median_3d_mm": 120.1179455931753,
+            "p95_3d_mm": 168.92817166308774,
+            "median_range_mm": 119.70371978183327,
+            "median_range_half_width_mm": null,
+            "range_inside": null
+          }
+        }
+      }
+    },
+    "2": {
+      "frames": 6,
+      "methods": {
+        "abstain": {
+          "frames": 6,
+          "coverage": 0,
+          "median_3d_mm": null,
+          "p95_3d_mm": null,
+          "median_range_mm": null,
+          "median_range_half_width_mm": null,
+          "range_inside": null
+        },
+        "median_depth": {
+          "frames": 6,
+          "coverage": 6,
+          "median_3d_mm": 169.90923790443054,
+          "p95_3d_mm": 226.79547127949954,
+          "median_range_mm": 169.78526076215766,
+          "median_range_half_width_mm": null,
+          "range_inside": null
+        },
+        "appearance": {
+          "frames": 6,
+          "coverage": 6,
+          "median_3d_mm": 230.52468055277424,
+          "p95_3d_mm": 688.7461618362879,
+          "median_range_mm": 230.4433909247022,
+          "median_range_half_width_mm": 1080.806121440274,
+          "range_inside": 6
+        },
+        "qualified_appearance": {
+          "frames": 6,
+          "coverage": 0,
+          "median_3d_mm": null,
+          "p95_3d_mm": null,
+          "median_range_mm": null,
+          "median_range_half_width_mm": null,
+          "range_inside": null
+        },
+        "last_point": {
+          "frames": 6,
+          "coverage": 6,
+          "median_3d_mm": 231.38423465952297,
+          "p95_3d_mm": 236.62407351449963,
+          "median_range_mm": 124.92099973531474,
+          "median_range_half_width_mm": null,
+          "range_inside": null
+        },
+        "linear": {
+          "frames": 6,
+          "coverage": 6,
+          "median_3d_mm": 57.04270962306856,
+          "p95_3d_mm": 61.60747779693745,
+          "median_range_mm": 37.560669014293936,
+          "median_range_half_width_mm": null,
+          "range_inside": null
+        },
+        "linear_on_ray": {
+          "frames": 6,
+          "coverage": 6,
+          "median_3d_mm": 37.79108036749291,
+          "p95_3d_mm": 45.05201279637524,
+          "median_range_mm": 37.560669014293666,
+          "median_range_half_width_mm": null,
+          "range_inside": null
+        },
+        "gravity": {
+          "frames": 6,
+          "coverage": 6,
+          "median_3d_mm": 11.529446528682083,
+          "p95_3d_mm": 17.45012645551556,
+          "median_range_mm": 4.248349502928019,
+          "median_range_half_width_mm": null,
+          "range_inside": null
+        },
+        "stereo_ray": {
+          "frames": 6,
+          "coverage": 6,
+          "median_3d_mm": 4.500613528795649,
+          "p95_3d_mm": 11.222143054986555,
+          "median_range_mm": 4.248349502928721,
+          "median_range_half_width_mm": 53.33333333333333,
+          "range_inside": 6
+        }
+      },
+      "matched": {
+        "appearance": {
+          "appearance": {
+            "frames": 6,
+            "coverage": 6,
+            "median_3d_mm": 230.52468055277424,
+            "p95_3d_mm": 688.7461618362879,
+            "median_range_mm": 230.4433909247022,
+            "median_range_half_width_mm": 1080.806121440274,
+            "range_inside": 6
+          },
+          "median_depth": {
+            "frames": 6,
+            "coverage": 6,
+            "median_3d_mm": 169.90923790443054,
+            "p95_3d_mm": 226.79547127949954,
+            "median_range_mm": 169.78526076215766,
+            "median_range_half_width_mm": null,
+            "range_inside": null
+          }
+        },
+        "qualified_appearance": {
+          "qualified_appearance": {
+            "frames": 0,
+            "coverage": 0,
+            "median_3d_mm": null,
+            "p95_3d_mm": null,
+            "median_range_mm": null,
+            "median_range_half_width_mm": null,
+            "range_inside": null
+          },
+          "median_depth": {
+            "frames": 0,
+            "coverage": 0,
+            "median_3d_mm": null,
+            "p95_3d_mm": null,
+            "median_range_mm": null,
+            "median_range_half_width_mm": null,
+            "range_inside": null
+          },
+          "appearance": {
+            "frames": 0,
+            "coverage": 0,
+            "median_3d_mm": null,
+            "p95_3d_mm": null,
+            "median_range_mm": null,
+            "median_range_half_width_mm": null,
+            "range_inside": null
+          }
+        },
+        "stereo_ray": {
+          "stereo_ray": {
+            "frames": 6,
+            "coverage": 6,
+            "median_3d_mm": 4.500613528795649,
+            "p95_3d_mm": 11.222143054986555,
+            "median_range_mm": 4.248349502928721,
+            "median_range_half_width_mm": 53.33333333333333,
+            "range_inside": 6
+          },
+          "last_point": {
+            "frames": 6,
+            "coverage": 6,
+            "median_3d_mm": 231.38423465952297,
+            "p95_3d_mm": 236.62407351449963,
+            "median_range_mm": 124.92099973531474,
+            "median_range_half_width_mm": null,
+            "range_inside": null
+          },
+          "linear": {
+            "frames": 6,
+            "coverage": 6,
+            "median_3d_mm": 57.04270962306856,
+            "p95_3d_mm": 61.60747779693745,
+            "median_range_mm": 37.560669014293936,
+            "median_range_half_width_mm": null,
+            "range_inside": null
+          },
+          "linear_on_ray": {
+            "frames": 6,
+            "coverage": 6,
+            "median_3d_mm": 37.79108036749291,
+            "p95_3d_mm": 45.05201279637524,
+            "median_range_mm": 37.560669014293666,
+            "median_range_half_width_mm": null,
+            "range_inside": null
+          },
+          "gravity": {
+            "frames": 6,
+            "coverage": 6,
+            "median_3d_mm": 11.529446528682083,
+            "p95_3d_mm": 17.45012645551556,
+            "median_range_mm": 4.248349502928019,
+            "median_range_half_width_mm": null,
+            "range_inside": null
+          },
+          "median_depth": {
+            "frames": 6,
+            "coverage": 6,
+            "median_3d_mm": 169.90923790443054,
+            "p95_3d_mm": 226.79547127949954,
+            "median_range_mm": 169.78526076215766,
+            "median_range_half_width_mm": null,
+            "range_inside": null
+          }
+        }
+      }
+    },
+    "3": {
+      "frames": 6,
+      "methods": {
+        "abstain": {
+          "frames": 6,
+          "coverage": 0,
+          "median_3d_mm": null,
+          "p95_3d_mm": null,
+          "median_range_mm": null,
+          "median_range_half_width_mm": null,
+          "range_inside": null
+        },
+        "median_depth": {
+          "frames": 6,
+          "coverage": 6,
+          "median_3d_mm": 208.007961561893,
+          "p95_3d_mm": 233.6020823362793,
+          "median_range_mm": 207.9626720081364,
+          "median_range_half_width_mm": null,
+          "range_inside": null
+        },
+        "appearance": {
+          "frames": 6,
+          "coverage": 6,
+          "median_3d_mm": 686.7326164774287,
+          "p95_3d_mm": 1520.5486289906412,
+          "median_range_mm": 686.5933717433335,
+          "median_range_half_width_mm": 2583.3745902309374,
+          "range_inside": 6
+        },
+        "qualified_appearance": {
+          "frames": 6,
+          "coverage": 0,
+          "median_3d_mm": null,
+          "p95_3d_mm": null,
+          "median_range_mm": null,
+          "median_range_half_width_mm": null,
+          "range_inside": null
+        },
+        "last_point": {
+          "frames": 6,
+          "coverage": 6,
+          "median_3d_mm": 318.9903453688414,
+          "p95_3d_mm": 355.4195727460687,
+          "median_range_mm": 180.11915310268157,
+          "median_range_half_width_mm": null,
+          "range_inside": null
+        },
+        "linear": {
+          "frames": 6,
+          "coverage": 6,
+          "median_3d_mm": 85.37857442550433,
+          "p95_3d_mm": 101.07708684921295,
+          "median_range_mm": 60.89200739701026,
+          "median_range_half_width_mm": null,
+          "range_inside": null
+        },
+        "linear_on_ray": {
+          "frames": 6,
+          "coverage": 6,
+          "median_3d_mm": 61.027419392664996,
+          "p95_3d_mm": 68.77907823151695,
+          "median_range_mm": 60.89200739700983,
+          "median_range_half_width_mm": null,
+          "range_inside": null
+        },
+        "gravity": {
+          "frames": 6,
+          "coverage": 6,
+          "median_3d_mm": 25.75954002058884,
+          "p95_3d_mm": 140.23990500104378,
+          "median_range_mm": 17.84198880972848,
+          "median_range_half_width_mm": null,
+          "range_inside": null
+        },
+        "stereo_ray": {
+          "frames": 6,
+          "coverage": 5,
+          "median_3d_mm": 16.280933756704485,
+          "p95_3d_mm": 44.72167715337667,
+          "median_range_mm": 15.565496335571208,
+          "median_range_half_width_mm": 78.00000000000001,
+          "range_inside": 5
+        }
+      },
+      "matched": {
+        "appearance": {
+          "appearance": {
+            "frames": 6,
+            "coverage": 6,
+            "median_3d_mm": 686.7326164774287,
+            "p95_3d_mm": 1520.5486289906412,
+            "median_range_mm": 686.5933717433335,
+            "median_range_half_width_mm": 2583.3745902309374,
+            "range_inside": 6
+          },
+          "median_depth": {
+            "frames": 6,
+            "coverage": 6,
+            "median_3d_mm": 208.007961561893,
+            "p95_3d_mm": 233.6020823362793,
+            "median_range_mm": 207.9626720081364,
+            "median_range_half_width_mm": null,
+            "range_inside": null
+          }
+        },
+        "qualified_appearance": {
+          "qualified_appearance": {
+            "frames": 0,
+            "coverage": 0,
+            "median_3d_mm": null,
+            "p95_3d_mm": null,
+            "median_range_mm": null,
+            "median_range_half_width_mm": null,
+            "range_inside": null
+          },
+          "median_depth": {
+            "frames": 0,
+            "coverage": 0,
+            "median_3d_mm": null,
+            "p95_3d_mm": null,
+            "median_range_mm": null,
+            "median_range_half_width_mm": null,
+            "range_inside": null
+          },
+          "appearance": {
+            "frames": 0,
+            "coverage": 0,
+            "median_3d_mm": null,
+            "p95_3d_mm": null,
+            "median_range_mm": null,
+            "median_range_half_width_mm": null,
+            "range_inside": null
+          }
+        },
+        "stereo_ray": {
+          "stereo_ray": {
+            "frames": 5,
+            "coverage": 5,
+            "median_3d_mm": 16.280933756704485,
+            "p95_3d_mm": 44.72167715337667,
+            "median_range_mm": 15.565496335571208,
+            "median_range_half_width_mm": 78.00000000000001,
+            "range_inside": 5
+          },
+          "last_point": {
+            "frames": 5,
+            "coverage": 5,
+            "median_3d_mm": 320.03069846765715,
+            "p95_3d_mm": 356.36730112896146,
+            "median_range_mm": 188.93504654257268,
+            "median_range_half_width_mm": null,
+            "range_inside": null
+          },
+          "linear": {
+            "frames": 5,
+            "coverage": 5,
+            "median_3d_mm": 89.38229557461528,
+            "p95_3d_mm": 101.50480775931813,
+            "median_range_mm": 61.19717489462657,
+            "median_range_half_width_mm": null,
+            "range_inside": null
+          },
+          "linear_on_ray": {
+            "frames": 5,
+            "coverage": 5,
+            "median_3d_mm": 61.37161324572544,
+            "p95_3d_mm": 69.21464577589661,
+            "median_range_mm": 61.197174894625654,
+            "median_range_half_width_mm": null,
+            "range_inside": null
+          },
+          "gravity": {
+            "frames": 5,
+            "coverage": 5,
+            "median_3d_mm": 20.02771557568348,
+            "p95_3d_mm": 58.51716201961163,
+            "median_range_mm": 15.565496335571638,
+            "median_range_half_width_mm": null,
+            "range_inside": null
+          },
+          "median_depth": {
+            "frames": 5,
+            "coverage": 5,
+            "median_3d_mm": 219.28166510586365,
+            "p95_3d_mm": 234.43736664408115,
+            "median_range_mm": 219.2207950476057,
+            "median_range_half_width_mm": null,
+            "range_inside": null
+          }
+        }
+      }
+    },
+    "4": {
+      "frames": 6,
+      "methods": {
+        "abstain": {
+          "frames": 6,
+          "coverage": 0,
+          "median_3d_mm": null,
+          "p95_3d_mm": null,
+          "median_range_mm": null,
+          "median_range_half_width_mm": null,
+          "range_inside": null
+        },
+        "median_depth": {
+          "frames": 6,
+          "coverage": 6,
+          "median_3d_mm": 182.65362370762261,
+          "p95_3d_mm": 268.551791372882,
+          "median_range_mm": 182.5661552938937,
+          "median_range_half_width_mm": null,
+          "range_inside": null
+        },
+        "appearance": {
+          "frames": 6,
+          "coverage": 6,
+          "median_3d_mm": 735.4140968834761,
+          "p95_3d_mm": 1371.1399701662508,
+          "median_range_mm": 735.3468442812446,
+          "median_range_half_width_mm": 2581.175494979831,
+          "range_inside": 6
+        },
+        "qualified_appearance": {
+          "frames": 6,
+          "coverage": 0,
+          "median_3d_mm": null,
+          "p95_3d_mm": null,
+          "median_range_mm": null,
+          "median_range_half_width_mm": null,
+          "range_inside": null
+        },
+        "last_point": {
+          "frames": 6,
+          "coverage": 6,
+          "median_3d_mm": 386.5019643559845,
+          "p95_3d_mm": 433.6554884969588,
+          "median_range_mm": 167.69876420368234,
+          "median_range_half_width_mm": null,
+          "range_inside": null
+        },
+        "linear": {
+          "frames": 6,
+          "coverage": 6,
+          "median_3d_mm": 110.46340187548063,
+          "p95_3d_mm": 176.18345827441712,
+          "median_range_mm": 79.14166922762817,
+          "median_range_half_width_mm": null,
+          "range_inside": null
+        },
+        "linear_on_ray": {
+          "frames": 6,
+          "coverage": 6,
+          "median_3d_mm": 79.21955579848054,
+          "p95_3d_mm": 116.36429003349356,
+          "median_range_mm": 79.1416692276282,
+          "median_range_half_width_mm": null,
+          "range_inside": null
+        },
+        "gravity": {
+          "frames": 6,
+          "coverage": 6,
+          "median_3d_mm": 180.6286623692451,
+          "p95_3d_mm": 314.25738573164864,
+          "median_range_mm": 130.94169588049445,
+          "median_range_half_width_mm": null,
+          "range_inside": null
+        },
+        "stereo_ray": {
+          "frames": 6,
+          "coverage": 2,
+          "median_3d_mm": 18.797301103549387,
+          "p95_3d_mm": 24.256687901925215,
+          "median_range_mm": 17.840516971363705,
+          "median_range_half_width_mm": 109.33333333333333,
+          "range_inside": 2
+        }
+      },
+      "matched": {
+        "appearance": {
+          "appearance": {
+            "frames": 6,
+            "coverage": 6,
+            "median_3d_mm": 735.4140968834761,
+            "p95_3d_mm": 1371.1399701662508,
+            "median_range_mm": 735.3468442812446,
+            "median_range_half_width_mm": 2581.175494979831,
+            "range_inside": 6
+          },
+          "median_depth": {
+            "frames": 6,
+            "coverage": 6,
+            "median_3d_mm": 182.65362370762261,
+            "p95_3d_mm": 268.551791372882,
+            "median_range_mm": 182.5661552938937,
+            "median_range_half_width_mm": null,
+            "range_inside": null
+          }
+        },
+        "qualified_appearance": {
+          "qualified_appearance": {
+            "frames": 0,
+            "coverage": 0,
+            "median_3d_mm": null,
+            "p95_3d_mm": null,
+            "median_range_mm": null,
+            "median_range_half_width_mm": null,
+            "range_inside": null
+          },
+          "median_depth": {
+            "frames": 0,
+            "coverage": 0,
+            "median_3d_mm": null,
+            "p95_3d_mm": null,
+            "median_range_mm": null,
+            "median_range_half_width_mm": null,
+            "range_inside": null
+          },
+          "appearance": {
+            "frames": 0,
+            "coverage": 0,
+            "median_3d_mm": null,
+            "p95_3d_mm": null,
+            "median_range_mm": null,
+            "median_range_half_width_mm": null,
+            "range_inside": null
+          }
+        },
+        "stereo_ray": {
+          "stereo_ray": {
+            "frames": 2,
+            "coverage": 2,
+            "median_3d_mm": 18.797301103549387,
+            "p95_3d_mm": 24.256687901925215,
+            "median_range_mm": 17.840516971363705,
+            "median_range_half_width_mm": 109.33333333333333,
+            "range_inside": 2
+          },
+          "last_point": {
+            "frames": 2,
+            "coverage": 2,
+            "median_3d_mm": 429.93010124011823,
+            "p95_3d_mm": 436.6357983024313,
+            "median_range_mm": 248.55664716826564,
+            "median_range_half_width_mm": null,
+            "range_inside": null
+          },
+          "linear": {
+            "frames": 2,
+            "coverage": 2,
+            "median_3d_mm": 145.6082921412705,
+            "p95_3d_mm": 153.24958471644817,
+            "median_range_mm": 95.49303516034641,
+            "median_range_half_width_mm": null,
+            "range_inside": null
+          },
+          "linear_on_ray": {
+            "frames": 2,
+            "coverage": 2,
+            "median_3d_mm": 95.69842914986378,
+            "p95_3d_mm": 96.81731029798677,
+            "median_range_mm": 95.49303516034612,
+            "median_range_half_width_mm": null,
+            "range_inside": null
+          },
+          "gravity": {
+            "frames": 2,
+            "coverage": 2,
+            "median_3d_mm": 27.174780678261165,
+            "p95_3d_mm": 30.157460793909465,
+            "median_range_mm": 17.840516971363503,
+            "median_range_half_width_mm": null,
+            "range_inside": null
+          },
+          "median_depth": {
+            "frames": 2,
+            "coverage": 2,
+            "median_3d_mm": 251.3680088707152,
+            "p95_3d_mm": 282.29881737461545,
+            "median_range_mm": 251.29479867395764,
+            "median_range_half_width_mm": null,
+            "range_inside": null
+          }
+        }
+      }
+    }
+  },
+  "courses": [
+    {
+      "camera_seed": 236026241,
+      "trajectory_seed": 918826991,
+      "table_resized": false,
+      "source_ticks": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
+      "source_frames": 20,
+      "last_mount_source_frames": {
+        "left": 15,
+        "right": 10,
+        "spare": 10
+      },
+      "monocular": [
+        {
+          "tick": 20,
+          "registered": [
+            "spare"
+          ],
+          "detected": [
+            "spare"
+          ],
+          "truth_m": [
+            -0.2630105291657049,
+            -0.8203067402640853,
+            0.10309232321346451
+          ],
+          "methods": {
+            "last_point": {
+              "estimate_m": [
+                -0.25850728636289955,
+                -0.7301129868627786,
+                0.1735512594304215
+              ],
+              "error_m": 0.11454105832050777,
+              "range_error_m": 0.06075421222289551,
+              "interval_half_width_m": null,
+              "interval_contains_range": null,
+              "source_frames": null
+            },
+            "linear": {
+              "estimate_m": [
+                -0.25924684474486265,
+                -0.8290924722531858,
+                0.12466933949360504
+              ],
+              "error_m": 0.02359919571844438,
+              "range_error_m": 0.016411708480908442,
+              "interval_half_width_m": null,
+              "interval_contains_range": null,
+              "source_frames": null
+            },
+            "linear_on_ray": {
+              "estimate_m": [
+                -0.2558288274988336,
+                -0.8153324497608789,
+                0.11880953920408732
+              ],
+              "error_m": 0.017981971063766075,
+              "range_error_m": 0.016411708480908928,
+              "interval_half_width_m": null,
+              "interval_contains_range": null,
+              "source_frames": null
+            },
+            "gravity": {
+              "estimate_m": [
+                -0.25924684474486265,
+                -0.8290924722531858,
+                0.09741933949360508
+              ],
+              "error_m": 0.011114726775309608,
+              "range_error_m": 0.002054501410010329,
+              "interval_half_width_m": null,
+              "interval_contains_range": null,
+              "source_frames": null
+            },
+            "median_depth": {
+              "estimate_m": [
+                -0.13864862287941682,
+                -0.7979517983187767,
+                0.22797403004874317
+              ],
+              "error_m": 0.17765434941658506,
+              "range_error_m": 0.1775022838122212,
+              "interval_half_width_m": null,
+              "interval_contains_range": null,
+              "source_frames": null
+            },
+            "appearance": {
+              "estimate_m": [
+                -0.19426323355263797,
+                -0.806200786843237,
+                0.1761637377098273
+              ],
+              "error_m": 0.10131436320937329,
+              "range_error_m": 0.10104747935720627,
+              "interval_half_width_m": 2.1231748516461164,
+              "interval_contains_range": true,
+              "source_frames": 10
+            },
+            "stereo_ray": {
+              "estimate_m": [
+                -0.2692614833144362,
+                -0.8173248366954382,
+                0.10629574442480383
+              ],
+              "error_m": 0.007630732869096566,
+              "range_error_m": 0.0020545014100098813,
+              "interval_half_width_m": 0.035333333333333335,
+              "interval_contains_range": true,
+              "source_frames": 4
+            }
+          }
+        },
+        {
+          "tick": 21,
+          "registered": [
+            "spare"
+          ],
+          "detected": [
+            "spare"
+          ],
+          "truth_m": [
+            -0.26355706176438704,
+            -0.9091536573240588,
+            0.01959301629979615
+          ],
+          "methods": {
+            "last_point": {
+              "estimate_m": [
+                -0.25850728636289955,
+                -0.7301129868627786,
+                0.1735512594304215
+              ],
+              "error_m": 0.23618679586018132,
+              "range_error_m": 0.1334898821059921,
+              "interval_half_width_m": null,
+              "interval_contains_range": null,
+              "source_frames": null
+            },
+            "linear": {
+              "estimate_m": [
+                -0.25942064478202836,
+                -0.9251897029623279,
+                0.06960816420184819
+              ],
+              "error_m": 0.052685669065019335,
+              "range_error_m": 0.03536989094792636,
+              "interval_half_width_m": null,
+              "interval_contains_range": null,
+              "source_frames": null
+            },
+            "linear_on_ray": {
+              "estimate_m": [
+                -0.23631246909301185,
+                -0.9017030057399338,
+                0.04133321645207744
+              ],
+              "error_m": 0.03564290029610984,
+              "range_error_m": 0.03536989094792664,
+              "interval_half_width_m": null,
+              "interval_contains_range": null,
+              "source_frames": null
+            },
+            "gravity": {
+              "estimate_m": [
+                -0.25942064478202836,
+                -0.9251897029623279,
+                0.009658164201848243
+              ],
+              "error_m": 0.019312327445771382,
+              "range_error_m": 0.006030945777451608,
+              "interval_half_width_m": null,
+              "interval_contains_range": null,
+              "source_frames": null
+            },
+            "median_depth": {
+              "estimate_m": [
+                -0.09319966208175323,
+                -0.8752030694347239,
+                0.18030683730375419
+              ],
+              "error_m": 0.2366499911395569,
+              "range_error_m": 0.23660902592779962,
+              "interval_half_width_m": null,
+              "interval_contains_range": null,
+              "source_frames": null
+            },
+            "appearance": {
+              "estimate_m": [
+                -0.16522783110107797,
+                -0.8885403935432702,
+                0.11036190602206508
+              ],
+              "error_m": 0.13539769417515216,
+              "range_error_m": 0.1353260818619154,
+              "interval_half_width_m": 2.145233742233437,
+              "interval_contains_range": true,
+              "source_frames": 10
+            },
+            "stereo_ray": {
+              "estimate_m": [
+                -0.2657550025096671,
+                -0.907154825716772,
+                0.012742235942295732
+              ],
+              "error_m": 0.007467225911994686,
+              "range_error_m": 0.006030945777451635,
+              "interval_half_width_m": 0.05333333333333333,
+              "interval_contains_range": true,
+              "source_frames": 4
+            }
+          }
+        },
+        {
+          "tick": 22,
+          "registered": [
+            "spare"
+          ],
+          "detected": [
+            "spare"
+          ],
+          "truth_m": [
+            -0.26450836611802714,
+            -0.9942602054344314,
+            0.07392618388014194
+          ],
+          "methods": {
+            "last_point": {
+              "estimate_m": [
+                -0.25850728636289955,
+                -0.7301129868627786,
+                0.1735512594304215
+              ],
+              "error_m": 0.2823737270281476,
+              "range_error_m": 0.11488063067653888,
+              "interval_half_width_m": null,
+              "interval_contains_range": null,
+              "source_frames": null
+            },
+            "linear": {
+              "estimate_m": [
+                -0.2595944448191941,
+                -1.02128693367147,
+                0.01454698891009132
+              ],
+              "error_m": 0.06542537318977365,
+              "range_error_m": 0.04110930293708412,
+              "interval_half_width_m": null,
+              "interval_contains_range": null,
+              "source_frames": null
+            },
+            "linear_on_ray": {
+              "estimate_m": [
+                -0.2946599544602333,
+                -1.0173238367192867,
+                0.0507203882032532
+              ],
+              "error_m": 0.044492227642579645,
+              "range_error_m": 0.041109302937083765,
+              "interval_half_width_m": null,
+              "interval_contains_range": null,
+              "source_frames": null
+            },
+            "gravity": {
+              "estimate_m": [
+                -0.2595944448191941,
+                -1.02128693367147,
+                -0.08900301108990863
+              ],
+              "error_m": 0.16522866953201137,
+              "range_error_m": 0.11125742943666582,
+              "interval_half_width_m": null,
+              "interval_contains_range": null,
+              "source_frames": null
+            },
+            "median_depth": {
+              "estimate_m": [
+                -0.12853824012746262,
+                -0.979545493334584,
+                0.20761532893027024
+              ],
+              "error_m": 0.1912516285376562,
+              "range_error_m": 0.1904930494419138,
+              "interval_half_width_m": null,
+              "interval_contains_range": null,
+              "source_frames": null
+            },
+            "appearance": {
+              "estimate_m": [
+                -0.7191429400886951,
+                -1.11385705669264,
+                -0.3501858577821153
+              ],
+              "error_m": 0.6331406056819425,
+              "range_error_m": 0.6329118761965766,
+              "interval_half_width_m": 2.6279269407122396,
+              "interval_contains_range": true,
+              "source_frames": 10
+            }
+          }
+        },
+        {
+          "tick": 23,
+          "registered": [
+            "spare"
+          ],
+          "detected": [
+            "spare"
+          ],
+          "truth_m": [
+            -0.2654963158422523,
+            -1.0775657896230144,
+            0.13856814014547358
+          ],
+          "methods": {
+            "last_point": {
+              "estimate_m": [
+                -0.25850728636289955,
+                -0.7301129868627786,
+                0.1735512594304215
+              ],
+              "error_m": 0.3492794229752327,
+              "range_error_m": 0.09338131065590517,
+              "interval_half_width_m": null,
+              "interval_contains_range": null,
+              "source_frames": null
+            },
+            "linear": {
+              "estimate_m": [
+                -0.25976824485635985,
+                -1.1173841643806122,
+                -0.04051418638166552
+              ],
+              "error_m": 0.1835450719576224,
+              "range_error_m": 0.12209464762277121,
+              "interval_half_width_m": null,
+              "interval_contains_range": null,
+              "source_frames": null
+            },
+            "linear_on_ray": {
+              "estimate_m": [
+                -0.3578009729127314,
+                -1.1111766741606488,
+                0.064815457219082
+              ],
+              "error_m": 0.12283850990280608,
+              "range_error_m": 0.12209464762277214,
+              "interval_half_width_m": null,
+              "interval_contains_range": null,
+              "source_frames": null
+            },
+            "gravity": {
+              "estimate_m": [
+                -0.25976824485635985,
+                -1.1173841643806122,
+                -0.19856418638166543
+              ],
+              "error_m": 0.33952395991322526,
+              "range_error_m": 0.2269268823317375,
+              "interval_half_width_m": null,
+              "interval_contains_range": null,
+              "source_frames": null
+            },
+            "median_depth": {
+              "estimate_m": [
+                -0.1671603044882506,
+                -1.0618659841770661,
+                0.23934305030588288
+              ],
+              "error_m": 0.14167581846558552,
+              "range_error_m": 0.14103134758230407,
+              "interval_half_width_m": null,
+              "interval_contains_range": null,
+              "source_frames": null
+            },
+            "appearance": {
+              "estimate_m": [
+                -0.7860756929638644,
+                -1.2219532577866798,
+                -0.327261200338679
+              ],
+              "error_m": 0.7133355474830478,
+              "range_error_m": 0.7132078285927089,
+              "interval_half_width_m": 2.661556491984624,
+              "interval_contains_range": true,
+              "source_frames": 10
+            }
+          }
+        }
+      ]
+    },
+    {
+      "camera_seed": 258998363,
+      "trajectory_seed": 402379163,
+      "table_resized": true,
+      "source_ticks": [
+        0,
+        1,
+        2,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
+      "source_frames": 19,
+      "last_mount_source_frames": {
+        "left": 15,
+        "right": 10,
+        "spare": 10
+      },
+      "monocular": [
+        {
+          "tick": 20,
+          "registered": [
+            "spare"
+          ],
+          "detected": [
+            "spare"
+          ],
+          "truth_m": [
+            -0.1690058357354463,
+            -0.7104493413254108,
+            0.2050637463121583
+          ],
+          "methods": {
+            "last_point": {
+              "estimate_m": [
+                -0.16875881521836425,
+                -0.6160866812240647,
+                0.2767249410579068
+              ],
+              "error_m": 0.11848923779367528,
+              "range_error_m": 0.05544252718938636,
+              "interval_half_width_m": null,
+              "interval_contains_range": null,
+              "source_frames": null
+            },
+            "linear": {
+              "estimate_m": [
+                -0.16489590114145816,
+                -0.7076015611019798,
+                0.231506700554694
+              ],
+              "error_m": 0.02691154480219711,
+              "range_error_m": 0.02110395918828208,
+              "interval_half_width_m": null,
+              "interval_contains_range": null,
+              "source_frames": null
+            },
+            "linear_on_ray": {
+              "estimate_m": [
+                -0.1443820442434034,
+                -0.7136688285801731,
+                0.209922355954427
+              ],
+              "error_m": 0.025304195171613898,
+              "range_error_m": 0.021103959188282312,
+              "interval_half_width_m": null,
+              "interval_contains_range": null,
+              "source_frames": null
+            },
+            "gravity": {
+              "estimate_m": [
+                -0.16489590114145816,
+                -0.7076015611019798,
+                0.20425670055469394
+              ],
+              "error_m": 0.00506485314915117,
+              "range_error_m": 0.002671527855539466,
+              "interval_half_width_m": null,
+              "interval_contains_range": null,
+              "source_frames": null
+            },
+            "median_depth": {
+              "estimate_m": [
+                -0.06686710718115396,
+                -0.7060611196284592,
+                0.28145440151078294
+              ],
+              "error_m": 0.1276209565942215,
+              "range_error_m": 0.12685496979685787,
+              "interval_half_width_m": null,
+              "interval_contains_range": null,
+              "source_frames": null
+            },
+            "appearance": {
+              "estimate_m": [
+                -1.8213679379594465,
+                -0.878256727107087,
+                -1.3376275214366675
+              ],
+              "error_m": 2.2667942525023035,
+              "range_error_m": 2.26675125630882,
+              "interval_half_width_m": 3.5567374646854804,
+              "interval_contains_range": true,
+              "source_frames": 10
+            },
+            "stereo_ray": {
+              "estimate_m": [
+                -0.1578929198978236,
+                -0.7149948544218646,
+                0.19745429999713293
+              ],
+              "error_m": 0.014214860567215257,
+              "range_error_m": 0.0026715278555401673,
+              "interval_half_width_m": 0.035333333333333335,
+              "interval_contains_range": true,
+              "source_frames": 4
+            }
+          }
+        },
+        {
+          "tick": 21,
+          "registered": [
+            "spare"
+          ],
+          "detected": [
+            "spare"
+          ],
+          "truth_m": [
+            -0.16444358506437293,
+            -0.7957782328379027,
+            0.12260719788874541
+          ],
+          "methods": {
+            "last_point": {
+              "estimate_m": [
+                -0.16875881521836425,
+                -0.6160866812240647,
+                0.2767249410579068
+              ],
+              "error_m": 0.23676983273260574,
+              "range_error_m": 0.11994855454218574,
+              "interval_half_width_m": null,
+              "interval_contains_range": null,
+              "source_frames": null
+            },
+            "linear": {
+              "estimate_m": [
+                -0.15901252155623244,
+                -0.7956189798939441,
+                0.17840212101117417
+              ],
+              "error_m": 0.056058855309106606,
+              "range_error_m": 0.04221297597239565,
+              "interval_half_width_m": null,
+              "interval_contains_range": null,
+              "source_frames": null
+            },
+            "linear_on_ray": {
+              "estimate_m": [
+                -0.13427590715131377,
+                -0.7954867074072992,
+                0.15238582542528345
+              ],
+              "error_m": 0.042390334224945994,
+              "range_error_m": 0.042212975972395844,
+              "interval_half_width_m": null,
+              "interval_contains_range": null,
+              "source_frames": null
+            },
+            "gravity": {
+              "estimate_m": [
+                -0.15901252155623244,
+                -0.7956189798939441,
+                0.11845212101117407
+              ],
+              "error_m": 0.006840064048540975,
+              "range_error_m": 0.0010807846881955836,
+              "interval_half_width_m": null,
+              "interval_contains_range": null,
+              "source_frames": null
+            },
+            "median_depth": {
+              "estimate_m": [
+                -0.036555134768221365,
+                -0.7824253527507912,
+                0.2453663466399414
+              ],
+              "error_m": 0.17777391183154595,
+              "range_error_m": 0.17773170407283476,
+              "interval_half_width_m": null,
+              "interval_contains_range": null,
+              "source_frames": null
+            },
+            "appearance": {
+              "estimate_m": [
+                -0.15854526762210375,
+                -0.7987305491889926,
+                0.12929372605797562
+              ],
+              "error_m": 0.009392336208026113,
+              "range_error_m": 0.00855633590902319,
+              "interval_half_width_m": 1.1177925312338084,
+              "interval_contains_range": true,
+              "source_frames": 10
+            },
+            "stereo_ray": {
+              "estimate_m": [
+                -0.16393578928304509,
+                -0.7994510461056679,
+                0.12416468848049567
+              ],
+              "error_m": 0.004021590580702685,
+              "range_error_m": 0.0010807846881955344,
+              "interval_half_width_m": 0.05333333333333333,
+              "interval_contains_range": true,
+              "source_frames": 4
+            }
+          }
+        },
+        {
+          "tick": 22,
+          "registered": [
+            "spare"
+          ],
+          "detected": [
+            "spare"
+          ],
+          "truth_m": [
+            -0.15999013067291798,
+            -0.8792410298155839,
+            0.030987604504875144
+          ],
+          "methods": {
+            "last_point": {
+              "estimate_m": [
+                -0.16875881521836425,
+                -0.6160866812240647,
+                0.2767249410579068
+              ],
+              "error_m": 0.3601582146605326,
+              "range_error_m": 0.19742844118752276,
+              "interval_half_width_m": null,
+              "interval_contains_range": null,
+              "source_frames": null
+            },
+            "linear": {
+              "estimate_m": [
+                -0.15312914197100674,
+                -0.8836363986859085,
+                0.12529754146765432
+              ],
+              "error_m": 0.09466127319763533,
+              "range_error_m": 0.07043585249147215,
+              "interval_half_width_m": null,
+              "interval_contains_range": null,
+              "source_frames": null
+            },
+            "linear_on_ray": {
+              "estimate_m": [
+                -0.10441986227156042,
+                -0.8729182210375163,
+                0.07465511279853798
+              ],
+              "error_m": 0.07095691595341529,
+              "range_error_m": 0.07043585249147213,
+              "interval_half_width_m": null,
+              "interval_contains_range": null,
+              "source_frames": null
+            },
+            "gravity": {
+              "estimate_m": [
+                -0.15312914197100674,
+                -0.8836363986859084,
+                0.021747541467654175
+              ],
+              "error_m": 0.012319545381457382,
+              "range_error_m": 0.0021790288275772523,
+              "interval_half_width_m": null,
+              "interval_contains_range": null,
+              "source_frames": null
+            },
+            "median_depth": {
+              "estimate_m": [
+                0.013103002134534414,
+                -0.8530530205770126,
+                0.19189618865187708
+              ],
+              "error_m": 0.23777850387528865,
+              "range_error_m": 0.2376235306103986,
+              "interval_half_width_m": null,
+              "interval_contains_range": null,
+              "source_frames": null
+            },
+            "appearance": {
+              "estimate_m": [
+                -0.6743006517259258,
+                -0.9692466774473472,
+                -0.4938592541837816
+              ],
+              "error_m": 0.7403246272729149,
+              "range_error_m": 0.7402748672900902,
+              "interval_half_width_m": 2.6502171701144954,
+              "interval_contains_range": true,
+              "source_frames": 10
+            },
+            "stereo_ray": {
+              "estimate_m": [
+                -0.15546374868197432,
+                -0.8815463040999085,
+                0.02373361604354418
+              ],
+              "error_m": 0.008855663275612394,
+              "range_error_m": 0.0021790288275772116,
+              "interval_half_width_m": 0.07800000000000001,
+              "interval_contains_range": true,
+              "source_frames": 4
+            }
+          }
+        },
+        {
+          "tick": 23,
+          "registered": [
+            "spare"
+          ],
+          "detected": [
+            "spare"
+          ],
+          "truth_m": [
+            -0.15597808857391413,
+            -0.95950394021763,
+            0.06937428747902541
+          ],
+          "methods": {
+            "last_point": {
+              "estimate_m": [
+                -0.16875881521836425,
+                -0.6160866812240647,
+                0.2767249410579068
+              ],
+              "error_m": 0.401363992266126,
+              "range_error_m": 0.18306586906853484,
+              "interval_half_width_m": null,
+              "interval_contains_range": null,
+              "source_frames": null
+            },
+            "linear": {
+              "estimate_m": [
+                -0.14724576238578105,
+                -0.9716538174778727,
+                0.07219296192413448
+              ],
+              "error_m": 0.015225569405524034,
+              "range_error_m": 0.006414492488569534,
+              "interval_half_width_m": null,
+              "interval_contains_range": null,
+              "source_frames": null
+            },
+            "linear_on_ray": {
+              "estimate_m": [
+                -0.14972136024010219,
+                -0.9518621755186314,
+                0.07069205669178036
+              ],
+              "error_m": 0.0099639215601123,
+              "range_error_m": 0.006414492488570128,
+              "interval_half_width_m": null,
+              "interval_contains_range": null,
+              "source_frames": null
+            },
+            "gravity": {
+              "estimate_m": [
+                -0.14724576238578105,
+                -0.9716538174778727,
+                -0.0858570380758657
+              ],
+              "error_m": 0.15595075335381842,
+              "range_error_m": 0.1031062379658388,
+              "interval_half_width_m": null,
+              "interval_contains_range": null,
+              "source_frames": null
+            },
+            "median_depth": {
+              "estimate_m": [
+                -0.010857267197360354,
+                -0.9241720720226867,
+                0.2067839024818805
+              ],
+              "error_m": 0.20295269400129512,
+              "range_error_m": 0.20280942281711956,
+              "interval_half_width_m": null,
+              "interval_contains_range": null,
+              "source_frames": null
+            },
+            "appearance": {
+              "estimate_m": [
+                -0.7482906364884694,
+                -1.0712194898944098,
+                -0.5159275355509139
+              ],
+              "error_m": 0.8401742334175619,
+              "range_error_m": 0.8401396362985247,
+              "interval_half_width_m": 2.7026374261893618,
+              "interval_contains_range": true,
+              "source_frames": 10
+            }
+          }
+        }
+      ]
+    },
+    {
+      "camera_seed": 838991611,
+      "trajectory_seed": 535562741,
+      "table_resized": false,
+      "source_ticks": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
+      "source_frames": 20,
+      "last_mount_source_frames": {
+        "left": 15,
+        "right": 10,
+        "spare": 10
+      },
+      "monocular": [
+        {
+          "tick": 20,
+          "registered": [
+            "spare"
+          ],
+          "detected": [
+            "spare"
+          ],
+          "truth_m": [
+            0.06945581086125727,
+            -0.5953031284649288,
+            0.2936039491029072
+          ],
+          "methods": {
+            "last_point": {
+              "estimate_m": [
+                0.07680281515265511,
+                -0.5153157076238604,
+                0.35428233283811156
+              ],
+              "error_m": 0.10066693706267577,
+              "range_error_m": 0.050394100963851655,
+              "interval_half_width_m": null,
+              "interval_contains_range": null,
+              "source_frames": null
+            },
+            "linear": {
+              "estimate_m": [
+                0.06778909554964167,
+                -0.5978717851282591,
+                0.31597841580666475
+              ],
+              "error_m": 0.02258301789534781,
+              "range_error_m": 0.015191169357211848,
+              "interval_half_width_m": null,
+              "interval_contains_range": null,
+              "source_frames": null
+            },
+            "linear_on_ray": {
+              "estimate_m": [
+                0.0778084216021866,
+                -0.5925241129923364,
+                0.30654024052797313
+              ],
+              "error_m": 0.01564725755589873,
+              "range_error_m": 0.015191169357211739,
+              "interval_half_width_m": null,
+              "interval_contains_range": null,
+              "source_frames": null
+            },
+            "gravity": {
+              "estimate_m": [
+                0.06778909554964167,
+                -0.5978717851282591,
+                0.28872841580666475
+              ],
+              "error_m": 0.0057573224598604705,
+              "range_error_m": 0.004734380541024098,
+              "interval_half_width_m": null,
+              "interval_contains_range": null,
+              "source_frames": null
+            },
+            "median_depth": {
+              "estimate_m": [
+                0.14421189410664903,
+                -0.5912893783022145,
+                0.3777320735359937
+              ],
+              "error_m": 0.1126149345921291,
+              "range_error_m": 0.11255246976680866,
+              "interval_half_width_m": null,
+              "interval_contains_range": null,
+              "source_frames": null
+            },
+            "appearance": {
+              "estimate_m": [
+                -0.3799256310911363,
+                -0.601035416579247,
+                -0.18420105676243193
+              ],
+              "error_m": 0.6559528665447044,
+              "range_error_m": 0.6559421453799364,
+              "interval_half_width_m": 2.344303993858586,
+              "interval_contains_range": true,
+              "source_frames": 10
+            },
+            "stereo_ray": {
+              "estimate_m": [
+                0.06421856917378399,
+                -0.592776808545658,
+                0.2919704225923003
+              ],
+              "error_m": 0.0060398180178187705,
+              "range_error_m": 0.004734380541023982,
+              "interval_half_width_m": 0.035333333333333335,
+              "interval_contains_range": true,
+              "source_frames": 4
+            }
+          }
+        },
+        {
+          "tick": 21,
+          "registered": [
+            "spare"
+          ],
+          "detected": [
+            "spare"
+          ],
+          "truth_m": [
+            0.05985381215488285,
+            -0.6768930846109392,
+            0.224599328837766
+          ],
+          "methods": {
+            "last_point": {
+              "estimate_m": [
+                0.07680281515265511,
+                -0.5153157076238604,
+                0.35428233283811156
+              ],
+              "error_m": 0.20787544102947017,
+              "range_error_m": 0.113949567496505,
+              "interval_half_width_m": null,
+              "interval_contains_range": null,
+              "source_frames": null
+            },
+            "linear": {
+              "estimate_m": [
+                0.05650540957841896,
+                -0.6833797132342772,
+                0.2751975889588989
+              ],
+              "error_m": 0.05112212904405492,
+              "range_error_m": 0.03485285694726343,
+              "interval_half_width_m": null,
+              "interval_contains_range": null,
+              "source_frames": null
+            },
+            "linear_on_ray": {
+              "estimate_m": [
+                0.07833695504770333,
+                -0.6798245634661718,
+                0.2551139053286149
+              ],
+              "error_m": 0.03579608243776074,
+              "range_error_m": 0.034852856947264026,
+              "interval_half_width_m": null,
+              "interval_contains_range": null,
+              "source_frames": null
+            },
+            "gravity": {
+              "estimate_m": [
+                0.05650540957841896,
+                -0.6833797132342772,
+                0.21524758895889895
+              ],
+              "error_m": 0.01186352348474809,
+              "range_error_m": 0.009431720916137101,
+              "interval_half_width_m": null,
+              "interval_contains_range": null,
+              "source_frames": null
+            },
+            "median_depth": {
+              "estimate_m": [
+                0.1637663659398867,
+                -0.6745185444357987,
+                0.34891740250138703
+              ],
+              "error_m": 0.16204456397731512,
+              "range_error_m": 0.16183881745148057,
+              "interval_half_width_m": null,
+              "interval_contains_range": null,
+              "source_frames": null
+            },
+            "appearance": {
+              "estimate_m": [
+                0.1930370432133779,
+                -0.6727005432460087,
+                0.3810572927826654
+              ],
+              "error_m": 0.20551020636469755,
+              "range_error_m": 0.2053480144524316,
+              "interval_half_width_m": 0.7986588681052165,
+              "interval_contains_range": true,
+              "source_frames": 10
+            },
+            "stereo_ray": {
+              "estimate_m": [
+                0.04854464270500358,
+                -0.6816749633998515,
+                0.2224012475047683
+              ],
+              "error_m": 0.01247378210265051,
+              "range_error_m": 0.009431720916136808,
+              "interval_half_width_m": 0.05333333333333333,
+              "interval_contains_range": true,
+              "source_frames": 4
+            }
+          }
+        },
+        {
+          "tick": 22,
+          "registered": [
+            "spare"
+          ],
+          "detected": [
+            "spare"
+          ],
+          "truth_m": [
+            0.05045969973608087,
+            -0.7568628252134152,
+            0.1460020452062204
+          ],
+          "methods": {
+            "last_point": {
+              "estimate_m": [
+                0.07680281515265511,
+                -0.5153157076238604,
+                0.35428233283811156
+              ],
+              "error_m": 0.32003069846765714,
+              "range_error_m": 0.18893504654257268,
+              "interval_half_width_m": null,
+              "interval_contains_range": null,
+              "source_frames": null
+            },
+            "linear": {
+              "estimate_m": [
+                0.045221723607196236,
+                -0.7688876413402953,
+                0.23441676211113308
+              ],
+              "error_m": 0.08938229557461529,
+              "range_error_m": 0.06206227712987858,
+              "interval_half_width_m": null,
+              "interval_contains_range": null,
+              "source_frames": null
+            },
+            "linear_on_ray": {
+              "estimate_m": [
+                0.09261475721947199,
+                -0.7485428639434926,
+                0.191038027968923
+              ],
+              "error_m": 0.0622455650658219,
+              "range_error_m": 0.06206227712987938,
+              "interval_half_width_m": null,
+              "interval_contains_range": null,
+              "source_frames": null
+            },
+            "gravity": {
+              "estimate_m": [
+                0.045221723607196236,
+                -0.7688876413402952,
+                0.13086676211113307
+              ],
+              "error_m": 0.02002771557568348,
+              "range_error_m": 0.015565496335571638,
+              "interval_half_width_m": null,
+              "interval_contains_range": null,
+              "source_frames": null
+            },
+            "median_depth": {
+              "estimate_m": [
+                0.19732471160374554,
+                -0.7383807753783548,
+                0.3102039722878911
+              ],
+              "error_m": 0.22107281771925114,
+              "range_error_m": 0.22102128089057785,
+              "interval_half_width_m": null,
+              "interval_contains_range": null,
+              "source_frames": null
+            },
+            "appearance": {
+              "estimate_m": [
+                -0.31594238119792983,
+                -0.7881932854237682,
+                -0.27392346966570225
+              ],
+              "error_m": 0.5581841279454435,
+              "range_error_m": 0.5581637184217527,
+              "interval_half_width_m": 2.36424385674593,
+              "interval_contains_range": true,
+              "source_frames": 10
+            },
+            "stereo_ray": {
+              "estimate_m": [
+                0.04147955615368781,
+                -0.753505529098704,
+                0.13284323112485463
+              ],
+              "error_m": 0.016280933756704485,
+              "range_error_m": 0.015565496335571208,
+              "interval_half_width_m": 0.07800000000000001,
+              "interval_contains_range": true,
+              "source_frames": 4
+            }
+          }
+        },
+        {
+          "tick": 23,
+          "registered": [
+            "spare"
+          ],
+          "detected": [
+            "spare"
+          ],
+          "truth_m": [
+            0.041278500804412886,
+            -0.8351591874726194,
+            0.05807260652331914
+          ],
+          "methods": {
+            "last_point": {
+              "estimate_m": [
+                0.07680281515265511,
+                -0.5153157076238604,
+                0.35428233283811156
+              ],
+              "error_m": 0.4373808757537994,
+              "range_error_m": 0.2763515703209336,
+              "interval_half_width_m": null,
+              "interval_contains_range": null,
+              "source_frames": null
+            },
+            "linear": {
+              "estimate_m": [
+                0.03393803763597353,
+                -0.8543955694463132,
+                0.19363593526336723
+              ],
+              "error_m": 0.1371179670577398,
+              "range_error_m": 0.09660622360272085,
+              "interval_half_width_m": null,
+              "interval_contains_range": null,
+              "source_frames": null
+            },
+            "linear_on_ray": {
+              "estimate_m": [
+                0.1096364224285653,
+                -0.8270865424807152,
+                0.12633465061537663
+              ],
+              "error_m": 0.09694163042555598,
+              "range_error_m": 0.09660622360271984,
+              "interval_half_width_m": null,
+              "interval_contains_range": null,
+              "source_frames": null
+            },
+            "gravity": {
+              "estimate_m": [
+                0.03393803763597353,
+                -0.8543955694463132,
+                0.03558593526336726
+              ],
+              "error_m": 0.030488869695648166,
+              "range_error_m": 0.02352160159441374,
+              "interval_half_width_m": null,
+              "interval_contains_range": null,
+              "source_frames": null
+            },
+            "median_depth": {
+              "estimate_m": [
+                0.23132091738401295,
+                -0.810336321824553,
+                0.2699983563021209
+              ],
+              "error_m": 0.28573557387504883,
+              "range_error_m": 0.28562195452541306,
+              "interval_half_width_m": null,
+              "interval_contains_range": null,
+              "source_frames": null
+            },
+            "appearance": {
+              "estimate_m": [
+                -0.25438826041776874,
+                -0.8771955868926434,
+                -0.30344183749260845
+              ],
+              "error_m": 0.46891213014802635,
+              "range_error_m": 0.46884290389124295,
+              "interval_half_width_m": 2.3570956362419797,
+              "interval_contains_range": true,
+              "source_frames": 10
+            },
+            "stereo_ray": {
+              "estimate_m": [
+                0.0323005643608143,
+                -0.8377320457368429,
+                0.03503003570494778
+              ],
+              "error_m": 0.024863286435078083,
+              "range_error_m": 0.023521601594414483,
+              "interval_half_width_m": 0.10933333333333332,
+              "interval_contains_range": true,
+              "source_frames": 4
+            }
+          }
+        }
+      ]
+    },
+    {
+      "camera_seed": 453647027,
+      "trajectory_seed": 883039687,
+      "table_resized": true,
+      "source_ticks": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
+      "source_frames": 20,
+      "last_mount_source_frames": {
+        "left": 15,
+        "right": 10,
+        "spare": 10
+      },
+      "monocular": [
+        {
+          "tick": 20,
+          "registered": [
+            "spare"
+          ],
+          "detected": [
+            "spare"
+          ],
+          "truth_m": [
+            -0.19636422206259618,
+            -0.6053446736207043,
+            0.45425505373970365
+          ],
+          "methods": {
+            "last_point": {
+              "estimate_m": [
+                -0.1978065561625006,
+                -0.5219967499080794,
+                0.5090433967873621
+              ],
+              "error_m": 0.09975329191946095,
+              "range_error_m": 0.03769338641987089,
+              "interval_half_width_m": null,
+              "interval_contains_range": null,
+              "source_frames": null
+            },
+            "linear": {
+              "estimate_m": [
+                -0.2004732761070718,
+                -0.6094087898656985,
+                0.48449354007351997
+              ],
+              "error_m": 0.030785831509862503,
+              "range_error_m": 0.016049919740956542,
+              "interval_half_width_m": null,
+              "interval_contains_range": null,
+              "source_frames": null
+            },
+            "linear_on_ray": {
+              "estimate_m": [
+                -0.18257672409812908,
+                -0.6070827976530908,
+                0.4629314015107713
+              ],
+              "error_m": 0.016382771008491025,
+              "range_error_m": 0.0160499197409576,
+              "interval_half_width_m": null,
+              "interval_contains_range": null,
+              "source_frames": null
+            },
+            "gravity": {
+              "estimate_m": [
+                -0.2004732761070718,
+                -0.6094087898656985,
+                0.4572435400735198
+              ],
+              "error_m": 0.006506336646735446,
+              "range_error_m": 0.0014136470898583973,
+              "interval_half_width_m": null,
+              "interval_contains_range": null,
+              "source_frames": null
+            },
+            "median_depth": {
+              "estimate_m": [
+                -0.14194028043924956,
+                -0.604737317722394,
+                0.49691262249777624
+              ],
+              "error_m": 0.06915202437642982,
+              "range_error_m": 0.06907392571102984,
+              "interval_half_width_m": null,
+              "interval_contains_range": null,
+              "source_frames": null
+            },
+            "appearance": {
+              "estimate_m": [
+                -0.8696087181033234,
+                -0.6467373443750618,
+                -0.11158211176345478
+              ],
+              "error_m": 0.8804221728841001,
+              "range_error_m": 0.8804160421322037,
+              "interval_half_width_m": 1.1206443136466033,
+              "interval_contains_range": true,
+              "source_frames": 10
+            },
+            "stereo_ray": {
+              "estimate_m": [
+                -0.19596042147482384,
+                -0.6078552863545892,
+                0.4517396155858415
+              ],
+              "error_m": 0.003576822657070857,
+              "range_error_m": 0.0014136470898574735,
+              "interval_half_width_m": 0.035333333333333335,
+              "interval_contains_range": true,
+              "source_frames": 4
+            }
+          }
+        },
+        {
+          "tick": 21,
+          "registered": [
+            "spare"
+          ],
+          "detected": [
+            "spare"
+          ],
+          "truth_m": [
+            -0.19722671426049507,
+            -0.6875241854904401,
+            0.39229176657487264
+          ],
+          "methods": {
+            "last_point": {
+              "estimate_m": [
+                -0.1978065561625006,
+                -0.5219967499080794,
+                0.5090433967873621
+              ],
+              "error_m": 0.20256014243769127,
+              "range_error_m": 0.08700370388794676,
+              "interval_half_width_m": null,
+              "interval_contains_range": null,
+              "source_frames": null
+            },
+            "linear": {
+              "estimate_m": [
+                -0.2025894874537066,
+                -0.6958936999675936,
+                0.4535174657936673
+              ],
+              "error_m": 0.06202736778016156,
+              "range_error_m": 0.03522503612097044,
+              "interval_half_width_m": null,
+              "interval_contains_range": null,
+              "source_frames": null
+            },
+            "linear_on_ray": {
+              "estimate_m": [
+                -0.17048613124351641,
+                -0.6847067628999668,
+                0.4150512843839831
+              ],
+              "error_m": 0.03522772063367786,
+              "range_error_m": 0.03522503612096979,
+              "interval_half_width_m": null,
+              "interval_contains_range": null,
+              "source_frames": null
+            },
+            "gravity": {
+              "estimate_m": [
+                -0.2025894874537066,
+                -0.6958936999675936,
+                0.3935674657936671
+              ],
+              "error_m": 0.010021752212160468,
+              "range_error_m": 0.0038017764105839603,
+              "interval_half_width_m": null,
+              "interval_contains_range": null,
+              "source_frames": null
+            },
+            "median_depth": {
+              "estimate_m": [
+                -0.11314396164864782,
+                -0.679465112824285,
+                0.4644326899793465
+              ],
+              "error_m": 0.11108182015376611,
+              "range_error_m": 0.11108096883513763,
+              "interval_half_width_m": null,
+              "interval_contains_range": null,
+              "source_frames": null
+            },
+            "appearance": {
+              "estimate_m": [
+                -0.6239358449182997,
+                -0.7261566198341205,
+                0.024553603771642507
+              ],
+              "error_m": 0.5646277566255073,
+              "range_error_m": 0.564627589142288,
+              "interval_half_width_m": 1.0438197116467396,
+              "interval_contains_range": true,
+              "source_frames": 10
+            },
+            "stereo_ray": {
+              "estimate_m": [
+                -0.19998787254256678,
+                -0.6874035182827061,
+                0.3896452444111209
+              ],
+              "error_m": 0.0038265696383189773,
+              "range_error_m": 0.003801776410584693,
+              "interval_half_width_m": 0.05333333333333333,
+              "interval_contains_range": true,
+              "source_frames": 4
+            }
+          }
+        },
+        {
+          "tick": 22,
+          "registered": [
+            "spare"
+          ],
+          "detected": [
+            "spare"
+          ],
+          "truth_m": [
+            -0.19807810607791218,
+            -0.7681227047720683,
+            0.320530004257378
+          ],
+          "methods": {
+            "last_point": {
+              "estimate_m": [
+                -0.1978065561625006,
+                -0.5219967499080794,
+                0.5090433967873621
+              ],
+              "error_m": 0.310024770881668,
+              "range_error_m": 0.14791350756874375,
+              "interval_half_width_m": null,
+              "interval_contains_range": null,
+              "source_frames": null
+            },
+            "linear": {
+              "estimate_m": [
+                -0.20470569880034142,
+                -0.782378610069489,
+                0.4225413915138147
+              ],
+              "error_m": 0.10321569139973882,
+              "range_error_m": 0.06119717489462657,
+              "interval_half_width_m": null,
+              "interval_contains_range": null,
+              "source_frames": null
+            },
+            "linear_on_ray": {
+              "estimate_m": [
+                -0.15557230037097236,
+                -0.7627393540876037,
+                0.36447031523710205
+              ],
+              "error_m": 0.06137161324572544,
+              "range_error_m": 0.06119717489462565,
+              "interval_half_width_m": null,
+              "interval_contains_range": null,
+              "source_frames": null
+            },
+            "gravity": {
+              "estimate_m": [
+                -0.20470569880034142,
+                -0.782378610069489,
+                0.3189913915138143
+              ],
+              "error_m": 0.015796301792447447,
+              "range_error_m": 0.0072844654170672405,
+              "interval_half_width_m": null,
+              "interval_contains_range": null,
+              "source_frames": null
+            },
+            "median_depth": {
+              "estimate_m": [
+                -0.0819920292644496,
+                -0.7534841337923104,
+                0.4298559540234894
+              ],
+              "error_m": 0.160132533491895,
+              "range_error_m": 0.16006576019009613,
+              "interval_half_width_m": null,
+              "interval_contains_range": null,
+              "source_frames": null
+            },
+            "appearance": {
+              "estimate_m": [
+                -1.5171498817233742,
+                -0.9340040188549511,
+                -0.8454684166420563
+              ],
+              "error_m": 1.7683379985755863,
+              "range_error_m": 1.7683319531436996,
+              "interval_half_width_m": 3.200224007748272,
+              "interval_contains_range": true,
+              "source_frames": 10
+            },
+            "stereo_ray": {
+              "estimate_m": [
+                -0.2065379093649211,
+                -0.7691500118852612,
+                0.31918074440387967
+              ],
+              "error_m": 0.008628101396713307,
+              "range_error_m": 0.00728446541706815,
+              "interval_half_width_m": 0.07800000000000001,
+              "interval_contains_range": true,
+              "source_frames": 4
+            }
+          }
+        },
+        {
+          "tick": 23,
+          "registered": [
+            "spare"
+          ],
+          "detected": [
+            "spare"
+          ],
+          "truth_m": [
+            -0.1989174508514456,
+            -0.8470844767837186,
+            0.2392184215551879
+          ],
+          "methods": {
+            "last_point": {
+              "estimate_m": [
+                -0.1978065561625006,
+                -0.5219967499080794,
+                0.5090433967873621
+              ],
+              "error_m": 0.422479326726437,
+              "range_error_m": 0.22076172401559768,
+              "interval_half_width_m": null,
+              "interval_contains_range": null,
+              "source_frames": null
+            },
+            "linear": {
+              "estimate_m": [
+                -0.20682191014697623,
+                -0.8688635201713842,
+                0.39156531723396204
+              ],
+              "error_m": 0.15409861722480125,
+              "range_error_m": 0.09437984671797196,
+              "interval_half_width_m": null,
+              "interval_contains_range": null,
+              "source_frames": null
+            },
+            "linear_on_ray": {
+              "estimate_m": [
+                -0.13123876745458052,
+                -0.8391478018076955,
+                0.30462786335645653
+              ],
+              "error_m": 0.09445522787417157,
+              "range_error_m": 0.09437984671797243,
+              "interval_half_width_m": null,
+              "interval_contains_range": null,
+              "source_frames": null
+            },
+            "gravity": {
+              "estimate_m": [
+                -0.20682191014697623,
+                -0.8688635201713841,
+                0.23351531723396163
+              ],
+              "error_m": 0.02386069166087416,
+              "range_error_m": 0.012159432348313268,
+              "interval_half_width_m": null,
+              "interval_contains_range": null,
+              "source_frames": null
+            },
+            "median_depth": {
+              "estimate_m": [
+                -0.0418339476556433,
+                -0.8247933191432,
+                0.3872625702169521
+              ],
+              "error_m": 0.21700044386638156,
+              "range_error_m": 0.21696764282250225,
+              "interval_half_width_m": null,
+              "interval_contains_range": null,
+              "source_frames": null
+            },
+            "appearance": {
+              "estimate_m": [
+                -1.329137422822182,
+                -1.031477650701381,
+                -0.8025608145861671
+              ],
+              "error_m": 1.5481285490824805,
+              "range_error_m": 1.5481239517163903,
+              "interval_half_width_m": 3.098414333371381,
+              "interval_contains_range": true,
+              "source_frames": 10
+            },
+            "stereo_ray": {
+              "estimate_m": [
+                -0.2089392021561549,
+                -0.8516230749020972,
+                0.23281123580844154
+              ],
+              "error_m": 0.012731315772020689,
+              "range_error_m": 0.012159432348312928,
+              "interval_half_width_m": 0.10933333333333332,
+              "interval_contains_range": true,
+              "source_frames": 4
+            }
+          }
+        }
+      ]
+    },
+    {
+      "camera_seed": 720213857,
+      "trajectory_seed": 916835247,
+      "table_resized": false,
+      "source_ticks": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
+      "source_frames": 19,
+      "last_mount_source_frames": {
+        "left": 14,
+        "right": 9,
+        "spare": 10
+      },
+      "monocular": [
+        {
+          "tick": 20,
+          "registered": [
+            "spare"
+          ],
+          "detected": [
+            "spare"
+          ],
+          "truth_m": [
+            0.244982663478326,
+            -0.7756893115178809,
+            0.16204584480682616
+          ],
+          "methods": {
+            "last_point": {
+              "estimate_m": [
+                0.24184472364260245,
+                -0.6864278499813279,
+                0.2355991484793358
+              ],
+              "error_m": 0.11570455333820953,
+              "range_error_m": 0.06083585509801866,
+              "interval_half_width_m": null,
+              "interval_contains_range": null,
+              "source_frames": null
+            },
+            "linear": {
+              "estimate_m": [
+                0.24662763185970965,
+                -0.7808117513547027,
+                0.19132613654992872
+              ],
+              "error_m": 0.02977046851191313,
+              "range_error_m": 0.023023008513929955,
+              "interval_half_width_m": null,
+              "interval_contains_range": null,
+              "source_frames": null
+            },
+            "linear_on_ray": {
+              "estimate_m": [
+                0.26016051141097374,
+                -0.7735117550380666,
+                0.17923499907845208
+              ],
+              "error_m": 0.02303423201808813,
+              "range_error_m": 0.023023008513929084,
+              "interval_half_width_m": null,
+              "interval_contains_range": null,
+              "source_frames": null
+            },
+            "gravity": {
+              "estimate_m": [
+                0.24662763185970965,
+                -0.7808117513547027,
+                0.16407613654992875
+              ],
+              "error_m": 0.005750425672915144,
+              "range_error_m": 0.0022207835822986234,
+              "interval_half_width_m": null,
+              "interval_contains_range": null,
+              "source_frames": null
+            },
+            "median_depth": {
+              "estimate_m": [
+                0.31285347638802974,
+                -0.7673472939060412,
+                0.24193282991361853
+              ],
+              "error_m": 0.10515686802255532,
+              "range_error_m": 0.10515441012474205,
+              "interval_half_width_m": null,
+              "interval_contains_range": null,
+              "source_frames": null
+            },
+            "appearance": {
+              "estimate_m": [
+                0.0889936563689635,
+                -0.7935362768211345,
+                -0.024431477588485517
+              ],
+              "error_m": 0.24377218109789578,
+              "range_error_m": 0.24377112083590755,
+              "interval_half_width_m": 0.8958418408983644,
+              "interval_contains_range": true,
+              "source_frames": 10
+            },
+            "stereo_ray": {
+              "estimate_m": [
+                0.2468144478071721,
+                -0.7750730885175358,
+                0.16335490505620687
+              ],
+              "error_m": 0.0023342671976595104,
+              "range_error_m": 0.002220783582297887,
+              "interval_half_width_m": 0.035333333333333335,
+              "interval_contains_range": true,
+              "source_frames": 4
+            }
+          }
+        },
+        {
+          "tick": 21,
+          "registered": [
+            "spare"
+          ],
+          "detected": [
+            "spare"
+          ],
+          "truth_m": [
+            0.24982575983888355,
+            -0.8629663210684226,
+            0.08435620879812578
+          ],
+          "methods": {
+            "last_point": {
+              "estimate_m": [
+                0.24184472364260245,
+                -0.6864278499813279,
+                0.2355991484793358
+              ],
+              "error_m": 0.23260256988251327,
+              "range_error_m": 0.1300697511367138,
+              "interval_half_width_m": null,
+              "interval_contains_range": null,
+              "source_frames": null
+            },
+            "linear": {
+              "estimate_m": [
+                0.25188193976649614,
+                -0.8741874333371696,
+                0.14361594787557946
+              ],
+              "error_m": 0.060347807847265116,
+              "range_error_m": 0.04593708431960711,
+              "interval_half_width_m": null,
+              "interval_contains_range": null,
+              "source_frames": null
+            },
+            "linear_on_ray": {
+              "estimate_m": [
+                0.2789191503111652,
+                -0.8581520299846814,
+                0.11958135480037013
+              ],
+              "error_m": 0.04593923898685165,
+              "range_error_m": 0.04593708431960676,
+              "interval_half_width_m": null,
+              "interval_contains_range": null,
+              "source_frames": null
+            },
+            "gravity": {
+              "estimate_m": [
+                0.25188193976649614,
+                -0.8741874333371696,
+                0.08366594787557953
+              ],
+              "error_m": 0.011428809937335374,
+              "range_error_m": 0.00040077253709863096,
+              "interval_half_width_m": null,
+              "interval_contains_range": null,
+              "source_frames": null
+            },
+            "median_depth": {
+              "estimate_m": [
+                0.3466643814764163,
+                -0.8470184531844065,
+                0.20321803077280132
+              ],
+              "error_m": 0.15414339380538736,
+              "range_error_m": 0.15414275166526098,
+              "interval_half_width_m": null,
+              "interval_contains_range": null,
+              "source_frames": null
+            },
+            "appearance": {
+              "estimate_m": [
+                0.4101462368494577,
+                -0.8365855400470132,
+                0.281591242829788
+              ],
+              "error_m": 0.2555391547408509,
+              "range_error_m": 0.25553876739697273,
+              "interval_half_width_m": 0.7497348819324934,
+              "interval_contains_range": true,
+              "source_frames": 10
+            },
+            "stereo_ray": {
+              "estimate_m": [
+                0.24990801899553827,
+                -0.8629198587013256,
+                0.08376489144636645
+              ],
+              "error_m": 0.000598816775734837,
+              "range_error_m": 0.00040077253709837557,
+              "interval_half_width_m": 0.05333333333333333,
+              "interval_contains_range": true,
+              "source_frames": 4
+            }
+          }
+        },
+        {
+          "tick": 22,
+          "registered": [
+            "spare"
+          ],
+          "detected": [
+            "spare"
+          ],
+          "truth_m": [
+            0.2546037702168619,
+            -0.948052619395026,
+            0.016945048385894834
+          ],
+          "methods": {
+            "last_point": {
+              "estimate_m": [
+                0.24184472364260245,
+                -0.6864278499813279,
+                0.2355991484793358
+              ],
+              "error_m": 0.3412036470026769,
+              "range_error_m": 0.19620823036772736,
+              "interval_half_width_m": null,
+              "interval_contains_range": null,
+              "source_frames": null
+            },
+            "linear": {
+              "estimate_m": [
+                0.2571362476732827,
+                -0.9675631153196367,
+                0.0959057592012302
+              ],
+              "error_m": 0.08137485327639336,
+              "range_error_m": 0.06058683989939396,
+              "interval_half_width_m": null,
+              "interval_contains_range": null,
+              "source_frames": null
+            },
+            "linear_on_ray": {
+              "estimate_m": [
+                0.28920069231915346,
+                -0.9388581735221663,
+                0.06594473214027774
+              ],
+              "error_m": 0.06068322553960454,
+              "range_error_m": 0.06058683989939401,
+              "interval_half_width_m": null,
+              "interval_contains_range": null,
+              "source_frames": null
+            },
+            "gravity": {
+              "estimate_m": [
+                0.2571362476732827,
+                -0.9675631153196367,
+                -0.007644240798769769
+              ],
+              "error_m": 0.0314913644654942,
+              "range_error_m": 0.020118481283885326,
+              "interval_half_width_m": null,
+              "interval_contains_range": null,
+              "source_frames": null
+            },
+            "median_depth": {
+              "estimate_m": [
+                0.372671901627021,
+                -0.9213681307562147,
+                0.17203283865083163
+              ],
+              "error_m": 0.1967342580179224,
+              "range_error_m": 0.19670454896866713,
+              "interval_half_width_m": null,
+              "interval_contains_range": null,
+              "source_frames": null
+            },
+            "appearance": {
+              "estimate_m": [
+                0.18591088640476983,
+                -0.9605008828791892,
+                -0.06533190829850843
+              ],
+              "error_m": 0.10790351778992151,
+              "range_error_m": 0.10784934148405448,
+              "interval_half_width_m": 0.8923553967804637,
+              "interval_contains_range": true,
+              "source_frames": 10
+            },
+            "stereo_ray": {
+              "estimate_m": [
+                0.2397099184675322,
+                -0.9492281652637775,
+                0.0030442119346161256
+              ],
+              "error_m": 0.02040691015479192,
+              "range_error_m": 0.020118481283885162,
+              "interval_half_width_m": 0.07800000000000001,
+              "interval_contains_range": true,
+              "source_frames": 4
+            }
+          }
+        },
+        {
+          "tick": 23,
+          "registered": [
+            "spare"
+          ],
+          "detected": [
+            "spare"
+          ],
+          "truth_m": [
+            0.25949558712959786,
+            -1.0291484633894468,
+            0.09295528942891462
+          ],
+          "methods": {
+            "last_point": {
+              "estimate_m": [
+                0.24184472364260245,
+                -0.6864278499813279,
+                0.2355991484793358
+              ],
+              "error_m": 0.37163993644584303,
+              "range_error_m": 0.1523316593388299,
+              "interval_half_width_m": null,
+              "interval_contains_range": null,
+              "source_frames": null
+            },
+            "linear": {
+              "estimate_m": [
+                0.2623905555800692,
+                -1.0609387973021036,
+                0.048195570526880956
+              ],
+              "error_m": 0.05497670969416516,
+              "range_error_m": 0.03753383796609902,
+              "interval_half_width_m": null,
+              "interval_contains_range": null,
+              "source_frames": null
+            },
+            "linear_on_ray": {
+              "estimate_m": [
+                0.23349914608850297,
+                -1.031828165793498,
+                0.06565272583969328
+              ],
+              "error_m": 0.03779451984508965,
+              "range_error_m": 0.037533837966099735,
+              "interval_half_width_m": null,
+              "interval_contains_range": null,
+              "source_frames": null
+            },
+            "gravity": {
+              "estimate_m": [
+                0.2623905555800692,
+                -1.0609387973021036,
+                -0.10985442947311896
+              ],
+              "error_m": 0.20530657138467176,
+              "range_error_m": 0.1587771537951501,
+              "interval_half_width_m": null,
+              "interval_contains_range": null,
+              "source_frames": null
+            },
+            "median_depth": {
+              "estimate_m": [
+                0.33769321553156173,
+                -1.0054879681454325,
+                0.1941692967857458
+              ],
+              "error_m": 0.13007291573618363,
+              "range_error_m": 0.12999741024442324,
+              "interval_half_width_m": null,
+              "interval_contains_range": null,
+              "source_frames": null
+            },
+            "appearance": {
+              "estimate_m": [
+                0.12945702038987572,
+                -1.058129952154999,
+                -0.06267643243387733
+              ],
+              "error_m": 0.20486871010665936,
+              "range_error_m": 0.20482077932404952,
+              "interval_half_width_m": 0.9056395706860589,
+              "interval_contains_range": true,
+              "source_frames": 10
+            }
+          }
+        }
+      ]
+    },
+    {
+      "camera_seed": 174047849,
+      "trajectory_seed": 107650489,
+      "table_resized": true,
+      "source_ticks": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ],
+      "source_frames": 20,
+      "last_mount_source_frames": {
+        "left": 15,
+        "right": 10,
+        "spare": 10
+      },
+      "monocular": [
+        {
+          "tick": 20,
+          "registered": [
+            "spare"
+          ],
+          "detected": [
+            "spare"
+          ],
+          "truth_m": [
+            0.08629305784097063,
+            -0.7545321633843987,
+            0.14662578774505886
+          ],
+          "methods": {
+            "last_point": {
+              "estimate_m": [
+                0.08045170876767033,
+                -0.6684838562470627,
+                0.21875227342770737
+              ],
+              "error_m": 0.11243070068769803,
+              "range_error_m": 0.05867450377240499,
+              "interval_half_width_m": null,
+              "interval_contains_range": null,
+              "source_frames": null
+            },
+            "linear": {
+              "estimate_m": [
+                0.0854316022827845,
+                -0.760254204133396,
+                0.17434258486253731
+              ],
+              "error_m": 0.028314390307110224,
+              "range_error_m": 0.018982006758503596,
+              "interval_half_width_m": null,
+              "interval_contains_range": null,
+              "source_frames": null
+            },
+            "linear_on_ray": {
+              "estimate_m": [
+                0.09258508822952294,
+                -0.7533971219162825,
+                0.16664764092379247
+              ],
+              "error_m": 0.021017910701484448,
+              "range_error_m": 0.018982006758502076,
+              "interval_half_width_m": null,
+              "interval_contains_range": null,
+              "source_frames": null
+            },
+            "gravity": {
+              "estimate_m": [
+                0.0854316022827845,
+                -0.760254204133396,
+                0.1470925848625372
+              ],
+              "error_m": 0.005805321314173865,
+              "range_error_m": 0.0009033000444194156,
+              "interval_half_width_m": null,
+              "interval_contains_range": null,
+              "source_frames": null
+            },
+            "median_depth": {
+              "estimate_m": [
+                0.17579050102958016,
+                -0.7390794317021434,
+                0.25675698228289034
+              ],
+              "error_m": 0.14274963840259577,
+              "range_error_m": 0.14246411223320807,
+              "interval_half_width_m": null,
+              "interval_contains_range": null,
+              "source_frames": null
+            },
+            "appearance": {
+              "estimate_m": [
+                0.14098419382760308,
+                -0.745068776712829,
+                0.21906263871116538
+              ],
+              "error_m": 0.0912566349406436,
+              "range_error_m": 0.09080934660603025,
+              "interval_half_width_m": 0.8476673939902664,
+              "interval_contains_range": true,
+              "source_frames": 10
+            },
+            "stereo_ray": {
+              "estimate_m": [
+                0.07918585799424083,
+                -0.7557028135913866,
+                0.15213661609273288
+              ],
+              "error_m": 0.009069285564255028,
+              "range_error_m": 0.0009033000444208002,
+              "interval_half_width_m": 0.035333333333333335,
+              "interval_contains_range": true,
+              "source_frames": 4
+            }
+          }
+        },
+        {
+          "tick": 21,
+          "registered": [
+            "spare"
+          ],
+          "detected": [
+            "spare"
+          ],
+          "truth_m": [
+            0.09102898750466386,
+            -0.8413810536512941,
+            0.06719033372083283
+          ],
+          "methods": {
+            "last_point": {
+              "estimate_m": [
+                0.08045170876767033,
+                -0.6684838562470627,
+                0.21875227342770737
+              ],
+              "error_m": 0.2301658994365327,
+              "range_error_m": 0.12989344492844374,
+              "interval_half_width_m": null,
+              "interval_contains_range": null,
+              "source_frames": null
+            },
+            "linear": {
+              "estimate_m": [
+                0.08969126528640896,
+                -0.8525320554518155,
+                0.1241196563977262
+              ],
+              "error_m": 0.05802656393703051,
+              "range_error_m": 0.039751447080661514,
+              "interval_half_width_m": null,
+              "interval_contains_range": null,
+              "source_frames": null
+            },
+            "linear_on_ray": {
+              "estimate_m": [
+                0.11634146674484347,
+                -0.8369236947631027,
+                0.09756042382162544
+              ],
+              "error_m": 0.03978607829722508,
+              "range_error_m": 0.0397514470806607,
+              "interval_half_width_m": null,
+              "interval_contains_range": null,
+              "source_frames": null
+            },
+            "gravity": {
+              "estimate_m": [
+                0.08969126528640896,
+                -0.8525320554518157,
+                0.06416965639772608
+              ],
+              "error_m": 0.01163008312002879,
+              "range_error_m": 0.00469492259527208,
+              "interval_half_width_m": null,
+              "interval_contains_range": null,
+              "source_frames": null
+            },
+            "median_depth": {
+              "estimate_m": [
+                0.21964178414752666,
+                -0.8146408079824274,
+                0.2143097912845473
+              ],
+              "error_m": 0.19723191169932747,
+              "range_error_m": 0.19722492872683453,
+              "interval_half_width_m": null,
+              "interval_contains_range": null,
+              "source_frames": null
+            },
+            "appearance": {
+              "estimate_m": [
+                -0.38868110651667287,
+                -0.945861993353261,
+                -0.4732129045210005
+              ],
+              "error_m": 0.7301189635732148,
+              "range_error_m": 0.7301170772471763,
+              "interval_half_width_m": 2.4851657575023682,
+              "interval_contains_range": true,
+              "source_frames": 10
+            },
+            "stereo_ray": {
+              "estimate_m": [
+                0.08718529361064453,
+                -0.843212965902266,
+                0.06460830076291435
+              ],
+              "error_m": 0.004979636476888613,
+              "range_error_m": 0.004694922595272749,
+              "interval_half_width_m": 0.05333333333333333,
+              "interval_contains_range": true,
+              "source_frames": 4
+            }
+          }
+        },
+        {
+          "tick": 22,
+          "registered": [
+            "spare"
+          ],
+          "detected": [
+            "spare"
+          ],
+          "truth_m": [
+            0.0954514734966444,
+            -0.9259672441455927,
+            0.032823497820272385
+          ],
+          "methods": {
+            "last_point": {
+              "estimate_m": [
+                0.08045170876767033,
+                -0.6684838562470627,
+                0.21875227342770737
+              ],
+              "error_m": 0.3179499922700256,
+              "range_error_m": 0.17130325966279045,
+              "interval_half_width_m": null,
+              "interval_contains_range": null,
+              "source_frames": null
+            },
+            "linear": {
+              "estimate_m": [
+                0.09395092829003342,
+                -0.9448099067702352,
+                0.07389672793291507
+              ],
+              "error_m": 0.04521402218990566,
+              "range_error_m": 0.026413926881815705,
+              "interval_half_width_m": null,
+              "interval_contains_range": null,
+              "source_frames": null
+            },
+            "linear_on_ray": {
+              "estimate_m": [
+                0.10866212976474232,
+                -0.9214192149335567,
+                0.05582743650186206
+              ],
+              "error_m": 0.02691444228687835,
+              "range_error_m": 0.026413926881815486,
+              "interval_half_width_m": null,
+              "interval_contains_range": null,
+              "source_frames": null
+            },
+            "gravity": {
+              "estimate_m": [
+                0.09395092829003343,
+                -0.9448099067702351,
+                -0.029653272067085068
+              ],
+              "error_m": 0.06527361140814099,
+              "range_error_m": 0.05053697468574251,
+              "interval_half_width_m": null,
+              "interval_contains_range": null,
+              "source_frames": null
+            },
+            "median_depth": {
+              "estimate_m": [
+                0.2336238774634034,
+                -0.8893280808334252,
+                0.1991076135542511
+              ],
+              "error_m": 0.21928166510586367,
+              "range_error_m": 0.2192207950476057,
+              "interval_half_width_m": null,
+              "interval_contains_range": null,
+              "source_frames": null
+            },
+            "appearance": {
+              "estimate_m": [
+                -0.41215137458044593,
+                -1.0551681126314716,
+                -0.5413333145929564
+              ],
+              "error_m": 0.7771805202358063,
+              "range_error_m": 0.7771633479286725,
+              "interval_half_width_m": 2.5388222397496354,
+              "interval_contains_range": true,
+              "source_frames": 10
+            },
+            "stereo_ray": {
+              "estimate_m": [
+                0.05878880710591883,
+                -0.9342270662555705,
+                -0.0013569309733676427
+              ],
+              "error_m": 0.05080036890302286,
+              "range_error_m": 0.050536974685742746,
+              "interval_half_width_m": 0.07800000000000001,
+              "interval_contains_range": true,
+              "source_frames": 4
+            }
+          }
+        },
+        {
+          "tick": 23,
+          "registered": [
+            "spare"
+          ],
+          "detected": [
+            "spare"
+          ],
+          "truth_m": [
+            0.09934100799572908,
+            -1.0081347019082787,
+            0.10231452558229193
+          ],
+          "methods": {
+            "last_point": {
+              "estimate_m": [
+                0.08045170876767033,
+                -0.6684838562470627,
+                0.21875227342770737
+              ],
+              "error_m": 0.3595514590528299,
+              "range_error_m": 0.139384044833771,
+              "interval_half_width_m": null,
+              "interval_contains_range": null,
+              "source_frames": null
+            },
+            "linear": {
+              "estimate_m": [
+                0.09821059129365789,
+                -1.0370877580886548,
+                0.023673799468103975
+              ],
+              "error_m": 0.08380883669322145,
+              "range_error_m": 0.06390349173728438,
+              "interval_half_width_m": null,
+              "interval_contains_range": null,
+              "source_frames": null
+            },
+            "linear_on_ray": {
+              "estimate_m": [
+                0.058076847446950186,
+                -1.0238100075588568,
+                0.05599507801200021
+              ],
+              "error_m": 0.06398388372278951,
+              "range_error_m": 0.06390349173728398,
+              "interval_half_width_m": null,
+              "interval_contains_range": null,
+              "source_frames": null
+            },
+            "gravity": {
+              "estimate_m": [
+                0.09821059129365789,
+                -1.0370877580886548,
+                -0.1343762005318962
+              ],
+              "error_m": 0.2384576631869187,
+              "range_error_m": 0.17943779107488936,
+              "interval_half_width_m": null,
+              "interval_contains_range": null,
+              "source_frames": null
+            },
+            "median_depth": {
+              "estimate_m": [
+                0.20593552265057702,
+                -0.9794413464324037,
+                0.22136620264429574
+              ],
+              "error_m": 0.16235455341395008,
+              "range_error_m": 0.16232288777066786,
+              "interval_half_width_m": null,
+              "interval_contains_range": null,
+              "source_frames": null
+            },
+            "appearance": {
+              "estimate_m": [
+                -0.3952397389498463,
+                -1.159838887684699,
+                -0.451012533165843
+              ],
+              "error_m": 0.7574926462839042,
+              "range_error_m": 0.7574858599697802,
+              "interval_half_width_m": 2.5007944979750376,
+              "interval_contains_range": true,
+              "source_frames": 10
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
