@@ -25,6 +25,8 @@ def save(path, memory, prior, response, timing, *, entry_memory=None, shot_memor
                  racket=dict(gain=response.gain, enabled=response.enabled, default_speed=response.default_speed,
                              dt=response.dt, reacquisition=response.reacquisition),
                  speed=response.speed, reference=response.reference)
+    if prior.span_memory is not None:
+        state['motor_span'] = prior.span_memory.state()
     if entry_memory is not None:
         state['entry_memory'] = entry_memory.state()
     if shot_memory is not None:
@@ -50,6 +52,15 @@ def load(path):
     prior.roles = RoleModel(**state['roles'])
     prior.clock = state['clock']
     prior.numeric = tuple(np.asarray(a) for a in state['numeric'])
+    if 'motor_span' in state:
+        from .tt3_cycle import ConditionedNumeric
+        prior.span_memory = ConditionedNumeric.restore(state['motor_span'])
+        shared = prior.span_memory.shared
+        if any(not np.array_equal(stored, routed) for stored, routed in
+               zip(prior.numeric, (shared.coefficients, shared.scores, shared.counts), strict=True)):
+            raise ValueError('shared motor-span evidence differs from the portable numeric state')
+        prior.numeric = shared.coefficients, shared.scores, shared.counts
+        prior.span_memory.active = None
     prior.delay = tuple(np.asarray(a) for a in state['timing_choices'])
     prior.bounce_values = state['bounce']
     prior.rng.bit_generator.state = state['rng']

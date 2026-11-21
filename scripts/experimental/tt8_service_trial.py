@@ -28,6 +28,8 @@ class PointInterface(DelayedWiring):
 def check_tapes(report):
     arena = TT8ServiceArena(**report['arena'])
     wiring = TT6Wiring(arena, report['installation_seed'])
+    score = (ServiceScore(report['race_to'], report['first_server'])
+             if 'race_to' in report and not report.get('practice') else None)
     try:
         for row in report['points']:
             disturbance = prepare_point(arena, row['phase'])
@@ -39,6 +41,10 @@ def check_tapes(report):
                 raise ValueError(f"service replay diverged on point {row['seed']}")
             if json.loads(json.dumps(arena.events)) != row['events']:
                 raise ValueError(f"service events diverged on point {row['seed']}")
+            if score is not None:
+                score.record(arena.point_result())
+        if score is not None and (list(score.score) != report['score'] or score.finished != report['finished']):
+            raise ValueError('recorded game score differs from the replayed points')
     finally:
         arena.close()
 
@@ -51,7 +57,7 @@ def run(args):
                       view='first_person', render_mode='mujoco', width=192, height=144, baseline=.28,
                       max_steps=420, frameskip=8, distractor=False)
     arena = TT8ServiceArena(**arena_args)
-    cache_hall_stereo(arena, reflections=True)
+    cache_hall_stereo(arena, reflections=True, compiled_geometry=args.compiled_geometry)
     wiring = TT6Wiring(arena, install['arena_seed'])
     checkpoint = _read(args.resume)
     memory = ServiceMemory(_read(args.service_in) if args.service_in else checkpoint.get('service_memory'))
@@ -133,10 +139,15 @@ if __name__ == '__main__':
     p.add_argument('--service-out', type=Path)
     p.add_argument('--checkpoint', type=Path, help='save shared body, reward, timing, and service state together')
     p.add_argument('--probe-cache', type=Path)
+    p.add_argument('--compiled-geometry', action=argparse.BooleanOptionalAction, default=False,
+                   help='reuse native GL geometry lists in the reflective renderer')
     p.add_argument('--trace', action='store_true')
     p.add_argument('--drive-from', type=Path, help='initialize rate from a scored optical drive practice receipt')
     policy = p.add_mutually_exclusive_group()
     policy.add_argument('--drive', choices=('online', 'frozen'))
     policy.add_argument('--receiver-only', action='store_true')
     policy.add_argument('--fixed', type=int, choices=range(len(STROKES)))
-    run(p.parse_args())
+    args = p.parse_args()
+    if args.limit <= 0:
+        p.error('the point limit must be positive')
+    run(args)

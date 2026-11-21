@@ -53,9 +53,17 @@ class ConditionedNumeric:
         return self.profiles.get(rank_of(matrix), self.shared).choose(rng)
 
     def observe(self, option, reward):
+        self._observe(self.active, option, reward)
+
+    def observe_for_response(self, matrix, option, reward):
+        self._observe(rank_of(matrix), option, reward)
+
+    def _observe(self, rank, option, reward):
+        if rank is not None:
+            if rank not in self.profiles:
+                self.profiles[rank] = PortableMemory.restore(self.shared.state())
+            self.profiles[rank].observe(option, reward)
         self.shared.observe(option, reward)
-        if self.active is not None:
-            self.profiles[self.active].observe(option, reward)
 
     def goal(self, *args, **kwargs):
         return self.shared.goal(*args, **kwargs)

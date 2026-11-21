@@ -13,7 +13,23 @@ from .tt6_memory import load
 def portable(path):
     checkpoint = _read(path)
     _, prior, _, _ = load(path)
-    return dict(memory=prior.state()['numeric'], roles=checkpoint['roles'])
+    state = dict(memory=prior.state()['numeric'], roles=checkpoint['roles'])
+    if prior.span_memory is not None:
+        state['motor_span'] = prior.span_memory.state()
+    return state
+
+
+def evaluate(schedule, state):
+    if 'motor_span' not in state:
+        return _native(schedule, state)
+    from .tt3_cycle import ConditionedNumeric
+    from .tt3_pong import PongCase, evaluate_pong, summarize_pong
+    from .tt3_visual import RoleModel
+    memory = ConditionedNumeric.restore(state['motor_span'])
+    rows = evaluate_pong([PongCase(**case) for case in schedule['evaluation']], RoleModel(**state['roles']),
+                         memory, points_per_match=schedule['evaluation_points'],
+                         opponent_speed=schedule['opponent_speed'], max_ticks=schedule['max_ticks'])
+    return dict(summary=summarize_pong(rows), points=rows)
 
 
 def run(before, after, reference, output):
@@ -24,7 +40,7 @@ def run(before, after, reference, output):
     for name, digest in _hashes().items():
         if old['implementation_sha256'][name] != digest:
             raise ValueError(f'Pong implementation changed at {name}')
-    end = _native(old['schedule'], carried)
+    end = evaluate(old['schedule'], carried)
     initial_points = old['runs']['after']['points']
     differences = sum(x['action_sha256'] != y['action_sha256'] for x, y in
                       zip(initial_points, end['points'], strict=True))

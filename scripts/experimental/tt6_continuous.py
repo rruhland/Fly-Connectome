@@ -152,11 +152,13 @@ class PredictiveServo(DelayedCameraServo):
         normal = design.T @ design + .00055 * np.eye(design.shape[1])
         rhs = design.T @ error.ravel()
         self._strike_objective(normal, rhs, states, effect, jac, targets)
+        return self._solve_plan(normal, rhs)
+
+    def _solve_plan(self, normal, rhs):
         plan = np.linalg.solve(normal, rhs)
         lower = np.maximum(-1., -MOTOR_BUDGET - self.requested)
         upper = np.minimum(1., MOTOR_BUDGET - self.requested)
-        return np.clip(plan[:fit.action_size], lower, upper)
-
+        return np.clip(plan[:self.fit.action_size], lower, upper)
 
     def _strike_objective(self, normal, rhs, states, effect, jac, targets):
         """Optional additional requirements on the predicted movement at impact."""
@@ -168,6 +170,9 @@ class ContinualPlayer(CameraBodyPlayer):
     def __init__(self, adapter, prior, factory, response, timing, *, adjust=True, predictive=False):
         self.response = response
         self.timing_memory = timing
+        if prior.span_memory is not None:
+            prior.span_memory.active = None
+            prior.span_memory.identify(adapter.jacobian(np.zeros(adapter.action_size))[:3])
         self.adjust = adjust
         self.predictive = predictive
         super().__init__(adapter, prior, factory, retain_trace=True)

@@ -108,8 +108,8 @@ class CachedHallRenderer(mujoco.Renderer):
         return (geom.type, geom.pos.copy(), geom.size.copy(), matrix,
                 geom.rgba.copy(), geom.specular, geom.shininess, geom.emission)
 
-    def _draw(self, params, reflectance=1.):
-        kind, pos, size, matrix, rgba, specular, shininess, emission = params
+    @staticmethod
+    def _material(rgba, specular, shininess, emission, reflectance):
         if reflectance != 1.:
             rgba = rgba.copy()
             rgba[:3] *= reflectance
@@ -117,9 +117,8 @@ class CachedHallRenderer(mujoco.Renderer):
         GL.glColor4fv(rgba)
         GL.glMaterialf(GL.GL_FRONT_AND_BACK, GL.GL_SHININESS, shininess * 128)
         GL.glMaterialfv(GL.GL_FRONT_AND_BACK, GL.GL_SPECULAR, (specular, specular, specular, 1))
-        GL.glPushMatrix()
-        GL.glTranslatef(*pos)
-        GL.glMultMatrixf(matrix)
+
+    def _shape(self, kind, size):
         GL.glScalef(*size)
         base = self._context.baseBuiltin
         if kind == _CAPSULE:
@@ -132,6 +131,14 @@ class CachedHallRenderer(mujoco.Renderer):
             GL.glCallList(base + _SPHERE_BOTTOM)
         else:
             GL.glCallList(base + _PRIMITIVE[kind])
+
+    def _draw(self, params, reflectance=1.):
+        kind, pos, size, matrix, rgba, specular, shininess, emission = params
+        self._material(rgba, specular, shininess, emission, reflectance)
+        GL.glPushMatrix()
+        GL.glTranslatef(*pos)
+        GL.glMultMatrixf(matrix)
+        self._shape(kind, size)
         GL.glPopMatrix()
 
     def _moving_parameters(self):
@@ -181,7 +188,7 @@ class CachedHallRenderer(mujoco.Renderer):
         super().close()
 
 
-def cache_hall_stereo(arena, *, reflections=False):
+def cache_hall_stereo(arena, *, reflections=False, compiled_geometry=False):
     """Install the cache before the first native hall observation.
 
     With reflections enabled, actors are drawn in both the view and floor mirror.
@@ -191,7 +198,13 @@ def cache_hall_stereo(arena, *, reflections=False):
         raise ValueError('expected an uncaptured native hall')
     arena._apply_camera_rig()
     renderer = CachedHallRenderer
-    if reflections:
+    if compiled_geometry and not reflections:
+        raise ValueError('compiled geometry requires the reflective renderer')
+    if compiled_geometry:
+        from .tt8_render import CompiledHallRenderer
+
+        renderer = CompiledHallRenderer
+    elif reflections:
         from .tt6_render_reflections import ReflectingHallRenderer
 
         renderer = ReflectingHallRenderer

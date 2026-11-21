@@ -216,6 +216,7 @@ class TransferPrior:
     def __init__(self, condition, native, seed, *, mini=None):
         self.rng = np.random.default_rng(seed)
         self.clock = None
+        self.span_memory = None
         self.bounce_values = []
         if condition == 'fresh':
             scratch = np.stack([(self.rng.permutation(4) + self.rng.random(4)) / 2. - 1.
@@ -247,9 +248,12 @@ class TransferPrior:
         return float(np.median(self.bounce_values)) if self.bounce_values else .70
 
     def choose(self):
-        _, scores, counts = self.numeric
-        means = np.divide(scores, np.maximum(1, counts))
-        selection = int(self.rng.choice(np.flatnonzero(np.isclose(means, means.max()))))
+        if self.span_memory is None:
+            _, scores, counts = self.numeric
+            means = np.divide(scores, np.maximum(1, counts))
+            selection = int(self.rng.choice(np.flatnonzero(np.isclose(means, means.max()))))
+        else:
+            selection = self.span_memory.choose(self.rng)
         delays, uses, continuations, totals = self.delay
         unseen = np.flatnonzero(uses == 0)
         if len(unseen):
@@ -264,9 +268,12 @@ class TransferPrior:
     def observe(self, option, delay, reward, *, opportunity, outgoing):
         if not opportunity:
             return
-        _, scores, counts = self.numeric
-        scores[option] += reward
-        counts[option] += 1
+        if self.span_memory is None:
+            _, scores, counts = self.numeric
+            scores[option] += reward
+            counts[option] += 1
+        else:
+            self.span_memory.observe(option, reward)
         _, uses, continuations, totals = self.delay
         uses[delay] += 1
         continuations[delay] += int(outgoing)

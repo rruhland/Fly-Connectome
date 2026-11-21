@@ -1,0 +1,94 @@
+{
+  "frames": [
+    {
+      "body": "gantry",
+      "frames": 72,
+      "delta": 0,
+      "changed": 0,
+      "cpu": [
+        1.300033152,
+        1.253936708
+      ],
+      "wall": [
+        1.3633396709992667,
+        1.3743756969925016
+      ]
+    },
+    {
+      "body": "offset",
+      "frames": 72,
+      "delta": 0,
+      "changed": 0,
+      "cpu": [
+        1.3801938870000017,
+        1.1889945199999996
+      ],
+      "wall": [
+        1.4796972820040537,
+        1.2432470290004858
+      ]
+    },
+    {
+      "body": "rotary",
+      "frames": 72,
+      "delta": 0,
+      "changed": 0,
+      "cpu": [
+        1.3351997880000006,
+        1.2988262200000005
+      ],
+      "wall": [
+        1.4551450700018904,
+        1.3584067369956756
+      ]
+    },
+    {
+      "body": "stock",
+      "frames": 72,
+      "delta": 0,
+      "changed": 0,
+      "cpu": [
+        1.2697727930000013,
+        1.136360439999999
+      ],
+      "wall": [
+        1.398590354998305,
+        1.2465236790012568
+      ]
+    }
+  ],
+  "games": [
+    {
+      "mode": "--no-compiled-geometry",
+      "cpu": 37.703453926,
+      "wall": 38.77791101500043
+    },
+    {
+      "mode": "--compiled-geometry",
+      "cpu": 34.818526728,
+      "wall": 35.48666928899911
+    },
+    {
+      "mode": "--compiled-geometry",
+      "cpu": 26.051573939999997,
+      "wall": 26.26559055099642
+    },
+    {
+      "mode": "--no-compiled-geometry",
+      "cpu": 27.385055241000003,
+      "wall": 27.60999928900128
+    },
+    {
+      "mode": "--no-compiled-geometry",
+      "cpu": 27.536883664,
+      "wall": 27.764781247002247
+    },
+    {
+      "mode": "--compiled-geometry",
+      "cpu": 27.435341703000006,
+      "wall": 27.64302804000181
+    }
+  ],
+  "game_reference": "service-warm-gantry.json.gz",
+  "exact_receipt_parity": true
+}

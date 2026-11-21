@@ -3,9 +3,11 @@ import pytest
 
 pytest.importorskip('mujoco')
 
+from scripts.experimental.tt8_transfer_continuity import snapshots
 from scripts.experimental.tt8_transfer_model import bank_predictions, optical_prior
+from scripts.experimental.tt8_transfer_recurrence import players as recurrence_players
 from scripts.experimental.tt8_transfer_rebound import DT, ReboundCourt, pixels
-from scripts.experimental.tt8_transfer_switch import controllers
+from scripts.experimental.tt8_transfer_switch import CHANGE_HAZARD, controllers
 from scripts.experimental.tt8_transfer_trial import play, player_group, verify
 
 
@@ -69,3 +71,28 @@ def test_blind_source_mixture_can_only_distinguish_plates_after_public_feedback(
     count = min(len(lively['commands']), len(low['commands']))
     assert lively['commands'][:count] == low['commands'][:count]
     assert lively['final_ratio'] > low['final_ratio']
+
+
+def test_recurring_mode_belief_updates_from_public_crossing():
+    donors = dict(lively=dict(center=.92, spread=.055), low=dict(center=.65, spread=.055))
+    player = recurrence_players(donors)['source_calibrated']
+    np.testing.assert_array_equal(player.state, [.5, .5])
+    court = ReboundCourt('low')
+    play(court, court.opening(71601), player, visibility='curtain')
+    posterior = player.state.copy()
+    assert posterior[1] > .90
+    assert abs(player.offset) <= .12 / 3.
+    player.reset()
+    np.testing.assert_allclose(player.state, (1. - CHANGE_HAZARD) * posterior + CHANGE_HAZARD * posterior[::-1])
+
+
+def test_chronological_and_shuffled_snapshots_only_receive_past_optical_evidence():
+    past = [[.91], [.88], [], [.65]]
+    first_stream = list(snapshots([*past, [.6], [.59]], np.random.default_rng(450)))
+    second_stream = list(snapshots([*past, [.94], [.92]], np.random.default_rng(450)))
+    for (count, before, order), (_, other, other_order) in zip(first_stream[:2], second_stream[:2], strict=True):
+        assert order == other_order
+        assert sorted(order) == list(range(count))
+        for name in before:
+            np.testing.assert_array_equal(before[name], other[name])
+    assert not np.array_equal(first_stream[-1][1]['chronological'], second_stream[-1][1]['chronological'])

@@ -114,7 +114,8 @@ def run(source, seed, stations, rounds):
 
 def verify(receipt):
     """Replay the applied cart commands through the independent physical scoring rule."""
-    courts = {name: ReboundCourt(name) for name in MATERIALS}
+    materials = {row['material'] for row in receipt['rows']}
+    courts = {name: ReboundCourt(name) for name in materials}
     checked = 0
     for row in receipt['rows']:
         opening = courts[row['material']].opening(row['fall'])

@@ -13,13 +13,13 @@ from .tt6_body_arena import BODIES, TT6Arena
 from .tt6_render import cache_hall_stereo
 
 
-_MODES = ('native', 'cached', 'reflection')
+_MODES = ('native', 'cached', 'reflection', 'compiled')
 _POINT_SEEDS = (833294100, 1175555228)
 
 
 def _install(arena, mode):
     if mode != 'native':
-        cache_hall_stereo(arena, reflections=mode == 'reflection')
+        cache_hall_stereo(arena, reflections=mode in ('compiled', 'reflection'), compiled_geometry=mode == 'compiled')
 
 
 def _capture(body, seed, distractor, mode, steps):

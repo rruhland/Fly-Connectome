@@ -36,9 +36,39 @@ One player per session started with an equal mixture of the two learned distribu
 
 Every player missed the first fall after each change. The table-tennis mixture caught 22 fewer balls than the generic hard and soft mixture, a difference of −5.73 percentage points with a paired 95% interval from −8.07 to −3.65. Reuse improved screened catches when the prior was paired with the same material. On the blind switches, the best results came from the generic two-material prior and target RGB feedback. [Switch course A](rebound-switch-a.json.gz) · [Switch course B](rebound-switch-b.json.gz)
 
+## Recognizing a returning material
+
+In two additional courses of 16 sessions each, the first material returned after a spell on the other one. Each spell had an unannounced length of three to six falls. One model tracked two possible materials with a 17% chance of switching between them per fall. It compared the terminal RGB location with the predicted crossing distribution for each material. A second version also estimated a signed landing offset shared by both materials, weighted by confidence in the inferred material and shrunk toward zero. The comparison used learned and generic mode distributions with the same observation and update rules. The original observer remixed its starting distribution between falls and updated individual restitution candidates from target feedback.
+
+| Recurrence observer | Course A / 222 | Course B / 212 | Next two after the original material returned / 64 |
+|---|---:|---:|---:|
+| Table tennis, original observer | 136 | 121 | 40 |
+| Table tennis, two-mode observer | 118 | 119 | 37 |
+| Table tennis, two-mode observer with offset | 132 | 124 | 44 |
+| Generic mixture, original observer | 141 | 129 | 44 |
+| Generic mixture, two-mode observer | 138 | 136 | 46 |
+| Generic mixture, two-mode observer with offset | 139 | 139 | 49 |
+
+All six conditions missed all 64 first falls after changes. The shared offset added 19 catches to the table-tennis two-mode observer, a gain of 4.38 percentage points with a paired 95% interval of 0.47 to 8.48. That brought the learned two-mode observer back to the original observer's score range. The equivalent generic observer caught 22 more balls than its table-tennis counterpart, a difference of 5.07 points with an interval of 3.07 to 7.06. [Recurrence course A](rebound-recurrence-a.json.gz) · [Recurrence course B](rebound-recurrence-b.json.gz)
+
+## Carrying the current belief from table tennis
+
+Each of the two archived table-tennis visits was replayed in order through a single observer. It updated its current rebound distribution from the optical bounce estimates after each point. It received the observed ratios and their order. Every two points, the catcher began a target session with that current distribution. Its snapshot and cutoff depended only on the observable stream and the point count. A control received the same optical samples up to each cutoff in shuffled order. The other two controls started from the generic hard-and-soft and hard-with-broad-support priors. All four received the same terminal RGB feedback and used the same target update.
+
+The evaluator randomly maintained the most recent plate in half of the target sessions. The other half switched to one of the other three materials. Gantry and offset visits supplied disjoint source plays and used disjoint target seeds. Each count-based handoff ran eight paired sessions of four catches. The catch sessions branched independently from the snapshot, and the source observer continued through the original archive.
+
+| Initial belief | Plate persisted / 256 | First persisted fall / 64 | First two persisted falls / 128 | Plate changed / 256 | All / 512 |
+|---|---:|---:|---:|---:|---:|
+| Chronological table tennis | 184 | 32 | 79 | 134 | 318 |
+| Shuffled prefix of table tennis | 149 | 27 | 60 | 121 | 270 |
+| Generic hard and soft mixture | 178 | 27 | 74 | 167 | 345 |
+| Generic hard prior with broad support | 169 | 27 | 72 | 165 | 334 |
+
+With the plate retained, chronological carry scored 89/128 on the gantry source visit and 95/128 on the offset visit, versus 88/128 and 90/128 for the generic mixture. It gained 13.67 percentage points over the shuffled prefix, with a paired 95% interval of 9.38 to 17.97. The gain over the generic mixture was 2.34 points, with an interval of −0.78 to 5.47. When the plate changed, the chronological player scored 12.89 points below the generic mixture, with an interval of −20.31 to −5.86. The intervals resampled paired target sessions within each archived handoff. They describe target variation conditional on the two source visits. [Gantry source handoffs](rebound-continuity-a.json.gz) · [Offset source handoffs](rebound-continuity-b.json.gz)
+
 ## Reproduce
 
-Run from the repository root in the project Python environment. The replay checks the physical scoring instant, ball crossing location, each cart command, and the final miss distance. All 7,680 action tapes reproduced their recorded scores.
+Run from the repository root in the project Python environment. The replay checks the physical scoring instant, ball crossing location, each cart command, and the final miss distance. All 12,332 action tapes reproduced their recorded scores. Regenerating the first matched-material course reproduced its receipt byte for byte.
 
 ```sh
 export PYTHONPATH=.:src
@@ -47,9 +77,17 @@ python -m scripts.experimental.tt8_transfer_trial /tmp/rebound-catch-a.json.gz
 python -m scripts.experimental.tt8_transfer_trial /tmp/rebound-catch-b.json.gz --seed 72095801
 python -m scripts.experimental.tt8_transfer_switch /tmp/rebound-switch-a.json.gz
 python -m scripts.experimental.tt8_transfer_switch /tmp/rebound-switch-b.json.gz --seed 96039722
+python -m scripts.experimental.tt8_transfer_recurrence /tmp/rebound-recurrence-a.json.gz
+python -m scripts.experimental.tt8_transfer_recurrence /tmp/rebound-recurrence-b.json.gz --seed 40721055
+python -m scripts.experimental.tt8_transfer_continuity /tmp/rebound-continuity-a.json.gz
+python -m scripts.experimental.tt8_transfer_continuity /tmp/rebound-continuity-b.json.gz --visit 1 --seed 24581650
 python -m scripts.experimental.tt8_transfer_trial /tmp/rebound-catch-a.json.gz --verify
 python -m scripts.experimental.tt8_transfer_trial /tmp/rebound-catch-b.json.gz --verify
 python -m scripts.experimental.tt8_transfer_switch /tmp/rebound-switch-a.json.gz --verify
 python -m scripts.experimental.tt8_transfer_switch /tmp/rebound-switch-b.json.gz --verify
+python -m scripts.experimental.tt8_transfer_recurrence /tmp/rebound-recurrence-a.json.gz --verify
+python -m scripts.experimental.tt8_transfer_recurrence /tmp/rebound-recurrence-b.json.gz --verify
+python -m scripts.experimental.tt8_transfer_continuity /tmp/rebound-continuity-a.json.gz --verify
+python -m scripts.experimental.tt8_transfer_continuity /tmp/rebound-continuity-b.json.gz --verify
 python -m scripts.experimental.tt8_transfer_replay /tmp/rebound-catch-a.json.gz /tmp/catch.webp 807414228
 ```
