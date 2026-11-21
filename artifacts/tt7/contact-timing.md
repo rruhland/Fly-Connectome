@@ -1,5 +1,7 @@
 # Learning when to raise the six-joint racket
 
+The [mixed-condition follow-up](contact-mixed.md) plays complete games against aligned and earlier fixed lifts.
+
 After 24 all-soft practice points, the player returned 14 of 20 openings across two new six-joint installations. The inherited receiver returned two. The learner that began with an empty timing memory returned ten. Both timing learners kept updating on every held point. The carried player won 12 points and the empty-memory player won ten, compared with two for the inherited receiver. [Timing learners](contact-soft-online.json.gz) · [Inherited and coasting controls](contact-soft-controls.json.gz) · [Practice](contact-lift-practice.json.gz)
 
 | Player | Legal openings, site A | Legal openings, site B | Legal returns | Points with a second return | Wins–losses |

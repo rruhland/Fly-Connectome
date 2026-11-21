@@ -11,13 +11,16 @@ import numpy as np
 from .tt4_replay import caption, recording
 from .tt4_transfer_trial import _read
 from .tt6_body_arena import TT6Arena, TT6Wiring
-from .tt6_continuous_trial import point_condition
-from .tt6_racket import set_racket_response
+from .tt6_continuous_trial import prepare_point
 from .tt6_timing import DelayedWiring
 
 
-def replay(path, output=None, visit_index=0, point_index=0):
+def replay(path, output=None, visit_index=0, point_index=0, *, prepare=None):
     doc = _read(path)
+    if prepare is None:
+        from .tt7_surface_trial import SURFACE_PROTOCOL, prepare_material
+
+        prepare = prepare_material if doc.get('protocol') == SURFACE_PROTOCOL else prepare_point
     checked = 0
     total_returns = 0
     body_names = {'stock':'Jointed arm', 'gantry':'Four-axis gantry', 'offset':'Five-axis arm', 'rotary':'Six-joint arm'}
@@ -32,8 +35,7 @@ def replay(path, output=None, visit_index=0, point_index=0):
             for j, row in enumerate(visit['points']):
                 if output is not None and j != point_index:
                     continue
-                rubber, disturbance = point_condition(row['phase'])
-                set_racket_response(arena, rubber)
+                disturbance = prepare(arena, row['phase'])
                 interface = DelayedWiring(wiring, disturbance, seed=doc['seed'])
                 movie = output is not None
                 imgs = interface.reset(seed=row['seed'], render=movie)

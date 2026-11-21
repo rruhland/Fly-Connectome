@@ -16,7 +16,7 @@ def _serializable_body(model):
     return {k: v.tolist() if isinstance(v, np.ndarray) else v for k, v in asdict(model).items()}
 
 
-def save(path, memory, prior, response, timing, *, entry_memory=None, shot_memory=None):
+def save(path, memory, prior, response, timing, *, entry_memory=None, shot_memory=None, service_memory=None, service_drive=None):
     path.parent.mkdir(parents=True, exist_ok=True)
     state = dict(schema='tt6-installation-memory-v1', models=[_serializable_body(m) for m in memory.models],
                  rng=prior.rng.bit_generator.state, roles=asdict(prior.roles), clock=prior.clock,
@@ -29,6 +29,10 @@ def save(path, memory, prior, response, timing, *, entry_memory=None, shot_memor
         state['entry_memory'] = entry_memory.state()
     if shot_memory is not None:
         state['shot_memory'] = shot_memory.state()
+    if service_memory is not None:
+        state['service_memory'] = service_memory.state()
+    if service_drive is not None:
+        state['service_drive'] = asdict(service_drive)
     _write(path, state)
 
 
