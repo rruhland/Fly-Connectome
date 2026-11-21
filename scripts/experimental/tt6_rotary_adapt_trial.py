@@ -12,7 +12,7 @@ from .tt4_transfer_trial import ROOT, _counts, _metrics, _point, _seeds, _write,
 from .tt5_vision import motion_tracker_factory
 from .tt6_body_arena import TT6Arena, TT6Wiring
 from .tt6_body_control import fit_camera_body
-from .tt6_body_probe import probe_histories
+from .tt6_body_probe import probe_commands, probe_histories
 from .tt6_body_vision import body_tracker_factory
 from .tt6_continuous import ContinualPlayer
 from .tt6_continuous_trial import point_condition
@@ -25,14 +25,28 @@ from .tt6_timing import DelayedWiring, TimingMemory
 PHASES = ('ordinary', 'soft', 'mixed', 'delay')
 
 
-def commission(seed, points, geometry):
+def commission(seed, points, geometry, *, probe_cache=None):
     installation = _seeds(seed + 109, 0, 1, 1)
     schedule = _seeds(seed, 0, 8, points)
     arena = TT6Arena(installation['arena_seed'], body='rotary', view_seed=installation['view_seed'], **geometry)
     try:
         cache_hall_stereo(arena, reflections=True)
         wiring = TT6Wiring(arena, installation['arena_seed'])
-        histories, probes = probe_histories(wiring, schedule, {'probe_horizon': 34})
+        horizon = 34
+        if probe_cache is None:
+            histories, probes = probe_histories(wiring, schedule, {'probe_horizon': horizon})
+        else:
+            from .tt7_probe_cache import ProbeCache
+
+            nominal = DelayedWiring(wiring)
+            cache = ProbeCache(probe_cache, nominal, arena.cameras, schedule, horizon)
+            histories, probes = [], []
+            for index, start in enumerate(schedule['calibration']):
+                commands = probe_commands(schedule['player_seed'] + index, horizon, wiring.arena.action_size)
+                history = cache.collect(nominal, start, commands)
+                histories.append(history)
+                probes.append(dict(seed=start, steps=len(history) - 1, frames=len(history),
+                                   actions=[action.tolist() for action, _ in history[1:]]))
         for track in (body_tracker_factory, motion_tracker_factory):
             factory = track(arena.cameras, histories)
             try:

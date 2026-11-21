@@ -144,7 +144,7 @@ class BallFlight:
         return duration, point, speed
 
 
-def _launch_pitch(position, incoming, forward_speed, restitution):
+def _launch_pitch(position, incoming, forward_speed, restitution, correction=(0., 0.)):
     """Choose a return trajectory aimed inside the opponent's half of the table."""
     angles = np.linspace(-.02, .72, 51)
     sine, cosine = np.sin(angles), np.cos(angles)
@@ -154,8 +154,12 @@ def _launch_pitch(position, incoming, forward_speed, restitution):
     tangent = -y_speed * sine + z_speed * cosine
     impulse = -(1. + restitution) * normal
     friction = -.23 * tangent
-    out = np.maximum(.02, incoming[1] + impulse * cosine - friction * sine)
-    rise = incoming[2] + impulse * sine + friction * cosine
+    out = np.maximum(.02, incoming[1] + impulse * cosine - friction * sine + correction[0])
+    rise = incoming[2] + impulse * sine + friction * cosine + correction[1]
+    return float(angles[np.argmin(_landing_cost(position, out, rise))])
+
+
+def _landing_cost(position, out, rise):
     travel = np.array([-position[1], .76 - position[1]])[:, None]
     # Treat the depth drag rate as constant over the planned arc.
     loss = DRAG * out
@@ -163,7 +167,7 @@ def _launch_pitch(position, incoming, forward_speed, restitution):
     decay = -np.expm1(-loss * intervals) / loss
     elevation = position[2] + (rise + GRAVITY / loss) * decay - GRAVITY / loss * intervals
     error = np.abs(elevation[1] - BALL_RADIUS) + 2.5 * np.maximum(0., NET_CLEARANCE - elevation[0])
-    return float(angles[np.argmin(error)])
+    return error
 
 
 class RallyPlayer(TransferPlayer):
@@ -232,6 +236,9 @@ class RallyPlayer(TransferPlayer):
         donor = (np.median(ratios[-12:]) - .65) * .27 * self.transfer_strength if ratios else 0.
         return float(np.clip(.86 + donor, .72, .99))
 
+    def _strike_pitch(self, position, incoming):
+        return _launch_pitch(position, incoming, self.stroke_speed, self.impact_restitution)
+
     def _stroke_goals(self, estimate):
         ready = self.adapter.ready
         tick = self.scene.tick
@@ -269,7 +276,7 @@ class RallyPlayer(TransferPlayer):
         projected[0] += self.transfer_strength * (.12 * (gain - 1.) * (position[0] - ready[0])
                                                   + .12 * (lead - 1.) * (ball[0] - position[0]) + .035 * bias)
         projected[2] = np.clip(projected[2], .080, .61)
-        pitch = _launch_pitch(projected, speed, self.stroke_speed, self.impact_restitution)
+        pitch = self._strike_pitch(projected, speed)
         if not self._wrist_available():
             pitch = self.adapter.home[3]
         next_plan = np.array([tick + horizon, projected[0], plane, projected[2], pitch])

@@ -30,17 +30,26 @@ def probe_commands(seed, horizon, action_size):
     return np.array(commands[:horizon])
 
 
+def collect_probe(wiring, seed, commands, *, render=True):
+    options = {} if render else {'render': False}
+    frames = wiring.reset(seed=seed, **options)
+    size = getattr(wiring, 'action_size', None)
+    if size is None:
+        size = wiring.arena.action_size
+    history = [(np.zeros(size), frames)]
+    for action in commands:
+        frames, _, terminated, truncated, _ = wiring.step(action, **options)
+        history.append((action, frames))
+        if terminated or truncated:
+            break
+    return history
+
+
 def _collect(wiring, schedule, horizon):
     histories, receipt = [], []
     for index, seed in enumerate(schedule['calibration']):
-        frames = wiring.reset(seed=seed)
-        action_size = wiring.arena.action_size
-        history = [(np.zeros(action_size), frames)]
-        for action in probe_commands(schedule['player_seed'] + index, horizon, action_size):
-            frames, _, terminated, truncated, _ = wiring.step(action)
-            history.append((action, frames))
-            if terminated or truncated:
-                break
+        commands = probe_commands(schedule['player_seed'] + index, horizon, wiring.arena.action_size)
+        history = collect_probe(wiring, seed, commands)
         histories.append(history)
         receipt.append(dict(seed=seed, steps=len(history) - 1, frames=len(history),
                             actions=[action.tolist() for action, _ in history[1:]]))

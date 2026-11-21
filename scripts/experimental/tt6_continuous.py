@@ -7,7 +7,7 @@ from scipy.signal import lfilter
 from .tt5_vision import motion_tracker_factory
 from .tt6_body_vision import body_tracker_factory
 from .tt6_body_control import MOTOR_BUDGET, CameraBodyPlayer, CameraServo, _samples, fit_camera_body
-from .tt6_body_probe import probe_commands
+from .tt6_body_probe import collect_probe, probe_commands
 from .tt6_timing import VisualDelay, advance_stroke
 
 
@@ -39,18 +39,18 @@ def supports(adapter, evidence):
 class BodyLibrary:
     models: list
 
-    def commission(self, wiring, rig, schedule, *, horizon=34):
+    def commission(self, wiring, rig, schedule, *, horizon=34, probe_cache=None):
         histories, probes, attempts = [], [], []
         size = wiring.action_size
         old = [(i, m) for i,m in enumerate(self.models) if m.action_size == size]
+        collect = collect_probe
+        if probe_cache is not None:
+            from .tt7_probe_cache import ProbeCache
+
+            collect = ProbeCache(probe_cache, wiring, rig, schedule, horizon).collect
         for i, seed in enumerate(schedule['calibration']):
-            frames = wiring.reset(seed=seed)
-            history = [(np.zeros(size),frames)]
-            for action in probe_commands(schedule['player_seed'] + i, horizon, size):
-                frames, _, terminated, truncated, _ = wiring.step(action)
-                history.append((action, frames))
-                if terminated or truncated:
-                    break
+            commands = probe_commands(schedule['player_seed'] + i, horizon, size)
+            history = collect(wiring, seed, commands)
             histories.append(history)
             probes.append(dict(seed=seed, actions=[a.tolist() for a,_ in history[1:]]))
             n = len(probes)
@@ -149,12 +149,17 @@ class PredictiveServo(DelayedCameraServo):
             initial = np.clip(self.stroke * self.intercept, -.107, .145)
             targets[:, 1] += initial - np.clip(self.stroke*(self.intercept-times), -.107, .145)
         error = (targets - fit.pose(states) - self.correction) * self.weights * self.scale[:, None]
-        # Ridge term shares a stroke over the look-ahead window and discourages chattering.
         normal = design.T @ design + .00055 * np.eye(design.shape[1])
-        plan = np.linalg.solve(normal, design.T @ error.ravel())
+        rhs = design.T @ error.ravel()
+        self._strike_objective(normal, rhs, states, effect, jac, targets)
+        plan = np.linalg.solve(normal, rhs)
         lower = np.maximum(-1., -MOTOR_BUDGET - self.requested)
         upper = np.minimum(1., MOTOR_BUDGET - self.requested)
         return np.clip(plan[:fit.action_size], lower, upper)
+
+
+    def _strike_objective(self, normal, rhs, states, effect, jac, targets):
+        """Optional additional requirements on the predicted movement at impact."""
 
 
 class ContinualPlayer(CameraBodyPlayer):

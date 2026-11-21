@@ -34,7 +34,13 @@ def match_phases(phases, limit, seed):
     return order[:limit]
 
 
-def run(args):
+def prepare_point(arena, phase):
+    rubber, disturbance = point_condition(phase)
+    set_racket_response(arena, rubber)
+    return disturbance
+
+
+def run(args, *, make_player=None, after_visit=None, prepare=prepare_point, protocol=None):
     if args.race_to < 0 or min(args.max_steps, args.match_limit, args.probes) < 1:
         raise ValueError('the run needs a positive probe budget and valid match lengths')
     if args.rally_response and (not args.predictive or args.mode == 'frozen'):
@@ -69,6 +75,8 @@ def run(args):
                     render_mode='mujoco', max_steps=args.max_steps, frameskip=8, distractor=False)
     report = dict(seed=args.seed, geometry=geometry, surfaces=args.phases, cached_render=args.cached_render, predictive=args.predictive,
                   mode=args.mode, source_sha256=hashes, reflections=args.reflections, visits=[], gain=gain)
+    if protocol is not None:
+        report['protocol'] = protocol
     if args.rally_response:
         report['rally_response'] = True
     if args.auto_servo:
@@ -123,14 +131,17 @@ def run(args):
                 cache_hall_stereo(arena, reflections=args.reflections)
             wiring = TT6Wiring(arena, install['arena_seed'])
             library = BodyLibrary([]) if args.mode in ('refit', 'restart') else memory
-            adapter, factory, probes, attempts = library.commission(DelayedWiring(wiring), arena.cameras, schedule)
+            adapter, factory, probes, attempts = library.commission(
+                DelayedWiring(wiring), arena.cameras, schedule, probe_cache=getattr(args, 'probe_cache', None))
             before = prior.state()
             visit = dict(body=body, install=name, schedule=schedule, installation=install,
                          wiring=wiring.state(), probes=probes, attempts=attempts, before=before, points=[])
             if adapter is not None:
                 if entry_memory is not None and 'recalled' not in attempts[-1]:
                     visit['learned_entry_speed'] = entry_memory.enter(response)
-                if shot_memory is not None:
+                if make_player is not None:
+                    player = make_player(adapter, prior, factory, response, timing)
+                elif shot_memory is not None:
                     player = LocalShotPlayer(adapter, prior, factory, response, timing, adjust=args.mode != 'frozen',
                                              predictive=args.predictive, shot_memory=shot_memory)
                 elif args.auto_servo:
@@ -148,8 +159,7 @@ def run(args):
                 visit['fit'] = adapter.stats()
                 score = [0, 0]
                 for phase, point_seed in zip(phases, schedule['tests'], strict=True):
-                    rubber, disturbance = point_condition(phase)
-                    set_racket_response(arena, rubber)
+                    disturbance = prepare(arena, phase)
                     disturbed = DelayedWiring(wiring, disturbance, seed=args.seed)
                     row = _point(disturbed, player, point_seed)
                     point = dict(phase=phase, applied=disturbed.applied, **row, **_counts(row))
@@ -171,6 +181,8 @@ def run(args):
                 from .tt6_memory import save
                 save(args.checkpoints / f'visit-{i + 1}.json.gz', library, prior, response, timing,
                      entry_memory=entry_memory, shot_memory=shot_memory)
+            if after_visit is not None:
+                after_visit(visit)
             report['visits'].append(visit)
             _write(args.output, report)
             print(i, name, len(probes), attempts[-1] if attempts else 'no supported fit', [(p['phase'],p['player_returns'],p['points_for'],
@@ -179,7 +191,7 @@ def run(args):
             arena.close()
 
 
-if __name__ == '__main__':
+def parser():
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument('output', type=Path)
     p.add_argument('--seed', required=True, type=int)
@@ -190,6 +202,7 @@ if __name__ == '__main__':
     servo.add_argument('--predictive', action='store_true')
     servo.add_argument('--auto-servo', action='store_true', help='select a solver from the fitted camera response')
     p.add_argument('--cached-render', action='store_true')
+    p.add_argument('--probe-cache', type=Path, help='reuse public calibration RGB in this directory')
     p.add_argument('--probes', type=int, default=8)
     p.add_argument('--rally-response', action='store_true', help='use an observed rebound to adjust later strikes in the same point')
     p.add_argument('--race-to', type=int, default=0, help='play receiving games to this score, winning by two')
@@ -205,4 +218,8 @@ if __name__ == '__main__':
     p.add_argument('--start-visit', default=0, type=int, help='zero-based first visit to play on resuming the same course')
     p.add_argument('--resume', type=Path, help='resume learned state at an installation boundary')
     p.add_argument('--stations-from', type=Path, help='reuse physical installations from a previous receipt')
-    run(p.parse_args())
+    return p
+
+
+if __name__ == '__main__':
+    run(parser().parse_args())
