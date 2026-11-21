@@ -1,0 +1,142 @@
+<mujoco model="tt4 regulation table">
+  <compiler angle="radian" autolimits="true"/>
+  <option timestep="0.002083333333333333" gravity="0 0 -9.81" integrator="implicitfast" iterations="25"/>
+  <statistic center="0 0 0.8" extent="8"/>
+  <visual>
+    <global offwidth="640" offheight="480"/>
+    <headlight ambient="0.32 0.32 0.32" diffuse="0.61 0.61 0.61" specular="0.15 0.15 0.15"/>
+    <map znear="0.008" zfar="24"/>
+  </visual>
+  <asset>
+    <texture name="room" type="skybox" builtin="gradient" rgb1="0.19 0.24 0.30" rgb2="0.049 0.065 0.087" width="128" height="128"/>
+  </asset>
+  <default>
+    <geom contype="0" conaffinity="0"/>
+    <joint damping="0.13" armature="0.008"/>
+    <default class="table_collision">
+      <geom contype="2" conaffinity="5" priority="1" condim="3" friction="0.18 0.004 0.0002"
+            solref="-100000 -24" solimp="0.99 0.99 0.001 0.5 2"/>
+    </default>
+    <default class="racket_collision">
+      <geom contype="4" conaffinity="3" priority="2" condim="3" friction="0.54 0.003 0.0002"
+            solref="-100000 -25" solimp="0.99 0.99 0.001 0.5 2"/>
+    </default>
+    <default class="net_collision">
+      <geom contype="2" conaffinity="5" priority="3" condim="3" friction="0.35 0.003 0.0002"
+            solref="-28000 -180" solimp="0.94 0.98 0.001 0.5 2"/>
+    </default>
+    <default class="link">
+      <geom type="capsule" size="0.023" density="470" rgba="0.42 0.48 0.54 1"/>
+    </default>
+    <default class="pivot">
+      <geom type="sphere" size="0.039" density="360" rgba="0.24 0.31 0.38 1"/>
+    </default>
+  </default>
+  <worldbody>
+    <light name="ceiling" pos="-1.8 -1.7 4.7" dir="0.29 0.28 -1" cutoff="65" diffuse="0.7 0.7 0.68" castshadow="false"/>
+    <camera name="eye_left" pos="-0.08 -2.30 1.60" xyaxes="1 0 0 0 0.251 0.968" fovy="65"/>
+    <camera name="eye_right" pos="0.08 -2.30 1.60" xyaxes="1 0 0 0 0.251 0.968" fovy="65"/>
+    <geom name="floor" type="plane" size="5 5 0.05" contype="2" conaffinity="5" rgba="0.13 0.17 0.22 1"/>
+    <geom name="table" class="table_collision" type="box" pos="0 0 0.735" size="0.7625 1.37 0.025" rgba="0.10 0.30 0.34 1"/>
+    <geom type="box" pos="0 -1.359 0.7605" size="0.750 0.010 0.0005" rgba="0.86 0.89 0.89 1"/>
+    <geom type="box" pos="0 1.359 0.7605" size="0.750 0.010 0.0005" rgba="0.86 0.89 0.89 1"/>
+    <geom type="box" pos="-0.752 0 0.7605" size="0.010 1.37 0.0005" rgba="0.86 0.89 0.89 1"/>
+    <geom type="box" pos="0.752 0 0.7605" size="0.010 1.37 0.0005" rgba="0.86 0.89 0.89 1"/>
+    <geom type="box" pos="0 0 0.7605" size="0.0015 1.35 0.0005" rgba="0.78 0.83 0.85 1"/>
+    <geom type="box" pos="-0.55 -0.94 0.355" size="0.030 0.039 0.355" rgba="0.22 0.28 0.33 1"/>
+    <geom type="box" pos="0.55 -0.94 0.355" size="0.030 0.039 0.355" rgba="0.22 0.28 0.33 1"/>
+    <geom type="box" pos="-0.55 0.94 0.355" size="0.030 0.039 0.355" rgba="0.22 0.28 0.33 1"/>
+    <geom type="box" pos="0.55 0.94 0.355" size="0.030 0.039 0.355" rgba="0.22 0.28 0.33 1"/>
+    <geom name="net" class="net_collision" type="box" pos="0 0 0.83625" size="0.915 0.007 0.07625" rgba="0.13 0.19 0.27 0.36"/>
+    <geom type="box" pos="0 0 0.9085" size="0.915 0.008 0.004" rgba="0.82 0.87 0.89 1"/>
+    <geom type="cylinder" pos="-0.915 0 0.833" size="0.013 0.080" rgba="0.47 0.53 0.59 1"/>
+    <geom type="cylinder" pos="0.915 0 0.833" size="0.013 0.080" rgba="0.47 0.53 0.59 1"/>
+    <body name="ball" pos="0 1.40 1.03">
+      <freejoint name="ball_free"/>
+      <geom name="ball" type="sphere" size="0.020" mass="0.0027" contype="1" conaffinity="6" rgba="0.96 0.86 0.30 1"/>
+    </body>
+    <body name="decoy" mocap="true" pos="0 0 -100">
+      <geom name="decoy" type="sphere" size="0.020" rgba="0.85 0.36 0.80 1"/>
+    </body>
+    <!-- The two identical arms face toward each other. Their wrist linkages are
+         articulated and constrained by the fixed tendons below. -->
+    <body name="learner_base" pos="0 -1.94 0.96">
+      <geom type="cylinder" pos="0 0 -0.48" size="0.061 0.48" rgba="0.23 0.29 0.35 1"/>
+      <body name="learner_yaw">
+        <joint name="learner_yaw" axis="0 0 -1" range="-1.18 1.18"/>
+        <geom class="pivot"/>
+        <body name="learner_shoulder">
+          <joint name="learner_shoulder" axis="1 0 0" range="-1.18 0.68"/>
+          <geom class="link" fromto="0 0 0 0 0.38 0"/>
+          <body name="learner_elbow" pos="0 0.38 0">
+            <joint name="learner_elbow" axis="1 0 0" range="0.40 2.36"/>
+            <geom class="pivot"/>
+            <geom class="link" fromto="0 0 0 0 0.38 0"/>
+            <body name="learner_pitch_link" pos="0 0.38 0">
+              <joint name="learner_pitch_link" axis="1 0 0" damping="0.02" armature="0.0002"/>
+              <inertial pos="0 0 0" mass="0.02" diaginertia="0.00002 0.00002 0.00002"/>
+              <body name="learner_yaw_link">
+                <joint name="learner_yaw_link" axis="0 0 -1" damping="0.02" armature="0.0002"/>
+                <inertial pos="0 0 0" mass="0.02" diaginertia="0.00002 0.00002 0.00002"/>
+                <body name="learner_wrist">
+                  <joint name="learner_wrist" axis="1 0 0" range="-0.75 0.82"/>
+                  <geom name="learner_racket" class="racket_collision" type="cylinder" size="0.076 0.006" mass="0.13" quat="0.70710678 -0.70710678 0 0" rgba="0.89 0.25 0.19 1"/>
+                </body>
+              </body>
+            </body>
+          </body>
+        </body>
+      </body>
+    </body>
+    <body name="rival_base" pos="0 1.94 0.96" quat="0 0 0 1">
+      <geom type="cylinder" pos="0 0 -0.48" size="0.061 0.48" rgba="0.23 0.29 0.35 1"/>
+      <body name="rival_yaw">
+        <joint name="rival_yaw" axis="0 0 -1" range="-1.18 1.18"/>
+        <geom class="pivot"/>
+        <body name="rival_shoulder">
+          <joint name="rival_shoulder" axis="1 0 0" range="-1.18 0.68"/>
+          <geom class="link" fromto="0 0 0 0 0.38 0"/>
+          <body name="rival_elbow" pos="0 0.38 0">
+            <joint name="rival_elbow" axis="1 0 0" range="0.40 2.36"/>
+            <geom class="pivot"/>
+            <geom class="link" fromto="0 0 0 0 0.38 0"/>
+            <body name="rival_pitch_link" pos="0 0.38 0">
+              <joint name="rival_pitch_link" axis="1 0 0" damping="0.02" armature="0.0002"/>
+              <inertial pos="0 0 0" mass="0.02" diaginertia="0.00002 0.00002 0.00002"/>
+              <body name="rival_yaw_link">
+                <joint name="rival_yaw_link" axis="0 0 -1" damping="0.02" armature="0.0002"/>
+                <inertial pos="0 0 0" mass="0.02" diaginertia="0.00002 0.00002 0.00002"/>
+                <body name="rival_wrist">
+                  <joint name="rival_wrist" axis="1 0 0" range="-0.75 0.82"/>
+                  <geom name="rival_racket" class="racket_collision" type="cylinder" size="0.076 0.006" mass="0.13" quat="0.70710678 -0.70710678 0 0" rgba="0.24 0.67 0.95 1"/>
+                </body>
+              </body>
+            </body>
+          </body>
+        </body>
+      </body>
+    </body>
+  </worldbody>
+  <tendon>
+    <fixed name="learner_pitch"><joint joint="learner_shoulder" coef="1"/><joint joint="learner_elbow" coef="1"/><joint joint="learner_pitch_link" coef="1"/></fixed>
+    <fixed name="learner_counter_yaw"><joint joint="learner_yaw" coef="1"/><joint joint="learner_yaw_link" coef="1"/></fixed>
+    <fixed name="rival_pitch"><joint joint="rival_shoulder" coef="1"/><joint joint="rival_elbow" coef="1"/><joint joint="rival_pitch_link" coef="1"/></fixed>
+    <fixed name="rival_counter_yaw"><joint joint="rival_yaw" coef="1"/><joint joint="rival_yaw_link" coef="1"/></fixed>
+  </tendon>
+  <equality>
+    <tendon tendon1="learner_pitch" polycoef="0 0 0 0 0" solref="0.008 1"/>
+    <tendon tendon1="learner_counter_yaw" polycoef="0 0 0 0 0" solref="0.008 1"/>
+    <tendon tendon1="rival_pitch" polycoef="0 0 0 0 0" solref="0.008 1"/>
+    <tendon tendon1="rival_counter_yaw" polycoef="0 0 0 0 0" solref="0.008 1"/>
+  </equality>
+  <actuator>
+    <position name="learner_yaw" joint="learner_yaw" kp="130" kv="6" forcerange="-17 17"/>
+    <position name="learner_shoulder" joint="learner_shoulder" kp="122" kv="5" forcerange="-15 15"/>
+    <position name="learner_elbow" joint="learner_elbow" kp="102" kv="4" forcerange="-13 13"/>
+    <position name="learner_wrist" joint="learner_wrist" kp="38" kv="1.4" forcerange="-4 4"/>
+    <position name="rival_yaw" joint="rival_yaw" kp="130" kv="6" forcerange="-17 17"/>
+    <position name="rival_shoulder" joint="rival_shoulder" kp="122" kv="5" forcerange="-15 15"/>
+    <position name="rival_elbow" joint="rival_elbow" kp="102" kv="4" forcerange="-13 13"/>
+    <position name="rival_wrist" joint="rival_wrist" kp="38" kv="1.4" forcerange="-4 4"/>
+  </actuator>
+</mujoco>

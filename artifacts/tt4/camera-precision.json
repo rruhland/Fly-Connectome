@@ -1,0 +1,419 @@
+{
+  "camera_sha256": "176ebb234ad388d7ae5312736ba8ad6c900372ae27f13f15249d489863df668d",
+  "tt4_source_sha256": "2dc5f27916f4e28674988fa6be2a20b3d62a51f9700c8e2769c06d0c68d68f02",
+  "tt4_xml_sha256": "b5537ed9f0b9778ceeba24defcf6e8ef3bcd4dc89eaded3bee3cc552ff0f4dcc",
+  "tt4_frameskip": 8,
+  "tt4_timestep": 0.004166666666666667,
+  "renderer": "calibrated software RGB",
+  "protocol": "12 seeded passive points per sim and view; error measured against sim truth only for evaluation. For each frame with the ball center within both camera frustums and the court measurement envelope, used nearest observed anonymous 3D track. Median/p90 are conditional on recovery within 20 cm. Near y < -0.55 m, middle |y| <= 0.55 m, far y > 0.55 m.",
+  "results": [
+    {
+      "sim": "tt3",
+      "view": "first_person",
+      "baseline": 0.16,
+      "resolution": [
+        96,
+        72
+      ],
+      "points": 12,
+      "far": {
+        "eligible": 26,
+        "within_20cm": 22,
+        "median_cm": 1.12,
+        "p90_cm": 8.13
+      },
+      "middle": {
+        "eligible": 198,
+        "within_20cm": 156,
+        "median_cm": 1.22,
+        "p90_cm": 10.53
+      },
+      "near": {
+        "eligible": 190,
+        "within_20cm": 173,
+        "median_cm": 0.64,
+        "p90_cm": 2.6
+      },
+      "paddle": {
+        "eligible": 414,
+        "within_20cm": 414,
+        "median_cm": 0.94,
+        "p90_cm": 1.18
+      }
+    },
+    {
+      "sim": "tt3",
+      "view": "first_person",
+      "baseline": 0.064,
+      "resolution": [
+        96,
+        72
+      ],
+      "points": 12,
+      "far": {
+        "eligible": 26,
+        "within_20cm": 16,
+        "median_cm": 2.14,
+        "p90_cm": 8.03
+      },
+      "middle": {
+        "eligible": 198,
+        "within_20cm": 132,
+        "median_cm": 1.35,
+        "p90_cm": 7.72
+      },
+      "near": {
+        "eligible": 191,
+        "within_20cm": 174,
+        "median_cm": 1.16,
+        "p90_cm": 5.04
+      },
+      "paddle": {
+        "eligible": 415,
+        "within_20cm": 415,
+        "median_cm": 4.07,
+        "p90_cm": 4.07
+      }
+    },
+    {
+      "sim": "tt3",
+      "view": "overhead_side",
+      "baseline": null,
+      "resolution": [
+        96,
+        72
+      ],
+      "points": 12,
+      "far": {
+        "eligible": 26,
+        "within_20cm": 25,
+        "median_cm": 0.12,
+        "p90_cm": 1.12
+      },
+      "middle": {
+        "eligible": 198,
+        "within_20cm": 186,
+        "median_cm": 0.14,
+        "p90_cm": 1.27
+      },
+      "near": {
+        "eligible": 181,
+        "within_20cm": 169,
+        "median_cm": 0.2,
+        "p90_cm": 1.4
+      },
+      "paddle": {
+        "eligible": 405,
+        "within_20cm": 405,
+        "median_cm": 0.07,
+        "p90_cm": 0.21
+      }
+    },
+    {
+      "sim": "tt4",
+      "view": "first_person",
+      "baseline": 0.16,
+      "resolution": [
+        96,
+        72
+      ],
+      "points": 12,
+      "far": {
+        "eligible": 88,
+        "within_20cm": 42,
+        "median_cm": 5.53,
+        "p90_cm": 14.26
+      },
+      "middle": {
+        "eligible": 134,
+        "within_20cm": 109,
+        "median_cm": 2.62,
+        "p90_cm": 9.32
+      },
+      "near": {
+        "eligible": 170,
+        "within_20cm": 163,
+        "median_cm": 0.49,
+        "p90_cm": 2.16
+      },
+      "paddle": {
+        "eligible": 392,
+        "within_20cm": 392,
+        "median_cm": 1.89,
+        "p90_cm": 1.9
+      }
+    },
+    {
+      "sim": "tt4",
+      "view": "first_person",
+      "baseline": 0.064,
+      "resolution": [
+        96,
+        72
+      ],
+      "points": 12,
+      "far": {
+        "eligible": 88,
+        "within_20cm": 46,
+        "median_cm": 8.32,
+        "p90_cm": 14.31
+      },
+      "middle": {
+        "eligible": 134,
+        "within_20cm": 94,
+        "median_cm": 4.66,
+        "p90_cm": 15.05
+      },
+      "near": {
+        "eligible": 170,
+        "within_20cm": 166,
+        "median_cm": 1.03,
+        "p90_cm": 6.26
+      },
+      "paddle": {
+        "eligible": 392,
+        "within_20cm": 392,
+        "median_cm": 8.47,
+        "p90_cm": 8.47
+      }
+    },
+    {
+      "sim": "tt4",
+      "view": "overhead_side",
+      "baseline": null,
+      "resolution": [
+        96,
+        72
+      ],
+      "points": 12,
+      "far": {
+        "eligible": 88,
+        "within_20cm": 83,
+        "median_cm": 0.73,
+        "p90_cm": 2.31
+      },
+      "middle": {
+        "eligible": 134,
+        "within_20cm": 132,
+        "median_cm": 0.61,
+        "p90_cm": 1.65
+      },
+      "near": {
+        "eligible": 166,
+        "within_20cm": 162,
+        "median_cm": 0.76,
+        "p90_cm": 1.81
+      },
+      "paddle": {
+        "eligible": 388,
+        "within_20cm": 388,
+        "median_cm": 0.29,
+        "p90_cm": 0.59
+      }
+    },
+    {
+      "sim": "tt3",
+      "view": "first_person",
+      "baseline": 0.16,
+      "resolution": [
+        192,
+        144
+      ],
+      "points": 12,
+      "far": {
+        "eligible": 26,
+        "within_20cm": 26,
+        "median_cm": 0.83,
+        "p90_cm": 6.74
+      },
+      "middle": {
+        "eligible": 198,
+        "within_20cm": 183,
+        "median_cm": 0.96,
+        "p90_cm": 4.59
+      },
+      "near": {
+        "eligible": 190,
+        "within_20cm": 173,
+        "median_cm": 0.16,
+        "p90_cm": 1.0
+      },
+      "paddle": {
+        "eligible": 414,
+        "within_20cm": 414,
+        "median_cm": 1.45,
+        "p90_cm": 1.5
+      }
+    },
+    {
+      "sim": "tt3",
+      "view": "first_person",
+      "baseline": 0.064,
+      "resolution": [
+        192,
+        144
+      ],
+      "points": 12,
+      "far": {
+        "eligible": 26,
+        "within_20cm": 24,
+        "median_cm": 4.01,
+        "p90_cm": 15.77
+      },
+      "middle": {
+        "eligible": 198,
+        "within_20cm": 183,
+        "median_cm": 2.19,
+        "p90_cm": 7.52
+      },
+      "near": {
+        "eligible": 191,
+        "within_20cm": 175,
+        "median_cm": 0.34,
+        "p90_cm": 2.31
+      },
+      "paddle": {
+        "eligible": 415,
+        "within_20cm": 413,
+        "median_cm": 1.15,
+        "p90_cm": 1.21
+      }
+    },
+    {
+      "sim": "tt3",
+      "view": "overhead_side",
+      "baseline": null,
+      "resolution": [
+        192,
+        144
+      ],
+      "points": 12,
+      "far": {
+        "eligible": 26,
+        "within_20cm": 26,
+        "median_cm": 0.09,
+        "p90_cm": 0.18
+      },
+      "middle": {
+        "eligible": 198,
+        "within_20cm": 198,
+        "median_cm": 0.09,
+        "p90_cm": 0.25
+      },
+      "near": {
+        "eligible": 183,
+        "within_20cm": 180,
+        "median_cm": 0.1,
+        "p90_cm": 0.35
+      },
+      "paddle": {
+        "eligible": 407,
+        "within_20cm": 407,
+        "median_cm": 0.45,
+        "p90_cm": 0.62
+      }
+    },
+    {
+      "sim": "tt4",
+      "view": "first_person",
+      "baseline": 0.16,
+      "resolution": [
+        192,
+        144
+      ],
+      "points": 12,
+      "far": {
+        "eligible": 88,
+        "within_20cm": 88,
+        "median_cm": 1.4,
+        "p90_cm": 7.63
+      },
+      "middle": {
+        "eligible": 134,
+        "within_20cm": 128,
+        "median_cm": 1.05,
+        "p90_cm": 2.72
+      },
+      "near": {
+        "eligible": 170,
+        "within_20cm": 167,
+        "median_cm": 0.18,
+        "p90_cm": 1.19
+      },
+      "paddle": {
+        "eligible": 392,
+        "within_20cm": 392,
+        "median_cm": 1.29,
+        "p90_cm": 1.36
+      }
+    },
+    {
+      "sim": "tt4",
+      "view": "first_person",
+      "baseline": 0.064,
+      "resolution": [
+        192,
+        144
+      ],
+      "points": 12,
+      "far": {
+        "eligible": 88,
+        "within_20cm": 79,
+        "median_cm": 2.18,
+        "p90_cm": 12.53
+      },
+      "middle": {
+        "eligible": 134,
+        "within_20cm": 126,
+        "median_cm": 1.77,
+        "p90_cm": 7.86
+      },
+      "near": {
+        "eligible": 170,
+        "within_20cm": 167,
+        "median_cm": 0.49,
+        "p90_cm": 2.62
+      },
+      "paddle": {
+        "eligible": 392,
+        "within_20cm": 392,
+        "median_cm": 1.47,
+        "p90_cm": 1.65
+      }
+    },
+    {
+      "sim": "tt4",
+      "view": "overhead_side",
+      "baseline": null,
+      "resolution": [
+        192,
+        144
+      ],
+      "points": 12,
+      "far": {
+        "eligible": 88,
+        "within_20cm": 88,
+        "median_cm": 0.16,
+        "p90_cm": 0.28
+      },
+      "middle": {
+        "eligible": 134,
+        "within_20cm": 134,
+        "median_cm": 0.14,
+        "p90_cm": 0.27
+      },
+      "near": {
+        "eligible": 167,
+        "within_20cm": 166,
+        "median_cm": 0.17,
+        "p90_cm": 0.29
+      },
+      "paddle": {
+        "eligible": 389,
+        "within_20cm": 389,
+        "median_cm": 0.21,
+        "p90_cm": 0.43
+      }
+    }
+  ]
+}
