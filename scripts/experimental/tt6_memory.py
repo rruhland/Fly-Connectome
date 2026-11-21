@@ -17,7 +17,7 @@ def _serializable_body(model):
 
 
 def save(path, memory, prior, response, timing, *, entry_memory=None, shot_memory=None, service_memory=None,
-         service_drive=None, receiving_lift=None):
+         service_drive=None, receiving_lift=None, service_registration=None):
     path.parent.mkdir(parents=True, exist_ok=True)
     state = dict(schema='tt6-installation-memory-v1', models=[_serializable_body(m) for m in memory.models],
                  rng=prior.rng.bit_generator.state, roles=asdict(prior.roles), clock=prior.clock,
@@ -36,6 +36,8 @@ def save(path, memory, prior, response, timing, *, entry_memory=None, shot_memor
         state['service_memory'] = service_memory.state()
     if service_drive is not None:
         state['service_drive'] = asdict(service_drive)
+    if service_registration is not None:
+        state['service_registration'] = service_registration.state()
     if receiving_lift is not None:
         state['receiving_lift'] = receiving_lift
     _write(path, state)

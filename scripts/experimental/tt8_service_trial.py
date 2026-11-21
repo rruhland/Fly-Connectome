@@ -61,13 +61,24 @@ def run(args):
     wiring = TT6Wiring(arena, install['arena_seed'])
     checkpoint = _read(args.resume)
     memory = ServiceMemory(_read(args.service_in) if args.service_in else checkpoint.get('service_memory'))
+    registration = None
+    registration_mode = args.registration
+    if registration_mode is None and 'service_registration' in checkpoint:
+        registration_mode = 'online'
+    if registration_mode is not None:
+        from .tt9_precontact_registration import RegistrationMemory, RegistrationPlayer
+
+        if args.drive is not None or args.drive_from is not None:
+            raise ValueError('service registration uses a fixed drive pace')
+        registration = RegistrationMemory(**({} if registration_mode == 'reset'
+                                             else checkpoint.get('service_registration', {})))
     drive = None
     drive_state = checkpoint.get('service_drive')
     if args.drive_from is not None:
         if args.drive is None:
             raise ValueError('select online or frozen drive when supplying optical drive practice')
         drive_state = _read(args.drive_from)['sections']['practice']['drive_after']
-    if args.drive is not None or drive_state is not None:
+    if args.drive is not None or drive_state is not None or registration is not None:
         from .tt8_service_drive import DrivePlayer, ServiceDrive
         if args.receiver_only or args.fixed is not None or args.service_in is not None:
             raise ValueError('a drive checkpoint uses its stored serving policy')
@@ -95,7 +106,12 @@ def run(args):
         if fit is None:
             raise ValueError(f'body identification failed: {attempts}')
         flight = FlightMemory('fixed')
-        if drive is not None:
+        if registration is not None:
+            player = RegistrationPlayer(fit, prior, factory, response, timing, predictive=True, flight_memory=flight,
+                                        drive=drive, learn=False, registration=registration,
+                                        intervention='fixed' if registration_mode == 'fixed' else 'full',
+                                        learn_registration=registration_mode in ('online', 'reset'))
+        elif drive is not None:
             player = DrivePlayer(fit, prior, factory, response, timing, predictive=True, flight_memory=flight,
                                  drive=drive, learn=args.drive != 'frozen')
         elif lift is not None:
@@ -112,11 +128,13 @@ def run(args):
                       practice=args.practice, race_to=args.race_to, first_server=args.first_server,
                       receiver_only=args.receiver_only, fixed=args.fixed, points=[], schedule=schedule,
                       probes=probes, attempts=attempts, before=memory.state())
+        if registration is not None:
+            report.update(registration_mode=registration_mode, registration_before=registration.state())
         if lift is not None:
             report.update(receiving_lift_mode=lift_mode, receiving_lift_before=lift.state(),
                           receiving_practice_sha256=_hash(args.receive_practice) if args.receive_practice else None)
         if drive is not None:
-            report.update(drive_mode=args.drive or 'online', drive_before=asdict(drive),
+            report.update(drive_mode='frozen' if registration is not None else args.drive or 'online', drive_before=asdict(drive),
                           drive_practice_sha256=_hash(args.drive_from) if args.drive_from else None)
         args.output.parent.mkdir(exist_ok=True, parents=True)
         for seed, phase in zip(schedule['tests'], phases, strict=True):
@@ -130,6 +148,8 @@ def run(args):
             if not args.practice:
                 scoreboard.record(row['evaluator'])
             report.update(score=scoreboard.score, finished=scoreboard.finished, service_state=memory.state())
+            if registration is not None:
+                report['registration_after'] = registration.state()
             if lift is not None:
                 report['receiving_lift_after'] = lift.state()
             if drive is not None:
@@ -140,6 +160,7 @@ def run(args):
                 break
         if args.checkpoint:
             save(args.checkpoint, library, prior, response, timing, service_memory=memory, service_drive=drive,
+                 service_registration=registration,
                  receiving_lift=None if lift is None else dict(mode=lift_mode, memory=lift.state()))
         if args.service_out:
             _write(args.service_out, memory.state())
@@ -167,6 +188,8 @@ if __name__ == '__main__':
     p.add_argument('--compiled-geometry', action=argparse.BooleanOptionalAction, default=False,
                    help='reuse native GL geometry lists in the reflective renderer')
     p.add_argument('--trace', action='store_true')
+    p.add_argument('--registration', choices=('online', 'reset', 'frozen', 'fixed'),
+                   help='use learned blade registration, restart it, freeze it, or use the fixed stroke')
     p.add_argument('--receive-lift', choices=('online', 'early'), help='use matched visual lift timing on incoming strokes')
     p.add_argument('--receive-practice', type=Path, help='initialize lift timing from separate matched practice')
     p.add_argument('--drive-from', type=Path, help='initialize rate from a scored optical drive practice receipt')
