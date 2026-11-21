@@ -11,8 +11,14 @@ from .tt8_service_arena import ServiceScore, TT8ServiceArena
 from .tt8_service_trial import PointInterface
 
 
-def movie(receipt, path):
+def movie(receipt, path, section=None):
     game = _read(receipt)
+    if section is not None:
+        played = game['sections'][section]
+        if not played.get('finished'):
+            raise ValueError('select a completed full game')
+        game = dict(game, **{k: played[k] for k in ('points', 'race_to', 'first_server', 'score', 'finished')},
+                    practice=False)
     if game['practice']:
         raise ValueError('a full game receipt is required')
     arena = TT8ServiceArena(**game['arena'])
@@ -62,5 +68,6 @@ if __name__ == '__main__':
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument('receipt', type=Path)
     p.add_argument('output', type=Path)
+    p.add_argument('--section', help='named game in a paired experiment receipt')
     args = p.parse_args()
-    movie(args.receipt, args.output)
+    movie(args.receipt, args.output, args.section)
