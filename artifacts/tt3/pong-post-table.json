@@ -1,0 +1,47 @@
+{
+  "role_model": {
+    "control_weights": [
+      0.009097809099334655,
+      1.2661239448235364,
+      0.0
+    ],
+    "relevance_weights": [
+      0.58682906897594,
+      0.25282698412315674,
+      0.1631057671956529,
+      0.6650867289377451,
+      0.16251654871137758
+    ],
+    "control_floor": 0.33,
+    "source_control_examples": 269,
+    "source_reward_examples": 201,
+    "receiving_control_examples": 541,
+    "receiving_reward_examples": 105
+  },
+  "return_memory": {
+    "relations": [
+      "project",
+      "pursue",
+      "hold",
+      "recede",
+      "project_positive",
+      "project_negative"
+    ],
+    "scores": [
+      -16.0,
+      -10.0,
+      -20.0,
+      -24.0,
+      -10.0,
+      -10.0
+    ],
+    "counts": [
+      30,
+      40,
+      30,
+      30,
+      42,
+      40
+    ]
+  }
+}

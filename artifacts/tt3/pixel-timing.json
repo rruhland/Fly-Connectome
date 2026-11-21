@@ -1,0 +1,172 @@
+{
+  "portable": {
+    "seconds": 14.033542086,
+    "rows": [
+      {
+        "action_sha256": "a3463bda4dbb11a27100bb6dc6542df5f5b52ec1cc5b26e2146a71500db64c28",
+        "legal_returns": 1,
+        "rival_returns": 1,
+        "points_for": 0,
+        "frames": 151,
+        "probes": 16
+      },
+      {
+        "action_sha256": "329e846550f1ba9fbd45c5019a7cc71885627c48357cff105c0a2c9b6f5a4119",
+        "legal_returns": 1,
+        "rival_returns": 1,
+        "points_for": 0,
+        "frames": 155,
+        "probes": 0
+      },
+      {
+        "action_sha256": "926808323a579183840af2c452dd36dccd826b3ce7f2cc8333419c54ef3cd97e",
+        "legal_returns": 0,
+        "rival_returns": 0,
+        "points_for": 0,
+        "frames": 74,
+        "probes": 0
+      },
+      {
+        "action_sha256": "7fdcec46e0c5eb9982b04da6aa741d4b412c428becf30e6f4e7dfaade251c8ab",
+        "legal_returns": 1,
+        "rival_returns": 0,
+        "points_for": 1,
+        "frames": 98,
+        "probes": 0
+      },
+      {
+        "action_sha256": "59c4d661abcdc85dc54daf694eee88dd41bf07c411bb46b1e0558946f150c2b3",
+        "legal_returns": 1,
+        "rival_returns": 1,
+        "points_for": 0,
+        "frames": 156,
+        "probes": 0
+      },
+      {
+        "action_sha256": "aba81e6bd7e29bba92bcc9137a207366d690d7bc68f62b67ad38c56683aa3587",
+        "legal_returns": 0,
+        "rival_returns": 0,
+        "points_for": 0,
+        "frames": 50,
+        "probes": 0
+      },
+      {
+        "action_sha256": "3c5c597950ce5945149d2497de63f5a0a9ab58c26788d29e533f649a89329ebd",
+        "legal_returns": 1,
+        "rival_returns": 0,
+        "points_for": 0,
+        "frames": 102,
+        "probes": 0
+      },
+      {
+        "action_sha256": "730a6ff183de7f2fbe41fd614aa3d6985bb5f915a5d2317518ca9044d9857f70",
+        "legal_returns": 1,
+        "rival_returns": 0,
+        "points_for": 0,
+        "frames": 98,
+        "probes": 0
+      },
+      {
+        "action_sha256": "2006e8fbaef702ee7cbc22e11f30ef16df56ec36550308f0affc11bf67a2bf1c",
+        "legal_returns": 1,
+        "rival_returns": 1,
+        "points_for": 0,
+        "frames": 148,
+        "probes": 0
+      },
+      {
+        "action_sha256": "c52f52e61206dc48668425b457a7461dd30751584eae3007ebe800647b588f2a",
+        "legal_returns": 1,
+        "rival_returns": 1,
+        "points_for": 0,
+        "frames": 152,
+        "probes": 0
+      }
+    ]
+  },
+  "compiled": {
+    "seconds": 7.520983087000001,
+    "rows": [
+      {
+        "action_sha256": "a3463bda4dbb11a27100bb6dc6542df5f5b52ec1cc5b26e2146a71500db64c28",
+        "legal_returns": 1,
+        "rival_returns": 1,
+        "points_for": 0,
+        "frames": 151,
+        "probes": 16
+      },
+      {
+        "action_sha256": "329e846550f1ba9fbd45c5019a7cc71885627c48357cff105c0a2c9b6f5a4119",
+        "legal_returns": 1,
+        "rival_returns": 1,
+        "points_for": 0,
+        "frames": 155,
+        "probes": 0
+      },
+      {
+        "action_sha256": "926808323a579183840af2c452dd36dccd826b3ce7f2cc8333419c54ef3cd97e",
+        "legal_returns": 0,
+        "rival_returns": 0,
+        "points_for": 0,
+        "frames": 74,
+        "probes": 0
+      },
+      {
+        "action_sha256": "7fdcec46e0c5eb9982b04da6aa741d4b412c428becf30e6f4e7dfaade251c8ab",
+        "legal_returns": 1,
+        "rival_returns": 0,
+        "points_for": 1,
+        "frames": 98,
+        "probes": 0
+      },
+      {
+        "action_sha256": "59c4d661abcdc85dc54daf694eee88dd41bf07c411bb46b1e0558946f150c2b3",
+        "legal_returns": 1,
+        "rival_returns": 1,
+        "points_for": 0,
+        "frames": 156,
+        "probes": 0
+      },
+      {
+        "action_sha256": "aba81e6bd7e29bba92bcc9137a207366d690d7bc68f62b67ad38c56683aa3587",
+        "legal_returns": 0,
+        "rival_returns": 0,
+        "points_for": 0,
+        "frames": 50,
+        "probes": 0
+      },
+      {
+        "action_sha256": "3c5c597950ce5945149d2497de63f5a0a9ab58c26788d29e533f649a89329ebd",
+        "legal_returns": 1,
+        "rival_returns": 0,
+        "points_for": 0,
+        "frames": 102,
+        "probes": 0
+      },
+      {
+        "action_sha256": "730a6ff183de7f2fbe41fd614aa3d6985bb5f915a5d2317518ca9044d9857f70",
+        "legal_returns": 1,
+        "rival_returns": 0,
+        "points_for": 0,
+        "frames": 98,
+        "probes": 0
+      },
+      {
+        "action_sha256": "2006e8fbaef702ee7cbc22e11f30ef16df56ec36550308f0affc11bf67a2bf1c",
+        "legal_returns": 1,
+        "rival_returns": 1,
+        "points_for": 0,
+        "frames": 148,
+        "probes": 0
+      },
+      {
+        "action_sha256": "c52f52e61206dc48668425b457a7461dd30751584eae3007ebe800647b588f2a",
+        "legal_returns": 1,
+        "rival_returns": 1,
+        "points_for": 0,
+        "frames": 152,
+        "probes": 0
+      }
+    ]
+  }
+}

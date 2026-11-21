@@ -1,0 +1,19 @@
+{
+  "control_weights": [
+    0.0,
+    1.132578113016088,
+    0.0
+  ],
+  "relevance_weights": [
+    0.31419890503174897,
+    -0.14070842324960448,
+    0.018278961477234613,
+    0.9205246781636051,
+    0.02838057709188935
+  ],
+  "control_floor": 0.33,
+  "source_control_examples": 316,
+  "source_reward_examples": 225,
+  "receiving_control_examples": 0,
+  "receiving_reward_examples": 0
+}

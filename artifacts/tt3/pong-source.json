@@ -1,0 +1,49 @@
+{
+  "role_model": {
+    "control_weights": [
+      0.0,
+      1.1255160576369068,
+      0.0
+    ],
+    "relevance_weights": [
+      0.24554687773498007,
+      -0.09105449807344737,
+      0.16310576698110726,
+      0.6650867289377451,
+      0.16251654871137758
+    ],
+    "control_floor": 0.33,
+    "source_control_examples": 269,
+    "source_reward_examples": 201,
+    "receiving_control_examples": 0,
+    "receiving_reward_examples": 0
+  },
+  "return_memory": {
+    "relations": [
+      "project",
+      "pursue",
+      "hold",
+      "recede",
+      "project_positive",
+      "project_negative"
+    ],
+    "scores": [
+      -16.0,
+      0.0,
+      -20.0,
+      -24.0,
+      2.0,
+      0.0
+    ],
+    "counts": [
+      30,
+      30,
+      30,
+      30,
+      30,
+      30
+    ]
+  },
+  "schedule_sha256": "47ed3f791472608ca91e7f671abd3376e71511a34d03aec9ff20aea03fdf9c5d",
+  "schema": "native-pong-source-v1"
+}

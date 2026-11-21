@@ -1,0 +1,115 @@
+{
+  "role_model": {
+    "control_weights": [
+      0.014872364893414472,
+      1.247555174120536,
+      0.0
+    ],
+    "relevance_weights": [
+      0.539506760273397,
+      0.20559169770673041,
+      -0.02341557164707395,
+      0.47733008136718963,
+      -0.024016956095335582
+    ],
+    "control_floor": 0.33,
+    "source_control_examples": 269,
+    "source_reward_examples": 201,
+    "receiving_control_examples": 982,
+    "receiving_reward_examples": 153
+  },
+  "return_memory": {
+    "return_memory": {
+      "relations": [
+        "project",
+        "pursue",
+        "hold",
+        "recede",
+        "project_positive",
+        "project_negative"
+      ],
+      "scores": [
+        -16.0,
+        -13.0,
+        -20.0,
+        -24.0,
+        -14.0,
+        -13.0
+      ],
+      "counts": [
+        30,
+        47,
+        30,
+        30,
+        50,
+        47
+      ]
+    },
+    "active_response_rank": 2,
+    "by_response_rank": {
+      "1": {
+        "relations": [
+          "project",
+          "pursue",
+          "hold",
+          "recede",
+          "project_positive",
+          "project_negative"
+        ],
+        "scores": [
+          -16.0,
+          0.0,
+          -20.0,
+          -24.0,
+          2.0,
+          0.0
+        ],
+        "counts": [
+          30,
+          30,
+          30,
+          30,
+          30,
+          30
+        ]
+      },
+      "2": {
+        "relations": [
+          "project",
+          "pursue",
+          "hold",
+          "recede",
+          "project_positive",
+          "project_negative"
+        ],
+        "scores": [
+          -16.0,
+          -13.0,
+          -20.0,
+          -24.0,
+          -14.0,
+          -13.0
+        ],
+        "counts": [
+          30,
+          47,
+          30,
+          30,
+          50,
+          47
+        ]
+      }
+    },
+    "strokes_by_response_rank": {
+      "2": [
+        0.0,
+        -1.0,
+        0.0
+      ]
+    },
+    "response_observations": {
+      "2": 4411,
+      "1": 15
+    }
+  }
+}
