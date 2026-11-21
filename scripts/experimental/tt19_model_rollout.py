@@ -9,7 +9,7 @@ from .tt4_arena import (BALL_INERTIA, BALL_MASS, BALL_RADIUS, MAGNUS_COEFFICIENT
                         SOLVER_SUBSTEPS, SPIN_DECAY, TABLE_HEIGHT, mujoco)
 from .tt19_catalog import Player, candidate_costs
 from .tt19_flight import optical_start
-from .tt19_shoot import COURT, HORIZON
+from .tt19_shoot import COURT, DISK_RADIUS, HALF_THICKNESS, HORIZON
 from .tt19_so101 import SO101Arena
 
 
@@ -174,6 +174,25 @@ def physical_ranking(position, velocity, already_bounced, steps_per_frame):
     return rollouts
 
 
+def reachable_tapes(poses, points):
+    """Conservatively reject sweeps too far from every eligible ball segment."""
+    ball_low = np.minimum(points[:-1], points[1:])
+    ball_high = np.maximum(points[:-1], points[1:])
+    ticks = np.flatnonzero((ball_low[:, 1] < -.78) & (ball_high[:, 2] > .03))
+    if not len(ticks):
+        return np.empty(0, dtype=int)
+    radius = np.hypot(DISK_RADIUS, HALF_THICKNESS) + BALL_RADIUS + .001001
+    # Both centers move linearly inside each segment in the exact disk test.
+    # Box overlap is necessary for contact at any of its four sample times.
+    possible = np.ones((len(ticks), len(poses)), dtype=bool)
+    for axis in range(3):
+        start = poses[:, ticks, axis].T
+        end = poses[:, ticks+1, axis].T
+        possible &= np.maximum(start, end) >= ball_low[ticks, axis, None] - radius
+        possible &= np.minimum(start, end) <= ball_high[ticks, axis, None] + radius
+    return np.flatnonzero(np.any(possible, axis=0))
+
+
 class RolloutPlayer(Player):
     """Keep the catalogue command protocol and replace the receiving shot ranker."""
 
@@ -185,8 +204,11 @@ class RolloutPlayer(Player):
 
     def choose(self, estimate):
         points, speeds = self.law.trajectory(*estimate, HORIZON, bounds=COURT)
-        rows = [candidate_costs(self.poses[i:i + 256], self.law, self.response, points, speeds, False)
-                for i in range(0, len(self.poses), 256)]
+        reachable = reachable_tapes(self.poses, points)
+        if not len(reachable):
+            return None
+        rows = [candidate_costs(self.poses[batch], self.law, self.response, points, speeds, False)
+                for batch in np.array_split(reachable, (len(reachable) + 255) // 256)]
         costs, eta, hit, _, _, _, _, ball = map(np.concatenate, zip(*rows))
         potential = np.flatnonzero(hit & (ball[:, 1] < -.78) & (ball[:, 2] > .03))
         if not len(potential):
@@ -196,6 +218,8 @@ class RolloutPlayer(Player):
         by_depth = potential[np.argsort(abs(ball[potential, 1] + 1.02))]
         shortlist = np.unique(np.r_[by_landing[:self.count * 3 // 4], by_depth[:self.count // 4]])
         duration = np.clip(np.ceil(eta[shortlist]).astype(int) + 2, 2, HORIZON)
+        landing_cost = costs[shortlist]
+        shortlist = reachable[shortlist]
         ball = observed_ball(self.history, estimate, self.law)
         trials = self.sim.predict(self.tapes[shortlist], duration, ball, np.zeros((len(shortlist), 9)))
         self.evaluated += len(trials)
@@ -216,7 +240,7 @@ class RolloutPlayer(Player):
         return dict(detail, index=int(shortlist[chosen]), duration=int(duration[chosen]),
                     approximate_spin=ball.spin.tolist(), estimate=ball.center.tolist(),
                     candidates=len(shortlist), robustness=scenario[pick].tolist(),
-                    landing_prior_cost=float(costs[shortlist[chosen]]))
+                    landing_prior_cost=float(landing_cost[chosen]))
 
     def command(self, tick, xyz, server, *, estimated_velocity=None):
         self.history.append((tick, xyz))
