@@ -1,0 +1,282 @@
+{
+  "parameters": [
+    -0.15105255279508523,
+    -0.08727324141457027,
+    -0.9393506129080097,
+    -0.018427966007907276,
+    -0.18305630746803603,
+    1.4520686597872203,
+    3.720582396472408,
+    -3.3219045590308562,
+    -0.9994261835197324,
+    -0.838048550104637,
+    15.805411533870316,
+    3.9799532357519984,
+    50.11324236608947
+  ],
+  "training": [],
+  "held": [
+    {
+      "seed": 275037551,
+      "legal": 2,
+      "player": 1,
+      "rival": 1,
+      "reason": "floor",
+      "ticks": 74
+    },
+    {
+      "seed": 217928350,
+      "legal": 2,
+      "player": 1,
+      "rival": 1,
+      "reason": "floor",
+      "ticks": 70
+    },
+    {
+      "seed": 583759384,
+      "legal": 2,
+      "player": 1,
+      "rival": 1,
+      "reason": "floor",
+      "ticks": 73
+    },
+    {
+      "seed": 1488796270,
+      "legal": 2,
+      "player": 1,
+      "rival": 1,
+      "reason": "fixture_contact",
+      "ticks": 58
+    },
+    {
+      "seed": 1956021656,
+      "legal": 2,
+      "player": 1,
+      "rival": 1,
+      "reason": "own_half",
+      "ticks": 70
+    },
+    {
+      "seed": 647427941,
+      "legal": 0,
+      "player": 0,
+      "rival": 0,
+      "reason": "floor",
+      "ticks": 46
+    },
+    {
+      "seed": 725845583,
+      "legal": 2,
+      "player": 1,
+      "rival": 1,
+      "reason": "floor",
+      "ticks": 72
+    },
+    {
+      "seed": 703094326,
+      "legal": 2,
+      "player": 1,
+      "rival": 1,
+      "reason": "fixture_contact",
+      "ticks": 64
+    },
+    {
+      "seed": 90528984,
+      "legal": 0,
+      "player": 0,
+      "rival": 0,
+      "reason": "floor",
+      "ticks": 45
+    },
+    {
+      "seed": 1408826778,
+      "legal": 2,
+      "player": 1,
+      "rival": 1,
+      "reason": "own_half",
+      "ticks": 75
+    },
+    {
+      "seed": 1053561849,
+      "legal": 2,
+      "player": 1,
+      "rival": 1,
+      "reason": "fixture_contact",
+      "ticks": 64
+    },
+    {
+      "seed": 865236903,
+      "legal": 0,
+      "player": 0,
+      "rival": 0,
+      "reason": "floor",
+      "ticks": 47
+    },
+    {
+      "seed": 1764185326,
+      "legal": 0,
+      "player": 0,
+      "rival": 0,
+      "reason": "floor",
+      "ticks": 48
+    },
+    {
+      "seed": 1350732948,
+      "legal": 2,
+      "player": 1,
+      "rival": 1,
+      "reason": "floor",
+      "ticks": 73
+    },
+    {
+      "seed": 804367292,
+      "legal": 2,
+      "player": 1,
+      "rival": 1,
+      "reason": "floor",
+      "ticks": 73
+    },
+    {
+      "seed": 2023121752,
+      "legal": 2,
+      "player": 1,
+      "rival": 1,
+      "reason": "floor",
+      "ticks": 74
+    }
+  ],
+  "stationary": [
+    {
+      "seed": 275037551,
+      "legal": 0,
+      "player": 0,
+      "rival": 0,
+      "reason": "own_half",
+      "ticks": 37
+    },
+    {
+      "seed": 217928350,
+      "legal": 0,
+      "player": 0,
+      "rival": 0,
+      "reason": "own_half",
+      "ticks": 37
+    },
+    {
+      "seed": 583759384,
+      "legal": 0,
+      "player": 0,
+      "rival": 0,
+      "reason": "own_half",
+      "ticks": 36
+    },
+    {
+      "seed": 1488796270,
+      "legal": 0,
+      "player": 0,
+      "rival": 0,
+      "reason": "own_half",
+      "ticks": 37
+    },
+    {
+      "seed": 1956021656,
+      "legal": 0,
+      "player": 0,
+      "rival": 0,
+      "reason": "own_half",
+      "ticks": 35
+    },
+    {
+      "seed": 647427941,
+      "legal": 0,
+      "player": 0,
+      "rival": 0,
+      "reason": "floor",
+      "ticks": 41
+    },
+    {
+      "seed": 725845583,
+      "legal": 0,
+      "player": 0,
+      "rival": 0,
+      "reason": "own_half",
+      "ticks": 36
+    },
+    {
+      "seed": 703094326,
+      "legal": 0,
+      "player": 0,
+      "rival": 0,
+      "reason": "own_half",
+      "ticks": 36
+    },
+    {
+      "seed": 90528984,
+      "legal": 0,
+      "player": 0,
+      "rival": 0,
+      "reason": "own_half",
+      "ticks": 35
+    },
+    {
+      "seed": 1408826778,
+      "legal": 0,
+      "player": 0,
+      "rival": 0,
+      "reason": "own_half",
+      "ticks": 37
+    },
+    {
+      "seed": 1053561849,
+      "legal": 0,
+      "player": 0,
+      "rival": 0,
+      "reason": "own_half",
+      "ticks": 32
+    },
+    {
+      "seed": 865236903,
+      "legal": 0,
+      "player": 0,
+      "rival": 0,
+      "reason": "own_half",
+      "ticks": 34
+    },
+    {
+      "seed": 1764185326,
+      "legal": 0,
+      "player": 0,
+      "rival": 0,
+      "reason": "own_half",
+      "ticks": 35
+    },
+    {
+      "seed": 1350732948,
+      "legal": 0,
+      "player": 0,
+      "rival": 0,
+      "reason": "own_half",
+      "ticks": 36
+    },
+    {
+      "seed": 804367292,
+      "legal": 0,
+      "player": 0,
+      "rival": 0,
+      "reason": "own_half",
+      "ticks": 37
+    },
+    {
+      "seed": 2023121752,
+      "legal": 0,
+      "player": 0,
+      "rival": 0,
+      "reason": "own_half",
+      "ticks": 36
+    }
+  ],
+  "training_seed": 220749,
+  "spread": 0.45,
+  "opponent": "anchor",
+  "seconds": 32.81781240399869
+}
