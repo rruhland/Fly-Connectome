@@ -35,9 +35,9 @@ def tosses():
         yield Toss(np.array([x, y, z]), np.array([vx, vy, up]))
 
 
-def proposals(count):
+def proposals(count, *, geometry=None):
     """Convert public tool path goals into new two-stage requested motions."""
-    geometry = FactoryModel()
+    geometry = FactoryModel() if geometry is None else geometry
     sequence = qmc.Sobol(10, scramble=True, seed=DESIGN_SEED).random_base2(
         int(np.ceil(np.log2(count))))[:count]
     for u in sequence:
@@ -158,9 +158,9 @@ def _score(simulator, programs, sample):
     return [r for left in range(0, len(programs), 24) for r in simulator.score(programs[left:left+24], sample)]
 
 
-def propose(simulator, count=SHOTS):
+def propose(simulator, count=SHOTS, *, geometry=None):
     scenarios = list(tosses())
-    programs = np.asarray(list(proposals(count)))
+    programs = np.asarray(list(proposals(count, geometry=geometry)))
     nominal = np.asarray(_score(simulator, programs, scenarios[0]))
     seed = np.argsort(-nominal[:, 2], kind='stable')[:12]
     print('factory central toss', len(programs), int(nominal[:, 0].sum()), int(nominal[:, 1].sum()), flush=True)

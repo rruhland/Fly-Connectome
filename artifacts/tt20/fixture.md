@@ -1,0 +1,31 @@
+# Moved SO-101 end clamp and wrist optics
+
+The stock arm base moved 35 mm toward the table and 22 mm upward from the TT19 pedestal. Its flange sits at (0, −1.140, 0.512) m in floor coordinates. The compact court remains 0.848 × 1.600 m at a height of 0.760 m. Two steel cantilevers support the flange through jaws that grip a bolted adapter beneath the near end. The highest support box is 44 mm below the playing surface. The clamp is rigid in the simulation. Fastener loading and table flex are outside the model. [Full native view](fixture-full-view.png)
+
+The camera module sits outside the arm on an external boom. The 15 g module moves with the wrist, and relocating it changes the mass distribution. At the neutral posture its optical center is (−0.127, −1.017, 1.005) m in floor coordinates. It looks down-table with an upright horizon at neutral, a vertical field of view of 84°, and a 3 mm near plane. World right points image right at neutral. The colored grip and red blade are the visible physical parts. Native rendering uses opaque meshes and ordinary depth tests. [External module close-up](fixture-module.png) · [Before and after native wrist frames](fixture-wrist-comparison.png) · [Outboard wrist frame](fixture-wrist.png)
+
+The evaluator sampled 18 poses per fixture across an archived serve, an archived receiving stroke, and a lateral wrist sweep. The new wrist image contained the complete blade silhouette, handle and both jaw meshes in all 18 sampled poses. It saw the ball in 13 of 18, the same count as the old view. The minimum signed blade and moving-jaw clearances from the clamp across those poses were 188 mm and 128 mm. For 2,970 sampled rays in the new configuration, every opaque first hit was beyond the near plane. All 94 rays whose nearest solid was wrist hardware had a matching hardware pixel in the native evaluator render. In the legacy configuration, all 2,970 sampled first hits were wrist hardware clipped by its 64 mm near plane. Object IDs from the separate evaluator render were used to count visible pixels. The player-facing streams are RGB. [Geometry and visibility receipt](fixture-audit.json.gz)
+
+The archived serve and receiving commands still produced a legal serve and legal return, respectively, after the move, with the original ball release positions. These are physical reach checks. The clamp and camera housing can stop a ball. The simulator records them as separate fixture contacts, with no table bounce or racket credit. Inside a scored point they follow the same last-hitter and receiving-bounce decision as a floor contact. A fixture hit while waiting for a legal toss strike is a missed toss. [Fixture regression tests](../../tests/test_tt20_fixture.py)
+
+The public interface is `TT20Arena`. `view_mode='wrist'` returns only `wrist`. `view_mode='outside'` returns only `left`, and `view_mode='right'` returns only `right`. `lens_intrinsics()` provides image size, focal length, principal point and vertical field of view. The default render size is 480 × 360. Both marked and unmarked arms use the same natural red blade and orange ball. Unmarked removes the survey stands and the synthetic rim and tip markers. TT19 retains its original options. [Fixture implementation](../../scripts/experimental/tt20_fixture.py)
+
+## The ball can leave the wrist field of view
+
+At a separate set of eight held opening trajectories, the evaluator matched 62 precontact images by point and control tick. A resolved ball occupies at least four uncropped pixels. The optional longer boom, `wrist_optics='raised'`, lifts the eye by 77 mm and moves it 42 mm farther back than the outboard default. Exact CAD renders preserve the whole blade and both jaw meshes at all 62 matched times for both placements.
+
+| Lens at 480 × 360 | Own toss | Near incoming ball | Farther incoming ball |
+|---|---:|---:|---:|
+| Standard outboard, 84° | 0/24 | 20/26 | 10/12 |
+| Raised eye, 84° | 4/24 | 22/26 | 12/12 |
+
+The ball center left the image in 23/24 standard own-toss samples and 20/24 raised samples. Every own-toss center inside either image had an unobstructed center ray. In the separate development set, 12 of 24 toss centers fell behind the optical plane of each 84° view. Pitching the existing boom upward by 14° and widening it to 101° yielded eight held toss sightings and matched the standard incoming counts, with both jaw outlines clipped at all 62 samples. On the qualified raised geometry, a separate 2,970-ray audit found zero near-clipped opaque hits and all 72 nearest wrist hits matched the rendered object. The raised option improves coverage and still yields only four resolved precontact toss images in this sample. [Raised wrist frame](fixture-wrist-raised.png) · [Held visibility and ray receipt](wrist-optics-held.json.gz)
+
+The optional `wrist_optics='ultrawide'` uses the same compact boom as the standard outboard camera. It tilts the module up by 20° and uses a 126° vertical pinhole lens at 960 × 720. The 183 px focal length is close to the standard 200 px focal length at 480 × 360. The evaluator selected the lens and tilt from ball bearings and projected jaw mesh vertices on separate development starts. Exact CAD held images resolved 12/24 precontact toss samples and kept all 24 centers ahead of the lens. On each of the four tosses, the camera saw the ball at ticks 0, 3 and 15. The ball left the image around the apex. It retained the standard near and far incoming counts of 20/26 and 10/12 and kept the whole blade and both jaw outlines in all 62 held samples. An independent 2,970-ray audit found zero near-clipped opaque hits and 90/90 rendered hardware matches. [Ultrawide native incoming frame](fixture-wrist-ultrawide.png) · [Ultrawide native toss frame](fixture-wrist-ultrawide-toss.png) · [Development bearings](wrist-ultrawide-development.json.gz) · [Held ultrawide receipt](wrist-ultrawide-held.json.gz)
+
+```bash
+python -m scripts.experimental.tt20_fixture_audit
+python -m scripts.experimental.tt20_wrist_optics_trial artifacts/tt20 --ultrawide --development
+python -m scripts.experimental.tt20_wrist_optics_trial artifacts/tt20 --ultrawide --optimum outboard-126-20
+python -m pytest -q tests/test_tt20_fixture.py
+```

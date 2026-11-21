@@ -56,8 +56,8 @@ def observed_ball(history, state, law):
 class DrySimulator:
     """Use the known station dynamics in a fresh model with no opponent contact."""
 
-    def __init__(self, law):
-        self.arena = SO101Arena(venue='studio', detail='preview', strict_endline=False)
+    def __init__(self, law, *, arena=None):
+        self.arena = SO101Arena(venue='studio', detail='preview', strict_endline=False) if arena is None else arena
         self.model, self.data = self.arena.model, self.arena.data
         rival = self.model.geom('rival_racket')
         rival.contype[0] = rival.conaffinity[0] = 0
@@ -218,7 +218,7 @@ class RolloutPlayer(Player):
                     candidates=len(shortlist), robustness=scenario[pick].tolist(),
                     landing_prior_cost=float(costs[shortlist[chosen]]))
 
-    def command(self, tick, xyz, server):
+    def command(self, tick, xyz, server, *, estimated_velocity=None):
         self.history.append((tick, xyz))
         if self.plan is not None:
             start, index, until = self.plan
@@ -236,7 +236,8 @@ class RolloutPlayer(Player):
             self.cleared = True
         if self.plans and (tick - self.ends < 5 or not self.cleared):
             return np.zeros(6)
-        estimate = optical_start(self.history, self.law.gravity)
+        estimate = ((xyz, estimated_velocity) if estimated_velocity is not None and xyz is not None
+                    else optical_start(self.history, self.law.gravity))
         if estimate is None or xyz is None:
             return np.zeros(6)
         p, velocity = estimate

@@ -31,7 +31,7 @@ class MatchPlayer:
         self.player.reset()
         self.moved=np.zeros(5)
 
-    def command(self,t,xyz):
+    def command(self,t,xyz,*,estimated_velocity=None):
         pos=None if xyz is None else np.asarray(xyz)
         if pos is not None:
             self.history.append((t,pos))
@@ -62,6 +62,8 @@ class MatchPlayer:
                 self.phase='receive'
                 self.player.reset()
             return np.r_[cmd,0.]
+        if estimated_velocity is not None:
+            return self.player.command(t,pos,-1,estimated_velocity=estimated_velocity)
         return self.player.command(t,pos,-1)
 
 

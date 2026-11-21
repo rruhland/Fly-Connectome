@@ -173,13 +173,13 @@ def _in_court(role, point):
         abs(x) < 1.5 and -2.3 < y < -.20 and -.53 < z < 1.40)
 
 
-def _wrist_fit(image, prior):
+def _wrist_fit(image, prior, fovy=WRIST_FOV):
     observations = tuple(_landmark_pixels(image, LANDMARKS))
     if len(observations) < (6 if prior is None else 5):
         return None, 'insufficient_landmarks'
     world, pixels = map(np.asarray, zip(*observations, strict=True))
     height, width = image.shape
-    focal = height / (2 * np.tan(np.deg2rad(WRIST_FOV) / 2))
+    focal = height / (2 * np.tan(np.deg2rad(fovy) / 2))
 
     def view(parameters):
         rotation = Rotation.from_rotvec(parameters[:3]).as_matrix()
@@ -217,11 +217,12 @@ def _wrist_fit(image, prior):
 class ViewTransport:
     """Hold persistent RGB camera fits while the player resets per-point tracks."""
 
-    def __init__(self, mode='wrist+fixed', state=None, *, monocular_ball=False):
+    def __init__(self, mode='wrist+fixed', state=None, *, monocular_ball=False, wrist_fovy=WRIST_FOV):
         if mode not in MODES:
             raise ValueError(f'unknown SO-101 camera mode {mode!r}')
         self.mode = mode
         self.monocular_ball = bool(monocular_ball or mode == 'wrist')
+        self.wrist_fovy = wrist_fovy
         self.registry = ViewRegistry(LANDMARKS)
         if state is not None:
             self.registry.known.update({key: CameraFit(**dict(fit, eye=np.asarray(fit['eye']),
@@ -240,7 +241,7 @@ class ViewTransport:
             fits = {key: previous[key] for key in fixed}
             registry.last_events = {key: 'verified' for key in fixed}
         if WRIST in images:
-            fit, reason = _wrist_fit(images[WRIST], registry.known.get(WRIST))
+            fit, reason = _wrist_fit(images[WRIST], registry.known.get(WRIST), self.wrist_fovy)
             registry.last_events[WRIST] = reason
             if fit is not None:
                 registry.known[WRIST] = fits[WRIST] = fit

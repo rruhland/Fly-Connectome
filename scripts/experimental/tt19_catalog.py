@@ -40,9 +40,9 @@ def programs(count, wide=False):
     return tape
 
 
-def dry_catalog(path,count,wide=False):
+def dry_catalog(path,count,wide=False,*,arena=None):
     start=perf_counter()
-    arena=SO101Arena(venue='hall',detail='preview',strict_endline=True)
+    arena=SO101Arena(venue='hall',detail='preview',strict_endline=True) if arena is None else arena
     try:
         arena.reset(seed=842,render=False)
         arena.ball[:]=[1.4,2.0,.15]
@@ -143,7 +143,7 @@ class Player:
         self.plan=None
         self.cleared=False
 
-    def command(self,tick,xyz,server):
+    def command(self,tick,xyz,server,*,estimated_velocity=None):
         self.history.append((tick,xyz))
         if self.plan is not None:
             start,index,until=self.plan
@@ -162,7 +162,8 @@ class Player:
             self.cleared=True
         if self.plans and (tick-self.ends<5 or not self.cleared):
             return np.zeros(6)
-        start=optical_start(self.history,self.law.gravity)
+        start=((xyz,estimated_velocity) if estimated_velocity is not None and xyz is not None
+               else optical_start(self.history,self.law.gravity))
         if start is None or xyz is None:
             return np.zeros(6)
         p,v=start

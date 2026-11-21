@@ -31,7 +31,7 @@ class Idle:
     def reset(self):
         self.plans = []
 
-    def command(self, tick, position, server):
+    def command(self, tick, position, server, *, estimated_velocity=None):
         return np.zeros(6)
 
 
