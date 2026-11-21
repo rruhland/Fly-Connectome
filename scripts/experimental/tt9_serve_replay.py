@@ -43,6 +43,15 @@ def point_frames(report, row, title):
 def movie(receipt, output, seeds):
     report = _read(receipt)
     sides = [('fixed_drive', 'Fixed stroke'), ('frozen_registration', 'Stroke after 12 practice serves')]
+    sections = [(report, report['sections'][key]['rows'], title) for key, title in sides]
+    pair_movie(sections, output, seeds)
+
+
+def pair_movie(sections, output, seeds):
+    report = sections[0][0]
+    if any(other[k] != report[k] for other, _, _ in sections
+           for k in ('arena', 'installation_seed', 'seed')):
+        raise ValueError('the two players must share an installation and disturbance schedule')
     # Read the exact camera step from the arena, including XML physics options.
     arena = TT8ServiceArena(**report['arena'])
     try:
@@ -53,8 +62,8 @@ def movie(receipt, output, seeds):
         append = None
         for index, seed in enumerate(seeds, 1):
             shots = []
-            for key, title in sides:
-                row = next(row for row in report['sections'][key]['rows'] if row['seed'] == seed)
+            for report, rows, title in sections:
+                row = next(row for row in rows if row['seed'] == seed)
                 shots.append(list(point_frames(report, row, f'{title}   |   Toss {index}   |   Half speed')))
             for tick in range(max(map(len, shots))):
                 left, right = (shot[min(tick, len(shot) - 1)] for shot in shots)
