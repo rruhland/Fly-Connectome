@@ -31,10 +31,10 @@ def _coordinates(values):
     return ' '.join(f'{value:.6f}' for value in values)
 
 
-def add_view_landmarks(model):
+def add_view_landmarks(model, landmarks=LANDMARKS):
     """Install surveyed calibration stands on the hall floor, independent of the table."""
     world, asset = model.find('worldbody'), model.find('asset')
-    for index, marker in enumerate(LANDMARKS):
+    for index, marker in enumerate(landmarks):
         position = np.asarray(marker.position) + ORIGIN
         x, y, z = position
         name = f'tt18_landmark_{index}'
