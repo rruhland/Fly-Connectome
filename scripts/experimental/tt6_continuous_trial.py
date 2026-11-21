@@ -85,6 +85,17 @@ def run(args):
     if entry_state is not None:
         from .tt6_entry_memory import EntryMemory
         entry_memory = EntryMemory.from_state(entry_state)
+    shot_memory = None
+    shot_state = _read(args.resume).get('shot_memory') if args.resume else None
+    if args.shot_memory is not None:
+        shot_state = _read(args.shot_memory)
+        hashes['shot_memory'] = _hash(args.shot_memory)
+    if shot_state is not None:
+        from .tt6_shot_memory import LocalShotPlayer, ShotMemory
+
+        if args.auto_servo or args.rally_response:
+            raise ValueError('select a single experimental player extension')
+        shot_memory = ShotMemory.from_state(shot_state)
     homes = {}
     if args.stations_from is not None:
         homes.update((v['install'], v['installation']) for v in _read(args.stations_from)['visits'])
@@ -119,7 +130,10 @@ def run(args):
             if adapter is not None:
                 if entry_memory is not None and 'recalled' not in attempts[-1]:
                     visit['learned_entry_speed'] = entry_memory.enter(response)
-                if args.auto_servo:
+                if shot_memory is not None:
+                    player = LocalShotPlayer(adapter, prior, factory, response, timing, adjust=args.mode != 'frozen',
+                                             predictive=args.predictive, shot_memory=shot_memory)
+                elif args.auto_servo:
                     from .tt6_select import SelectingPlayer
 
                     player = SelectingPlayer(adapter, prior, factory, response, timing, adjust=args.mode != 'frozen')
@@ -156,7 +170,7 @@ def run(args):
             if args.checkpoints is not None:
                 from .tt6_memory import save
                 save(args.checkpoints / f'visit-{i + 1}.json.gz', library, prior, response, timing,
-                     entry_memory=entry_memory)
+                     entry_memory=entry_memory, shot_memory=shot_memory)
             report['visits'].append(visit)
             _write(args.output, report)
             print(i, name, len(probes), attempts[-1] if attempts else 'no supported fit', [(p['phase'],p['player_returns'],p['points_for'],
@@ -182,6 +196,7 @@ if __name__ == '__main__':
     p.add_argument('--max-steps', type=int, default=140, help='control-frame cap per point')
     p.add_argument('--match-limit', type=int, default=70, help='maximum receiving points in each game')
     p.add_argument('--entry-memory', type=Path, help='start newly fitted arms at a speed learned across previous visits')
+    p.add_argument('--shot-memory', type=Path, help='choose shots from rewards on similar fitted motor responses')
     p.add_argument('--match-rng', type=Path, help='start from mini with only the policy RNG copied from this checkpoint')
     p.add_argument('--gain', type=float, help='override the gain from varied mini practice')
     p.add_argument('--practice', type=Path, default=ROOT/'artifacts/tt6/racket-practice.json.gz')

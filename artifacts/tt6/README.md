@@ -42,6 +42,8 @@ For the longer receiving games, add `--seed 53785301 --course gantry offset --ra
 
 The [21-point](continual-player-21.json.gz), [42-point](continual-player.json.gz) and [84-point](continual-player-84.json.gz) snapshots can all resume through the same command. To recreate the additional 42 practice points, resume the 42-point checkpoint with `--seed 18204759 --course offset gantry offset-b offset gantry offset-b`.
 
+Two opt-in controls test what should carry to a new installation. Resume the 84-point checkpoint with `--entry-memory artifacts/tt6/stroke-entry-memory.json.gz` for the success-weighted stroke initializer, or with `--shot-memory artifacts/tt6/local-shot-memory.json.gz` for shot selection using similar camera-fitted motion. Both archives were constructed exclusively from the 84 practice points. Each continues updating with public results. Neither recovered the 42-point checkpoint's sustained-return performance.
+
 ## Component experiments
 
 - [Transfer to unseen physical joint-axis tilts](axes.md)
