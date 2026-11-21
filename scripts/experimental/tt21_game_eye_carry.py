@@ -1,6 +1,8 @@
 """Carry only the delay learned in ordinary play to a different physical camera."""
 
 import argparse
+import gzip
+import json
 from hashlib import sha256
 from pathlib import Path
 from time import perf_counter
@@ -120,7 +122,8 @@ def summarize_target(points):
 
 
 def run(source_path, output, count):
-    receipt = _read(source_path)
+    snapshot = source_path.read_bytes()
+    receipt = json.loads(gzip.decompress(snapshot))
     for source_key, path in (('factory_sha256', TT20/'curriculum-factory.json.gz'),
                              ('atlas_sha256', TT20/'curriculum-dry-catalog.npz'), ('source_sha256', CHECKPOINT)):
         if _hash(path) != receipt[source_key]:
@@ -130,7 +133,7 @@ def run(source_path, output, count):
     if int(candidate) != receipt['candidate']:
         raise ValueError('the source and destination use different factory serve banks')
     data = dict(schema='tt21-ordinary-game-eye-carry-1', source=source_path.name,
-                source_sha256=_hash(source_path), arena=receipt['arena'], held_starts_per_eye=count,
+                source_sha256=sha256(snapshot).hexdigest(), arena=receipt['arena'], held_starts_per_eye=count,
                 schedule=schedule, schedule_generators=TARGET_SEEDS, target_nominal_renders=0,
                 target_calibration_points=0, destination_learning=False, destinations={})
     player = GameDelayPlayer(programs, catalogue, law, response, model_arena())
@@ -183,7 +186,10 @@ if __name__ == '__main__':
     args = parser.parse_args()
     args.output.parent.mkdir(parents=True, exist_ok=True)
     if args.verify:
-        print(verify_points(_read(args.output)))
+        data = _read(args.output)
+        if _hash(args.source) != data['source_sha256']:
+            raise ValueError('source games differ from the verified release')
+        print(verify_points(data))
     else:
         completed = run(args.source, args.output, args.count)
         print({eye: section['summary'] for eye, section in completed['destinations'].items()})
