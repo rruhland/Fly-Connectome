@@ -48,13 +48,16 @@ def course(seed):
             for name, span in STREAMS.items() for s, lane in draw(rng, SPLIT_PER_WIDTH, span)]
 
 
-def described(primitive, sight, theta, law):
+def described(primitive, sight, theta, law, *, requested_goal=None):
     """Use only issued motor geometry and the shared observed optical flight."""
     if sight['mover'] is None:
         return None, None
     mover, velocity = np.asarray(sight['mover'])
     ready = primitive.ready_world.copy()
-    goal, _ = lateral_goal(ready, mover, velocity, np.r_[0., theta[:2]])
+    if requested_goal is None:
+        goal, _ = lateral_goal(ready, mover, velocity, np.r_[0., theta[:2]])
+    else:
+        goal = float(requested_goal)
     goals = primitive._translate(goal, ready)
     issued, peak = (np.asarray(frame['solved']) for frame in goals)
     flight, speed = law.trajectory(mover, velocity, 24, bounds=COURT)
