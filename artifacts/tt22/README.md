@@ -1,5 +1,7 @@
 # Learning to rally with the SO-101
 
+[Watch the 23-return point](ordinary-rally-frozen.mp4) · [Results from three complete games](ordinary-game.md) · [Learning later strokes](branch-motor.md) · [Learning visually after a motor remap](tt22_learned_body.md) · [Pong transfer and training curves](source-transfer.md)
+
 [Watch fourteen legal returns](rally-14.mp4) · [Watch the practiced arm complete ten](learned-ten.mp4)
 
 The near robot is the end-clamped SO-101 simulation with the gripped paddle and compact table. A return counts when the ball actually lands on the other half after legal physical contact. We exclude the serve. Ten returns therefore require five from each player in one uninterrupted point. The receiver uses two fixed outside RGB cameras in the main comparisons. [Counting and held-start protocol](benchmark.md)

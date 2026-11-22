@@ -1,5 +1,11 @@
 # M1B research handoff
 
+## SO-101 rally learning on November 22
+
+The end-clamped arm and five-axis practice partner produced a 23-return point in an ordinary first-to-11 match. Seven optical stroke corrections learned from four practice points raised the arm's own legal returns from 19 to 28 against the same partner across 11 points. Two practiced points exceeded ten versus one before practice. Further updates during the game produced 24 arm returns, longest 15. All three finished 0–11. The strong arm uses fixed stereo, a body model and a contact-and-landing stroke planner. [Watch 23 returns](../../artifacts/tt22/ordinary-rally-frozen.mp4) · [Three complete games](../../artifacts/tt22/ordinary-game.md)
+
+The closest causal evidence for Pong transfer comes from 176 unique matched opening serves. Training on native Pong duration raised arm contacts from 65 to 168 and legal first returns from 36 to 56; the held benchmark supplies a previously practiced physical motor stroke. Training on later physical robot replies separately increased points with a second arm return from 1/10 to 6/10 with the same opening. Proving that prior Pong practice accelerates *sustained* arm rallies is the outstanding test. [Source learning curves](../../artifacts/tt22/source-transfer.md) · [Later returns](../../artifacts/tt22/branch-motor.md)
+
 ## SO-101 cooperative rallies on November 21
 
 TT22 reached ten to fourteen uninterrupted legal returns with fixed stereo RGB on the near arm, and 24, 10, 32 and 22 on four ordinary starts with privileged control on both sides. A real five-axis cooperative opponent and an optically learned placement target produced ten on three of six wider starts, then two of twelve with the original near stroke ranker on an independent cohort. Four-point near-arm optical calibration improved individual points but did not increase the frequency reaching ten on the twelve-start four-axis comparison. The complete alternated-service game ended 2–11, longest eight. See the distinct controls, replays and videos in the [TT22 report](../../artifacts/tt22/README.md).
