@@ -2,7 +2,7 @@
 
 A rally counts strict, consecutive legal returns from both robots after the serve. The best receiving controller uses native stereo RGB and issued motor commands. It estimates incoming flight, searches a nominal physics model for candidate strokes and can learn corrections from its own visible outgoing shots. The five-axis practice partner uses simulator state and a physical racket. All results on this page come from the simulator.
 
-The longest verified rally has **46 returns, 23 by each robot**. A separate matched intervention changed the near arm alone: four practice points increased its legal returns from 22 to 55 on eight fresh starts. The wrist-only arm reached 19 and one external camera reached 25. [Watch 46 returns](tt23_sequence_coach_46.mp4) · [Watch the wrist-only player and its live view](single-eye-wrist-rally.mp4) · [Every start in the two practice comparisons](rally-practice.png)
+The longest verified point has **62 returns, 31 by each robot**. A separate matched opponent comparison produced 46, with 23 by each. A separate matched intervention changed the near arm alone: four practice points increased its legal returns from 22 to 55 on eight fresh starts. The wrist-only arm reached 19 and one external camera reached 25. [Watch 62 returns and inspect the matched opening controls](implicit-witness.md) · [Watch the wrist-only player and its live view](single-eye-wrist-rally.mp4) · [Every start in the two practice comparisons](rally-practice.png)
 
 | Question | Evidence |
 |---|---|
@@ -53,3 +53,6 @@ On the 32-start three-action benchmark the Pong-initialized online chooser avera
 An independent confirmation played only the actions the two online learners selected across sixteen fresh streams. The Pong prior took 4.31 capped receiving points to reach ten versus 5.44, with 13/16 and 10/16 streams succeeding. The exact paired test gave p=.094. One source-guided point lasted **62 alternating returns**, 31 by each arm. [All sixteen streams](implicit-confirm.md)
 
 In the new partner’s first-to-eleven game, the online arm acquired 33 new optical corrections and made 40 legal returns. Keeping the seven initial corrections frozen produced 32. The unpracticed arm made 45. All three produced at least an 18-return point. The online arm reached 23 on a point where both controls reached seven; the unpracticed arm reached 22 on the next point and won it. [Complete games, service order and all 34 verified points](coached-match.md)
+
+
+On the 62-return point, the frozen native direction and the live learner both selected right. Keeping its three previous arm experiences and fourth random draw fixed, flattening only the source prior selected center. The matched center and left physical reruns each earned zero legal returns. The actual flat learner had reached ten on the first point of this stream and was already stopped. This is a causal witness for the opening, selected retrospectively, alongside the prospective 16-stream speed benchmark. [Video and controlled replay](implicit-witness.md)

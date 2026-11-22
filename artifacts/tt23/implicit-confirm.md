@@ -25,6 +25,6 @@ The source learner reached ten in 13/16 streams versus 10/16. Every qualifying e
 
 ![First ten-return point in each actual independent training stream](implicit-confirm-learning.png)
 
-On stream 16 the flat-prior learner reached twelve returns on its first point and stopped. The source learner reached 62 on its fourth, making 31 legal arm returns under the shared high-ceiling physical continuation. This complete uninterrupted exchange establishes a rally capability. The flat learner had already reached the speed endpoint in this stream. [Full two-arm recording](implicit-confirm-16.json.gz)
+On stream 16 the flat-prior learner reached twelve returns on its first point and stopped. The source learner reached 62 on its fourth, making 31 legal arm returns under the shared high-ceiling physical continuation. This complete uninterrupted exchange establishes a rally capability. The flat learner had already reached the speed endpoint in this stream. [62-return video, matched left/center outcomes and source-prior intervention](implicit-witness.md) · [Full stream receipt](implicit-confirm-16.json.gz)
 
 The physical scope matters. The opening choices were fixed body-relative displacements, and the source learned which direction was useful from native Pong time. Later strokes used the common trained stereo controller. The 62-return record tests the combination. [Matched full matches with ongoing optical calibration](coached-match.md)
