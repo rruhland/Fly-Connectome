@@ -28,3 +28,17 @@ The same conditioned model and unchanged signed choices opened each new point. A
 | Stock motor, Pong duration | 3/6 | 11 | 4, 12, 5, 0, 0, 0 | 1/6 |
 
 Both Pong-guided arms reached the tenth legal bounce after 303 accumulated control frames, 10.10 seconds of simulated play. The conditioned policy chose the stock motor option for that point and issued exactly the same commands. It chose a different motor for four of the six points and produced additional legal openings on two of those and a longer exchange on a third. The pilot qualified for the 12-start confirmation on its count of ten-return points versus the same corrected arm using neutral gains.
+
+## Independent 12-start confirmation
+
+The confirmation schedule and decision rule were recorded while the pilot was still running, after its first partial match. The fitted motor, signed gains, service lanes and continuation remained frozen throughout confirmation. The original motor also ran on the first four starts, the prespecified balanced subset. All 28 complete command tapes replayed exactly. [Confirmatory commands and outcomes](opening-sequence-confirmatory.json.gz)
+
+| Opening policy | Physical contacts | Legal openings | Legal near returns | Points with at least two near returns | Longest rally |
+|---|---:|---:|---:|---:|---:|
+| Conditioned motor, Pong duration | 12/12 | 7/12 | 14 | 5/12 | 6 |
+| Conditioned motor, neutral | 4/12 | 4/12 | 14 | 4/12 | 8 |
+| Stock motor, Pong duration | 4/4 | 0/4 | 0 | 0/4 | 0 |
+
+On the fixed four-start motor comparison, the conditioned Pong policy converted two openings and landed five legal near returns. Both motor policies made all four opening contacts. In the 12-start signed-gain comparison, the conditioned Pong policy reached eight additional balls and converted three additional openings. Total near returns tied, and both arms stayed below ten. The motor correction improved opening conversion on these starts while the length advantage from the six-start pilot remained confined to that pilot.
+
+Reproduce the motor practice and opening diagnostic with `python -m scripts.experimental.tt23_opening_motor`. Then run `python -m scripts.experimental.tt23_opening_sequence` for the pilot and add `--confirmatory` for the confirmation. These commands take the repo's Python environment, `MUJOCO_GL=egl` and one thread each for OpenBLAS, OpenMP and llvmpipe.

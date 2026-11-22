@@ -67,19 +67,24 @@ def assess():
         y=np.take_along_axis(flat,rng.random(flat.shape).argsort(axis=1),axis=1)
         return w@np.stack((y,y[:,::-1]),axis=1).reshape(-1,7)
     n=[]
+    pooled_null=[]
     for _ in range(1024):
         control_scores=[control(w,y) for w,y in prepared]
+        pooled_null.append(act(sum(control_scores)))
         n.append(np.mean([act(s) for s in control_scores],axis=0))
     n=np.array(n)
+    pooled_null=np.asarray(pooled_null)
     chosen=np.array([act(s) for s in learned])
     pooled=dict(x=sum((r['model']['x'] for r in source),[]),value=sum((r['model']['value'] for r in source),[]))
     result=dict(native_hash=_hash(TRAIN),arm_hash=_hash(ARM),replicate_scores=chosen.tolist(),
                 shuffled_scores=[act(s).tolist() for s in shuffled],pooled=act(sum(learned)).tolist(),
                 pooled_shuffled=act(sum(shuffled)).tolist(),neutral=target[:,3].sum(axis=0).tolist(),
                 mean_null=n.mean(0).tolist(),p_mean=((1+(n>=chosen.mean(0)).sum(0))/(1+len(n))).tolist(),
-                null_draws=n.tolist(),pooled_model=pooled)
+                pooled_null_median=np.median(pooled_null,axis=0).tolist(),
+                pooled_p=((1+(pooled_null>=act(sum(learned))).sum(axis=0))/(1+len(n))).tolist(),
+                pooled_null=pooled_null.tolist(),null_draws=n.tolist(),pooled_model=pooled)
     _write(RESULT,result)
-    print({k:v for k,v in result.items() if k not in ('pooled_model','null_draws')})
+    print({k:v for k,v in result.items() if k not in ('pooled_model','null_draws','pooled_null')})
 
 
 if __name__=='__main__':
