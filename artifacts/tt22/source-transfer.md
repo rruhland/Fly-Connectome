@@ -30,3 +30,13 @@ A separate six-stream learner adjusted visual gains and four dimensions of its t
 | Farther off center | Unselected signed candidate | 3.4% | 1.6% | 5.5% | 4.2% |
 
 For Pong minus neutral, the mean difference over the first three checkpoints was +3.0 percentage points on moderate serves (paired 95% interval −11.8 to +17.5) and +3.5 farther off center (−0.3 to +8.0). Individual training streams varied considerably. [Six learning traces](anonymous-joint-practice.json.gz) · [Wider held test](anonymous-wide-hold.json.gz)
+
+## The independent third cohort and the conversion to legal returns
+
+A third draw of 64 new serves gave 59 contacts and 18 legal openings for the frozen Pong-duration policy, versus 21 contacts and 9 legal openings for the frozen neutral policy. Across all **176 unique matched starts**, the same physically practiced arm made contact **168/176 versus 65/176** and landed a first legal return **56/176 versus 36/176**. On 38 it returned legally when neutral missed. On 18 the reverse happened (descriptive two-sided paired binomial probability 0.0105). These cohorts use two strata of initial lateral placement, the same target-trained motor pulse, and separate opening resets. No model receives a hidden object ID, contact label, or oracle trajectory when deciding how to move. The table coordinate system, calibrated stereo and recipe for turning relative position and motion into a possible command are given. [Paired counts](source-summary.json.gz) · [Third cohort](contextual-motor.json.gz)
+
+The neutral controller touched 65 serves. On those exact serves, the Pong-guided arm touched all 65, but landed just 26 versus neutral's 36. On the other 103 balls that the Pong policy alone touched, it landed 30. Of its 39 failed legal conversions on common contacts, all 39 ended in an own-half fault. This separates getting the paddle to the ball from choosing a useful blade angle and stroke.
+
+The third cohort also tested a context-sensitive online option learner. It compared nearby optical positions, velocities and proposed motor targets with previously earned return rewards. Each of 160 paired order/exploration draws saw one outcome per practice point from the same original 48 starts. At 0/4/8/16/32/48 practice serves, the native-ranked policy averaged **18.0/16.9/17.0/18.5/20.9/22.0** held returns out of 64. The uniform policy averaged **8.8/13.6/14.7/17.9/19.7/21.1**. The gap was largest before target practice, and the fixed neutral policy alone scored 9/64 on this cohort. Resampling evaluation orders does not create additional independent starts. [Learning implementation](../../scripts/experimental/tt22_contextual_motor.py)
+
+![Opening contacts, legal returns and the learning curve](source-transfer.png)

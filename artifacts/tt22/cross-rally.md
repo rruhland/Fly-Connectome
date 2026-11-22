@@ -6,6 +6,15 @@ The far controller is the same privileged four-axis physical cycle planner that 
 
 Four fresh seeds were fixed before play. Each branch receives the same unmodified native serve, uses the same far controller and strict contacts, and plays until the referee ends the point. Every result counts, including any point without a return. Each action pair is replayed with both original camera streams and its complete event list verified.
 
-<!-- RESULTS -->
+| Ordinary start | Prior cycle observer | Ordinary RallyPlayer |
+|---|---:|---:|
+| 1758044470 | 0 | 2 |
+| 270973880 | 0 | 0 |
+| 210681131 | 2 | 6 |
+| 1831566172 | 4 | 1 |
+
+The ordinary RallyPlayer increased the total from six to nine across the four matched starts. Its SO-101 landed five legal returns versus three, and the far robot landed four versus three. It lengthened two rallies, shortened one and tied one. The longest rally rose from four to six, with three returns by each robot in the six-return point. The prior policy lost all four points, and RallyPlayer won one. Additional calibration was omitted from this comparison.
+
+All eight loops reproduced their native stereo RGB digests, scorer results and referee events.
 
 [Native optical and physical tapes](cross-rally.json.gz) · [Reproduction script](../../scripts/experimental/tt22_cross_trial.py)
