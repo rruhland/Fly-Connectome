@@ -10,7 +10,7 @@ from .tt22_duration_transfer import STREAMS
 from .tt22_joint_practice import draw
 from .tt23_anonymous_action import WIDTH
 from .tt23_anonymous_target import target_context
-from .tt23_direction import MIRROR, SOURCE, pick
+from .tt23_direction import MIRROR, NATIVE, SOURCE, pick
 from .tt23_jog_station import ExplicitJogStation
 from .tt23_optical_contact import OUT
 from .tt23_sequence import summarize, verify
@@ -37,7 +37,7 @@ class JogLearner:
             means[direction], means[2 - direction] = .75, .25
         return means
 
-    def choose(self, x, draws):
+    def choose(self, x, draws, *, greedy=False):
         n = len(draws)
         if x is None:
             return np.ones(n, dtype=int)
@@ -53,6 +53,11 @@ class JogLearner:
                 weight = .5 * np.exp(-.5 * np.sum(((x - key) / WIDTH) ** 2))
                 a[indices, action] += weight * reward
                 b[indices, action] += weight * (1 - reward)
+        if greedy:
+            posterior = a / (a + b)
+            chosen = posterior.argmax(axis=1)
+            chosen[posterior[:, 1] == posterior.max(axis=1)] = 1
+            return chosen
         return betaincinv(a, b, draws).argmax(axis=1)
 
     def update(self, x, chosen, ticks):
@@ -133,7 +138,25 @@ def play_live():
         station.close()
 
 
-def score(bank, model, mode, uniforms):
+def native_retention(learner, n):
+    before = JogLearner(learner.model, learner.mode)
+    per_agent = np.zeros((n, 3))
+    native = _read(NATIVE)['rows']
+    stub = np.full((n, 3), .5)
+    for row in native:
+        context = None if row['context'] is None else np.asarray(row['context'])
+        now = learner.choose(context, stub, greedy=True)
+        original = before.choose(context, stub, greedy=True)
+        choices = row['options'][2:5]
+        per_agent[:, 0] += np.asarray([trial['ticks'] for trial in choices])[now]
+        per_agent[:, 1] += np.asarray([bool(trial['contacts'] and trial['contacts'][0]['returned'])
+                                       for trial in choices])[now]
+        per_agent[:, 2] += now != original
+    return dict(mean_native_seconds=float(per_agent[:, 0].mean() / (120 * len(native))),
+                first_returns=float(per_agent[:, 1].mean()), changed_actions=float(per_agent[:, 2].mean()))
+
+
+def score(bank, model, mode, uniforms, *, retention=False):
     cases = bank['cases']
     replications = len(uniforms[0])
     elapsed = np.zeros(replications, dtype=int)
@@ -166,11 +189,14 @@ def score(bank, model, mode, uniforms):
         elapsed += ticks
         learner.update(x, action, ticks)
     success = first_time >= 0
-    return dict(chance_ten=float(success.mean()), launches_capped=float(first_point.mean()),
+    result = dict(chance_ten=float(success.mean()), launches_capped=float(first_point.mean()),
                 by_40_seconds=float((success & (first_time <= 1200)).mean()),
                 ended_early=float((~success & (elapsed < 1200)).mean()),
                 ten_points=float(ten_points.mean()), twenty_points=float(twenty_points.mean()),
                 arm=float(arm.mean()))
+    if retention:
+        result['native_after'] = native_retention(learner, replications)
+    return result
 
 
 def analyze():
@@ -187,7 +213,7 @@ def analyze():
             raise ValueError('Repeated physical start')
         seeds.update(starts)
         uniforms = paired_draws(90143421 + i)
-        rows = {mode: score(bank, source['pooled'], mode, uniforms)
+        rows = {mode: score(bank, source['pooled'], mode, uniforms, retention=mode in ('learned', 'flat'))
                 for mode in (*PRIOR_MODES, 'frozen', 'center')}
         runs = [{k: score(bank, model, k, uniforms) for k in ('learned', 'shuffled')}
                 for model in source['sets']]
