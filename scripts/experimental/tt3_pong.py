@@ -89,13 +89,13 @@ class _RandomActions:
         return self.action
 
 
-def _native_rallies(cases, agents, *, max_ticks, opponent_speed, camera_ticks=CAMERA_TICKS):
+def _native_rallies(cases, agents, *, max_ticks, opponent_speed, camera_ticks=CAMERA_TICKS, game_factory=Pong):
     """Run native physics. The agents only receive the camera, action ID and score."""
     if not cases or not len(cases) == len(agents):
         raise ValueError('one agent per native Pong case is required')
     if max_ticks < 1 or camera_ticks < 1:
         raise ValueError('maximum native ticks and camera stride must be positive')
-    game = Pong([case.serve for case in cases], Physics(opponent_speed=opponent_speed))
+    game = game_factory([case.serve for case in cases], Physics(opponent_speed=opponent_speed))
     presentations = [_Presentation(case.presentation) for case in cases]
     active = torch.ones(len(cases), dtype=torch.bool)
     drive = torch.zeros(len(cases))
