@@ -45,7 +45,7 @@ def plot(streams, path):
 
     fig, axes = plt.subplots(1, len(streams), sharey=True, figsize=(10, 3.3))
     for index, (ax, pair) in enumerate(zip(axes, streams, strict=True)):
-        for method, color, label in [('pong', '#007966', 'Pong first'), ('cold', '#a74c2a', 'Table tennis only')]:
+        for method, color, label in [('pong', '#007966', 'Pong first'), ('cold', '#a74c2a', 'Flat prior')]:
             counts = np.r_[0, pair[method]['arm_curve']]
             ax.step(np.arange(len(counts)), counts, where='post', color=color, label=label)
             first = pair[method]['first_ten']
