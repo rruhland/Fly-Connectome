@@ -24,6 +24,19 @@ CONFIRM_SEEDS = (162487003, 428705921, 1289605463, 951207684, 78560314, 20341658
                  605237480, 1036842751, 1692573410, 531689273)
 
 
+
+WIDE_SEEDS = (179538264, 958120643, 1326508479, 721465033, 486291703, 1806941532,
+              308972418, 1628047391, 98462071, 180561002, 847219635, 461098725)
+
+
+def live_schedule(seed, only_wide=False):
+    rng = np.random.default_rng(seed)
+    if only_wide:
+        return draw(rng, 8, STREAMS['wide'])
+    strata = [draw(rng, 4, band) for band in STREAMS.values()]
+    return [(s, lane) for pair in zip(*strata, strict=True) for s, lane in pair]
+
+
 class JogLearner:
     def __init__(self, model, mode):
         self.model = model
@@ -74,15 +87,15 @@ def paired_draws(seed, n=DRAWS):
     return np.random.default_rng(seed).uniform(1.e-7, 1. - 1.e-7, (8, n, 3))
 
 
-def play_live(confirm=None):
+def play_live(confirm=None, *, only_wide=False):
     model = _read(SOURCE)['pooled']
     learners = {key: JogLearner(model, key) for key in ('learned', 'flat')}
-    seed_generator = LIVE_SEED if confirm is None else CONFIRM_SEEDS[confirm]
+    series = WIDE_SEEDS if only_wide else CONFIRM_SEEDS
+    seed_generator = LIVE_SEED if confirm is None else series[confirm]
     draws = paired_draws(seed_generator + 1, 1)
-    rng = np.random.default_rng(seed_generator)
-    strata = [draw(rng, 4, band) for band in STREAMS.values()]
-    schedule = [(seed, lane) for pair in zip(*strata, strict=True) for seed, lane in pair]
-    path = OUT / ('implicit-online-live.json.gz' if confirm is None else f'implicit-confirm-{confirm+1}.json.gz')
+    schedule = live_schedule(seed_generator, only_wide=only_wide)
+    prefix = 'implicit-wide' if only_wide else 'implicit-confirm'
+    path = OUT / ('implicit-online-live.json.gz' if confirm is None else f'{prefix}-{confirm+1}.json.gz')
     record = _read(path) if path.exists() else dict(source=_hash(SOURCE), cases=[])
     if record['source'] != _hash(SOURCE):
         raise ValueError('The source direction fit changed')
@@ -242,8 +255,11 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--live', action='store_true')
     parser.add_argument('--confirm', type=int, choices=range(1, len(CONFIRM_SEEDS)+1))
+    parser.add_argument('--wide', type=int, choices=range(1, len(WIDE_SEEDS)+1))
     args = parser.parse_args()
-    if args.confirm is not None:
+    if args.wide is not None:
+        play_live(confirm=args.wide-1, only_wide=True)
+    elif args.confirm is not None:
         play_live(confirm=args.confirm-1)
     elif args.live:
         play_live()
