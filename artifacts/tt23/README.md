@@ -2,7 +2,7 @@
 
 A rally counts strict, consecutive legal returns from both robots after the serve. The best receiving controller uses native stereo RGB and issued motor commands. It estimates incoming flight, searches a nominal physics model for candidate strokes and can learn corrections from its own visible outgoing shots. The five-axis practice partner uses simulator state and a physical racket. All results on this page come from the simulator.
 
-The longest verified point has **62 returns, 31 by each robot**. A separate matched opponent comparison produced 46, with 23 by each. A separate matched intervention changed the near arm alone: four practice points increased its legal returns from 22 to 55 on eight fresh starts. The wrist-only arm reached 19 and one external camera reached 25. [Watch 62 returns and inspect the matched opening controls](implicit-witness.md) · [Watch the wrist-only player and its live view](single-eye-wrist-rally.mp4) · [Every start in the two practice comparisons](rally-practice.png)
+The longest verified point has **62 returns, 31 by each robot**. A separate matched opponent comparison produced 46, with 23 by each. A separate matched intervention changed the near arm alone: four practice points increased its legal returns from 22 to 55 on eight fresh starts. The wrist-only arm reached 19 and one external camera reached 25. [Watch the 62-return rally](implicit-witness-62.mp4) · [Matched opening controls](implicit-witness.md) · [Watch the wrist-only player and its live view](single-eye-wrist-rally.mp4) · [Every start in the two practice comparisons](rally-practice.png)
 
 | Question | Evidence |
 |---|---|
@@ -56,3 +56,6 @@ In the new partner’s first-to-eleven game, the online arm acquired 33 new opti
 
 
 On the 62-return point, the frozen native direction and the live learner both selected right. Keeping its three previous arm experiences and fourth random draw fixed, flattening only the source prior selected center. The matched center and left physical reruns each earned zero legal returns. The actual flat learner had reached ten on the first point of this stream and was already stopped. This is a causal witness for the opening, selected retrospectively, alongside the prospective 16-stream speed benchmark. [Video and controlled replay](implicit-witness.md)
+
+
+A prospective test on twelve additional, wider ordinary streams produced a similar saving in launches: 4.00 versus 5.17, with 11/12 versus 10/12 reaching ten. The two direct cohorts together reached ten on 24/28 Pong-first streams and 20/28 flat streams. Each component test has substantial uncertainty. [Wider courses, clocks and full paired outcomes](implicit-wide.md)
