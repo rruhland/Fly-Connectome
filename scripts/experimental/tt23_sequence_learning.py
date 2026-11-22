@@ -15,6 +15,7 @@ from .tt23_sequence import MODES
 BANK = OUT/'tt23_sequence.json.gz'
 SOURCE = OUT/'sequence-learning-native.json.gz'
 CURVE = OUT/'sequence-learning.json.gz'
+RETENTION = OUT/'sequence-learning-retention.json.gz'
 BUDGETS = (0,2,4,8,12)
 CAP = 300
 
@@ -32,7 +33,19 @@ def fit_source():
     print(candidates,means,flush=True)
 
 
-def learning(bank,source):
+def retention_bank():
+    import torch
+    torch.set_num_threads(1)
+    prior = _read(SOURCE)
+    native = cases(18,2030000000)
+    if set(prior['seeds']) & {c.serve for c in native}:
+        raise ValueError('retention reuses a source training point')
+    outcomes = play(native,prior['options'],RoleModel(**_read(ROLE_MODEL)),54)
+    _write(RETENTION,dict(source_sha256=_hash(SOURCE),options=prior['options'],rows=outcomes,
+                           mean_ticks=[np.mean([r['ticks'] for r in outcomes[k]]) for k in MODES]))
+
+
+def learning(bank,source,retention):
     groups = bank['bank_seeds']
     names = list(groups)
     if len(names)!=2 or len(bank['cases'])!=24 or not bank['verified']:
@@ -57,13 +70,15 @@ def learning(bank,source):
             b=2-a
             elapsed=np.zeros(512,dtype=int)
             first=np.zeros(512,dtype=int)
+            first_point=np.zeros(512,dtype=int)
             row_idx=np.arange(512)
             checks=[]
             for i in range(len(train)+1):
                 if i in BUDGETS:
                     greedy=np.argmax(a/(a+b)+ties[i],axis=1)
                     aggregate=score.sum(axis=0)[greedy]
-                    checks.append(dict(practice=i,held_ten=aggregate[:,0].mean(),held_twenty=aggregate[:,1].mean(),
+                    native_ticks=np.asarray(retention['mean_ticks'])[greedy]
+                    checks.append(dict(practice=i,native_retention_seconds=float(np.mean(native_ticks)/120.),held_ten=aggregate[:,0].mean(),held_twenty=aggregate[:,1].mean(),
                                        held_own_legal=aggregate[:,2].mean(),options=np.bincount(greedy,minlength=3).tolist()))
                 if i==len(train):
                     break
@@ -74,12 +89,16 @@ def learning(bank,source):
                                 for r in results])[chosen]
                 just=(first==0)&(tenth>0)
                 first[just]=elapsed[just]+tenth[just]
+                first_point[just]=i+1
                 elapsed+=length
                 # Each simulated learner receives exactly one clock interval.
                 utility=np.minimum(length/CAP,1.)
                 a[row_idx,chosen]+=utility
                 b[row_idx,chosen]+=1-utility
             traces[mode]=dict(held=checks,training_ten_probability=(first>0).mean(),
+                              probability_by_point=[float(np.mean((first_point>0)&(first_point<=i))) for i in BUDGETS],
+                              probability_by_seconds={t:float(np.mean((first>0)&(first<=30*t))) for t in [10,20,30,40]},
+                              mean_points_until_ten_capped_at_12=float(np.where(first_point>0,first_point,12).mean()),
                               frames_to_first_ten_if_reached=None if not np.any(first) else float(np.mean(first[first>0])),
                               mean_practice_frames=elapsed.mean())
         curves[train_group]=dict(held_cohort=held_group,traces=traces)
@@ -89,10 +108,13 @@ def learning(bank,source):
 if __name__=='__main__':
     p=argparse.ArgumentParser(description=__doc__)
     p.add_argument('--source',action='store_true')
+    p.add_argument('--retention',action='store_true')
     a=p.parse_args()
     if a.source:
         fit_source()
+    elif a.retention:
+        retention_bank()
     else:
-        results=learning(_read(BANK),_read(SOURCE))
-        _write(CURVE,dict(bank_sha256=_hash(BANK),source_sha256=_hash(SOURCE),curves=results))
+        results=learning(_read(BANK),_read(SOURCE),_read(RETENTION))
+        _write(CURVE,dict(bank_sha256=_hash(BANK),source_sha256=_hash(SOURCE),retention_sha256=_hash(RETENTION),curves=results))
         print(results)

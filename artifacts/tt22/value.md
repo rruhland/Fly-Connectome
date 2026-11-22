@@ -99,7 +99,22 @@ On the same three archived wide feeds, preparation was enabled after the last fa
 
 In three fresh complete receiving points, Pong preparation produced alternating lengths of **0, 10 and 4**, compared with **2, 4 and 2** for the stationary control. The near and far arms each scored seven legal returns with preparation and four in the stationary condition. Both conditions lost all three points. All six points replayed exactly. [Three-start receipt](value-ready-fresh.json.gz) · [Matched native replay](value-ready-matched.mp4) · [Video receipt](value-ready-matched.json)
 
-The two independent validation blocks and four fixed mirrored controls use the same parameters as this pilot. [Frozen validation design](value-ready-validation-design.md)
+### Fixed validation
+
+Across twelve fresh matched starts, Pong preparation lengthened one rally, shortened seven and tied four. Both conditions made a first legal learner return on 10/12 starts. The learner returned a second ball on 6/12 starts with Pong preparation and 9/12 with stationary preparation. Both had zero ten- or twenty-return points. All 28 ordinary and mirrored points replayed exactly. [Frozen design](value-ready-validation-design.md) · [Block 1 receipt](value-ready-validation-1.json.gz) · [Block 2 receipt](value-ready-validation-2.json.gz)
+
+| Block and branch | Learner returns | Rival returns | Alternating returns by launch | Points won |
+|---|---:|---:|---|---:|
+| 1 · Pong | 11 | 11 | 2, 2, 6, 4, 6, 2 | 0/6 |
+| 1 · Stationary | 17 | 17 | 6, 4, 8, 6, 6, 4 | 0/6 |
+| 2 · Pong | 8 | 8 | 4, 0, 0, 4, 6, 2 | 0/6 |
+| 2 · Stationary | 10 | 8 | 4, 5, 0, 0, 7, 2 | 2/6 |
+| Total · Pong | 19 | 19 | Longest 6 | 0/12 |
+| Total · Stationary | 27 | 25 | Longest 8 | 2/12 |
+
+The prepared branch started moving a median 8.5 frames before late stroke selection among 30 selected strokes with preparation. It spent 1.35 seconds computing preparation across the twelve points, excluding the late ranker and rendering. At the first late decision, the median absolute blade offset from center was 1.5 cm. The late selector chose a different initial pitch in nine pairs. The development replays showed a larger change in blade position and improved contact on wide feeds. The fixed fresh comparison showed fewer sustained returns with the same preparation policy.
+
+The four mirrored-control points lasted 8, 4, 0 and 4, versus 2, 6, 0 and 6 for Pong preparation and 4, 6, 5 and 7 for stationary preparation. They produced eight learner returns, compared with seven and twelve respectively. The cumulative absolute preparatory joint-rate effort was 50.9 for mirrored and 55.5 for Pong preparation, in sums of normalized per-frame axis commands. The direction comparison varied by launch, and stationary preparation had the most learner returns. [Mirrored schedule and receipts](value-ready-validation-design.md)
 
 ## Reproduction
 
