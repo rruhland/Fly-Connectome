@@ -16,6 +16,30 @@ def starts(seed):
     return [(s, lane) for pair in zip(*strata, strict=True) for s, lane in pair]
 
 
+def plot(rows):
+    import matplotlib
+    matplotlib.use('Agg')
+    import matplotlib.pyplot as plt
+
+    fig, ax = plt.subplots(figsize=(7, 4.5))
+    y = np.arange(len(rows), 0, -1)
+    counts = {k: np.array([r['paired'][k]['point'] or 9 for r in rows]) for k in ('learned', 'flat')}
+    ax.axvspan(8.6, 9.4, color='#f4ece5', zorder=0)
+    ax.hlines(y, np.minimum(counts['flat'], counts['learned']), np.maximum(counts['flat'], counts['learned']),
+              color='#939d9b', lw=1.4)
+    ax.scatter(counts['flat'], y, marker='o', edgecolors='#824222', facecolors='white', label='Flat prior',
+               s=46, zorder=3)
+    ax.scatter(counts['learned'], y, marker='x', color='#007465', label='Pong first', s=50, zorder=4)
+    ax.set(yticks=y, yticklabels=np.arange(1, len(rows)+1), ylim=(.4,len(rows)+.6), xlim=(.65,9.45),
+           xticks=np.arange(1,10), xticklabels=[*range(1,9),'Missed'],
+           xlabel='First target point with ten alternating legal returns', ylabel='Independent training stream')
+    ax.grid(axis='x', alpha=.15)
+    fig.legend(*ax.get_legend_handles_labels(), loc='upper center', ncol=2, frameon=False)
+    fig.tight_layout(rect=(0, 0, 1, .93))
+    fig.savefig(OUT/'implicit-confirm-learning.png', dpi=160)
+    plt.close(fig)
+
+
 def main():
     prior = {s for generator in (*GENERATORS, LIVE_SEED) for s, _ in starts(generator)}
     rows = []
@@ -63,6 +87,7 @@ def main():
                             censored_before_40=sum(r['seconds'] is None and r['observation_seconds']<40 for r in sample),
                             capped_mean=float(np.mean([r['point'] or 9 for r in sample])))
     _write(OUT/'implicit-confirm-summary.json.gz', report)
+    plot(rows)
     print({k:v for k,v in report.items() if k!='rows'})
 
 
