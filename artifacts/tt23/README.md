@@ -2,6 +2,8 @@
 
 A rally counts strict, consecutive legal returns from both robots after the serve. The best receiving controller uses native stereo RGB and issued motor commands. It estimates incoming flight, searches a nominal physics model for candidate strokes and can learn corrections from its own visible outgoing shots. The five-axis practice partner uses simulator state and a physical racket. All results on this page come from the simulator.
 
+The longest verified rally has **46 returns, 23 by each robot**. A separate matched intervention changed the near arm alone: four practice points increased its legal returns from 22 to 55 on eight fresh starts. The wrist-only arm reached 19 and one external camera reached 25. [Watch 46 returns](tt23_sequence_coach_46.mp4) · [Watch the wrist-only player and its live view](single-eye-wrist-rally.mp4) · [Every start in the two practice comparisons](rally-practice.png)
+
 | Question | Evidence |
 |---|---|
 | Does arm practice improve long rallies? | Seven optical corrections from four practice points took eight matched near-serve starts from 22 to 55 legal arm returns. Two matched points rose from 3 to 41 and from 1 to 37. [Point-by-point results](../tt22/lateral-rallies.md) |
@@ -13,8 +15,6 @@ A rally counts strict, consecutive legal returns from both robots after the serv
 | Do better camera predictions guarantee better shots? | The learned uncertainty model predicted held optical errors better and reduced actual near returns from 18 to 12 on six new starts. [Forecast and real-play tests](vision-and-risk.md) |
 
 The outside work most directly relevant to these choices is Mülling and colleagues' demonstration of conditioning learned table-tennis strokes on the incoming ball; they used physical human demonstrations. Our experiments use recorded robot motor actions, optical observations and real simulated outcomes. Learning on states visited by the student also follows the distribution-shift concern described by Ross, Gordon and Bagnell. The local ridge and outcome learners here use no backpropagation. [Robot table tennis](https://journals.sagepub.com/doi/10.1177/0278364912472380) · [Learning on student states](https://proceedings.mlr.press/v15/ross11a.html)
-
-[Every matched start in the two practice experiments](rally-practice.png)
 
 ## A more capable practice partner
 
