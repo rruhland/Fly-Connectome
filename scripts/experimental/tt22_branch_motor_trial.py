@@ -192,6 +192,7 @@ def held(checkpoint, output, count, schedule, conditions, lateral_fraction=LATER
     if output.exists():
         import json
         prior = _read(output)
+        prior.setdefault("lateral_fraction", LATERAL_FRACTION)
         if any(prior[key] != json.loads(json.dumps(experiment[key])) for key in experiment if key != "rows"):
             raise ValueError("cannot resume different treatments or source")
         experiment = prior

@@ -8,6 +8,8 @@ A scored game began at 0–0 with ordinary release speed and spread. Service rot
 | After four practice points, calibration frozen | 28 | 33 | 2/11 | 23 | 0–11 |
 | Same four points, keep updating during play | 24 | 29 | 2/11 | 15 | 0–11 |
 
+![Number of legal returns per point in the three complete games](ordinary-game.png)
+
 All arms had the same physical stroke search and edge and net penalties. The four practice points gave seven observations of differences between predicted and visible outgoing flight. Point seven lasted 5, 23 and 15 returns respectively. On point two the arm with zero practice did best, lasting 14 versus 4 in both practiced conditions. Every condition made all five of its serves legally. Four points of practice helped over this match, and updating further shortened its longest point. The initial zero-practice control was added after the long match was observed. Independent games are needed to establish the size and frequency of the advantage.
 
 The longest rally started with the SO-101 serving at 0–6. It lasted 451 control frames (15.0 simulated seconds). The SO-101 made 11 legal returns and the partner made 12. The final SO-101 stroke landed on its own side. The video includes the two actual input cameras. Replaying every joint command reproduced their combined RGB digest, the event log and the point outcome. [Watch the rally](ordinary-rally-frozen.mp4) · [Video verification](ordinary-rally-frozen-video.json) · [Practiced games](ordinary-game.json.gz) · [Zero-practice game](ordinary-zero-practice.json.gz)
