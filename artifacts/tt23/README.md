@@ -40,3 +40,12 @@ A clock-only attempt to select later strokes from long successful table-tennis h
 On eight independent time-to-ten confirmation streams using the supplied spatial rules, the Pong prior reached ten in 8/8 and flat in 6/8. Both succeeded on the same numbered point in all six common successes. On the two others flat was still unsuccessful after twelve receiving points. [Eight-stream confirmation](online-rally-confirm.md)
 
 Five distinct native Pong fits each learned which direction to jog for the original arm releases. Compared with independently shuffled source durations the increase in mean arm openings was unlikely conditional on that bank (p=.029). The ordinary release generator couples where the ball starts with its flight direction. On a separate course varying the two draws independently, holding center got 36 openings and the native learner got 17. Adding delayed native observations and the explicit option to hold preserved native performance but the learner again moved on every detected arm start. [Pure direction](direction.md) · [Uncoupled flight paths](crossflight.md) · [Source hold-action experiment](abstain.md)
+
+
+## Monocular and stereo rallies
+
+On six matched legal services the wrist camera alone produced 27 near-arm returns and a 19-return rally. One fixed external camera produced 26 and reached 25. Stereo produced 39 and reached 25 on the same best start. When the court lines left the wrist image, the initial visual-registration algorithm lost its pose and earned zero returns. Using the nominal arm and its own commands to locate the moving camera restored single-eye ball tracking. All camera conditions shared the same physical serve and opponent. [Wrist camera with actual policy view](single-eye-wrist-rally.mp4) · [All six starts and RGB replays](single-eye.md)
+
+## Transfer without an opening interception rule
+
+On the 32-start three-action benchmark the Pong-initialized online chooser averaged 4.80 capped launches to ten versus 6.09 from flat initialization. The live eight-point deployment reached ten on the same point under both conditions. The single fixed reward shuffle tied the source on these visual contexts. Independent native height and angle draws improved native Pong performance on crossed motion but did not improve legal arm returns on crossed flights. [Anonymous online choices and retention](implicit-online.md) · [Independent source physics](decoupled-pong.md) · [Native visual value versus target visibility](sensory-value.md)
