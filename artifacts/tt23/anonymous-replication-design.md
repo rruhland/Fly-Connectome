@@ -1,0 +1,7 @@
+# Independent reruns of the discrete motor choice
+
+The first native duration fit selected useful directions on 64 arm starts, but its one prespecified shuffled fit did even better. Among 1,024 within-Pong label permutations 13% equalled or exceeded the learned policy on arm returns. The target tests here are expensive in motor trajectories and cheap to rescore because all seven fixed displacements can be physically evaluated once per launch.
+
+Keep the exact original descriptors, kernel widths, symmetric motor menu, reward and target displacement scale. Train four separate fits on four new 48-start native Pong sets generated from offsets 1050000000, 1100000000, 1150000000 and 1200000000. Evaluate every fit and its own independently shuffled reward control on the same 64 fresh arm starts from generator 1820651572. Also evaluate a single fit pooling only these four source datasets and an initially neutral arm. Report each training replicate, native action curves, target legal returns and contacts, and a label permutation comparison averaged across all four independent source training sets. None of these policies gets target labels for fitting.
+
+If the pooled source model beats neutral and a typical untrained or shuffled policy on actual legal opening returns, test its fixed physical displacements in the uninterrupted five-axis setup. If the effect comes only from low-level contact, report that limit. The single most favorable shuffled model and the original pilot remain visible in the report.

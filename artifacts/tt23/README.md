@@ -13,3 +13,13 @@ A rally counts strict, consecutive legal returns from both robots after the serv
 | Do better camera predictions guarantee better shots? | The learned uncertainty model predicted held optical errors better and reduced actual near returns from 18 to 12 on six new starts. [Forecast and real-play tests](vision-and-risk.md) |
 
 The outside work most directly relevant to these choices is Mülling and colleagues' demonstration of conditioning learned table-tennis strokes on the incoming ball; they used physical human demonstrations. Our experiments use recorded robot motor actions, optical observations and real simulated outcomes. Learning on states visited by the student also follows the distribution-shift concern described by Ross, Gordon and Bagnell. The local ridge and outcome learners here use no backpropagation. [Robot table tennis](https://journals.sagepub.com/doi/10.1177/0278364912472380) · [Learning on student states](https://proceedings.mlr.press/v15/ross11a.html)
+
+## A more capable practice partner
+
+From 87 earlier physical replies the five-axis partner learned which incoming flight conditions the SO-101 could return. On eight fresh starts it raised the near arm's legal returns from 19 to 44. Four rallies reached ten and two reached twenty, versus one and zero with the stock partner. On one start the same optical arm went from one alternating return to 27. The partner can use simulator state to rank its own physically legal shots. The learner sees its own camera frames. [Coach, matched services and full results](coach.md)
+
+## Testing the source contribution across complete points
+
+When the native Pong preference controlled only the first movement, it increased opening contacts from 11 to 23 on 24 points. Both the native and zero-gain arms reached ten twice; both first reached it on point 13. A duration-updated online selector gained less than one practice point on two disjoint twelve-point banks. A separate anticipation experiment gained a ten-return rally in a three-point pilot but failed to reproduce that advantage across twelve more paired starts. [Full points](tt23_sequence.md) · [Online selection and return to Pong](sequence-learning.md) · [Anticipation, video and replication](../tt22/value.md)
+
+A separate test removed the supplied formula for moving to a predicted interception. A Pong paddle learned to choose among fixed displacements using point duration. On the first 64 arm starts the selected strategy beat holding position; a fixed source-label shuffle beat both, prompting independent source replications. [Discrete motor choice](anonymous-action.md)
