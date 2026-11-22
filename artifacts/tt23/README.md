@@ -23,3 +23,13 @@ From 87 earlier physical replies the five-axis partner learned which incoming fl
 When the native Pong preference controlled only the first movement, it increased opening contacts from 11 to 23 on 24 points. Both the native and zero-gain arms reached ten twice; both first reached it on point 13. A duration-updated online selector gained less than one practice point on two disjoint twelve-point banks. A separate anticipation experiment gained a ten-return rally in a three-point pilot but failed to reproduce that advantage across twelve more paired starts. [Full points](tt23_sequence.md) · [Online selection and return to Pong](sequence-learning.md) · [Anticipation, video and replication](../tt22/value.md)
 
 A separate test removed the supplied formula for moving to a predicted interception. A Pong paddle learned to choose among fixed displacements using point duration. On the first 64 arm starts the selected strategy beat holding position; a fixed source-label shuffle beat both, prompting independent source replications. [Discrete motor choice](anonymous-action.md)
+
+The two approaches can be combined in a continuous point. On 24 scheduled starts the learned partner and neutral opening generated 22-, 46- and 30-return rallies. Native opening gains reached ten on the very first point. The neutral arm achieved the longer rallies overall. [Watch 46 legal returns](tt23_sequence_coach_46.mp4) · [Both opponent and opening interventions](tt23_sequence_coach.md)
+
+A fresh carried-learning test used the improved partner and opening swing throughout. Pong ranking versus flat initialization led to 139 versus 91 legal arm returns across 48 matched points. The four paired streams first reached ten on points 2/5, 3/3, 1/3 and 1/6. Each online update used only the chosen point’s elapsed time. [All four learning curves](online-rally.md)
+
+## Can a direction emerge from experience alone?
+
+Giving the source learner seven fixed movement magnitudes reduced native Pong mistakes. Moving that whole choice to the arm often overstepped, even when feature smoothing improved native duration across five independent source batches. Online arm practice helped recalibrate the movement but a simple centered stroke was still quicker to its first landing. [Independent fits](anonymous-action.md) · [Smooth source scoring](smooth-jog.md) · [Online magnitude recovery](adaptive-jog.md)
+
+A clock-only attempt to select later strokes from long successful table-tennis histories predicted the next second better than chance. Its ordering deteriorated on longer horizons when evaluated on a completely different group of recordings. [Continuation predictions](duration-value.md)
