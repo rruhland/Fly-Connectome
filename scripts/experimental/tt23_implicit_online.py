@@ -19,6 +19,9 @@ NAMES = ('left', 'center', 'right')
 PRIOR_MODES = ('learned', 'flat', 'shuffled', 'reversed')
 LIVE_SEED = 1138013972
 DRAWS = 256
+CONFIRM_SEEDS = (162487003, 428705921, 1289605463, 951207684, 78560314, 2034165820,
+                 318056711, 1543786421, 827501334, 24183675, 131824603, 1950648317,
+                 605237480, 1036842751, 1692573410, 531689273)
 
 
 class JogLearner:
@@ -71,14 +74,15 @@ def paired_draws(seed, n=DRAWS):
     return np.random.default_rng(seed).uniform(1.e-7, 1. - 1.e-7, (8, n, 3))
 
 
-def play_live():
+def play_live(confirm=None):
     model = _read(SOURCE)['pooled']
     learners = {key: JogLearner(model, key) for key in ('learned', 'flat')}
-    draws = paired_draws(LIVE_SEED + 1, 1)
-    rng = np.random.default_rng(LIVE_SEED)
+    seed_generator = LIVE_SEED if confirm is None else CONFIRM_SEEDS[confirm]
+    draws = paired_draws(seed_generator + 1, 1)
+    rng = np.random.default_rng(seed_generator)
     strata = [draw(rng, 4, band) for band in STREAMS.values()]
     schedule = [(seed, lane) for pair in zip(*strata, strict=True) for seed, lane in pair]
-    path = OUT / 'implicit-online-live.json.gz'
+    path = OUT / ('implicit-online-live.json.gz' if confirm is None else f'implicit-confirm-{confirm+1}.json.gz')
     record = _read(path) if path.exists() else dict(source=_hash(SOURCE), cases=[])
     if record['source'] != _hash(SOURCE):
         raise ValueError('The source direction fit changed')
@@ -92,13 +96,18 @@ def play_live():
 
     station = ExplicitJogStation(jog)
     try:
+        reached = set()
         for i, (seed, lane) in enumerate(schedule):
+            if confirm is not None and len(reached) == len(learners):
+                break
             if i == len(record['cases']):
                 record['cases'].append(dict(seed=seed, lane=lane, results={}, choices={}))
             case = record['cases'][i]
             if (case['seed'], case['lane']) != (seed, lane):
                 raise ValueError('Schedule changed')
             for mode, learner in learners.items():
+                if confirm is not None and mode in reached:
+                    continue
                 if mode in case['results']:
                     row = case['results'][mode]
                     sight = row['opening']
@@ -111,7 +120,7 @@ def play_live():
                         raise ValueError('Cannot regenerate selected action')
                 else:
                     decisions.pop(mode, None)
-                    if mode == 'flat':
+                    if mode == 'flat' and 'learned' in case['results']:
                         x = None if case.get('context') is None else np.array(case['context'])
                         matched = learner.choose(x, draws[i])
                     else:
@@ -131,8 +140,10 @@ def play_live():
                     _write(path, record)
                     print(i + 1, mode, NAMES[int(action[0])], row['longest'], flush=True)
                 learner.update(x, action, [len(row['actions'])])
+                if row['longest'] >= 10:
+                    reached.add(mode)
         record['verified'] = verify(record['cases'])
-        record['summary'] = {key: summarize([case['results'][key] for case in record['cases']]) for key in learners}
+        record['summary'] = {key: summarize([case['results'][key] for case in record['cases'] if key in case['results']]) for key in learners}
         _write(path, record)
     finally:
         station.close()
@@ -230,5 +241,11 @@ def analyze():
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--live', action='store_true')
+    parser.add_argument('--confirm', type=int, choices=range(1, len(CONFIRM_SEEDS)+1))
     args = parser.parse_args()
-    play_live() if args.live else analyze()
+    if args.confirm is not None:
+        play_live(confirm=args.confirm-1)
+    elif args.live:
+        play_live()
+    else:
+        analyze()
