@@ -91,6 +91,16 @@ The two eight-return points stopped after wide far-arm replies. Stereo observed 
 
 The arm issued the extra swing in all three points. The lengths stayed at 8, 8 and 4, and the extra swings made no additional contact. All six points replayed exactly. The nominal pose solver found candidate blade positions within 4 mm of the proposed static anchors on the two eight-return points. At the normal decision time, none of the 112 simulated swings on either point reversed the ball. Simulating one of those decisions five frames earlier yielded 44 reversals and one crossing to the far half. The ranker's selected forecast reversed the ball and stopped short of the net. [Wide-return receipt](value-wide-development.json.gz)
 
+## Preparing the blade earlier
+
+The highest-scoring native Pong coefficient vector supplies continuous lateral motion in the ready phase. It combines the reconstructed blade location, the current stereo ball location and the lateral crossing forecast while the inbound ball is between y = +.62 m and −.30 m. The factory inverse kinematics maps this request to a blade ready pose at the usual depth and height, with a lateral target capped at 29 cm and rate-limited joint commands. Both branches keep the same subsequent value model and late stroke search, including the duration-based proposal variants and the edge deck. The point-score-trained coefficients enter only the ready motion. Evaluator blade and ball positions are logged separately from the controller's RGB inputs. [Ready-pose runner](../../scripts/experimental/tt23_value_ready.py)
+
+On the same three archived wide feeds, preparation was enabled after the last far-arm contact. The earlier issued commands matched each recorded point. At the usual late decision, the blade had moved 15.1, 24.7 and 28.9 cm laterally. It remained near the center in each stationary replay. The preparation reached two of the three wide feeds and neither new contact produced a legal return. The alternating lengths stayed at 8, 8 and 4. All six points replayed exactly. [Ready-pose development receipt](value-ready-development.json.gz)
+
+In three fresh complete receiving points, Pong preparation produced alternating lengths of **0, 10 and 4**, compared with **2, 4 and 2** for the stationary control. The near and far arms each scored seven legal returns with preparation and four in the stationary condition. Both conditions lost all three points. All six points replayed exactly. [Three-start receipt](value-ready-fresh.json.gz) · [Matched native replay](value-ready-matched.mp4) · [Video receipt](value-ready-matched.json)
+
+The two independent validation blocks and four fixed mirrored controls use the same parameters as this pilot. [Frozen validation design](value-ready-validation-design.md)
+
 ## Reproduction
 
 Run from the repository root using its Python environment. Source fitting replays the archived native duration policies. The first physical run supplies deliberate failed-shot examples to calibration. The calibrated and supported runs draw fresh launch banks and reject overlap with their archived inputs.
@@ -111,6 +121,13 @@ python -m scripts.experimental.tt22_value_trial --replication --count 8
 python -m scripts.experimental.tt22_value_online --count 8
 python -m scripts.experimental.tt22_value_inverse --count 6
 python -m scripts.experimental.tt23_value_wide
+python -m scripts.experimental.tt23_value_ready
+python -m scripts.experimental.tt23_value_ready --fresh 3
+python -m scripts.experimental.tt23_value_ready --block 1
+python -m scripts.experimental.tt23_value_ready --block 2
+python -m scripts.experimental.tt22_value_movie artifacts/tt22/value-ready-fresh.json.gz \
+  --mode pong --compare stationary --seed 488245766 --minimum 10 \
+  --output artifacts/tt22/value-ready-matched.mp4
 ```
 
 To verify a saved physical receipt without rerunning ranker inference, pass its path to `python -m scripts.experimental.tt22_value_trial --verify`. The replay executes both sides' archived commands and compares the exact strict referee reward, terminal outcome and event log.
