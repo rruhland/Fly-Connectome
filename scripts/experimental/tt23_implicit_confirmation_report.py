@@ -1,22 +1,15 @@
 """Audit independent schedules and tabulate censored time-to-ten for actual online agents."""
+import argparse
 import itertools
 import numpy as np
 
 from .tt4_transfer_trial import _hash, _read, _write
-from .tt22_duration_transfer import STREAMS
-from .tt22_joint_practice import draw
-from .tt23_implicit_online import CONFIRM_SEEDS, LIVE_SEED, OUT, SOURCE
+from .tt23_implicit_online import CONFIRM_SEEDS, LIVE_SEED, OUT, SOURCE, WIDE_SEEDS, live_schedule
 from .tt23_jog_bank import GENERATORS
 from .tt23_sequence import summarize
 
 
-def starts(seed):
-    rng = np.random.default_rng(seed)
-    strata = [draw(rng, 4, band) for band in STREAMS.values()]
-    return [(s, lane) for pair in zip(*strata, strict=True) for s, lane in pair]
-
-
-def plot(rows):
+def plot(rows, path):
     import matplotlib
     matplotlib.use('Agg')
     import matplotlib.pyplot as plt
@@ -36,20 +29,24 @@ def plot(rows):
     ax.grid(axis='x', alpha=.15)
     fig.legend(*ax.get_legend_handles_labels(), loc='upper center', ncol=2, frameon=False)
     fig.tight_layout(rect=(0, 0, 1, .93))
-    fig.savefig(OUT/'implicit-confirm-learning.png', dpi=160)
+    fig.savefig(path, dpi=160)
     plt.close(fig)
 
 
-def main():
-    prior = {s for generator in (*GENERATORS, LIVE_SEED) for s, _ in starts(generator)}
+def main(only_wide=False):
+    series = WIDE_SEEDS if only_wide else CONFIRM_SEEDS
+    prefix = 'implicit-wide' if only_wide else 'implicit-confirm'
+    prior = {s for generator in (*GENERATORS, LIVE_SEED) for s, _ in live_schedule(generator)}
+    if only_wide:
+        prior.update(s for generator in CONFIRM_SEEDS for s, _ in live_schedule(generator))
     rows = []
-    for i, seed in enumerate(CONFIRM_SEEDS, 1):
-        schedule = starts(seed)
+    for i, seed in enumerate(series, 1):
+        schedule = live_schedule(seed, only_wide=only_wide)
         claimed = {s for s, _ in schedule}
         if len(claimed) != 8 or prior & claimed:
             raise ValueError('Duplicate destination starts')
         prior.update(claimed)
-        path = OUT / f'implicit-confirm-{i}.json.gz'
+        path = OUT / f'{prefix}-{i}.json.gz'
         doc = _read(path)
         if doc['source'] != _hash(SOURCE):
             raise ValueError('Unexpected source checkpoint')
@@ -86,10 +83,12 @@ def main():
                             solved_by_40=sum(r['seconds'] is not None and r['seconds']<=40 for r in sample),
                             censored_before_40=sum(r['seconds'] is None and r['observation_seconds']<40 for r in sample),
                             capped_mean=float(np.mean([r['point'] or 9 for r in sample])))
-    _write(OUT/'implicit-confirm-summary.json.gz', report)
-    plot(rows)
+    _write(OUT/f'{prefix}-summary.json.gz', report)
+    plot(rows, OUT/f'{prefix}-learning.png')
     print({k:v for k,v in report.items() if k!='rows'})
 
 
 if __name__ == '__main__':
-    main()
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--wide', action='store_true')
+    main(only_wide=parser.parse_args().wide)
