@@ -1,44 +1,38 @@
-"""Summarize complete physical games and the separate matched opening experiment."""
-
-import gzip
-import json
-from pathlib import Path
-
+"""Show every matched start in the two successful target-practice experiments."""
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import numpy as np
 
-DIR=Path(__file__).resolve().parents[2]/'artifacts/tt22'
+from .tt4_transfer_trial import _read
+from .tt23_optical_contact import OUT
 
 
-def read(name):
-    with gzip.open(DIR/name,'rt') as f:
-        return json.load(f)
-
-
-def plot():
-    game=read('ordinary-game.json.gz')
-    cold=read('ordinary-zero-practice.json.gz')
-    if cold['verified']!=11 or game['verified']!={'online':11,'frozen':11}:
-        raise ValueError('missing verified complete games')
-    fig,ax=plt.subplots(figsize=(8.5,4.5),layout='constrained')
-    x=np.arange(1,12)
-    ax.axhspan(10,20,color='#d6ebe1',alpha=.60)
-    for values,dx,color,label in [(cold['summary']['lengths'],-.19,'#77818c','Before optical practice'),
-                                  (game['summary']['frozen']['lengths'],0.,'#156e69','After four practice points'),
-                                  (game['summary']['online']['lengths'],.19,'#be662a','Practice + updates in game')]:
-        ax.vlines(x+dx,0,values,color=color,alpha=.50,linewidth=1.5)
-        ax.scatter(x+dx,values,s=32,color=color,label=label,zorder=3)
-    ax.set(xlim=(.45,11.55),ylim=(-.8,25),xticks=x,yticks=[0,5,10,15,20,25],xlabel='Point in the game',ylabel='Consecutive legal returns by both robots')
-    ax.spines[['top','right']].set_visible(False)
-    ax.set_title('The same 11 points before and after SO-101 practice',loc='left',fontweight='bold',pad=11)
-    ax.legend(frameon=False,loc='upper left',fontsize=9)
-    ax.text(11.45,19.1,'10–20 return benchmark',ha='right',va='top',fontsize=8,color='#335a48')
-    ax.annotate('23',xy=(7,23),xytext=(7.3,23),va='center',fontsize=10,color='#156e69')
-    fig.savefig(DIR/'ordinary-game.png',dpi=150)
+def render():
+    untrained = _read(OUT / 'after-service-zero.json.gz')['rows']
+    practiced = _read(OUT.parent / 'tt22' / 'after-service.json.gz')['rows']['neutral']
+    coaches = _read(OUT / 'coach-held.json.gz')['rows']
+    comparisons = [('Arm practice', 'Without corrections', 'After four practice points', untrained, practiced),
+                   ('Opponent practice', 'Original opponent', 'Trained opponent', coaches['stock'], coaches['learned'])]
+    fig, axes = plt.subplots(1, 2, sharex=True, figsize=(9, 4))
+    for ax, (title, old, new, before, after) in zip(axes, comparisons, strict=True):
+        if [r['seed'] for r in before] != [r['seed'] for r in after]:
+            raise ValueError('Start order differs between conditions')
+        y = np.arange(len(before), 0, -1)
+        left, right = [[r['longest'] for r in group] for group in (before, after)]
+        ax.axvspan(10, 20, color='#ecefe8', zorder=0)
+        ax.hlines(y, np.minimum(left, right), np.maximum(left, right), color='#8c978e', lw=1.5)
+        ax.scatter(left, y, marker='o', facecolors='white', edgecolors='#3a5366', s=49, label=old, zorder=3)
+        ax.scatter(right, y, marker='x', color='#ad4726', s=47, label=new, zorder=4)
+        ax.set(yticks=y, yticklabels=[str(i + 1) for i in range(len(y))], xlabel='Consecutive legal returns',
+               title=title, ylim=(.5,len(y)+.5), xlim=(-1.6, 44.5), xticks=[0,10,20,30,40])
+        ax.legend(loc='upper left', bbox_to_anchor=(0, -.21), frameon=False, fontsize=9)
+        ax.grid(axis='x', alpha=.18)
+    axes[0].set_ylabel('Matched start within each experiment')
+    fig.tight_layout(rect=(0, .07, 1, 1))
+    fig.savefig(OUT / 'rally-practice.png', dpi=155)
     plt.close(fig)
 
 
-if __name__=='__main__':
-    plot()
+if __name__ == '__main__':
+    render()

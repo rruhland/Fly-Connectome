@@ -217,7 +217,12 @@ def analyze():
                 for mode in (*PRIOR_MODES, 'frozen', 'center')}
         runs = [{k: score(bank, model, k, uniforms) for k in ('learned', 'shuffled')}
                 for model in source['sets']]
-        streams.append(dict(bank=_hash(path), rows=rows, independent_source_runs=runs))
+        lengths = np.array([[case['results'][name]['longest'] for name in NAMES] for case in bank['cases']])
+        attainable = lengths.max(axis=1)
+        first = np.flatnonzero(attainable >= 10)
+        ceiling = dict(point_lengths=attainable.tolist(), ten=int(sum(attainable >= 10)),
+                       twenty=int(sum(attainable >= 20)), first_ten=None if not len(first) else int(first[0]+1))
+        streams.append(dict(bank=_hash(path), rows=rows, independent_source_runs=runs, evaluator_ceiling=ceiling))
         print(i + 1, rows, flush=True)
     _write(OUT / 'implicit-online-results.json.gz', dict(source=_hash(SOURCE), streams=streams, draws=DRAWS))
 

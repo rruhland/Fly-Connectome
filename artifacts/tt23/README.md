@@ -14,6 +14,8 @@ A rally counts strict, consecutive legal returns from both robots after the serv
 
 The outside work most directly relevant to these choices is Mülling and colleagues' demonstration of conditioning learned table-tennis strokes on the incoming ball; they used physical human demonstrations. Our experiments use recorded robot motor actions, optical observations and real simulated outcomes. Learning on states visited by the student also follows the distribution-shift concern described by Ross, Gordon and Bagnell. The local ridge and outcome learners here use no backpropagation. [Robot table tennis](https://journals.sagepub.com/doi/10.1177/0278364912472380) · [Learning on student states](https://proceedings.mlr.press/v15/ross11a.html)
 
+[Every matched start in the two practice experiments](rally-practice.png)
+
 ## A more capable practice partner
 
 From 87 earlier physical replies the five-axis partner learned which incoming flight conditions the SO-101 could return. On eight fresh starts it raised the near arm's legal returns from 19 to 44. Four rallies reached ten and two reached twenty, versus one and zero with the stock partner. On one start the same optical arm went from one alternating return to 27. The partner can use simulator state to rank its own physically legal shots. The learner sees its own camera frames. [Coach, matched services and full results](coach.md)
@@ -33,3 +35,8 @@ A fresh carried-learning test used the improved partner and opening swing throug
 Giving the source learner seven fixed movement magnitudes reduced native Pong mistakes. Moving that whole choice to the arm often overstepped, even when feature smoothing improved native duration across five independent source batches. Online arm practice helped recalibrate the movement but a simple centered stroke was still quicker to its first landing. [Independent fits](anonymous-action.md) · [Smooth source scoring](smooth-jog.md) · [Online magnitude recovery](adaptive-jog.md)
 
 A clock-only attempt to select later strokes from long successful table-tennis histories predicted the next second better than chance. Its ordering deteriorated on longer horizons when evaluated on a completely different group of recordings. [Continuation predictions](duration-value.md)
+
+
+On eight independent time-to-ten confirmation streams using the supplied spatial rules, the Pong prior reached ten in 8/8 and flat in 6/8. Both succeeded on the same numbered point in all six common successes. On the two others flat was still unsuccessful after twelve receiving points. [Eight-stream confirmation](online-rally-confirm.md)
+
+Five distinct native Pong fits each learned which direction to jog for the original arm releases. Compared with independently shuffled source durations the increase in mean arm openings was unlikely conditional on that bank (p=.029). The ordinary release generator couples where the ball starts with its flight direction. On a separate course varying the two draws independently, holding center got 36 openings and the native learner got 17. Adding delayed native observations and the explicit option to hold preserved native performance but the learner again moved on every detected arm start. [Pure direction](direction.md) · [Uncoupled flight paths](crossflight.md) · [Source hold-action experiment](abstain.md)
