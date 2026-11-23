@@ -15,8 +15,15 @@ from .tt24_motor import optical_sightings
 
 DATA = Path('artifacts/tt24/predict-reference-data.npz')
 RESULT = Path('artifacts/tt24/predict-reference.json.gz')
+REFINED = Path('artifacts/tt24/predict-reference-refined.json.gz')
+ORTHO_DATA = Path('artifacts/tt24/predict-reference-orthographic-data.npz')
+ORTHO = Path('artifacts/tt24/predict-reference-orthographic.json.gz')
+ORTHO_CONFIRM = Path('artifacts/tt24/predict-reference-orthographic-confirm.json.gz')
 DEMOS = tuple(range(249001, 249005))
 HELD = tuple(range(250001, 250013))
+REFINED_HELD = tuple(range(251001, 251013))
+ORTHO_HELD = tuple(range(252001, 252013))
+CONFIRM_HELD = tuple(range(253001, 253017))
 HEIGHT = 144
 WIDTH = 192
 TICK = 1. / 60
@@ -26,16 +33,17 @@ COMMAND_UNIT = 5.2 / 60
 class TrainingEyes(BounceArena):
     """Two stationary training viewpoints aimed at the table-end workspace."""
 
-    def __init__(self, *, view='wrist'):
+    def __init__(self, *, view='wrist', orthographic=False):
         super().__init__(view=view, height=HEIGHT, width=WIDTH, max_steps=360)
-        self._model.vis.global_.fovy = 22.
+        self._model.vis.global_.orthographic = int(orthographic)
+        self._model.vis.global_.fovy = .61 if orthographic else 22.
         self.eyes = []
         for azimuth in (0., 90.):
             camera = mujoco.MjvCamera()
             camera.type = mujoco.mjtCamera.mjCAMERA_FREE
             camera.lookat[:] = (0., -.94, .92)
             camera.distance = 1.60
-            camera.elevation = -12.
+            camera.elevation = -2. if orthographic else -12.
             camera.azimuth = azimuth
             self.eyes.append(camera)
 
@@ -104,6 +112,45 @@ def load(path):
                 for seed in DEMOS]
 
 
+def replay_optics(base, output):
+    """Change only the two reference lenses for the archived physical episodes."""
+    reconstruction = {}
+    arena = TrainingEyes(orthographic=True)
+    try:
+        for seed, source in zip(DEMOS, load(base), strict=True):
+            senses, positions, verified_targets = [], [], []
+            obs = arena.reset(seed=seed, split='held')
+            teacher = PrivilegedCeiling(arena)
+            target = np.zeros(5)
+            for _ in source['target']:
+                _, seen = photograph(arena, obs, wrist=False)
+                senses.append(seen)
+                positions.append(obs['joints'])
+                # Recompute the original command because subtracting integrated
+                # labels loses its last bits, which eventually changes collisions.
+                action = teacher.command()
+                target = target + COMMAND_UNIT * action
+                verified_targets.append(target)
+                obs, _, done = arena.step(action)
+                if done:
+                    break
+            amount = len(senses)
+            max_error = np.max(abs(np.asarray(positions) - source['enc'][:amount, :5]))
+            target_error = np.max(abs(np.asarray(verified_targets) - source['target'][:amount]))
+            if amount != len(source['target']) or max_error > 2.e-4 or target_error > 2.e-5:
+                raise RuntimeError(f'archived release {seed} diverged: {amount} ticks, {max_error:g} rad, '
+                                   f'{target_error:g} target offset')
+            replayed = arena.judge_metrics()['longest_consecutive_rebounds']
+            print('orthographic replay', seed, amount, replayed, 'encoder max deviation', max_error,
+                  'visibility', np.isfinite(np.asarray(senses)).mean(axis=0).tolist(), flush=True)
+            stored = source | dict(fixed=np.asarray(senses), replay_error=np.array([max_error, target_error]),
+                                   replay_streak=np.array([replayed]))
+            reconstruction.update({f'{seed}_{key}': value for key, value in stored.items()})
+        np.savez_compressed(output, **reconstruction)
+    finally:
+        arena.close()
+
+
 def fit(design, output, ridge):
     reg = np.eye(design.shape[1]) * ridge
     reg[0, 0] *= .03
@@ -118,19 +165,38 @@ def upper(x):
 class Reference:
     """Compose image coordinates from two upright views measured in silhouette units."""
 
-    def __init__(self, examples):
+    def __init__(self, examples, calibrated=False):
         pictures = np.concatenate([example['fixed'] for example in examples])
-        self.scale = .020 / np.nanmedian(pictures[:, :, 2], axis=0)
+        self.calibrated = calibrated
+        self.radius = np.nanmedian(pictures[:, :, 2], axis=0)
+        self.scale = .020 / self.radius
+        self.cross = np.zeros(3)
+        if calibrated:
+            ball, _ = self._projection(pictures)
+            finite = np.isfinite(ball).all(axis=(1, 2))
+            x = np.c_[np.ones(finite.sum()), ball[finite, :, 0]]
+            y = ball[finite, 0, 1] - ball[finite, 1, 1]
+            self.cross = fit(x, y, .03)
         self.default = np.nanmedian(self.read(pictures), axis=0)
 
-    def read(self, pictures):
+    def _projection(self, pictures):
         ball, blade = pictures[:, :, :2], pictures[:, :, 3:5]
         ball = ball * self.scale[None, :, None]
         blade = blade * self.scale[None, :, None]
-        ball_xyz = np.c_[ball[:, :, 0], ball[:, :, 1].mean(axis=1)]
-        blade_xyz = np.c_[blade[:, :, 0], blade[:, :, 1].mean(axis=1)]
+        if self.calibrated:
+            ratio = np.clip(self.radius / pictures[:, :, 2], .75, 1.28)
+            ball *= (.25 + .75 * ratio[:, :, None])
+        return ball, blade
+
+    def _couple(self, value):
+        lateral = value[:, :, 0]
+        height = value[:, :, 1].mean(axis=1) + .5 * (self.cross[1] * lateral[:, 0] - self.cross[2] * lateral[:, 1])
+        return np.c_[lateral, height]
+
+    def read(self, pictures):
+        ball, blade = self._projection(pictures)
         aspect = (pictures[:, :, 5] / pictures[:, :, 6])**2
-        return np.c_[ball_xyz, blade_xyz, aspect * .18]
+        return np.c_[self._couple(ball), self._couple(blade), aspect * .18]
 
 
 class WristReadout:
@@ -245,8 +311,8 @@ def pupil_inputs(read, velocity, encoders):
     return np.c_[read[:, :3] - anchor, velocity, read[:, 3:6] - anchor, read[:, 6:], home, joints - home]
 
 
-def references(examples):
-    ref = Reference(examples)
+def references(examples, *, calibrated=False):
+    ref = Reference(examples, calibrated=calibrated)
     readout = WristReadout(examples, ref)
     ref_read = [replace_gaps(ref.read(item['fixed']), ref.default) for item in examples]
     wrist_read = [replace_gaps(readout.read(item['wrist'], item['enc']), ref.default) for item in examples]
@@ -261,10 +327,10 @@ def references(examples):
                 wrist_read=wrist_read, optical_targets=optical_targets)
 
 
-def visual_validation(examples):
+def visual_validation(examples, *, calibrated=False):
     errors = []
     for i, test in enumerate(examples):
-        models = references([item for j, item in enumerate(examples) if i != j])
+        models = references([item for j, item in enumerate(examples) if i != j], calibrated=calibrated)
         ref, decoder, motion = (models[key] for key in ('ref', 'readout', 'wrist_motion'))
         loc = replace_gaps(ref.read(test['fixed']), ref.default)
         mapped = replace_gaps(decoder.read(test['wrist'], test['enc']), ref.default)
@@ -285,7 +351,7 @@ def make_actor(examples, reads, vels):
 
 
 def play(arena, seed, mode, models, actor):
-    use_wrist = mode in ('transfer', 'single')
+    use_wrist = mode in ('transfer', 'aligned', 'single')
     obs = arena.reset(seed=seed, split='held', render=use_wrist)
     issued = np.zeros(5)
     history = []
@@ -302,7 +368,7 @@ def play(arena, seed, mode, models, actor):
                 read = models['ref'].read(fixed[None])[0]
                 motion = models['ref_motion']
                 default = models['ref'].default
-            elif mode == 'transfer':
+            elif mode in ('transfer', 'aligned'):
                 read = models['readout'].read(wrist[None], encoded)[0]
                 motion = models['wrist_motion']
                 default = models['ref'].default
@@ -327,23 +393,39 @@ def play(arena, seed, mode, models, actor):
     return arena.judge_metrics() | dict(visual_gap_ticks=gaps, actions=actions)
 
 
-def qualify(data, output):
+def qualify(data, output, *, refined=False, orthographic=False, confirm=False):
     examples = load(data)
-    models = references(examples)
-    validation = visual_validation(examples)
+    models = references(examples, calibrated=refined)
+    validation = visual_validation(examples, calibrated=refined)
     print('cross-view visual validation', validation, flush=True)
-    debug = [models['lone_motion'].predict(Motion.history(row[:, :3] - row[0, 3:6]))
-             for row in models['lone_read']]
-    ref_actor, ref_scoring = make_actor(examples, models['ref_read'], models['optical_targets'])
-    single_actor, single_scoring = make_actor(examples, models['lone_read'], debug)
-    print('selected channel pairs', ref_actor.pair, single_actor.pair, flush=True)
+    motor_sources = [i for i, item in enumerate(examples) if not refined or item['rebounds'][0] >= 10]
+    motor_examples = [examples[i] for i in motor_sources]
+    actors, scores = {}, {}
+    for name, reader in (('reference', 'ref'), ('single', 'lone'), ('aligned', 'wrist')):
+        if name == 'aligned' and not refined:
+            continue
+        read = [models[f'{reader}_read'][i] for i in motor_sources]
+        if name == 'reference' and not refined:
+            speed = models['optical_targets']
+        else:
+            motion = models[f'{reader}_motion']
+            speed = [motion.predict(Motion.history(row[:, :3] - row[0, 3:6])) for row in read]
+        actors[name], scores[name] = make_actor(motor_examples, read, speed)
+    print('selected channel pairs', {key: actor.pair for key, actor in actors.items()}, flush=True)
     evaluation = {}
-    arena = TrainingEyes()
+    arena = TrainingEyes(orthographic=orthographic)
+    seeds = ORTHO_HELD if orthographic else REFINED_HELD if refined else HELD
+    modes = ('hold', 'reference', 'transfer', 'single')
+    if refined:
+        modes = ('hold', 'reference', 'transfer', 'aligned', 'single')
+    if confirm:
+        seeds = CONFIRM_HELD
+        modes = ('hold', 'transfer', 'single')
     try:
-        for mode in ('hold', 'reference', 'transfer', 'single'):
-            actor = single_actor if mode == 'single' else ref_actor
+        for mode in modes:
+            actor = actors.get(mode, actors['reference'])
             evaluation[mode] = []
-            for seed in HELD:
+            for seed in seeds:
                 row = play(arena, seed, mode, models, actor)
                 evaluation[mode].append(row)
                 print('image reference held', mode, seed, row['longest_consecutive_rebounds'], row['visual_gap_ticks'], flush=True)
@@ -352,21 +434,28 @@ def qualify(data, output):
     with gzip.open(output, 'wt') as stream:
         json.dump(dict(schema='tt24-visual-reference-1', visual_validation=validation,
                        teacher_streaks=[item['rebounds'][0].item() for item in examples],
-                       policy_pair_scores=dict(reference=ref_scoring, single=single_scoring), held=evaluation,
+                       motor_demo_seeds=[DEMOS[i] for i in motor_sources], policy_pair_scores=scores, held=evaluation,
+                       orthographic_training_eyes=orthographic,
                        summary={key: summarize(rows) for key, rows in evaluation.items()}),
                   stream, separators=(',', ':'))
 
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('stage', choices=('collect', 'qualify'))
-    parser.add_argument('--data', type=Path, default=DATA)
-    parser.add_argument('--output', type=Path, default=RESULT)
+    parser.add_argument('stage', choices=('collect', 'qualify', 'refined', 'orthographic', 'confirm'))
+    parser.add_argument('--data', type=Path)
+    parser.add_argument('--output', type=Path)
     args = parser.parse_args()
     if args.stage == 'collect':
-        collect(args.data)
+        collect(args.data or DATA)
+    elif args.stage == 'orthographic':
+        replay_optics(args.data or DATA, ORTHO_DATA)
+        qualify(ORTHO_DATA, args.output or ORTHO, orthographic=True)
+    elif args.stage == 'confirm':
+        qualify(args.data or ORTHO_DATA, args.output or ORTHO_CONFIRM, orthographic=True, confirm=True)
     else:
-        qualify(args.data, args.output)
+        refined = args.stage == 'refined'
+        qualify(args.data or DATA, args.output or (REFINED if refined else RESULT), refined=refined)
 
 
 if __name__ == '__main__':

@@ -3,6 +3,7 @@
 import argparse
 from collections import deque
 from hashlib import sha256
+import json
 from pathlib import Path
 from time import perf_counter
 
@@ -26,6 +27,7 @@ EXPLORATION = 1.4
 PULSE_FRAMES = 9
 VISION_LIMIT = 35
 PRACTICE_LIMIT = 96
+SOURCE_WINDOW = 34
 CREW = (*MODES, 'warm')
 
 
@@ -86,10 +88,43 @@ class FixedWitness:
         return None if result is None else result.tolist()
 
 
-def pulse(arena, launch, body, basis, perturbation, sign, regime):
+class RandomWitness(FixedWitness):
+    """Open an independently scheduled pulse after a measurable RGB prefix."""
+
+    def __init__(self, dt, wait):
+        super().__init__(dt)
+        self.wait = wait
+        self.ready = None
+
+    def update(self, tick, rgb):
+        ball, blade = optical_sightings(rgb)
+        row = None if ball is None or blade is None else [blade.center.tolist(), ball.center.tolist()]
+        if self.cue is not None:
+            self.samples.append(row)
+            return
+        self.prefix.update(rgb)
+        self.recent.append(row)
+        if len(self.recent) < 5 or any(sample is None for sample in self.recent):
+            return
+        if self.ready is None:
+            self.ready = tick
+        if tick < self.ready + self.wait:
+            return
+        self.cue = dict(tick=tick, hi=tick + SOURCE_WINDOW, span=blade.half_span,
+                        prefix=self.prefix.hexdigest())
+        self.samples.extend(self.recent)
+
+    def extract(self):
+        return None
+
+    def trace(self):
+        return None if self.cue is None else dict(tracks=self.samples, **self.cue)
+
+
+def pulse(arena, launch, body, basis, perturbation, sign, regime, wait=None):
     options = dict(readout=body['readout'], retinal=body['retinal'])
     controller = MotorPolicy(basis, target_effects(body, arena.action_size), **options)
-    tracker = FixedWitness(arena.dt)
+    tracker = FixedWitness(arena.dt) if wait is None else RandomWitness(arena.dt, wait)
     obs = arena.reset(seed=launch, split='practice', regime=regime)
     done, reward = False, 0.
     commands, pulse_frames = [], 0
@@ -111,18 +146,30 @@ def pulse(arena, launch, body, basis, perturbation, sign, regime):
         reward += r
     local = tracker.extract()
     runtime = len(commands) * arena.dt
-    return dict(seed=launch, sign=sign, pulse_frames=pulse_frames, cue=tracker.cue, optical=local,
-                public_score=float(reward), seconds=runtime, censored=not done, actions=commands,
-                referee=arena.judge_metrics())
+    row = dict(seed=launch, sign=sign, pulse_frames=pulse_frames, cue=tracker.cue, optical=local,
+               public_score=float(reward), seconds=runtime, censored=not done, actions=commands,
+               referee=arena.judge_metrics())
+    if wait is not None:
+        row['trace'] = tracker.trace()
+    return row
 
 
-def source_effects(pair, source):
-    a, b = [branch['optical'] for branch in pair]
+def source_effects(pair, source, dt):
+    selected = None
+    if 'gate' in source:
+        from .tt24_recurrence_surprise import select
+
+        selected = select(*(row['trace'] for row in pair), dt, source['gate'])
+    if selected is None:
+        a, b = [branch['optical'] for branch in pair]
+        strength = 1.
+    else:
+        _, strength, (a, b) = selected
     if a is None or b is None:
         support = 0.
     else:
         stretch = np.max(np.abs((np.asarray(a) - b) / source['scale']))
-        support = float(np.exp(-.5 * max(stretch - 3.5, 0.)**2))
+        support = strength * float(np.exp(-.5 * max(stretch - 3.5, 0.)**2))
     return support, {mode: support * contrast(a, b, source, mode) for mode in MODES}
 
 
@@ -220,6 +267,8 @@ def run(source_path, embodiment_path, path, *, arm='stock', regime='standard', s
                     calibration_frame_cap=PRACTICE_LIMIT)
     if arm != 'stock' or regime != 'standard' or untrained:
         metadata.update(arm=arm, regime=regime, untrained=untrained)
+    if 'gate' in source:
+        metadata.update(timing='random after track visibility', observation_window=SOURCE_WINDOW)
     report = _read(path) if path.exists() else dict(metadata=metadata, practice=[], held={mode: [] for mode in CREW})
     if report['metadata'] != metadata:
         raise ValueError('paired calibration receipt has a different schedule or warm-start policy')
@@ -232,10 +281,11 @@ def run(source_path, embodiment_path, path, *, arm='stock', regime='standard', s
             if i < len(report['practice']):
                 continue
             signs = (1, -1) if i % 2 == 0 else (-1, 1)
-            rows = {sign: pulse(calibration, launch, body, basis, direction, sign, regime) for sign in signs}
+            wait = int(np.random.default_rng(launch).integers(0, 7)) if 'gate' in source else None
+            rows = {sign: pulse(calibration, launch, body, basis, direction, sign, regime, wait) for sign in signs}
             plus, minus = (rows[sign] for sign in (1, -1))
             verify_pair(plus, minus)
-            support, source_delta = source_effects((plus, minus), source)
+            support, source_delta = source_effects((plus, minus), source, calibration.dt)
             scores = [np.log1p(row['seconds']) + .15 * row['public_score'] for row in (plus, minus)]
             record = dict(direction=direction.tolist(), plus=plus, minus=minus, public_delta=float(scores[0] - scores[1]),
                           source_delta=source_delta, support=support)
@@ -255,23 +305,50 @@ def run(source_path, embodiment_path, path, *, arm='stock', regime='standard', s
     evaluate(held, policies, body, report, path, began, arm=arm, regime=regime)
 
 
-def replicate(first_path, embodiment_path, path, count):
+def replicate(first_path, embodiment_path, path, count, schedule=REPLICATION_SEED):
     began = perf_counter()
     first = _read(first_path)
     body = _read(embodiment_path)
     if first['metadata']['embodiment_sha256'] != _hash(embodiment_path) or first['replayed'] != 4 * HELD:
         raise ValueError('replication needs the original completed pulse calibration')
-    held = np.random.default_rng(REPLICATION_SEED).choice(2147483646, count, replace=False).tolist()
+    held = np.random.default_rng(schedule).choice(2147483646, count, replace=False).tolist()
     known = set(body['practice_seeds']) | {row['seed'] for rows in body['held'].values() for row in rows}
     known.update(first['metadata']['practice'] + first['metadata']['held'])
     if known.intersection(held):
         raise ValueError('replication starts overlap arm practice or earlier tests')
     metadata = dict(schema='tt24-local-recurrence-replication-1', calibration_sha256=_hash(first_path),
-                    held=held, schedule=REPLICATION_SEED, previous_attempts=body['total_initial_attempts'])
+                    held=held, schedule=schedule, previous_attempts=body['total_initial_attempts'])
     report = _read(path) if path.exists() else dict(metadata=metadata, held={mode: [] for mode in CREW})
     if report['metadata'] != metadata:
         raise ValueError('replication uses different weights, body, or launch order')
     evaluate(held, first['policies'], body, report, path, began)
+
+
+def retain(prior_path, embodiment_path, output, evidence):
+    prior = _read(prior_path)
+    body = _read(embodiment_path)
+    if prior['metadata']['embodiment_sha256'] != _hash(embodiment_path):
+        raise ValueError('the original embodied arm checkpoint has changed')
+    arena = BounceArena(view='wrist', width=64, height=48)
+    receipts = {}
+    try:
+        for mode in ('warm', 'pong'):
+            old = prior['held'][mode]
+            live = []
+            for trial in old:
+                current = play(arena, trial['seed'], np.asarray(prior['policies'][mode]),
+                               target_effects(body, arena.action_size), split='held', stride=body['stride'],
+                               readout=body['readout'], retinal=body['retinal'], keep_actions=True)
+                if json.dumps(current, sort_keys=True) != json.dumps(trial, sort_keys=True):
+                    raise ValueError('restored arm policy changed its command or rebound trajectory')
+                live.append(current)
+            receipts[mode] = live
+    finally:
+        arena.close()
+    _write(output, dict(schema='tt24-local-recurrence-arm-retention-1', original_sha256=_hash(prior_path),
+                        body_sha256=_hash(embodiment_path), downstream={item.name: _hash(item) for item in evidence},
+                        matching={mode: len(rows) for mode, rows in receipts.items()}, rows=receipts))
+    print('arm retention', {mode: len(rows) for mode, rows in receipts.items()}, flush=True)
 
 
 def main():
@@ -280,14 +357,18 @@ def main():
     parser.add_argument('--embodiment', type=Path, default=EMBODIMENT)
     parser.add_argument('--output', type=Path)
     parser.add_argument('--replicate', type=Path, help='completed calibration to test on fresh starts')
+    parser.add_argument('--revisit', type=Path, nargs='*', help='measure original arm behavior after these receipts')
     parser.add_argument('--count', type=int, default=24)
     parser.add_argument('--arm', choices=('stock', 'alternate'), default='stock')
     parser.add_argument('--regime', choices=('standard', 'changed'), default='standard')
     parser.add_argument('--schedule', type=int, default=SCHEDULE)
     parser.add_argument('--untrained', action='store_true')
     args = parser.parse_args()
-    if args.replicate:
-        replicate(args.replicate, args.embodiment, args.output or REPLICATION, args.count)
+    if args.revisit is not None:
+        retain(RECEIPT, args.embodiment, args.output or OUTPUT / 'recurrence-arm-retention.json.gz', args.revisit)
+    elif args.replicate:
+        schedule = REPLICATION_SEED if args.schedule == SCHEDULE else args.schedule
+        replicate(args.replicate, args.embodiment, args.output or REPLICATION, args.count, schedule)
     else:
         run(args.source, args.embodiment, args.output or RECEIPT, schedule=args.schedule,
             arm=args.arm, regime=args.regime, untrained=args.untrained)

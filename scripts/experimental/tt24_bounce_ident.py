@@ -311,7 +311,8 @@ class WristPupil:
     def load(cls, path):
         with np.load(path, allow_pickle=False) as checkpoint:
             actor = _restore(DirectPupil, checkpoint, 'actor_')
-            actor.pair, actor.context = tuple(actor.pair), tuple(actor.context)
+            actor.pair = tuple(map(int, actor.pair))
+            actor.context = tuple(map(int, actor.context))
             decoder = _restore(WristDecoder, checkpoint, 'decoder_')
             motion = _restore(MotionFit, checkpoint, 'motion_')
         return cls(actor, decoder, motion)
@@ -338,8 +339,8 @@ def wrist_features(decoder, motion, records):
     return result
 
 
-def episode(arena, seed, *, actor=None, teacher_fraction=0., collect=False, sensor_factory=CleanState):
-    obs = arena.reset(seed=seed, split='held')
+def episode(arena, seed, *, actor=None, teacher_fraction=0., collect=False, sensor_factory=CleanState, regime='standard'):
+    obs = arena.reset(seed=seed, split='held', regime=regime)
     home = obs['joints'].copy()
     sensor = sensor_factory(arena)
     initial_control = arena._control[:arena.action_size].copy() if collect else None
@@ -423,9 +424,9 @@ def _save_pupil(path, actor, decoder, motion):
     np.savez_compressed(path, **weights)
 
 
-def run_deployed(arena, seed, checkpoint):
+def run_deployed(arena, seed, checkpoint, *, regime='standard'):
     policy = WristPupil.load(checkpoint)
-    obs = arena.reset(seed=seed, split='held')
+    obs = arena.reset(seed=seed, split='held', regime=regime)
     commands = []
     for _ in range(arena.max_steps):
         command = policy.command(obs)

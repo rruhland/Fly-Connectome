@@ -37,3 +37,19 @@ The alternate physical arm has a 15% longer upper arm, a tilted elbow axis, a mo
 | Wrist and encoder decoder with live vision removed from the policy | 26 | 35 |
 
 Changed-body calibration used ten drops / 290 frames and seven drops / 278 frames, respectively, equivalent to 4.8 and 4.6 seconds at 60 Hz. Earlier stock calibration used eight and nine additional drops. This recovers much of the prior policy's limited bounce performance after changing the five-axis interface. The score margin over a stationary altered arm is small, especially on the second cohort. [First run](retinal-mixed.json) · [Independent replication](retinal-replication.json) · [Retinal and encoder calibration](../../scripts/experimental/tt24_retinal_map.py)
+
+## Unannounced changes during wrist-only paddle bouncing
+
+Six independent 30-drop streams began with seven stock drops, moved to fifteen with the alternate arm, new contact dynamics and a different dense actuator mapping, then restored the stock setup for eight drops. All three conditions used the same practiced Pong-informed arm readout and exactly matched releases. The adaptive arm observed its wrist image, measured joints and its own issued commands. It detected each change from an error in predicting measured joint movement. It received neither the switch time nor the identity of the physical arm. The familiar-wiring comparison kept the same altered mechanics, optics and ball physics, with the motor command wiring retained.
+
+| Actual rebounds pooled across six streams | Adaptive | Frozen | Familiar wiring |
+| --- | ---: | ---: | ---: |
+| Seven stock drops | 138 | 138 | 138 |
+| First five altered drops, including practice | 40 | 30 | 76 |
+| Next ten altered drops | 158 | 62 | 151 |
+| All fifteen altered drops | 198 | 92 | 227 |
+| Eight restored stock drops | 156 | 176 | 176 |
+
+The first unexpected mapping triggered calibration at frames 12, 12, 12, 16, 16 and 12. The learner spent 850 total control frames probing across the six streams, a mean of 2.36 simulated seconds. It recognized the original mapping within 12–20 frames in every stream. One unnecessary recalibration cost five additional drops on restoration. Through the final seven restored drops, five of six adaptive streams matched their original-policy comparator's total exactly. Nominal setup used five calibration drops (145 frames) and five reference drops (625 frames). The underlying skill still averages only a few rebounds per drop. [All per-drop results](ongoing-body.json) · [Runner](../../scripts/experimental/tt24_ongoing_game.py)
+
+In a separate cross-check, a wrist-and-encoder decoder acquired in five changed-body probe drops (267 frames) let the pre-practiced Pong-informed policy score 68 rebounds on 24 fresh drops, versus 34 under uncorrected mixing and 69 with familiar wiring. Cold-credit and shuffled-credit policies with the identical decoder scored 55 and 52, the frozen earlier arm policy 67, stationary 57 and vision-ablated 55. Earlier nominal motor calibration used eight drops (271 frames). [Per-policy receipts](carried-physics.json)

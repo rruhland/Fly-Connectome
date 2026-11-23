@@ -64,9 +64,10 @@ def effect_features(initial_actor, initial_mover, actor, mover, *, scale, dt):
 class PulseCollector(Collector):
     """The same RGB probe and approach gate bind all branches before a signed pulse."""
 
-    def __init__(self, seed, pulse):
+    def __init__(self, seed, pulse, pulse_frames=PULSE):
         super().__init__(seed)
         self.pulse = pulse
+        self.pulse_frames = pulse_frames
         self.cue = None
 
     def qualify(self):
@@ -99,7 +100,7 @@ class PulseCollector(Collector):
         else:
             if self.cue is None:
                 self.cue = self.qualify()
-            within = self.cue is not None and len(self.actions) - self.cue['frame'] < PULSE
+            within = self.cue is not None and len(self.actions) - self.cue['frame'] < self.pulse_frames
             command = self.motor.effects[self.pulse + 1 if within else 1]
         self.actions.append(command)
         return command
@@ -155,13 +156,13 @@ def comparisons(groups):
     return pairs
 
 
-def fit(data):
+def fit(data, shuffle_seed=RNG['shuffle']):
     _, xx, yy = zip(*data, strict=True)
     x, y = np.asarray(xx), np.asarray(yy)
     scale = np.maximum(.12, x.std(axis=0))
     z = np.clip(x / scale, -4., 4.)
     regularization = z.T @ z + 3. * np.eye(z.shape[1])
-    rng = np.random.default_rng(RNG['shuffle'])
+    rng = np.random.default_rng(shuffle_seed)
     launch_signs = dict(zip(sorted({row[0] for row in data}),
                             rng.choice((-1., 1.), size=len({row[0] for row in data})), strict=True))
     shuffle = y * np.array([launch_signs[row[0]] for row in data])
@@ -169,7 +170,7 @@ def fit(data):
                'shuffled': np.linalg.solve(regularization, z.T @ shuffle).tolist(),
                'cold': [0.] * z.shape[1]}
     return dict(schema='tt24-local-recurrence-1', features=NAMES, scale=scale.tolist(), weights=weights,
-                train_pairs=len(y), train_launches=len(launch_signs), shuffle_seed=RNG['shuffle'])
+                train_pairs=len(y), train_launches=len(launch_signs), shuffle_seed=shuffle_seed)
 
 
 def contrast(a, b, state, mode):
@@ -204,30 +205,46 @@ def qualification(state, pairs):
                 passed=len(groups) >= 12 and accuracy['pong'] >= .65 and all(v[0] > 0. for v in confidence.values()))
 
 
-def run(train, held, batch_size):
+def run(train, held, batch_size, plan, receipt, weights):
     began = perf_counter()
     counts = dict(practice=train, held=held)
-    seeds = {name: np.random.default_rng(RNG[name]).choice(2147483646, size=n, replace=False).tolist()
+    seeds = {name: np.random.default_rng(plan[name]).choice(2147483646, size=n, replace=False).tolist()
              for name, n in counts.items()}
     if set(seeds['practice']) & set(seeds['held']):
         raise ValueError('native practice and held launches overlap')
-    report = _read(RECEIPT) if RECEIPT.exists() else dict(schema='tt24-recurrence-native-1', seeds=seeds)
+    report = _read(receipt) if receipt.exists() else dict(schema='tt24-recurrence-native-1', seeds=seeds)
     if report['seeds'] != seeds:
         raise ValueError('native recurrence receipt uses a different launch schedule')
     for name in counts:
         if name not in report:
             report[name] = collection(seeds[name], batch_size, name)
-            _write(RECEIPT, report)
+            _write(receipt, report)
     native = comparisons(report['practice'])
     checks = comparisons(report['held'])
     if not native:
         raise ValueError('native pulses produced no optically comparable practice effects')
-    model = fit(native)
+    model = fit(native, plan['shuffle'])
     result = qualification(model, checks)
-    _write(WEIGHTS, dict(model, qualification=result))
-    report.update(weights_sha256=_hash(WEIGHTS), qualification=result, seconds=perf_counter() - began)
-    _write(RECEIPT, report)
+    _write(weights, dict(model, qualification=result))
+    report.update(weights_sha256=_hash(weights), qualification=result, seconds=perf_counter() - began)
+    _write(receipt, report)
     print('native local intervention', result, flush=True)
+
+
+def retain(receipt, weights, batch, evidence):
+    before = _read(receipt)
+    if before['weights_sha256'] != _hash(weights):
+        raise ValueError('native weights differ from the original pulse course')
+    original = before['held']
+    revisited = collection(before['seeds']['held'], batch, 'revisit')
+    if revisited != original:
+        raise ValueError('native command, RGB track or continuation changed after target calibration')
+    report = dict(schema='tt24-recurrence-native-revisit-1', source_sha256=_hash(weights),
+                  original_receipt_sha256=_hash(receipt), revisited_launches=len(original),
+                  matching_branches=sum(map(len, revisited)), downstream={item.name: _hash(item) for item in evidence},
+                  qualification=qualification(_read(weights), comparisons(revisited)))
+    _write(OUTPUT / 'recurrence-native-retention.json.gz', report)
+    print('native retention', report['matching_branches'], 'exact branch tapes', flush=True)
 
 
 def main():
@@ -235,9 +252,17 @@ def main():
     parser.add_argument('--train', type=int, default=192)
     parser.add_argument('--held', type=int, default=126)
     parser.add_argument('--batch', type=int, default=42)
+    parser.add_argument('--schedule', nargs=3, type=int, metavar=('TRAIN', 'HELD', 'SHUFFLE'))
+    parser.add_argument('--receipt', type=Path, default=RECEIPT)
+    parser.add_argument('--weights', type=Path, default=WEIGHTS)
+    parser.add_argument('--revisit', type=Path, nargs='*', help='rerun the held native pulse course after these receipts')
     args = parser.parse_args()
     torch.set_num_threads(1)
-    run(args.train, args.held, args.batch)
+    if args.revisit is not None:
+        retain(args.receipt, args.weights, args.batch, args.revisit)
+    else:
+        schedule = RNG if args.schedule is None else dict(zip(RNG, args.schedule, strict=True))
+        run(args.train, args.held, args.batch, schedule, args.receipt, args.weights)
 
 
 if __name__ == '__main__':
