@@ -1,6 +1,6 @@
 # SO-101 direct control and transfer
 
-[Watch 428 consecutive rebounds](long-wrist-428.mp4) · [Two-minute stock and altered-arm results, including every early failure](long-wrist.md)
+[Learning all five motor responses while playing Pong](learned-tip-transfer.md) · [Half a second on a single direction](pong-arm-report.md) · [Watch 428 consecutive rebounds](long-wrist-428.mp4) · [Two-minute stock and altered-arm results, including every early failure](long-wrist.md)
 
 [Load the continual wrist learner](continual-wrist.md) · [Inspecting a hidden change before the current release](current-pause.md) · [Watch it use an unfamiliar control interface](motor-interface-paired.mp4) · [See the learned interface in table tennis](settled-match-witness.mp4)
 
@@ -9,6 +9,8 @@ Independent encoder checks and a short relocation cut severe identification erro
 A 1.45-second movement test recovered 383 rebounds on 32 drops with previously unknown five-axis controls. The unchanged controller scored 31 and the supplied inverse scored 416. On stock the learned map matched the supplied inverse on the ten-rebound threshold. [Motor discovery and retention](motor-settle.md) · [Recovered map checkpoint](motor-bank.npz)
 
 On a new common-launcher test the released wrist policy made 40–56 consecutive rebounds on all eight stock starts, even as gravity changed twice. Only two of eight altered-arm starts lasted the full 15 seconds. After a surprise sideways impulse on a separate course, live feedback scored 105 post-kick rebounds versus 23 from its original motor commands. [Combined physical stresses](integrated-stress.md) · [Surprise flight intervention](carried-perturb.md) · [Wrist-only body recalibration](wrist-source-only.md)
+
+Measuring the altered paddle directly in wrist RGB produced 10/12 short ten-rebound starts and one full two-minute run on a separate course. Pooled long-course scores favored the original observer, which remains the default. [Wrist geometry and all paired runs](wrist-rim.md) · [Watch the full altered-arm release](wrist-rim-407.mp4)
 
 A reference preference learned in native Pong transferred to the five-joint arm. In a twelve-cohort confirmation, 51/72 new stock releases reached ten rebounds versus 22/72 using shuffled Pong credit. On the changed arm the counts were 11/48 and 4/48. Both groups used a motor policy that had already learned powered bouncing on other arms. [Load the carried wrist policy](carried-wrist.md) · [Paired video](reference-transfer-paired.mp4) · [All transfer controls and native-game results](reference-transfer.md)
 

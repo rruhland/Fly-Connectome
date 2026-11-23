@@ -1,4 +1,5 @@
 """Present one complete 120-second release from verified commands with real-time and accelerated sections."""
+import argparse
 import gzip
 import json
 import subprocess
@@ -17,10 +18,14 @@ from .tt24_ready import prepare_step
 
 
 def main():
-    with gzip.open(ROOT/"long-wrist-4.json.gz","rt") as f:
+    parser=argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--altered",action="store_true",help="show the separate altered-arm qualification")
+    changed=parser.parse_args().altered
+    source="wrist-rim-long-3.json.gz" if changed else "long-wrist-4.json.gz"
+    with gzip.open(ROOT/source,"rt") as f:
         r=json.load(f)
     plan=r["plan"]
-    row=r["results"]["live"]
+    row=r["results"]["measured" if changed else "live"]
     arm=InstalledArm(plan["body"])
     env=arm.arena
     env.max_steps=CAP
@@ -28,7 +33,7 @@ def main():
     title=ImageFont.truetype(BOLD,24)
     text=ImageFont.truetype(FONT,16)
     label=ImageFont.truetype(BOLD,17)
-    target=ROOT/"long-wrist-428.mp4"
+    target=ROOT/("wrist-rim-407.mp4" if changed else "long-wrist-428.mp4")
     result=[]
     cmd=["ffmpeg","-loglevel","error","-y","-f","rawvideo","-pix_fmt","rgb24","-s","768x430","-r","30",
          "-i","-","-c:v","libx264","-vf","tpad=stop_mode=clone:stop_duration=1","-pix_fmt","yuv420p",
@@ -63,12 +68,15 @@ def main():
                 since=max(0,tick+1)/60.
                 canvas=Image.new("RGB",(768,430),BACKGROUND)
                 pen=ImageDraw.Draw(canvas)
-                pen.text((16,12),"Two minutes of wrist-controlled bouncing",font=title,fill=INK)
+                pen.text((16,12),"Two minutes on the altered arm" if changed else "Two minutes of wrist-controlled bouncing",font=title,fill=INK)
                 pen.text((16,51),f"{len(env._rebounds)} qualified rebounds   ·   {since:05.1f} s   ·   {'real time' if normal else '8× playback'}",font=label,fill=ACCENT)
                 pen.text((16,90),"Outside view",font=text,fill=MUTED)
                 pen.text((394,90),"Wrist camera used for play",font=text,fill=MUTED)
                 for x,img in ((16,env.render_external()),(394,env.render_wrist())):
                     canvas.paste(Image.fromarray(img).resize((355,266)),(x,117))
+                if changed:
+                    longest=env.judge_metrics()["longest_consecutive_rebounds"]
+                    pen.text((750,397),f"Longest streak {longest}",anchor="ra",font=text,fill=INK)
                 pen.text((16,397),f"Gravity {gravity:.2f} × nominal     ·     {switch_count} changes so far",font=text,fill=INK)
                 proc.stdin.write(canvas.tobytes())
             proc.stdin.close()

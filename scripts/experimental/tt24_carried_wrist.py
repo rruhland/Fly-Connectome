@@ -65,6 +65,12 @@ class CarriedWristPolicy:
             if archive["schema"].item()!="tt24-carried-wrist-1":
                 raise ValueError("unsupported carried wrist checkpoint")
             self.weights=archive["weights"]
+            self.face_normals={}
+            if "wrist_rim_indices" in archive:
+                for index, normal in zip(archive["wrist_rim_indices"], archive["wrist_rim_normals"], strict=True):
+                    if int(index) not in (0, 1) or normal.shape!=(3,) or not np.isclose(np.linalg.norm(normal), 1.):
+                        raise ValueError("invalid wrist tool normal")
+                    self.face_normals[int(index)]=normal
             self.equilibrium=archive["equilibrium"]
             self.reuse=float(archive["reuse"])
             self.references=archive["reference_images"]
@@ -95,7 +101,12 @@ class CarriedWristPolicy:
     def act(self,observation):
         if self.sensor is None:
             raise RuntimeError("call begin_release with the first wrist observation")
-        return commands(self.sensor.observe(observation),self.weights,self.issued)
+        state=self.sensor.observe(observation)
+        if self.calibration_index in self.face_normals:
+            _, rotations=self.sensor.decoder.links.read(np.asarray(observation["joints"])[None,:5])
+            normal=rotations[0]@self.face_normals[self.calibration_index]
+            state[9:11]=normal[:2] if normal[2]>=0 else -normal[:2]
+        return commands(state,self.weights,self.issued)
 
 
 if __name__=="__main__":
