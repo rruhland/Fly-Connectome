@@ -31,7 +31,7 @@ def replay(arena,seed,actions,frames=None):
             frames.append((arena.render_external(),arena.render_wrist(),pairs,returns))
         for _ in range(8):
             q,v=arena._ball_position,arena._ball_velocity
-            dq=action * (5.2*model.opt.timestep)
+            dq=(action * 5.2) * model.opt.timestep
             data.ctrl[:5]=np.clip(data.ctrl[:5]+dq,arena._control_low[:5],arena._control_high[:5])
             for i in (0,1):
                 aim=np.clip(q[i],home[i]-.025,home[i]+.025) if arena.precise else q[i]

@@ -1,5 +1,15 @@
 # M1B research handoff
 
+## Sustained wrist-only control and the initial catch
+
+Seven of twelve new stock releases lasted the full 30 seconds through five unannounced gravity changes. All five early losses occurred in the first four seconds. The strongest actual wrist streak was 99. Using an online wrist estimate of gravity raised mean consecutive rebounds from 48.08 to 49.25. The motor weights stayed frozen and came from bouncing on three donor arms. [Watch the first release through every change](../../artifacts/tt24/continuous-gravity-first.mp4) · [All courses and controls](../../artifacts/tt24/continuous-gravity.md)
+
+The usual donor release distribution favors a nearly level paddle. Independently rotating every joint exposed an important limitation: stock starts rarely got past the first contact. With an external ball launcher and 0.23–0.63 seconds of preparation, a common visual and motor reference learned from donor poses took the arm from zero of sixteen ten-bounce starts to nine. On a changed arm it went from zero of twelve to three. An unweighted average of earlier postures also worked. [Body coordinates and paired starts](../../artifacts/tt24/ready.md)
+
+Authentic native arcade Pong has yet to teach the entire five-joint bouncing skill. Native outcome credit produced more total qualifying rebounds than target-only credit in one small comparison, but a lower sum of longest streaks. Separately, two physical partner-volley policies learned up to ten and fifteen consecutive two-racket exchanges and both fell below stationary on the solo-bounce target. [Native outcome credit](../../artifacts/tt24/tt24_outcome_pong.md) · [Independent partner game](../../artifacts/tt24/partner-transfer.md)
+
+On two visibly different games played by one donor body, a public wrist-image and encoder router learned from 24 scalar-reward trials. Across 32 fresh plays including 14 game switches it made 85 solo rebounds and 16 completed overhead exchanges, matching a selector given the actual game. The individual motor policies had already learned each task. Five of sixteen overhead starts achieved an exchange, and that head missed its initial stricter feasibility screen. [Dual-game learning](../../artifacts/tt24/dual-game.md)
+
 ## Reward-only motor learning transfers between hinged arms
 
 A direct five-joint readout learned on three physically varied donor arms, with no action teacher, reached ten consecutive rebounds on 12/16 fresh stock SO-101 starts using wrist RGB and encoders. It averaged 11.94 against 2.56 stationary; 175 of its 191 scored impacts came with the contact point moving upward faster than 0.055 m/s. There was no stock motor practice or stock outcome used in model selection. Training received metric ball, paddle and motion observations on the donors. Stock sensing used earlier unlabelled wrist/stereo calibration. The source task was bouncing on different arms. Native arcade Pong provided no input to this successful policy. The first held stock drop ran for seventeen rebounds. [Experiment and weights](../../artifacts/tt24/tt24_donor.md) · [Watch the first stock drop](../../artifacts/tt24/donor-first-drop.mp4)

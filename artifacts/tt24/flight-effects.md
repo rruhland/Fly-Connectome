@@ -1,0 +1,5 @@
+# Learning motor consequences from a single physical encounter
+
+Forty-eight donor flights supplied 825 active control ticks. Control ended at the first paddle encounter. A model fitted the relationship between changes in the commands issued and changes in subsequent observations, without source reward optimization. Eight scalar-reward target attempts per condition then tested whether this relationship could guide solo-bounce learning. [Experiment](../../scripts/experimental/tt24_flight_effects.py) · [Source trajectories](flight-effects-source.json.gz)
+
+On twelve paired target interventions, the learned model predicted encoder changes with normalized error 0.522, versus 0.640 for shuffled action-effect pairs and 0.605 for predicting no change. Its optical prediction error was 1.311 versus 1.335 shuffled and 1.250 for no change. All three target searches selected a stationary motor output, averaging 2.33 consecutive rebounds on twelve held starts with a maximum of four. [Command audit](flight-effects-command-audit.json.gz) · [Transfer](flight-effects-transfer.json.gz)

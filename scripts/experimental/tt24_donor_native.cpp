@@ -129,7 +129,8 @@ struct Donor {
 
     ~Donor() { mj_deleteData(data); }
 
-    void play(const double* weights, const double* initial, double drag, double damping, int cap, double* result) {
+    void play(const double* weights, const double* initial, double drag, double damping, int cap, double* result,
+              const double* transient=nullptr) {
         mj_resetData(model, data);
         model->geom_solref[blade * mjNREF + 1] = -damping;
         mj_setState(model, data, initial, mjSTATE_INTEGRATION);
@@ -151,7 +152,15 @@ struct Donor {
             const int side = normal[8] >= 0. ? 1 : -1;
             state[9] = side * normal[2];
             state[10] = side * normal[5];
-            command(state, weights, issued, action);
+            if (transient && tick < 120) {
+                // The extra readout decays continuously after reset and uses the same live observations.
+                const double gain = std::exp(-tick / 16.);
+                double mixed[kJoints * kFeatures];
+                for (int i = 0; i < kJoints * kFeatures; ++i) mixed[i] = weights[i] + gain * transient[i];
+                command(state, mixed, issued, action);
+            } else {
+                command(state, weights, issued, action);
+            }
             for (int sub = 0; sub < kSubsteps; ++sub) {
                 for (int a = 0; a < kJoints; ++a) {
                     data->ctrl[a] = std::clamp(data->ctrl[a] + action[a] * (kRate * model->opt.timestep),
@@ -191,4 +200,16 @@ extern "C" void tt24_donor_evaluate(void* handle, const double* weights, int pop
 
 extern "C" void tt24_donor_command(const double* state, const double* weights, double* issued, double* output) {
     command(state, weights, issued, output);
+}
+
+extern "C" void tt24_donor_transient(void* handle, const double* weights, const double* residuals,
+                                     int policies, const double* states, const double* physics,
+                                     int starts, int cap, double* outputs) {
+    auto* donor = static_cast<Donor*>(handle);
+    for (int i = 0; i < policies; ++i) {
+        for (int s = 0; s < starts; ++s) {
+            donor->play(weights, states+s*donor->state_size, physics[2*s], physics[2*s+1], cap,
+                        outputs+4*(i*starts+s), residuals+i*kJoints*kFeatures);
+        }
+    }
 }

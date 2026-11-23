@@ -2,6 +2,8 @@
 
 A five-joint controller trained from rebound rewards on three other simulated arms reached ten consecutive bounces on **12 of 16** stock SO-101 wrist-only drops, with zero stock motor practice and zero action demonstrations. Its wrist observer had eight earlier unlabelled calibration drops. On another twelve drops with a 15 s horizon it averaged 31.08 and reached 57. Eight lasted the full interval and three scored zero. [Watch the first drop](donor-first-drop.mp4) · [Watch all 57 from both cameras](donor-longest-drop.mp4) · [Donor bodies, source exposure and physical controls](tt24_donor.md)
 
+Seven of twelve fresh wrist-only starts stayed in play through five gravity changes and all 30 seconds. The other five ended before the first change. [Watch the first release](continuous-gravity-first.mp4) · [Gravity interventions](continuous-gravity.md) · [Playing from a much wider range of joint angles](ready.md)
+
 The end-clamped arm drives its five motor joints continuously. Its gripper holds the paddle. A separate six-hinge experiment adds a physical wrist motor. All reported policy learning and calibration in TT24 use non-backpropagation methods.
 
 | Question | Independently tested result | Evidence |
@@ -24,3 +26,5 @@ The original wrist experiment with direct target reward learning averaged 3.36 r
 ![Learning during a hardware switch and paired wrist recalibration](transfer-progress.png)
 
 [Can partner rallies teach solo bouncing?](partner-transfer.md) · [Single-flight delivery](tt24_volley_source.md) · [Reverse transfer to delivery](donor-volley.md) · [Recognizing a returning body](context-residual.md) · [Learning generic motor features from donor wrist recordings](universal-donor-images.md) · [Native Pong outcome credit](tt24_outcome_pong.md) · [Two visually similar balls](object-transfer.md)
+
+[Continual recall across two physical games](dual-game.md) · [Learning motor responses from real simulated table-tennis points](forehand-carry.md) · [Single-flight action effects](flight-effects.md) · [Training for the first catch](acquisition.md) · [Conditional ready posture](ready-geometry.md)

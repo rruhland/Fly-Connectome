@@ -270,11 +270,13 @@ class BounceArena:
         data.time = 0.
         mujoco.mj_kinematics(model, data)
 
+    sample_drop = staticmethod(_sample_drop)
+
     def reset(self, *, seed=None, split='practice', regime='standard', render=True):
         """Reset to a new seeded drop in the practice or held distribution."""
         if regime not in ('standard', 'changed'):
             raise ValueError("regime must be 'standard' or 'changed'")
-        self._drop = _sample_drop(seed, split, regime)
+        self._drop = self.sample_drop(seed, split, regime)
         self._seed, self._split, self._regime = seed, split, regime
         model = self._model
         drive = self._changed_drive if regime == 'changed' else np.ones(len(self._joint_axes))
