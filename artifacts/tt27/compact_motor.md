@@ -13,6 +13,8 @@ The source probe spent 30 control ticks, or 1.00 second of actuator time per new
 
 On fresh zero-delay release `1321462031`, the regulation estimate restored a **12-return rally**, six per arm. The known and intact branches scored the same rally. The estimated and known branches issued identical encoded requests, and the zero-delay inverse reproduced the intact physical motor commands, opposing commands and referee events. The stale map made zero returns on that release. The two other zero-delay starts had zero returns in all branches. A separately labeled retry of the earlier 7+7 release also recovered all 14 alternating returns using the estimate, while stale scored zero. [Fresh cases and executed command tapes](compact_motor.json.gz) · [Original 7+7 point](compact-live.mp4)
 
+The matched video plays both branches at 30 frames per second from the same fresh serve. The stale branch ends after 1.37 seconds and holds its terminal frame while the learned branch continues for 8.13 seconds. The export reconstructs the executed motor rates from the encoded requests and matches both full referee event sequences. [Watch the matched replay](compact_motor-live.mp4) · [Video verification](compact_motor-live.json)
+
 The estimated and known branches executed identical commands through the one-frame delayed interface. They made zero returns on three fresh starts, including one that elicited two returns per side with an intact interface. Knowing the correct delay leaves a physical wait before a newly issued command can reach the arm. In separately labeled diagnostic retries, half-frame and full-frame extrapolation of visual movement still gave zero returns on that fresh start. On the earlier verified 7+7 trajectory, the full-frame lookahead recovered one near return and one far reply with the delayed interface. [Delayed-interface tracking diagnostic](compact_motor-delay.json.gz)
 
 ## Reproduce
@@ -21,4 +23,5 @@ The estimated and known branches executed identical commands through the one-fra
 export PYTHONPATH=src MUJOCO_GL=egl OPENBLAS_NUM_THREADS=1 LP_NUM_THREADS=1
 python -m scripts.experimental.tt27_compact_motor
 python -m scripts.experimental.tt27_compact_motor --delay-diagnostic
+python -m scripts.experimental.tt27_compact_motor_movie
 ```

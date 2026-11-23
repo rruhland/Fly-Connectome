@@ -42,3 +42,14 @@ def test_observed_crossing_interpolates_motion_and_declines_a_long_gap():
     np.testing.assert_allclose(OpticalError.crossing([a, b]), [0.19, 0.125])
     b[0] = 19
     assert OpticalError.crossing([a, b]) is None
+
+
+def test_end_aligned_opponent_moves_only_the_downcourt_coordinate():
+    from scripts.experimental.tt22_opponent import RallyOpponent
+
+    rival = RallyOpponent.__new__(RallyOpponent)
+    rival.target_profile = (0.12, -0.9, 0.2, 2.4)
+    rival.receiving_depth_shift = 0.0
+    np.testing.assert_array_equal(rival.target(), rival.target_profile)
+    rival.receiving_depth_shift = 0.57
+    np.testing.assert_allclose(rival.target(), (0.12, -1.47, 0.2, 2.4))

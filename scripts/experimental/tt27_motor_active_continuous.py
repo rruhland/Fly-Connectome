@@ -119,10 +119,11 @@ def arm_digest(arena):
     return sha256(retained.tobytes()).hexdigest()
 
 
-def receive(arena, shot, actual, inferred, pose_memory, tape=None):
+def receive(arena, shot, actual, inferred, pose_memory, tape=None, *,
+            preparation_ticks=PREP_TICKS, encoder_dofs=None):
     before = arm_digest(arena)
     arena.release(shot)
-    if arm_digest(arena) != before or arena.steps != PREP_TICKS:
+    if arm_digest(arena) != before or arena.steps != preparation_ticks:
         raise ValueError("Release changed the physical arm or reset its clock")
     body, tracker = PublicBody(arena), ViewHistory()
     target_error = np.max(np.abs(arena.data.ctrl[arena._arm_ids[1][2]] - body.target))
@@ -130,6 +131,7 @@ def receive(arena, shot, actual, inferred, pose_memory, tape=None):
         raise ValueError("Balanced preparation changed a servo target")
     keys, goals, scale = pose_memory
     action_log, executed = [], []
+    transitions = []
     previous, goal_index = ZERO, None
     for tick in range(arena.max_steps - PREP_TICKS):
         if tape is None:
@@ -147,17 +149,24 @@ def receive(arena, shot, actual, inferred, pose_memory, tape=None):
         else:
             request = np.asarray(tape[tick])
         applied = actual.apply(previous if actual.delay else request)
+        if encoder_dofs is not None:
+            before_step = arena.joints[:AXIS_COUNT], arena.data.qvel[encoder_dofs].copy()
         _, _, done, cap, _ = arena.step(np.r_[applied, 0.], render=False)
+        if encoder_dofs is not None:
+            transitions.append((*before_step, arena.joints[:AXIS_COUNT], arena.data.qvel[encoder_dofs].copy()))
         body.issued(np.r_[inferred.apply(previous if inferred.delay else request), 0.])
         previous = request
         action_log.append(request.tolist())
         executed.append(applied.tolist())
         if done or cap or arena.legal_returns:
             break
-    assert arena.steps == PREP_TICKS + len(action_log)
-    return dict(preparation_state_sha256=before, goal_index=goal_index, servo_recenter_error=float(target_error),
-                legal=arena.legal_returns, contact=arena.contacts, incoming=arena.rival_returns,
-                events=digest_json(arena.events), requests=action_log, executed=executed)
+    assert arena.steps == preparation_ticks + len(action_log)
+    receipt = dict(preparation_state_sha256=before, goal_index=goal_index, servo_recenter_error=float(target_error),
+                   legal=arena.legal_returns, contact=arena.contacts, incoming=arena.rival_returns,
+                   events=digest_json(arena.events), requests=action_log, executed=executed)
+    if encoder_dofs is not None:
+        receipt["encoders"] = np.asarray(transitions).tolist()
+    return receipt
 
 
 def summarize(receipt):

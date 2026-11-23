@@ -1,5 +1,7 @@
 # What the arm learns after an unfamiliar incoming shot
 
+[Learning across successive changes](learning-across-changes.png) · [Watch a recovered 12-return rally](compact_motor-live.mp4)
+
 The primary measure is a legal landing on the opponent’s half. A second return requires the opponent to have legally sent the first one back. The regulation table measures 2.74 × 1.525 m. Both ends use physical arms. The near SO-101 receives two fixed RGB camera feeds, its encoders and its own commands. The far arm uses simulator state for its decisions. This pass did not use backpropagation.
 
 ## From the opening image to the end of the point
@@ -31,6 +33,8 @@ On four previously unpracticed surfaces the learner observed one to two balls be
 
 On the independent course the carried policy landed six of the first 16 scored balls pooled over the four changes. Reset also landed six. Source practice helped relative to learning entirely on the new tables. Retaining recent rewards did not make the next surface consistently easier. Across 128 presentations of unmodified recordings at the first four settings, only six had a legal outcome anywhere among the seven actions. Access to all seven outcomes is used only to measure coverage. [Independent launches and measured bounces](surface-confirmation.json.gz) · [Independent learning curves](context-confirmation.json.gz)
 
+In a further chronological test, a simulated crosswind exerted a lateral force on the incoming ball in a fixed zone around the net. The learner estimated its deflection from stereo before and after that zone and used the preceding three observations to adjust the next motor target. Across six unannounced settings it made 19/90 first returns on new variations of practiced feeds, versus 30/90 frozen. On original-recording presentations it made 3/90 versus 4/90. Effective motor registration does not yet give the receiver an equally effective response to a novel ball path. [Crosswind receipt](crosswind.json.gz)
+
 A separate learner estimated the lateral and vertical direction of its own miss from ball images, a paddle silhouette and the arm’s encoders, then adjusted its next command for visually similar balls. Its eight seven-shot streams around unfamiliar original recordings produced zero legal returns in 56 attempts versus two for the frozen policy. On another eight streams with a lateral velocity change applied to familiar feeds, it produced 11/56 versus 12 frozen. Optical miss direction alone did not resolve the timing and face angle needed for a legal shot. [All chronological commands and optical errors](miss-learning.json.gz)
 
 Continuously steering the wrist toward the latest observed flight produced 22/120 opening returns, versus 39 frozen, over nominal, soft and higher-gravity conditions. A ballistic predictor using a rolling estimate of the table’s bounce produced 37/144 versus 35 with the original material estimate and 49 with the original receiving posture. The geometric re-selection diagnostic used the adaptive player’s preceding material estimate. [Continuous tracking](opening-beginners.json.gz) · [Physical prediction and gravity changes](physics-course.json.gz)
@@ -42,6 +46,8 @@ The arm practiced 342 distinct perturbed feeds around 19 successful source recor
 On the existing 136 original-recording roster, the expanded, interpolated policy made eight returns versus four with the original 19 examples. On another 76 wide variations of the source shots it tied at eight. On an independent roster of 114 nearby and 96 unrestricted original recordings it tied again at seven legal returns. A model that also used the 2,703 unsuccessful attempts to estimate which goals were likely to work made six legal returns on that roster. Increasing the number of remembered examples did not establish better generalization. [First cohort](growing-held.json.gz) · [Independent cohort](growing-confirmation.json.gz)
 
 A second practice method measured each original motor action in dry swings, perturbed the joint goal to move the paddle laterally at the demonstrated contact time, then kept only goals that actually returned a ball on a regulation table. It produced 37 successful examples from 445 shot attempts across 114 displaced feeds. On the first 210 independent recordings, interpolating this smaller library landed 14 returns versus seven for the original. On a new disjoint set of 370 original recordings that became 14 versus 12. On the same 370 with changed table damping and 4% greater gravity it became 10 versus nine. The improvement shrank on replication. The curriculum receives the original contact time, commands the feed and exercises the arm without a ball during practice. Deployment receives the first four RGB frames and sends joint targets. [Guided practice](lateral-practice.json.gz) · [Learned motor checkpoint](lateral-memory.npz) · [First test](lateral-held.json.gz) · [New recordings and changed physics](lateral-confirmation.json.gz)
+
+A geometry audit of the second, 370-launch roster found 230 inbound trajectories passing within a ball-plus-paddle radius of a sampled collision-clear paddle center. All 14 successful openings fell in that group. The sample contained 8,192 arm configurations. This screen ignores arrival time and paddle attitude, so it identifies opportunities for investigation without proving all 230 were returnable. It also cannot prove that every one of the other 140 was physically unreachable. [Paired workspace and return audit](workspace-audit.json.gz)
 
 In 70 end-to-end live points on the earlier independent roster (38 nearby, 32 unrestricted), growing the action library by ordinary perturbations and using the original 19 goals each yielded two legal opening returns and zero seconds. Both policies used the visual reply controller whenever a ball came back. [All 140 full games](growing-games.json.gz)
 
@@ -67,6 +73,8 @@ python -m scripts.experimental.tt27_outcome_receiver /path/to/rallies.json
 python -m scripts.experimental.tt27_growing_games /path/to/rallies.json
 python -m scripts.experimental.tt27_lateral_practice /path/to/rallies.json
 python -m scripts.experimental.tt27_lateral_confirm /path/to/rallies.json
+python -m scripts.experimental.tt27_workspace_audit /path/to/rallies.json
+python -m scripts.experimental.tt27_crosswind /path/to/rallies.json
 python -m scripts.experimental.tt27_full_points /path/to/rallies.json
 python -m scripts.experimental.tt27_full_points --nearby /path/to/rallies.json
 python -m scripts.experimental.tt27_full_points --align-to-end /path/to/rallies.json
