@@ -1,7 +1,7 @@
 """Render the first registered drop from the three-way wrist calibration comparison."""
+import argparse
 import gzip
 import json
-from pathlib import Path
 import subprocess
 
 import numpy as np
@@ -27,19 +27,39 @@ def frames(arena, row):
 
 
 def main():
-    with gzip.open(DIR/"public-carry.json.gz","rt") as src:
-        doc = json.load(src)
-    names = {"carried":"Self-calibrated wrist", "direct":"Previous calibration", "hold":"Stationary paddle"}
-    arena = BounceArena(view="none", width=192, height=144, max_steps=doc["horizon"])
+    parser=argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--donor",action="store_true")
+    cfg=parser.parse_args()
+    if cfg.donor:
+        with gzip.open(DIR/"tt24_donor-refined.json.gz","rt") as src:
+            doc=json.load(src)
+        first=doc["held_stock"][0]
+        rows={mode:dict(seed=first["seed"],actions=r["actions"],score=r["metrics"]["rebounds"],
+                        run=r["metrics"]["longest_consecutive_rebounds"])
+              for mode,r in first["conditions"].items()}
+        names={"public":"Wrist camera policy","clean":"Perfect-state diagnostic","hold":"Stationary paddle"}
+        horizon=300
+        heading="The first held drop on a new arm"
+        caption="Five-joint motor control learned from rebound rewards on three other arms."
+        path=DIR/"donor-first-drop.mp4"
+    else:
+        with gzip.open(DIR/"public-carry.json.gz","rt") as src:
+            doc=json.load(src)
+        rows={mode:r[0] for mode,r in doc["modes"].items()}
+        names={"carried":"Self-calibrated wrist","direct":"Previous calibration","hold":"Stationary paddle"}
+        horizon=doc["horizon"]
+        heading="One drop, three wrist conditions"
+        caption="First held release. Both active arms use the same five-joint motor weights."
+        path=DIR/"public-carry-first-drop.mp4"
+    arena = BounceArena(view="none", width=192, height=144, max_steps=horizon)
     try:
-        clips = {mode:frames(arena, doc["modes"][mode][0]) for mode in names}
+        clips = {mode:frames(arena, rows[mode]) for mode in names}
     finally:
         arena.close()
     title = ImageFont.truetype(BOLD, 25)
     label = ImageFont.truetype(BOLD, 17)
     text = ImageFont.truetype(FONT, 15)
     size = (928, 592)
-    path = DIR/"public-carry-first-drop.mp4"
     command = ["ffmpeg","-loglevel","error","-y","-f","rawvideo","-pixel_format","rgb24",
                "-video_size","928x592","-framerate","30","-i","-","-c:v","libx264",
                "-vf","tpad=stop_mode=clone:stop_duration=0.7","-pix_fmt","yuv420p","-preset","fast",
@@ -48,8 +68,8 @@ def main():
         for tick in range(max(map(len, clips.values()))):
             canvas = Image.new("RGB",size,BACKGROUND)
             draw = ImageDraw.Draw(canvas)
-            draw.text((16,9),"One drop, three wrist conditions",font=title,fill=INK)
-            draw.text((16,44),"First held release. Both active arms use the same five-joint motor weights.",font=text,fill=MUTED)
+            draw.text((16,9),heading,font=title,fill=INK)
+            draw.text((16,44),caption,font=text,fill=MUTED)
             draw.text((912,17),f"{tick/30:.2f} s",anchor="ra",font=label,fill=MUTED)
             for col, (mode, name) in enumerate(names.items()):
                 x = 16+col*304

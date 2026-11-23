@@ -1,5 +1,12 @@
 # M1B research handoff
 
+## Reward-only motor learning transfers between hinged arms
+
+A direct five-joint readout learned on three physically varied donor arms, with no action teacher, reached ten consecutive rebounds on 12/16 fresh stock SO-101 starts using wrist RGB and encoders. It averaged 11.94 against 2.56 stationary; 175 of its 191 scored impacts came with the contact point moving upward faster than 0.055 m/s. There was no stock motor practice or stock outcome used in model selection. Training received metric ball, paddle and motion observations on the donors. Stock sensing used earlier unlabelled wrist/stereo calibration. The source task was bouncing on different arms. Native arcade Pong provided no input to this successful policy. The first held stock drop ran for seventeen rebounds. [Experiment and weights](../../artifacts/tt24/tt24_donor.md) · [Watch the first stock drop](../../artifacts/tt24/donor-first-drop.mp4)
+
+The practiced four-demonstration control head separately averaged 23.3 consecutive rebounds over twenty fresh 15 s stock drops after public calibration, and reached 43. Four generic calibration drops on a changed stock-family arm with a moved camera took 2.57 s, improving the same head from 4.19 to 7.94 without new demonstrations. [Changed-arm calibration](../../artifacts/tt24/public-morph.md) · [Wrist-only calibration using scene boundaries](../../artifacts/tt24/wrist-egomotion.md)
+
+
 ## Source learning, motor recall and public wrist calibration
 
 A source controller learned repeated rebounds using reward alone and reached ten in all 256 held MuJoCo gantry drops. Driving a five-hinge SO-101 through an inverse movement model exposed a transfer gap even with accurate state. On the stock arm, a wrist observer fitted to 337 frames of unlabelled optical/motor probes supported 204 summed consecutive rebounds in 16 drops when paired with the already taught motor readout, versus 142 using its old observer and 40 stationary. For a practiced wrist, a separate encoder-based memory recovered an earlier motor mapping during an ongoing drop in 8–14 ticks. [Body and world transfer](../../artifacts/tt24/source-world-transfer.md) · [Motor recall](../../artifacts/tt24/body.md#switching-motors-during-an-ongoing-bounce)
