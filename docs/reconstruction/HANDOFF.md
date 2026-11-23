@@ -1,5 +1,13 @@
 # M1B research handoff
 
+## The first catch is the limiting step on the changed arm
+
+In a new mixed-body course, one frozen wrist policy sustained 40–56 consecutive rebounds over the full 15 seconds on all eight stock starts. A common stock launcher, a new mass and drag draw per release, independent starting arm angles and two hidden gravity changes were combined. Only two of eight altered-arm starts lasted the full interval, with streaks of 12 and 28. All six other altered runs failed before the first gravity change. All 48 physical replays matched. [Stress test](../../artifacts/tt24/integrated-stress.md)
+
+The packaged motor responds causally to unexpected ball movement. On paired interventions, it made 105 uninterrupted post-kick rebounds against 23 replaying the commands from its original undisturbed games. Two generic altered-arm movements totaling 3.2 seconds yielded a wrist-only camera and link calibration. It reached ten rebounds on 7/16 altered-arm starts versus 3/16 with stock optics, and recovered the complete original stock commands on all four revisits. [Flight intervention](../../artifacts/tt24/carried-perturb.md) · [Wrist-only recalibration](../../artifacts/tt24/wrist-source-only.md)
+
+A source-learned causal correction reduced lateral speed on all 12 comparable wide first rebounds, but only two of 16 complete starts improved. Broad donor training regained some second rebounds at the expense of ordinary-start performance. Online scalar reference learning also improved mobile-station revisits but lost much of the advantage when the fixed station returned. [Event-based correction](../../artifacts/tt24/event-align.md) · [Donor posture generalization](../../artifacts/tt24/tt24_tilted_start_context_report.md) · [Online station learning](../../artifacts/tt24/station-switch.md) · [Motion-gain test](../../artifacts/tt24/tt24_motion_ready.md)
+
 ## Replicated native Pong transfer to five-joint wrist control
 
 The [portable wrist policy](../../artifacts/tt24/carried-wrist.md) reproduced 8,011 live decisions across 32 drops running at a median 1.43 ms per frame.
