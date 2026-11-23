@@ -179,7 +179,8 @@ class Station:
                 physical = np.asarray(execute(command.copy()))
             _, reward, done, cap, _ = arena.step(physical, render=False)
             actions.append(physical.tolist())
-            requested.append(command.tolist())
+            if execute is not None:
+                requested.append(command.tolist())
             history.issued(command)
             body.issued(command)
             if done or cap:

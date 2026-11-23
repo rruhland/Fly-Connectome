@@ -2,6 +2,8 @@
 
 ## Direct joint control and body adaptation on November 22
 
+The broader direct pupil plays from the first frame on live stereo RGB and measured joints. On 24 previously unseen starts it reached a second legal near-arm return eight times and a fifth twice, with two complete ten-return alternating rallies. It learned from 48 archived physical demonstrations. Native Pong credit for local visual interventions separately improved a previously practiced wrist bounce policy versus matched cold and shuffled updates. On 24 fresh drops it earned 84 total verified rebounds versus 61 cold, 54 shuffled and 79 with the earlier body policy frozen. Improvement over the frozen arm remains uncertain. [TT24 progress and evidence](../../artifacts/tt24/README.md) · [Direct rally video](../../artifacts/tt24/rally-bank-held.mp4)
+
 The TT24 effort removes the stroke planner from the evaluated learner. Active sensorimotor calibration on 32 new physical simulation streams retained accurate five-joint reaching on 31/32 after each of two unannounced mixed motor, load and latency changes. Median recovery was 3.2 simulated seconds. A decoder learned in four changed-body paddle-bounce practice drops later restored second legal table-tennis returns to 4/9 versus 1/9 under frozen wiring on the same changed interface. The table-tennis policy in this comparison had motor demonstrations and a common assisted opening. [Body learning and physical comparisons](../../artifacts/tt24/body.md) · [Design and control definitions](../../artifacts/tt24/design.md)
 
 ## SO-101 rally learning on November 22

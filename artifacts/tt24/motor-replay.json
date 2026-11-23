@@ -1,0 +1,360 @@
+{
+  "motor-rate-continued": {
+    "standard": {
+      "live": {
+        "episodes": 14,
+        "rebounds": 47
+      },
+      "blind": {
+        "episodes": 14,
+        "rebounds": 34
+      },
+      "hold": {
+        "episodes": 14,
+        "rebounds": 35
+      },
+      "static": {
+        "episodes": 14,
+        "rebounds": 34
+      }
+    }
+  },
+  "motor-rate-target-only": {
+    "standard": {
+      "live": {
+        "episodes": 14,
+        "rebounds": 38
+      },
+      "blind": {
+        "episodes": 14,
+        "rebounds": 35
+      },
+      "hold": {
+        "episodes": 14,
+        "rebounds": 35
+      },
+      "static": {
+        "episodes": 14,
+        "rebounds": 36
+      }
+    }
+  },
+  "motor-position-witness": {
+    "standard": {
+      "live": {
+        "episodes": 10,
+        "rebounds": 30
+      },
+      "blind": {
+        "episodes": 10,
+        "rebounds": 28
+      },
+      "hold": {
+        "episodes": 10,
+        "rebounds": 29
+      },
+      "static": {
+        "episodes": 10,
+        "rebounds": 30
+      }
+    }
+  },
+  "motor-short-pong": {
+    "standard": {
+      "live": {
+        "episodes": 12,
+        "rebounds": 32
+      },
+      "blind": {
+        "episodes": 12,
+        "rebounds": 33
+      },
+      "hold": {
+        "episodes": 12,
+        "rebounds": 33
+      },
+      "static": {
+        "episodes": 12,
+        "rebounds": 32
+      }
+    }
+  },
+  "motor-short-cold": {
+    "standard": {
+      "live": {
+        "episodes": 12,
+        "rebounds": 31
+      },
+      "blind": {
+        "episodes": 12,
+        "rebounds": 31
+      },
+      "hold": {
+        "episodes": 12,
+        "rebounds": 33
+      },
+      "static": {
+        "episodes": 12,
+        "rebounds": 31
+      }
+    }
+  },
+  "motor-short-shuffled": {
+    "standard": {
+      "live": {
+        "episodes": 12,
+        "rebounds": 35
+      },
+      "blind": {
+        "episodes": 12,
+        "rebounds": 32
+      },
+      "hold": {
+        "episodes": 12,
+        "rebounds": 33
+      },
+      "static": {
+        "episodes": 12,
+        "rebounds": 32
+      }
+    }
+  },
+  "motor-changed-pong": {
+    "standard": {
+      "live": {
+        "episodes": 12,
+        "rebounds": 33
+      },
+      "blind": {
+        "episodes": 12,
+        "rebounds": 33
+      },
+      "hold": {
+        "episodes": 12,
+        "rebounds": 28
+      },
+      "static": {
+        "episodes": 12,
+        "rebounds": 33
+      }
+    },
+    "changed": {
+      "online": {
+        "episodes": 12,
+        "rebounds": 30
+      },
+      "frozen": {
+        "episodes": 12,
+        "rebounds": 32
+      },
+      "blind": {
+        "episodes": 12,
+        "rebounds": 24
+      },
+      "hold": {
+        "episodes": 12,
+        "rebounds": 24
+      },
+      "static": {
+        "episodes": 12,
+        "rebounds": 26
+      }
+    }
+  },
+  "motor-changed-cold": {
+    "standard": {
+      "live": {
+        "episodes": 12,
+        "rebounds": 33
+      },
+      "blind": {
+        "episodes": 12,
+        "rebounds": 33
+      },
+      "hold": {
+        "episodes": 12,
+        "rebounds": 28
+      },
+      "static": {
+        "episodes": 12,
+        "rebounds": 33
+      }
+    },
+    "changed": {
+      "online": {
+        "episodes": 12,
+        "rebounds": 30
+      },
+      "frozen": {
+        "episodes": 12,
+        "rebounds": 32
+      },
+      "blind": {
+        "episodes": 12,
+        "rebounds": 24
+      },
+      "hold": {
+        "episodes": 12,
+        "rebounds": 24
+      },
+      "static": {
+        "episodes": 12,
+        "rebounds": 26
+      }
+    }
+  },
+  "motor-changed-shuffled": {
+    "standard": {
+      "live": {
+        "episodes": 12,
+        "rebounds": 33
+      },
+      "blind": {
+        "episodes": 12,
+        "rebounds": 33
+      },
+      "hold": {
+        "episodes": 12,
+        "rebounds": 28
+      },
+      "static": {
+        "episodes": 12,
+        "rebounds": 33
+      }
+    },
+    "changed": {
+      "online": {
+        "episodes": 12,
+        "rebounds": 30
+      },
+      "frozen": {
+        "episodes": 12,
+        "rebounds": 32
+      },
+      "blind": {
+        "episodes": 12,
+        "rebounds": 24
+      },
+      "hold": {
+        "episodes": 12,
+        "rebounds": 24
+      },
+      "static": {
+        "episodes": 12,
+        "rebounds": 26
+      }
+    }
+  },
+  "motor-changed-drive": {
+    "standard": {
+      "live": {
+        "episodes": 16,
+        "rebounds": 55
+      },
+      "blind": {
+        "episodes": 16,
+        "rebounds": 46
+      },
+      "hold": {
+        "episodes": 16,
+        "rebounds": 42
+      },
+      "static": {
+        "episodes": 16,
+        "rebounds": 48
+      }
+    },
+    "changed": {
+      "online": {
+        "episodes": 16,
+        "rebounds": 46
+      },
+      "frozen": {
+        "episodes": 16,
+        "rebounds": 49
+      },
+      "blind": {
+        "episodes": 16,
+        "rebounds": 34
+      },
+      "hold": {
+        "episodes": 16,
+        "rebounds": 33
+      },
+      "static": {
+        "episodes": 16,
+        "rebounds": 35
+      },
+      "gain_only": {
+        "episodes": 16,
+        "rebounds": 51
+      }
+    }
+  },
+  "witness": {
+    "live": "6e71260056a53429c368b82da7ea4de04bfe61241f3d4871faca63d6041204bf",
+    "blind": "e910db7402bb15b83b91261428eba5761d6390dea79ba9525cb4d6529fa024c1",
+    "hold": "4721dc211bd51466a9e8c32765ec92abeb097d6f3235a22914bbb03fddbb498d",
+    "seed": 1687620118
+  },
+  "motor-anonymous-pong": {
+    "standard": {
+      "live": {
+        "episodes": 12,
+        "rebounds": 32
+      },
+      "blind": {
+        "episodes": 12,
+        "rebounds": 32
+      },
+      "hold": {
+        "episodes": 12,
+        "rebounds": 33
+      },
+      "static": {
+        "episodes": 12,
+        "rebounds": 33
+      }
+    }
+  },
+  "motor-anonymous-cold": {
+    "standard": {
+      "live": {
+        "episodes": 12,
+        "rebounds": 31
+      },
+      "blind": {
+        "episodes": 12,
+        "rebounds": 31
+      },
+      "hold": {
+        "episodes": 12,
+        "rebounds": 33
+      },
+      "static": {
+        "episodes": 12,
+        "rebounds": 31
+      }
+    }
+  },
+  "motor-anonymous-shuffled": {
+    "standard": {
+      "live": {
+        "episodes": 12,
+        "rebounds": 32
+      },
+      "blind": {
+        "episodes": 12,
+        "rebounds": 33
+      },
+      "hold": {
+        "episodes": 12,
+        "rebounds": 33
+      },
+      "static": {
+        "episodes": 12,
+        "rebounds": 31
+      }
+    }
+  }
+}
