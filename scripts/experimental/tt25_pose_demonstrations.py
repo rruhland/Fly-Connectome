@@ -107,17 +107,19 @@ def suggest(bank, track):
     return [(goals[i],float(best[i])) for i in picked]
 
 
-def episode(arena,shot,goal=None,memory=None,collect=False,observer=None):
+def episode(arena,shot,goal=None,memory=None,collect=False,observer=None,choose_goal=None):
     arena.launch(shot)
     body, vision = PublicBody(arena),ViewHistory()
     key = None
     actions = []
     for tick in range(arena.max_steps):
-        if tick <= OBSERVE and (collect or memory is not None):
+        if tick <= OBSERVE and (collect or memory is not None or choose_goal is not None):
             obs = vision.observe(arena.render_cameras(),arena.joints,body.target)
             if tick==OBSERVE:
                 key=obs[:14].copy()
-                if memory is not None:
+                if choose_goal is not None:
+                    goal=choose_goal(key)
+                elif memory is not None:
                     keys, goals, scales = memory
                     goal=goals[np.argmin(np.linalg.norm((keys-key)/scales,axis=1))]
         cmd=np.zeros(arena.action_size)

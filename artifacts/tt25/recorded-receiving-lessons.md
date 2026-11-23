@@ -14,6 +14,12 @@ Eight other real shots were selected around each demonstrated launch using posit
 
 The repertoire itself limits transfer. On the 32 unfiltered held feeds, trying *every* demonstrated posture with perfect hindsight still produced zero legal returns. Four points admitted any racket contact. Acquiring more varied contact experience and learning to correct the paddle during approach address a limitation that choosing among these six examples alone cannot overcome. [192 physical posture checks](recorded-pose-coverage.json.gz)
 
+## Repeatability and continual practice
+
+The same six-example pupil returned 4/48 in a second, disjoint set of nearby real shots, for 7/96 across the two cohorts. We physically tried each learned posture on every shot. Across 96 launches the best single fixed choice returned four. Under all 720 ways of assigning the six demonstrated postures to visual examples, 24 assignments equaled or beat the actual seven. In the second cohort 16/720 assignments equaled or beat four. These checks condition on six particular examples and two focused courses. They support a contribution from matching the visual observation to a demonstrated action, within a narrow range of shots. [All posture outcomes and label controls](recorded-block-confirmation.json.gz)
+
+We then gave the pupil a single chronological stream of 192 practice balls. The generator gradually widened position, velocity and spin around the six demonstrated launches. The learner saw four images, issued one bounded joint goal per ball and received credit for a legal landing. It used successful exploratory joint adjustments to fit local corrections without backpropagation or access to the shot parameters. Eighty balls landed legally during practice, decreasing from 38/64 to 23/64 to 19/64 as difficulty increased. Both the adapted and frozen pupils retained 6/6 demonstrated shots. On 48 further, previously unplayed real neighboring shots they scored 6 versus 5, with two gains and one loss. On a further 32 unrestricted shots they both scored zero. A one-shot net gain gives insufficient evidence that this online update improves general learning speed. [Chronological practice and frozen comparison](recorded-progressive.json.gz) · [Resumable correction data](recorded-progressive.npz)
+
 ## What cheaper practice accomplished
 
 | Procedure | Physical exposure | Result |
@@ -37,4 +43,6 @@ python -m scripts.experimental.tt25_pose_demonstrations /path/to/rallies.json
 python -m scripts.experimental.tt25_pose_coverage /path/to/rallies.json
 python -m scripts.experimental.tt25_nearby_lessons /path/to/rallies.json
 python -m scripts.experimental.tt25_receiving_movie /path/to/rallies.json
+python -m scripts.experimental.tt25_block_confirmation /path/to/rallies.json
+python -m scripts.experimental.tt25_progressive_receiving /path/to/rallies.json
 ```
