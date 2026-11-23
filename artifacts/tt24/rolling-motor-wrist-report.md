@@ -26,3 +26,5 @@ All preparation, released-play, and terminal transitions entered the estimator. 
 The fixture independently held and released the ball with the same altered arm, camera, gravity switches and visual preparation protocol for each paired condition. Each drive used six actual adaptation games followed by four unexposed starts. All 60 adaptive, frozen and supplied-map tapes replayed exactly. Both saved checkpoints retained the native source head and original map. Their respective held native Pong tapes reproduced two returns each, and the original stock context reproduced six archived physical wrist tapes.
 
 Reproduce with `PYTHONPATH=src MUJOCO_GL=egl python -m scripts.experimental.tt24_rolling_motor_wrist`. [Physical course and public motor samples](rolling-motor-wrist-course.json.gz)
+
+A separate chronological comparison checked each proposed update against the following release before applying it. [Held performance and causal audit](rolling-motor-wrist-guard-report.md)
