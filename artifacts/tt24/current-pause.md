@@ -4,6 +4,8 @@ This comparison reruns all three original 12-release single-arm courses. The fiv
 
 The fixture suspends its ordinary setup countdown during the additional measured-settling probes. The existing probe callback sends voluntary joint rates to the same physical arm, receives encoders, and returns toward the setup setpoint when needed. When inspection ends, the wrist controller initializes its observation history from the actual posture and resumes the remaining ordinary setup. The same arm state continues through pickup, inspection and discharge. The ordered action record includes every normal setup, probe, settling and live-ball tick. After discharge the fixture declines further inspection requests and the monitor can carry surprise to the next test. Each release admits at most one new inline inspection. [Per-stream actions and referee evidence](current-pause-stream-0.json.gz) · [Stream 1](current-pause-stream-1.json.gz) · [Stream 2](current-pause-stream-2.json.gz)
 
+[Watch the strongest matched release in real time](current-pause-paired.mp4). Both sides execute identical inspection movements before the ball drops. The newly measured map earns 25 rebounds on this release and the stale map earns two.
+
 ## Matched results
 
 | Scope | Releases | Same-release inspection | Fixed-release adaptive | Uncompensated | Known map, original schedule |
