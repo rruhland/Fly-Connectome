@@ -74,5 +74,32 @@
         "p90": 73.41666666666322
       }
     }
+  },
+  "thin_shell_match_fit": {
+    "segments": 383,
+    "any_net_collision": 56,
+    "first_table_contacts": 337,
+    "next_racket_position_error_cm": {
+      "n": 383,
+      "p10": 8.600790832942646,
+      "median": 18.397734401917486,
+      "p90": 66.67761017645071
+    },
+    "contacted_table_xy_error_cm": {
+      "n": 337,
+      "p10": 5.115635167833816,
+      "median": 15.160389481453576,
+      "p90": 36.152244229903125
+    },
+    "contacted_table_time_error_ms": {
+      "n": 337,
+      "p10": 3.5000000000247056,
+      "median": 25.000000000006793,
+      "p90": 71.03333333332832
+    }
+  },
+  "ball_inertia_kg_m2": {
+    "solid": 4.32e-07,
+    "shell": 7.2e-07
   }
 }

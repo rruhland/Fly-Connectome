@@ -48,12 +48,16 @@ def position(row):
     return rotate(vector(row, "ball_pos")) + [0., 0., TABLE_HEIGHT]
 
 
-def table_model():
+def table_model(*, thin_shell=False):
     document = ET.parse(MODEL_PATH).getroot()
     world = document.find("worldbody")
     for child in list(world):
         if child.get("name") not in {"table", "net", "ball", "floor"}:
             world.remove(child)
+    if thin_shell:
+        inertia = 2 / 3 * BALL_MASS * BALL_RADIUS**2
+        ET.SubElement(world.find("body[@name='ball']"), "inertial", pos="0 0 0",
+                      mass=str(BALL_MASS), diaginertia=" ".join([str(inertia)] * 3))
     for child in list(document):
         if child.tag not in {"option", "default", "compiler", "worldbody"}:
             document.remove(child)
@@ -134,6 +138,10 @@ def run(csv_path, zip_path):
                    table=list(model.geom("table").solref), friction=list(model.geom("table").friction),
                    dt=model.opt.timestep, legacy_spindoe_error_cm=legacy_check(zip_path, models),
                    through_bounce={name: simulate(model, coeff, cohort) for name, coeff in models.items()})
+    shell = table_model(thin_shell=True)
+    results["thin_shell_match_fit"] = simulate(shell, models["match_fit"], cohort)
+    results["ball_inertia_kg_m2"] = dict(solid=float(model.body("ball").inertia[0]),
+                                          shell=float(shell.body("ball").inertia[0]))
     (OUTPUT / "recorded-exchange.json").write_text(json.dumps(results, indent=2, allow_nan=False) + "\n")
     print(results["through_bounce"])
 
