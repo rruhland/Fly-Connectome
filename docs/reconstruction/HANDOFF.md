@@ -1,5 +1,11 @@
 # M1B research handoff
 
+## Solo bouncing as preparation for full-size receiving
+
+Start with the [bounce-to-table report](../../artifacts/tt26/bounce-to-table.md), [paired video](../../artifacts/tt26/bounce-to-table.mp4), and [learning curves](../../artifacts/tt26/learning-speed.png). On two concealed grip changes the simulated SO-101 selected wrist roll from all five joints by rebound reward. Updating its estimate of paddle attitude raised the median fresh wrist-camera streak to 24 versus one cold. In eight matched online receiving streams it reached five legal returns in a median eight shots versus 18 cold. On four new grip angles, carrying just the learned order for exploring joints reached the final 50% beginner-feed return rate after 24 probes versus 88 for uniform exploration.
+
+Both tasks retain their existing visual heads and the receiving arm has six previously demonstrated motor options. Against a live opponent it legally returned 28/48 fresh beginner feeds versus 12/48 cold. The opponent returned all 28 and the learner missed the next ball on every point. On 144 independent nearby recorded feeds under both grips it improved to 23/288 from 7/288, with zero on the unrestricted 32 under either grip. Keep second returns, broad recorded launches and source retention in the next assessment. Target-calibration gains and full-match competence need separate scores.
+
 ## Realistic receiving and the next ball
 
 Use the collision-enabled, regulation-size SO-101 receiving benchmark for natural-play claims. A new flight profile fitted on five opponents' measured matches cut median bounce-location error from 38.5 to 16.2 cm on 417 held recorded shots. Restoring moving-link/table contact removed gripper penetrations beyond 5 mm on the 16 audited compact points. The stock direct pupil still returned 25 shots on 24 compact starts and produced one 12-return rally there. [Flight physics, arm clearance and scores](../../artifacts/tt25/recorded-benchmarks.md) · [Watch the compact rally](../../artifacts/tt25/recorded-arm-stock.mp4)
