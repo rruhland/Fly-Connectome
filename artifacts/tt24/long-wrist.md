@@ -1,0 +1,14 @@
+# Two-minute wrist-only bouncing under repeated changes in gravity
+
+A single donor-trained five-joint motor readout kept five of six fresh stock releases alive for two minutes. The longest uninterrupted sequence was **428 qualifying rebounds**. On the altered arm, the best time was 100.95 seconds with 240 qualified rebounds in total and a longest uninterrupted run of 28 on that release. A different altered-arm drop reached 53 consecutive. All 12 releases count, including those that ended in the first seconds. [Watch the 428-rebound release](long-wrist-428.mp4) · [Stock controller and changed-body optical calibration](carried-wrist.md)
+
+| Body | All six longest consecutive counts | Total qualifying rebounds | Finished two minutes | Gravity switches experienced |
+| --- | --- | ---: | ---: | ---: |
+| Stock | 4, 324, 357, 403, 416, 428 | 2,183 | 5/6 | 93 |
+| Altered | 1, 2, 3, 7, 28, 53 | 409 | 0/6 | 24 |
+
+The five stock survivors played through 18 or 19 unannounced changes in gravity. The remaining stock drop ended after 2.38 seconds. One altered drop lasted 45.9 seconds and navigated seven switches, another lasted 100.95 seconds through sixteen. The other four altered drops all ended within five seconds. A qualified rebound must rise at least 4.5 cm in the original physical judge. A subsequent weaker touch can end a consecutive streak while allowing the ball to remain in play. Stationary control scored four rebounds total on stock and six total on the altered body. No stationary drop reached a gravity change. [Physical referee](../../scripts/experimental/tt24_bounce.py)
+
+All twelve independent starts used wide joint angles, an independent stock-world ball dispenser with a 14–38 tick preparation interval, randomized ball mass and drag and the fixed horizontal workspace adjustment from prior tests. Gravity varied between 0.78–0.92 and 1.11–1.25 times nominal, switching after roughly 3–5 seconds at first and then every 4.5–8.2 seconds. The visual and motor parameters stayed frozen. This longer test uses familiar actuator wiring and earlier camera calibrations. It measures sustained feedback after transfer. In a separate course the same family of controllers directly learned previously unknown motor mappings. [Long evaluation](../../scripts/experimental/tt24_long_wrist.py) · [Same-arm acquisition](continual-wrist.md) · [Workspace comparison](workspace-stress.md)
+
+Each of 24 action tapes reproduced the full physical score and all reached gravity-switch states. The video shows the strongest uninterrupted run and identifies the accelerated sections. Both views replay the exact 120-second trace. [Video verification](../../scripts/experimental/tt24_long_wrist_movie.py) · [428-run command tape](long-wrist-4.json.gz) · [100.95-second changed arm](long-wrist-7.json.gz) · [53 consecutive on the changed arm](long-wrist-0.json.gz)

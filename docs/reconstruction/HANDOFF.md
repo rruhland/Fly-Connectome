@@ -1,5 +1,9 @@
 # M1B research handoff
 
+## Two-minute wrist qualification
+
+A frozen direct wrist controller sustained the whole 120 seconds on five of six stock releases under 18–19 hidden gravity changes apiece. The strongest made 428 consecutive rebounds. The altered arm had a best survival of 100.95 seconds and a best uninterrupted streak of 53 across six drops. Four altered starts ended within five seconds. This course used familiar motor wiring, prior optical calibration, and a visually adjusted workspace. [Watch all 428](../../artifacts/tt24/long-wrist-428.mp4) · [All twelve results and passive controls](../../artifacts/tt24/long-wrist.md)
+
 ## Combined single-arm checkpoint
 
 A persistent wrist learner inspected the actual receiving arm and played without resetting it. Across 36 sequential compound-physics releases it scored 456 qualified rebounds versus 278 frozen and 537 with true actuator mappings. Stock reached ten on 10/15, altered on 7/21 versus 0/21 frozen. All 11,381 commands reproduced after reloading the model at each game boundary. An invisible control change inside a familiar installation still cost the first ball. [Load the checkpoint and see every paired result](../../artifacts/tt24/continual-wrist.md) · [Sharing motor knowledge between bodies](../../artifacts/tt24/motor-recombine.md)

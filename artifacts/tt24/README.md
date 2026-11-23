@@ -1,5 +1,7 @@
 # SO-101 direct control and transfer
 
+[Watch 428 consecutive rebounds](long-wrist-428.mp4) · [Two-minute stock and altered-arm results, including every early failure](long-wrist.md)
+
 [Load the continual wrist learner](continual-wrist.md) · [Watch it use an unfamiliar control interface](motor-interface-paired.mp4) · [See the learned interface in table tennis](settled-match-witness.mp4)
 
 A 1.45-second movement test recovered 383 rebounds on 32 drops with previously unknown five-axis controls. The unchanged controller scored 31 and the supplied inverse scored 416. On stock the learned map matched the supplied inverse on the ten-rebound threshold. [Motor discovery and retention](motor-settle.md) · [Recovered map checkpoint](motor-bank.npz)
