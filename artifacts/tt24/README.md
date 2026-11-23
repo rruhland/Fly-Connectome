@@ -1,5 +1,7 @@
 # SO-101 direct control and transfer
 
+A 1.45-second movement test recovered 383 rebounds on 32 drops with previously unknown five-axis controls. The unchanged controller scored 31 and the supplied inverse scored 416. On stock the learned map matched the supplied inverse on the ten-rebound threshold. [Motor discovery and retention](motor-settle.md) · [Recovered map checkpoint](motor-bank.npz)
+
 On a new common-launcher test the released wrist policy made 40–56 consecutive rebounds on all eight stock starts, even as gravity changed twice. Only two of eight altered-arm starts lasted the full 15 seconds. After a surprise sideways impulse on a separate course, live feedback scored 105 post-kick rebounds versus 23 from its original motor commands. [Combined physical stresses](integrated-stress.md) · [Surprise flight intervention](carried-perturb.md) · [Wrist-only body recalibration](wrist-source-only.md)
 
 A reference preference learned in native Pong transferred to the five-joint arm. In a twelve-cohort confirmation, 51/72 new stock releases reached ten rebounds versus 22/72 using shuffled Pong credit. On the changed arm the counts were 11/48 and 4/48. Both groups used a motor policy that had already learned powered bouncing on other arms. [Load the carried wrist policy](carried-wrist.md) · [Paired video](reference-transfer-paired.mp4) · [All transfer controls and native-game results](reference-transfer.md)

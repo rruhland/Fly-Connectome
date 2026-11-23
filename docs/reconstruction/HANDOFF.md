@@ -1,5 +1,9 @@
 # M1B research handoff
 
+## Rapid motor-interface learning
+
+Eight new dense five-channel mappings were learned from one 1.45-second unscored encoder inspection each. On the first four drops per mapping, stock earned 258 rebounds versus 14 uncorrected and 251 with the true inverse. The physically altered arm earned 125 versus 17 and 165. Previous mappings were recognized in 0.70 seconds. This test provided a setup opportunity before play. [Results, controls, learned interfaces and inference code](../../artifacts/tt24/motor-settle.md)
+
 ## Native Pong experience under visual delay
 
 Four new native-Pong fits were assessed on 24 previously unseen arm starts. Using their learned visual lookahead produced a summed longest streak of 62 against 55 without extrapolation and 56 for shuffled source reward. Fixed gains of one and two produced 70 and 68. The initial 12-start gain over cold was real, but the independent test does not support preferring this learned adjustment over the simpler fixed settings. On prompt input the complete native and wrist commands matched their original tapes. [Source and both arm studies](../../artifacts/tt24/pong-temporal.md)
