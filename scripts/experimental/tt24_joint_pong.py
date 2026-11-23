@@ -51,10 +51,12 @@ def field(frame, old, velocity, visible):
 
 
 @torch.no_grad()
-def arcade(weights, seeds, *, cap=CAP, opponent=.45, witness=None):
+def arcade(weights, seeds, *, cap=CAP, opponent=.45, witness=None, paddle_factory=None):
     """Run the installed batched Pong native physics and its actual raster."""
     weights = np.repeat(np.asarray(weights).reshape(-1, len(MODE_COLUMNS)), len(seeds), axis=0)
     game = Pong(list(seeds) * (len(weights) // len(seeds)), Physics(opponent_speed=opponent))
+    if paddle_factory is not None:
+        game.body = paddle_factory(game.config)
     current = np.ones(len(weights), dtype=bool)
     old = np.zeros((len(weights), 2))
     velocity = np.zeros_like(old)

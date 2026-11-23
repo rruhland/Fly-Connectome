@@ -1,5 +1,9 @@
 # M1B research handoff
 
+## Body learning during native Pong transfers on the first bounce games
+
+The first half-second of ordinary physical joystick motion by a reward-trained native Pong player identified one changed actuator direction. Without any target practice, the carried wrist policy reached ten consecutive rebounds on 9/12 fresh drops, versus 5/12 with the original map. Two seconds produced the same count, or 0/12 with shuffled command and encoder timing. An earlier paired experiment found that two interfaces indistinguishable in the source game behaved very differently in five-axis wrist play. The unobserved dense change gave zero ten-rebound runs across ten starts. [Source play, controls and transfer](../../artifacts/tt24/pong-arm-report.md)
+
 ## Two-minute wrist qualification
 
 A frozen direct wrist controller sustained the whole 120 seconds on five of six stock releases under 18–19 hidden gravity changes apiece. The strongest made 428 consecutive rebounds. The altered arm had a best survival of 100.95 seconds and a best uninterrupted streak of 53 across six drops. Four altered starts ended within five seconds. This course used familiar motor wiring, prior optical calibration, and a visually adjusted workspace. [Watch all 428](../../artifacts/tt24/long-wrist-428.mp4) · [All twelve results and passive controls](../../artifacts/tt24/long-wrist.md)
