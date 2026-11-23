@@ -73,8 +73,9 @@ def verify_point(point):
     return checked
 
 
-def run_map(settings):
-    path = ROOT/f'settled-match-map-{settings["index"]}.json.gz'
+def run_map(settings, path=None):
+    if path is None:
+        path = ROOT/f'settled-match-map-{settings["index"]}.json.gz'
     data = _read(path) if path.exists() else dict(settings=settings, cases=[], verified=0)
     if data['settings']!=settings:
         raise ValueError('stored physical map receipts have changed')

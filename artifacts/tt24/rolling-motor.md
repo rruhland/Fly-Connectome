@@ -23,3 +23,5 @@ learner.save("continued-motor.npz")
 ```
 
 The saved estimator carries the source history needed to continue fitting. The combined gameplay checkpoints additionally include the wrist motor head, both optical calibrations, the original drive, the selected source-learned map, and the native Pong readout. Switching games and choosing the same electronics across them were provided by the benchmark. [Resumable motor A](rolling-motor-0.npz) · [Resumable motor B](rolling-motor-1.npz) · [Combined gameplay A](learned-tip-learner-0.npz) · [Combined gameplay B](learned-tip-learner-1.npz)
+
+The same two learned maps were also applied directly to competitive two-arm table tennis on sixteen new serves. Neither produced a legal near return. A separate 1.45-second encoder inspection recovered eleven complete exchanges, versus 21 with the supplied drives. [Matched game evidence](rolling-match.md)

@@ -111,7 +111,7 @@ class OnlineResponse:
 
 
 class StreamingTip(NativeTip):
-    """Expose source events immediately, holding no clip inside the learner or paddle."""
+    """Send each live event to the learner and independently verify the archived reference."""
 
     def __init__(self,arena,joystick,pose,wiring,spec,expected,sink):
         super().__init__(arena,joystick,pose,wiring,spec)
