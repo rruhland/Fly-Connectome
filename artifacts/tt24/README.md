@@ -1,6 +1,6 @@
 # SO-101 direct control and transfer
 
-A five-joint controller trained from rebound rewards on three other simulated arms reached ten consecutive bounces on **12 of 16** stock SO-101 wrist-only drops, with zero stock motor practice and zero action demonstrations. Its wrist observer had eight earlier unlabelled calibration drops. The first held drop reached seventeen. [Watch the first drop](donor-first-drop.mp4) · [Donor bodies, source exposure and physical controls](tt24_donor.md)
+A five-joint controller trained from rebound rewards on three other simulated arms reached ten consecutive bounces on **12 of 16** stock SO-101 wrist-only drops, with zero stock motor practice and zero action demonstrations. Its wrist observer had eight earlier unlabelled calibration drops. On another twelve drops with a 15 s horizon it averaged 31.08 and reached 57. Eight lasted the full interval and three scored zero. [Watch the first drop](donor-first-drop.mp4) · [Watch all 57 from both cameras](donor-longest-drop.mp4) · [Donor bodies, source exposure and physical controls](tt24_donor.md)
 
 The end-clamped arm drives its five motor joints continuously. Its gripper holds the paddle. A separate six-hinge experiment adds a physical wrist motor. All reported policy learning and calibration in TT24 use non-backpropagation methods.
 
@@ -17,6 +17,8 @@ The end-clamped arm drives its five motor joints continuously. Its gripper holds
 | Does online motor learning recognize a returning body? | After an unannounced in-flight change, the practiced wrist policy recalled its former motor map in 0.13–0.23 s. On a fresh schedule it made 22 rebounds versus 5 frozen after adaptation and retained all 22 on restoration. | [Learning during a drop](body.md#switching-motors-during-an-ongoing-bounce) |
 | How far does reward-only bouncing generalize across bodies? | A reward-trained Cartesian controller struggled on the five-hinge arm. Direct control trained on three other hinged arms transferred immediately to stock wrist-only play, reaching 11.94 consecutive on average versus 2.56 stationary. | [Hinged donors](tt24_donor.md) · [Cartesian source experiments](source-world-transfer.md) |
 
-The longer physical streaks came from prior action demonstrations and calibrated perception. The reward-only wrist policy averaged 3.36 rebounds against 2.50 stationary on its first independent qualification. The physical simulator can reliably sustain much longer runs with a fully informed controller. Native Pong by itself has yet to produce a consistently long five-joint wrist bounce after a small target budget. [Reward-only training](motor-results.md) · [Appearance and paint tests](tt24_anonvision.md) · [Physical ceiling](bounce-ceiling.md) · [Design](design.md)
+The original wrist experiment with direct target reward learning averaged 3.36 rebounds against 2.50 stationary on its first independent qualification. The physical simulator can reliably sustain much longer runs with a fully informed controller. Native Pong by itself has yet to produce a consistently long five-joint wrist bounce after a small target budget. [Reward-only training](motor-results.md) · [Appearance and paint tests](tt24_anonvision.md) · [Physical ceiling](bounce-ceiling.md) · [Design](design.md)
+
+[Eight-drop target adaptation and source retention](donor-adaptation.md) · [Unknown camera delay and recovery](latency.md) · [Side-fed native Pong test](tt24_side_feed.md)
 
 ![Learning during a hardware switch and paired wrist recalibration](transfer-progress.png)

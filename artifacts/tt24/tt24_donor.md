@@ -21,7 +21,7 @@ The target head receives zero stock motor-practice drops. The stock wrist observ
 | 52 g wrist payload | 8 | 10.125 | 2.25 | 3 |
 | Combined | 24 | 12.333 | 2.25 | 17 |
 
-The refined search used 18,000 scored donor drops and 2,651,727 control frames. Donor validation added 8,664 runs and 2,143,144 frames, using 24 repeated validation release contexts. The shared body interaction and policy selection used about 22.2 hours of simulated control, in 559 wall seconds for the refinement on one CPU process. The separate failed pilot took 1,248 training drops and 975 validation runs. Performance qualifies as transfer with substantial donor experience. [Donor training and held replays](tt24_donor-refined.json.gz)
+The refined search used 18,000 scored donor drops and 2,651,727 control frames. Donor validation added 8,664 runs and 2,143,144 frames, using 24 repeated validation release contexts. The 30 motor probes contributed another 150 control frames. The refinement used about 22.2 hours of simulated control, in 559 wall seconds on one CPU process. The separate failed pilot took 1,248 training drops with 61,196 frames and 975 validation runs with 64,659 frames. Performance qualifies as transfer with substantial donor experience. [Donor training and held replays](tt24_donor-refined.json.gz)
 
 The selected head first appeared at round 36, after 5,400 practice drops and 630,763 control frames, plus 2,616 validation runs. The archive preserves the zero head and every donor-development improvement up to round 36 with its cumulative exposure. At independently scored donor impacts, the paddle contact point was rising faster than 0.055 m/s on 321 of 335 learned rebounds and zero of 54 stationary rebounds. The median was 0.121–0.126 m/s across the three learned donors. [Development checkpoints](tt24_donor-development-weights.npz) · [Impact audit](tt24_donor-extended.json.gz)
 
@@ -40,6 +40,18 @@ On stock the public-wrist controller struck 175 of its 191 scored rebounds with 
 ## Changed body and physics
 
 A separate 12-drop course uses an unseen elbow-axis direction, new upper-link mass and wrist payload, altered actuator drive and force, 0.84 times Earth gravity and 1.35 times the existing changed-regime drag. It retains the fixed donor readout and the original stock wrist observer. The public wrist branch averages 5.333 consecutive rebounds with a maximum of 14 and three drops reaching ten. The clean diagnostic averages 3.25 with a maximum of 12, and stationary averages 1.50 with a maximum of two. This is one held stress comparison. The frozen stock observer may have systematic errors on the changed body, and the higher public score here gives no general ordering between clean and estimated inputs. [Changed-body tapes](tt24_donor-extended.json.gz)
+
+## Fifteen-second stock course
+
+The five-second public wrist score exceeded the predeclared gate of a mean of five and at least four ten-rebound drops. The extended comparison uses the same frozen head and public observer on 12 independently seeded stock drops with a 900-decision limit.
+
+| Observation | Mean consecutive | Maximum | At least 10 | Reached 15 seconds |
+| --- | ---: | ---: | ---: | ---: |
+| Public wrist | 31.083 | 57 | 8/12 | 8/12 |
+| Clean diagnostic | 30.167 | 60 | 7/12 | 7/12 |
+| Stationary | 2.333 | 5 | 0/12 | 0/12 |
+
+Seed `149196482` yields 57 consecutive rebounds with the public wrist observer before the 15-second cap. Three public-observer starts in this course score zero. All 168 held traces across the three donor designs, five-second stock, changed-body and 15-second stock courses reproduced their physical referee events. [Replay the longest of the twelve drops](donor-longest-drop.mp4) · [Extended trajectories and bounds](tt24_donor-extended.json.gz)
 
 ## Reproduce
 

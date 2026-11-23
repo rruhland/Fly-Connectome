@@ -163,8 +163,10 @@ def _after(row, kick):
                 right_censored=not fault, loss_reason=metrics['termination'] if fault else None)
 
 
-def _case(arena, arm, regime, launch):
-    nominal = _run(arena, regime, launch, model=_model(arm))
+def _case(arena, arm, regime, launch, model_factory=None):
+    if model_factory is None:
+        model_factory = lambda: _model(arm)
+    nominal = _run(arena, regime, launch, model=model_factory())
     _verify(arena, regime, launch, nominal)
     kick = nominal['kick_candidate']
     row = dict(launch, nominal=nominal, eligible=kick is not None, verified_tapes=1)
@@ -175,7 +177,7 @@ def _case(arena, arm, regime, launch):
     intact = _run(arena, regime, launch, tape=tape, cap=cap)
     branches = {'nominal': intact}
     for name in ('live', 'tape', 'hold'):
-        model = _model(arm) if name == 'live' else None
+        model = model_factory() if name == 'live' else None
         trial = _run(arena, regime, launch, model=model, tape=tape, kick=kick, cap=cap, hold=name == 'hold')
         _verify(arena, regime, launch, trial, kick)
         branches[name] = trial

@@ -37,6 +37,9 @@ class ProbeEyes(BounceArena):
 
     def __init__(self):
         super().__init__(view='wrist', width=WIDTH, height=HEIGHT, max_steps=72, arm='alternate')
+        self.configure_reference_cameras()
+
+    def configure_reference_cameras(self):
         prototype = TrainingEyes()
         self.eyes = prototype.eyes
         prototype.close()
@@ -48,9 +51,9 @@ class ProbeEyes(BounceArena):
             eye.elevation = tilt
 
 
-def collect(seeds):
+def collect(seeds, arena_factory=ProbeEyes):
     """The fitter records only RGB summaries, encoders and its own probe commands."""
-    arena = ProbeEyes()
+    arena = arena_factory()
     records = []
     try:
         for seed in seeds:
@@ -227,8 +230,8 @@ def contact_directions(links, decoder, records, points):
     return directions, samples
 
 
-def calibrate(path, receipt):
-    eyes, records = collect(PROBE_SEEDS)
+def calibrate(path, receipt, seeds=PROBE_SEEDS, arena_factory=ProbeEyes, arm_name="alternate"):
+    eyes, records = collect(seeds, arena_factory)
     links, mount, normal, blade = blade_fit(records, eyes)
     registration, points, optics = register_ball(links, mount, records, eyes)
     decoder = MorphDecoder(links, mount, normal, registration, np.zeros(3))
@@ -253,7 +256,7 @@ def calibrate(path, receipt):
     np.savez_compressed(path, schema='tt24-public-morph-1', shifts=shifts, tilts=tilts, offset=mount,
                         unfused_normal=normal, normal=decoder.normal, registration=registration, default=default,
                         motion_mean=motion.mean, motion_scale=motion.scale, motion_weights=motion.weights)
-    _write(receipt, dict(schema='tt24-public-morph-fit-1', arm='alternate', regime='changed',
+    _write(receipt, dict(schema='tt24-public-morph-fit-1', arm=arm_name, regime='changed',
                          prior_geometry='original stock vendor CAD with optically fitted corrections',
                          labels=['calibrated fixed RGB', 'wrist RGB', 'own encoders'],
                          new_teacher_actions=0, target_rewards_used=0, hidden_pose_labels=0,

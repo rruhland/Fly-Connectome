@@ -29,11 +29,16 @@ def frames(arena, row):
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--donor",action="store_true")
+    parser.add_argument("--long-donor",action="store_true")
     cfg=parser.parse_args()
-    if cfg.donor:
-        with gzip.open(DIR/"tt24_donor-refined.json.gz","rt") as src:
+    if cfg.donor or cfg.long_donor:
+        receipt = "tt24_donor-extended.json.gz" if cfg.long_donor else "tt24_donor-refined.json.gz"
+        with gzip.open(DIR/receipt,"rt") as src:
             doc=json.load(src)
-        first=doc["held_stock"][0]
+        if cfg.long_donor:
+            first = max(doc["long_stock"]["cases"], key=lambda case: case["conditions"]["public"]["metrics"]["longest_consecutive_rebounds"])
+        else:
+            first = doc["held_stock"][0]
         rows={mode:dict(seed=first["seed"],actions=r["actions"],score=r["metrics"]["rebounds"],
                         run=r["metrics"]["longest_consecutive_rebounds"])
               for mode,r in first["conditions"].items()}
@@ -42,6 +47,11 @@ def main():
         heading="The first held drop on a new arm"
         caption="Five-joint motor control learned from rebound rewards on three other arms."
         path=DIR/"donor-first-drop.mp4"
+        if cfg.long_donor:
+            horizon=900
+            heading="57 consecutive rebounds on wrist vision"
+            caption="Longest of 12 held stock drops. All three panels replay the same release."
+            path=DIR/"donor-longest-drop.mp4"
     else:
         with gzip.open(DIR/"public-carry.json.gz","rt") as src:
             doc=json.load(src)
