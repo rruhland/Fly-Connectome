@@ -35,7 +35,7 @@ def replay(arena, row):
         rates = np.asarray(far)
         arena._aim = arena._command_to = lambda *args, rates=rates: rates
         _, reward, done, cap, _ = arena.step(near, render=False)
-        if bool(done or cap) != (i+1 == len(row["actions"])):
+        if bool(done or cap) != (i + 1 == len(row["actions"])):
             raise ValueError("Solid court duration changed on replay")
     if reward != row["reward"] or digest_json(arena.events) != digest_json(row["events"]):
         raise ValueError("Solid court referee changed on replay")
@@ -55,16 +55,23 @@ def run():
             settings = previous["settings"]
             truth, inverse = np.array(settings["truth"]), np.linalg.inv(settings["fit"])
             for case in previous["cases"]:
-                row = station.play(case, "calibrated", actor, live_opening=True,
-                                   execute=lambda q: driver(truth, inverse, q))
+                row = station.play(
+                    case,
+                    "calibrated",
+                    actor,
+                    live_opening=True,
+                    execute=lambda q: driver(truth, inverse, q),
+                )
                 replay(check, row)
                 results.append(row)
                 print(len(results), row["outcome"]["legal_returns"], row["longest"], flush=True)
     finally:
         check.close()
         station.arena.close()
-    _write(OUTPUT / "recorded-arm-live.json.gz", dict(policy_bank_sha256=_hash(CACHE),
-           opponent=profile, cases=results, verified=len(results)))
+    _write(
+        OUTPUT / "recorded-arm-live.json.gz",
+        dict(policy_bank_sha256=_hash(CACHE), opponent=profile, cases=results, verified=len(results)),
+    )
 
 
 def stock():
@@ -89,8 +96,15 @@ def stock():
     finally:
         station.arena.close()
         check.close()
-    _write(OUTPUT / "recorded-arm-stock.json.gz", dict(source_sha256=_hash(source),
-           policy_bank_sha256=_hash(CACHE), cases=cases, verified=2*len(cases)))
+    _write(
+        OUTPUT / "recorded-arm-stock.json.gz",
+        dict(
+            source_sha256=_hash(source),
+            policy_bank_sha256=_hash(CACHE),
+            cases=cases,
+            verified=2 * len(cases),
+        ),
+    )
 
 
 def movie(stock_course=False):
@@ -102,10 +116,15 @@ def movie(stock_course=False):
         raise ValueError("Incomplete solid-arm evaluation")
     rows = [c["results"]["retina_rate"] for c in results["cases"]] if stock_course else results["cases"]
     longest = max(rows, key=lambda r: r["longest"])
-    render_tape(longest, source, OUTPUT / ("recorded-arm-stock.mp4" if stock_course else "recorded-arm-live.mp4"), branch="solid_arm",
-                subtitle="End-clamped arm on the compact court",
-                terminal_caption=f"Live camera policy, selected longest point from {len(rows)}",
-                arena_factory=lambda: SolidArm(**dict(CONFIG, width=DIMS[0], height=DIMS[1])))
+    render_tape(
+        longest,
+        source,
+        OUTPUT / ("recorded-arm-stock.mp4" if stock_course else "recorded-arm-live.mp4"),
+        branch="solid_arm",
+        subtitle="End-clamped arm on the compact court",
+        terminal_caption=f"Live camera policy, selected longest point from {len(rows)}",
+        arena_factory=lambda: SolidArm(**dict(CONFIG, width=DIMS[0], height=DIMS[1])),
+    )
 
 
 if __name__ == "__main__":

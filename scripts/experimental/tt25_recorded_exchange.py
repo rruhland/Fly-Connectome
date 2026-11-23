@@ -33,9 +33,16 @@ def measurements(path):
         rows.sort()
         first_shot = next((i for i, r in rows if r["type"].startswith("shot_")), None)
         for (i, hit), (j, bounce), (k, reply) in zip(rows, rows[1:], rows[2:]):
-            if (first_shot is None or i == first_shot or j != i+1 or k != j+1
-                    or not hit["type"].startswith("shot_") or not bounce["type"].startswith("bounce_")
-                    or not reply["type"].startswith("shot_") or hit["type"] == reply["type"]):
+            if (
+                first_shot is None
+                or i == first_shot
+                or j != i + 1
+                or k != j + 1
+                or not hit["type"].startswith("shot_")
+                or not bounce["type"].startswith("bounce_")
+                or not reply["type"].startswith("shot_")
+                or hit["type"] == reply["type"]
+            ):
                 continue
             yield key, hit, bounce, reply
 
@@ -45,7 +52,7 @@ def rotate(vec):
 
 
 def position(row):
-    return rotate(vector(row, "ball_pos")) + [0., 0., TABLE_HEIGHT]
+    return rotate(vector(row, "ball_pos")) + [0.0, 0.0, TABLE_HEIGHT]
 
 
 def table_model(*, thin_shell=False):
@@ -56,8 +63,13 @@ def table_model(*, thin_shell=False):
             world.remove(child)
     if thin_shell:
         inertia = 2 / 3 * BALL_MASS * BALL_RADIUS**2
-        ET.SubElement(world.find("body[@name='ball']"), "inertial", pos="0 0 0",
-                      mass=str(BALL_MASS), diaginertia=" ".join([str(inertia)] * 3))
+        ET.SubElement(
+            world.find("body[@name='ball']"),
+            "inertial",
+            pos="0 0 0",
+            mass=str(BALL_MASS),
+            diaginertia=" ".join([str(inertia)] * 3),
+        )
     for child in list(document):
         if child.tag not in {"option", "default", "compiler", "worldbody"}:
             document.remove(child)
@@ -68,11 +80,13 @@ def step_ball(model, data, coeff, w, body):
     vx, vy, vz = data.qvel[:3]
     mujoco.mju_rotVecQuat(w, data.qvel[3:6], data.qpos[3:7])
     wx, wy, wz = w
-    drag = -BALL_MASS * coeff[0] * (vx*vx + vy*vy + vz*vz)**.5
+    drag = -BALL_MASS * coeff[0] * (vx * vx + vy * vy + vz * vz) ** 0.5
     magnus = BALL_MASS * coeff[1]
-    data.xfrc_applied[body, :3] = (drag*vx + magnus*(wy*vz - wz*vy),
-                                   drag*vy + magnus*(wz*vx - wx*vz),
-                                   drag*vz + magnus*(wx*vy - wy*vx))
+    data.xfrc_applied[body, :3] = (
+        drag * vx + magnus * (wy * vz - wz * vy),
+        drag * vy + magnus * (wz * vx - wx * vz),
+        drag * vz + magnus * (wx * vy - wy * vx),
+    )
     data.xfrc_applied[body, 3:] = -model.body_inertia[body, 0] * SPIN_DECAY * w
     mujoco.mj_step(model, data)
 
@@ -88,7 +102,7 @@ def simulate(model, coeff, cohort):
     for _, hit, observed_bounce, reply in cohort:
         mujoco.mj_resetData(model, data)
         data.qpos[:3] = position(hit)
-        data.qpos[3:7] = [1., 0., 0., 0.]
+        data.qpos[3:7] = [1.0, 0.0, 0.0, 0.0]
         data.qvel[:3] = rotate(vector(hit, "ball_vel_out"))
         data.qvel[3:6] = rotate(vector(hit, "ball_spin_out"))
         mujoco.mj_forward(model, data)
@@ -106,18 +120,23 @@ def simulate(model, coeff, cohort):
                     continue
                 if net in contact.geom:
                     hit_net = True
-                if first_bounce is None and table in contact.geom and abs(contact.frame[2]) > .55:
+                if first_bounce is None and table in contact.geom and abs(contact.frame[2]) > 0.55:
                     first_bounce = data.time - step, contact.pos[:2].copy()
         frac = (data.time - horizon) / step
-        at_reply = frac*last_pos + (1-frac)*data.qpos[:3]
-        errors.append(100*np.linalg.norm(at_reply - position(reply)))
+        at_reply = frac * last_pos + (1 - frac) * data.qpos[:3]
+        errors.append(100 * np.linalg.norm(at_reply - position(reply)))
         touched_net += hit_net
         if first_bounce is not None:
-            time_errors.append(1000*abs(first_bounce[0] - (float(observed_bounce["timestamp"])-start)))
-            land_errors.append(100*np.linalg.norm(first_bounce[1] - position(observed_bounce)[:2]))
-    return dict(segments=len(cohort), any_net_collision=touched_net, first_table_contacts=len(land_errors),
-                next_racket_position_error_cm=quantiles(errors),
-                contacted_table_xy_error_cm=quantiles(land_errors), contacted_table_time_error_ms=quantiles(time_errors))
+            time_errors.append(1000 * abs(first_bounce[0] - (float(observed_bounce["timestamp"]) - start)))
+            land_errors.append(100 * np.linalg.norm(first_bounce[1] - position(observed_bounce)[:2]))
+    return dict(
+        segments=len(cohort),
+        any_net_collision=touched_net,
+        first_table_contacts=len(land_errors),
+        next_racket_position_error_cm=quantiles(errors),
+        contacted_table_xy_error_cm=quantiles(land_errors),
+        contacted_table_time_error_ms=quantiles(time_errors),
+    )
 
 
 def legacy_check(path, models):
@@ -129,7 +148,10 @@ def legacy_check(path, models):
     if held.sum() != len(reference["test_shots"]):
         raise ValueError("Missing legacy test shots")
     held = tuple(x[held] for x in data)
-    return {name: quantiles(100*np.linalg.norm(predict(held, coeff), axis=1)) for name, coeff in models.items()}
+    return {
+        name: quantiles(100 * np.linalg.norm(predict(held, coeff), axis=1))
+        for name, coeff in models.items()
+    }
 
 
 def run(csv_path, zip_path):
@@ -137,15 +159,22 @@ def run(csv_path, zip_path):
     models = {name: fit["held_scores"][name]["coefficients"] for name in ("current", "match_fit")}
     cohort = list(measurements(csv_path))
     model = table_model()
-    results = dict(match_csv_sha256=SHA256, previous_dataset_sha256=sha256(zip_path.read_bytes()).hexdigest(),
-                   model_xml_sha256=sha256(MODEL_PATH.read_bytes()).hexdigest(), unique_rallies=len({r[0] for r in cohort}),
-                   table=list(model.geom("table").solref), friction=list(model.geom("table").friction),
-                   dt=model.opt.timestep, legacy_spindoe_error_cm=legacy_check(zip_path, models),
-                   through_bounce={name: simulate(model, coeff, cohort) for name, coeff in models.items()})
+    results = dict(
+        match_csv_sha256=SHA256,
+        previous_dataset_sha256=sha256(zip_path.read_bytes()).hexdigest(),
+        model_xml_sha256=sha256(MODEL_PATH.read_bytes()).hexdigest(),
+        unique_rallies=len({r[0] for r in cohort}),
+        table=list(model.geom("table").solref),
+        friction=list(model.geom("table").friction),
+        dt=model.opt.timestep,
+        legacy_spindoe_error_cm=legacy_check(zip_path, models),
+        through_bounce={name: simulate(model, coeff, cohort) for name, coeff in models.items()},
+    )
     shell = table_model(thin_shell=True)
     results["thin_shell_match_fit"] = simulate(shell, models["match_fit"], cohort)
-    results["ball_inertia_kg_m2"] = dict(solid=float(model.body("ball").inertia[0]),
-                                          shell=float(shell.body("ball").inertia[0]))
+    results["ball_inertia_kg_m2"] = dict(
+        solid=float(model.body("ball").inertia[0]), shell=float(shell.body("ball").inertia[0])
+    )
     (OUTPUT / "recorded-exchange.json").write_text(json.dumps(results, indent=2, allow_nan=False) + "\n")
     print(results["through_bounce"])
 

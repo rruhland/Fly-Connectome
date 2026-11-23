@@ -38,10 +38,14 @@ def workspace():
         for pose in poses:
             data.qpos[joints] = pose
             mujoco.mj_kinematics(model, data)
-            data.qpos[paddle_q:paddle_q+3] = data.xpos[grip] + data.xmat[grip].reshape(3,3) @ _GRASP_POS
-            data.qpos[paddle_q+3:paddle_q+7] = data.xquat[grip]
+            data.qpos[paddle_q : paddle_q + 3] = (
+                data.xpos[grip] + data.xmat[grip].reshape(3, 3) @ _GRASP_POS
+            )
+            data.qpos[paddle_q + 3 : paddle_q + 7] = data.xquat[grip]
             mujoco.mj_kinematics(model, data)
-            if any(mujoco.mj_geomDistance(model, data, i, table, .003, None) < 0 for i in [blade, *meshes]):
+            if any(
+                mujoco.mj_geomDistance(model, data, i, table, 0.003, None) < 0 for i in [blade, *meshes]
+            ):
                 continue
             points.append(data.geom_xpos[blade].copy())
         radius = float(model.geom_size[blade, 0])
@@ -62,18 +66,18 @@ def trajectories(rows, coeff, tree, radius):
         mujoco.mj_resetData(model, data)
         data.qpos[:3] = [shot["pos_x"], shot["pos_y"], TABLE_HEIGHT + shot["pos_z"]]
         data.qpos[3:7] = [1, 0, 0, 0]
-        data.qvel[:3] = [shot["vel_"+a] for a in "xyz"]
-        data.qvel[3:6] = [shot["w_vel_"+a] for a in "xyz"]
+        data.qvel[:3] = [shot["vel_" + a] for a in "xyz"]
+        data.qvel[3:6] = [shot["w_vel_" + a] for a in "xyz"]
         mujoco.mj_forward(model, data)
         bounced = False
         prev_table = False
         track = []
-        for _ in range(round(2. / model.opt.timestep)):
+        for _ in range(round(2.0 / model.opt.timestep)):
             step_ball(model, data, coeff, world_spin, body)
             contact = [c for c in data.contact if c.efc_address >= 0]
             if any(floor in c.geom for c in contact):
                 break
-            tabletop = any(table in c.geom and abs(c.frame[2]) > .55 for c in contact)
+            tabletop = any(table in c.geom and abs(c.frame[2]) > 0.55 for c in contact)
             if tabletop and not prev_table:
                 if bounced or data.qpos[1] >= 0:
                     break
@@ -82,8 +86,14 @@ def trajectories(rows, coeff, tree, radius):
                 track.append(data.qpos[:3].copy())
             prev_table = tabletop
         distance = float(tree.query(track)[0].min()) if track else None
-        results.append(dict(id=shot["id"], received_bounce=bounced, closest_sampled_center_m=distance,
-                            near_blade=bool(distance is not None and distance <= radius + BALL_RADIUS)))
+        results.append(
+            dict(
+                id=shot["id"],
+                received_bounce=bounced,
+                closest_sampled_center_m=distance,
+                near_blade=bool(distance is not None and distance <= radius + BALL_RADIUS),
+            )
+        )
     return results
 
 
@@ -97,15 +107,26 @@ def run(path):
     selection = np.random.default_rng(26863).choice(len(source), 192, replace=False)
     rows = [source[i] for i in selection]
     tree, radius, poses = workspace()
-    coeff = json.loads((OUTPUT / "recorded-flight.json").read_text())["held_scores"]["match_fit"]["coefficients"]
+    coeff = json.loads((OUTPUT / "recorded-flight.json").read_text())["held_scores"]["match_fit"][
+        "coefficients"
+    ]
     cases = trajectories(rows, coeff, tree, radius)
-    summary = dict(source_sha256=reference["sha256"], incoming_population=len(source), sampled=len(rows),
-                   incoming_speed_mps=quantiles([np.linalg.norm([r["vel_"+a] for a in "xyz"]) for r in rows]),
-                   sampled_poses=poses, table_clear_poses=tree.n, ball_radius=BALL_RADIUS, blade_radius=radius,
-                   court_dimensions_m=[2.74,1.525], valid_incoming=sum(r["received_bounce"] for r in cases),
-                   near_sampled_blade=sum(r["near_blade"] for r in cases), cases=cases)
-    (OUTPUT / "recorded-reach.json").write_text(json.dumps(summary, indent=2, allow_nan=False)+"\n")
-    print({k:v for k,v in summary.items() if k!="cases"})
+    summary = dict(
+        source_sha256=reference["sha256"],
+        incoming_population=len(source),
+        sampled=len(rows),
+        incoming_speed_mps=quantiles([np.linalg.norm([r["vel_" + a] for a in "xyz"]) for r in rows]),
+        sampled_poses=poses,
+        table_clear_poses=tree.n,
+        ball_radius=BALL_RADIUS,
+        blade_radius=radius,
+        court_dimensions_m=[2.74, 1.525],
+        valid_incoming=sum(r["received_bounce"] for r in cases),
+        near_sampled_blade=sum(r["near_blade"] for r in cases),
+        cases=cases,
+    )
+    (OUTPUT / "recorded-reach.json").write_text(json.dumps(summary, indent=2, allow_nan=False) + "\n")
+    print({k: v for k, v in summary.items() if k != "cases"})
 
 
 if __name__ == "__main__":

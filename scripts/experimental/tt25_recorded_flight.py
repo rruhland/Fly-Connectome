@@ -58,21 +58,35 @@ def records(source):
         if player in HELD:
             speeds.extend(np.linalg.norm(vector(r, "ball_vel_out")) for _, r in strokes[1:])
             spins.extend(np.linalg.norm(vector(r, "ball_spin_out")) for _, r in strokes[1:])
-            intervals.extend(float(b["timestamp"]) - float(a["timestamp"])
-                             for (_, a), (_, b) in zip(strokes[1:], strokes[2:])
-                             if a["type"] != b["type"])
+            intervals.extend(
+                float(b["timestamp"]) - float(a["timestamp"])
+                for (_, a), (_, b) in zip(strokes[1:], strokes[2:])
+                if a["type"] != b["type"]
+            )
         if not strokes:
             continue
         for (a, hit), (b, land) in zip(entries, entries[1:]):
-            if (a <= strokes[0][0] or not hit["type"].startswith("shot_")
-                    or not land["type"].startswith("bounce_") or b != a+1):
+            if (
+                a <= strokes[0][0]
+                or not hit["type"].startswith("shot_")
+                or not land["type"].startswith("bounce_")
+                or b != a + 1
+            ):
                 continue
             dt = float(land["timestamp"]) - float(hit["timestamp"])
             if dt <= 0:
                 raise ValueError("Nonpositive flight time")
-            flights.append(Flight(player, f"{key}/event{a}", vector(hit, "ball_pos"),
-                                  vector(hit, "ball_vel_out"), vector(hit, "ball_spin_out"),
-                                  dt, vector(land, "ball_pos")))
+            flights.append(
+                Flight(
+                    player,
+                    f"{key}/event{a}",
+                    vector(hit, "ball_pos"),
+                    vector(hit, "ball_vel_out"),
+                    vector(hit, "ball_spin_out"),
+                    dt,
+                    vector(land, "ball_pos"),
+                )
+            )
     return flights, dict(speed=speeds, spin=spins, interval=intervals)
 
 
@@ -83,14 +97,15 @@ def propagate(rows, coeff, *, predict_landing=False):
     spin = np.stack([r.spin for r in rows])
     duration = np.array([r.duration for r in rows])
     count = 500 if predict_landing else 64
-    dt = np.full((len(rows), 1), .003) if predict_landing else duration[:, None] / count
+    dt = np.full((len(rows), 1), 0.003) if predict_landing else duration[:, None] / count
     landing = np.full((len(rows), 2), np.nan)
     landing_time = np.full(len(rows), np.nan)
     decay = np.exp(-SPIN_DECAY * dt / 2)
 
     def accel(velocity, omega):
-        air = (-coeff[0] * np.linalg.norm(velocity, axis=1, keepdims=True) * velocity
-               + coeff[1] * np.cross(omega, velocity))
+        air = -coeff[0] * np.linalg.norm(velocity, axis=1, keepdims=True) * velocity + coeff[1] * np.cross(
+            omega, velocity
+        )
         air[:, 2] -= GRAVITY
         return air
 
@@ -114,7 +129,9 @@ def quantiles(values):
     a = np.asarray(values)
     if not len(a) or not np.isfinite(a).all():
         raise ValueError("Empty or nonfinite metric")
-    return dict(n=len(a), p10=float(np.quantile(a, .1)), median=float(np.median(a)), p90=float(np.quantile(a, .9)))
+    return dict(
+        n=len(a), p10=float(np.quantile(a, 0.1)), median=float(np.median(a)), p90=float(np.quantile(a, 0.9))
+    )
 
 
 def score(rows, coeff):
@@ -123,10 +140,14 @@ def score(rows, coeff):
     predicted, times = propagate(rows, coeff, predict_landing=True)
     ok = np.isfinite(times)
     t = np.array([r.duration for r in rows])
-    return dict(coefficients=list(coeff), shots=len(rows), no_downward_crossing=int((~ok).sum()),
-                endpoint_at_recorded_time_cm=quantiles(100 * np.linalg.norm(pred - endpoints, axis=1)),
-                landing_error_cm=quantiles(100 * np.linalg.norm(predicted[ok] - endpoints[ok, :2], axis=1)),
-                landing_time_error_ms=quantiles(1000 * np.abs(times[ok] - t[ok])))
+    return dict(
+        coefficients=list(coeff),
+        shots=len(rows),
+        no_downward_crossing=int((~ok).sum()),
+        endpoint_at_recorded_time_cm=quantiles(100 * np.linalg.norm(pred - endpoints, axis=1)),
+        landing_error_cm=quantiles(100 * np.linalg.norm(predicted[ok] - endpoints[ok, :2], axis=1)),
+        landing_time_error_ms=quantiles(1000 * np.abs(times[ok] - t[ok])),
+    )
 
 
 def compact_court():
@@ -157,22 +178,39 @@ def run(source):
     held = [r for r in rows if r.player in HELD]
     target = np.stack([r.end for r in train])
     current = [AIR_DRAG, MAGNUS_COEFFICIENT]
-    fit = least_squares(lambda c: (propagate(train, c) - target).ravel(), current,
-                        bounds=([0., 0.], [.6, .01]), loss="soft_l1", f_scale=.02, x_scale=current)
+    fit = least_squares(
+        lambda c: (propagate(train, c) - target).ravel(),
+        current,
+        bounds=([0.0, 0.0], [0.6, 0.01]),
+        loss="soft_l1",
+        f_scale=0.02,
+        x_scale=current,
+    )
     if not fit.success:
         raise ValueError(fit.message)
-    models = dict(gravity=[0., 0.], current=current, match_fit=fit.x.tolist())
+    models = dict(gravity=[0.0, 0.0], current=current, match_fit=fit.x.tolist())
     scores = {name: score(held, coeff) for name, coeff in models.items()}
-    by_player = {player: {name: score([r for r in held if r.player == player], coeff)
-                          for name, coeff in models.items()} for player in sorted(HELD)}
+    by_player = {
+        player: {
+            name: score([r for r in held if r.player == player], coeff) for name, coeff in models.items()
+        }
+        for player in sorted(HELD)
+    }
     sim, starts = compact_court()
-    report = dict(source_commit=SOURCE, source_sha256=SHA256,
-                  counts={p: sum(r.player == p for r in rows) for p in sorted({r.player for r in rows})},
-                  training_flights=len(train), held_flights=len(held), held_players=sorted(HELD),
-                  held_rallies=len({(r.player, r.key.rsplit("/", 1)[0]) for r in held}),
-                  held_scores=scores, by_player=by_player, compact_seeds=starts,
-                  measured_reference={k: quantiles(v) for k, v in reference.items()},
-                  compact_match={k: quantiles(v) for k, v in sim.items()})
+    report = dict(
+        source_commit=SOURCE,
+        source_sha256=SHA256,
+        counts={p: sum(r.player == p for r in rows) for p in sorted({r.player for r in rows})},
+        training_flights=len(train),
+        held_flights=len(held),
+        held_players=sorted(HELD),
+        held_rallies=len({(r.player, r.key.rsplit("/", 1)[0]) for r in held}),
+        held_scores=scores,
+        by_player=by_player,
+        compact_seeds=starts,
+        measured_reference={k: quantiles(v) for k, v in reference.items()},
+        compact_match={k: quantiles(v) for k, v in sim.items()},
+    )
     OUTPUT.mkdir(exist_ok=True)
     (OUTPUT / "recorded-flight.json").write_text(json.dumps(report, indent=2, allow_nan=False) + "\n")
     return report
