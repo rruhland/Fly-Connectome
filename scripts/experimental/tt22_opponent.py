@@ -175,7 +175,7 @@ def _stroke(arena, timeline, time, ball, pace, lead, pitch, lateral, rise, headi
     return np.column_stack((goals, -goals[:, 0] - heading))
 
 
-def _rank(arena, centers, speeds, lane):
+def _rank(arena, centers, speeds, lane, receiving_depth_shift=0.):
     """Use the physical trajectories to rank a useful incoming window after landing."""
     position, velocity = centers[:, :-1], speeds[:, :-1]
     near = (abs(position[..., 0]) < arena.table_half_width + .008)
@@ -209,12 +209,14 @@ def _rank(arena, centers, speeds, lane):
         end = strike + int(lands[1]) if len(lands) > 1 else len(centers[index])
         sample = centers[index, land + 1:end]
         speed = speeds[index, land + 1:end]
-        usable = ((abs(sample[:, 0]) < .38) & (sample[:, 1] > -1.14) & (sample[:, 1] < -.745)
+        usable = ((abs(sample[:, 0]) < .38)
+                  & (sample[:, 1] > -1.14 - receiving_depth_shift)
+                  & (sample[:, 1] < -.745 - receiving_depth_shift)
                   & (sample[:, 2] > TABLE_HEIGHT + .05) & (sample[:, 2] < TABLE_HEIGHT + .47)
                   & (speed[:, 1] < -.45))
         use = np.flatnonzero(usable)
         if not len(use):
-            cost = 8. + abs(position[index, land, 0]) + abs(position[index, land, 1] + .66)
+            cost = 8. + abs(position[index, land, 0]) + abs(position[index, land, 1] + .66 + receiving_depth_shift)
             reach = None
         else:
             xyz = sample[use] - [0., 0., TABLE_HEIGHT]
@@ -238,9 +240,10 @@ def _rank(arena, centers, speeds, lane):
 class RallyOpponent(RivalSearch):
     """Replan a separate rate-limited rival arm on each actual learner strike."""
 
-    def __init__(self, arena, inherited, lane, target_profile=None):
+    def __init__(self, arena, inherited, lane, target_profile=None, receiving_depth_shift=0.):
         self.lane = lane
         self.target_profile = target_profile
+        self.receiving_depth_shift = receiving_depth_shift
         super().__init__(arena, inherited)
         self.incoming = Incoming(arena)
         self.check = copy(arena)
@@ -252,11 +255,15 @@ class RallyOpponent(RivalSearch):
 
     def target(self):
         if self.target_profile is not None:
-            return self.target_profile
-        if self.lane == 'anchor':
-            return ANCHOR
-        index = (self.arena.seed + self.arena.contacts - 1) % len(VARIED)
-        return VARIED[index]
+            target = self.target_profile
+        elif self.lane == 'anchor':
+            target = ANCHOR
+        else:
+            index = (self.arena.seed + self.arena.contacts - 1) % len(VARIED)
+            target = VARIED[index]
+        if self.receiving_depth_shift:
+            return (target[0], target[1] - self.receiving_depth_shift, *target[2:])
+        return target
 
     def command(self, bias, target_depth, scale):
         arena = self.arena
@@ -299,7 +306,7 @@ class RallyOpponent(RivalSearch):
 
     def _rank_paths(self, paths, lane):
         return _rank(self.arena, paths[..., self.position:self.position+3],
-                     paths[..., self.velocity:self.velocity+3], lane)
+                     paths[..., self.velocity:self.velocity+3], lane, self.receiving_depth_shift)
 
     def confirm(self, ranked, tapes, record):
         arena, check = self.arena, self.check
@@ -330,13 +337,14 @@ class RallyOpponent(RivalSearch):
                         return dict(candidate, exact_landing=landing, exact_tick=landing_tick)
                     x, y, z = check.ball - [0., 0., TABLE_HEIGHT]
                     vy = -check.velocity[1]
-                    if -.1 + target[1] < y < -.72 and .055 < z < .46 and abs(x) < .40 and vy > .45:
+                    in_depth = target[1] - .1 < y < -.72 - self.receiving_depth_shift
+                    if in_depth and .055 < z < .46 and abs(x) < .40 and vy > .45:
                         sample = np.asarray((x, y, z, vy, check.velocity[0], check.velocity[2])
                                             if phase else (x, y, z, vy))
                         error = float(weights @ np.abs(sample - target))
                         if error < cost:
                             choice, cost = sample.tolist(), error
-                    if check._last_hitter == 1 or y <= -1.10:
+                    if check._last_hitter == 1 or y <= -1.10 - self.receiving_depth_shift:
                         break
                 if done or capped:
                     break
@@ -349,8 +357,8 @@ class RallyOpponent(RivalSearch):
         return best
 
 
-def install_rally_opponent(arena, lane='anchor', *, target_profile=None):
-    """Install the practice rival without changing ball state or referee rules."""
+def install_rally_opponent(arena, lane='anchor', *, target_profile=None, align_to_end=False):
+    """Install a physical rival. End alignment follows the receiving end as the table length changes."""
     if lane not in ('anchor', 'varied'):
         raise ValueError('expected anchor or varied rally targets')
     if target_profile is not None:
@@ -360,7 +368,8 @@ def install_rally_opponent(arena, lane='anchor', *, target_profile=None):
     inherited = arena._aim
     response = arena._choose_rival_response
     reset = arena.reset
-    opponent = RallyOpponent(arena, inherited, lane, target_profile)
+    shift = arena.table_half_length - .80 if align_to_end else 0.
+    opponent = RallyOpponent(arena, inherited, lane, target_profile, shift)
 
     def opening(*args, **kwargs):
         opponent.reset()
