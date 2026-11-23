@@ -1,5 +1,9 @@
 # M1B research handoff
 
+## Recommended online motor learner
+
+A single live stream of Pong commands and encoders updates the drive estimate at each point break. A rolling 0.5 MB numeric history reproduced both independently qualified full-map fits after twelve points, then continued past the window limit. On 32 stock wrist drops across two fresh cohorts those maps reached ten consecutive rebounds on 14/32 versus 1/32 with the stale mapping. Moving the electronics to the altered body reduced ten-rebound starts to 2/12. [Watch Pong and the first wrist release](../../artifacts/tt24/pong-to-wrist.mp4) · [Load the continuing estimator and check timing](../../artifacts/tt24/rolling-motor.md)
+
 ## Body learning during native Pong transfers on the first bounce games
 
 The first half-second of ordinary physical joystick motion by a reward-trained native Pong player identified one changed actuator direction. Without any target practice, the carried wrist policy reached ten consecutive rebounds on 9/12 fresh drops, versus 5/12 with the original map. Two seconds produced the same count, or 0/12 with shuffled command and encoder timing. An earlier paired experiment found that two interfaces indistinguishable in the source game behaved very differently in five-axis wrist play. The unobserved dense change gave zero ten-rebound runs across ten starts. [Source play, controls and transfer](../../artifacts/tt24/pong-arm-report.md)

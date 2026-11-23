@@ -4,8 +4,8 @@ The live recursive learner qualified one of the two drive matrices. On its eight
 
 | Drive | Online evaluator matrix error | Stored batch error | Wrist qualification |
 |---|---:|---:|---|
-| 0 | 35.19% | 13.28% | Stopped at the source check |
-| 1 | 14.43% | 5.31% | Passed |
+| 0 | 35.19% | 13.32% | Stopped at the source check |
+| 1 | 14.43% | 5.29% | Passed |
 
 On each of six independent native source points per drive, the physically repeated play reproduced the archived public events exactly. On both drives every held encoder row improved over stale, but the first drive's error across the actual five-dimensional matrix remained above 22%. The estimator received no evaluator matrix, target reward or contact label.
 

@@ -1,6 +1,6 @@
 # SO-101 direct control and transfer
 
-[Learning all five motor responses while playing Pong](learned-tip-transfer.md) · [Half a second on a single direction](pong-arm-report.md) · [Watch 428 consecutive rebounds](long-wrist-428.mp4) · [Two-minute stock and altered-arm results, including every early failure](long-wrist.md)
+[Watch native Pong transfer into wrist bouncing](pong-to-wrist.mp4) · [Resumable online motor learning](rolling-motor.md) · [Both physical bodies](learned-tip-transfer.md) · [Half a second on a single direction](pong-arm-report.md) · [Watch 428 consecutive rebounds](long-wrist-428.mp4) · [Two-minute stock and altered-arm results, including every early failure](long-wrist.md)
 
 [Load the continual wrist learner](continual-wrist.md) · [Inspecting a hidden change before the current release](current-pause.md) · [Watch it use an unfamiliar control interface](motor-interface-paired.mp4) · [See the learned interface in table tennis](settled-match-witness.mp4)
 
