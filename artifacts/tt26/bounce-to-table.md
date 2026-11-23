@@ -38,8 +38,27 @@ We discarded the learned correction completely. The only information carried int
 
 The bounce-informed order reached **50% held returns after 24 target probes**. Uniform exploration averaged **26%** at 24 and reached 50% at 88, once it had tried all five joints. Three altered grips benefited early, and the fourth and the neutral control already did as well without an adjustment. The 24 held variants were reused across grips and orderings. This result applies to grip rotations around the handle. [All measured actions and budget curves](exploration-transfer.json.gz)
 
+## Transfer from watching impacts
+
+In a separate experiment, the robot learned the paddle-face change by observing how the ball rebounded during solo play. In a chronological test with different drops for the old and new grip, a single new solo drop raised legal beginner returns from 62/192 to 97/192 without any practice at the table. The test included a new mounting axis. A separately trained continuation subsequently produced one second legal return on a held launch variant. [Observations, corrections, fresh recorded-ball tests and rally limits](visible-impacts.md)
+
 ## Other transfer mechanisms
 
 A motor predictor fitted from bounce-time encoders reduced mean angular tracking error on a lagged servo test from 19.21 to 17.91 milliradians. Legal returns stayed tied. More aggressive inverse feedback performed worse. An independently optimized varied-drop actor doubled wrist-camera rebound counts on the varied course and reduced performance on ordinary drops. [Motor prediction, tracking, and the source tradeoff](bounce.md)
 
 Fitting paddle restitution from physically verified rebounds matched the existing cold reflection estimate on the standard paddle. It gave identical held results. On a softer paddle, cold returned two nearby shots and the fitted variant returned none. This fit used simulator impact measurements during teaching. Those trials provide no evidence of target gains from that particular collision model. [Collision-learning experiments](match-rebound.md)
+
+## Reproduction
+
+From the repository root, the following sequence runs the source, physically measures receiving speed, and reloads the shared state. Supply the [original DeepMind rallies JSON identified by the benchmark hash](../tt25/recorded-benchmarks.md). Each target runner checks the source file before using it. The project environment needs MuJoCo and an EGL-capable renderer.
+
+```bash
+export MUJOCO_GL=egl PYTHONPATH=.:src OPENBLAS_NUM_THREADS=1 LP_NUM_THREADS=1
+python -m scripts.experimental.tt26_grip_course source
+python -m scripts.experimental.tt26_receiving_speed /path/to/rallies.json
+python -m scripts.experimental.tt26_round_trip
+python -m scripts.experimental.tt26_free_joints practice
+python -m scripts.experimental.tt26_carried_player /path/to/rallies.json
+```
+
+For the independent impact-based transfer, run `tt26_bounce_optics` and then `tt26_few_drops /path/to/rallies.json` under the same module prefix. All evaluation commands operate on the simulated robot.

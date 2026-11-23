@@ -36,3 +36,26 @@ def test_exploration_uses_only_outcomes_of_queried_joints():
     scores = np.array([2, 0, 0, 5, 1, 2, 3, 2, 0, 4, 1])
     order = [4, 0, 1, 2, 3]
     assert decisions(scores, order) == [0, 0, 6, 6, 3, 3]
+
+
+def test_tool_attitude_transport_preserves_nominal_and_corrects_twist():
+    from scipy.spatial.transform import Rotation
+    from scripts.experimental.tt26_optical_transfer import transport
+
+    class PlanarLinks:
+        def read(self, angles):
+            return np.zeros((len(angles), 3)), Rotation.from_euler("z", angles[:, 4]).as_matrix().reshape(
+                -1, 3, 3
+            )
+
+    class Tool:
+        normal = np.array([1.0, 0.0, 0.0])
+        offset = np.zeros(6)
+        links = PlanarLinks()
+
+    rig = Tool()
+    goal = np.zeros(5)
+    bounds = (-np.ones(5), np.ones(5))
+    np.testing.assert_array_equal(transport(rig, goal, np.eye(3), bounds), goal)
+    offset = transport(rig, goal, Rotation.from_euler("z", 0.24).as_matrix(), bounds)
+    np.testing.assert_allclose(offset, [0, 0, 0, 0, -0.24], atol=0.002)

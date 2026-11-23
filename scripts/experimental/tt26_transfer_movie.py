@@ -99,6 +99,15 @@ def run():
         and r["results"]["bounce"]["far"] > 0
         and r["results"]["cold"]["near"] == 0
     )
+    followup = next(
+        case for case in _read(OUT / "match-continuation.json.gz")["held"] if case["result"]["near"] >= 2
+    )
+    opening = next(r for r in games if r["angle"] == followup["angle"] and r["idx"] == followup["idx"])
+    played = dict(
+        angle=opening["angle"],
+        shot=opening["shot"],
+        results={"cold": opening["results"]["bounce"], "bounce": followup["result"]},
+    )
     segments = [
         ("Wrist-camera paddle bouncing", "Same release, spin and arm", bounce_frames, solo, "Rebounds"),
         (
@@ -109,6 +118,15 @@ def run():
             "Legal returns",
         ),
     ]
+    segments.append(
+        (
+            "Recovering for the opponent’s reply",
+            "Same opening and grip, after separate match practice",
+            match_frames,
+            played,
+            "Legal returns",
+        )
+    )
     out = OUT / "bounce-to-table.mp4"
     args = [
         "ffmpeg",
@@ -147,9 +165,10 @@ def run():
                 draw = ImageDraw.Draw(canvas)
                 draw.text((12, 6), title, fill="white", font=font(22, True))
                 draw.text((12, 35), note, fill="#c8dce4", font=font(15))
+                recovery = row is played
                 for x, images, label in [
-                    (12, left, "Before solo practice"),
-                    (396, right, "After solo practice"),
+                    (12, left, "Before reply practice" if recovery else "Before solo practice"),
+                    (396, right, "After reply practice" if recovery else "After solo practice"),
                 ]:
                     view, score = images[min(t, len(images) - 1)]
                     canvas.paste(view, (x, 84))
@@ -170,6 +189,8 @@ def run():
             bounce_seed=solo["plan"]["learner_seed"],
             point=game["idx"],
             recording_id=game["shot"]["id"],
+            recovery_variant=[followup["angle"], followup["idx"]],
+            recovery_selection="first held continuation point with a second legal return",
             selection="first fresh attitude-aware wrist release reaching ten consecutive and first matching-grip positive paired point",
             verified=True,
         ),
