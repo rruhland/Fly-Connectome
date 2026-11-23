@@ -34,6 +34,8 @@ The two additional branches use the same held schedule, RGB size and body-state 
 
 The broader bank increased second-return frequency at both neighborhood sizes. The two fifth returns occurred with the broader bank at 28 neighbors. All 48 additional physical tapes passed strict command replay. [Broader fit at 20 neighbors](rally-bank-matched-locality.json.gz) · [Original fit at 28 neighbors](rally-bank-original-wide-locality.json.gz)
 
+A follow-up changes the visual temporal features and how the pupil converts observation to joint rates. It also uses separate active reward and corrective-practice schedules. [Direct rate and corrective-practice study](rally-improve.md)
+
 ## Reproduce
 
 Use the [TT23 environment](../tt23/tt23_sequence.md#reproduce) and the earlier [rally training banks](rally.md#reproduce).
