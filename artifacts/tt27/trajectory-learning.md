@@ -53,11 +53,34 @@ In 70 end-to-end live points on the earlier independent roster (38 nearby, 32 un
 
 The cameras also measured four lateral clamp movements (4.5 to 13 cm in magnitude) to within 0.7 mm using the ordinary red paddle face at rest. Changing the target joint posture to preserve the predicted final paddle position and normal reduced opening returns to 15/112 nearby feeds versus 26/112 with the uncorrected policy. Correctly locating the base was insufficient to control the moving paddle at contact. Returning the clamp to its original position restored identical outcomes for all gains. [Physical mounting trials](mount-position.json.gz)
 
+## Can a better choice among the learned motions solve a new opening?
+
+On 38 original recordings excluded from the preceding 210- and 370-shot evaluations, we physically executed every one of the 56 learned joint goals on every opening. Of 19 recordings from the neighborhoods of practiced shots, 14 elicited contact with at least one goal and four had a legal option. Of 19 unrestricted recordings, nine elicited contact and three had a legal option. An evaluator with hindsight could return seven of 38 from the fixed library. This ceiling applies to these 56 goals with their fixed start time and motor rate. It places no limit on a controller that changes its motion. [All 2,128 executions](action-coverage.json.gz)
+
+The online comparison started with the goal nearest to the first four camera observations. After a miss it tried a different goal, favoring similar poses when the referee reported contact. It got three of 38 on the first try. Repeating each identical opening for up to five attempts added two successes, on attempts four and five. Each selected action reproduced its events during a separate live replay. The other 55 outcomes on a given shot were available only to the evaluator. [Implementation](../../scripts/experimental/tt27_action_coverage.py)
+
+We then allowed eight attempts per original shot and tested the accepted setting on four previously unseen variations. All branches started with the same camera-selected movement and received the legal-return reward. Three also received the referee’s contact bit. The branch called reward only used the number of previous misses to decide when to vary its movement. The shift memory held 128 small joint differences from past failures followed by successful training attempts. [Each branch’s own actions and independent variations](contact-refine.json.gz) · [Implementation](../../scripts/experimental/tt27_contact_refine.py)
+
+| Exploration strategy | Recordings returned within three tries, of 38 | Within five | Within eight | Legal returns on 152 new variations |
+| --- | ---: | ---: | ---: | ---: |
+| Search the fixed library after a miss | 3 | 5 | 5 | 11 |
+| After contact, try a continuous shift learned from prior corrections | 3 | 3 | 4 | 10 |
+| After contact, perturb either of the last two active joints | 3 | 4 | 5 | 8 |
+| Try previously learned shifts with legal reward alone | 3 | 3 | 3 | 8 |
+
+The two-joint perturbation returned two original recordings for which every one of the 56 stored goals failed. It needed five and eight attempts respectively. The acquired goals returned only one of the eight subsequent variations of those two shots. Changing the movement can overcome the measured library limit, but carrying these small corrections did not yield dependable ball control. The two exploration axes and their amplitudes were chosen by the experimenter.
+
+## Preparing for a changed trajectory
+
+A camera-selected receiving policy had 14 control ticks before release to move toward or away from the posture it used for the preceding approach. The practice comparison exercised all six preparations. During evaluation the carried learner saw only the reward from its chosen preparation. We checked that the first four images yielded the same choice of receiving action across all six preparations on every feed. With varied table damping and fresh launches near practiced shots, carrying the reward history scored 36/90, level with the neutral ready position. Always moving 20% toward the previous receiving posture scored 14/90. On fresh variations of ten unfamiliar recordings, carrying scored 2/90 versus 1/90 neutral. Changing where the arm waited did little to recover these trajectories. [Paired physical trials and chronological rewards](ready-learning.json.gz)
+
+A timing replay reproduced all motor commands and referee events of the four-return regulation point. With other experiments running on this host, the active reply controller took 5.8 ms per frame at the median and 17.4 ms at the 95th percentile. Generating the camera observations took 35.5 ms per frame at the median. The full 4.77 simulated seconds took 16.79 wall seconds including simulation and opposing-arm planning. This measures simulator throughput on one point. [Per-component timings](control-clock.json)
+
 ## Reproduction
 
 The input file is the same hash-checked DeepMind measured-launch dataset used in the regulation benchmark. [Dataset and reference measurements](../tt25/recorded-benchmarks.md) · [Google DeepMind table tennis data](https://github.com/google-deepmind/competitive_robot_table_tennis)
 
-Run from the repository root with the project’s MuJoCo dependencies and set `MUJOCO_GL=egl`, `PYTHONPATH=.:src`, `LP_NUM_THREADS=1` and `OPENBLAS_NUM_THREADS=1`. Each command below accepts the downloaded measured-launch JSON as its final positional argument.
+Run from the repository root with the project’s MuJoCo dependencies and set `MUJOCO_GL=egl`, `PYTHONPATH=.:src`, `LP_NUM_THREADS=1` and `OPENBLAS_NUM_THREADS=1`. Commands with a dataset argument use the downloaded measured-launch JSON. The context-memory evaluation reads the preceding surface trial.
 
 ```sh
 python -m scripts.experimental.tt27_flight_feedback /path/to/rallies.json
@@ -74,7 +97,11 @@ python -m scripts.experimental.tt27_growing_games /path/to/rallies.json
 python -m scripts.experimental.tt27_lateral_practice /path/to/rallies.json
 python -m scripts.experimental.tt27_lateral_confirm /path/to/rallies.json
 python -m scripts.experimental.tt27_workspace_audit /path/to/rallies.json
+python -m scripts.experimental.tt27_action_coverage /path/to/rallies.json
+python -m scripts.experimental.tt27_contact_refine /path/to/rallies.json
 python -m scripts.experimental.tt27_crosswind /path/to/rallies.json
+python -m scripts.experimental.tt27_ready_learning /path/to/rallies.json
+python -m scripts.experimental.tt27_control_clock /path/to/rallies.json
 python -m scripts.experimental.tt27_full_points /path/to/rallies.json
 python -m scripts.experimental.tt27_full_points --nearby /path/to/rallies.json
 python -m scripts.experimental.tt27_full_points --align-to-end /path/to/rallies.json
