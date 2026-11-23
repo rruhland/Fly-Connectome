@@ -22,3 +22,5 @@ The original wrist experiment with direct target reward learning averaged 3.36 r
 [Eight-drop target adaptation and source retention](donor-adaptation.md) · [Unknown camera delay and recovery](latency.md) · [Side-fed native Pong test](tt24_side_feed.md)
 
 ![Learning during a hardware switch and paired wrist recalibration](transfer-progress.png)
+
+[Can partner rallies teach solo bouncing?](partner-transfer.md) · [Single-flight delivery](tt24_volley_source.md) · [Reverse transfer to delivery](donor-volley.md) · [Recognizing a returning body](context-residual.md) · [Learning generic motor features from donor wrist recordings](universal-donor-images.md) · [Native Pong outcome credit](tt24_outcome_pong.md) · [Two visually similar balls](object-transfer.md)

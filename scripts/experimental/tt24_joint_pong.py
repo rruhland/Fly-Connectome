@@ -51,7 +51,7 @@ def field(frame, old, velocity, visible):
 
 
 @torch.no_grad()
-def arcade(weights, seeds, *, cap=CAP, opponent=.45):
+def arcade(weights, seeds, *, cap=CAP, opponent=.45, witness=None):
     """Run the installed batched Pong native physics and its actual raster."""
     weights = np.repeat(np.asarray(weights).reshape(-1, len(MODE_COLUMNS)), len(seeds), axis=0)
     game = Pong(list(seeds) * (len(weights) // len(seeds)), Physics(opponent_speed=opponent))
@@ -77,6 +77,8 @@ def arcade(weights, seeds, *, cap=CAP, opponent=.45):
             observation = np.stack((gap, tangent, pose, np.clip(gap * normal, -3., 3.)), axis=1)
             offset = .36 * np.tanh((observation * weights).sum(axis=1))
             paddle_speed = .70 * paddle_speed + .30 * (paddle - previous_paddle) * (120 / STRIDE)
+            if witness is not None:
+                witness.sample(paddle, paddle_speed, old, velocity, seen & current)
             request = np.clip(-11. * (anchor + offset - paddle) + 1.35 * paddle_speed, -1., 1.)
             # Native motor convention: positive analog drive moves the image upward.
             # A missing mover leaves the last issued request in place until another camera return.
@@ -85,7 +87,10 @@ def arcade(weights, seeds, *, cap=CAP, opponent=.45):
         result = game.step(torch.from_numpy(action.astype(np.float32)), auto_reset=False)
         scored = result.scores.numpy()
         age += current
-        hits += result.hits.numpy() * current
+        contacts = result.hits.numpy()
+        hits += contacts * current
+        if witness is not None:
+            witness.outcome(contacts, scored, current)
         score += scored * current
         current &= scored == 0
         if not current.any():

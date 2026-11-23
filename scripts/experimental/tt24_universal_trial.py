@@ -143,8 +143,8 @@ def calibrate(worlds, first, cap):
     changes = np.concatenate([np.diff(normalize(row), axis=0) for row in probe_data + neutral_data])
     eigenvalues, vectors = np.linalg.eigh(changes.T @ changes / len(changes))
     order = np.argsort(-eigenvalues)
-    psychophysics = normalize(np.asarray(endpoint))
-    difference = (psychophysics[:, :, 1] - psychophysics[:, :, 0]) / 2.
+    scaled_endpoints = normalize(np.asarray(endpoint))
+    difference = (scaled_endpoints[:, :, 1] - scaled_endpoints[:, :, 0]) / 2.
     response = difference.mean(axis=0).T
     _, _, sensitive = qr(response.T, pivoting=True, mode='economic')
     inverse = np.linalg.solve(response.T @ response + .08**2 * np.eye(5), response.T)

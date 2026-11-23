@@ -70,13 +70,13 @@ class DonorBounce(BounceArena):
 
 
 class Native:
-    def __init__(self):
+    def __init__(self, source=NATIVE):
         self.working = TemporaryDirectory(prefix='tt24_donor-')
         library = Path(self.working.name) / 'donor.so'
         package = Path(mujoco.__file__).parent
         engine = package / f'libmujoco.so.{mujoco.__version__}'
         subprocess.run(['c++', '-std=c++17', '-O3', '-ffp-contract=off', '-shared', '-fPIC', '-I',
-                        str(package / 'include'), str(NATIVE), str(engine), f'-Wl,-rpath,{package}',
+                        str(package / 'include'), str(source), str(engine), f'-Wl,-rpath,{package}',
                         '-o', str(library)], check=True)
         self.so = ctypes.CDLL(str(library))
         pointer, integer = ctypes.c_void_p, ctypes.c_int
