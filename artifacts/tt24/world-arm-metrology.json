@@ -1,0 +1,27 @@
+{
+  "seed": 552917,
+  "arm": "stock",
+  "states": "simulator pose metrology only",
+  "public_sensor": false,
+  "game_reward_observations": 0,
+  "ball_contacts": 0,
+  "runs": 8,
+  "ticks_per_run": 96,
+  "total_seconds": 12.8,
+  "train_runs": 6,
+  "held_runs": 2,
+  "peak_to_peak_effect": [
+    0.1782469044423564,
+    0.13143029979146126,
+    0.12535192409783819,
+    0.32278094662855805,
+    0.4894445984272792
+  ],
+  "peak_to_peak_goal": [
+    0.09775186572462863,
+    0.10411472023877479,
+    0.055690108686025454,
+    0.2656157019412328,
+    0.2655908047318731
+  ]
+}

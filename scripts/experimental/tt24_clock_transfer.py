@@ -67,10 +67,10 @@ def evaluate(arena,seeds,reference,gravity,mode):
             tempo=1.
             if mode=='diagnostic':
                 tempo=np.sqrt(gravity)
-            elif mode=='online' and len(recent)>=24:
+            elif mode in ('online','capped') and len(recent)>=24:
                 measured=np.median(recent,axis=0)
                 ratio=np.dot(measured,reference)/np.dot(reference,reference)
-                tempo=np.sqrt(np.clip(ratio,.48,1.90))
+                tempo=np.sqrt(np.clip(ratio,.48,1. if mode=='capped' else 1.90))
             state[3:6]/=tempo
             u=pupil.actor.command(_features(state,obs['joints'],home),pupil.issued)
             u=np.clip(tempo*u,-1,1) if mode!='hold' else np.zeros(5)
@@ -95,6 +95,7 @@ def main():
     p.add_argument('out',type=Path)
     p.add_argument('--seed',type=int,default=45181092)
     p.add_argument('--count',type=int,default=8)
+    p.add_argument('--confirm',action='store_true')
     args=p.parse_args()
     rng=np.random.default_rng(args.seed)
     env=BounceArena(view='wrist',width=192,height=144,max_steps=450)
@@ -103,7 +104,8 @@ def main():
     finally:
         env.close()
     doc=dict(reference=reference.tolist(),nominal_experience=cost,verified=True,regimes=[])
-    for gravity,mass in ((.69,.81),(1.38,1.34)):
+    regimes=((.73,1.12),(1.31,.92)) if args.confirm else ((.69,.81),(1.38,1.34))
+    for gravity,mass in regimes:
         env=BounceArena(view='wrist',width=192,height=144,max_steps=450)
         model=env._model
         model.opt.gravity[:]*=gravity
@@ -114,7 +116,8 @@ def main():
         reg=dict(gravity=gravity,mass=mass,seeds=seeds,modes={})
         doc['regimes'].append(reg)
         try:
-            for mode in ('native','online','diagnostic','hold'):
+            conditions=('native','capped','online','hold') if args.confirm else ('native','online','diagnostic','hold')
+            for mode in conditions:
                 rows=evaluate(env,seeds,reference,gravity,mode)
                 reg['modes'][mode]=rows
                 print(gravity,mode,[r['run'] for r in rows],flush=True)

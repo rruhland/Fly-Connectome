@@ -1,0 +1,223 @@
+{
+  "groups": {
+    "0": {
+      "pong": {
+        "consecutive": 37,
+        "total": 38,
+        "ten": 0,
+        "maximum": 7
+      },
+      "shuffled": {
+        "consecutive": 30,
+        "total": 30,
+        "ten": 0,
+        "maximum": 7
+      },
+      "cold": {
+        "consecutive": 18,
+        "total": 18,
+        "ten": 0,
+        "maximum": 3
+      },
+      "matched_cold": {
+        "consecutive": 16,
+        "total": 16,
+        "ten": 0,
+        "maximum": 2
+      },
+      "hold": {
+        "consecutive": 35,
+        "total": 35,
+        "ten": 0,
+        "maximum": 4
+      }
+    },
+    "1": {
+      "pong": {
+        "consecutive": 19,
+        "total": 19,
+        "ten": 0,
+        "maximum": 3
+      },
+      "shuffled": {
+        "consecutive": 6,
+        "total": 6,
+        "ten": 0,
+        "maximum": 3
+      },
+      "cold": {
+        "consecutive": 17,
+        "total": 17,
+        "ten": 0,
+        "maximum": 3
+      },
+      "matched_cold": {
+        "consecutive": 24,
+        "total": 24,
+        "ten": 0,
+        "maximum": 4
+      },
+      "hold": {
+        "consecutive": 28,
+        "total": 28,
+        "ten": 0,
+        "maximum": 4
+      }
+    },
+    "2": {
+      "pong": {
+        "consecutive": 3,
+        "total": 3,
+        "ten": 0,
+        "maximum": 1
+      },
+      "shuffled": {
+        "consecutive": 5,
+        "total": 5,
+        "ten": 0,
+        "maximum": 2
+      },
+      "cold": {
+        "consecutive": 13,
+        "total": 13,
+        "ten": 0,
+        "maximum": 2
+      },
+      "matched_cold": {
+        "consecutive": 10,
+        "total": 10,
+        "ten": 0,
+        "maximum": 1
+      },
+      "hold": {
+        "consecutive": 40,
+        "total": 40,
+        "ten": 0,
+        "maximum": 5
+      }
+    },
+    "3": {
+      "pong": {
+        "consecutive": 17,
+        "total": 18,
+        "ten": 0,
+        "maximum": 3
+      },
+      "shuffled": {
+        "consecutive": 6,
+        "total": 6,
+        "ten": 0,
+        "maximum": 1
+      },
+      "cold": {
+        "consecutive": 16,
+        "total": 16,
+        "ten": 0,
+        "maximum": 2
+      },
+      "matched_cold": {
+        "consecutive": 27,
+        "total": 27,
+        "ten": 0,
+        "maximum": 5
+      },
+      "hold": {
+        "consecutive": 28,
+        "total": 28,
+        "ten": 0,
+        "maximum": 4
+      }
+    },
+    "4": {
+      "pong": {
+        "consecutive": 21,
+        "total": 21,
+        "ten": 0,
+        "maximum": 3
+      },
+      "shuffled": {
+        "consecutive": 6,
+        "total": 6,
+        "ten": 0,
+        "maximum": 2
+      },
+      "cold": {
+        "consecutive": 17,
+        "total": 17,
+        "ten": 0,
+        "maximum": 2
+      },
+      "matched_cold": {
+        "consecutive": 21,
+        "total": 21,
+        "ten": 0,
+        "maximum": 4
+      },
+      "hold": {
+        "consecutive": 33,
+        "total": 33,
+        "ten": 0,
+        "maximum": 4
+      }
+    },
+    "5": {
+      "pong": {
+        "consecutive": 24,
+        "total": 24,
+        "ten": 0,
+        "maximum": 5
+      },
+      "shuffled": {
+        "consecutive": 21,
+        "total": 22,
+        "ten": 0,
+        "maximum": 5
+      },
+      "cold": {
+        "consecutive": 21,
+        "total": 21,
+        "ten": 0,
+        "maximum": 3
+      },
+      "matched_cold": {
+        "consecutive": 23,
+        "total": 23,
+        "ten": 0,
+        "maximum": 4
+      },
+      "hold": {
+        "consecutive": 29,
+        "total": 29,
+        "ten": 0,
+        "maximum": 4
+      }
+    }
+  },
+  "primary_totals": {
+    "pong": {
+      "consecutive": 84,
+      "total": 85,
+      "ten": 0
+    },
+    "shuffled": {
+      "consecutive": 44,
+      "total": 45,
+      "ten": 0
+    },
+    "cold": {
+      "consecutive": 84,
+      "total": 84,
+      "ten": 0
+    },
+    "matched_cold": {
+      "consecutive": 105,
+      "total": 105,
+      "ten": 0
+    },
+    "hold": {
+      "consecutive": 158,
+      "total": 158,
+      "ten": 0
+    }
+  }
+}

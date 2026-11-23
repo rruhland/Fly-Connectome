@@ -1,0 +1,41 @@
+# From source bouncing worlds to an articulated wrist
+
+A reward-trained controller achieved ten rebounds on every one of 256 fresh drops on a five-axis MuJoCo Cartesian gantry. With the same readout driving an SO-101 through its wrist camera and a local inverse, it often lost the ball earlier than a stationary paddle. The source learned genuine powered rebounds. Carrying a requested blade position and tilt between the bodies left a substantial gap in actual play.
+
+| Where the frozen readout played | Matched drops | Analytic-source controller | Gantry-refined controller | Stationary |
+| --- | ---: | ---: | ---: | ---: |
+| MuJoCo gantry, nominal | 128 | 18.16 | 19.52 | 2.55 |
+| MuJoCo gantry, wider dynamics | 128 | 17.77 | 19.29 | 2.04 |
+| SO-101, stock wrist RGB and encoder observer learned from public calibration | 16 | 1.44 | 1.38 | 2.56 |
+
+The gantry rows show mean total verified rebounds. The arm row shows mean **longest consecutive streak**. Gantry refinement increased the nominal mean consecutive streak from 18.16 to 19.04. The analytic world's receiving contract supplies relative ball position and velocity, blade pose, and a shared horizontal orientation convention. The source search took 14.6 s for 732,160 training rollouts, and the gantry refinement used 4,608 additional scored episodes. Both source games explicitly practiced bouncing. [Analytic source and training exposure](world-prior.md) · [Gantry source and held physics](gantry-source.md) · [Stock wrist](world-arm-fused-fused.json.gz) · [Gantry carry](world-arm-fused-gantry.json.gz)
+
+On the arm, training with dynamics identified during 864 frames of public, ball-free motor play increased mean score on fitted source worlds from 15.91 to 20.71, while dropping to 0.44 mean consecutive rebounds on the wrist. A higher-arc source objective substantially improved survival through strong source disturbances, yet still gave 1.44 per physical wrist drop. Selecting among six body gains with twelve actual practice attempts per independent course led to summed held streaks of 32, 22 and 66 against stationary totals of 34, 28 and 25. One course benefited and the other two lost ground. [Body dynamics](world-prior-body.md) · [High-arc dynamics](world-margin.md) · [Body-aligned wrist](world-arm-fused-aligned.json.gz) · [High-arc wrist](world-arm-fused-margin.json.gz) · [Gain search](world-arm-gains.json.gz)
+
+Even feeding accurate simulator state and a true jaw-point Jacobian into the analytic policy produced only 21 summed longest streaks versus 41 stationary on sixteen stock starts. The Jacobian uses the gripping jaw body at the blade center because the physical racket is attached by a weld constraint. A separate round-trip test sent a practiced motor policy's desired pose through the ordinary learned inverse and recovered 55 summed streaks versus 61 for its usual actuator output and 16 stationary. The shared pose interface can express much of an already effective physical policy. [State and inverse diagnostic](world-diagnostic-stock.json.gz) · [Round-trip controls](world-arm-interface.json.gz)
+
+## Wrist sensing from eight unlabelled drops
+
+Eight short generic probe drops supplied 337 frames of wrist and calibrated outside-camera RGB plus encoders. The calibration used vendor link geometry, the visible disk silhouette, and changes in the ball's visually measured velocity. Deployed on the stock arm, this wrist-only observer and a **frozen motor readout previously taught with four demonstrations** achieved 204 summed longest streaks over sixteen new drops, versus 142 with the original observer and 40 stationary. Nine reached ten, the best reached 21, and all commands reproduced under physical replay. This isolates the quality of the learned observation and preserves the provenance of the motor skill. [Watch the first held drop, 21 vs 5 vs 2](public-carry-first-drop.mp4) · [Calibration and accuracy](public-body.md) · [Paired physical outcomes](public-carry.json.gz)
+
+The separate native Pong experiment used observed paddle movements to initialize twelve horizontal coefficients of the 42-coefficient policy, then learned all coefficients in the bouncing worlds. Across 24 source learning streams, a stronger qualified native player accelerated early learning relative to a zero start and shuffled Pong movements. Its paired difference against an equally large random initialization was +0.034 mean consecutive rebounds, with a 95% interval of −0.050 to +0.111. The native actor inherited visual tracking and interception rules. [Source lineage, controls and outcomes](pong-world-strong.md)
+
+## Physical confirmation of native Pong transfer
+
+The first registered Pong-initialized source stream, after eight updates in the cheap bouncing worlds, produced 59 summed consecutive rebounds on sixteen new wrist-only SO-101 launches. Shuffled Pong gave 34, and both cold controls gave 31. On twelve more launches that same stream scored 37 versus 35 stationary. To check sensitivity to source training, we reproduced the next five registered learning streams exactly and fixed twelve new physical starts per stream before testing. [First physical course](native-initialized-arm-pong.json.gz) · [Source replay hashes](pong-world-strong-bank.json) · [Prospective physical roster](native-bank-arm-plan.json)
+
+| Five additional source streams, 60 physical launches per condition | Pong | Shuffled Pong | Zero cold | Matched random | Stationary |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| Sum of longest consecutive streaks | 84 | 44 | 84 | 105 | 158 |
+| Total verified rebounds | 85 | 45 | 84 | 105 | 158 |
+| Drops reaching ten | 0 | 0 | 0 | 0 | 0 |
+
+The initial gain was specific to one trained policy. Coherent source motion helped relative to shuffling on aggregate, yet gave the same physical score as zero initialization and fewer rebounds than random or passive controls. All 360 confirmation tapes replayed. These source streams had cheap 3D practice and zero scored SO-101 training. [All independent physical summaries](native-bank-arm-summary.json) · [Runner](../../scripts/experimental/tt24_native_bank_arm.py)
+
+A second intervention gave the previously taught motor head its normal vertical flight inputs, removed its lateral ball cues, and let native Pong preferences request horizontal paddle displacement through the public inverse. On sixteen held drops with no additional practice, Pong scored 48 summed streaks, against 42 shuffled, 42 random and 37 with a zero horizontal target. The intact original body policy scored 91. These small differences cover one source readout on one held roster. [Coherent](native-composition-pong.json.gz) · [Matched shuffle](native-composition-shuffled.json.gz) · [Intact motor readout](native-composition-intact.json.gz) · [Composition method](../../scripts/experimental/tt24_native_composition.py)
+
+## Learning what the five joints actually do
+
+A predictive servo learned how encoders respond to issued rates in 14.4 s of ball-free movement and applied that model to independently generated reaching goals. With stock drives, blade-position tracking error fell from 17.14 to 8.24 mm; with weakened drives it fell from 20.73 to 10.20 mm. The largest improvement came in height, and horizontal x tracking deteriorated. Moving the frozen body-aligned source policy with that servo raised a 16-drop consecutive total from 9 to 23 against 40 stationary. [Independent reaching and game comparisons](predictive-body.md)
+
+First-impact geometry identified a second limitation. Between first blade contact and the next contact, median lateral travel was 95 mm for the original prior and 142 mm after gantry refinement. It was 28 mm holding still. The blade radius is 76 mm. The active controllers hit a hand, link, camera, handle or clamp on 16 of 32 launches, always after a blade contact. Supplying accurate obstacle locations to a short-horizon avoidance correction diverted two handle strikes to the table while preserving its 1.44 mean rebound score. The ball was already leaving the usable paddle area. [Substep contacts and matched interventions](clearance.md)

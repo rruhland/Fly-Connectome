@@ -1,5 +1,11 @@
 # M1B research handoff
 
+## Source learning, motor recall and public wrist calibration
+
+A source controller learned repeated rebounds using reward alone and reached ten in all 256 held MuJoCo gantry drops. Driving a five-hinge SO-101 through an inverse movement model exposed a transfer gap even with accurate state. On the stock arm, a wrist observer fitted to 337 frames of unlabelled optical/motor probes supported 204 summed consecutive rebounds in 16 drops when paired with the already taught motor readout, versus 142 using its old observer and 40 stationary. For a practiced wrist, a separate encoder-based memory recovered an earlier motor mapping during an ongoing drop in 8–14 ticks. [Body and world transfer](../../artifacts/tt24/source-world-transfer.md) · [Motor recall](../../artifacts/tt24/body.md#switching-motors-during-an-ongoing-bounce)
+
+The stronger native Pong actor reproduced 2,753 commands from its archived qualification. Carrying its observed lateral placements into cheap 3D reward learning helped against zero and shuffled initializations; the magnitude-matched random comparison was inconclusive. Across the next five independently trained source streams and 60 new SO-101 drops per condition, the physical summed streaks were 84 Pong, 44 shuffled, 84 zero, 105 matched random and 158 stationary. The initial positive physical seed did not generalize. [Stronger Pong results](../../artifacts/tt24/pong-world-strong.md) · [Physical confirmation](../../artifacts/tt24/native-bank-arm-summary.json)
+
 ## Direct joint control and body adaptation on November 22
 
 A direct stereo pupil won a 25-return physical point (13 near, 12 far). Across independent receiving cohorts, the best frequency reaching ten alternating returns was 3/24. Five probes learned during a different game restored twelve legal table-tennis returns from zero on 24 receiving starts after a wiring change. The arm drove itself from the first frame. [Current research index](../../artifacts/tt24/README.md) · [Native winning point](../../artifacts/tt24/match-bridge-native.mp4) · [Changed wiring, 10 vs 0](../../artifacts/tt24/match-bridge-changed.mp4)

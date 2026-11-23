@@ -68,3 +68,15 @@ A second controller uses the wrist policy's ordinary movements to estimate the c
 Both learned methods needed earlier stock practice. The ordinary-command method recalibrated early in one stock stream and needed a second correction on one return to stock. It recovered more early game reward and the dedicated probes produced a slightly stronger settled mapping. The policy already had target bouncing experience. This result uses a practiced motor readout that earns a few rebounds per drop. [Eight independent streams](voluntary-independent.json.gz) · [Development comparison](voluntary-development.json.gz) · [Learning curves](transfer-progress.png)
 
 An independent cross-game control transferred the decoder learned in five bounce probe drops directly to a table-tennis receiver facing the same new wiring. Across 24 fresh unassisted receiving points, it made 12 legal near-arm returns versus zero frozen, 22 with the known wiring inverse, and 37 on native wiring. It reached five near returns in one altered point, alternating ten times with the opponent. The stock pupil won a different point after 25 alternating legal returns. Each of the 96 two-arm tapes replayed. The table-tennis motor skill came from 48 archived table-tennis demonstrations. [Matched game receipts](bounce-to-match.json.gz) · [Changed wiring, 10 vs 0](match-bridge-changed.mp4) · [Native 25-return point](match-bridge-native.mp4)
+
+## Switching motors during an ongoing bounce
+
+The simulator silently changed the mapping from the five commands to the joints, together with actuator load, damping and ball drag, 24 frames into a drop. It later restored the original system during another drop. The controller compared observed joint motion with its own stored forward models, and learned a new inverse from its recent ordinary movements. Its nominal preparation used 1,920 ball-free frames and 719 frames of stock play. The practiced wrist motor readout came from four demonstrations. [Implementation](../../scripts/experimental/tt24_motor_recall.py) · [Stored nominal map](motor-recall-stock.npz)
+
+| Actual rebounds, four matched courses | First affected drop | Next three changed drops | Next five changed drops | Restoration drop plus next three |
+| --- | ---: | ---: | ---: | ---: |
+| Error-based memory and online correction | 9 | 31 | 98 | 88 |
+| Earlier online inverse | 6 | 14 | 88 | 21 |
+| Frozen controller | 7 | 17 | 26 | 82 |
+
+The memory recognized the original mapping 8–14 control ticks after restoration (0.13–0.23 s). On a fresh independent course, it scored 6 on the first affected drop versus 8 frozen, 22 versus 5 after the change settled, and 22 versus 22 across the three fully restored drops. Recognition took ten ticks. Each recorded physical action sequence reproduced its judged outcome. [Four courses](motor-recall.json.gz) · [Fresh course](motor-recall-fresh.json.gz)

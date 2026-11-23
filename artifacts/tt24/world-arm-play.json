@@ -1,0 +1,26 @@
+{
+  "seed": 552917,
+  "arm": "stock",
+  "states": "calibrated public encoders to metric effect, before each command",
+  "game_reward_observations": 0,
+  "ball_contacts": 0,
+  "runs": 8,
+  "ticks_per_run": 96,
+  "total_seconds": 12.8,
+  "train_runs": 6,
+  "held_runs": 2,
+  "peak_to_peak_effect": [
+    0.8933277152228628,
+    0.1422460745113095,
+    0.33732592389285465,
+    0.44683629313156953,
+    3.4677423804889465
+  ],
+  "peak_to_peak_goal": [
+    0.09775186572462863,
+    0.10411472023877479,
+    0.055690108686025454,
+    0.2656157019412328,
+    0.2655908047318731
+  ]
+}
