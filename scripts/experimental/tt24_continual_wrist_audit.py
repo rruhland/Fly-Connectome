@@ -2,6 +2,7 @@
 from concurrent.futures import ProcessPoolExecutor
 import gzip
 import json
+from time import perf_counter_ns
 
 import mujoco
 import numpy as np
@@ -15,7 +16,7 @@ from .tt24_ready import prepare_step
 from .tt24_single_arm_course import CAP
 
 
-def verify(index):
+def verify(index, profile=False):
     with gzip.open(ROOT/f"single-arm-course-{index}.json.gz","rt") as f:
         source=json.load(f)
     policy=ContinualWrist()
@@ -25,6 +26,7 @@ def verify(index):
         a.arena.max_steps=CAP
     server=BounceArena(view="none")
     verified=[]
+    timing={"ordinary": [], "reference_adjustment": []}
     try:
         for row in source["rows"]:
             plan=row["plan"]
@@ -57,7 +59,12 @@ def verify(index):
             for tick,recorded in enumerate(expected["actions"]):
                 if tick-lead in changes:
                     arm.switch_gravity(tick-lead,changes[tick-lead])
+                before=policy.policy.switch_tick
+                start=perf_counter_ns() if profile else 0
                 request=policy.act(obs)
+                if profile:
+                    elapsed=perf_counter_ns()-start
+                    name="reference_adjustment" if policy.policy.switch_tick!=before else "ordinary"
                 physical=np.clip(wire@request,-1.,1.)
                 if not np.array_equal(physical,recorded):
                     raise ValueError(f"game action mismatch, stream {index} seed {plan['learner_seed']} tick {tick}")
@@ -70,7 +77,10 @@ def verify(index):
                     obs=env._observation(True)
                 else:
                     obs,_,_=env.step(physical)
+                start=perf_counter_ns() if profile else 0
                 policy.observe(request,obs)
+                if profile:
+                    timing[name].append((elapsed+perf_counter_ns()-start)/1e6)
             if digest_json(env.judge_metrics())!=digest_json(expected["metrics"]):
                 raise ValueError("stored policy changed the physical result")
             policy.save_between_releases(target)
@@ -78,6 +88,14 @@ def verify(index):
             verified.append(dict(setup_ticks=count,game_ticks=len(expected["actions"]),seed=plan["learner_seed"]))
         if len(verified)!=12 or not np.array_equal(policy.bank.maps,source["maps"]):
             raise ValueError("incomplete restored course")
+        if profile:
+            with open(ROOT/f"continual-wrist-timing-{index}.json","w") as f:
+                result={}
+                for name,values in timing.items():
+                    result[name]=dict(frames=len(values),median_ms=float(np.median(values)),
+                                      p95_ms=float(np.percentile(values,95)),p99_ms=float(np.percentile(values,99)),
+                                      max_ms=float(np.max(values)),above_60hz=sum(x>1000/60 for x in values))
+                json.dump(result,f,indent=2)
         with open(ROOT/f"continual-wrist-audit-{index}.json","w") as f:
             json.dump(dict(games=verified,bytes=target.stat().st_size),f,indent=2)
     finally:
@@ -87,5 +105,9 @@ def verify(index):
 
 
 if __name__=="__main__":
-    with ProcessPoolExecutor(max_workers=3) as pool:
-        list(pool.map(verify,range(3)))
+    import sys
+    if "--profile" in sys.argv[1:]:
+        verify(0,profile=True)
+    else:
+        with ProcessPoolExecutor(max_workers=3) as pool:
+            list(pool.map(verify,range(3)))

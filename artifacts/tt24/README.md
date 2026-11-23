@@ -2,7 +2,9 @@
 
 [Watch 428 consecutive rebounds](long-wrist-428.mp4) · [Two-minute stock and altered-arm results, including every early failure](long-wrist.md)
 
-[Load the continual wrist learner](continual-wrist.md) · [Watch it use an unfamiliar control interface](motor-interface-paired.mp4) · [See the learned interface in table tennis](settled-match-witness.mp4)
+[Load the continual wrist learner](continual-wrist.md) · [Inspecting a hidden change before the current release](current-pause.md) · [Watch it use an unfamiliar control interface](motor-interface-paired.mp4) · [See the learned interface in table tennis](settled-match-witness.mp4)
+
+Independent encoder checks and a short relocation cut severe identification errors from 10/56 to 2/56 when the paddle could be constrained by the table or clamp. In a new 12-game course all six initial fits were already accurate and the checks cost time, so this remains an optional calibration method. A separate two-launch test ruled out raising effort uniformly as the next changed-arm fix. [Calibration and play](validated-motor-report.md) · [Effort comparison](live-effort.md)
 
 A 1.45-second movement test recovered 383 rebounds on 32 drops with previously unknown five-axis controls. The unchanged controller scored 31 and the supplied inverse scored 416. On stock the learned map matched the supplied inverse on the ten-rebound threshold. [Motor discovery and retention](motor-settle.md) · [Recovered map checkpoint](motor-bank.npz)
 

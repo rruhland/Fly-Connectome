@@ -32,11 +32,16 @@ class ContinualWrist:
         self.policy=ToolEquilibrium(checkpoint,limit)
         self.policy.mode="workspace_local"
 
+    @property
+    def inspection_requested(self):
+        """Whether encoder feedback requests a setup interval on the current arm."""
+        return bool(self.monitor.pending)
+
     def open_release(self,observation):
         """Check the opening wrist image. A positive result requests a contact-free setup interval."""
         self.policy.begin_release(observation)
         eye=self.policy.calibration_index
-        check=self.monitor.pending or (self.last_eye is not None and self.last_eye!=eye)
+        check=self.inspection_requested or (self.last_eye is not None and self.last_eye!=eye)
         self.last_eye=eye
         return check
 

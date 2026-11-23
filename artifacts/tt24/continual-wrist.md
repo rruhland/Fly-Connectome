@@ -29,11 +29,21 @@ if learner.open_release(observation):
     learner.inspect(observation["joints"], send_rate_and_read_joints, seed=17)
     observation = read_live_observation()
 learner.begin_play(observation)
+inspected_during_play = False
 while playing:
     requested = learner.act(observation)
     observation = play_one_tick(requested)
     learner.observe(requested, observation)
+    if learner.inspection_requested and not inspected_during_play and launcher_holds_ball():
+        learner.inspect(observation["joints"], send_rate_and_read_joints, seed=17)
+        observation = read_live_observation()
+        learner.begin_play(observation)
+        inspected_during_play = True
 learner.save_between_releases("my-wrist.npz")
 ```
 
 An independent replay saved and reloaded the entire learner at every game boundary. It reproduced all 1,527 inspection commands and all 9,854 gameplay and preparation commands, plus the terminal physical records. [Audit runner](../../scripts/experimental/tt24_continual_wrist_audit.py) · [Stream 1](continual-wrist-audit-0.json) · [2](continual-wrist-audit-1.json) · [3](continual-wrist-audit-2.json)
+
+On a second pass the launcher accepted one encoder-triggered inspection during preparation of the current release, as in the example above. This raised the total to 529 from 456 at a net cost of 6.12 simulated seconds of preparation across the 36 releases. On three invisible changes, the current inspection earned 35 rebounds versus four with the same preparation and the stale motor map. [Current-release checkpoint](current-pause-stream-0.npz) · [Paired controls and recall cost](current-pause.md)
+
+On one 12-game replay, computing the motor request and updating the encoder monitor took a median 1.13 ms and 95th percentile 1.62 ms on ordinary frames. The 11 frames that adjusted the workspace took a median 9.41 ms and a maximum 11.96 ms. One of the 3,038 frames exceeded the 16.67 ms budget. Timing excludes rendering, physical stepping and the time spent moving the arm for its inspections. [Timing record](continual-wrist-timing-0.json)
