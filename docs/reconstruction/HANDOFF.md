@@ -1,5 +1,13 @@
 # M1B research handoff
 
+## Replicated native Pong transfer to five-joint wrist control
+
+The [portable wrist policy](../../artifacts/tt24/carried-wrist.md) reproduced 8,011 live decisions across 32 drops running at a median 1.43 ms per frame.
+
+Pong reward taught a single numerical preference for reusing a familiar reference position when beginning in an unusual pose. The same scalar controls the visual origin and motor equilibrium on the arm. Twelve fresh native fits selected full reuse; a within-serve shuffle did so on five. On 72 fresh physical stock starts, the native preference reached ten rebounds on 51, versus 22 for shuffled credit. On 48 changed-arm starts it reached ten on eleven, versus four. The native and fixed full-reuse controls were identical. The five-joint motor skill came from three other hinged arms, and the wrist sensor had prior optical calibration. [Paired video](../../artifacts/tt24/reference-transfer-paired.mp4) · [Source and both physical replications](../../artifacts/tt24/reference-transfer.md)
+
+In another 32-start course, recalling the altered body’s calibrated wrist model from its first image while using a consistent motor and visual reference gave ten consecutive rebounds on 10/16 changed starts and 8/16 stock starts. [Mixed-arm recall](../../artifacts/tt24/ready.md#switching-physical-arms)
+
 ## Sustained wrist-only control and the initial catch
 
 Seven of twelve new stock releases lasted the full 30 seconds through five unannounced gravity changes. All five early losses occurred in the first four seconds. The strongest actual wrist streak was 99. Using an online wrist estimate of gravity raised mean consecutive rebounds from 48.08 to 49.25. The motor weights stayed frozen and came from bouncing on three donor arms. [Watch the first release through every change](../../artifacts/tt24/continuous-gravity-first.mp4) · [All courses and controls](../../artifacts/tt24/continuous-gravity.md)

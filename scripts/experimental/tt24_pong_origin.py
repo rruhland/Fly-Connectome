@@ -20,10 +20,15 @@ OUTPUT = ROOT / f'{TAG}.json.gz'
 BANK_PLAN = ROOT / f'{TAG}-bank-plan.json'
 BANK = ROOT / f'{TAG}-bank.json.gz'
 BANK_HELD = ROOT / f'{TAG}-bank-held.json.gz'
+CONFIRM_PLAN = ROOT / f'{TAG}-confirmation-plan.json'
+CONFIRM_BANK = ROOT / f'{TAG}-confirmation-bank.json.gz'
+CONFIRM_HELD = ROOT / f'{TAG}-confirmation-held.json.gz'
 SEED = 1819039097
 SHUFFLE = 1586409229
 BANK_SEED = 508081255
 BANK_STREAMS = 6
+CONFIRM_SEED = 1388239721
+CONFIRM_STREAMS = 12
 GRID = np.linspace(0., 1., 11)
 COURSES = {'practice': 96, 'shifted': 64, 'ordinary': 48}
 
@@ -184,17 +189,26 @@ def held(plan, source, began):
     _write(OUTPUT, result)
 
 
-def bank_registration():
+def bank_registration(confirm=False):
     prior = _read(PARENT_PLAN)
     previous = _read(PLAN)
+    destination = CONFIRM_PLAN if confirm else BANK_PLAN
+    seed, streams = (CONFIRM_SEED, CONFIRM_STREAMS) if confirm else (BANK_SEED, BANK_STREAMS)
     used = {k for row in previous['rosters'].values() for k in row['seeds']}
     used.update(prior['warm_held'])
     used.update(k for group in prior['warm_train'] for k in group)
     used.update(k for trace in prior['streams'] for k in trace['held_native'])
     used.update(k for trace in prior['streams'] for group in trace['native'] for k in group)
-    rng = np.random.default_rng(BANK_SEED)
+    if confirm:
+        previous_bank = _read(BANK_PLAN)
+        previous_lock = _read(BANK)
+        if (previous_lock['plan'] != _hash(BANK_PLAN) or previous_lock['earlier_lock'] != _hash(LOCK)
+                or len(previous_lock['replicas']) != BANK_STREAMS):
+            raise ValueError('earlier source ties and replication bank must be frozen first')
+        used.update(k for group in previous_bank['replicas'] for row in group['rosters'].values() for k in row['seeds'])
+    rng = np.random.default_rng(seed)
     groups = []
-    for index in range(BANK_STREAMS):
+    for index in range(streams):
         practice_seed, shuffle_seed = (int(q) for q in rng.integers(1, 2**31 - 1, size=2))
         replica = np.random.default_rng(practice_seed)
         rosters = {name: named_roster(replica, count, name != 'ordinary') for name, count in COURSES.items()}
@@ -203,24 +217,28 @@ def bank_registration():
             raise ValueError('bank replica contains an older native start')
         used.update(current)
         groups.append(dict(index=index, seed=practice_seed, shuffle_seed=shuffle_seed, rosters=rosters))
-    bank = dict(schema='tt24-pong-origin-bank-plan-1', seed=BANK_SEED, first_alpha_lock=_hash(LOCK),
+    bank = dict(schema='tt24-pong-origin-bank-plan-1', seed=seed, first_alpha_lock=_hash(LOCK),
                 source_plan=_hash(PLAN), warm_policy=_hash(WARM), replicas=groups,
                 practice_alphas=GRID.tolist(), source_objective=previous['practice_payoff'], arm_exposure=0)
-    if BANK_PLAN.exists():
-        if _read(BANK_PLAN) != bank:
+    if confirm:
+        bank['preceding_bank'] = dict(plan_sha256=_hash(BANK_PLAN), checkpoint_sha256=_hash(BANK))
+    if destination.exists():
+        if _read(destination) != bank:
             raise ValueError('native origin replication schedule changed')
     else:
-        _write(BANK_PLAN, bank)
+        _write(destination, bank)
     return bank
 
 
-def replication(source, held_too):
-    plan = bank_registration()
+def replication(source, held_too, *, confirm=False):
+    plan = bank_registration(confirm)
+    path_plan, path_bank, path_held = (CONFIRM_PLAN, CONFIRM_BANK, CONFIRM_HELD) if confirm else (BANK_PLAN, BANK, BANK_HELD)
+    plan_hash = _hash(path_plan)
     weights = np.array(_read(WARM)['weights'])
     familiar = source['familiar_optical_home']
-    if BANK.exists():
-        receipt = _read(BANK)
-        if receipt['plan'] != _hash(BANK_PLAN) or len(receipt['replicas']) != BANK_STREAMS:
+    if path_bank.exists():
+        receipt = _read(path_bank)
+        if receipt['plan'] != plan_hash or len(receipt['replicas']) != len(plan['replicas']):
             raise ValueError('incomplete or wrong alpha lock bank')
     else:
         replicas = []
@@ -231,31 +249,33 @@ def replication(source, held_too):
                                  selected=selected, fitted=fitted, optical_launch=origin[0].tolist(),
                                  practice=data.tolist(), points=int(np.prod(data.shape[:2])), frames=int(data[..., 2].sum())))
             print('native replication complete', spec['index'], flush=True)
-        receipt = dict(plan=_hash(BANK_PLAN), warm=_hash(WARM), earlier_lock=_hash(LOCK), arm_exposure=0,
+        receipt = dict(plan=plan_hash, warm=_hash(WARM), earlier_lock=_hash(LOCK), arm_exposure=0,
                        familiar_optical_home=familiar, replicas=replicas)
-        _write(BANK, receipt)
-    print('LOCKED COMPLETE BANK', _hash(BANK), [rep['selected'] for rep in receipt['replicas']], flush=True)
+        _write(path_bank, receipt)
+    print('LOCKED COMPLETE BANK', _hash(path_bank), [rep['selected'] for rep in receipt['replicas']], flush=True)
     if held_too:
         outcomes_by_replica = []
         for row, spec in zip(receipt['replicas'], plan['replicas'], strict=True):
             metric = {name: course_outcomes(weights, row['selected'], spec['rosters'][name], familiar, name == 'ordinary')
                       for name in ('shifted', 'ordinary')}
             outcomes_by_replica.append(dict(index=spec['index'], held=metric))
-        _write(BANK_HELD, dict(plan=_hash(BANK_PLAN), frozen=_hash(BANK), replicas=outcomes_by_replica))
+        _write(path_held, dict(plan=plan_hash, frozen=_hash(path_bank), replicas=outcomes_by_replica))
 
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--lock-only', action='store_true')
-    parser.add_argument('--replicate', action='store_true')
+    group = parser.add_mutually_exclusive_group()
+    group.add_argument('--replicate', action='store_true')
+    group.add_argument('--confirm', action='store_true')
     args = parser.parse_args()
     torch.set_num_threads(1)
     start = perf_counter()
     plan = register()
     source = lock(plan)
     print('source coefficients', source['selected'], flush=True)
-    if args.replicate:
-        replication(source, not args.lock_only)
+    if args.replicate or args.confirm:
+        replication(source, not args.lock_only, confirm=args.confirm)
     elif not args.lock_only:
         held(plan, source, start)
 

@@ -1,5 +1,7 @@
 # SO-101 direct control and transfer
 
+A reference preference learned in native Pong transferred to the five-joint arm. In a twelve-cohort confirmation, 51/72 new stock releases reached ten rebounds versus 22/72 using shuffled Pong credit. On the changed arm the counts were 11/48 and 4/48. Both groups used a motor policy that had already learned powered bouncing on other arms. [Load the carried wrist policy](carried-wrist.md) · [Paired video](reference-transfer-paired.mp4) · [All transfer controls and native-game results](reference-transfer.md)
+
 A five-joint controller trained from rebound rewards on three other simulated arms reached ten consecutive bounces on **12 of 16** stock SO-101 wrist-only drops, with zero stock motor practice and zero action demonstrations. Its wrist observer had eight earlier unlabelled calibration drops. On another twelve drops with a 15 s horizon it averaged 31.08 and reached 57. Eight lasted the full interval and three scored zero. [Watch the first drop](donor-first-drop.mp4) · [Watch all 57 from both cameras](donor-longest-drop.mp4) · [Donor bodies, source exposure and physical controls](tt24_donor.md)
 
 Seven of twelve fresh wrist-only starts stayed in play through five gravity changes and all 30 seconds. The other five ended before the first change. [Watch the first release](continuous-gravity-first.mp4) · [Gravity interventions](continuous-gravity.md) · [Playing from a much wider range of joint angles](ready.md)

@@ -1,0 +1,204 @@
+{
+  "cases": [
+    {
+      "seed": 1152895432,
+      "body": 0,
+      "frames": 397,
+      "streak": 18
+    },
+    {
+      "seed": 1101138845,
+      "body": 1,
+      "frames": 374,
+      "streak": 19
+    },
+    {
+      "seed": 1464733589,
+      "body": 0,
+      "frames": 63,
+      "streak": 1
+    },
+    {
+      "seed": 1384654666,
+      "body": 1,
+      "frames": 386,
+      "streak": 17
+    },
+    {
+      "seed": 1628120394,
+      "body": 0,
+      "frames": 378,
+      "streak": 20
+    },
+    {
+      "seed": 103174137,
+      "body": 1,
+      "frames": 50,
+      "streak": 0
+    },
+    {
+      "seed": 1520454630,
+      "body": 0,
+      "frames": 375,
+      "streak": 16
+    },
+    {
+      "seed": 957800745,
+      "body": 0,
+      "frames": 57,
+      "streak": 0
+    },
+    {
+      "seed": 223048041,
+      "body": 0,
+      "frames": 381,
+      "streak": 17
+    },
+    {
+      "seed": 29404468,
+      "body": 0,
+      "frames": 106,
+      "streak": 2
+    },
+    {
+      "seed": 2138672099,
+      "body": 1,
+      "frames": 92,
+      "streak": 2
+    },
+    {
+      "seed": 1357402758,
+      "body": 0,
+      "frames": 139,
+      "streak": 3
+    },
+    {
+      "seed": 955109239,
+      "body": 1,
+      "frames": 392,
+      "streak": 13
+    },
+    {
+      "seed": 439031736,
+      "body": 0,
+      "frames": 374,
+      "streak": 17
+    },
+    {
+      "seed": 1581042503,
+      "body": 1,
+      "frames": 386,
+      "streak": 17
+    },
+    {
+      "seed": 1406275328,
+      "body": 0,
+      "frames": 387,
+      "streak": 19
+    },
+    {
+      "seed": 773018471,
+      "body": 1,
+      "frames": 383,
+      "streak": 19
+    },
+    {
+      "seed": 506606585,
+      "body": 1,
+      "frames": 84,
+      "streak": 2
+    },
+    {
+      "seed": 499698117,
+      "body": 1,
+      "frames": 100,
+      "streak": 2
+    },
+    {
+      "seed": 1285093769,
+      "body": 1,
+      "frames": 80,
+      "streak": 1
+    },
+    {
+      "seed": 402769083,
+      "body": 0,
+      "frames": 75,
+      "streak": 2
+    },
+    {
+      "seed": 787839538,
+      "body": 0,
+      "frames": 321,
+      "streak": 10
+    },
+    {
+      "seed": 1613329412,
+      "body": 1,
+      "frames": 390,
+      "streak": 16
+    },
+    {
+      "seed": 488821731,
+      "body": 0,
+      "frames": 84,
+      "streak": 2
+    },
+    {
+      "seed": 1857118747,
+      "body": 0,
+      "frames": 382,
+      "streak": 20
+    },
+    {
+      "seed": 818320375,
+      "body": 1,
+      "frames": 88,
+      "streak": 1
+    },
+    {
+      "seed": 2046145269,
+      "body": 1,
+      "frames": 386,
+      "streak": 20
+    },
+    {
+      "seed": 1948465094,
+      "body": 1,
+      "frames": 382,
+      "streak": 12
+    },
+    {
+      "seed": 2009062870,
+      "body": 1,
+      "frames": 398,
+      "streak": 19
+    },
+    {
+      "seed": 1740820960,
+      "body": 1,
+      "frames": 397,
+      "streak": 11
+    },
+    {
+      "seed": 1386003063,
+      "body": 0,
+      "frames": 64,
+      "streak": 1
+    },
+    {
+      "seed": 1057737573,
+      "body": 0,
+      "frames": 60,
+      "streak": 1
+    }
+  ],
+  "exact_commands": 8011,
+  "inference_ms_percentiles": {
+    "p50": 1.428958996257279,
+    "p95": 2.052394498605281,
+    "p99": 3.416885300248379
+  },
+  "inputs": "wrist RGB and joint encoders",
+  "measured": "optical observer and motor inference, excluding simulation and rendering"
+}

@@ -37,6 +37,21 @@ Six independent replications each use 96 further native practice starts, identic
 
 Real outcomes consistently chose substantial familiar-origin reuse in this actor. Fixed full reuse achieved almost the same pooled payoff as the learned values. Across 288 ordinary starts, all conditions replayed identical records, with 277 own-return points, 181 later returns and 12 losses. The first fit used 1,056 actual practice points and 591,855 simulated physics ticks. The six new fits used 6,336 actual practice points and 3,748,967 ticks. Verification checked 1,456 distinct starts across the first and replicated protocols, reproduced every scalar from the archived payoffs, and matched the original controller's ordinary native outcomes exactly. [Full source bank](tt24_pong_origin-bank.json.gz)
 
+## Twelve-fit confirmation bank
+
+The final bank fixes 12 further independent native fits and shuffles, with the same 96×11 practice exposures and scoring rules in each. Its registration pins the earlier locks, and its native practice, shifted qualification and ordinary qualification starts are disjoint from both previous cohorts. All 12 alpha pairs and their raw source experience are sealed together before the bank can be used for the arm follow-up. [Confirmation registration](tt24_pong_origin-confirmation-plan.json) · [Frozen source archive](tt24_pong_origin-confirmation-bank.json.gz) · [Held native qualification](tt24_pong_origin-confirmation-held.json.gz)
+
+All 12 coherent fits chose alpha 1.0. The shuffled fits matched 1.0 in five pairs, chose 0 in four, and chose 0.438–0.556 in three. On fresh shifted starts, the native-selected value improved on all seven distinct shuffled values and tied the identical five. Its performance was exactly that of fixed full reuse. The confirmation bank used 12,672 actual practice points and 7,415,527 physics ticks. Verification reproduced all 12 fit pairs, checked 3,952 distinct allocations across the three source protocols, and verified the earlier locks against their original hashes.
+
+| Across 12 shifted native qualifications | Own-return points / 768 | Later returns | Losses | Mean native payoff |
+|---|---:|---:|---:|---:|
+| Native-selected and fixed familiar | 633 | 361 | 127 | 0.220 |
+| Shuffled | 583 | 304 | 211 | 0.094 |
+| Fixed neutral | 606 | 319 | 196 | 0.123 |
+| Fixed current | 543 | 237 | 296 | −0.034 |
+
+Across 576 ordinary starts, all conditions again reproduced identical outcomes, with 551 own-return points, 383 later returns and 20 losses. [Paired native qualification](tt24_pong_origin-confirmation-held.json.gz)
+
 ## Reproduction
 
 Use the repository's table-tennis Python environment from the repository root.
@@ -45,4 +60,5 @@ Use the repository's table-tennis Python environment from the repository root.
 export PYTHONPATH=src OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1
 python -m scripts.experimental.tt24_pong_origin
 python -m scripts.experimental.tt24_pong_origin --replicate
+python -m scripts.experimental.tt24_pong_origin --confirm
 ```

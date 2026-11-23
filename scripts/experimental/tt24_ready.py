@@ -29,19 +29,21 @@ def prepare_step(arena,command,location):
     mujoco.mj_forward(arena._model,arena._data)
 
 
-def episode(arena,server,seed,native,w,mu,mode,regime,*,alpha=None):
+def episode(arena,server,seed,native,w,mu,mode,regime,*,alpha=None,sensor_factory=None,lead_override=None):
     server.reset(seed=seed,split="held",regime=regime,render=False)
     location=server._ball_position.copy()
     vel,spin=server._ball_velocity.copy(),server._ball_spin.copy()
-    lead=int(np.random.default_rng(seed ^ 11940).integers(14,39))
+    lead=int(np.random.default_rng(seed ^ 11940).integers(14,39)) if lead_override is None else lead_override
     def reset():
         arena.reset(seed=seed,split="held",regime=regime,render=False)
         arena._ball_position[:]=location
-        arena._ball_velocity[:]=0.
+        arena._ball_velocity[:]=vel if lead==0 else 0.
+        if lead==0:
+            arena._ball_spin[:]=spin
         mujoco.mj_forward(arena._model,arena._data)
     reset()
-    sensor=load_public(FUSED_OUTPUT)
     obs=arena._observation(True)
+    sensor=load_public(FUSED_OUTPUT) if sensor_factory is None else sensor_factory(obs)
     q=obs["joints"]
     ordinary=mode=="as_started"
     target=q if ordinary else mu

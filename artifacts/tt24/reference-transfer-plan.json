@@ -1,0 +1,10 @@
+{
+  "source": "Independently choose visual/motor coordinate reuse in actual native Pong. The arm receives one scalar.",
+  "target_selection": "No new-holdout selections or fit. Use learned coefficients once available. Overall source-center mechanism was developed using separate earlier SO-101 experiments.",
+  "target_primary": "Mean longest streak, and proportion reaching ten, with an external fixed release on twenty novel wide-pose stock starts.",
+  "target_secondary": "Twelve new same-launcher altered-arm starts, and twelve stock starts where a mobile launcher follows the original randomized blade position.",
+  "controllers": ["native-selected scalar", "within-source reward-shuffled scalar", "neutral 0.5", "always reset origin at 0", "always reuse familiar origin at 1"],
+  "target_inputs": "Wrist RGB and five encoder positions/velocities. The motor head and familiar body posture come from earlier hinged donors. The physical setup offers a visible held ball for fourteen to thirty-eight decisions before release.",
+  "seed_derivation": "PCG64 sequential integers using seed 50244611 plus course index 0,1,2. No target motor practice.",
+  "attribution": "Test representation transfer. Fixed endpoint matching the native best is an explicit heuristic control. Success cannot establish acquisition of a five-joint motor skill from Pong alone."
+}
