@@ -1,5 +1,9 @@
 # M1B research handoff
 
+## Native Pong experience under visual delay
+
+Four new native-Pong fits were assessed on 24 previously unseen arm starts. Using their learned visual lookahead produced a summed longest streak of 62 against 55 without extrapolation and 56 for shuffled source reward. Fixed gains of one and two produced 70 and 68. The initial 12-start gain over cold was real, but the independent test does not support preferring this learned adjustment over the simpler fixed settings. On prompt input the complete native and wrist commands matched their original tapes. [Source and both arm studies](../../artifacts/tt24/pong-temporal.md)
+
 ## The first catch is the limiting step on the changed arm
 
 In a new mixed-body course, one frozen wrist policy sustained 40–56 consecutive rebounds over the full 15 seconds on all eight stock starts. A common stock launcher, a new mass and drag draw per release, independent starting arm angles and two hidden gravity changes were combined. Only two of eight altered-arm starts lasted the full interval, with streaks of 12 and 28. All six other altered runs failed before the first gravity change. All 48 physical replays matched. [Stress test](../../artifacts/tt24/integrated-stress.md)

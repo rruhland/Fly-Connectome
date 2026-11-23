@@ -32,3 +32,5 @@ The original wrist experiment with direct target reward learning averaged 3.36 r
 [Can partner rallies teach solo bouncing?](partner-transfer.md) · [Single-flight delivery](tt24_volley_source.md) · [Reverse transfer to delivery](donor-volley.md) · [Recognizing a returning body](context-residual.md) · [Learning generic motor features from donor wrist recordings](universal-donor-images.md) · [Native Pong outcome credit](tt24_outcome_pong.md) · [Two visually similar balls](object-transfer.md)
 
 [Continual recall across two physical games](dual-game.md) · [Learning motor responses from real simulated table-tennis points](forehand-carry.md) · [Single-flight action effects](flight-effects.md) · [Training for the first catch](acquisition.md) · [Conditional ready posture](ready-geometry.md)
+
+[Learning visual delay compensation in native Pong](pong-temporal.md) · [Testing in-flight actuator discovery in the carried wrist](drive-spontaneous.md)
