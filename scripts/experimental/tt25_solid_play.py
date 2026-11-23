@@ -67,24 +67,55 @@ def run():
            opponent=profile, cases=results, verified=len(results)))
 
 
-def movie():
+def stock():
+    source = ROOT / "artifacts/tt24/rally-improve-held.json.gz"
+    previous = _read(source)
+    station = SolidStation(previous["metadata"]["profile"])
+    check = SolidArm(**CONFIG)
+    with np.load(CACHE, allow_pickle=False) as bank:
+        actor = policy_for("retina_rate", bank)
+    cases = []
+    try:
+        for case in previous["cases"]:
+            results = {}
+            for name in ("retina_rate", "hold"):
+                row = station.play(case, name, actor, live_opening=True)
+                replay(check, row)
+                results[name] = row
+            if results["retina_rate"]["prefix_rgb"] != results["hold"]["prefix_rgb"]:
+                raise ValueError("Paired policies observed different initial images")
+            cases.append(dict(seed=case["seed"], results=results))
+            print(len(cases), results["retina_rate"]["longest"], flush=True)
+    finally:
+        station.arena.close()
+        check.close()
+    _write(OUTPUT / "recorded-arm-stock.json.gz", dict(source_sha256=_hash(source),
+           policy_bank_sha256=_hash(CACHE), cases=cases, verified=2*len(cases)))
+
+
+def movie(stock_course=False):
     from .tt23_sequence_coach_movie import render_tape
 
-    source = OUTPUT / "recorded-arm-live.json.gz"
+    source = OUTPUT / ("recorded-arm-stock.json.gz" if stock_course else "recorded-arm-live.json.gz")
     results = _read(source)
-    if len(results["cases"]) != results["verified"]:
+    if len(results["cases"]) * (2 if stock_course else 1) != results["verified"]:
         raise ValueError("Incomplete solid-arm evaluation")
-    longest = max(results["cases"], key=lambda r: r["longest"])
-    render_tape(longest, source, OUTPUT / "recorded-arm-live.mp4", branch="solid_arm",
+    rows = [c["results"]["retina_rate"] for c in results["cases"]] if stock_course else results["cases"]
+    longest = max(rows, key=lambda r: r["longest"])
+    render_tape(longest, source, OUTPUT / ("recorded-arm-stock.mp4" if stock_course else "recorded-arm-live.mp4"), branch="solid_arm",
                 subtitle="End-clamped arm on the compact court",
-                terminal_caption="Live camera policy, selected longest point from 16",
+                terminal_caption=f"Live camera policy, selected longest point from {len(rows)}",
                 arena_factory=lambda: SolidArm(**dict(CONFIG, width=DIMS[0], height=DIMS[1])))
 
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--movie", action="store_true")
-    if parser.parse_args().movie:
-        movie()
+    parser.add_argument("--stock", action="store_true")
+    args = parser.parse_args()
+    if args.movie:
+        movie(args.stock)
+    elif args.stock:
+        stock()
     else:
         run()

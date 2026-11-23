@@ -64,6 +64,19 @@ def table_model(*, thin_shell=False):
     return mujoco.MjModel.from_xml_string(ET.tostring(document, encoding="unicode"))
 
 
+def step_ball(model, data, coeff, w, body):
+    vx, vy, vz = data.qvel[:3]
+    mujoco.mju_rotVecQuat(w, data.qvel[3:6], data.qpos[3:7])
+    wx, wy, wz = w
+    drag = -BALL_MASS * coeff[0] * (vx*vx + vy*vy + vz*vz)**.5
+    magnus = BALL_MASS * coeff[1]
+    data.xfrc_applied[body, :3] = (drag*vx + magnus*(wy*vz - wz*vy),
+                                   drag*vy + magnus*(wz*vx - wx*vz),
+                                   drag*vz + magnus*(wx*vy - wy*vx))
+    data.xfrc_applied[body, 3:] = -model.body_inertia[body, 0] * SPIN_DECAY * w
+    mujoco.mj_step(model, data)
+
+
 def simulate(model, coeff, cohort):
     data = mujoco.MjData(model)
     table, net = (model.geom(name).id for name in ("table", "net"))
@@ -87,16 +100,7 @@ def simulate(model, coeff, cohort):
         hit_net = False
         while data.time < horizon:
             last_pos = data.qpos[:3].copy()
-            vx, vy, vz = data.qvel[:3]
-            mujoco.mju_rotVecQuat(w, data.qvel[3:6], data.qpos[3:7])
-            wx, wy, wz = w
-            drag = -BALL_MASS * coeff[0] * (vx*vx + vy*vy + vz*vz)**.5
-            magnus = BALL_MASS * coeff[1]
-            data.xfrc_applied[body, :3] = (drag*vx + magnus*(wy*vz - wz*vy),
-                                           drag*vy + magnus*(wz*vx - wx*vz),
-                                           drag*vz + magnus*(wx*vy - wy*vx))
-            data.xfrc_applied[body, 3:] = -model.body_inertia[body, 0] * SPIN_DECAY * w
-            mujoco.mj_step(model, data)
+            step_ball(model, data, coeff, w, body)
             for contact in data.contact:
                 if contact.efc_address < 0:
                     continue
