@@ -6,6 +6,8 @@ The first half-second of ordinary physical joystick motion by a reward-trained n
 
 A joystick operated by the physical arm from varied postures exposed all five directions. A reward-trained Pong player learned two new coupled interfaces from 59 and 68 seconds of ordinary source play. Its wrist controller reached ten bounces immediately on 8/16 stock drops versus 0/16 stale and 10/16 with the true maps. With the same electronics on the physically altered body, these counts were 2/12, 0/12 and 6/12. [Source histories, runnable learners, both physical bodies and retention](../../artifacts/tt24/learned-tip-transfer.md)
 
+A 1.60 s targeted inspection on the altered arm improved measured map accuracy on 10/12 starts but reduced qualifying rebounds from 90 to 75. The body-model error explains only part of the remaining game loss. [Same-pose controls](../../artifacts/tt24/tip-two-probes.md)
+
 ## Two-minute wrist qualification
 
 A frozen direct wrist controller sustained the whole 120 seconds on five of six stock releases under 18–19 hidden gravity changes apiece. The strongest made 428 consecutive rebounds. The altered arm had a best survival of 100.95 seconds and a best uninterrupted streak of 53 across six drops. Four altered starts ended within five seconds. This course used familiar motor wiring, prior optical calibration, and a visually adjusted workspace. [Watch all 428](../../artifacts/tt24/long-wrist-428.mp4) · [All twelve results and passive controls](../../artifacts/tt24/long-wrist.md)
