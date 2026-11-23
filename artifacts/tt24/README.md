@@ -36,3 +36,5 @@ The original wrist experiment with direct target reward learning averaged 3.36 r
 [Continual recall across two physical games](dual-game.md) · [Learning motor responses from real simulated table-tennis points](forehand-carry.md) · [Single-flight action effects](flight-effects.md) · [Training for the first catch](acquisition.md) · [Conditional ready posture](ready-geometry.md)
 
 [Learning visual delay compensation in native Pong](pong-temporal.md) · [Testing in-flight actuator discovery in the carried wrist](drive-spontaneous.md)
+
+[Watch 15 alternating table-tennis returns after motor calibration](settled-match-witness.mp4) · [Cross-game controls](settled-match.md) · [Recovering with a sixth hinge](carried-six.md) · [Visual workspace under changing physics](workspace-stress.md) · [Unannounced motor changes](autonomous-drive.md) · [Learning from delayed wrist images](online-temporal-memory.md)

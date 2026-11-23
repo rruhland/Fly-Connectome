@@ -38,6 +38,47 @@ def identify(joints, step, known, coords):
     return fit,dict(ticks=ticks,known=None,residuals=residuals,x=x.tolist(),y=y.tolist())
 
 
+def sample(joints,send,seed,known=()):
+    rng=np.random.default_rng(seed)
+    axes=np.linalg.qr(rng.normal(size=(5,5)))[0]
+    # Visit small zero-centered command displacements to avoid drift away from the sampled pose.
+    points=np.r_[np.zeros((1,5)),axes*.084,np.zeros((1,5))]
+    walked=[]
+    spans=[]
+    records=[]
+    def rest(joint):
+        stable=0
+        for tick in range(30):
+            current=send(np.zeros(5))
+            stable=stable+1 if np.max(abs(current-joint))<.00045 else 0
+            joint=current
+            if tick>=4 and stable>=3:
+                break
+        return joint,tick+1
+    joints,n=rest(joints)
+    records.append(n)
+    for goal,previous in zip(points[1:],points[:-1],strict=True):
+        original=joints.astype(float)
+        dx=goal-previous
+        for _ in range(4):
+            joints=send(dx/(STEP*4))
+        joints,n=rest(joints)
+        spans.append(dx)
+        walked.append(joints.astype(float)-original)
+        records.append(n+4)
+        if len(spans)==2 and len(known):
+            x,y=np.array(spans),np.array(walked)
+            errors=[float(np.sqrt(np.mean((y-x@m.T)**2))) for m in known]
+            best=int(np.argmin(errors))
+            if errors[best]<.012 and sum(r<.018 for r in errors)==1:
+                return known[best],dict(ticks=sum(records),known=best,segment_ticks=records,
+                                       residuals=errors,x=x.tolist(),y=y.tolist(),fit=known[best].tolist())
+    x=np.array(spans)
+    y=np.array(walked)
+    fit=np.linalg.lstsq(x,y,rcond=None)[0].T
+    return fit,dict(ticks=sum(records),known=None,segment_ticks=records,x=x.tolist(),y=y.tolist(),fit=fit.tolist())
+
+
 def decoder(mapping):
     u,s,v=np.linalg.svd(mapping)
     return (v.T*(1./np.maximum(s,.30)))@u.T
@@ -51,8 +92,11 @@ class MotorBank:
             raise ValueError("expected one or more finite 5 by 5 motor maps")
         self.selected=None
 
-    def connect(self,joints,step,seed):
-        mapping,report=identify(joints,step,self.maps,seed)
+    def connect(self,joints,step,seed,*,measured_settling=False):
+        if measured_settling:
+            mapping,report=sample(joints,step,seed,self.maps)
+        else:
+            mapping,report=identify(joints,step,self.maps,seed)
         self.selected=report["known"]
         if self.selected is None:
             self.selected=len(self.maps)
@@ -87,6 +131,13 @@ def build():
         for session in course["sessions"][1:3]:
             bank.maps.append(np.array(session["inspection"]["fit"]))
     bank.save(ROOT/"motor-bank.npz")
+    motion=MotorBank()
+    for index in (0,1):
+        with gzip.open(ROOT/f"motor-sampling-{index}.json.gz","rt") as f:
+            source=json.load(f)
+        for case in source["cases"]:
+            motion.maps.append(np.array(case["adaptive"]["fit"]))
+    motion.save(ROOT/"motor-bank-motion.npz")
 
 
 if __name__=="__main__":

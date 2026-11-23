@@ -1,0 +1,109 @@
+"""Adapt native Pong's prediction to actual target motion using only subsequently delivered packets."""
+from concurrent.futures import ProcessPoolExecutor
+import gzip
+import json
+
+import numpy as np
+
+from .tt24_bounce import BounceArena
+from .tt24_carried_wrist import BUNDLE
+from .tt24_donor_trial import ROOT, Native
+from .tt24_posture import WidePosture
+from .tt24_pong_temporal_wrist import DelayedWrist, MAX_STEPS, starts
+from .tt24_ready import episode
+
+
+class Memory:
+    def __init__(self):
+        self.capacity=768
+        self.x=np.zeros((9,self.capacity,8))
+        self.y=np.zeros((9,self.capacity,6))
+        self.count=np.zeros(9,int)
+
+    @staticmethod
+    def context(state):
+        return np.r_[(state[:3]-state[6:9]) / (.065,.065,.13),
+                     state[3:6] / (.38,.38,1.5),state[9:11]/.18]
+
+    def store(self,age,state,future,gain):
+        baseline=state[:6].copy()
+        baseline[:3]+=gain*state[3:6]*age/60
+        n=self.count[age]%self.capacity
+        self.x[age,n]=self.context(state)
+        self.y[age,n]=np.clip(future[:6]-baseline,(-.12,-.12,-.30,-1.,-1.,-3.),(.12,.12,.30,1.,1.,3.))
+        self.count[age]+=1
+
+    def correction(self,age,state):
+        n=min(self.count[age],self.capacity)
+        if n<8:
+            return 0.
+        d=np.sum((self.x[age,:n]-self.context(state))**2,axis=1)
+        neighbours=np.argpartition(d,min(8,n)-1)[:8]
+        weight=np.exp(-d[neighbours]/.70)
+        return (weight@self.y[age,neighbours])/(1.5+weight.sum())
+
+
+class LearnedForecast(DelayedWrist):
+    def __init__(self,seed,gain,archive,*,update,delay=True):
+        super().__init__(seed,gain,delay)
+        self.archive=archive
+        self.update=update
+        self.recent={}
+
+    def observe(self,live):
+        old=self.capture
+        result=super().observe(live)
+        if self.capture>old and self.update:
+            for t,prior in list(self.recent.items()):
+                h=self.capture-t
+                if h>8:
+                    del self.recent[t]
+                else:
+                    self.archive.store(h,prior,self.last_state,self.gain)
+            self.recent[self.capture]=self.last_state.copy()
+        age=self.tick-self.capture
+        if age:
+            result[:6]+=self.archive.correction(age,self.last_state)
+        return result
+
+
+def run(index):
+    rng=np.random.default_rng(67105512+index)
+    training=starts(int(rng.integers(2**31)),12)
+    held=starts(int(rng.integers(2**31)),6)
+    with np.load(BUNDLE,allow_pickle=False) as d:
+        w,mu=d["weights"],d["equilibrium"]
+    with gzip.open(ROOT/"pong-temporal-source.json.gz","rt") as f:
+        gain=json.load(f)["gains"]["pong"]
+    n=Native()
+    arena=WidePosture(view="wrist",width=192,height=144,max_steps=MAX_STEPS)
+    launcher=BounceArena(view="none")
+    recordings={}
+    try:
+        for kind in ("online","within","frozen","prompt"):
+            state=Memory()
+            series=[]
+            for i,s in enumerate(training+held):
+                if kind=="within":
+                    state=Memory()
+                if kind=="prompt":
+                    factory=None
+                elif kind=="frozen":
+                    factory=lambda _,s=s: DelayedWrist(s,gain,True)
+                else:
+                    factory=lambda _,s=s: LearnedForecast(s,gain,state,update=i<len(training) or kind=="within")
+                row=episode(arena,launcher,s,n,w,mu,"scalar","standard",alpha=1.,sensor_factory=factory)
+                row["trained_pairs"]=state.count.tolist()
+                series.append(row)
+            recordings[kind]=series
+        with gzip.open(ROOT/f"temporal-memory-{index}.json.gz","wt") as f:
+            json.dump(dict(gain=gain,train_count=len(training),modes=recordings),f,separators=(",",":"))
+    finally:
+        arena.close()
+        launcher.close()
+        n.working.cleanup()
+
+
+if __name__=="__main__":
+    with ProcessPoolExecutor(max_workers=3) as pool:
+        list(pool.map(run,range(3)))

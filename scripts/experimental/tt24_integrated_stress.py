@@ -25,11 +25,11 @@ MODES = ('bundle', 'reset_origin', 'passive')
 BODIES = ('stock', 'alternate')
 
 
-def schedule():
-    rng = np.random.default_rng(ROSTER_SEED)
+def schedule(seed=ROSTER_SEED, per_body=PER_BODY):
+    rng = np.random.default_rng(seed)
     rows = []
     for body in BODIES:
-        for high_first in rng.permutation([False, True] * (PER_BODY//2)):
+        for high_first in rng.permutation([False, True] * (per_body//2)):
             low, high = rng.uniform(.78, .88), rng.uniform(1.13, 1.26)
             first, second = (high, low) if high_first else (low, high)
             rows.append(dict(body=body, learner_seed=int(rng.integers(1, 2**31-1)),
@@ -131,9 +131,9 @@ def episode(installation, bundle, plan, launch, mode, *, replay=None):
                 loss_seconds=None if metrics['termination']=='timeout' else physical_seconds)
 
 
-def summary(rows):
+def summary(rows, modes=MODES):
     result = {}
-    for mode in MODES:
+    for mode in modes:
         trials = [row['modes'][mode] for row in rows]
         streaks = np.array([trial['metrics']['longest_consecutive_rebounds'] for trial in trials])
         time = np.array([trial['observed_seconds'] for trial in trials])

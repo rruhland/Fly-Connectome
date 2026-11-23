@@ -1,5 +1,15 @@
 # M1B research handoff
 
+## Body knowledge transferred immediately into a real two-arm game
+
+A motor interface learned in one 1.45-second movement test carried straight into table tennis on 16 fresh receiving points with four unknown mappings. The arm made 12 legal returns and 10 completed two-arm exchanges, versus one return and zero exchanges with its original commands. The true inverse gave 11 and 11. The longest point was a win with eight own returns and seven opponent returns. The existing match head had prior demonstrations and used two cameras. All 48 points replayed exactly. [Watch the same point with and without the learned mapping](../../artifacts/tt24/settled-match-witness.mp4) · [Transfer and retention](../../artifacts/tt24/settled-match.md)
+
+With the original wrist hinge mechanically jammed on a six-hinge body, the carried reward-trained pupil reached 20 solo rebounds on five of eight starts, versus one when the extra motor was sent zero and none when both hinges were locked. The benchmark supplied the correct previously calibrated public map. On a separate course with no topology change, encoder-triggered settling learned eight new five-channel mappings to within 0.4% in 1.37–2.60 seconds. [Six-hinge topology](../../artifacts/tt24/carried-six.md) · [Efficient identification](../../artifacts/tt24/motor-sampling.md)
+
+Across 64 releases with unannounced changes, the arm's own tracking-error monitor earned 594 rebounds versus 376 frozen and 938 when the current inverse was supplied. A native-Pong threshold for that monitor transferred poorly. On delayed camera packets, retaining future-motion observations from earlier games produced 94 summed consecutive rebounds on 18 fresh releases, versus 54 clearing memory each game, 49 with the frozen forecast and 229 with prompt input. [Unannounced motor changes](../../artifacts/tt24/autonomous-drive.md) · [Online visual adaptation](../../artifacts/tt24/online-temporal-memory.md)
+
+On a fresh compound-physics course, shifting the familiar horizontal workspace from three wrist sightings, while preserving the familiar paddle height and tilt for the current arm, produced ten consecutive rebounds on eight of twelve altered-arm starts, versus three with the original reference and four with a constant shift. Full 15-second runs still occurred on only four of twelve. Extra training across held releases improved donors and failed to improve the changed receiving arm. [Visually adjusted workspace](../../artifacts/tt24/workspace-stress.md) · [Donor-training test](../../artifacts/tt24/held-donor-report.md)
+
 ## Rapid motor-interface learning
 
 Eight new dense five-channel mappings were learned from one 1.45-second unscored encoder inspection each. On the first four drops per mapping, stock earned 258 rebounds versus 14 uncorrected and 251 with the true inverse. The physically altered arm earned 125 versus 17 and 165. Previous mappings were recognized in 0.70 seconds. This test provided a setup opportunity before play. [Results, controls, learned interfaces and inference code](../../artifacts/tt24/motor-settle.md)
