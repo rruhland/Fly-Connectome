@@ -1,6 +1,6 @@
 # Direct rate feedback, observed reversal, and corrective practice
 
-Every assessment near-arm command comes from live stereo RGB at 240×180 pixels, measured joints and locally issued joint commands. The same MuJoCo opponent and strict referee score complete points. Each actor calculates one set of five active joint rates per frame. The policy has a closed gripper. All teacher data are training inputs. The follow-up reserves separate two-stream cohorts and checks 144 distinct proposed launch IDs against the original TT24 cohorts, the teacher bank, and 265 earlier TT22/23 JSON receipts. [Assessment roster audit](rally-improve-schedules.json.gz)
+Every assessment near-arm command comes from live stereo RGB at 240×180 pixels, measured joints and locally issued joint commands. The same MuJoCo opponent and strict referee score complete points. Each actor calculates one set of five active joint rates per frame. The policy has a closed gripper. All teacher data are training inputs. The follow-up reserves separate two-stream cohorts and checks 144 distinct proposed launch IDs against the original TT24 cohorts, the teacher bank, and 265 earlier TT22/23 JSON receipts. The combination reserves another 24 and repeats the audit against these schedules and archives. [Assessment roster audit](rally-improve-schedules.json.gz) · [Combination roster](rally-improve-combined-held.json.gz)
 
 ## Direct rate and relative posture
 
@@ -51,6 +51,17 @@ The scalar-only residual experiment compares mirrored changes to a 5×5 sensor-t
 
 Continuation-only practice increased the capped return-score sum from nine to eleven on the three development points. The first improvement followed 21 actual points and 2,950 control frames, or 98.3 simulated seconds. The complete budget used 45 points and 5,603 frames, or 186.8 seconds. Fixed scored returns were the only new feedback during this update, which starts with the earlier 48-tape warm law. [Continuation practice and assessment](rally-improve-practice-continuation.json.gz)
 
+| Fresh O/P outcome across 24 launches | Broad | Scalar-practiced | Delayed RGB | Hold |
+| --- | ---: | ---: | ---: | ---: |
+| First near return | 11 | 11 | 0 | 0 |
+| Second near return | 6 | 6 | 0 | 0 |
+| Fifth near return | 1 | 2 | 0 | 0 |
+| Total near returns | 25 | 28 | 0 | 0 |
+| Points with at least ten alternating returns | 1 | 2 | 0 | 0 |
+| Longest alternating exchange | 10 | 16 | 0 | 0 |
+
+The practiced law earned eight near and eight far returns on seed `1986277319`, where the unchanged warm fit earned three near returns. Its first held fifth was on point three after 283 assessment frames. The broad branch earned its fifth on the final point after 1,718 frames. These assessment times follow the separately charged practice budget. Across the all-live practice and assessment, all 141 tapes passed strict command replay. [O/P physical game tapes and practice sequence](rally-improve-practice-continuation.json.gz)
+
 The extent and interaction variants learn apparent size versus depth using paired RGB observations on the same demonstrated releases. A short causal track estimates velocity through partial occlusion. The interaction variant also reads the observed ball-to-blade displacement. A separate mixed-initiative collection charges practice in which the pupil starts the point and an explicitly privileged teacher takes over after its first legal landing. Any fits from those extra observations are assessed on completely separate starts. [Optical readout](../../scripts/experimental/tt24_rally_improve_optical.py) · [Recovery protocol](../../scripts/experimental/tt24_rally_improve_recovery.py)
 
 The optical fit reconstructs 5,706 camera frames from the same 48 verified tapes and keeps 5,124 motor examples. Its size calibration uses visible paired ball observations. Across twelve E/F development launches, the broad, extent-only and interaction pupils reached a second near return on four, two and two points and reached a fifth on two, zero and two. Their longest alternating exchanges were ten, four and ten. The two interaction fifths happened on different releases than the two broad fifths. [Optical data](rally-improve-optical-demos.npz) · [Optical development tapes](rally-improve-optical-development.json.gz)
@@ -79,7 +90,21 @@ The corrective teacher took over on seven of the twelve development points. The 
 
 The corrected pupil reached nine near and nine far returns on seed `1041545090`, where its broad counterpart reached three near returns. Its near landings were at frames 35, 83, 111, 152, 184, 221, 257, 295 and 328. Its first fifth was on the twelfth point after 1,058 cumulative frames, or 35.27 seconds. The broad fit's first fifth took 1,688 frames on the 22nd point. In all 24 pairs, the two policies issued identical commands through the first paddle contact and different commands later. All 96 Q/R tapes reproduced the recorded strict outcomes, and the corrective teacher acted only during the development collection. [Q/R assessment tapes](rally-improve-recovery-held.json.gz) · [Eighteen-return held video](rally-improve-recovery-held.mp4) · [Video verification](rally-improve-recovery-held.json)
 
-The combined fit reconstructs optical extent and paddle displacement on the six successful recorded corrections. It adds the same 1,255 charged transitions to the optical fit, bringing it to 6,379 examples. The original optical fit controls the opening. The camera-observed first reversal shifts 88% of subsequent feedback to the augmented fit. This refit reuses the recorded teacher exposure and keeps all releases in a separate S/T test. [Combination protocol](../../scripts/experimental/tt24_rally_improve_combined.py) · [Combined training data](rally-improve-combined-demos.npz)
+The combined fit reconstructs optical extent and paddle displacement on the six successful recorded corrections. It adds the same 1,255 charged transitions to the optical fit, bringing it to 6,379 examples. Control starts with the original optical fit, then shifts up to 88% of feedback to the augmented fit when the visual history detects a reversal. This refit reuses the recorded teacher exposure and keeps all releases in a separate S/T test. [Combination protocol](../../scripts/experimental/tt24_rally_improve_combined.py) · [Combined training data](rally-improve-combined-demos.npz)
+
+| Fresh S/T outcome across 24 launches | Optical interaction | Combined fit | Delayed RGB | Hold |
+| --- | ---: | ---: | ---: | ---: |
+| First near return | 8 | 8 | 0 | 0 |
+| Second near return | 7 | 6 | 0 | 0 |
+| Fifth near return | 1 | 1 | 0 | 0 |
+| Tenth near return | 0 | 1 | 0 | 0 |
+| Total near returns | 22 | 26 | 0 | 0 |
+| Points with at least ten alternating returns | 1 | 1 | 0 | 0 |
+| Longest alternating exchange | 10 | 22 | 0 | 0 |
+
+On the independently held seed `675106336`, the combined pupil returned the ball legally eleven times with eleven legal far replies. The unchanged optical pupil returned twice. The combined pupil's tenth near landing arrived at frame 365 on the thirteenth point, after 969 cumulative control frames or 32.3 seconds of assessment. On this point its first changed command followed the first paddle contact. The two policies matched commands through that contact on 15 of 24 held launches, with early changes of up to 0.035 normalized joint rate on the other nine. Every one of the 96 complete S/T tapes reproduced the recorded strict referee outcomes. [S/T assessment tapes](rally-improve-combined-held.json.gz) · [Twenty-two-return held video](rally-improve-combined-held.mp4) · [Video verification](rally-improve-combined-held.json)
+
+The highest held rate of points reaching ten alternating returns was three of 24 on K/L and Q/R. The requested majority would require at least thirteen on a single 24-launch course.
 
 ## Reproduce
 
@@ -101,4 +126,5 @@ python -m scripts.experimental.tt24_rally_improve_movie
 python -m scripts.experimental.tt24_rally_improve_movie --source artifacts/tt24/rally-improve-phase-development.json.gz --mode rate_blend
 python -m scripts.experimental.tt24_rally_improve_movie --source artifacts/tt24/rally-improve-optical-held.json.gz --mode interaction
 python -m scripts.experimental.tt24_rally_improve_movie --source artifacts/tt24/rally-improve-recovery-held.json.gz --mode corrected
+python -m scripts.experimental.tt24_rally_improve_movie --source artifacts/tt24/rally-improve-combined-held.json.gz --mode combined
 ```

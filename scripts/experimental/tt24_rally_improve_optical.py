@@ -173,7 +173,7 @@ def prepare_collection():
 
 
 def collect_tape(item):
-    source, row = item
+    _, row = item
     arena = ARENA
     arena.lane = row['lane']
     arena.reset(seed=row['seed'], server=-1, render=False)
@@ -210,7 +210,7 @@ def collect(path, workers):
         blocks = list(pool.map(collect_tape, items))
     sphere = learn_radius(np.asarray([sample[2] for block in blocks for sample in block]))
     features, postures, rates, seeds = [], [], [], []
-    for ((source, row), block) in zip(items, blocks, strict=True):
+    for ((_, row), block) in zip(items, blocks, strict=True):
         history = None
         previous = -1
         for tick, keep, observations, joints, issued, command in block:

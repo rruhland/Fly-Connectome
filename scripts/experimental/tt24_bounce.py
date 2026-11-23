@@ -189,6 +189,17 @@ class BounceArena:
     action_axes = AXES[:5]
     action_size = len(action_axes)
     dt = CONTROL_INTERVAL
+    _joint_axes = AXES
+    _rates = (*RATES[:5], 0.)
+    _changed_drive = _CHANGED_DRIVE
+    _changed_force = _CHANGED_FORCE
+
+    @staticmethod
+    def _document(width, height, detail, arm):
+        return _model_document(width, height, detail, arm)
+
+    def _actuated_pose(self, pose):
+        return pose
 
     def __init__(self, *, view='wrist', proprioception=True, width=96, height=72,
                  max_steps=300, detail='preview', arm='stock', apex_reward_weight=0.):
@@ -207,11 +218,11 @@ class BounceArena:
         self.apex_reward_weight = apex_reward_weight
         self.proprioception = proprioception
         self.width, self.height, self.max_steps = width, height, max_steps
-        doc = _model_document(width, height, detail, arm)
+        doc = self._document(width, height, detail, arm)
         self._model = mujoco.MjModel.from_xml_string(ET.tostring(doc, encoding='unicode'))
         self._data = mujoco.MjData(self._model)
         model = self._model
-        joints = [model.joint(f'learner_{axis}') for axis in AXES]
+        joints = [model.joint(f'learner_{axis}') for axis in self._joint_axes]
         self._joint_position = np.array([joint.qposadr[0] for joint in joints])
         self._joint_velocity = np.array([joint.dofadr[0] for joint in joints])
         self._control = self._data.ctrl
@@ -219,8 +230,8 @@ class BounceArena:
         self._standard_gain = model.actuator_gainprm[:, 0].copy()
         self._standard_bias = model.actuator_biasprm[:, 1:3].copy()
         self._standard_force = model.actuator_forcerange.copy()
-        self._increments = np.array((*RATES[:5], 0.)) * model.opt.timestep
-        self._command = np.zeros(len(AXES))
+        self._increments = np.array(self._rates) * model.opt.timestep
+        self._command = np.zeros(len(self._joint_axes))
         self._blade = model.geom(BLADE).id
         self._ball_geom = model.geom('ball').id
         self._ball_body = model.body('ball').id
@@ -245,6 +256,7 @@ class BounceArena:
 
     def _prepare_pose(self, pose):
         model, data = self._model, self._data
+        pose = self._actuated_pose(pose)
         mujoco.mj_resetData(model, data)
         data.qpos[self._joint_position] = pose
         self._control[:] = pose
@@ -265,8 +277,8 @@ class BounceArena:
         self._drop = _sample_drop(seed, split, regime)
         self._seed, self._split, self._regime = seed, split, regime
         model = self._model
-        drive = _CHANGED_DRIVE if regime == 'changed' else np.ones(len(AXES))
-        force = _CHANGED_FORCE if regime == 'changed' else np.ones(len(AXES))
+        drive = self._changed_drive if regime == 'changed' else np.ones(len(self._joint_axes))
+        force = self._changed_force if regime == 'changed' else np.ones(len(self._joint_axes))
         model.actuator_gainprm[:, 0] = self._standard_gain * drive
         model.actuator_biasprm[:, 1:3] = self._standard_bias * drive[:, None]
         model.actuator_forcerange[:] = self._standard_force * force[:, None]
@@ -292,7 +304,7 @@ class BounceArena:
         return self._observation(render)
 
     def step(self, action, *, render=True):
-        """Apply normalized rates to the five independent position-servo targets."""
+        """Apply normalized rates to the independently actuated position-servo targets."""
         if self._done:
             raise RuntimeError('reset before stepping a finished drop')
         action = np.asarray(action, dtype=float)
@@ -405,12 +417,15 @@ class BounceArena:
         return result
 
     def _render(self, view):
+        camera = WRIST_CAMERA if view == 'wrist' else _EXTERNAL_CAMERA
+        return self._render_camera(camera, self._scene_option)
+
+    def _render_camera(self, camera, options):
         if self._renderer is None:
             self._renderer = mujoco.Renderer(self._model, width=self.width, height=self.height)
         mujoco.mj_kinematics(self._model, self._data)
         mujoco.mj_camlight(self._model, self._data)
-        camera = WRIST_CAMERA if view == 'wrist' else _EXTERNAL_CAMERA
-        self._renderer.update_scene(self._data, camera=camera, scene_option=self._scene_option)
+        self._renderer.update_scene(self._data, camera=camera, scene_option=options)
         return self._renderer.render()
 
     def render_wrist(self):

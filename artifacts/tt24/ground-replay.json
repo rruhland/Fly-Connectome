@@ -1,0 +1,28 @@
+{
+  "ground-planar": {
+    "exact_replays": 96,
+    "counts": {
+      "hold": 34,
+      "powered/live": 7,
+      "powered/blind": 7,
+      "powered/source_removed": 10,
+      "cold/live": 20,
+      "cold/blind": 20,
+      "shuffled/live": 12,
+      "shuffled/blind": 20
+    }
+  },
+  "ground-pose": {
+    "exact_replays": 96,
+    "counts": {
+      "hold": 30,
+      "powered/live": 30,
+      "powered/blind": 30,
+      "powered/source_removed": 30,
+      "cold/live": 24,
+      "cold/blind": 29,
+      "shuffled/live": 30,
+      "shuffled/blind": 30
+    }
+  }
+}

@@ -53,3 +53,18 @@ Six independent 30-drop streams began with seven stock drops, moved to fifteen w
 The first unexpected mapping triggered calibration at frames 12, 12, 12, 16, 16 and 12. The learner spent 850 total control frames probing across the six streams, a mean of 2.36 simulated seconds. It recognized the original mapping within 12–20 frames in every stream. One unnecessary recalibration cost five additional drops on restoration. Through the final seven restored drops, five of six adaptive streams matched their original-policy comparator's total exactly. Nominal setup used five calibration drops (145 frames) and five reference drops (625 frames). The underlying skill still averages only a few rebounds per drop. [All per-drop results](ongoing-body.json) · [Runner](../../scripts/experimental/tt24_ongoing_game.py)
 
 In a separate cross-check, a wrist-and-encoder decoder acquired in five changed-body probe drops (267 frames) let the pre-practiced Pong-informed policy score 68 rebounds on 24 fresh drops, versus 34 under uncorrected mixing and 69 with familiar wiring. Cold-credit and shuffled-credit policies with the identical decoder scored 55 and 52, the frozen earlier arm policy 67, stationary 57 and vision-ablated 55. Earlier nominal motor calibration used eight drops (271 frames). [Per-policy receipts](carried-physics.json)
+
+## Estimating motor effects from voluntary commands
+
+A second controller uses the wrist policy's ordinary movements to estimate the changed motor mixing from each observed transition. It solves a regularized least-squares inverse and keeps controlling all five joints throughout identification. A development comparison also included exploratory movements added during play. Ordinary commands alone performed better in that comparison, so we locked that method for eight fresh thirty-drop streams.
+
+| Total actual rebounds | Ordinary-command learning | Dedicated motor probes | Frozen | Familiar wiring |
+| --- | ---: | ---: | ---: | ---: |
+| First five altered drops | 80 | 41 | 52 | 103 |
+| Next ten altered drops | 183 | 196 | 106 | 203 |
+| All fifteen altered drops | 263 | 237 | 158 | 306 |
+| Eight restored drops | 197 | 199 | 203 | 203 |
+
+Both learned methods needed earlier stock practice. The ordinary-command method recalibrated early in one stock stream and needed a second correction on one return to stock. It recovered more early game reward and the dedicated probes produced a slightly stronger settled mapping. The policy already had target bouncing experience. This result uses a practiced motor readout that earns a few rebounds per drop. [Eight independent streams](voluntary-independent.json.gz) · [Development comparison](voluntary-development.json.gz) · [Learning curves](transfer-progress.png)
+
+An independent cross-game control transferred the decoder learned in five bounce probe drops directly to a table-tennis receiver facing the same new wiring. Across 24 fresh unassisted receiving points, it made 12 legal near-arm returns versus zero frozen, 22 with the known wiring inverse, and 37 on native wiring. It reached five near returns in one altered point, alternating ten times with the opponent. The stock pupil won a different point after 25 alternating legal returns. Each of the 96 two-arm tapes replayed. The table-tennis motor skill came from 48 archived table-tennis demonstrations. [Matched game receipts](bounce-to-match.json.gz) · [Changed wiring, 10 vs 0](match-bridge-changed.mp4) · [Native 25-return point](match-bridge-native.mp4)
