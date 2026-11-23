@@ -44,13 +44,13 @@ def frame(arena, spectator, tick, subtitle, footer='Both arms replaying recorded
     return canvas.tobytes()
 
 
-def render_tape(row, source, movie, *, branch, subtitle, terminal_caption, maxrate='480k'):
+def render_tape(row, source, movie, *, branch, subtitle, terminal_caption, maxrate='480k', arena_factory=None):
     length = len(row['actions'])
     total = length + HOLD
     digest = sha256()
     with TemporaryDirectory(dir=movie.parent) as directory, ExitStack() as resources:
         target = Path(directory) / 'rally.mp4'
-        arena = SequenceArena(**CONFIG)
+        arena = SequenceArena(**CONFIG) if arena_factory is None else arena_factory()
         resources.callback(arena.close)
         arena.lane = row['lane']
         arena.reset(seed=row['seed'], server=-1, render=False)

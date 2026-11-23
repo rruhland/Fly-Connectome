@@ -1,0 +1,223 @@
+{
+  "source": [
+    {
+      "file": "rolling-match-inspected-0.json.gz",
+      "sha256": "e20c7db41edfbe5b689c561c61a2d00bbfb9990ba54cf4c6ca8ce0bb5fb96f3f"
+    },
+    {
+      "file": "rolling-match-inspected-1.json.gz",
+      "sha256": "f93c857bf238743bf083937121cda2d3067e5a552befb479fc126d049339f668"
+    }
+  ],
+  "cases": [
+    {
+      "seed": 1066772849,
+      "returns": 2,
+      "ticks": 127,
+      "terminal": true,
+      "available_ticks": 127,
+      "ticks_above_nominal": 0,
+      "max_observed_speed_rad_s": 5.211831773466643,
+      "min_arm_table_signed_cm": -0.2485426685102765,
+      "deepest_body": "learner_gripper",
+      "ticks_below_minus_5mm": 0
+    },
+    {
+      "seed": 1621490829,
+      "returns": 0,
+      "ticks": 36,
+      "terminal": true,
+      "available_ticks": 36,
+      "ticks_above_nominal": 0,
+      "max_observed_speed_rad_s": 4.950174054650603,
+      "min_arm_table_signed_cm": 1.8543028507364916,
+      "deepest_body": "learner_wrist",
+      "ticks_below_minus_5mm": 0
+    },
+    {
+      "seed": 1641371873,
+      "returns": 0,
+      "ticks": 35,
+      "terminal": true,
+      "available_ticks": 35,
+      "ticks_above_nominal": 0,
+      "max_observed_speed_rad_s": 5.014292090145078,
+      "min_arm_table_signed_cm": 0.2264173010941284,
+      "deepest_body": "learner_gripper",
+      "ticks_below_minus_5mm": 0
+    },
+    {
+      "seed": 1627551516,
+      "returns": 0,
+      "ticks": 46,
+      "terminal": true,
+      "available_ticks": 46,
+      "ticks_above_nominal": 0,
+      "max_observed_speed_rad_s": 4.601178103359389,
+      "min_arm_table_signed_cm": -0.23078811441887256,
+      "deepest_body": "learner_gripper",
+      "ticks_below_minus_5mm": 0
+    },
+    {
+      "seed": 1059783127,
+      "returns": 0,
+      "ticks": 36,
+      "terminal": true,
+      "available_ticks": 36,
+      "ticks_above_nominal": 0,
+      "max_observed_speed_rad_s": 4.388258003006964,
+      "min_arm_table_signed_cm": 0.0956168447513339,
+      "deepest_body": "learner_gripper",
+      "ticks_below_minus_5mm": 0
+    },
+    {
+      "seed": 820149021,
+      "returns": 1,
+      "ticks": 78,
+      "terminal": true,
+      "available_ticks": 155,
+      "ticks_above_nominal": 0,
+      "max_observed_speed_rad_s": 4.379268748879461,
+      "min_arm_table_signed_cm": -0.09368044927092754,
+      "deepest_body": "learner_gripper",
+      "ticks_below_minus_5mm": 0
+    },
+    {
+      "seed": 777509181,
+      "returns": 1,
+      "ticks": 72,
+      "terminal": true,
+      "available_ticks": 72,
+      "ticks_above_nominal": 0,
+      "max_observed_speed_rad_s": 4.007170560026465,
+      "min_arm_table_signed_cm": 1.3539770525494912,
+      "deepest_body": "learner_gripper",
+      "ticks_below_minus_5mm": 0
+    },
+    {
+      "seed": 45772625,
+      "returns": 1,
+      "ticks": 72,
+      "terminal": true,
+      "available_ticks": 72,
+      "ticks_above_nominal": 0,
+      "max_observed_speed_rad_s": 5.262632159375284,
+      "min_arm_table_signed_cm": -0.08374937181150667,
+      "deepest_body": "learner_gripper",
+      "ticks_below_minus_5mm": 0
+    },
+    {
+      "seed": 347549088,
+      "returns": 3,
+      "ticks": 146,
+      "terminal": true,
+      "available_ticks": 146,
+      "ticks_above_nominal": 0,
+      "max_observed_speed_rad_s": 5.236717228799838,
+      "min_arm_table_signed_cm": 0.11527005131770193,
+      "deepest_body": "learner_gripper",
+      "ticks_below_minus_5mm": 0
+    },
+    {
+      "seed": 540301290,
+      "returns": 0,
+      "ticks": 38,
+      "terminal": true,
+      "available_ticks": 38,
+      "ticks_above_nominal": 0,
+      "max_observed_speed_rad_s": 4.9924369899494385,
+      "min_arm_table_signed_cm": -0.2025596017280177,
+      "deepest_body": "learner_gripper",
+      "ticks_below_minus_5mm": 0
+    },
+    {
+      "seed": 1975342296,
+      "returns": 0,
+      "ticks": 37,
+      "terminal": true,
+      "available_ticks": 37,
+      "ticks_above_nominal": 1,
+      "max_observed_speed_rad_s": 5.699899348930115,
+      "min_arm_table_signed_cm": 0.08728255109562433,
+      "deepest_body": "learner_gripper",
+      "ticks_below_minus_5mm": 0
+    },
+    {
+      "seed": 400281356,
+      "returns": 0,
+      "ticks": 27,
+      "terminal": true,
+      "available_ticks": 27,
+      "ticks_above_nominal": 0,
+      "max_observed_speed_rad_s": 4.504615444341711,
+      "min_arm_table_signed_cm": 1.9720345154198662,
+      "deepest_body": "learner_wrist",
+      "ticks_below_minus_5mm": 0
+    },
+    {
+      "seed": 47008641,
+      "returns": 0,
+      "ticks": 44,
+      "terminal": true,
+      "available_ticks": 44,
+      "ticks_above_nominal": 2,
+      "max_observed_speed_rad_s": 5.568080739787338,
+      "min_arm_table_signed_cm": 0.12497449604718901,
+      "deepest_body": "learner_gripper",
+      "ticks_below_minus_5mm": 0
+    },
+    {
+      "seed": 1200022252,
+      "returns": 0,
+      "ticks": 35,
+      "terminal": true,
+      "available_ticks": 35,
+      "ticks_above_nominal": 0,
+      "max_observed_speed_rad_s": 5.108992053988286,
+      "min_arm_table_signed_cm": -0.15761867487957604,
+      "deepest_body": "learner_gripper",
+      "ticks_below_minus_5mm": 0
+    },
+    {
+      "seed": 47520106,
+      "returns": 1,
+      "ticks": 75,
+      "terminal": true,
+      "available_ticks": 75,
+      "ticks_above_nominal": 0,
+      "max_observed_speed_rad_s": 4.870283280057313,
+      "min_arm_table_signed_cm": -0.042940233568743644,
+      "deepest_body": "learner_gripper",
+      "ticks_below_minus_5mm": 0
+    },
+    {
+      "seed": 1962093855,
+      "returns": 0,
+      "ticks": 45,
+      "terminal": true,
+      "available_ticks": 45,
+      "ticks_above_nominal": 1,
+      "max_observed_speed_rad_s": 6.623886118627451,
+      "min_arm_table_signed_cm": 1.939316206634439,
+      "deepest_body": "learner_wrist",
+      "ticks_below_minus_5mm": 0
+    }
+  ],
+  "nominal_rad_s": 5.454153912482279,
+  "checked_point_tapes": 16,
+  "contact_enabled": true,
+  "evaluated_cad_bodies": [
+    "learner_elbow",
+    "learner_gripper",
+    "learner_moving_jaw_so101_v1",
+    "learner_shoulder",
+    "learner_upper_arm",
+    "learner_wrist",
+    "learner_wrist_camera",
+    "learner_wrist_camera_mount"
+  ],
+  "clearance_query": "MuJoCo convex geom distance at control ticks; table only; excludes held paddle",
+  "ticks": 949,
+  "below_minus_5mm": 0,
+  "above_motor_nominal": 4
+}

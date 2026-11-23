@@ -1,0 +1,78 @@
+{
+  "match_csv_sha256": "e9ee2fc299b6b2358f4b43ca770cc7201210443f0135934122a5234b7f8860d5",
+  "previous_dataset_sha256": "c2a5e0597117c5af59d0e56a95aa3e35f541ad255b3e2687d92dc3e0c5fb5474",
+  "model_xml_sha256": "7fe6383326d7751efc523462bcf757cf5c9cdd8ef9260631a6059d91b71febfe",
+  "unique_rallies": 126,
+  "table": [
+    -100000.0,
+    -24.0
+  ],
+  "friction": [
+    0.18,
+    0.004,
+    0.0002
+  ],
+  "dt": 0.002083333333333333,
+  "legacy_spindoe_error_cm": {
+    "current": {
+      "n": 37,
+      "p10": 2.163089831949651,
+      "median": 3.6285968559482225,
+      "p90": 7.836830315115617
+    },
+    "match_fit": {
+      "n": 37,
+      "p10": 1.4142262578574885,
+      "median": 4.459735631370291,
+      "p90": 7.160198360126605
+    }
+  },
+  "through_bounce": {
+    "current": {
+      "segments": 383,
+      "any_net_collision": 51,
+      "first_table_contacts": 282,
+      "next_racket_position_error_cm": {
+        "n": 383,
+        "p10": 12.599275292277735,
+        "median": 32.1139174423384,
+        "p90": 97.05542837235701
+      },
+      "contacted_table_xy_error_cm": {
+        "n": 282,
+        "p10": 10.366630108286891,
+        "median": 30.579797412663922,
+        "p90": 60.741891178662094
+      },
+      "contacted_table_time_error_ms": {
+        "n": 282,
+        "p10": 24.433333333323272,
+        "median": 66.6250000000021,
+        "p90": 117.60833333335958
+      }
+    },
+    "match_fit": {
+      "segments": 383,
+      "any_net_collision": 56,
+      "first_table_contacts": 340,
+      "next_racket_position_error_cm": {
+        "n": 383,
+        "p10": 9.095916584404108,
+        "median": 19.590304843645086,
+        "p90": 67.65045314044029
+      },
+      "contacted_table_xy_error_cm": {
+        "n": 340,
+        "p10": 5.126648878830525,
+        "median": 15.300955498871549,
+        "p90": 36.95922929680087
+      },
+      "contacted_table_time_error_ms": {
+        "n": 340,
+        "p10": 3.733333333319599,
+        "median": 25.291666666664213,
+        "p90": 73.41666666666322
+      }
+    }
+  }
+}
