@@ -10,3 +10,5 @@ A fixed prediction gain learned in native Pong helped on an initial delayed-vide
 | Prompt camera packets | 119 | 139 | 137 | 229 |
 
 Values sum the longest qualifying streak on each release. On the 18 fresh drops the carried memory was frozen and the per-game learner could still update within each release. The carried learner reached ten on 4/18, compared with 1/18 for the reset learner, none for the frozen Pong forecast and 15/18 with prompt frames. Individual stream held sums of 59, 9 and 26 versus 22, 12 and 15 for frozen forecasting reveal uneven benefits. The three acquisition histories took 24.65, 32.82 and 32.93 simulated seconds. These are online target interactions even though no scores were used. The arm still loses substantial performance to camera latency. [Stream 1](temporal-memory-0.json.gz) · [2](temporal-memory-1.json.gz) · [3](temporal-memory-2.json.gz)
+
+Reloading the stored forecasts at the boundary between acquisition and held play reproduced all 2,826 held commands and every scoring record. [Stream 1 memory](temporal-memory-0.npz) · [2](temporal-memory-1.npz) · [3](temporal-memory-2.npz)

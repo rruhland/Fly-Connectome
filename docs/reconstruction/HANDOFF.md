@@ -1,5 +1,9 @@
 # M1B research handoff
 
+## Combined single-arm checkpoint
+
+A persistent wrist learner inspected the actual receiving arm and played without resetting it. Across 36 sequential compound-physics releases it scored 456 qualified rebounds versus 278 frozen and 537 with true actuator mappings. Stock reached ten on 10/15, altered on 7/21 versus 0/21 frozen. All 11,381 commands reproduced after reloading the model at each game boundary. An invisible control change inside a familiar installation still cost the first ball. [Load the checkpoint and see every paired result](../../artifacts/tt24/continual-wrist.md) · [Sharing motor knowledge between bodies](../../artifacts/tt24/motor-recombine.md)
+
 ## Body knowledge transferred immediately into a real two-arm game
 
 A motor interface learned in one 1.45-second movement test carried straight into table tennis on 16 fresh receiving points with four unknown mappings. The arm made 12 legal returns and 10 completed two-arm exchanges, versus one return and zero exchanges with its original commands. The true inverse gave 11 and 11. The longest point was a win with eight own returns and seven opponent returns. The existing match head had prior demonstrations and used two cameras. All 48 points replayed exactly. [Watch the same point with and without the learned mapping](../../artifacts/tt24/settled-match-witness.mp4) · [Transfer and retention](../../artifacts/tt24/settled-match.md)
