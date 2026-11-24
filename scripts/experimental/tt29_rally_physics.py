@@ -624,9 +624,15 @@ def replay(arena, record):
     return result
 
 
-def rally(arena, shot, *, seed=0, target=100, display=False, checkpoint=None):
+def rally(arena, shot, *, seed=0, target=100, display=False, checkpoint=None, remember=False):
     arena.launch(shot)
-    near = MotionPlanner(arena, 1, seed=seed)
+    if remember:
+        from .tt29_action_memory import Experience, RallyObjective, RecallPlanner
+
+        near = RecallPlanner(arena, Experience(), seed=seed, blend=True, recent=True)
+        near.predict = RallyObjective(near.predict)
+    else:
+        near = MotionPlanner(arena, 1, seed=seed)
     far = MotionPlanner(arena, -1, seed=seed + 1) if getattr(arena, "partner", None) is None else None
     actions = []
     state_hash = sha256()
@@ -647,10 +653,15 @@ def rally(arena, shot, *, seed=0, target=100, display=False, checkpoint=None):
         if partner is not None:
             config.update(partner_lanes=partner.targets.tolist(), guard_table=partner.guard_table,
                           partner_fast=type(partner).__name__ == "FastPracticePartner")
-        return dict(seed=seed, launch=shot, returns=returns, result=arena.point_result(), events=arena.events,
-                    volleys=volleys, motor=arena.motor_audit(), configuration=config, actions=actions,
-                    decisions=near.decisions + (partner.reports if far is None else far.decisions),
-                    elapsed=perf_counter() - started, live_state_sha256=state_hash.hexdigest())
+        result = dict(seed=seed, launch=shot, returns=returns, result=arena.point_result(), events=arena.events,
+                      volleys=volleys, motor=arena.motor_audit(), configuration=config, actions=actions,
+                      decisions=near.decisions + (partner.reports if far is None else far.decisions),
+                      elapsed=perf_counter() - started, live_state_sha256=state_hash.hexdigest())
+        if remember:
+            result["recall"] = dict(examples=len(near.memory.examples), retrieved=near.retrieved,
+                                    planned=near.fallback, retrieval_seconds=near.retrieval_seconds,
+                                    fallback_seconds=near.fallback_seconds)
+        return result
 
     for _ in range(arena.max_steps):
         u = near.command()
@@ -663,6 +674,8 @@ def rally(arena, shot, *, seed=0, target=100, display=False, checkpoint=None):
             if event["kind"] == "contact":
                 ledger += 1
             elif ledger and event["kind"] == "legal_return":
+                if remember and event["side"] == 1:
+                    near.remember()
                 returns += 1
                 if display:
                     print("legal", arena.steps, returns, event["side"], event["location"], flush=True)
@@ -695,6 +708,7 @@ def main():
     parser.add_argument("--guard-arm", action="store_true")
     parser.add_argument("--clearance-margin", type=float, default=0.0)
     parser.add_argument("--fast-search", action="store_true")
+    parser.add_argument("--remember", action="store_true")
     parser.add_argument("--rate-scale", type=float, default=1.0)
     parser.add_argument("--guard-speed", action="store_true")
     parser.add_argument("--motor-envelope", action="store_true")
@@ -738,7 +752,8 @@ def main():
 
     try:
         for sid in args.ids:
-            row = rally(arena, launches[sid], seed=args.seed, target=args.target, display=True, checkpoint=checkpoint)
+            row = rally(arena, launches[sid], seed=args.seed, target=args.target, display=True,
+                        checkpoint=checkpoint, remember=args.remember)
             checkpoint(row)
             row["replay"] = replay(arena, row)
             rows.append(row)
