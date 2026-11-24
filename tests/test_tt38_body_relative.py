@@ -5,7 +5,8 @@ import numpy as np
 from scripts.experimental.tt37_joint_deep import DeepField
 from scripts.experimental.tt38_body_relative import Body, FREQ, RelativeField, groups, input_motion
 from scripts.experimental.tt38_body_relative_augment import translate
-from scripts.experimental.tt38_body_relative_online import passage
+from scripts.experimental.tt38_body_relative_face import single_joint_command
+from scripts.experimental.tt38_body_relative_online import PassageField, passage
 
 
 def linearish_body():
@@ -78,3 +79,52 @@ def test_signed_passage_requires_two_nearby_measured_exposures():
     assert passage(4, first, 9, second) is None
     assert passage(4, second, 6, first) is None
     assert passage(4, np.array([.01, .11, .01]), 6, np.array([.01, -.11, .01])) is None
+
+
+def test_passage_credit_only_happens_after_qualifying_terminal_exposure():
+    states = np.zeros((24, 11))
+    states[:, 4] = np.repeat([-2., 2.], 12)
+    bank = {"states": states, "targets_now": np.zeros((24, 6)),
+            "marks": np.c_[np.arange(24), np.zeros(24)]}
+    receipt = {"practice": [{"frames": 24, "card": {"id": 1}}]}
+    weights = linearish_body().weights
+    actor = PassageField(bank, receipt, weights, mode="learn")
+    state = np.zeros(9)
+    miss = (10., np.array([.1, -.12]), [(7, state, np.zeros(2))])
+    actor.gaps = [miss]
+    actor.end_point(terminal=False)
+    assert actor.memory == []
+    actor.clock_tick(12)
+    actor.score_feedback(1)
+    actor.end_point(terminal=True)
+    assert actor.memory == []
+    actor.begin_point()
+    actor.gaps = [miss]
+    actor.end_point(terminal=True)
+    np.testing.assert_allclose(actor.correction(state), [.04, -.045])
+
+    frozen = PassageField(bank, receipt, weights, mode="carry", memory=actor.memory.copy())
+    frozen.gaps = [miss]
+    frozen.end_point(terminal=True)
+    assert frozen.memory == actor.memory
+
+    disabled = PassageField(bank, receipt, weights, mode="fixed", memory=actor.memory.copy())
+    np.testing.assert_array_equal(disabled.correction(state), [0., 0.])
+
+
+def test_joint_face_decoupling_decreases_independent_face_disagreement():
+    center = linearish_body().weights
+    angular = np.zeros_like(center)
+    angular[0, 1] = 1.
+    for joint, axis in [(3, 0), (4, 2)]:
+        harmonic = np.eye(5)[joint]
+        at = np.flatnonzero(np.all(FREQ == harmonic, axis=1))[0]
+        angular[1 + len(FREQ) + at, axis] = .6
+    pose = Body(np.c_[center, angular])
+    relative = np.array([.12, -.10, .17, .32, -.22, -.1])
+    absolute = np.array([.20, .00, .09, .01, -.01, -.1])
+    estimate = single_joint_command(relative, absolute, pose, np.full(5, -1.), np.full(5, 1.))
+    target_orientation = pose.position(absolute)[3:]
+    np.testing.assert_allclose(pose.position(estimate)[:3], pose.position(relative)[:3])
+    assert np.linalg.norm(pose.position(estimate)[3:] - target_orientation) < .5 * np.linalg.norm(
+        pose.position(relative)[3:] - target_orientation)

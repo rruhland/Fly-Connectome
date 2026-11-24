@@ -8,10 +8,16 @@ from .tt37_joint_deep_report import totals
 from .tt37_joint_report import paired, read_complete, replay_case
 
 
+def condition(doc):
+    fit = doc.get("candidate_source")
+    return fit.get("augmentation", fit["body_coordinates"]) if fit else "absolute"
+
+
 def report(control_path, conditions, output, *, replay=False):
     control = read_complete(control_path)
-    sources = {"absolute": _hash(control_path)}
-    scores = {"absolute": totals(control)}
+    control_name = condition(control)
+    sources = {control_name: _hash(control_path)}
+    scores = {control_name: totals(control)}
     pair = {}
     proof = {}
     for path in conditions:
@@ -19,7 +25,7 @@ def report(control_path, conditions, output, *, replay=False):
         for key in ("source_sha256", "plan_sha256", "deck", "cap", "ready"):
             if candidate[key] != control[key]:
                 raise ValueError(f"Control mismatch at {key}: {path.name}")
-        name = candidate["candidate_source"].get("augmentation", candidate["candidate_source"]["body_coordinates"])
+        name = condition(candidate)
         if name in scores:
             raise ValueError(f"Duplicate condition {name}")
         sources[name] = _hash(path)
