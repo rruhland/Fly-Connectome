@@ -16,7 +16,7 @@ All three shared exactly 23 physical first offers. Assignment 10316 produced no 
 
 Earlier recordings of other actors on the same 24 assignments put these results in context. The planner-free joint actor had 47 total own returns and a longest rally of 11 alternating returns. The integrated actor had 134 and a longest rally of 63. Those are separate historical references, not the matched ordinary-control counterfactual. [Planner-free tape](action-baseline.json.gz) · [Integrated tape](../tt37/integrated-replication.json.gz)
 
-The independent referee recomputed every one of the 72 scores from the recorded physical contact, separation and landing events. All agreed. The scores do not depend on the separate geometry audit, which replays one longest point per arm without rerunning either policy.
+The independent referee recomputed every one of the 72 scores from the recorded physical contact, separation and landing events. All agreed. A separate action-only replay reproduced every placement, contact and score in one longest point per controller. The three replays kept one launch apiece and found zero checked arm, paddle or court penetrations across 57,483 physics samples. Minimum checked clearance was 15.63 mm in the ordinary replay, 15.26 mm with commitment and 15.28 mm with commitment plus carry. The other points were not geometry-replayed. [Independent referee and detailed geometry replay](commitment-replication-audit.json)
 
 ## Reproduce
 
