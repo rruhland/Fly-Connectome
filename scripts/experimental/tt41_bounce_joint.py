@@ -3,8 +3,11 @@
 import argparse
 from ast import literal_eval
 from collections import deque
+from copy import copy, deepcopy
 from pathlib import Path
 from time import process_time
+from types import SimpleNamespace
+from unittest.mock import patch
 
 import numpy as np
 
@@ -304,7 +307,7 @@ def fork_tick(row):
     )
 
 
-def play_fork(a, res, model, raw, card, row, serial, ready, stop):
+def play_fork(a, res, model, raw, card, row, serial, ready, stop, cache=None):
     renderer, rig, stride, lo, hi = res
     a.launch(row["shot"], card=card)
     a.partner.reset(seed=card["seed"])
@@ -321,11 +324,28 @@ def play_fork(a, res, model, raw, card, row, serial, ready, stop):
     runtime = None
     for tick in range(min(a.max_steps, stop + 115)):
         q = a.joints.copy()
-        x = mpc.observed(eye, tick, renderer.capture() if tick % 2 == 0 else None, q)
+        if cache is not None and "eye" in cache and tick < stop:
+            enc, ref, x, flight = cache["sensors"][tick]
+            if not (np.array_equal(enc, q) and np.array_equal(ref, sent)):
+                raise ValueError(
+                    "Physical replay did not reproduce the cached sensor prefix"
+                )
+            tracker = SimpleNamespace(latest=flight)
+        else:
+            if cache is not None and "eye" in cache and tick == stop:
+                eye = deepcopy(cache["eye"], {id(rig): rig})
+            x = mpc.observed(
+                eye, tick, renderer.capture() if tick % 2 == 0 else None, q
+            )
+            tracker = eye.eye
+            if cache is not None and "eye" not in cache and tick < stop:
+                cache["sensors"].append((q.copy(), sent.copy(), x, tracker.latest))
+                if tick == stop - 1:
+                    cache["eye"] = deepcopy(eye, {id(rig): rig})
         if x is not None and x[4] < -0.9 and x[1] < -0.90:
             past_inbound = True
         if tick < stop:
-            model.engine.observe(tick, eye.eye, q, sent.copy())
+            model.engine.observe(tick, tracker, q, sent.copy())
             u = np.asarray(row["actions"][tick])
         else:
             if tick == stop:
@@ -394,6 +414,29 @@ def play_fork(a, res, model, raw, card, row, serial, ready, stop):
     }
 
 
+def from_shared(raw, spec, mode, law, extras, shared):
+    def factory(bank, engine):
+        if "prior" not in shared:
+            shared["prior"] = Carried(
+                bank, engine, practice=[PRACTICE], held={c["id"] for c in spec["cards"]}
+            )
+        old = shared["prior"]
+        active = copy(old)
+        active.online = deque(old.online, maxlen=old.online.maxlen)
+        return active
+
+    with patch.object(mpc, "Fragments", factory):
+        return Signed(
+            mpc.BANK,
+            raw,
+            variant="elastic",
+            budget=spec["budget"],
+            mode=mode,
+            law=law,
+            extra=extras,
+        )
+
+
 def assess(args):
     spec = _read(SRC)
     if (
@@ -411,12 +454,14 @@ def assess(args):
         "checkpoint_sha256": _hash(CHECKPOINT),
         "effect_sha256": _hash(SOLO),
         "extras": args.extra,
+        "frozen_observed_prefix_cache": args.cache_prefix,
         "modes": modes,
         "ids": ids,
         "rows": [],
         "design": "Archived real prefixes, reconstructed earned optical memory, rearmed independent direct MPCs on the same later incoming offer.",
     }
     law = _read(SOLO)["pooled"]
+    shared = {}
     with mpc.centered(spec["ready"]):
         a = mpc.arena()
         res = mpc.resources(a)
@@ -443,26 +488,22 @@ def assess(args):
                     "fork_tick": stop,
                     "modes": {},
                 }
+                cache = {"sensors": []} if args.cache_prefix else None
                 for mode in modes:
-                    model = Signed(
-                        mpc.BANK,
-                        raw,
-                        variant="elastic",
-                        budget=spec["budget"],
-                        mode=mode,
-                        law=law,
-                        extra=args.extra,
-                    )
+                    model = from_shared(raw, spec, mode, law, args.extra, shared)
                     try:
-                        model.priors = Carried(
-                            mpc.BANK,
-                            model.engine,
-                            practice=[PRACTICE],
-                            held={c["id"] for c in spec["cards"]},
-                        )
                         initial_bank(model, i + 1, row["memory"]["before"])
                         item = play_fork(
-                            a, res, model, raw, card, row, i + 1, spec["ready"], stop
+                            a,
+                            res,
+                            model,
+                            raw,
+                            card,
+                            row,
+                            i + 1,
+                            spec["ready"],
+                            stop,
+                            cache=cache,
                         )
                     finally:
                         model.close()
@@ -561,6 +602,7 @@ if __name__ == "__main__":
     p.add_argument("--modes", choices=MODES, nargs="+")
     p.add_argument("--extra", type=int, default=64)
     p.add_argument("--shift", type=int, default=0)
+    p.add_argument("--cache-prefix", action="store_true")
     p.add_argument("--plan", type=Path, default=ROOT / "tt37/memory-course.json")
     p.add_argument("--deck", default="replication")
     p.add_argument("--limit", type=int, default=2)
