@@ -20,7 +20,6 @@ from .tt31_ready import centered
 from .tt34_results import paired
 from .tt35_error import passage
 from .tt36_impact_refine import Frames
-from .tt37_motor_clinic import AIM
 from .tt37_opponent import arena
 from .tt37_rebound import fit as optical_fit
 from .tt37_visual_inertia import LearnedOptics
@@ -34,6 +33,7 @@ TRAIN = (("risk-recheck",0,6),("reuse-cold",0,4))
 HELD = (("stream-learn",0,6),("reuse-warm-frozen",6,9))
 CONTACT_HORIZON = 25
 LIVE_GAMES = 4
+AIM = np.array([0.,1.29,1.05,3.60])
 SCALES = np.array([.16,.33,.16,.80,1.2,1.65,.75,.8,.85,.8,.8,1.2,1.2,1.5,.7])
 # A discrete bank makes it possible to estimate a conditional action
 # consequence without averaging physically distinct contact hypotheses.
@@ -337,7 +337,7 @@ def live(mode):
     reset=_read(snapshot)
     if reset["vision_sha256"]!=_hash(VISION):
         raise ValueError("Holding a different sensor model would change the contact prior")
-    model=Correction(reset["rows"],mode="local") if mode=="local" else None
+    model=Correction(reset["rows"],mode=mode) if mode!="nominal" else None
     logged=[]
     result=OUT/f"contact-id-live-{mode}.json.gz"
     options=["tt37_motor_clinic","optical-fixed",str(result),"--plan",str(OUT/"contact-id-plan.json"),
@@ -382,45 +382,55 @@ def classify_for_report(doc):
 
 
 def summary():
-    before,after=(_read(OUT/f"contact-id-live-{v}.json.gz") for v in ("nominal","local"))
-    if (before["cards"]!=after["cards"] or len(before["rows"])!=len(before["cards"])
-            or len(after["rows"])!=len(after["cards"])):
-        raise ValueError("Incomplete or unpaired held test")
+    modes=[v for v in ("nominal","local","global")
+           if v!="global" or (OUT/"contact-id-live-global.json.gz").is_file()]
+    tapes={v:_read(OUT/f"contact-id-live-{v}.json.gz") for v in modes}
+    before=tapes["nominal"]
+    for after in tapes.values():
+        if before["cards"]!=after["cards"] or len(after["rows"])!=len(after["cards"]):
+            raise ValueError("Incomplete or unpaired held test")
     picked=[i for i,row in enumerate(before["rows"]) if row["placements"]["delivered"]]
-    if picked!=[i for i,row in enumerate(after["rows"]) if row["placements"]["delivered"]]:
-        raise ValueError("Actual first physical offer missing in one condition")
-    pair=[dict(d,rows=[d["rows"][i] for i in picked],cards=[d["cards"][i] for i in picked]) for d in (before,after)]
+    for after in tapes.values():
+        if picked!=[i for i,row in enumerate(after["rows"]) if row["placements"]["delivered"]]:
+            raise ValueError("Actual first physical offer missing in one condition")
+    eligible={v:dict(d,rows=[d["rows"][i] for i in picked],cards=[d["cards"][i] for i in picked])
+              for v,d in tapes.items()}
     labels={k:classify_for_report(_read(OUT/f"contact-id-{k}-observations.json")) for k in ("fit","held")}
-    s=dict(initial_opponent_faults=len(before["cards"])-len(picked),games=paired(*pair),
+    s=dict(initial_opponent_faults=len(before["cards"])-len(picked),
+           games={v:paired(eligible["nominal"],eligible[v]) for v in modes if v!="nominal"},
            label_categories_evaluator_only=labels,
-           sync_calls={d["contact_calibration"]:d["sync_calls"] for d in (before,after)})
+           sync_calls={v:d["sync_calls"] for v,d in tapes.items()})
     _write(OUT/"contact-id-live-results.json",s)
     print(s,flush=True)
 
 
 def audit():
-    before,after=(_read(OUT/f"contact-id-live-{v}.json.gz") for v in ("nominal","local"))
-    if before["cards"]!=after["cards"] or len(before["rows"])!=len(before["cards"]):
-        raise ValueError("Invalid held replay comparison")
-    changed=[i for i,(a,b) in enumerate(zip(before["rows"],after["rows"],strict=True))
-             if a["score"]["learner"]!=b["score"]["learner"]]
-    if not changed:
-        changed=[max(range(len(after["rows"])),key=lambda i:after["rows"][i]["score"]["learner"])]
-    selected=dict(after,cards=[after["cards"][i] for i in changed],rows=[after["rows"][i] for i in changed])
+    before=_read(OUT/"contact-id-live-nominal.json.gz")
+    checked={}
     with TemporaryDirectory(prefix="tt38-contact-replay-") as folder:
         corpus,report=(Path(folder)/x for x in ("subset.json.gz","report.json"))
-        _write(corpus,selected)
-        with patch.object(joint,"replay_arena",lambda cards,**settings:
-                          arena(cards,protocol="random",**settings)):
-            joint.verify(corpus,report,cad=True)
-        proof=_read(report)
-    _write(OUT/"contact-id-audit.json",dict(independent_replay=proof["points"],indices=changed,
-                                           source_sha256=_hash(OUT/"contact-id-live-local.json.gz")))
+        for mode in ("local","global"):
+            path=OUT/f"contact-id-live-{mode}.json.gz"
+            if not path.exists():
+                continue
+            after=_read(path)
+            if before["cards"]!=after["cards"] or len(before["rows"])!=len(before["cards"]):
+                raise ValueError("Invalid held replay comparison")
+            difference=[abs(a["score"]["learner"]-b["score"]["learner"])
+                        for a,b in zip(before["rows"],after["rows"],strict=True)]
+            i=max(range(len(difference)),key=lambda i:(difference[i],after["rows"][i]["score"]["learner"]))
+            selected=dict(after,cards=[after["cards"][i]],rows=[after["rows"][i]])
+            _write(corpus,selected)
+            with patch.object(joint,"replay_arena",lambda cards,**settings:
+                              arena(cards,protocol="random",**settings)):
+                joint.verify(corpus,report,cad=True)
+            checked[mode]=dict(independent_replay=_read(report)["points"],index=i,source_sha256=_hash(path))
+    _write(OUT/"contact-id-audit.json",checked)
 
 
 if __name__=="__main__":
     p=argparse.ArgumentParser(description=__doc__)
-    p.add_argument("phase",choices=("collect","fit","plan","nominal","local","summary","audit"))
+    p.add_argument("phase",choices=("collect","fit","plan","nominal","local","global","summary","audit"))
     p.add_argument("--resume",action="store_true")
     a=p.parse_args()
     fn={"collect":lambda:collect(resume=a.resume),"fit":fit,"plan":live_plan,
