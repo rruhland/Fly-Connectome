@@ -30,7 +30,7 @@ def _arena(record):
 def _overlay(rgb, time, landed, total, last_speed):
     image = Image.fromarray(rgb)
     draw = ImageDraw.Draw(image)
-    draw.rounded_rectangle((15, 12, 392, 71), radius=7, fill="#172332")
+    draw.rounded_rectangle((15, 12, 438, 71), radius=7, fill="#172332")
     title = "Physics-state coach · alternating legal returns"
     draw.text((27, 19), title, font=font(15, True), fill="#f7f8fc")
     pace = f"   ·   Last departure {last_speed:.1f} m/s" if last_speed is not None else ""

@@ -1,6 +1,6 @@
 # Full-size physical rally teacher
 
-A simulated SO-101 at the regulation table and a force-driven carriage opponent completed **100 consecutive alternating legal returns** in 70.33 simulated seconds. The first delivery used launch 10542 from the pinned DeepMind recordings. The referee excluded that delivery from the count. The carriage varied its target across six forehand positions and pace settings. Every subsequent return came from a native racket contact, traveled across the net, and landed on the receiving half. An independent command replay reproduced all 502 events and sampled the arm geometry at all 33,760 solver steps. [Action and contact receipt](rally-physics-100.json.gz)
+A simulated SO-101 at the regulation table and a force-driven carriage opponent completed **100 consecutive alternating legal returns** in 70.33 simulated seconds. The first delivery used launch 10542 from the pinned DeepMind recordings. The referee excluded that delivery from the count. The carriage varied its target across six forehand positions and pace settings. Every subsequent return came from a native racket contact, traveled across the net, and landed on the receiving half. An independent command replay reproduced all 502 events and sampled the arm geometry at all 33,760 solver steps. [Action and contact receipt](rally-physics-100.json.gz) · [30 FPS real-time replay](rally-physics-teacher.mp4)
 
 | Measurement | 10th percentile | Median | 90th percentile |
 | --- | ---: | ---: | ---: |
