@@ -1,5 +1,7 @@
 # Camera-controlled rallies with speed-dependent motor torque
 
+[Watch the 71-second camera-controlled game](coupled-camera100.mp4) · [See its contact and landing locations](coupled-placement.png)
+
 Two fixed RGB cameras observed one continuous ball in regulation table tennis. A simulated SO-101 stayed clamped to the near table edge. The powered practice partner selected a new forehand target on each return. The recorded opening launched the ball once. Each counted return required a new paddle contact and a legal landing on the other half. The opening launch was excluded. [Fixture and camera photographs from simulation](fixture.md) · [Native referee](../../scripts/experimental/tt29_endurance.py) · [Measured opening source](../tt25/recorded-secondary-reference.json)
 
 | Measured opening | Consecutive legal returns | Simulated duration | Median departure speed | Median time between hits | Live CPU time |
@@ -12,6 +14,30 @@ The arm's five stroke joints had a 3.35 N·m stall cap. Available motoring torqu
 The long rallies followed three continuous practice sequences. In the first sequence scores were 52, 8, 46 and **100**. A second sequence started with 120 rewarded movements and scored **95**, 10 and **100** on a different random opponent schedule. On its final point the arm started with 173 examples, retrieved 49 movements and selected two fresh plans. A third schedule carried the resulting 223 examples and scored 10, **95**, 0 and **100**. The two 95s ended after a legal near-side return. On 7271 the arm intercepted the ball across a 6.8 cm lateral span. Its shots landed across 62.5 cm of the opponent's half. Moving the opponent's targets across a wider region is substantially harder. [First course](rally-objective-envelope.json.gz) · [Second course](envelope-carry.json.gz) · [Third course](envelope-fresh.json.gz) · [Physical net-cord recovery](tt29_partner_short.md)
 
 The live arm received camera pixels, its own encoders, issued command history and legal-return feedback. It used a designed ball detector, a calibrated optical model, candidate arm movements and an isolated simulator to check predicted outcomes. It learned a reusable library of rewarded joint movements without backpropagation. The opponent had access to simulator state. The solo warm-up supplied actuator timing in separate delayed games. Its measured contribution was 10 to 60 and 16 to 30 returns. These 100s used stereo and the retained table movement library. [Matched learning comparisons](endurance.md) · [Warm-up and perturbations](adaptation.md)
+
+## A 200-return point and the learning control
+
+With the stop set to 200, a fresh run on opening 7271 landed **100 returns by the arm and 100 by the partner**. It lasted 138.02 simulated seconds, with 0.683 s median between hits and 4.51 m/s median ball departure speed. Its live loop consumed 169.0 CPU seconds. Each side used physical paddle contacts from the measured opening to the last bounce. The referee stopped the point at the target. [Full action stream and event log](envelope-extended.json.gz)
+
+A fresh optical tracker started each comparison. The arm that carried 173 previously rewarded movements landed 100 returns. The arm beginning with an empty movement library landed 28, and the partner missed that last shot. Total rally lengths were 200 and 55 on the same measured opening and opponent seed. The warm arm added 100 more rewarded movements during play and selected 98 actions by retrieval. It also selected three by search. This pair tests the effect of retained table experience. Solo-to-table timing transfer was tested independently. [173-movement starting checkpoint](coupled-173-movements.json.gz) · [Empty-memory control](coupled-cold.json.gz) · [Solo hold before and after table play](tt29_coupled_retention.md)
+
+To reproduce the longer point, run the live command below with `--ids 7271 --seed-offset 41157 --return-target 200 --checkpoint artifacts/tt29/coupled-173-movements.json.gz` in place of its opening IDs, opponent seed and input checkpoint.
+
+## Camera, table and motor changes
+
+| Change | Matched observations |
+| --- | --- |
+| Shorter, narrower table | A stereo measurement of painted edges changed 0 and 54 returns to 100 and 100. Motor torque was capped independently of speed for this comparison. |
+| Loaded arm, same checkpoint | A 32-control-tick encoder probe changed 15 and 12 to 100 and 44. This comparison also used the independent torque cap. |
+| Wider opponent, coupled motors | Four points scored 22, 2, 8 and 6. The opponent sampled 96 combinations of position, height and pace. The last near-side contact went short in two losses and off the table in another. |
+| Changed materials, arm load, camera pose, command and image lag, and command noise together | Scores of 0, 2 and 2 became 4, 2 and 3 when the arm used solo timing, surveyed the court lines and probed its own joints. Later optical updates gave 4, 5 and 6. |
+| Wrist camera alone | A 32-return point reproduced all 166 events, with positive clearance at all 11,146 CAD states. Its peak joint speed was 6.46 rad/s under the independent torque cap. Another opening scored zero. |
+
+[Table survey](table-survey.json.gz) · [Loaded-arm and registration details](adaptation.md) · [Wide-target runs](envelope-variety.json.gz) · [Compound baseline](envelope-compound-stale.json.gz) · [Compound calibration](envelope-compound-adapt.json.gz) · [Compound late visual updates](envelope-compound-late.json.gz) · [Wrist-only test](tt29_wrist_only.md)
+
+| Wrist-mounted board camera | Base clamped to the end of the table |
+| --- | --- |
+| ![Camera housing fastened to the gripper assembly](fixture-wrist-board.png) | ![Two clamps bearing against the tabletop](fixture-clamp.png) |
 
 ## Replay the 7271 point
 

@@ -3,6 +3,7 @@
 import argparse
 import gzip
 import json
+from functools import lru_cache
 from hashlib import sha256
 from pathlib import Path
 import subprocess
@@ -29,10 +30,14 @@ EYE = (328, 246)
 FPS = 30
 
 
+@lru_cache(maxsize=16)
+def font(size, bold):
+    return ImageFont.truetype('DejaVuSans-Bold.ttf' if bold else 'DejaVuSans.ttf', size)
+
+
 def label(canvas, position, text, size, *, bold=False, color='#e9efee'):
-    face = 'DejaVuSans-Bold.ttf' if bold else 'DejaVuSans.ttf'
     draw = ImageDraw.Draw(canvas)
-    draw.text(position, text, font=ImageFont.truetype(face, size), fill=color)
+    draw.text(position, text, font=font(size, bold), fill=color)
 
 
 def frame(arena, renderer, tick, count, streams, shot_id, capture=None):
