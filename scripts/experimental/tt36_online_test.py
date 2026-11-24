@@ -3,6 +3,7 @@
 import numpy as np
 
 from scripts.experimental.tt36_online import Actor, MAX_POINTS_IN_MEMORY, Memory, labels, outcome
+from scripts.experimental.tt36_online_components import transform
 
 
 def test_memory_is_local_and_uses_miss_magnitude():
@@ -61,3 +62,20 @@ def test_actor_uses_current_observation_and_does_not_update_memory():
     np.testing.assert_allclose(actor.command(optical, z, 5, False), np.r_[res, 0.])
     assert len(state.bank) == 1
     assert actor.choices[0]["tick"] == 5
+
+
+def test_legal_only_has_no_grades_from_visual_misses_or_outgoing_speed():
+    x = [0.] * 11
+    records = [dict(context=x, arm=1, landed=False, optical_outgoing_mps=4., optical_gap_m=.04),
+               dict(context=x, arm=3, landed=True, optical_outgoing_mps=None, optical_gap_m=None)]
+    assert transform(records, "legal") == [dict(context=x, arm=1, reward=0.),
+                                            dict(context=x, arm=3, reward=1.)]
+
+
+def test_visual_only_uses_the_same_values_for_legal_and_illegal_and_abstains():
+    x = [0.] * 11
+    observed = dict(context=x, arm=1, optical_outgoing_mps=3., optical_gap_m=.04)
+    hidden = dict(context=x, arm=3, landed=True, optical_outgoing_mps=None, optical_gap_m=None)
+    a, b = transform([dict(observed, landed=True), hidden, dict(observed, landed=False)], "optical")
+    assert a == b
+    assert .36 < a["reward"] < .61

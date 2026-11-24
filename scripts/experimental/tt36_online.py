@@ -199,7 +199,7 @@ def run(args):
     base = _read(BASE)
     actions = templates()
     if mode == "carry":
-        state_path = OUT / "online-memory.json"
+        state_path = args.memory or OUT / "online-memory.json"
         state = _read(state_path)
         if state["base_sha256"] != _hash(BASE) or state["actions_rad"] != actions.tolist():
             raise ValueError("Memory was learned using different joint targets")
@@ -405,6 +405,7 @@ if __name__ == "__main__":
     parser.add_argument("--feeds", type=Path, default=Path("/tmp/tt25-rallies.json"))
     parser.add_argument("--course", type=Path)
     parser.add_argument("--output", type=Path)
+    parser.add_argument("--memory", type=Path, help="Use a frozen acquired or ablated checkpoint in carry mode")
     parser.add_argument("--limit", type=int)
     arguments = parser.parse_args()
     entry = {"summary": summarize, "audit": audit_results}.get(arguments.stage)

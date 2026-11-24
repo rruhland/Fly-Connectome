@@ -8,6 +8,8 @@ A legal return contributes a reward of one. An RGB-observed path already moving 
 
 After eight practice points the memory already chose a nonzero offset for 27 of 32 recorded new-release opening observations. After all 32 practice points, retaining only hit evidence changed eight of those decisions and retaining only miss evidence changed 31. Both signals influenced offset selection. These were decision checks on recorded observations, not additional physical matches or evidence of faster improvement in score. [Learning-dose and ablation counts](online-results.json)
 
+In a separate physical ablation using the same practice experience, legal-only and optical-only grading each reproduced every held point score of the combined learner. Changing motor decisions did not establish that either feedback channel added legal returns beyond the other. [On-court component ablations](online-components.md)
+
 ## Matched points
 
 | Course and controller | Opening returns | Later returns | All legal arm returns |
