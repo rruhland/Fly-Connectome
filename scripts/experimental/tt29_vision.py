@@ -308,11 +308,12 @@ def solve(blocks, desired, regularization=None):
 class OpticalFlight:
     """A batch of recent rays is fit by recursive fixed-window, regularized least squares."""
 
-    def __init__(self, rig, practice=None, *, learn=False, window=.135):
+    def __init__(self, rig, practice=None, *, learn=False, window=.135, detector=None):
         self.rig = rig
         self.practice = FlightPractice() if practice is None else practice
         self.learn = learn
         self.window = window
+        self.detector = detector
         self.rays = deque()
         self.latest = None
         self.bounce_time = None
@@ -333,7 +334,7 @@ class OpticalFlight:
                 pixel = camera.project(self.latest.advance(capture)[0])
                 if pixel[2] > .05:
                     predicted = pixel[:2]
-            sight = ball_pixels(frames[stream], predicted)
+            sight = (self.detector or ball_pixels)(frames[stream], predicted)
             if sight is not None:
                 samples.append(RaySample.measure(capture, stream, camera, sight, self.practice.radius_factor(stream)))
         self.last_frame_views = tuple(sample.stream for sample in samples)

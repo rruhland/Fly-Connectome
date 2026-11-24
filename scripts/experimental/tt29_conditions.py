@@ -41,6 +41,7 @@ CONDITIONS = {
     "loaded_arm": Conditions(
         paddle_mass=1.13, elbow_mass=1.16, wrist_mass=1.20, joint_damping=1.22
     ),
+    "moved_stereo": Conditions(outside_shift_m=0.08, camera_yaw_deg=5.0),
     "moved_camera": Conditions(
         outside_shift_m=0.08, camera_yaw_deg=5.0, streams=("left", "wrist")
     ),

@@ -38,16 +38,50 @@ def context(path, depth):
     return row[[1, 3, 4, 5, 6]], row[0]
 
 
+class RallyObjective:
+    """Prefer robust predicted legal landings throughout a playable region of the far half."""
+
+    def __init__(self, solver):
+        self.solver = solver
+
+    def trajectories(self, goals, target, cutoff):
+        commands, scores = self.solver.trajectories(goals, target, cutoff)
+        ok = np.isfinite(scores[:, 0])
+        r = scores[ok]
+        # These are counterfactual observations from the nominal model. Each
+        # accepted movement must also earn a real landing before it is stored.
+        if len(r):
+            scores[ok, 0] = (
+                0.20 * r[:, 0]
+                + 14.0 * np.maximum(0.0, 0.10 - r[:, 5])
+                + 20.0 * np.maximum(0.0, r[:, 12] - 0.037)
+                + 4.0 * np.maximum(0.0, abs(r[:, 3]) - 0.52)
+                + 4.0 * np.maximum(0.0, 0.39 - r[:, 4])
+                + 4.0 * np.maximum(0.0, r[:, 4] - 1.15)
+                + 0.45 * np.maximum(0.0, 3.65 - r[:, 11])
+            )
+        return commands, scores
+
+
 class RecallPlanner(MotionPlanner):
     """The motor memory is updated only when the point supplies a legal-return reward."""
 
     def __init__(
-        self, arena, memory, *, seed, verify=True, blend=False, recall_only=False
+        self,
+        arena,
+        memory,
+        *,
+        seed,
+        verify=True,
+        blend=False,
+        recall_only=False,
+        recent=False,
     ):
         super().__init__(arena, side=1, seed=seed)
         self.memory = memory
         self.verify = verify
         self.blend = blend
+        self.recent = recent
         self.recall_only = recall_only
         self.pending = None
         self.retrieved = 0
@@ -74,6 +108,11 @@ class RecallPlanner(MotionPlanner):
         lo, hi = a._joint_low[self.axes], a._joint_high[self.axes]
         proposed = []
         neighbors = self.memory.nearest(key, 6)
+        if self.recent:
+            # Recently rewarded movements preserve evidence from changes in the body.
+            already = {id(e) for e in neighbors}
+            window = self.memory.examples[-12:]
+            neighbors.extend(e for e in window if id(e) not in already)
         for e in neighbors:
             interval = np.arange(max(1, round((delay + 0.65) / dt))) + 1.0
             ix = interval + (e.time_to_contact - delay) / dt
@@ -204,16 +243,24 @@ def run(
     reset_memory=False,
     no_memory=False,
     robust_contact=False,
+    rally_objective=False,
+    recent=False,
     blend=False,
     observe_until=0.0,
     recall_only=False,
     verify=True,
     camera_period=1,
+    size=(384, 288),
     identify_delay=False,
     rated=False,
+    motor_envelope=False,
     fast_partner=False,
+    cached_stereo=False,
     probe_delay=False,
+    timing_checkpoint=None,
     fit_body=False,
+    register=False,
+    survey=False,
     spread="practice",
     seed_offset=0,
     condition="stock",
@@ -230,13 +277,14 @@ def run(
     shots = measured_launches(path)
     settings = dict(
         strike_ready=pose,
-        width=384,
-        height=288,
+        width=size[0],
+        height=size[1],
         clearance_guard=True,
         fast_search=True,
         max_steps=9000,
         rate_scale=0.8 if rated else 1.0,
         velocity_guard=rated,
+        motor_envelope=motor_envelope,
     )
     twin = RallyArena(**settings, robust_contact=robust_contact)
     if fast_partner:
@@ -287,9 +335,55 @@ def run(
             memory.add(
                 np.array(e["flight"]), np.array(e["targets"]), e["time_to_contact"]
             )
+    survey_result = None
+    if survey:
+        from .tt18_plant import PlantSettings
+        from .tt29_table_survey import survey as fit_table
+
+        arena.streams = tuple(view.split("+"))
+        try:
+            footprint, error = fit_table(arena.render_cameras(), rig)
+        except ValueError as issue:
+            survey_result = dict(error=str(issue))
+        else:
+            twin.close()
+            width_m, length_m = map(float, footprint)
+            twin = RallyArena(
+                **settings,
+                robust_contact=robust_contact,
+                plant=PlantSettings(
+                    table_half_width=width_m, table_half_length=length_m
+                ),
+            )
+            survey_result = dict(
+                half_width_m=width_m, half_length_m=length_m, rms_px=error
+            )
+        print("court survey", survey_result, flush=True)
+    renderer = None
+    detector = None
+    capture = arena.render_cameras
+    if cached_stereo:
+        if view != "left+right":
+            raise ValueError(
+                "Static stereo capture requires both fixed external cameras"
+            )
+        from .tt29_fast_camera import CachedStereoRenderer, native_ball_pixels
+
+        renderer = CachedStereoRenderer(arena)
+        detector = native_ball_pixels
+        capture = renderer.capture
     rows = []
     calibration = None
     fixed_lag = None
+    if timing_checkpoint is not None:
+        from .tt4_transfer_trial import _read
+
+        if probe_delay or fit_body:
+            raise ValueError("Choose prior solo timing or a new table probe")
+        fixed_lag = int(_read(timing_checkpoint)["carried_lag"])
+        if not 0 <= fixed_lag <= delay_ident.maximum:
+            raise ValueError("Invalid lag in solo checkpoint")
+        delay_ident.lag = fixed_lag
     try:
         if probe_delay or fit_body:
             from .tt29_encoder_delay import calibrate_delay
@@ -309,7 +403,7 @@ def run(
             pipeline = Delay(conditions, opponent_seed + 29003)
             twin.reset(seed=sid, server=-1, render=False)
             rig.begin()
-            eye = OpticalFlight(rig, nominal, learn=True)
+            eye = OpticalFlight(rig, nominal, learn=True, detector=detector)
             policy = OpticalPlanner(twin, seed=290110)
             planner = RecallPlanner(
                 twin,
@@ -318,11 +412,27 @@ def run(
                 blend=blend,
                 recall_only=recall_only,
                 verify=verify,
+                recent=recent,
             )
+            if rally_objective:
+                planner.predict = RallyObjective(planner.predict)
             if fast_partner:
                 planner.flight = NativeBallFlight(twin)
             policy.nominal = planner
             arena.streams = tuple(view.split("+"))
+            registrations = {}
+            if register:
+                from .tt29_registration import register as fit_camera
+
+                for stream, frame in arena.render_cameras().items():
+                    if stream in rig.nominal:
+                        try:
+                            fit = fit_camera(frame, rig.nominal[stream])
+                        except ValueError:
+                            continue
+                        else:
+                            rig.fixed[stream] = fit.camera
+                            registrations[stream] = fit.line_error_px
             x = arena.joints.copy()
             prev = x.copy()
             lo, hi = (
@@ -341,7 +451,7 @@ def run(
                 q = arena.joints.copy()
                 t = step * arena.control_dt
                 captured = (
-                    pipeline.observe(t, arena.render_cameras(), q)
+                    pipeline.observe(t, capture(), q)
                     if step % camera_period == 0
                     else None
                 )
@@ -360,7 +470,7 @@ def run(
                         sample = None
                 ahead = 0
                 q_control, dq_control = q, dq
-                if identify_delay or probe_delay or fit_body:
+                if identify_delay or fixed_lag is not None:
                     delay_ident.observe(q, x, fixed=fixed_lag)
                     ahead = delay_ident.lag
                     q_control, delta = delay_ident.predict(q, q - prev)
@@ -401,6 +511,7 @@ def run(
                     planned=planner.fallback,
                     corrections=getattr(policy, "corrections", 0),
                     delay_estimates=lag_history,
+                    court_fit_px=registrations,
                     elapsed=perf_counter() - cpu,
                     process_cpu_s=process_time() - started_cpu,
                     retrieval_s=planner.retrieval_seconds,
@@ -436,23 +547,35 @@ def run(
                     reset_memory=reset_memory,
                     no_memory=no_memory,
                     robust_contact=robust_contact,
+                    rally_objective=rally_objective,
+                    recent=recent,
                     blend=blend,
                     observe_until=observe_until,
                     recall_only=recall_only,
                     verify=verify,
                     camera_period=camera_period,
+                    size=list(size),
                     identify_delay=identify_delay,
                     rated=rated,
+                    motor_envelope=motor_envelope,
                     fast_partner=fast_partner,
+                    cached_stereo=cached_stereo,
                     calibrated_lag=fixed_lag,
+                    timing_checkpoint=str(timing_checkpoint)
+                    if timing_checkpoint
+                    else None,
                     delay_probe=calibration,
                     fit_body=fit_body,
+                    register=register,
+                    table_survey=survey_result,
                     spread=spread,
                     rows=rows,
                     checkpoint=checkpoint,
                 ),
             )
     finally:
+        if renderer is not None:
+            renderer.close()
         twin.close()
         arena.close()
 
@@ -474,15 +597,25 @@ if __name__ == "__main__":
     p.add_argument("--seed-offset", type=int, default=0)
     p.add_argument("--condition", default="stock")
     p.add_argument("--bounce", type=Path)
+    p.add_argument("--rally-objective", action="store_true")
+    p.add_argument("--recent", action="store_true")
     p.add_argument("--robust-contact", action="store_true")
     p.add_argument("--blend", action="store_true")
     p.add_argument("--observe-until", type=float, default=0.0)
     p.add_argument("--recall-only", action="store_true")
     p.add_argument("--no-verify", action="store_true")
+    p.add_argument(
+        "--size", type=int, nargs=2, default=(384, 288), metavar=("WIDTH", "HEIGHT")
+    )
     p.add_argument("--camera-period", type=int, choices=(1, 2, 3), default=1)
+    p.add_argument("--cached-stereo", action="store_true")
+    p.add_argument("--motor-envelope", action="store_true")
     p.add_argument("--fast-partner", action="store_true")
     p.add_argument("--spread", choices=("practice", "varied"), default="practice")
+    p.add_argument("--survey", action="store_true")
+    p.add_argument("--register", action="store_true")
     p.add_argument("--fit-body", action="store_true")
+    p.add_argument("--timing-checkpoint", type=Path)
     p.add_argument("--probe-delay", action="store_true")
     p.add_argument(
         "--rated",
@@ -502,16 +635,24 @@ if __name__ == "__main__":
         reset_memory=args.reset_memory,
         no_memory=args.no_memory,
         robust_contact=args.robust_contact,
+        rally_objective=args.rally_objective,
+        recent=args.recent,
         blend=args.blend,
         observe_until=args.observe_until,
         recall_only=args.recall_only,
         verify=not args.no_verify,
         camera_period=args.camera_period,
+        size=args.size,
         identify_delay=args.identify_delay,
         rated=args.rated,
+        motor_envelope=args.motor_envelope,
         fast_partner=args.fast_partner,
+        cached_stereo=args.cached_stereo,
         probe_delay=args.probe_delay,
+        timing_checkpoint=args.timing_checkpoint,
         fit_body=args.fit_body,
+        register=args.register,
+        survey=args.survey,
         spread=args.spread,
         seed_offset=args.seed_offset,
         condition=args.condition,

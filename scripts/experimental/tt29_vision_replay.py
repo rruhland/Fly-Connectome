@@ -89,7 +89,7 @@ def clearance_final(arena, guard, data):
     return clearance
 
 
-def replay(feeds, source, shot_id, receipt, movie=None, *, fast_partner=False):
+def replay(feeds, source, shot_id, receipt, movie=None, *, fast_partner=False, last_frame=None):
     archived_bytes = source.read_bytes()
     source_digest = sha256(archived_bytes).hexdigest()
     archive = json.loads(gzip.decompress(archived_bytes) if source.suffix == '.gz' else archived_bytes)
@@ -100,9 +100,11 @@ def replay(feeds, source, shot_id, receipt, movie=None, *, fast_partner=False):
     streams = tuple(archive['view'].split('+'))
     targets = cooperative_targets(pose, archive.get('spread', 'practice'))
     condition = archive.get('condition', 'stock')
-    settings = dict(strike_ready=pose, width=384, height=288, clearance_guard=True, fast_search=True,
+    width, height = archive.get('size', (384, 288))
+    settings = dict(strike_ready=pose, width=width, height=height, clearance_guard=True, fast_search=True,
                     max_steps=9000, targets=targets, guard_table=True, plant=table_settings(condition),
-                    rate_scale=.8 if archive.get('rated') else 1., velocity_guard=archive.get('rated', False))
+                    rate_scale=.8 if archive.get('rated') else 1., velocity_guard=archive.get('rated', False),
+                    motor_envelope=archive.get('motor_envelope', False))
     if fast_partner:
         from .tt29_partner_fast import FastPartnerArena
     arena_type = FastPartnerArena if fast_partner else PartnerArena
@@ -124,8 +126,9 @@ def replay(feeds, source, shot_id, receipt, movie=None, *, fast_partner=False):
         guard = ArmClearance(cad.model, tolerance=0.)
         shadow = mujoco.MjData(cad.model)
         arena._cad_reader = guard, shadow
-        if movie is not None:
+        if movie is not None or last_frame is not None:
             renderer = start_renderer(arena)
+        if movie is not None:
             process = start_encoder(movie)
         for tick, action in enumerate(row['actions']):
             if process is not None and tick % 2 == 0:
@@ -148,6 +151,14 @@ def replay(feeds, source, shot_id, receipt, movie=None, *, fast_partner=False):
         checked = round(arena.data.time / arena.model.opt.timestep) + 1
         if clearance['samples'] != checked:
             raise ValueError(f'CAD audit sampled {clearance["samples"]} of {checked} physics states')
+        if renderer is not None:
+            # The final landing can fall between two video exposures.
+            final_image = frame(arena, renderer, arena.steps, count, streams, shot_id)
+            if last_frame is not None:
+                final_image.save(last_frame)
+            if process is not None:
+                process.stdin.write(final_image.tobytes())
+                frames += 1
         if process is not None:
             process.stdin.close()
             if process.wait() != 0:
@@ -187,15 +198,16 @@ def main():
     parser.add_argument('--receipt', type=Path, default=OUT / 'tt29_vision_memory_audit.json')
     parser.add_argument('--movie', type=Path)
     parser.add_argument('--fast-partner', action='store_true')
+    parser.add_argument('--last-frame', type=Path)
     args = parser.parse_args()
     args.receipt.parent.mkdir(parents=True, exist_ok=True)
     if args.movie is None:
-        replay(args.feeds, args.source, args.id, args.receipt, fast_partner=args.fast_partner)
+        replay(args.feeds, args.source, args.id, args.receipt, fast_partner=args.fast_partner, last_frame=args.last_frame)
     else:
         args.movie.parent.mkdir(parents=True, exist_ok=True)
         with TemporaryDirectory(prefix='tt29-replay-', dir=args.movie.parent) as work:
             temporary = Path(work) / 'rally.mp4'
-            replay(args.feeds, args.source, args.id, args.receipt, temporary, fast_partner=args.fast_partner)
+            replay(args.feeds, args.source, args.id, args.receipt, temporary, fast_partner=args.fast_partner, last_frame=args.last_frame)
             temporary.replace(args.movie)
 
 

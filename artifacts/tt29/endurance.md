@@ -9,6 +9,8 @@ Two different measured openings produced 100 alternating legal returns. The same
 
 Each replay reproduced all 502 referee and contact events. The CAD checks covered 33,297 and 33,393 states at 480 Hz, including the final state. The peak measured joint rates were 6.23 and 6.09 rad/s. The servo's unloaded reference is 5.45 rad/s. Both runs used capped target velocity and 3.35 N·m torque. These are simulator results. For context, the 13,088 measured DeepMind opening shots had a median departure speed of 5.50 m/s. [7271 audit](camera100-physics.json) · [11292 audit](camera100-independent.json) · [Measured speeds and source](../tt25/recorded-secondary-reference.json)
 
+[Watch the complete 100-return point at game speed](camera100.mp4) · [Final landing and both camera inputs](camera100-final.png) · [Video and physics receipt](camera100-audit.json)
+
 ## What changed during play
 
 The arm uses RGB from two external cameras, encoders and its issued commands. It receives one positive learning event for landing a legal return. It stores the estimated approach and its own joint targets and retimes those targets on later approaches. The implementation supplies a color detector, calibrated cameras, nominal ball dynamics, a model of the arm, a stroke generator and the landing objective. The opponent sees ball state and drives a finite-mass physical carriage. Training uses no backpropagation. The recorded opening is the only time the arena places the ball during the point. [Controller](../../scripts/experimental/tt29_action_memory.py) · [Referee audit](../../scripts/experimental/tt29_endurance.py)
@@ -36,3 +38,19 @@ With a checkpoint containing 40 prior movements, two matched openings gave the f
 Each pair used offset 289065 plus point ordinal and the original shot ID to seed the far partner. The complete event and command streams are available for the [material](camera-shift-materials.json.gz), [arm](camera-shift-loaded_arm.json.gz), [timing](camera-shift-latency.json.gz), [one outside camera](camera-shift-outside.json.gz), [wrist](camera-shift-wrist.json.gz), [remounted cameras](camera-shift-moved_camera.json.gz) and [compound change](camera-shift-combined_wrist.json.gz) cases.
 
 Longer solo practice did not improve monotonically. On eight held releases, the 0-, 4-, 12- and 24-drop checkpoints made 6, 33, 42 and 25 qualified rebounds. A separate validation course promoted the four-drop checkpoint, which made 10 rebounds versus four cold on another eight held releases. The retained controller reproduced those scores after the table matches. Wrist calibration learned during bouncing improved subsequent optical estimates and beginner feeding results. An initial full-match warm/cold comparison gave equal rally lengths in all four pairs. [Warm-up and retention](tt29_bounce.md) · [Full-game transfer controls](tt29_warm_rallies.md)
+
+## Reproduce the live learner
+
+The raw opening comes from the pinned CC BY 4.0 DeepMind dataset. The runner checks its SHA-256 before accepting any shot. Run these commands from the repository root with the table-tennis dependencies installed. Compilation of the isolated motion trials requires a C++ compiler and OpenMP. Video export also uses FFmpeg.
+
+```sh
+curl -fL https://raw.githubusercontent.com/google-deepmind/competitive_robot_table_tennis/54cf18e41a8f134d98ad38710001ed50aabb8ebc/rallies.json -o /tmp/tt29-feeds.json
+export MUJOCO_GL=egl OPENBLAS_NUM_THREADS=1 OMP_THREAD_LIMIT=1 LP_NUM_THREADS=1
+python -m scripts.experimental.tt29_action_memory /tmp/tt29-feeds.json /tmp/tt29-live.json.gz \
+    --ids 7271 --checkpoint artifacts/tt29/camera-action-memory.json.gz --robust-contact
+python -m scripts.experimental.tt29_vision_replay /tmp/tt29-feeds.json \
+    --source /tmp/tt29-live.json.gz --id 7271 --receipt /tmp/tt29-replay.json \
+    --fast-partner --movie /tmp/tt29-point.mp4
+```
+
+The first program chooses every new joint command online. The second plays the saved commands, audits every physics state, and renders the point. To try a new opponent sequence on the same opening, pass a fresh integer with `--seed-offset` to the first command. [Dataset](https://github.com/google-deepmind/competitive_robot_table_tennis/tree/54cf18e41a8f134d98ad38710001ed50aabb8ebc)
