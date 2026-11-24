@@ -1,0 +1,113 @@
+{
+  "rationale": "Known retrospectively selected supplemental counterexample. Archived endpoints only; not pooled in the forced-prefix cohort.",
+  "sources": {
+    "frozen": {
+      "path": "artifacts/tt38/joint-mpc-within-frozen.json.gz",
+      "sha256": "6f8f5fc5706456a1ff76ce9b2b07cb443ed69be2fd90f911e8251d4311a01329",
+      "row": 1
+    },
+    "active": {
+      "path": "artifacts/tt38/joint-mpc-held_openings-live.json.gz",
+      "sha256": "9a89d307fc260a757f4db471190c53febbc3e925ec161aead1e3f8ffb5885df3",
+      "row": 1
+    }
+  },
+  "card": {
+    "id": 4640,
+    "mode": "full",
+    "index": 1,
+    "seed": 371608,
+    "key": "full-1-371608",
+    "profile": "reach",
+    "reply_seed": 376618
+  },
+  "own_awards_at_branch": 2,
+  "first_decision_after_award_tick": 241,
+  "matched_prefix_actions_sha256": "bf8177f13fd3ad87e16299b37c73f75d0e71df55154dfa8ff8f43fd30bb6012b",
+  "matched_prefix_events_sha256": "bd1289be119252fb9eef1a115011913d95d0d046cd2a387b1fe57e0f8e3bf478",
+  "first_different_tick": 275,
+  "results": {
+    "frozen": {
+      "third_offer": {
+        "side": -1,
+        "hit": 4.199999999999921,
+        "incoming_mps": 2.7342276137033146,
+        "contact_xyz": [
+          0.2126819846876145,
+          1.1383761297641546,
+          1.346668426806707
+        ],
+        "interval_s": 1.1562499999999343,
+        "outgoing_mps": 6.448312085413586,
+        "spin_rad_s": 9.097488808277411,
+        "landing": 4.51666666666657,
+        "landing_xyz": [
+          -0.10352831973128031,
+          -0.6335127489352597,
+          0.759307406110337
+        ]
+      },
+      "third_return": {
+        "side": 1,
+        "hit": 4.731249999999891,
+        "incoming_mps": 4.108659593134353,
+        "contact_xyz": [
+          -0.2699343298150858,
+          -1.565324124604582,
+          1.0909216278246066
+        ],
+        "interval_s": 0.5312499999999698,
+        "outgoing_mps": 5.994558228422189,
+        "spin_rad_s": 56.555984110882065,
+        "landing": 5.743749999999833,
+        "landing_xyz": [
+          -0.01563923705352987,
+          1.1433951889921667,
+          0.7599562112428027
+        ]
+      },
+      "point_legal_strokes": 53
+    },
+    "active": {
+      "third_offer": {
+        "side": -1,
+        "hit": 4.199999999999921,
+        "incoming_mps": 2.7342276137033146,
+        "contact_xyz": [
+          0.2126819846876145,
+          1.1383761297641546,
+          1.346668426806707
+        ],
+        "interval_s": 1.1562499999999343,
+        "outgoing_mps": 6.448312085413586,
+        "spin_rad_s": 9.097488808277411,
+        "landing": 4.51666666666657,
+        "landing_xyz": [
+          -0.10352831973128031,
+          -0.6335127489352597,
+          0.759307406110337
+        ]
+      },
+      "third_return": {
+        "side": 1,
+        "hit": 4.7270833333332245,
+        "incoming_mps": 4.122773736215737,
+        "contact_xyz": [
+          -0.26751789164337225,
+          -1.5501841267431156,
+          1.0878792612402806
+        ],
+        "interval_s": 0.5270833333333034,
+        "outgoing_mps": 5.158066170866111,
+        "spin_rad_s": 57.9575117883331,
+        "landing": 5.670833333333171,
+        "landing_xyz": [
+          0.018630383885880893,
+          0.4964884015893784,
+          0.7565530778503986
+        ]
+      },
+      "point_legal_strokes": 27
+    }
+  }
+}
