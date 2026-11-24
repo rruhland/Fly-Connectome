@@ -1,6 +1,6 @@
 # Camera-controlled rallies with speed-dependent motor torque
 
-[Watch the 71-second camera-controlled game](coupled-camera100.mp4) · [See its contact and landing locations](coupled-placement.png)
+[Watch the complete 200-return game](coupled-camera200.mp4) · [See all 200 contact and landing locations](coupled-placement200.png) · [Second film, 100 returns](coupled-camera100.mp4)
 
 Two fixed RGB cameras observed one continuous ball in regulation table tennis. A simulated SO-101 stayed clamped to the near table edge. The powered practice partner selected a new forehand target on each return. The recorded opening launched the ball once. Each counted return required a new paddle contact and a legal landing on the other half. The opening launch was excluded. [Fixture and camera photographs from simulation](fixture.md) · [Native referee](../../scripts/experimental/tt29_endurance.py) · [Measured opening source](../tt25/recorded-secondary-reference.json)
 
@@ -17,11 +17,13 @@ The live arm received camera pixels, its own encoders, issued command history an
 
 ## A 200-return point and the learning control
 
-With the stop set to 200, a fresh run on opening 7271 landed **100 returns by the arm and 100 by the partner**. It lasted 138.02 simulated seconds, with 0.683 s median between hits and 4.51 m/s median ball departure speed. Its live loop consumed 169.0 CPU seconds. Each side used physical paddle contacts from the measured opening to the last bounce. The referee stopped the point at the target. [Full action stream and event log](envelope-extended.json.gz)
+With the stop set to 200, a fresh run on opening 7271 landed **100 returns by the arm and 100 by the partner**. It lasted 138.02 simulated seconds, with 0.683 s median between hits and 4.51 m/s median ball departure speed. Its live loop consumed 169.0 CPU seconds. Each side used physical paddle contacts from the measured opening to the last bounce. The referee stopped the point at the target. The replay reproduced 1,006 contact and referee events. All 66,249 geometry samples cleared the exclusion pairs, with a minimum separation of 18.6 mm. All 331,240 signed joint samples stayed inside the motor model. The maximum observed stroke-joint speed was 3.45 rad/s. [Full video and geometry receipt](coupled-camera200-audit.json) · [Signed torque audit](coupled-camera200-motors.json) [Full action stream and event log](envelope-extended.json.gz)
 
 A fresh optical tracker started each comparison. The arm that carried 173 previously rewarded movements landed 100 returns. The arm beginning with an empty movement library landed 28, and the partner missed that last shot. Total rally lengths were 200 and 55 on the same measured opening and opponent seed. The warm arm added 100 more rewarded movements during play and selected 98 actions by retrieval. It also selected three by search. This pair tests the effect of retained table experience. Solo-to-table timing transfer was tested independently. [173-movement starting checkpoint](coupled-173-movements.json.gz) · [Empty-memory control](coupled-cold.json.gz) · [Solo hold before and after table play](tt29_coupled_retention.md)
 
 To reproduce the longer point, run the live command below with `--ids 7271 --seed-offset 41157 --return-target 200 --checkpoint artifacts/tt29/coupled-173-movements.json.gz` in place of its opening IDs, opponent seed and input checkpoint.
+
+Two earlier tests trained arm movement from outcome feedback without the table-specific stroke planner. On held feeds, the learned controllers touched 9 of 32 and 20 of 40 balls respectively. Neither produced a legal return. Their stationary controls had zero touches. The 200-return milestone relies on the model-based planner and the rewarded movement library. [Reward-only movement experiments](reward-practice.json.gz) · [Shaped movement experiments](shaped-practice.json.gz)
 
 ## Camera, table and motor changes
 
@@ -38,6 +40,10 @@ To reproduce the longer point, run the live command below with `--ids 7271 --see
 | Wrist-mounted board camera | Base clamped to the end of the table |
 | --- | --- |
 | ![Camera housing fastened to the gripper assembly](fixture-wrist-board.png) | ![Two clamps bearing against the tabletop](fixture-clamp.png) |
+
+In the compound condition, a controller that learned from missed movements as well as rewarded ones raised six matched point totals from 19 to 28 returns. Three points improved and three tied. Both controllers reached a longest rally of six. Compute increased from 2.57 to 4.17 CPU seconds per return. On the wider targets they made identical movements. Independent RGB drop probes detected softer paddle rebound, but changing the private model's damping left one matched control sequence and loss unchanged. [Failure feedback and controls](tt29_outcome_feedback.md) · [Observed material response](rgb-material-probe.md)
+
+Raising the planner’s preferred ball departure speed to 4.9 m/s produced 28 and 10 returns on two practice openings. The first point’s median was 5.02 m/s. Screening plausible optical errors on the first wide-target opening reduced the score from 22 to 8. Screening alternative materials on the first compound opening tied the calibrated controller at 4. Those screens were stopped after their first completed point. [Pace experiment](envelope-paced.json.gz) · [Optical screen](envelope-variety-screen.json.gz) · [Material screen](envelope-compound-ensemble.json.gz)
 
 ## Replay the 7271 point
 
