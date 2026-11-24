@@ -1,6 +1,6 @@
 # Receding joint search from the camera and encoders
 
-The elastic direct-joint controller reached 49 alternating legal strokes in a natural simulated rally, with 24 returns by the near arm. On 12 novel releases it landed 78 legal near returns, compared with six from raw feedback using the same camera readout. On held continuations, live reward memory raised later returns from 18 to 35 with the same search. None of these runs reached 100 strokes. [Paired physical results](joint-mpc-results.json) · [49-stroke replay](joint-mpc-extended-audit.json)
+The elastic direct-joint controller with live learning reached 49 alternating legal strokes in a natural simulated rally, with 24 returns by the near arm. On 12 novel releases it landed 78 legal near returns, compared with six from raw feedback using the same camera readout. Live reward memory raised later returns from 18 to 35 on the held continuation deck, but the frozen search produced a longer individual rally of 53 strokes on a novel release. None of these runs reached 100. [Paired physical results](joint-mpc-results.json) · [49-stroke replay](joint-mpc-extended-audit.json)
 
 The controller revises short joint commands in a separately built nominal body model. The live game supplies stereo images, joint feedback, the controller’s own previous commands, and the actual referee signal for learning. The nominal model is never given the live physics state, marked ball spin, an opponent target or the incoming release identity. It is reset from its own calibrated plant and tethered to the measured joints. Ball position and velocity come from the same camera readout used for the paired raw control. [Implementation](../../scripts/experimental/tt38_joint_mpc.py)
 
@@ -36,6 +36,10 @@ The search used 141.1 CPU seconds on the novel deck, inside 284.1 total CPU seco
 
 Action-only replay reproduced the strongest novel point, live continuation, and frozen continuation. It found 43 legal near contacts on the negative paddle face, no arm penetrations over 34,646 physics steps, and a minimum clearance of 15.0 mm. This audit covers the selected strong points, not every assessed volley. [Held CAD and referee replays](joint-mpc-audit.json)
 
+## Isolate updates within one point
+
+The two leading novel cards were replayed with the memory frozen. The first point had no legal near return in either run and exactly matched every command and event. Both controllers therefore entered the chosen second point, release 4640, with empty memory. Commands first diverged at 4.58 simulated seconds, after two actual near returns could seed the live memory. Frozen search ultimately made 26 near returns in 53 alternating strokes. Live search made 13 near returns in 27 alternating strokes. This counterexample was chosen after observing the novel live result to isolate the effect of within-point updates. It is not another independent generalization trial. The reward memory helps some continuation sequences but can hurt others. [Within-point receipt](joint-mpc-within-results.json)
+
 ## Reproduce
 
 Use the measured launches from the [regulation reproduction instructions](../tt29/endurance.md) and the preserved TT37 evidence, including the [joint archive receipt](../tt37/long-rgb.json). Set the native physics and numerical workers to one.
@@ -60,4 +64,6 @@ for arm in raw live frozen; do
 done
 python -m scripts.experimental.tt38_joint_mpc_report comparison
 python -m scripts.experimental.tt38_joint_mpc_report audit
+python -m scripts.experimental.tt38_joint_mpc frozen held_openings artifacts/tt38/joint-mpc-within-frozen.json.gz --optic "$optic" --limit 2 --variant elastic
+python -m scripts.experimental.tt38_joint_mpc_report within
 ```

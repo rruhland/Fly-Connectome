@@ -196,8 +196,10 @@ def within_point(folder):
         raise ValueError("Within-point comparison did not start from the exact same reward-empty state")
     changed = next((i for i, (x, y) in enumerate(zip(active["actions"], control["actions"])) if x != y), None)
     elapsed = changed * DT if changed is not None else None
-    awarded = None if elapsed is None else sum(s["side"] == 1 and s["landing"] <= elapsed
+    awarded = None if elapsed is None else sum(s["side"] == 1 and s["landing"] <= elapsed + 1e-9
                                                 for s in active["score"]["shots"])
+    if changed is not None and awarded == 0:
+        raise ValueError("Controllers differed before any live reward on the target point")
     _write(folder / "joint-mpc-within-results.json", dict(
         stage="follow-up causal diagnostic chosen after observing the held result",
         card=a["cards"][-1], exact_earlier_point=True, equal_empty_memory=True,
