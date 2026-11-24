@@ -1,0 +1,1 @@
+{"source_sha256":"6dee07d80c750368a32fb33ed3b3bc88f33e20c2b796ee0d0a860752147ac2f4","source":"bodycoach-practice.json.gz","feed_scope":"practice only","input_columns":["x","y","z","vx","vy","vz"],"samples":266,"points":[{"id":9412,"sample_count":134,"legal":4},{"id":6011,"sample_count":98,"legal":3},{"id":12166,"sample_count":34,"legal":1}],"replay_exact":true}

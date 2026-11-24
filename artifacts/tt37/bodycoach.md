@@ -1,0 +1,26 @@
+# Translating carriage-style strokes to the articulated SO-101
+
+The spatial teacher landed all four first balls in the anchored continuation check, compared with three for the frozen raw pupil. It did not convert any of the four subsequent balls there. On four separate practice starts it produced eight legal SO-101 returns, including five after the opening shot. One practice point reached its eight-return cap with the real arm hitting four legal balls, spanning right, center, right, and left in order. These are results for an **oracle teacher**, not a learned camera-only controller. [Anchored results](bodycoach-refined.json.gz) · [Two additional anchored starts](bodycoach-other.json.gz) · [Practice tapes](bodycoach-practice.json.gz)
+
+## Teacher and controls
+
+The force-driven near carriage can translate over a broader workspace and accelerate faster than the five-axis arm. The teacher therefore uses the carriage technique to generate candidate strike locations, face normals, and velocities, not to replay its path. A limited near-court time/depth window is generated from the true ball state. Native sphere/blade contact and free flight rank carriage-style candidates. The articulated stage fits face alignment and blade center with the actual grasp geometry, then translates desired velocity through the measured kinematic Jacobian into bounded joint velocity. Cubic approach and follow-through paths are expressed as motor targets. A separate native simulation of the arm with its joint limits, torque/speed envelope, and clearance screen supplies the safe legal shortlist. On failed coarse searches, a bounded second sweep uses actual shadow-contact departures to change local lateral offset, face, timing and drive. Only the selected command sequence is executed live. The independently reactive TT37 far blade remains unchanged. No ball or limb pose is reinstalled once a point starts. [Teacher code](../../scripts/experimental/tt37_bodycoach.py)
+
+The refined teacher used the nominal raw learner's initial pose. On the first two left openings its unrefined version scored one legal return altogether, the refined version scored two, a held-endpoint version scored none, and starting the refined version from the alternative centered posture also scored none. On 14832 the initial 150 translated schedules contained no native legal motion. The 80 local variants contained 35, one of which produced the first legal return on the real arm. Returning toward the original ready angle with real actuators and starting brief approach prefixes did not rescue either later ball on these two openings. These are small controls on two starts, not a ranking of all postures. [Unrefined](bodycoach-dynamic.json.gz) · [Held endpoint](bodycoach-static.json.gz) · [Alternative ready posture](bodycoach-center.json.gz) · [Actuator-only recovery](bodycoach-recovery.json.gz)
+
+| Anchored opening | Frozen raw pupil | Refined spatial teacher | Teacher's next incoming lane |
+| --- | ---: | ---: | --- |
+| 5530 | 1 | 1 | Middle |
+| 14832 | 1 | 1 | Right |
+| 3025 | 1 | 1 | Right |
+| 8239 | 0 | 1 | Middle |
+
+## Why the carriage motion cannot simply be copied
+
+We separately tried to fit all 100 taught carriage impact endpoints from the long random witness onto the real arm's five-axis geometry. The approximate target normal was inferred from the ball impulse. The straight grasp fit 24/100 endpoints within 35 mm and with a face-normal dot product of at least 0.92. At most 23 also matched requested velocity within 0.45 m/s after bounding joint speed, and 22 also fit the illustrative 0.58 s nominal-start travel budget. With a side-on grasp those counts were 33, 25 and 15. Thus a grasp change opened some positions but did not remove the timing and dynamic penalty from the same initial joint values. This is an offline geometry check on sampled fits, not a claim no adjacent strike time or alternative preparation can reach those balls. [Kinematic receipts](bodycoach-workspace.json)
+
+## Independent replay and demonstration export
+
+All 16 coach/control action tapes reproduced their native contact, placement and score records. The full-CAD audit checked 22,941 solver states, with zero penetrations and 16.8 mm minimum separation among the checked pairs. The practice-only demonstration export contains 266 raw camera/encoder observations and corresponding demonstrated commands from eight actual legal strikes. No held opening was exported. The trainer can use RGB-derived ball position and velocity plus joint positions/velocities as inputs. The oracle planner is only a producer of motor targets and is not part of that input. [CAD audit](bodycoach-audit.json) · [Demonstration metadata](bodycoach-demo.json) · [Camera and motor arrays](bodycoach-demo.npz)
+
+Reproduce the teacher with `python -m scripts.experimental.tt37_bodycoach /tmp/tt25-rallies.json --expand --refine`. For the demonstration pool add `--group practice --count 4 --cap 8 --out artifacts/tt37/bodycoach-practice.json.gz`. Run `python -m scripts.experimental.tt37_bodycoach_audit --verify` followed by the desired action tapes for exact replay, or run without arguments for the offline copy check. `python -m scripts.experimental.tt37_bodycoach_demo artifacts/tt37/bodycoach-practice.json.gz` rebuilds the observations from rendered stereo and encoders.
