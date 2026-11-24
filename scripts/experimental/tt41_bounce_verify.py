@@ -178,10 +178,47 @@ def verify(tape, output, cad):
     print(out["compute"], flush=True)
 
 
+def verify_supplement(tape, supplemental, output, cad):
+    """A separately executed control must face the same preassigned rollout."""
+    a, b = (_read(path) for path in (tape, supplemental))
+    for key in ("plan_sha256", "group", "batch", "rounds", "cap", "law_sha256"):
+        if a[key] != b[key]:
+            raise ValueError(f"Assessment supplements differ in {key}")
+    ready = _read(SCHOOL)["ready"]
+    rows = []
+    for test in b["rows"]:
+        card = test["card"]
+        anchor = next(row for row in a["rows"] if row["card"] == card)
+        for mode, tr in test["results"].items():
+            r = {
+                "mode": mode,
+                "release": card["id"],
+                "own_legal": tr["score"]["learner"],
+                "physical_time_s": tr["simulation_s"],
+                "cpu_s": tr["cpu_s"],
+                **match(anchor["results"]["fixed"], tr),
+            }
+            if cad:
+                r["recheck"] = recheck(ready, card, tr)
+            rows.append(r)
+    _write(
+        output,
+        {
+            "matched_sha256": _hash(tape),
+            "supplement_sha256": _hash(supplemental),
+            "rows": rows,
+        },
+    )
+
+
 if __name__ == "__main__":
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("--tape", type=Path, default=OUT / "held.json.gz")
     p.add_argument("--out", type=Path, default=OUT / "held-audit.json")
     p.add_argument("--cad", action="store_true")
+    p.add_argument("--supplement", type=Path)
     q = p.parse_args()
-    verify(q.tape, q.out, q.cad)
+    if q.supplement:
+        verify_supplement(q.tape, q.supplement, q.out, q.cad)
+    else:
+        verify(q.tape, q.out, q.cad)
