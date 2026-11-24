@@ -427,7 +427,7 @@ class HindsightPrior(mpc.MPC):
         return index, int(support[winner]), float(quality[winner]), float(y[index, 1])
 
 
-def assess(folder, mode, feeds, optic):
+def assess(folder, mode, feeds, optic, *, resume=False):
     p = paths(folder, "bank")
     learned = _read(p)
     if not learned["count"] or not any(r["commands"] for r in learned["rows"]):
@@ -443,9 +443,29 @@ def assess(folder, mode, feeds, optic):
         raise ValueError("A physical practice recording leaked into assessment")
     dest = paths(folder, mode)
     factory = mpc.MPC if mode == "fixed" else lambda *a, **k: HindsightPrior(*a, learned=learned["rows"], **k)
-    with patch.object(mpc, "MPC", factory):
-        mpc.run(feeds, mpc.BANK, plan, "fresh", "frozen", dest, optic=optic, variant="elastic", cap=24)
-    out = read_complete(dest)
+    if resume:
+        out = _read(dest)
+        prior = out["rows"]
+        if (out["mode"] != "frozen" or out["deck"] != "fresh" or out["variant"] != "elastic"
+                or out["plan_sha256"] != _hash(plan) or out["cards"] != course["fresh"]
+                or out["optical_sha256"] != _hash(optic) or out["source_sha256"] != _hash(mpc.BANK)):
+            raise ValueError("Cannot resume a different or active assessment")
+        if len(prior) < len(out["cards"]):
+            unfinished = out["cards"][len(prior):]
+            recovery = paths(folder, f"{mode}-remaining")
+            with patch.object(mpc, "MPC", factory), patch.object(mpc, "cards_for", return_value=unfinished):
+                mpc.run(feeds, mpc.BANK, plan, "fresh", "frozen", recovery,
+                        optic=optic, variant="elastic", cap=24)
+            tail = read_complete(recovery)
+            if tail["cards"] != unfinished or any(r["memory"]["before"]["rows"] for r in tail["rows"]):
+                raise ValueError("A resumed frozen point reopened earlier practice")
+            out["rows"] = prior + tail["rows"]
+            out["resumed_after"] = len(prior)
+            out["continuation_model_source_sha256"] = tail["model_source_sha256"]
+    else:
+        with patch.object(mpc, "MPC", factory):
+            mpc.run(feeds, mpc.BANK, plan, "fresh", "frozen", dest, optic=optic, variant="elastic", cap=24)
+        out = read_complete(dest)
     out["hindsight_sha256"] = _hash(p) if mode != "fixed" else None
     _write(dest, out)
 
@@ -463,7 +483,18 @@ def report(folder):
         if (live["hindsight_sha256"] != _hash(paths(folder, "bank"))
                 or live["source_sha256"] != fixed["source_sha256"] or live["optical_sha256"] != fixed["optical_sha256"]):
             raise ValueError("Frozen policy comparison is not matched")
-        v["fresh"] = dict(fixed=metrics(fixed), learned=metrics(live), comparison=paired(fixed, live))
+        comparison = paired(fixed, live)
+        mutations = []
+        for c, original, changed in zip(fixed["cards"], fixed["rows"], live["rows"], strict=True):
+            switches = [dict(tick=n["tick"], robust=n["robust"], mode=n["prior_screen"])
+                        for n in changed["searches"] if n.get("chosen") == "verified_hindsight"]
+            first = next((j for j, (a, b) in enumerate(zip(original["actions"], changed["actions"]))
+                          if a != b), None)
+            if first is not None or switches:
+                mutations.append(dict(id=c["id"], first_different_action=first, issued=switches,
+                                      physical_legal_near=[original["score"]["learner"], changed["score"]["learner"]]))
+        v["fresh"] = dict(fixed=metrics(fixed), learned=metrics(live), comparison=comparison,
+                          causal_action_changes=mutations)
     _write(folder / "hindsight-results.json", v)
 
 
@@ -519,6 +550,7 @@ if __name__ == "__main__":
     p.add_argument("--folder", type=Path, default=OUT)
     p.add_argument("--feeds", type=Path, default=Path("/tmp/tt25-rallies.json"))
     p.add_argument("--optic", type=Path, default=OPTICS)
+    p.add_argument("--resume", action="store_true")
     args = p.parse_args()
     args.folder.mkdir(parents=True, exist_ok=True)
     if args.stage == "plan":
@@ -532,4 +564,4 @@ if __name__ == "__main__":
     elif args.stage == "audit":
         audit_estimate(args.folder)
     else:
-        assess(args.folder, args.stage, args.feeds, args.optic)
+        assess(args.folder, args.stage, args.feeds, args.optic, resume=args.resume)
