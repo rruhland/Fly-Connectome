@@ -33,11 +33,11 @@ TEST_AMPLITUDES = [[.032, -.032, .033, -.028, .030],
 PROBE_CARD = card(12330, "fixed", 0, 341003)
 
 
-def plan(feeds, output, *, count=16):
+def plan(feeds, output, *, count=16, seed=341127, exclude_ids=()):
     """Select new openings by neutral delivery only, before evaluating either learner."""
     shots = measured_launches(feeds)
     memory = _read(CHECKPOINT)
-    exclude = set(memory["training_release_ids"])
+    exclude = set(memory["training_release_ids"]).union(exclude_ids)
     archives = [PRIOR_COURSE, ARTIFACTS / "tt31" / "course-plan.json.gz",
                 ARTIFACTS / "tt31" / "recovery-full.json.gz",
                 ARTIFACTS / "tt31" / "recovery-periodic.json.gz",
@@ -47,7 +47,7 @@ def plan(feeds, output, *, count=16):
         for field in ("cards", "held", "staged"):
             exclude.update(entry["id"] for entry in archived.get(field, []))
     candidates = [shot for shot in opening_candidates(shots) if shot["id"] not in exclude][:300]
-    prng = np.random.default_rng(341127)
+    prng = np.random.default_rng(seed)
     counts = Counter()
     quota = dict(left=3 * count // 8, middle=count // 4, right=3 * count // 8)
     selections = []
@@ -55,7 +55,7 @@ def plan(feeds, output, *, count=16):
         arena = replay_arena([])
         try:
             for i, index in enumerate(prng.permutation(len(candidates))):
-                trial = card(candidates[index]["id"], "full", i, 341127 + i)
+                trial = card(candidates[index]["id"], "full", i, seed + i)
                 opening = neutral_delivery(arena, shots, trial)
                 side = opening["observed_lane"] if opening is not None else None
                 if side is not None and counts[side] < quota[side]:
@@ -346,6 +346,8 @@ def main():
     roster.add_argument("feeds", type=Path)
     roster.add_argument("output", type=Path)
     roster.add_argument("--count", type=int, choices=(8, 16, 24), default=16)
+    roster.add_argument("--seed", type=int, default=341127)
+    roster.add_argument("--exclude-ids", type=int, nargs="*", default=[])
     calibrate = actions.add_parser("calibrate")
     calibrate.add_argument("feeds", type=Path)
     calibrate.add_argument("output", type=Path)
@@ -363,7 +365,7 @@ def main():
     args = parser.parse_args()
     args.output.parent.mkdir(parents=True, exist_ok=True)
     if args.action == "plan":
-        plan(args.feeds, args.output, count=args.count)
+        plan(args.feeds, args.output, count=args.count, seed=args.seed, exclude_ids=args.exclude_ids)
     elif args.action == "calibrate":
         calibration(args.feeds, args.output)
     elif args.action == "trial":
