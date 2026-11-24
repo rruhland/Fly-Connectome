@@ -1,9 +1,91 @@
 // Isolated, exact force and contact trials. The live rally state is read only.
 #include <mujoco/mujoco.h>
 #include <algorithm>
+#include <array>
 #include <cmath>
 #include <limits>
 #include <vector>
+
+namespace {
+struct ClearanceBounds {
+    std::array<mjtNum, 3> center{}, half{};
+    bool finite = false;
+};
+
+// The compiled mesh AABB is in the geometry's local frame. For ordinary
+// primitives derive the bound directly from the current model sizes. Keep
+// unbounded or plugin-defined shapes on the original narrow-test path.
+ClearanceBounds local_clearance_box(const mjModel* m, int geom) {
+    ClearanceBounds b;
+    const mjtNum* size = m->geom_size + 3*geom;
+    switch (m->geom_type[geom]) {
+        case mjGEOM_SPHERE:
+            b.half = {size[0],size[0],size[0]};
+            break;
+        case mjGEOM_CAPSULE:
+            b.half = {size[0],size[0],size[0]+size[1]};
+            break;
+        case mjGEOM_CYLINDER:
+            b.half = {size[0],size[0],size[1]};
+            break;
+        case mjGEOM_ELLIPSOID:
+        case mjGEOM_BOX:
+            b.half = {size[0],size[1],size[2]};
+            break;
+        case mjGEOM_MESH: {
+            const mjtNum* local = m->geom_aabb + 6*geom;
+            b.center = {local[0],local[1],local[2]};
+            b.half = {local[3],local[4],local[5]};
+            // Mesh vertices are stored as floats. Cover the compiler's
+            // float extrema and center/half-extent roundoff as well.
+            for (int j=0; j<3; ++j) {
+                b.half[j] += 4.*std::numeric_limits<float>::epsilon() *
+                             (1. + std::abs(b.center[j]) + b.half[j]);
+            }
+            break;
+        }
+        default:
+            return b;
+    }
+    b.finite = true;
+    for (int j=0; j<3; ++j) {
+        if (!std::isfinite(b.center[j]) || !std::isfinite(b.half[j]) || b.half[j] < 0.) {
+            b.finite = false;
+        }
+    }
+    return b;
+}
+
+struct WorldBox { std::array<mjtNum, 3> low, high; bool finite = true; };
+
+WorldBox world_clearance_box(const mjData* d, int geom, const ClearanceBounds& local) {
+    const mjtNum* pos = d->geom_xpos + 3*geom;
+    const mjtNum* R = d->geom_xmat + 9*geom;
+    WorldBox bounds;
+    for (int k=0; k<3; ++k) {
+        const auto* r = R + 3*k;
+        const auto& c = local.center;
+        const auto& h = local.half;
+        const mjtNum at = pos[k] + r[0]*c[0] + r[1]*c[1] + r[2]*c[2];
+        const mjtNum radius = std::abs(r[0])*h[0] + std::abs(r[1])*h[1] + std::abs(r[2])*h[2];
+        // Expand the broad bound, never shrink it, including roundoff around
+        // the exact horizon. Distances that may matter still go to MuJoCo.
+        const mjtNum pad = 1.e-9 * (1. + std::abs(at) + radius);
+        bounds.low[k] = at - radius - pad;
+        bounds.high[k] = at + radius + pad;
+        bounds.finite = bounds.finite && std::isfinite(bounds.low[k]) && std::isfinite(bounds.high[k]);
+    }
+    return bounds;
+}
+
+bool boxes_separated(const WorldBox& a, const WorldBox& b, mjtNum horizon) {
+    if (!a.finite || !b.finite) return false;
+    for (int k=0; k<3; ++k) {
+        if (a.low[k] - b.high[k] > horizon || b.low[k] - a.high[k] > horizon) return true;
+    }
+    return false;
+}
+}  // namespace
 
 extern "C" void trial_strokes_v5(
     const mjModel* nominal, const mjData* source, const double* goals,
@@ -22,6 +104,22 @@ extern "C" void trial_strokes_v5(
     constexpr int width = 13;
     std::fill(scores, scores + width * count, std::numeric_limits<double>::quiet_NaN());
 
+    // Both checks are purely broad phase. Keep order, sampling, thresholds,
+    // narrow distances and the original sphere bound for every plausible pair.
+    std::vector<ClearanceBounds> local_bounds(pairs ? nominal->ngeom : 0);
+    std::vector<int> monitored;
+    if (pairs) {
+        std::vector<bool> seen(nominal->ngeom);
+        for (int k=0; k<pairs; ++k) {
+            for (const int g : {first[k],second[k]}) {
+                if (seen[g]) continue;
+                seen[g] = true;
+                local_bounds[g] = local_clearance_box(nominal,g);
+                if (local_bounds[g].finite) monitored.push_back(g);
+            }
+        }
+    }
+
     #pragma omp parallel num_threads(2)
     {
         // Each worker owns the actuator-limit table it changes during a trial.
@@ -29,6 +127,7 @@ extern "C" void trial_strokes_v5(
         const mjModel* model = local ? local : nominal;
         mjData* d = mj_makeData(model);
         std::vector<double> step_control(model->nu, 0.0);
+        std::vector<WorldBox> world_bounds(pairs ? model->ngeom : 0);
         #pragma omp for schedule(dynamic, 8)
         for (int i = 0; i < count; ++i) {
             mj_copyData(d, model, source);
@@ -119,8 +218,13 @@ extern "C" void trial_strokes_v5(
                         const double horizon = std::max(.001, clearance_margin + .0001);
                         if (clearance_margin > 0.0)
                             mj_kinematics(model, d);
+                        for (const int g : monitored) {
+                            world_bounds[g] = world_clearance_box(d,g,local_bounds[g]);
+                        }
                         for (int k = 0; k < pairs; ++k) {
                             const int first_geom = first[k], second_geom = second[k];
+                            if (local_bounds[first_geom].finite && local_bounds[second_geom].finite &&
+                                boxes_separated(world_bounds[first_geom],world_bounds[second_geom],horizon)) continue;
                             const double radius = model->geom_rbound[first_geom] + model->geom_rbound[second_geom]
                                                 + clearance_margin;
                             const double* p1 = d->geom_xpos + 3 * first_geom;
