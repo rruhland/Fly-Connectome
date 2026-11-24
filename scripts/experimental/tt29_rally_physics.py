@@ -51,7 +51,8 @@ class RallyArena(ReferenceReceiver):
 
     def __init__(self, *, fixture="table-edge", width=192, height=144, frameskip=4, max_steps=9000,
                  strike_ready=False, clearance_guard=False, fast_search=False, rate_scale=1.0,
-                 velocity_guard=False, robust_contact=False, clearance_margin=0.0, **settings):
+                 velocity_guard=False, robust_contact=False, clearance_margin=0.0, motor_envelope=False,
+                 **settings):
         if not 0.0 < rate_scale <= 1.0:
             raise ValueError("expected a target slew scale in (0, 1]")
         if clearance_margin < 0.0:
@@ -63,6 +64,8 @@ class RallyArena(ReferenceReceiver):
         self.rate_scale = rate_scale
         self.velocity_guard = velocity_guard
         self.robust_contact = robust_contact
+        self.motor_envelope = motor_envelope
+        self._motor_limits = None
         if strike_ready == "side-on":
             settings["paddle_grip"] = "side-on"
         self._cad_reader = None
@@ -100,7 +103,7 @@ class RallyArena(ReferenceReceiver):
         speeds = np.maximum(self._observed_speed, np.abs(self.data.qvel[self._near_dofs]))
         forces = np.maximum(self._observed_force, np.abs(self.data.actuator_force[axes]))
         return dict(target_rate_limit_rad_s=(rates * self.rate_scale).tolist(),
-                    no_load_reference_rad_s=NOMINAL_NO_LOAD,
+                    no_load_reference_rad_s=NOMINAL_NO_LOAD, linear_motoring_envelope=self.motor_envelope,
                     force_limit_nm=self.model.actuator_forcerange[axes].tolist(),
                     max_measured_rate_rad_s=speeds.tolist(), max_measured_force_nm=forces.tolist())
 
@@ -119,6 +122,19 @@ class RallyArena(ReferenceReceiver):
                 self._cad_violations += int(nearest[2] < -clearance.tolerance)
                 if self._cad_min is None or nearest[2] < self._cad_min["signed_m"]:
                     self._cad_min = dict(first=nearest[0], second=nearest[1], signed_m=nearest[2], time=self.data.time)
+
+        if self.motor_envelope:
+            axes = self._arm_ids[1][2]
+            self._motor_limits = self.model.actuator_forcerange[axes].copy()
+            normalized = self.data.qvel[self._near_dofs] / NOMINAL_NO_LOAD
+            self.model.actuator_forcerange[axes, 0] *= np.clip(1.0 + normalized, 0.0, 1.0)
+            self.model.actuator_forcerange[axes, 1] *= np.clip(1.0 - normalized, 0.0, 1.0)
+
+    def _contacts(self, incoming):
+        if self._motor_limits is not None:
+            self.model.actuator_forcerange[self._arm_ids[1][2]] = self._motor_limits
+            self._motor_limits = None
+        super()._contacts(incoming)
 
     def _arm_home(self, side):
         if self.strike_ready and side == 1 and self.fixture == "table-edge":
@@ -321,12 +337,13 @@ def _native_trials():
         "-I", str(package / "include"), str(source), str(library), f"-Wl,-rpath,{package}",
         "-o", str(target),
     ], check=True)
-    function = ctypes.CDLL(str(target)).trial_strokes
+    function = ctypes.CDLL(str(target)).trial_strokes_v2
     pointer, integer, number = ctypes.c_void_p, ctypes.c_int, ctypes.c_double
     function.argtypes = (
         pointer, pointer, pointer, integer, integer, integer, integer, pointer, integer, pointer,
         integer, pointer, pointer, pointer, pointer, pointer, ctypes.c_bool, number, number, number,
         pointer, pointer, pointer, pointer, pointer, integer, number, number, pointer, number, number,
+        number, pointer, pointer, integer,
     )
     function.restype = None
     return function, workspace
@@ -342,6 +359,8 @@ class Rollout:
         self.velocity_dofs = np.ascontiguousarray(
             self.model.jnt_dofadr[self.model.actuator_trnid[self.axes, 0]], dtype=np.intc)
         self.other = arena._arm_ids[-side][2].astype(np.intc)
+        self.near_axes = arena._arm_ids[1][2].astype(np.intc)
+        self.near_dofs = arena._near_dofs.astype(np.intc)
         self.other_home = np.asarray(arena._arm_home(-side)[0], dtype=float)
         self.micro = arena.frameskip * SOLVER_SUBSTEPS
         self.ids = np.array([
@@ -375,6 +394,8 @@ class Rollout:
             a.rate_scale if self.side == 1 else 1.0,
             NOMINAL_NO_LOAD if self.side == 1 and a.velocity_guard else 0.0, self.velocity_dofs.ctypes.data,
             45.0 if self.side == 1 and a.robust_contact else 0.0, a.clearance_margin,
+            NOMINAL_NO_LOAD if a.motor_envelope else 0.0,
+            self.near_axes.ctypes.data, self.near_dofs.ctypes.data, len(self.near_axes),
         )
         return rates, result
 
@@ -621,7 +642,8 @@ def rally(arena, shot, *, seed=0, target=100, display=False, checkpoint=None):
         config = dict(fixture=arena.fixture, strike_ready=arena.strike_ready, frameskip=arena.frameskip,
                       clearance_guard=arena.clearance_guard, fast_search=arena.fast_search,
                       velocity_guard=arena.velocity_guard, rate_scale=arena.rate_scale,
-                      robust_contact=arena.robust_contact, clearance_margin=arena.clearance_margin)
+                      robust_contact=arena.robust_contact, clearance_margin=arena.clearance_margin,
+                      motor_envelope=arena.motor_envelope)
         if partner is not None:
             config.update(partner_lanes=partner.targets.tolist(), guard_table=partner.guard_table)
         return dict(seed=seed, launch=shot, returns=returns, result=arena.point_result(), events=arena.events,
@@ -673,13 +695,15 @@ def main():
     parser.add_argument("--fast-search", action="store_true")
     parser.add_argument("--rate-scale", type=float, default=1.0)
     parser.add_argument("--guard-speed", action="store_true")
+    parser.add_argument("--motor-envelope", action="store_true")
     parser.add_argument("--robust-contact", action="store_true")
     parser.add_argument("--output", type=Path, default=OUTPUT / "rally-physics.json.gz")
     args = parser.parse_args()
     launches = measured_launches(args.feeds)
     settings = dict(fixture=args.fixture, strike_ready=args.ready, clearance_guard=args.guard_arm,
                     fast_search=args.fast_search, rate_scale=args.rate_scale, velocity_guard=args.guard_speed,
-                    robust_contact=args.robust_contact, clearance_margin=args.clearance_margin)
+                    robust_contact=args.robust_contact, clearance_margin=args.clearance_margin,
+                    motor_envelope=args.motor_envelope)
     if args.partner:
         from .tt29_partner import FOREHAND_LANES, PartnerArena
         if args.ready == "lateral":

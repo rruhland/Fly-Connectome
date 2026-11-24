@@ -5,24 +5,28 @@
 #include <limits>
 #include <vector>
 
-extern "C" void trial_strokes(
-    const mjModel* model, const mjData* source, const double* goals,
+extern "C" void trial_strokes_v2(
+    const mjModel* nominal, const mjData* source, const double* goals,
     int count, int frames, int micro, int side,
     const int* active, int active_count, const int* other, int other_count,
     const double* other_home, const double* increments, const double* low, const double* high,
     const int* ids, bool received, double cutoff, double drag, double lift,
     const double* target, double* rates, double* scores,
     const int* first, const int* second, int pairs, double rate_scale, double speed_limit,
-    const int* active_dofs, double rim_penalty, double clearance_margin) {
+    const int* active_dofs, double rim_penalty, double clearance_margin,
+    double envelope_no_load, const int* near_actuators, const int* near_dofs, int near_count) {
     const int ball = ids[0], blade = ids[1], table = ids[2], table2 = ids[3], net = ids[4];
     const int ball_body = ids[5], pos = ids[6], vel = ids[7];
     const double start = source->time;
-    const double mass = model->body_mass[ball_body];
+    const double mass = nominal->body_mass[ball_body];
     constexpr int width = 13;
     std::fill(scores, scores + width * count, std::numeric_limits<double>::quiet_NaN());
 
     #pragma omp parallel num_threads(2)
     {
+        // Each worker owns the actuator-limit table it changes during a trial.
+        mjModel* local = envelope_no_load > 0. ? mj_copyModel(nullptr, nominal) : nullptr;
+        const mjModel* model = local ? local : nominal;
         mjData* d = mj_makeData(model);
         std::vector<double> step_control(model->nu, 0.0);
         #pragma omp for schedule(dynamic, 8)
@@ -64,6 +68,16 @@ extern "C" void trial_strokes(
                     for (int j = 0; j < 3; ++j) {
                         applied[j] = mass * (-drag * speed * velocity[j] + lift * cross[j]);
                         applied[j + 3] = -.18 * model->body_inertia[3 * ball_body + j] * spin[j];
+                    }
+                    if (local) {
+                        for (int j = 0; j < near_count; ++j) {
+                            const int cap = 2 * near_actuators[j];
+                            const double rate = d->qvel[near_dofs[j]] / envelope_no_load;
+                            local->actuator_forcerange[cap] = nominal->actuator_forcerange[cap]
+                                                            * std::clamp(1. + rate, 0., 1.);
+                            local->actuator_forcerange[cap + 1] = nominal->actuator_forcerange[cap + 1]
+                                                                * std::clamp(1. - rate, 0., 1.);
+                        }
                     }
                     mj_step(model, d);
                     if (speed_limit > 0.0) {
@@ -194,5 +208,6 @@ extern "C" void trial_strokes(
             }
         }
         mj_deleteData(d);
+        if (local) mj_deleteModel(local);
     }
 }
