@@ -50,6 +50,8 @@ The pooled tapes make the servo delay measurable. The issued setpoint implied an
 
 A direct pupil supplements the original absolute joint target with a small rate-limited correction in well-supported near-ball states. The desired correction comes from measured three-tick paddle displacements on similar training observations. The learned encoder model predicts which small change to the current command will reduce that displacement error. It models the arm, not the ball or opponent. [Encoder-effect readout](../../scripts/experimental/tt38_body_relative_effects.py)
 
+The servo-aware readout landed 11 own returns, including 3 later, versus 17 and 8 in the identical-bank absolute control. Its best point lasted three own returns versus four for the control. The point it improved from one to three own returns replayed exactly from commands, with zero penetrations in 2,933 full CAD samples. In live play the readout changed 192 commands and forecast the next encoder-derived paddle center with 2.66 mm mean error. Copying short body motion more precisely was therefore not enough to improve physical returns. Training on the signed consequence of real controlled contacts would test a different objective, rather than assuming that body trajectory is a reliable proxy. [Paired physical test and replay](servo-effects-results.json)
+
 ## Reproduce
 
 Use the pinned measured launch corpus and stock broad opponent, documented in [TT37 learning](../tt37/learning.md). No card from the reserved TT37 *school* confirmation roster was used.
