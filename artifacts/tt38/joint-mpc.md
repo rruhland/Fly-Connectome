@@ -34,6 +34,8 @@ Exact paired opening trajectories matched on all 19 delivered first shots. The o
 
 The search used 141.1 CPU seconds on the novel deck, inside 284.1 total CPU seconds for 140.0 simulated seconds. On continuations the live search used 76.6 CPU seconds inside 150.9 total CPU seconds for 73.6 simulated seconds. This is a physically simulated result, not a hardware trial or real-time application. [Timing and candidate counts](joint-mpc-results.json)
 
+Action-only replay reproduced the strongest novel point, live continuation, and frozen continuation. It found 43 legal near contacts on the negative paddle face, no arm penetrations over 34,646 physics steps, and a minimum clearance of 15.0 mm. This audit covers the selected strong points, not every assessed volley. [Held CAD and referee replays](joint-mpc-audit.json)
+
 ## Reproduce
 
 Use the measured launches from the [regulation reproduction instructions](../tt29/endurance.md) and the preserved TT37 evidence, including the [joint archive receipt](../tt37/long-rgb.json). Set the native physics and numerical workers to one.
