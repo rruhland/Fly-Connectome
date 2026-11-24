@@ -336,6 +336,11 @@ def summary(reference, tested):
              'visual','refresh','variable','cap','refine','rounds','samples','guided','group','motor_value')
     if any(a.get(k)!=b.get(k) for k in options):
         raise ValueError('Default controller settings differ apart from rescue')
+    if bool(a.get('forget_between_points'))!=bool(b.get('forget_between_points')):
+        raise ValueError('Point-to-point practice setting differs')
+    n=a['memory_start']
+    if a['bank'][:n]!=b['bank'][:n] or any(ra['shot']!=rb['shot'] for ra,rb in zip(a['rows'],b['rows'],strict=True)):
+        raise ValueError('Starting practice memories or releases differ')
     pairs=[]
     for c,ra,rb in zip(a['cards'],a['rows'],b['rows'],strict=True):
         x,y=ra['placements'],rb['placements']
@@ -347,20 +352,82 @@ def summary(reference, tested):
             digest_json(x['delivered'][0][k])==digest_json(y['delivered'][0][k]) for k in keys))
         rescues=[r for r in rb['records'] if r.get('camera_rescue') is not None]
         installed=[r for r in rescues if r['camera_rescue']['status']=='selected']
-        legal_from_rescue=[]
+        effects=[]
+        def play_after(row, start, end):
+            hit=next((s for s in row['score']['shots'] if s['side']==1 and start<s['hit']<=end),None)
+            touches=[e for e in row['events'] if e['kind']=='contact' and e.get('side')==1 and start<e['time']<=end]
+            separation=None if not touches else next((e for e in row['events'] if e['kind']=='separation'
+                and e.get('collider')=='learner_racket' and touches[0]['time']<e['time']<=end+.035),None)
+            point=next((e for e in reversed(row['events']) if e['kind']=='point'),None)
+            return dict(touch_s=None if not touches else touches[0]['time'],
+                        outgoing_mps=None if separation is None else separation['velocity'],
+                        legal=hit is not None,landing=None if hit is None else hit['landing_xyz'],
+                        terminal=None if point is None else point['reason'],winner=None if point is None else point['winner'])
         for r in installed:
             start=r['tick']/60
-            end=start+r['score'][1]+.20
-            legal_from_rescue.append(any(s['side']==1 and start < s['hit'] <= end for s in rb['score']['shots']))
+            eta=r['score'][1]
+            end=start+eta+.20
+            baseline=play_after(ra,start,end)
+            realized=play_after(rb,start,end)
+            effects.append(dict(tick=r['tick'],predicted_touch_s=start+eta,predicted_landing_xy=r['score'][3:5],
+                same_prior_commands=ra['actions'][:r['tick']]==rb['actions'][:r['tick']],
+                stability=r['camera_rescue']['stability'],baseline=baseline,rescue=realized))
         trials=[t for r in rescues for t in r['search'] if t.get('stage','').startswith('camera_rescue')]
         near_later=lambda p:sum(e['near_landed'] for e in p['delivered'][1:])
+        match_cmd=next((i for i,(u,v) in enumerate(zip(ra['actions'],rb['actions'])) if u!=v),None)
+        winner=lambda row: next((e['winner'] for e in reversed(row['events']) if e['kind']=='point'),None)
         pairs.append(dict(id=c['id'],key=c['key'],first_physical_ball_exact=first,matched_request_prefix=len(common),
             baseline_own=ra['score']['learner'],rescue_own=rb['score']['learner'],baseline_total=ra['score']['returns'],
             rescue_total=rb['score']['returns'],baseline_later=near_later(x),rescue_later=near_later(y),
-            rescue_calls=len(rescues),selected=len(installed),legally_realized=sum(legal_from_rescue),
-            rescue_trials=sum(t['trials'] for t in trials),weak_trials=sum(t.get('weak_or_backward',0) for t in trials),
+            baseline_winner=winner(ra),rescue_winner=winner(rb),first_command_change=match_cmd,
+            rescue_calls=len(rescues),selected=len(installed),legally_realized=sum(e['rescue']['legal'] for e in effects),
+            selections=effects,rescue_trials=sum(t['trials'] for t in trials),weak_trials=sum(t.get('weak_or_backward',0) for t in trials),
+            contact_trials=sum(t['contacts'] for t in trials),nominal_legal_trials=sum(t['legal'] for t in trials if t['stage']=='camera_rescue'),
             baseline_cpu=ra.get('cpu_s'),rescue_cpu=rb.get('cpu_s')))
     return dict(reference_sha256=_hash(reference),test_sha256=_hash(tested),private_config=b['camera_rescue'],pairs=pairs)
+
+
+def clearance_replay(paths, point_id):
+    """Replay commands with a full CAD safety observer and match the native point ledger."""
+    from .tt4_transfer_trial import _read,_hash
+    from .tt19_view_full_game import digest_json
+    from .tt29_endurance import audit
+    from .tt29_partner import CARRIAGE
+    from .tt31_ready import centered
+    from .tt33_joint import FAR_COMMAND
+    from .tt37_opponent import arena
+    from .tt37_opponent_audit import CourtClearance,contact_observer,guarded,verify_clearance
+
+    receipts=[]
+    for path in paths:
+        source=_read(path)
+        i=next(i for i,c in enumerate(source['cards']) if c['id']==point_id)
+        c,r=source['cards'][i],source['rows'][i]
+        with centered(source['ready']):
+            a=arena(); cad=arena(detail='cad')
+            try:
+                a.launch(r['shot'],card=c)
+                a.partner.reset(seed=c['seed'])
+                guarded(a,CourtClearance(cad.model,articulated=True))
+                contacts=[]
+                with contact_observer(a,contacts):
+                    for u in r['actions']:
+                        a.exchange(u,FAR_COMMAND)
+                for k,live in (('events',a.events),('placements',a.point_placements()),('score',audit(a.events,opening_side=1))):
+                    if digest_json(live)!=digest_json(r[k]):
+                        raise ValueError(f'Full CAD observer changed {k}')
+                verify_clearance(a)
+                if len(contacts)!=sum(e['kind']=='contact' for e in a.events) or any(
+                        (p['side']==-1)!=(p['player']==CARRIAGE) for p in contacts):
+                    raise ValueError('Contact count or physical body disagrees with referee')
+                receipts.append(dict(source=Path(path).name,source_row_sha256=digest_json(r),
+                    exact_events_sha256=digest_json(a.events),point=c,own=r['score']['learner'],score=r['score']['returns'],
+                    ticks=len(r['actions']),clearance=a.clearance_result(),native_contacts=len(contacts),
+                    terminal=next((e for e in reversed(a.events) if e['kind']=='point'),None)))
+            finally:
+                a.close()
+                cad.close()
+    return dict(replays=receipts)
 
 
 if __name__=='__main__':
@@ -368,17 +435,22 @@ if __name__=='__main__':
     from pathlib import Path
     from .tt4_transfer_trial import _write
     p=argparse.ArgumentParser(description=__doc__)
-    p.add_argument('mode',choices=('diagnose','summarize'))
+    p.add_argument('mode',choices=('diagnose','summarize','clearance'))
     p.add_argument('reference',type=Path)
     p.add_argument('output',type=Path)
     p.add_argument('--tested',type=Path)
     p.add_argument('--search-seed',type=int)
+    p.add_argument('--point-id',type=int)
     a=p.parse_args(); a.output.parent.mkdir(parents=True,exist_ok=True)
     if a.mode=='diagnose':
         if a.search_seed is None:
             p.error('Supply one prospectively chosen private seed')
         reproduction(a.reference,a.output,a.search_seed)
-    else:
+    elif a.mode=='summarize':
         if a.tested is None:
             p.error('Supply the completed matched run')
         _write(a.output,summary(a.reference,a.tested))
+    else:
+        if a.tested is None or a.point_id is None:
+            p.error('Supply the paired physical game archive and one point ID')
+        _write(a.output,clearance_replay((a.reference,a.tested),a.point_id))
