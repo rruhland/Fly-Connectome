@@ -1,4 +1,5 @@
 """Replay the learner's stereo tracking and score incoming predictions against a physical crossing."""
+
 import argparse
 from pathlib import Path
 
@@ -14,16 +15,26 @@ from .tt29_vision import FlightPractice, OpticalFlight, Rig
 
 def crossing(start, end, y):
     if start[2] >= y > end[2]:
-        return start + (end-start) * (y-start[2])/(end[2]-start[2])
+        return start + (end - start) * (y - start[2]) / (end[2] - start[2])
     return None
 
 
 def run(source, output):
     data = _read(source)
     plane = -1.10  # Ahead of the receiving blade and after most table bounces.
-    arena = FastPartnerArena(strike_ready="lateral", fast_search=True, clearance_guard=True, velocity_guard=True,
-                             rate_scale=.8, motor_envelope=True, guard_table=True, max_steps=9000,
-                             targets=cooperative_targets("lateral","practice"), net_rescue=True, robust_contact=True)
+    arena = FastPartnerArena(
+        strike_ready="lateral",
+        fast_search=True,
+        clearance_guard=True,
+        velocity_guard=True,
+        rate_scale=0.8,
+        motor_envelope=True,
+        guard_table=True,
+        max_steps=9000,
+        targets=cooperative_targets("lateral", "practice"),
+        net_rescue=True,
+        robust_contact=True,
+    )
     stereo = CachedStereoRenderer(arena)
     rig = Rig.from_arena(arena)
     practice = FlightPractice()
@@ -41,18 +52,37 @@ def run(source, output):
                 t = i * arena.control_dt
                 before = np.r_[arena.data.time, arena.ball]
                 untouched = arena.contacts == 0
-                if first_motion is None and np.max(np.abs(action)) > .01:
+                if first_motion is None and np.max(np.abs(action)) > 0.01:
                     first_motion = t
                 if i % 2 == 0:
                     eye.observe(t, stereo.capture(), arena.joints)
                     f = eye.latest
-                    if (actual is None and untouched and f is not None and t-f.time < .105 and
-                            f.velocity[1] < -.9 and f.rms < 2.4 and f.depth_sigma < .16):
+                    if (
+                        actual is None
+                        and untouched
+                        and f is not None
+                        and t - f.time < 0.105
+                        and f.velocity[1] < -0.9
+                        and f.rms < 2.4
+                        and f.depth_sigma < 0.16
+                    ):
                         p, v = f.advance(t)
-                        path = nominal.path(p, v, np.zeros(3), 1, bool(f.bounced and p[1] < .1))
-                        if len(path) > 1 and path[-1,2] < plane < path[0,2]:
-                            projection = [np.interp(plane, path[::-1,2], col[::-1]) for col in path.T[:4]]
-                            forecasts.append(dict(t=t, arrival=t+projection[0], x=projection[1], z=projection[3]))
+                        path = nominal.path(
+                            p, v, np.zeros(3), 1, bool(f.bounced and p[1] < 0.1)
+                        )
+                        if len(path) > 1 and path[-1, 2] < plane < path[0, 2]:
+                            projection = [
+                                np.interp(plane, path[::-1, 2], col[::-1])
+                                for col in path.T[:4]
+                            ]
+                            forecasts.append(
+                                {
+                                    "t": t,
+                                    "arrival": t + projection[0],
+                                    "x": projection[1],
+                                    "z": projection[3],
+                                }
+                            )
                 arena.exchange(action, np.zeros(5))
                 if untouched and arena.contacts == 0 and actual is None:
                     actual = crossing(before, np.r_[arena.data.time, arena.ball], plane)
@@ -60,24 +90,39 @@ def run(source, output):
                 raise ValueError("Tracking replay diverged")
             samples = []
             if actual is not None:
-                for advance in (.30,.20,.10):
+                for advance in (0.30, 0.20, 0.10):
                     available = [f for f in forecasts if f["t"] <= actual[0] - advance]
                     if available:
                         f = available[-1]
-                        samples.append(dict(lead=advance, age_s=actual[0]-f["t"], ex=f["x"]-actual[1],
-                                            ez=f["z"]-actual[3], et=f["arrival"]-actual[0]))
-            rows.append(dict(id=row["shot"]["id"], landed=row["score"]["learner"], plane_y_m=plane,
-                             measured_crossing=None if actual is None else actual.tolist(),
-                             first_motion_s=first_motion, forecasts=forecasts, samples=samples))
+                        samples.append(
+                            {
+                                "lead": advance,
+                                "age_s": actual[0] - f["t"],
+                                "ex": f["x"] - actual[1],
+                                "ez": f["z"] - actual[3],
+                                "et": f["arrival"] - actual[0],
+                            }
+                        )
+            rows.append(
+                {
+                    "id": row["shot"]["id"],
+                    "landed": row["score"]["learner"],
+                    "plane_y_m": plane,
+                    "measured_crossing": None if actual is None else actual.tolist(),
+                    "first_motion_s": first_motion,
+                    "forecasts": forecasts,
+                    "samples": samples,
+                }
+            )
     finally:
         stereo.close()
         arena.close()
-    _write(output,dict(source_sha256=_hash(source),rows=rows))
+    _write(output, {"source_sha256": _hash(source), "rows": rows})
 
 
-if __name__=="__main__":
-    parser=argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("source",type=Path)
-    parser.add_argument("output",type=Path)
-    args=parser.parse_args()
-    run(args.source,args.output)
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("source", type=Path)
+    parser.add_argument("output", type=Path)
+    args = parser.parse_args()
+    run(args.source, args.output)

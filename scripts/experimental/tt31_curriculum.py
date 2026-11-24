@@ -111,7 +111,7 @@ def checkpoint(report):
     return {key: report[key] for key in ("checkpoint", "optical_outcome_checkpoint")}
 
 
-def play_card(feeds, entry, movement, errors, temporary, *, practice, cap):
+def play_card(feeds, entry, movement, errors, temporary, *, practice, cap, recall_only=False):
     arenas = []
 
     def arena_factory(**settings):
@@ -125,7 +125,7 @@ def play_card(feeds, entry, movement, errors, temporary, *, practice, cap):
          rated=True, motor_envelope=True, robust_contact=True, rally_objective=True,
          recent=True, blend=True, fast_partner=True, cached_stereo=True, net_rescue=True,
          camera_period=2, optical_outcomes="learn", censored_optical_outcomes=True,
-         no_memory=not practice, freeze_optical_outcomes=not practice)
+         no_memory=not practice, freeze_optical_outcomes=not practice, recall_only=recall_only)
     report = _read(temporary)
     row = report["rows"][0]
     row["placements"] = arenas[0].point_placements()
