@@ -118,6 +118,9 @@ def run(directory):
     practice_match = compare_delivery(*(first_deliveries(rows) for rows in practice_rows.values()))
     if practice_match["both_delivered"] != practice_match["cards"]:
         raise ValueError("Practice differed in actual near opportunities")
+    tapes = {order: {r["placements"]["card"]["key"]: digest_json(r["actions"]) for r in rows}
+             for order, rows in practice_rows.items()}
+    practice_match["near_command_tapes"] = sum(tapes["staged"][key] == tapes["mixed"][key] for key in tapes["staged"])
     held_rows = {order: doc["rows"] for order, doc in held.items()}
     opening_replies = first_deliveries(held_rows["original"])
     held_openings = [dict(id=item["id"], seed=item["seed"],
