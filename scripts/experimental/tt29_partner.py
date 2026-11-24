@@ -261,9 +261,74 @@ def _trajectory(start, eta, position, velocity, center, end_velocity, quat, targ
     return None
 
 
+@dataclass
+class ShortStroke(Stroke):
+    """A bounded acceleration, cruise and brake along the long carriage rail."""
+
+    direction: float
+    initial: float
+    cruise: float
+    acceleration: float
+    accelerate_time: float
+    brake_time: float
+
+    def translation(self, now):
+        position, velocity, acceleration = super().translation(now)
+        elapsed = now - self.start
+        if elapsed >= self.eta:
+            return position, velocity, acceleration
+        brake_start = self.eta - self.brake_time
+        if elapsed <= self.accelerate_time:
+            travel = self.initial * elapsed + .5 * self.acceleration * elapsed**2
+            rate, change = self.initial + self.acceleration * elapsed, self.acceleration
+        elif elapsed < brake_start:
+            travel_at_cruise = .5 * (self.initial + self.cruise) * self.accelerate_time
+            travel = travel_at_cruise + self.cruise * (elapsed - self.accelerate_time)
+            rate, change = self.cruise, 0.
+        else:
+            remaining = self.eta - elapsed
+            end_rate = self.direction * self.velocity[1]
+            travel = (self.direction * (self.center[1] - self.coefficients[0, 1])
+                      - end_rate * remaining - .5 * self.acceleration * remaining**2)
+            rate, change = end_rate + self.acceleration * remaining, -self.acceleration
+        position[1] = self.coefficients[0, 1] + self.direction * travel
+        velocity[1] = self.direction * rate
+        acceleration[1] = self.direction * change
+        return position, velocity, acceleration
+
+
+def _short_trajectory(start, eta, position, velocity, center, end_velocity, quat, target):
+    v0, v1 = velocity * eta, end_velocity * eta
+    displacement = center - position
+    coefficients = np.stack((position, v0, np.zeros(3), 10*displacement - 6*v0 - 4*v1,
+                             -15*displacement + 8*v0 + 7*v1, 6*displacement - 3*v0 - 3*v1))
+    direction = np.sign(displacement[1])
+    initial, end = direction * velocity[1], direction * end_velocity[1]
+    along = 34.
+    linear = along * eta + initial + end
+    discriminant = linear**2 - 4 * (along * abs(displacement[1]) + .5*(initial**2 + end**2))
+    if discriminant < 0:
+        return None
+    cruise = .5 * (linear - math.sqrt(discriminant))
+    accelerate, brake = (cruise-initial) / along, (cruise-end) / along
+    if min(accelerate, brake) < 0 or accelerate + brake > eta:
+        return None
+    stroke = ShortStroke(start, eta, coefficients, center, end_velocity, quat, target,
+                         direction, initial, cruise, along, accelerate, brake)
+    samples = [stroke.translation(time) for time in np.linspace(start, start + eta, 31)]
+    velocities, accelerations = np.asarray(samples).transpose(1, 0, 2)[1:]
+    if (np.linalg.norm(velocities, axis=1).max() <= .97 * LINEAR_SPEED
+            and np.linalg.norm(accelerations, axis=1).max() <= .93 * LINEAR_ACCELERATION):
+        return stroke
+    return None
+
+
 def _clears_table(stroke, depth, half_width):
     u = np.linspace(0, 1, 31)
-    approach = np.column_stack((1 + 0*u, u, u**2, u**3, u**4, u**5)) @ stroke.coefficients
+    if isinstance(stroke, ShortStroke):
+        approach = np.array([stroke.translation(stroke.start + t * stroke.eta)[0] for t in u])
+    else:
+        approach = np.column_stack((1 + 0*u, u, u**2, u**3, u**4, u**5)) @ stroke.coefficients
     # Reserve clearance for the rotating rim and the full follow-through.
     release = stroke.center + np.linspace(0., .083, 10)[:, None] * stroke.velocity
     p = np.concatenate((approach, release))
@@ -328,16 +393,20 @@ class PracticePartner:
         self.max_angular_speed = 0.
         self.max_force = 0.
 
-    def _plan(self, target, position, velocity, now):
+    def _plan(self, target, position, velocity, now, *, short_ball=False):
         a = self.arena
         path = self.flight.path(a.ball, a.velocity, a.spin, -1, bounced=a._received_bounce, horizon=.95)
-        feasible = (path[:, 0] >= .12) & (path[:, 2] > .51) & (path[:, 2] < a.table_half_length + .35)
-        feasible &= (np.abs(path[:, 1]) < .81) & (path[:, 3] > .86) & (path[:, 3] < 1.58)
+        near_depth = .23 if short_ball else .51
+        min_height = .84 if short_ball else .86
+        feasible = (path[:, 0] >= .12) & (path[:, 2] > near_depth) & (path[:, 2] < a.table_half_length + .35)
+        feasible &= (np.abs(path[:, 1]) < .81) & (path[:, 3] > min_height) & (path[:, 3] < 1.58)
         options = path[feasible]
         if not len(options):
             return None, dict(windows=0, verified=0)
-        chosen = np.unique(np.linspace(0, len(options)-1, min(7, len(options))).round().astype(int))
-        settings = np.array(list(product((-.60, .20, .95), (-.055, .018, .092), (-.060, 0., .060),
+        samples = 11 if short_ball else 7
+        chosen = np.unique(np.linspace(0, len(options)-1, min(samples, len(options))).round().astype(int))
+        lofts = (0., .065, .13, .21, .30) if short_ball else (-.055, .018, .092)
+        settings = np.array(list(product((-.60, .20, .95), lofts, (-.060, 0., .060),
                                          (-.44, .21, .68), (.0, .9, 1.6), (.0, .21))))
         nsettings = len(settings)
         rows = np.repeat(options[chosen], nsettings, axis=0)
@@ -363,17 +432,20 @@ class PracticePartner:
         out_p, out_v, out_w, centers, quats = self.impact.solve(rows, normal, drive)
         scores = _flight_approx(out_p, out_v, out_w, target)
         best, best_cost, verified = None, np.inf, 0
+        trajectory = _short_trajectory if short_ball else _trajectory
         for i in np.argsort(scores):
             if not np.isfinite(scores[i]) or verified >= 18:
                 break
-            stroke = _trajectory(now, rows[i, 0], position, velocity, centers[i], drive[i], quats[i], target)
-            if stroke is None or (self.guard_table and not _clears_table(
+            stroke = trajectory(now, rows[i, 0], position, velocity, centers[i], drive[i], quats[i], target)
+            if stroke is None or ((self.guard_table or short_ball) and not _clears_table(
                 stroke, a.table_half_length, a.table_half_width
             )):
                 continue
+            if short_ball and min(stroke.center[1], stroke.center[1] + .083 * stroke.velocity[1]) < .10:
+                continue
             verified += 1
             departure = out_p[i], out_v[i], out_w[i]
-            if self.verify_approach:
+            if self.verify_approach or short_ball:
                 start = np.searchsorted(path[:, 0], stroke.eta - .035)
                 departure = self.impact.verify_approach(path[start], stroke)
                 if departure is None:

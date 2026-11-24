@@ -103,11 +103,49 @@ class FastPracticePartner(PracticePartner):
         return self.flight.outgoing(position, velocity, spin, min_y)
 
 
+
+class NetRescuePracticePartner(FastPracticePartner):
+    """Retry slow incoming net deflections before the second table bounce."""
+
+    def reset(self, **settings):
+        super().reset(**settings)
+        self.pending_net = False
+
+    def advance(self):
+        a = self.arena
+        net = a._geom_ids["net"] in a._previous_touches
+        if a._last_hitter != 1:
+            self.pending_net = False
+        elif net:
+            self.pending_net = True
+        elif self.pending_net:
+            self.pending_net = False
+            if self.reception == a.contacts and .20 < a.velocity[1] < 1.45 and abs(a.ball[1]) < .10:
+                self._rescue()
+        super().advance()
+
+    def _rescue(self):
+        a = self.arena
+        now = float(a.data.time)
+        position = a.data.qpos[self.qpos:self.qpos+3]
+        velocity = a.data.qvel[self.qvel:self.qvel+3]
+        target = self.target.copy()
+        alternatives = (target, np.array([target[0], -.96, .94, 2.3]),
+                        np.array([target[0], -.84, .90, 1.85]))
+        for lane in alternatives:
+            stroke, record = self._plan(lane, position, velocity, now, short_ball=True)
+            self.reports.append(dict(time_s=now, stage="net_rescue", **record))
+            if stroke is not None:
+                self.stroke = stroke
+                return
+
+
 class FastPartnerArena(PartnerArena):
     """Explicit alternative to the unchanged default partner arena."""
 
-    def __init__(self, **settings):
+    def __init__(self, *, net_rescue=False, **settings):
         super().__init__(**settings)
         default = self.partner
-        self.partner = FastPracticePartner(self, targets=default.targets, guard_table=default.guard_table,
-                                           verify_approach=default.verify_approach)
+        partner = NetRescuePracticePartner if net_rescue else FastPracticePartner
+        self.partner = partner(self, targets=default.targets, guard_table=default.guard_table,
+                               verify_approach=default.verify_approach)
