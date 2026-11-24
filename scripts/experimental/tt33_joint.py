@@ -220,7 +220,7 @@ class JointPolicy:
         self.reference = self.home.copy()
         self.raw = self.options["features"].startswith("raw")
 
-    def command(self, optical, q):
+    def command(self, optical, q, *, offset=None):
         desired = self.home
         bound = self.options["recovery"]
         if optical is not None and (self.raw or -.09 < optical[0] < .69):
@@ -231,7 +231,13 @@ class JointPolicy:
             if not self.raw:
                 blend = np.clip((optical[0] + .09) / .045, 0., 1.) * np.clip((.69 - optical[0]) / .13, 0., 1.)
                 desired = self.home + blend * (desired - self.home)
+            if offset is not None:
+                desired[:5] += offset
             bound = self.options["limit"]
+        return self.drive(desired, q, bound)
+
+    def drive(self, desired, q, bound):
+        """Convert a desired posture to bounded one-tick joint commands."""
         feedback = self.options["feedback"] * (self.reference - q)
         desired = np.clip(desired + feedback, self.lower, self.upper)
         command = np.clip((desired - self.reference) / self.stride, -bound, bound)

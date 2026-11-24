@@ -147,12 +147,12 @@ class Reach:
         return correction
 
 
-def play(arena, renderer, rig, model, stride, lo, hi, shot, card, body, relation, authority, sign):
+def play(arena, renderer, rig, model, stride, lo, hi, shot, card, body, relation, authority, sign, feedback=Reach):
     arena.launch(shot, card=card)
     arena.partner.reset(seed=card["seed"])
     pupil = JointPolicy(model, stride, lo, hi)
     eye = Vision(rig, arena.control_dt, raw=True)
-    reach = Reach(body, relation, pupil, rig, authority, sign)
+    reach = feedback(body, relation, pupil, rig, authority, sign)
     commands, encoders = [], []
     started = process_time()
     for tick in range(arena.max_steps):
@@ -174,9 +174,10 @@ def play(arena, renderer, rig, model, stride, lo, hi, shot, card, body, relation
     )
 
 
-def run(feeds, observations, output_dir, cohort, modes):
+def run(feeds, observations, output_dir, cohort, modes, *, controllers=None):
     available = ("0", "1") if cohort == "practice" else ("aligned", "reversed")
-    if any(mode not in available for mode in modes):
+    controllers = controllers or {}
+    if any(mode not in available and mode not in controllers for mode in modes):
         raise ValueError("Practice and held modes have different configuration fields")
     output_dir.mkdir(exist_ok=True, parents=True)
     model = _read(PUPIL)
@@ -216,7 +217,8 @@ def run(feeds, observations, output_dir, cohort, modes):
                     context = varied_opponent(card["index"], seed) if seed is not None else nullcontext()
                     with context:
                         row = play(arena, renderer, rig, model, stride, lo, hi,
-                                   shots[card["id"]], card, body, relation, authority, sign)
+                                   shots[card["id"]], card, body, relation, authority, sign,
+                                   feedback=controllers.get(mode, Reach))
                     report["rows"].append(row)
                     _write(output_dir / f"reach-{cohort}-{mode}.json.gz", report)
                     print(cohort, mode, card["id"], row["score"]["learner"], row["score"]["returns"],
@@ -363,7 +365,7 @@ def main():
     capture.add_argument("output", type=Path)
     run_parser = actions.add_parser("run")
     run_parser.add_argument("feeds", type=Path)
-    run_parser.add_argument("cohort", choices=("practice", "new", "replies", "confirm"))
+    run_parser.add_argument("cohort", choices=("practice", "new", "replies", "confirm", "retained"))
     run_parser.add_argument("modes", nargs="+", choices=("0", "1", "aligned", "reversed"))
     for item in (run_parser, actions.add_parser("choose")):
         item.add_argument("--observations", type=Path, default=OUTPUT / "reach-observations.npz")
