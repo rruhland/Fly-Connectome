@@ -120,15 +120,22 @@ def try_moves(args):
 
 
 class Pulse:
-    def __init__(self, practice):
+    """Promote physical practice, then use only currently sensed optical context."""
+    scale = np.array([.078,.126,.046,.91,.64,.88])
+
+    def __init__(self, practice, minimum=1):
         votes=np.zeros(len(MOVES),dtype=int)
         totals=np.zeros(len(MOVES),dtype=int)
+        self.support={}
         for e in practice["rows"]:
+            stock = next((t for t in e["trials"] if t["index"]==0),None)
             for trial in e["trials"]:
                 j=trial["index"]
                 votes[j]+=trial["legal"]
                 totals[j]+=1
-        self.learned=np.flatnonzero((votes>votes[0]) & (np.arange(len(votes))>0))
+                if trial["legal"] and stock is not None and not stock["legal"] and "camera" in e:
+                    self.support.setdefault(j,[]).append(np.asarray(e["camera"][:6]))
+        self.learned=np.flatnonzero((votes>=votes[0]+minimum) & (np.arange(len(votes))>0))
         self.rank=sorted(self.learned,key=lambda k:(votes[k]/max(totals[k],1),-np.linalg.norm(MOVES[k])))[::-1]
         self.votes=votes.tolist()
 
@@ -138,33 +145,29 @@ class Pulse:
         if (not self.rank or not (LOW[0]<obs[2]<LOW[1] and .062<eta<.184)
                 or (score is not None and score[12]<.055)):
             return status
-        if not engine.sync():
-            return status
-        dt=engine.twin.control_dt
-        choices=[0,*self.rank[:6]]
-        # Validate only the physically rewarded modification family. Scores are
-        # private predictions from the received pixels and encoders, not live lookahead.
-        candidates=np.array([pulse(*fit,selected,eta,dt,surf.ready,MOVES[k],n=79) for k in choices])
-        f=np.zeros((len(candidates),9))
-        _,y=engine.trajectories(candidates,core.clinic.AIM,eta+.12,feedback=f)
-        loss,legal=core.consequence(y,f,None)
-        note.update(active=True,choices=list(map(int,choices)),vote=self.votes)
-        status["trace"]=[dict(trials=len(choices),legal=int(legal.sum()),contacts=int(np.sum(f[:,1])))]
-        if not legal[1:].any():
-            return status
-        valid=np.flatnonzero(legal & (np.arange(len(choices))>0))
-        ix=valid[np.argmin(loss[valid]-.35*np.asarray(self.votes)[np.asarray(choices)[valid]])]
-        if legal[0] and loss[0]-loss[ix]<1.35:
-            return status
-        note.update(issued=True,pulse_id=int(choices[ix]),nominal_departure=f[ix,2:5].tolist())
-        n=max(1,round((float(y[ix,1])+.086)/dt))
-        return dict(tape=candidates[ix,:n],score=y[ix].tolist(),eta=float(y[ix,1]),trace=status["trace"],note=note)
+        # The stock chooses the basic schedule. The learned pulse mode gets
+        # vetoed outside the optical support of actual successful practice.
+        current = np.asarray(obs[:6])
+        for choice in self.rank:
+            references = self.support.get(choice,[])
+            if not len(references):
+                continue
+            near = float(np.min(np.linalg.norm((np.asarray(references)-current)/self.scale,axis=1)))
+            if near > 1.8:
+                continue
+            dt=engine.twin.control_dt
+            n=max(1,round((eta+.075)/dt))
+            note.update(active=True,issued=True,pulse_id=int(choice),distance=near,
+                        supporting_play_wins=self.votes[int(choice)])
+            tape=pulse(*fit,selected,eta,dt,surf.ready,MOVES[choice],n=n)
+            return dict(tape=tape,score=score,eta=eta,trace=[],note=note)
+        return status
 
 
 def held(args):
     group=core._read(args.plan)[args.group][:args.limit]
     d=_read(args.training)
-    skill=Pulse(d)
+    skill=Pulse(d,minimum=2)
     if not skill.rank:
         raise ValueError("No separately scored pulse motions earned more than the stock practice motion")
     if {c["id"] for c in group} & {r["card"]["id"] for r in d["rows"]}:
@@ -179,7 +182,9 @@ def held(args):
         pupil=core.DeepField(bank,"local")
     params=core.clinic.generate(35)
     doc=dict(cards=group,profile="reach",protocol="random",cap=args.cap,training=str(args.training),
-             training_sha256=_hash(args.training),rows=[],practice_votes=skill.votes)
+             training_sha256=_hash(args.training),rows=[],practice_votes=skill.votes,
+             training_repeat_wins_required=2, source_code_sha256=_hash(Path(__file__)),
+             excludes_calibration=[r["card"]["id"] for r in d["rows"]])
     with core.centered(surf.ready):
         a=core.arena()
         engine=core.OpticalClinic(body=True)

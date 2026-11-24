@@ -61,3 +61,26 @@ def test_physical_learning_does_not_promote_unchanged_or_nonlegal_trials():
     assert not Pulse(no).rank
     yes = dict(rows=[dict(trials=[dict(index=0,legal=False),dict(index=4,legal=True)])])
     assert Pulse(yes).rank == [4]
+
+
+def test_twice_physical_pulse_selection_needs_only_camera_context():
+    from types import SimpleNamespace
+    from scripts.experimental.tt40_low_pulse import Pulse
+
+    obs = np.array([.09,-.16,.966,.12,-3.3,-.85])
+    trials = [dict(index=0,legal=False),dict(index=5,legal=True)]
+    coach = Pulse(dict(rows=[dict(camera=obs,trials=trials),dict(camera=obs+.003,trials=trials)]), minimum=2)
+    # The specialist receives a clock but no private simulator or sensor data other than obs.
+    clock = SimpleNamespace(twin=SimpleNamespace(control_dt=1/60))
+    surface = SimpleNamespace(ready=np.zeros(6))
+    fit = (np.zeros(5),np.zeros(5))
+    res = coach.plan(clock,surface,obs,np.zeros(10),None,fit,obs[0])
+    assert res["note"]["issued"] and res["note"]["pulse_id"] == 5
+    assert res["tape"] is not None
+    better = np.zeros(13)
+    better[12] = .03
+    passed = coach.plan(clock,surface,obs,np.zeros(10),better,fit,obs[0])
+    assert passed["tape"] is None
+    uncued = obs.copy()
+    uncued[1] = .24
+    assert coach.plan(clock,surface,uncued,np.zeros(10),None,fit,obs[0])["tape"] is None
