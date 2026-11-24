@@ -42,6 +42,8 @@ The two leading novel cards were replayed with the memory frozen. The first poin
 
 The 53-stroke frozen rally re-scored exactly in an independent run with one launch. The 26 legal face contacts covered 60.7 cm laterally. Full arm CAD found no penetrations in 21,165 solver samples and minimum clearance was 15.11 mm. [53-stroke CAD and referee replay](joint-mpc-within-audit.json)
 
+On eight separate openings, a guard that preserved a viable incumbent or raw controller was cheaper and returned one additional opening, but lost much of the standard elastic controller's later return advantage. On three known misses, extra fresh-image rechecks increased compute without recovering a return. [Incumbent preservation comparison](joint-mpc-guarded.md) · [Cadence diagnosis](joint-cadence.md)
+
 ## Reproduce
 
 Use the measured launches from the [regulation reproduction instructions](../tt29/endurance.md) and the preserved TT37 evidence, including the [joint archive receipt](../tt37/long-rgb.json). Set the native physics and numerical workers to one.
