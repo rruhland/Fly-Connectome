@@ -337,13 +337,13 @@ def _native_trials():
         "-I", str(package / "include"), str(source), str(library), f"-Wl,-rpath,{package}",
         "-o", str(target),
     ], check=True)
-    function = ctypes.CDLL(str(target)).trial_strokes_v4
+    function = ctypes.CDLL(str(target)).trial_strokes_v5
     pointer, integer, number = ctypes.c_void_p, ctypes.c_int, ctypes.c_double
     function.argtypes = (
         pointer, pointer, pointer, integer, integer, integer, integer, pointer, integer, pointer,
         integer, pointer, pointer, pointer, pointer, pointer, ctypes.c_bool, number, number, number,
         pointer, pointer, pointer, pointer, pointer, integer, number, number, pointer, number, number,
-        number, pointer, pointer, integer, pointer, pointer,
+        number, pointer, pointer, integer, pointer, pointer, pointer,
     )
     function.restype = None
     return function, workspace
@@ -379,7 +379,7 @@ class Rollout:
         self.first = np.ascontiguousarray(guard.first if guard else [], dtype=np.intc)
         self.second = np.ascontiguousarray(guard.second if guard else [], dtype=np.intc)
 
-    def trajectories(self, goals, target, cutoff, *, feedback=None, traces=None):
+    def trajectories(self, goals, target, cutoff, *, feedback=None, traces=None, approaches=None):
         a = self.arena
         goals = np.ascontiguousarray(goals, dtype=float)
         count, frames, _ = goals.shape
@@ -389,6 +389,9 @@ class Rollout:
         if traces is not None and (len(self.axes) != 6 or traces.shape != (count, frames, 17)
                 or traces.dtype != np.float64 or not traces.flags.c_contiguous or not traces.flags.writeable):
             raise ValueError("Frame traces require six actuators and a writable contiguous (candidate, tick, 17) buffer")
+        if approaches is not None and (len(self.axes) < 5 or approaches.shape != (count, 19)
+                or approaches.dtype != np.float64 or not approaches.flags.c_contiguous or not approaches.flags.writeable):
+            raise ValueError("Closest-contact observations require a writable contiguous (candidate, 19) buffer")
         result = np.empty((count, 13))
         rates = np.zeros_like(goals)
         self.trial(
@@ -404,6 +407,7 @@ class Rollout:
             self.near_axes.ctypes.data, self.near_dofs.ctypes.data, len(self.near_axes),
             feedback.ctypes.data if feedback is not None else None,
             traces.ctypes.data if traces is not None else None,
+            approaches.ctypes.data if approaches is not None else None,
         )
         return rates, result
 

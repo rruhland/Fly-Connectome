@@ -10,7 +10,6 @@ from .tt4_transfer_trial import _hash, _write
 
 
 def optical_state(tracker, now):
-    tracker = getattr(tracker, "tracker", tracker)
     f = tracker.latest
     if f is None or now - f.time >= 0.105 or f.rms >= 2.4 or f.depth_sigma >= 0.16:
         return None
@@ -18,7 +17,8 @@ def optical_state(tracker, now):
 
 
 class ScoredJoints:
-    def __init__(self):
+    def __init__(self, *, fitted_time=False):
+        self.fitted_time = fitted_time
         self.states = []
         self.targets = []
         self.leads = []
@@ -56,6 +56,12 @@ class ScoredJoints:
             return
         before, after = turns[-1]
         impact = (before[0] + after[0]) * 0.5
+        if self.fitted_time:
+            from .tt39_turn_time import turn_time
+
+            recovered = turn_time([(t, x) for t, x, *_ in rows])
+            if recovered is not None:
+                impact = recovered
         if not 5 <= rows[-1][0] - impact <= 73:
             return
         count = 0
@@ -111,6 +117,9 @@ class ScoredJoints:
                 "legal": sum(r["mentor_returns"] for r in self.practice),
                 "frames": len(self.states),
                 "bank_sha256": _hash(path),
+                "timing": "intersect_complete_visual_flights"
+                if self.fitted_time
+                else "first_observed_direction_change",
                 "credit": "Scalar legal return and horizontal reversal measured by stereo. No simulator contact time or coordinates select frames.",
             },
         )

@@ -267,6 +267,7 @@ def point(
     joint_experience=None,
     fallback=None,
     impact=None,
+    preparation=None,
 ):
     actor = joint.JointPolicy(model | {"ready": surf.ready.tolist()}, stride, lo, hi)
     eye = joint.Vision(rig, a.control_dt)
@@ -281,6 +282,11 @@ def point(
         engine = optical_engine
         engine.previous = None
         engine.bounced = False
+    outcome_pupil = pupil if hasattr(pupil, "record_command") else None
+    if outcome_pupil is not None:
+        outcome_pupil.begin_point()
+    if preparation is not None:
+        preparation.begin()
     if joint_experience is not None:
         joint_experience.begin_point()
     start_time = process_time()
@@ -491,8 +497,10 @@ def point(
                             if rescued["tape"] is not None:
                                 score = rescued["score"]
                                 eta = rescued["eta"]
-                        if impact is not None and optical_engine is not None and (
-                            rescued is None or rescued["tape"] is None
+                        if (
+                            impact is not None
+                            and optical_engine is not None
+                            and (rescued is None or rescued["tape"] is None)
                         ):
                             impact_review = impact.plan(
                                 optical_engine, surf, obs, selected, score, fit, eta
@@ -506,7 +514,10 @@ def point(
                                 {"x": x.tolist(), "change": selected.tolist()}
                                 if shift == 0
                                 and (rescued is None or rescued["tape"] is None)
-                                and (impact_review is None or impact_review["tape"] is None)
+                                and (
+                                    impact_review is None
+                                    or impact_review["tape"] is None
+                                )
                                 else None
                             )
                         elif score is not None and shift == 0:
@@ -562,6 +573,11 @@ def point(
                         prep = np.r_[p - 0.075 * v, GRIP]
                         lastprep = tick
                     desired = prep
+        if preparation is not None:
+            from .tt38_scored_joints import optical_state
+
+            prep_mix = preparation.observe(optical_state(eye.eye, now), q)
+            chart_goal = desired
         if pupil is not None and tape is None:
             # Visit the posture the pupil would actually reach. The physics coach
             # intervenes only inside the receiving window during training.
@@ -581,6 +597,8 @@ def point(
                     proposed, weight = pupil.get(optical, q)
                     if proposed is not None:
                         desired = surf.ready + weight * (proposed - surf.ready)
+        if preparation is not None and tape is None:
+            desired = chart_goal + prep_mix * (desired - chart_goal)
         if fallback is not None and tick < fallback_until:
             from .tt38_scored_joints import optical_state
 
@@ -594,6 +612,12 @@ def point(
                     if online_value is not None:
                         online_value.issued(None)
         action = actor.drive(desired, q, 0.8)
+        if outcome_pupil is not None:
+            from .tt38_scored_joints import optical_state
+
+            outcome_pupil.record_command(
+                tick, optical_state(eye.eye, now), q, actor.reference
+            )
         if joint_experience is not None:
             from .tt38_scored_joints import optical_state
 
@@ -601,10 +625,19 @@ def point(
         started = process_time()
         _, _, done, capped, info = a.exchange(action, FAR)
         arena_cpu += process_time() - started
+        if preparation is not None:
+            near = any(
+                e["kind"] == "legal_return" and e["side"] == 1 for e in info["events"]
+            )
+            preparation.feedback(near, done)
         if joint_experience is not None and any(
             e["kind"] == "legal_return" and e["side"] == 1 for e in info["events"]
         ):
             joint_experience.credit()
+        if outcome_pupil is not None and any(
+            e["kind"] == "legal_return" and e["side"] == 1 for e in info["events"]
+        ):
+            outcome_pupil.score_feedback(max(0, a.legal_returns - 1))
         if online_value is not None:
             online_value.feedback(
                 [e["side"] for e in info["events"] if e["kind"] == "legal_return"], done
@@ -628,6 +661,8 @@ def point(
         actions.append(action.tolist())
         if done or capped or a.legal_returns + a.rival_returns - 1 >= cap:
             break
+    if outcome_pupil is not None:
+        outcome_pupil.end_point(terminal=bool(done and not capped))
     return {
         "cpu_s": process_time() - start_time,
         "arena_cpu_s": arena_cpu,
@@ -709,6 +744,17 @@ def run(args):
         with np.load(args.rollin) as z:
             pupil = DeepField(z, "local")
         out["pupil_rollin"] = str(args.rollin)
+    if args.prep_outcomes:
+        from .tt39_action_value import ActionValue, load_data
+
+        if pupil is None:
+            raise ValueError("A base direct motor field is required")
+        dataset, used = load_data(args.prep_outcomes, future_mix=args.prep_lead)
+        if used & {c["id"] for c in cards}:
+            raise ValueError("Preparation outcomes came from this assessment course")
+        pupil = ActionValue(pupil, dataset, future_mix=args.prep_lead)
+        out["preparation_outcome_sources"] = [str(p) for p in args.prep_outcomes]
+        out["preparation_lead_fraction"] = args.prep_lead
     fallback = None
     if args.fallback_bank:
         from .tt37_joint_deep import DeepField
@@ -763,6 +809,24 @@ def run(args):
             "batch": args.rescue_batch,
             "rounds": args.rescue_rounds,
         }
+    preparation = None
+    if args.prep_memory or args.prep_fixed is not None:
+        from .tt39_preparation import Preparation
+
+        if pupil is None:
+            raise ValueError("Supply direct joint preparation with --rollin")
+        history = (
+            _read(args.prep_memory)
+            if args.prep_memory
+            else {"examples": [], "practice_ids": []}
+        )
+        if set(history["practice_ids"]) & {c["id"] for c in cards}:
+            raise ValueError(
+                "The preparations were learned on these assessment releases"
+            )
+        preparation = Preparation(history["examples"], fixed=args.prep_fixed)
+        out["preparation_source"] = str(args.prep_memory) if args.prep_memory else None
+        out["fixed_preparation"] = args.prep_fixed
     joint_experience = None
     if args.record_joints:
         from .tt38_scored_joints import ScoredJoints
@@ -843,6 +907,7 @@ def run(args):
                     rescue,
                     joint_experience,
                     fallback,
+                    preparation=preparation,
                 )
                 if servo is not None:
                     out["late_motor_memory"] = [
@@ -858,6 +923,8 @@ def run(args):
                 if args.learn_vision:
                     r["optical_labels_so_far"] = vision_source.added
                     vision_source.save(args.learn_vision)
+                if preparation is not None:
+                    out["preparation_experience"] = preparation.new
                 if args.learn_value:
                     out["value_experience"] = optical_engine.motor_value.examples
                     r["value_examples_so_far"] = len(out["value_experience"])
@@ -925,6 +992,10 @@ if __name__ == "__main__":
     p.add_argument("--body", action="store_true")
     p.add_argument("--robust", action="store_true")
     p.add_argument("--rollin", type=Path)
+    p.add_argument("--prep-outcomes", type=Path, nargs="+")
+    p.add_argument("--prep-lead", type=float, default=0.0)
+    p.add_argument("--prep-memory", type=Path)
+    p.add_argument("--prep-fixed", type=float, choices=(0.0, 0.5, 1.0))
     p.add_argument("--fallback-bank", type=Path)
     p.add_argument("--blank-vision", action="store_true")
     p.add_argument("--learn-vision", type=Path)

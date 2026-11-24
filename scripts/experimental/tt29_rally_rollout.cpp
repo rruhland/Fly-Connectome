@@ -5,7 +5,7 @@
 #include <limits>
 #include <vector>
 
-extern "C" void trial_strokes_v4(
+extern "C" void trial_strokes_v5(
     const mjModel* nominal, const mjData* source, const double* goals,
     int count, int frames, int micro, int side,
     const int* active, int active_count, const int* other, int other_count,
@@ -14,7 +14,7 @@ extern "C" void trial_strokes_v4(
     const double* target, double* rates, double* scores,
     const int* first, const int* second, int pairs, double rate_scale, double speed_limit,
     const int* active_dofs, double rim_penalty, double clearance_margin,
-    double envelope_no_load, const int* near_actuators, const int* near_dofs, int near_count, double* feedback, double* traces) {
+    double envelope_no_load, const int* near_actuators, const int* near_dofs, int near_count, double* feedback, double* traces, double* approaches) {
     const int ball = ids[0], blade = ids[1], table = ids[2], table2 = ids[3], net = ids[4];
     const int ball_body = ids[5], pos = ids[6], vel = ids[7];
     const double start = source->time;
@@ -45,6 +45,11 @@ extern "C" void trial_strokes_v4(
                 std::fill(observation, observation + 9, 0.);
                 observation[0] = 2.;  // Closest center separation before touching.
             }
+            // Optional output from a hypothetical model. Preserve its nearest pre-contact
+            // body configuration, replacing it with the first actual virtual contact if one occurs.
+            double* approach = approaches ? approaches + 19 * i : nullptr;
+            double best_approach = std::numeric_limits<double>::infinity();
+            if (approach) std::fill(approach, approach + 19, std::numeric_limits<double>::quiet_NaN());
             for (int t = 0; t < frames && !fault; ++t) {
                 for (int j = 0; j < active_count; ++j) {
                     const int motor = active[j];
@@ -151,6 +156,26 @@ extern "C" void trial_strokes_v4(
                     }
                     if (fault) break;
                     const bool hit = blade_contact != nullptr;
+                    if (approach && !struck && bounced) {
+                        const double* center = d->geom_xpos + 3 * blade;
+                        const double* rotation = d->geom_xmat + 9 * blade;
+                        double gap[3];
+                        mju_sub3(gap, d->qpos + pos, center);
+                        const double squared = mju_dot3(gap, gap);
+                        if (squared < best_approach || hit) {
+                            best_approach = squared;
+                            approach[0] = d->time - start;
+                            std::copy(d->qpos + pos, d->qpos + pos + 3, approach + 1);
+                            std::copy(center, center + 3, approach + 4);
+                            for (int axis = 0; axis < 3; ++axis) approach[7 + axis] = rotation[3 * axis + 2];
+                            for (int axis = 0; axis < 5; ++axis) {
+                                const int joint = model->actuator_trnid[2 * active[axis]];
+                                approach[10 + axis] = d->qpos[model->jnt_qposadr[joint]];
+                            }
+                            std::copy(d->qvel + vel, d->qvel + vel + 3, approach + 15);
+                            approach[18] = hit ? 1. : 0.;
+                        }
+                    }
                     if (hit && !touching_blade) {
                         if (!bounced || struck || y > -.1) {
                             fault = true;
@@ -241,4 +266,22 @@ extern "C" void trial_strokes_v4(
         mj_deleteData(d);
         if (local) mj_deleteModel(local);
     }
+}
+
+extern "C" void trial_strokes_v4(
+    const mjModel* nominal, const mjData* source, const double* goals,
+    int count, int frames, int micro, int side,
+    const int* active, int active_count, const int* other, int other_count,
+    const double* other_home, const double* increments, const double* low, const double* high,
+    const int* ids, bool received, double cutoff, double drag, double lift,
+    const double* target, double* rates, double* scores,
+    const int* first, const int* second, int pairs, double rate_scale, double speed_limit,
+    const int* active_dofs, double rim_penalty, double clearance_margin,
+    double envelope_no_load, const int* near_actuators, const int* near_dofs, int near_count, double* feedback, double* traces) {
+    trial_strokes_v5(
+        nominal, source, goals, count, frames, micro, side, active,
+        active_count, other, other_count, other_home, increments, low, high, ids,
+        received, cutoff, drag, lift, target, rates, scores, first,
+        second, pairs, rate_scale, speed_limit, active_dofs, rim_penalty, clearance_margin, envelope_no_load,
+        near_actuators, near_dofs, near_count, feedback, traces, nullptr);
 }

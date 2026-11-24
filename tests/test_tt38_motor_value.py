@@ -74,3 +74,23 @@ def test_far_return_cannot_receive_near_motor_credit():
     assert r.strikes == 0
     r.complete({"id": 1})
     assert r.completed == 1
+
+
+def test_preparation_only_learns_from_a_real_incoming_opportunity():
+    from scripts.experimental.tt39_preparation import Preparation
+
+    p = Preparation(fixed=0.5)
+    q = np.zeros(6)
+    x = np.array([0.1, 0.5, 1.2, 0.2, -3.1, 1.2])
+    p.feedback(True, False)
+    assert not p.new
+    assert p.observe(x, q) == 0.5
+    p.observe(x + 0.01, q)
+    p.feedback(False, False)
+    assert not p.new
+    p.feedback(True, False)
+    p.feedback(True, False)
+    p.observe(x, q)
+    p.feedback(False, True)
+    assert [r[-1] for r in p.new] == [1.0, 0.0]
+    assert p.new == p.examples
