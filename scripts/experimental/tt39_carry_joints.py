@@ -78,8 +78,8 @@ def run(args):
             held={r["id"] for r in roster},
             late=args.late,
         )
-        if not args.practice:
-            obj.online = deque(maxlen=192)
+        if args.capacity is not None or not args.practice:
+            obj.online = deque(obj.online, maxlen=args.capacity or 192)
         instances.append(obj)
         return obj
 
@@ -110,6 +110,7 @@ def run(args):
         if args.late
         else "intersected flight segments",
         previous_practice={f.name: _hash(f) for f in args.practice},
+        capacity=model.online.maxlen,
         checkpoint_sha256=_hash(tape),
     )
     _write(args.out, report)
@@ -122,6 +123,7 @@ if __name__ == "__main__":
     p.add_argument("--plan", type=Path, default=mpc.PLAN)
     p.add_argument("--limit", type=int, default=12)
     p.add_argument("--late", action="store_true")
+    p.add_argument("--capacity", type=int)
     p.add_argument("--practice", type=Path, nargs="*", default=[])
     p.add_argument("--feeds", type=Path, default=Path("/tmp/tt25-rallies.json"))
     run(p.parse_args())
