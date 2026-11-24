@@ -46,7 +46,39 @@ class MotorTrials(PartnerArena):
 def _arena(record, stall, derate=False):
     configuration = record["configuration"].copy()
     lanes = configuration.pop("partner_lanes")
-    return MotorTrials(stall=stall, derate=derate, targets=lanes, **configuration)
+    fast = configuration.pop("partner_fast", False)
+    arena = MotorTrials(stall=stall, derate=derate, targets=lanes, **configuration)
+    if fast:
+        from .tt29_partner_fast import FastPracticePartner
+
+        arena.partner = FastPracticePartner(arena, targets=lanes, guard_table=arena.partner.guard_table)
+    return arena
+
+
+def _record(document, shot_id):
+    if isinstance(document, list):
+        return max((r for r in document if shot_id is None or r["launch"]["id"] == shot_id),
+                   key=lambda r: r["returns"])
+    if "configuration" in document:
+        if shot_id is not None and document["launch"]["id"] != shot_id:
+            raise ValueError("The requested launch is absent")
+        return document
+
+    from .tt29_conditions import cooperative_targets
+
+    if document.get("condition", "stock") != "stock":
+        raise ValueError("Camera action replay currently expects the stock condition")
+    row = max((r for r in document["rows"] if shot_id is None or r["shot"]["id"] == shot_id),
+              key=lambda r: r["score"]["returns"])
+    width, height = document.get("size", (384, 288))
+    lane = document.get("spread", "practice")
+    pose = document["pose"]
+    configuration = dict(width=width, height=height, strike_ready=pose, guard_table=True,
+                         partner_fast=document.get("fast_partner", False),
+                         motor_envelope=document.get("motor_envelope", False),
+                         partner_lanes=cooperative_targets(pose, lane))
+    return dict(configuration=configuration, launch=row["shot"], opponent_seed=row["opponent_seed"],
+                returns=row["score"]["returns"], events=row["events"], actions=[(u, [0.] * 5) for u in row["actions"]])
 
 
 def envelope(angular, effort, stall, tick):
@@ -105,12 +137,13 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("receipt", type=Path)
     parser.add_argument("--stall", type=float, default=3.35)
+    parser.add_argument("--id", type=int)
     parser.add_argument("--derate", action="store_true")
     parser.add_argument("--output", type=Path, default=OUTPUT / "rally-physics-motor-envelope.json")
     args = parser.parse_args()
     if args.stall <= 0:
         parser.error("stall torque must be positive")
-    row = _read(args.receipt)
+    row = _record(_read(args.receipt), args.id)
     result = measure(row, args.stall, args.derate)
     _write(args.output, dict(receipt_sha256=_hash(args.receipt), **result))
     print(result, flush=True)
