@@ -24,3 +24,14 @@ The two lower tapes are accepted by the default simulator guard and referee, but
 ## Behind-endline check
 
 The default fast forecast suppresses sub-tabletop samples even when the real referee would let the ball continue. A separate isolated physical flight collector retained low samples to z = 0.71 m. It provided 17 candidate ball points across the three actual arcs in the requested y ≈ −1.72 to −1.92 m band. The deepest sampled ball was at y = −1.918 m, z = 0.729 m. Across both signed faces and the tested defensive-lob orientations, the mounted-arm pose/route screen found no statically cleared approach there. This is a finite route and pose search, not a proof of mechanical impossibility. All observed useful strokes came in early on the rising ball instead of extending the private horizon.
+
+## Strict follow-up on the two lower shots
+
+Changing the preparation to the opposite blade face succeeded where trimming the original positive-face stroke did not. A single fast flip preparation per case and a +0.6 mm guard in the private search yielded two additional physical proofs. The +0.6 mm check was used only to rank isolated search simulations. Physical execution used the same stock court and referee from the exact earlier command prefix.
+
+| Lower case | Actual clean stroke y/z | Full-CAD replay | Nearest audited gap |
+| --- | --- | --- | --- |
+| 4322 | −1.106 / 0.892 m | 0 overlap states out of 4,816 | 5.17 mm |
+| 8302 | −1.105 / 0.896 m | 0 overlap states out of 3,528 | 16.03 mm |
+
+Both used the verified negative blade face, landed legally and were answered. Both independent physical action replays reproduced the complete event histories. **All three formerly unresolved low balls now have a legal, answered, full-CAD-clean rescue from a long preparation.** This conclusion supersedes the unqualified positive-face trials on the lower two. It does not show a behind-endline lob or deployment transfer. Use `long-low-alternate-strict-optical.json.gz` for the two lower clean demonstrations, together with `long-low-cad-clean-optical.json.gz` for the two 14843 variants. The two clean files give four physical action demonstrations from three development cases. No held release was used.
