@@ -7,9 +7,10 @@ def event(kind, time, **kw):
     return dict(kind=kind, time=time, **kw)
 
 
-def test_count_only_landed_physical_hits_and_exclude_opening():
-    events = [event("legal_return", 0.1, side=-1)]
-    for i, side in enumerate((1, -1)):
+@pytest.mark.parametrize("opening_side", (-1, 1))
+def test_count_only_landed_physical_hits_and_exclude_opening(opening_side):
+    events = [event("legal_return", 0.1, side=opening_side)]
+    for i, side in enumerate((-opening_side, opening_side)):
         begin = i + 0.4
         events.extend(
             [
@@ -35,11 +36,12 @@ def test_count_only_landed_physical_hits_and_exclude_opening():
                 ),
             ]
         )
-    assert audit(events)["returns"] == 2
-    assert audit(events)["learner"] == audit(events)["opponent"] == 1
-    assert audit(events)["outgoing_mps"]["median"] == 5
+    report = audit(events, opening_side=opening_side)
+    assert report["returns"] == 2
+    assert report["learner"] == report["opponent"] == 1
+    assert report["outgoing_mps"]["median"] == 5
     with pytest.raises(ValueError):
-        audit(events[:1] * 2)
+        audit(events[:1] * 2, opening_side=opening_side)
 
 
 def test_fault_after_a_double_touch_does_not_erase_earlier_shots():

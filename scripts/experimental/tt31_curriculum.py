@@ -154,6 +154,9 @@ def run(feeds, deck_path, output, order, phase):
     movement, errors = MOVEMENTS, ERRORS
     if not practice and order != "original":
         movement = errors = output / f"course-{order}-checkpoint.json.gz"
+        training = _read(output / f"course-practice-{order}.json.gz")
+        if len(training["rows"]) != len(training["cards"]) or training["checkpoint_sha256"] != _hash(movement):
+            raise ValueError(f"Incomplete or mismatched {order} practice checkpoint")
     info = dict(schema="tt31-course-run-1", phase=phase, order=order, opening_side=1,
                 feed_sha256=_hash(feeds), plan_sha256=_hash(deck_path), return_target=cap,
                 initial_movement_sha256=_hash(movement), initial_error_sha256=_hash(errors),
