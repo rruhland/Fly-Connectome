@@ -207,7 +207,7 @@ class ImpactMargin:
         return self.output(note,trace,goals[j,:frames].copy(),know)
 
 
-def games(source, output, stage, count=None):
+def games(source, output, stage, count=None, policy=None):
     prior=_read(source)
     cards=prior['cards'][:count]
     params=clinic.generate(prior['samples'])
@@ -220,10 +220,12 @@ def games(source, output, stage, count=None):
     inherited=prior.get('motor_value')
     closed='late_motor_memory' in prior
     online='value_experience' in prior
-    impact=ImpactMargin(stage=stage) if stage!='stock' else None
+    impact=policy if policy is not None else ImpactMargin(stage=stage) if stage!='stock' else None
     out={k:v for k,v in prior.items() if k not in ('cards','bank','rows','late_motor_memory','value_experience')}
     out.update(cards=cards,bank=bank,rows=[],source=str(source),source_sha256=_hash(source),stage=stage,
                closed_loop=closed,private_perturbations=SHIFTS.tolist(),completed=False)
+    if policy is not None:
+        out['policy']=policy.provenance
     with centered(prior['ready']):
         a=arena()
         eye=OpticalClinic(body=prior['body'],robust=prior['robust'])
@@ -242,6 +244,8 @@ def games(source, output, stage, count=None):
                     refresh=prior['refresh'],repair=prior['repair'],camera_stride=prior['camera_stride'],
                     economy=prior['economy'],servo=servo,impact=impact)
                 row['memory_size']=[before,len(bank)]
+                if policy is not None:
+                    row['early_margin']=policy.notes
                 out['rows'].append(row)
                 if servo is not None:
                     out['late_motor_memory']=[dict(state=x.tolist(),delta=u.tolist()) for x,u in servo.memory]
@@ -296,16 +300,26 @@ def compare(source, tested):
             edits=[x['tick'] for x in row['servo'] if x['status']=='corrected' and j['tick']<x['tick']<until*60.]
             effects.append(dict(tick=j['tick'],expected=expected,before=d['stock_legal_cases'],after=d['candidate_legal_cases'],
                 family=d['candidate']['family'],twin_departure=d['feedback'][2:5],servo_intervention_ticks=edits,
+                stock_nominal_legal=d['entered_nominal_legal'],
                 same_prior_actions=before['actions'][:j['tick']]==row['actions'][:j['tick']],
                 stock=read_result(before),impact=read_result(row)))
         def terminal(row):
             e=next((e for e in reversed(row['events']) if e['kind']=='point'),None)
             return None if e is None else dict(reason=e['reason'],winner=e['winner'])
         trials=[t for r in calls for t in r['search'] if t.get('stage','').startswith('impact_margin')]
+        last=rs['shots'][-1] if rs['shots'] else None
+        terminal_review=None
+        if last is not None and last['side']==-1:
+            offers=[r for r in row['records'] if r['tick']/60.>last['hit']]
+            review=[r['impact_margin'] for r in offers if r.get('impact_margin') is not None]
+            terminal_review=dict(opponent_hit_s=last['hit'],opponent_landing_s=last['landing'],decisions=len(offers),
+                 reviewed=len(review),nominal=sum(r.get('nominal_candidates',0) for r in review),
+                 issued=sum(r['status']=='issued' for r in review),stock_nominal_legal=any(r['score'] is not None for r in offers),
+                 first_context=offers[0]['context'] if offers else None)
         pairs.append(dict(id=card['id'],key=card['key'],first_ball=first_ball,requests_equal=len(req),first_change=first_change,
              stock=dict(own=bs['learner'],total=bs['returns'],cpu_s=before['cpu_s'],terminal=terminal(before)),
              impact=dict(own=rs['learner'],total=rs['returns'],cpu_s=row['cpu_s'],terminal=terminal(row)),
-             calls=len(calls),native_trials=sum(t['trials'] for t in trials),selections=effects))
+             calls=len(calls),native_trials=sum(t['trials'] for t in trials),selections=effects,terminal_review=terminal_review))
     return dict(source_sha256=_hash(source),tested_sha256=_hash(tested),stage=after['stage'],cards=len(pairs),pairs=pairs)
 
 
