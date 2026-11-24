@@ -1,0 +1,540 @@
+{
+  "articulated_history": {
+    "offers": {
+      "legal_reply": 1081,
+      "missed_contact": 10,
+      "censored": 1
+    },
+    "release_seed_pairs": 77,
+    "misses": [
+      {
+        "tape": "tt37/mix-rollin",
+        "card": {
+          "id": 4833,
+          "mode": "full",
+          "index": 21,
+          "seed": 594802780,
+          "key": "full-21-594802780",
+          "opening": "random",
+          "profile": "reach",
+          "reply_seed": 325422843
+        },
+        "leg": 4,
+        "status": "missed_contact",
+        "bounce": [
+          0.07609983887381422,
+          1.3689284644294337,
+          0.7588002632593381
+        ],
+        "target": [
+          -0.10353896828005899,
+          -1.245995955766109,
+          1.0330085997194474,
+          3.904897119754027
+        ],
+        "reason": "floor"
+      },
+      {
+        "tape": "tt37/integrated-practice",
+        "card": {
+          "id": 13495,
+          "mode": "full",
+          "index": 5,
+          "seed": 418004520,
+          "key": "full-5-418004520",
+          "opening": "random",
+          "profile": "reach",
+          "reply_seed": 854814265
+        },
+        "leg": 6,
+        "status": "missed_contact",
+        "bounce": [
+          0.28732561270746265,
+          1.3692772032252842,
+          0.7592724263059379
+        ],
+        "target": [
+          -0.23712823802905234,
+          -1.327272115961531,
+          1.0876896219679764,
+          3.8942283226894165
+        ],
+        "reason": "floor"
+      },
+      {
+        "tape": "tt37/integrated-replication",
+        "card": {
+          "id": 8510,
+          "mode": "full",
+          "index": 29,
+          "seed": 250960795,
+          "key": "full-29-250960795",
+          "opening": "random",
+          "profile": "reach",
+          "reply_seed": 589138766
+        },
+        "leg": 1,
+        "status": "missed_contact",
+        "bounce": [
+          -0.7623312054533858,
+          0.14504156832367787,
+          0.7597496370276178
+        ],
+        "target": [
+          0.2778623656388184,
+          -1.3147070148713504,
+          1.0558344625574485,
+          3.4563430683350083
+        ],
+        "reason": "floor"
+      },
+      {
+        "tape": "tt37/rally-funded",
+        "card": {
+          "id": 3210,
+          "mode": "full",
+          "index": 2,
+          "seed": 901110305,
+          "key": "full-2-901110305",
+          "opening": "random",
+          "profile": "reach",
+          "reply_seed": 691138196
+        },
+        "leg": 1,
+        "status": "missed_contact",
+        "bounce": [
+          0.7435291227963422,
+          0.3292518851218463,
+          0.7595695390716684
+        ],
+        "target": [
+          -0.2795977239795554,
+          -1.2611344253157915,
+          1.1022564136699755,
+          3.647772037380021
+        ],
+        "reason": "floor"
+      },
+      {
+        "tape": "tt37/rally-funded",
+        "card": {
+          "id": 13052,
+          "mode": "full",
+          "index": 10,
+          "seed": 484914098,
+          "key": "full-10-484914098",
+          "opening": "random",
+          "profile": "reach",
+          "reply_seed": 1022647448
+        },
+        "leg": 4,
+        "status": "missed_contact",
+        "bounce": [
+          0.6631419976926247,
+          0.19895436201862304,
+          0.7597854338269848
+        ],
+        "target": [
+          -0.16140984083494578,
+          -1.2503770056436865,
+          1.0987598296181829,
+          3.5327658730286426
+        ],
+        "reason": "floor"
+      },
+      {
+        "tape": "tt37/rally-funded",
+        "card": {
+          "id": 14233,
+          "mode": "full",
+          "index": 11,
+          "seed": 985768437,
+          "key": "full-11-985768437",
+          "opening": "random",
+          "profile": "reach",
+          "reply_seed": 654466944
+        },
+        "leg": 4,
+        "status": "missed_contact",
+        "bounce": [
+          0.7277004883565309,
+          0.2289739602766576,
+          0.7588950349057849
+        ],
+        "target": [
+          -0.026120129029066963,
+          -1.2216821795178348,
+          1.0282700619240395,
+          3.5637892431703415
+        ],
+        "reason": "floor"
+      },
+      {
+        "tape": "tt37/rally-funded",
+        "card": {
+          "id": 14843,
+          "mode": "full",
+          "index": 22,
+          "seed": 451552298,
+          "key": "full-22-451552298",
+          "opening": "random",
+          "profile": "reach",
+          "reply_seed": 1031789550
+        },
+        "leg": 1,
+        "status": "missed_contact",
+        "bounce": [
+          -0.6749732984815324,
+          0.23105807661413805,
+          0.7590837669684312
+        ],
+        "target": [
+          -0.14552068123661321,
+          -1.2349892610372626,
+          1.0285236420336032,
+          3.5289883979072627
+        ],
+        "reason": "second_bounce"
+      },
+      {
+        "tape": "tt37/replicate-carry",
+        "card": {
+          "id": 14390,
+          "mode": "full",
+          "index": 35,
+          "seed": 49988654,
+          "key": "full-35-49988654",
+          "opening": "random",
+          "profile": "reach",
+          "reply_seed": 622451357
+        },
+        "leg": 8,
+        "status": "missed_contact",
+        "bounce": [
+          -0.7616808834789839,
+          0.10794847597641065,
+          0.7560088914614562
+        ],
+        "target": [
+          0.21385311819875752,
+          -1.2619949772949757,
+          1.0115049234470228,
+          3.602183799297591
+        ],
+        "reason": "out"
+      },
+      {
+        "tape": "tt37/replicate-carry",
+        "card": {
+          "id": 6619,
+          "mode": "full",
+          "index": 38,
+          "seed": 720806621,
+          "key": "full-38-720806621",
+          "opening": "random",
+          "profile": "reach",
+          "reply_seed": 337720010
+        },
+        "leg": 2,
+        "status": "missed_contact",
+        "bounce": [
+          0.7093337268255016,
+          0.37565435403841496,
+          0.7580330057041686
+        ],
+        "target": [
+          0.021911410386924235,
+          -1.2924814617655553,
+          1.0165675244835224,
+          3.4932863626799104
+        ],
+        "reason": "floor"
+      },
+      {
+        "tape": "tt39/prep-lead",
+        "card": {
+          "id": 4570,
+          "mode": "full",
+          "index": 31,
+          "seed": 91457746,
+          "key": "full-31-91457746",
+          "opening": "random",
+          "profile": "reach",
+          "reply_seed": 62604098
+        },
+        "leg": 2,
+        "status": "missed_contact",
+        "bounce": [
+          -0.05293785330568661,
+          1.3699033734467196,
+          0.7598304303616905
+        ],
+        "target": [
+          -0.02369400859223114,
+          -1.2987592359733768,
+          1.0330926953242807,
+          3.4755950605725476
+        ],
+        "reason": "floor"
+      }
+    ],
+    "per_tape": {
+      "tt37/mix-rollin": {
+        "points": 24,
+        "legal_reply": 103,
+        "missed_contact": 1,
+        "sha256": "98381401d72855f3f187b256c6e1ebcc69dd4f2c20b2d72b371a5ce7764ea65f"
+      },
+      "tt37/integrated-practice": {
+        "points": 24,
+        "legal_reply": 120,
+        "missed_contact": 1,
+        "sha256": "2b45a6976c74f546e8d031ff5dd9f0e30fe4114eb34499df1291177283918c85"
+      },
+      "tt37/integrated-replication": {
+        "points": 24,
+        "legal_reply": 133,
+        "missed_contact": 1,
+        "sha256": "3edf68ba388f3df75f073ef23fe987cbcf0a7fd232aa5e1e679fdf99afaef1b7"
+      },
+      "tt37/rally-funded": {
+        "points": 24,
+        "legal_reply": 87,
+        "missed_contact": 4,
+        "sha256": "8afb5bf2dff8172e7959191fc7b896d7ea317af3baa23ecb098803535cbf12ef"
+      },
+      "tt37/value-closed": {
+        "points": 12,
+        "legal_reply": 81,
+        "sha256": "a4a50689a451037b28d4b2a279afba758dd8a4ac802d4932c5562431260b5a91"
+      },
+      "tt37/replicate-carry": {
+        "points": 24,
+        "legal_reply": 103,
+        "missed_contact": 2,
+        "sha256": "f1dee41480dcb48870ebf81cf8bc30b8ca5702843834d89d3012161fd9cd8003"
+      },
+      "tt37/opponent-baseline-random-long": {
+        "points": 40,
+        "legal_reply": 19,
+        "sha256": "a978327bf2df5a3c64c9dcf336f4e673b3f823c7ebcf808adb60494215a83d6a"
+      },
+      "tt38/joint-mpc-development-raw": {
+        "points": 6,
+        "legal_reply": 2,
+        "sha256": "43cc13dc86fc2cbaab21757d8f2b13e5f32895256d641fbc3764e367616999f7"
+      },
+      "tt38/joint-mpc-development-live": {
+        "points": 6,
+        "legal_reply": 21,
+        "sha256": "cd3a9f8ac9ea57e53d1f9b31e66f8b4e6133474e212e3119622284b7149c9e8d"
+      },
+      "tt38/joint-mpc-development-elastic": {
+        "points": 6,
+        "legal_reply": 32,
+        "censored": 1,
+        "sha256": "4f267cf839a1a82eb75338d8be18371d0c6f7b17e1cd0ce5478fadbdb2e88b0f"
+      },
+      "tt39/prep-lead": {
+        "points": 24,
+        "legal_reply": 103,
+        "missed_contact": 1,
+        "sha256": "27c543982e83d2d4ae427f786b64ae969ddb403bb31ef0f70766fb023107097b"
+      },
+      "tt39/prep-half": {
+        "points": 24,
+        "legal_reply": 109,
+        "sha256": "7cd3b376252fabd1ee0fcdc6b7c4547dc17cc24ed10f71faef142296e0aac598"
+      },
+      "tt39/skill-replication": {
+        "points": 24,
+        "legal_reply": 103,
+        "sha256": "22188a358b11b4756008c0dd740c9b404e499c2fde1acd1aa3016292fc9ee807"
+      },
+      "tt39/pure-early-replication": {
+        "points": 24,
+        "legal_reply": 78,
+        "sha256": "d0d7750eb4d18194e79f29afe68d7f4c590b252cdb830ca597cadd372b8a4f60"
+      },
+      "tt39/integrated-31-tape": {
+        "points": 1,
+        "legal_reply": 31,
+        "sha256": "5d69b211d74e54ec7d8e55ed794dda7f0d7e47ec524048acb4e02b951aa64c90"
+      },
+      "tt39/direct-32-tape": {
+        "points": 1,
+        "legal_reply": 32,
+        "sha256": "99bc7ae0958b0eab2d709e206c0d97ba5b99c4eae5575ddfa5de825d6bb8f654"
+      }
+    }
+  },
+  "endurance_practice": {
+    "offers": {
+      "legal_reply": 398,
+      "missed_contact": 4
+    },
+    "release_seed_pairs": 91,
+    "misses": [
+      {
+        "tape": "tt39/endurance-02",
+        "card": {
+          "id": 12596,
+          "mode": "full",
+          "index": 42,
+          "seed": 887716373,
+          "key": "full-42-887716373",
+          "profile": "reach",
+          "opening": "random",
+          "reply_seed": 357505818
+        },
+        "leg": 8,
+        "status": "missed_contact",
+        "bounce": [
+          -0.7531697656948975,
+          0.30134687620887607,
+          0.7553876820664918
+        ],
+        "target": [
+          0.16144854049433888,
+          -1.3032503165000218,
+          1.1023390515730214,
+          3.788212782915822
+        ],
+        "reason": "floor"
+      },
+      {
+        "tape": "tt39/endurance-03",
+        "card": {
+          "id": 14645,
+          "mode": "full",
+          "index": 49,
+          "seed": 505664202,
+          "key": "full-49-505664202",
+          "profile": "reach",
+          "opening": "random",
+          "reply_seed": 735052034
+        },
+        "leg": 2,
+        "status": "missed_contact",
+        "bounce": [
+          0.5276932992637942,
+          1.3654299409348905,
+          0.7588304578118261
+        ],
+        "target": [
+          -0.015185045760891192,
+          -1.2945359537714332,
+          1.0649316635778634,
+          3.859221616509473
+        ],
+        "reason": "out"
+      },
+      {
+        "tape": "tt39/endurance-05",
+        "card": {
+          "id": 13077,
+          "mode": "full",
+          "index": 113,
+          "seed": 668284962,
+          "key": "full-113-668284962",
+          "profile": "reach",
+          "opening": "random",
+          "reply_seed": 1027338136
+        },
+        "leg": 2,
+        "status": "missed_contact",
+        "bounce": [
+          -0.7249060863064457,
+          0.29355975806409434,
+          0.7598871272904864
+        ],
+        "target": [
+          0.031092899131702156,
+          -1.337480959830841,
+          1.0435220842814779,
+          3.807890713165981
+        ],
+        "reason": "floor"
+      },
+      {
+        "tape": "tt39/endurance-05",
+        "card": {
+          "id": 15035,
+          "mode": "full",
+          "index": 117,
+          "seed": 430674730,
+          "key": "full-117-430674730",
+          "profile": "reach",
+          "opening": "random",
+          "reply_seed": 925672620
+        },
+        "leg": 3,
+        "status": "missed_contact",
+        "bounce": [
+          -0.4184785320322856,
+          0.19208317466809638,
+          0.7594545354277296
+        ],
+        "target": [
+          0.19577947762357212,
+          -1.3127779326982685,
+          1.0468020356989027,
+          3.90392504986047
+        ],
+        "reason": "second_bounce"
+      }
+    ],
+    "per_tape": {
+      "tt39/endurance-01": {
+        "points": 24,
+        "legal_reply": 51,
+        "sha256": "fd3697c2e7a5a54351be005441f47388f6e5099bb4f4dd8e85158147170a8d95"
+      },
+      "tt39/endurance-02": {
+        "points": 24,
+        "legal_reply": 96,
+        "missed_contact": 1,
+        "sha256": "6568327a5f230ff90b3e643e0a7c59f5bd3adaa400eba93bfa6730353f7c1324"
+      },
+      "tt39/endurance-03": {
+        "points": 24,
+        "legal_reply": 81,
+        "missed_contact": 1,
+        "sha256": "df4bfb7b10c228047ff20ba77b3d5ed79c42a498bdb1b69a74be7d52c388dd82"
+      },
+      "tt39/endurance-04": {
+        "points": 24,
+        "legal_reply": 108,
+        "sha256": "b3041f24f567b169d97363f4fa960786a57167c6efd0572f4067f05c2844c115"
+      },
+      "tt39/endurance-05": {
+        "points": 24,
+        "legal_reply": 62,
+        "missed_contact": 2,
+        "sha256": "a5896be4c0c51794889e798fe371d8968e5764bc2085d108de8859f2ea59fd13"
+      }
+    }
+  },
+  "mirror_capacity": {
+    "offers": {
+      "legal_reply": 440,
+      "censored": 8
+    },
+    "release_seed_pairs": 4,
+    "misses": [],
+    "per_tape": {
+      "tt37/opponent-capacity-central-random": {
+        "points": 4,
+        "legal_reply": 396,
+        "censored": 4,
+        "sha256": "7580cb064d9169af792b7e736431a8aaabeb923aeb2bd76140196167f77b78c8"
+      },
+      "tt37/opponent-capacity-wide-random": {
+        "points": 4,
+        "legal_reply": 44,
+        "censored": 4,
+        "sha256": "6afa5cc940d0e7c8d98a577dc3b84d494af1a26203ae576e6a1a6336f5b11753"
+      }
+    }
+  }
+}

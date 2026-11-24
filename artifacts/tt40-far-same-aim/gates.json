@@ -1,0 +1,77 @@
+{
+  "offers": {
+    "legal_reply": 398,
+    "missed_contact": 4
+  },
+  "trials": [
+    {
+      "source": "tt39/endurance-02",
+      "card": {
+        "id": 12596,
+        "mode": "full",
+        "index": 42,
+        "seed": 887716373,
+        "key": "full-42-887716373",
+        "profile": "reach",
+        "opening": "random",
+        "reply_seed": 357505818
+      },
+      "leg": 8,
+      "status": "missed_contact",
+      "gate": "short_outward",
+      "lead_s": 1.0291666666666082
+    },
+    {
+      "source": "tt39/endurance-03",
+      "card": {
+        "id": 14645,
+        "mode": "full",
+        "index": 49,
+        "seed": 505664202,
+        "key": "full-49-505664202",
+        "profile": "reach",
+        "opening": "random",
+        "reply_seed": 735052034
+      },
+      "leg": 2,
+      "status": "missed_contact",
+      "gate": "low_trailing_edge",
+      "lead_s": 0.9020833333332821
+    },
+    {
+      "source": "tt39/endurance-05",
+      "card": {
+        "id": 13077,
+        "mode": "full",
+        "index": 113,
+        "seed": 668284962,
+        "key": "full-113-668284962",
+        "profile": "reach",
+        "opening": "random",
+        "reply_seed": 1027338136
+      },
+      "leg": 2,
+      "status": "missed_contact",
+      "gate": "short_outward",
+      "lead_s": 0.8520833333332849
+    },
+    {
+      "source": "tt39/endurance-05",
+      "card": {
+        "id": 15035,
+        "mode": "full",
+        "index": 117,
+        "seed": 430674730,
+        "key": "full-117-430674730",
+        "profile": "reach",
+        "opening": "random",
+        "reply_seed": 925672620
+      },
+      "leg": 3,
+      "status": "missed_contact",
+      "gate": null,
+      "lead_s": 0.7812499999999556
+    }
+  ],
+  "description": "Geometry at observed native separation; runtime also needs no stock plan."
+}
