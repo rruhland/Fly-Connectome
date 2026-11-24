@@ -354,6 +354,8 @@ def point(
             )
             last_servo = tick
             if adjusted is not None:
+                if impact is not None and hasattr(impact, "cancel"):
+                    impact.cancel()
                 if online_value is not None:
                     online_value.issued(None)
                 tape = adjusted
@@ -413,6 +415,8 @@ def point(
                     eta = obs[0]
                     fit = geometry(surf, obs)
                     x = np.r_[obs[1:6], q[:5]]
+                    if hasattr(online_value, "context"):
+                        online_value.context(x)
                     if response is not None and response.last is not None:
                         response.observe(False)
                     remembered = (
@@ -563,7 +567,7 @@ def point(
                     deadline = now + eta + 0.26
                     retry_tick = (
                         tick + max(3, round((eta - 0.092) / a.control_dt))
-                        if (score is None or refresh) and eta > 0.13
+                        if (score is None or refresh) and eta > 0.13 and not (impact_review and impact_review.get("commit"))
                         else -1
                     )
                     records.append(
@@ -649,6 +653,9 @@ def point(
         started = process_time()
         _, _, done, capped, info = a.exchange(action, FAR)
         arena_cpu += process_time() - started
+        if impact is not None and hasattr(impact, "feedback"):
+            hit_reward = any(e["kind"] == "legal_return" and e["side"] == 1 for e in info["events"])
+            impact.feedback(hit_reward, done)
         if preparation is not None:
             near = any(
                 e["kind"] == "legal_return" and e["side"] == 1 for e in info["events"]
@@ -851,6 +858,14 @@ def run(args):
         preparation = Preparation(history["examples"], fixed=args.prep_fixed)
         out["preparation_source"] = str(args.prep_memory) if args.prep_memory else None
         out["fixed_preparation"] = args.prep_fixed
+    paired_model = None
+    if getattr(args, "paired_practice", None):
+        from .tt40_paired_practice import Paired
+        paired_model = Paired(args.paired_practice)
+        if (not args.mode.startswith("optical-") or args.variable or args.repair or args.camera_rescue
+            or set(paired_model.ids) & {c["id"] for c in cards}):
+            raise ValueError("Use an optical, nominal-depth policy on disjoint releases")
+        out["paired_practice"] = str(args.paired_practice)
     joint_experience = None
     if args.record_joints:
         from .tt38_scored_joints import ScoredJoints
@@ -911,6 +926,15 @@ def run(args):
                 out["rally_value"] = True
             optical_engine.motor_value = cls(start_value)
             out["motor_value"] = str(args.motor_value)
+        if getattr(args, "local_critic", None):
+            from .tt40_local_critic import Conditional
+            if not args.motor_value or args.rally_value or args.learn_value or optical_engine is None:
+                raise ValueError("Local updates require the existing two-outcome camera prior")
+            local_prior = _read(args.local_critic)
+            if set(local_prior["ids"]) & {c["id"] for c in cards}:
+                raise ValueError("Local critic has already practiced an assessment release")
+            optical_engine.motor_value = Conditional(_read(args.motor_value), local_prior, update=args.local_updates)
+            out["local_critic"] = str(args.local_critic)
         stereo, rig, stride, lo, hi = joint.resources(a)
         try:
             for c in cards:
@@ -953,6 +977,7 @@ def run(args):
                     joint_experience,
                     fallback,
                     preparation=preparation,
+                    impact=paired_model,
                 )
                 if servo is not None:
                     out["late_motor_memory"] = [
@@ -965,6 +990,10 @@ def run(args):
                         {"context": x.tolist(), "action": u.tolist(), "reward": v}
                         for x, u, v in response.experience
                     ]
+                if getattr(args, "local_critic", None):
+                    out["local_critic_updates"] = optical_engine.motor_value.online
+                if paired_model is not None:
+                    out["paired_online"] = [[x.tolist(), j, v] for x, j, v in paired_model.history]
                 if args.learn_vision:
                     r["optical_labels_so_far"] = vision_source.added
                     vision_source.save(args.learn_vision)
@@ -1019,6 +1048,9 @@ if __name__ == "__main__":
     p.add_argument("--empty-value", action="store_true")
     p.add_argument("--belief-search", type=Path)
     p.add_argument("--skill-memory", type=Path)
+    p.add_argument("--paired-practice", type=Path)
+    p.add_argument("--local-critic", type=Path)
+    p.add_argument("--local-updates", action="store_true")
     p.add_argument("--rally-value", action="store_true")
     p.add_argument("--cap", type=int, default=24)
     p.add_argument("--depth", type=float, default=-1.13)
