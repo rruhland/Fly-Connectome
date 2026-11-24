@@ -5,6 +5,7 @@ import numpy as np
 from scripts.experimental.tt37_joint_deep import DeepField
 from scripts.experimental.tt38_body_relative import Body, FREQ, RelativeField, groups, input_motion
 from scripts.experimental.tt38_body_relative_augment import translate
+from scripts.experimental.tt38_body_relative_effects import EncoderDynamics, sample_indices
 from scripts.experimental.tt38_body_relative_face import single_joint_command
 from scripts.experimental.tt38_body_relative_online import PassageField, passage
 
@@ -128,3 +129,24 @@ def test_joint_face_decoupling_decreases_independent_face_disagreement():
     np.testing.assert_allclose(pose.position(estimate)[:3], pose.position(relative)[:3])
     assert np.linalg.norm(pose.position(estimate)[3:] - target_orientation) < .5 * np.linalg.norm(
         pose.position(relative)[3:] - target_orientation)
+
+
+def test_encoder_effect_jacobian_matches_three_step_finite_difference():
+    rng = np.random.default_rng(21)
+    model = EncoderDynamics(rng.normal(scale=.01, size=(26, 5)))
+    q, dq, u = rng.normal(scale=.1, size=(3, 5))
+    y, jac = model.predict(q, dq, u, sensitivity=True)
+    np.testing.assert_allclose(y, model.predict(q, dq, u))
+    step = np.eye(5) * 1.e-5
+    numeric = np.column_stack([(model.predict(q, dq, u + s) - model.predict(q, dq, u - s)) / 2.e-5
+                               for s in step])
+    np.testing.assert_allclose(jac, numeric, atol=1.e-8)
+
+
+def test_actuator_motion_targets_never_bridge_points_or_future_capture_gaps():
+    states = np.zeros((12, 11))
+    states[:, 4] = -2.
+    marks = np.c_[[12, 13, 14, 15, 16, 18, 19, 20, 21, 22, 23, 24], np.full(12, -.1)]
+    receipt = {"practice": [{"frames": 8, "card": {"id": 1}}, {"frames": 4, "card": {"id": 2}}]}
+    samples, _, _ = sample_indices({"states": states, "marks": marks}, receipt)
+    np.testing.assert_array_equal(samples, [1])
