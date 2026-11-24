@@ -178,7 +178,7 @@ def compare_guarded(folder, *, audit_best=False):
         ))
 
 
-def within_point(folder):
+def within_point(folder, *, audit_best=False):
     fixed_path = folder / "joint-mpc-within-frozen.json.gz"
     active_path = folder / "joint-mpc-held_openings-live.json.gz"
     f, a = read_complete(fixed_path), read_complete(active_path)
@@ -207,6 +207,9 @@ def within_point(folder):
         already_awarded_actual_near=awarded, fixed=metrics(f), active=metrics(a), paired=result,
         sources=dict(active=_hash(active_path), fixed=_hash(fixed_path)),
     ))
+    if audit_best:
+        proof = replay_case(f["ready"], "random", f["cards"][-1], control)
+        _write(folder / "joint-mpc-within-audit.json", dict(source_sha256=_hash(fixed_path), **proof))
 
 
 if __name__ == "__main__":
@@ -225,6 +228,6 @@ if __name__ == "__main__":
     elif args.phase == "guarded":
         compare_guarded(args.folder, audit_best=args.audit_best)
     elif args.phase == "within":
-        within_point(args.folder)
+        within_point(args.folder, audit_best=args.audit_best)
     else:
         extend(args.folder)

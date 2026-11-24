@@ -40,6 +40,8 @@ Action-only replay reproduced the strongest novel point, live continuation, and 
 
 The two leading novel cards were replayed with the memory frozen. The first point had no legal near return in either run and exactly matched every command and event. Both controllers therefore entered the chosen second point, release 4640, with empty memory. Commands first diverged at 4.58 simulated seconds, after two actual near returns could seed the live memory. Frozen search ultimately made 26 near returns in 53 alternating strokes. Live search made 13 near returns in 27 alternating strokes. This counterexample was chosen after observing the novel live result to isolate the effect of within-point updates. It is not another independent generalization trial. The reward memory helps some continuation sequences but can hurt others. [Within-point receipt](joint-mpc-within-results.json)
 
+The 53-stroke frozen rally re-scored exactly in an independent run with one launch. The 26 legal face contacts covered 60.7 cm laterally. Full arm CAD found no penetrations in 21,165 solver samples and minimum clearance was 15.11 mm. [53-stroke CAD and referee replay](joint-mpc-within-audit.json)
+
 ## Reproduce
 
 Use the measured launches from the [regulation reproduction instructions](../tt29/endurance.md) and the preserved TT37 evidence, including the [joint archive receipt](../tt37/long-rgb.json). Set the native physics and numerical workers to one.
@@ -65,5 +67,5 @@ done
 python -m scripts.experimental.tt38_joint_mpc_report comparison
 python -m scripts.experimental.tt38_joint_mpc_report audit
 python -m scripts.experimental.tt38_joint_mpc frozen held_openings artifacts/tt38/joint-mpc-within-frozen.json.gz --optic "$optic" --limit 2 --variant elastic
-python -m scripts.experimental.tt38_joint_mpc_report within
+python -m scripts.experimental.tt38_joint_mpc_report within --audit-best
 ```
