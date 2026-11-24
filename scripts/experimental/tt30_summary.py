@@ -27,26 +27,36 @@ def summarize(path, donor):
             errors.append([observed_error, observed_error - bias[0], observed_error + bias[0]])
     returns = [r["score"]["returns"] for r in rows]
     cpu = sum(r["process_cpu_s"] for r in rows)
-    return dict(source_sha256=_hash(path), openings=data["ids"], seeds=[r["opponent_seed"] for r in rows],
+    simulated = sum(len(r["actions"]) for r in rows) / 60  # SO-101 control ticks
+    return dict(source_sha256=_hash(path), feed_sha256=data["feed_sha256"],
+                movement_sha256=data["movement_sha256"], openings=data["ids"], seeds=[r["opponent_seed"] for r in rows],
                 starting_examples=[r["initial_examples"] for r in rows], returns=returns,
                 arm=sum(r["score"]["learner"] for r in rows), total=sum(returns),
-                process_cpu_s=cpu, cpu_per_return_s=cpu / max(1, sum(returns)),
+                process_cpu_s=cpu, simulated_s=simulated, cpu_per_return_s=cpu / max(1, sum(returns)),
                 placement_samples=len(errors),
                 mean_absolute_error_m=None if not errors else np.abs(np.asarray(errors)).mean(axis=0).tolist())
 
 
 def main(directory):
-    donor = ShotResiduals(_read(directory / "wide-shot-errors.json.gz")["optical_outcome_checkpoint"])
+    donor_path = directory / "wide-shot-errors.json.gz"
+    donor = ShotResiduals(_read(donor_path)["optical_outcome_checkpoint"])
     out = {}
     for name in ("fresh-control", "fresh-online", "fresh-carried", "fresh-reversed",
-                 "fresh-motor", "fresh-combined", "repair", "confirm-control", "confirm-repair", "confirm-combined"):
-        result = summarize(directory / (name + ".json.gz"), donor)
+                 "fresh-motor", "fresh-combined", "fresh-combined-reversed", "repair", "confirm-control", "confirm-repair", "confirm-combined"):
+        path = directory / (name + ".json.gz")
+        if name in {"fresh-carried", "fresh-reversed", "fresh-combined", "fresh-combined-reversed", "confirm-combined"}:
+            if _read(path)["donor_sha256"] != _hash(donor_path):
+                raise ValueError(f"Optical donor mismatch: {name}")
+        result = summarize(path, donor)
         if out:
             comparison = out["confirm-control" if name.startswith("confirm-") and name != "confirm-control" else "fresh-control"]
-            if result["openings"] != comparison["openings"] or result["starting_examples"] != comparison["starting_examples"]:
+            if any(result[key] != comparison[key] for key in ("openings", "starting_examples", "feed_sha256", "movement_sha256")):
                 raise ValueError(f"Opening or starting movement library mismatch: {name}")
             if name != "confirm-control" and result["seeds"] != comparison["seeds"]:
                 raise ValueError(f"Opponent seed mismatch: {name}")
+            if name != "confirm-control":
+                delta = np.subtract(result["returns"], comparison["returns"])
+                result["better_tied_worse"] = [int((delta > 0).sum()), int((delta == 0).sum()), int((delta < 0).sum())]
         out[name] = result
     _write(directory / "transfer-summary.json", out)
 

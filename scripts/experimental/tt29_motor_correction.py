@@ -154,6 +154,14 @@ class ContactEditor(OpticalPlanner):
         )
         if len(base) * dt < reach_time + 0.45:
             return original
+        if self.mode == "repair":
+            _, incumbent = planner.predict.trajectories(
+                base[None, ...], anchor.target, reach_time + 0.10
+            )
+            if np.isfinite(incumbent[0, 0]):
+                self.log.append(dict(step=step, incumbent_landed=True,
+                                     scores=[float(incumbent[0, 0])], applied=False))
+                return original
         hit_goals = base[min(len(base) - 1, int((anchor.time - now) / dt)), :5]
         _, _, linear, angular = planner.ik.pose(hit_goals, jacobian=True)
         adjustment = np.linalg.lstsq(
@@ -193,10 +201,10 @@ class ContactEditor(OpticalPlanner):
                 ],
                 "proposed": winner,
                 "accepted": accept,
-                "applied": accept and self.mode == "edit",
+                "applied": accept and self.mode in ("edit", "repair"),
             }
         )
-        if not accept or self.mode != "edit":
+        if not accept or self.mode not in ("edit", "repair"):
             return original
         self.corrections += 1
         edited_tail = rates[winner]
@@ -310,7 +318,7 @@ if __name__ == "__main__":
         help="Apply a frozen optical outcome residual checkpoint",
     )
     parser.add_argument("--ids", type=int, nargs="+", required=True)
-    parser.add_argument("--mode", choices=("observe", "edit"), default="edit")
+    parser.add_argument("--mode", choices=("observe", "edit", "repair"), default="edit")
     parser.add_argument("--seed-offset", type=int, default=62470)
     parser.add_argument("--return-target", type=int, default=100)
     args = parser.parse_args()

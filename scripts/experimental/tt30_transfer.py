@@ -11,14 +11,14 @@ from .tt30_openings import nearest_openings
 
 
 def evaluate(feeds, movements, output, mode, donor, openings, offset):
-    uses_donor = mode in ("carried", "reversed", "combined")
+    uses_donor = mode in ("carried", "reversed", "combined", "combined-reversed")
     if uses_donor != (donor is not None):
         raise ValueError("Provide a donor only for a carried, reversed or combined comparison")
     results = []
     with TemporaryDirectory() as scratch:
         scratch = Path(scratch)
         bank = donor
-        if mode == "reversed":
+        if mode in ("reversed", "combined-reversed"):
             restore = _read(donor)["optical_outcome_checkpoint"]
             for example in restore["samples"]:
                 example["error_m"] = (-np.asarray(example["error_m"])).tolist()
@@ -26,7 +26,7 @@ def evaluate(feeds, movements, output, mode, donor, openings, offset):
             _write(bank, {"optical_outcome_checkpoint": restore})
         for i, shot in enumerate(openings):
             temporary = scratch / "point.json.gz"
-            if mode in ("motor", "combined", "repair"):
+            if mode in ("motor", "combined", "combined-reversed", "repair"):
                 from .tt29_motor_correction import run as edit
                 edit(
                     feeds, temporary, [shot], movements,
@@ -56,10 +56,8 @@ if __name__ == "__main__":
     p.add_argument("feeds", type=Path)
     p.add_argument("movements", type=Path)
     p.add_argument("output", type=Path)
-    p.add_argument("mode", choices=("control", "online", "carried", "reversed", "motor", "combined", "repair"))
+    p.add_argument("mode", choices=("control", "online", "carried", "reversed", "motor", "combined", "combined-reversed", "repair"))
     p.add_argument("--donor", type=Path)
     p.add_argument("--offset", type=int, default=91537)
     args = p.parse_args()
-    if args.mode in ("carried", "reversed", "combined") and not args.donor:
-        p.error("A frozen treatment requires a donor")
     evaluate(args.feeds, args.movements, args.output, args.mode, args.donor, nearest_openings(args.feeds), args.offset)
