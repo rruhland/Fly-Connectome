@@ -292,6 +292,10 @@ def run(output,batch,rounds,cases,check,only,gates_only=False,resume=False):
                 sep=next(e['time'] for e in old['events'] if far<e['time']<far+.06 and
                          e['kind']=='separation' and e.get('collider')=='rival_racket')
                 far_tick=int(np.ceil((sep+1e-7)/dt))+1
+                hit_tick=int(np.ceil((far-1e-7)/dt))
+                # For the literal first control tick after hit, refuse to shadow
+                # an unresolved far contact with its blade parked in isolation.
+                immediate=hit_tick if hit_tick*dt>sep+1e-8 else None
                 early,frames=optical_gate(a,view,rig,old,c,fork,late-1)
                 if early is not None and early < far_tick:
                     raise ValueError('Verified turn gate fired before completed far impact')
@@ -304,15 +308,19 @@ def run(output,batch,rounds,cases,check,only,gates_only=False,resume=False):
                 if previous is None:
                     doc['rows'].append(row)
                 else:
+                    targets=dict(rgb=early,far_separation=far_tick,first_tick_after_hit=immediate)
                     row['stages']=[s for s in previous['stages'] if
-                                   s['fork_tick'] is not None and s['fork_tick']==(early if s['name']=='rgb' else far_tick)
+                                   s['fork_tick'] is not None and s['fork_tick']==targets[s['name']]
                                    and s.get('shadow')]
                     doc['rows'][doc['rows'].index(previous)]=row
                 if gates_only:
                     _write(output,doc)
                     continue
                 priors,recipes=clean_proofs(a,k,old,c,proofs)
-                for name,tick in [('rgb',early),('far_separation',far_tick)]:
+                ordered=[('rgb',early),('far_separation',far_tick)]
+                if only=='first_tick_after_hit':
+                    ordered=[('first_tick_after_hit',immediate)]
+                for name,tick in ordered:
                     if only and only!=name:
                         continue
                     if any(s['name']==name for s in row['stages']):
@@ -355,7 +363,7 @@ if __name__=='__main__':
     p.add_argument('--rounds',type=int,default=5)
     p.add_argument('--check',type=int,default=5)
     p.add_argument('--cases',nargs='*',type=int)
-    p.add_argument('--only',choices=('rgb','far_separation'))
+    p.add_argument('--only',choices=('rgb','far_separation','first_tick_after_hit'))
     p.add_argument('--gates-only',action='store_true')
     p.add_argument('--resume',action='store_true')
     a=p.parse_args()
