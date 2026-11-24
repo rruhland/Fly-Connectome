@@ -13,8 +13,32 @@ The stock wrist roll spans −157.2° to +162.8°. Its commanded rate gives a no
 
 On the stricter plant, same-face bouncing gives repeated contact examples with the stock wrist. Practice on both settled faces can use separate releases and finish the turn while the ball is withheld. The earlier optical studies already recorded opposite-face contacts with a settled wrist, and found that a better solo camera fit did not improve their matched rally. [Settled-face solo calibration and matched rally](../tt29/tt29_wrist_only.md)
 
+All 56 saved drops replayed with identical encoder samples, rebound events and physics-state hashes. The full-CAD check covered 43,864 physics states and found zero penetrations. The closest checked separation was 18.6 mm. [Replay receipt](flip-practice.json.gz)
+
 ## Command timing
 
 Four paired bench practice drops provided a command-aligned encoder response on an immediate channel and on a channel with a withheld lag. The minimum-error alignment across candidates of zero to four control ticks identified two ticks, or 33.3 ms. These trials used the coupled plant and produced initial rebounds. Applying the learned advance to eight fresh delayed bench drops restored the zero-delay commands actually delivered to the motors and their exact trajectories. The face-change result remained zero of eight because the motors still took the same time to rotate.
 
 The separate table comparison reused only this integer delay estimate. Both table controllers played with the same delayed and noisy command channel, the same delayed stereo images, the same 223-entry frozen movement bank, the coupled motor plant and identical opponent seeds. Each point was capped at 12 alternating legal returns. The four measured launches came from the earlier wide-opening cohort. The experiment tests transport timing generalization to those balls. [Table evaluation](../../scripts/experimental/tt31_flip_table.py)
+
+| Measured opening | Cold | With solo timing |
+| --- | ---: | ---: |
+| 7331 | 2 | 0 |
+| 3152 | 4 | 6 |
+| 5736 | 2 | 2 |
+| 6739 | 4 | 12, cap |
+| **Total** | **12** | **20** |
+
+The arm itself landed 6 legal returns cold and 10 with the solo delay estimate. Two pairs improved, one tied and one regressed. Opening 6739 accounts for the aggregate increase. The source practice had qualified initial rebounds, and the exported quantity was motor timing measured during the attempted turns. [Cold action tapes](flip-table-cold.json.gz) · [Carried action tapes](flip-table-carried.json.gz)
+
+All eight table plays reproduced their contact and referee events. Full-CAD replay found zero penetrations across 14,423 physics states. The nearest checked separation was 18.6 mm. [Paired replay receipt](flip-table-audit.json.gz)
+
+## Reproduction
+
+Run from the repository root with the pinned DeepMind feed and dependencies listed in the [endurance instructions](../tt29/endurance.md). The table program plays both conditions unless passed `--verify-only`.
+
+```sh
+export MUJOCO_GL=egl OPENBLAS_NUM_THREADS=1 OMP_THREAD_LIMIT=1 LP_NUM_THREADS=1
+python -m scripts.experimental.tt31_flip_practice
+python -m scripts.experimental.tt31_flip_table /tmp/tt29-feeds.json
+```
