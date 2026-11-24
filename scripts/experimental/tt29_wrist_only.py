@@ -14,8 +14,10 @@ from .tt29_action_memory import Experience, RecallPlanner, refine_after_bounce
 from .tt29_arm_clearance import ArmClearance
 from .tt29_endurance import audit
 from .tt29_partner import FOREHAND_LANES, LANES, PartnerArena
+from .tt29_partner_fast import FastPartnerArena, NativeBallFlight
 from .tt29_rally_physics import RallyArena, measured_launches
 from .tt29_vision import FlightPractice, OpticalFlight, Rig
+from .tt29_vision_control import delay_to_y
 from .tt29_vision_replay import clearance_final
 from .tt29_vision_twin import OpticalPlanner
 
@@ -82,6 +84,51 @@ class WristPartner(CompactBoard, PartnerArena):
     pass
 
 
+class FastWristPartner(CompactBoard, FastPartnerArena):
+    pass
+
+
+class FreshBounce:
+    """Retry a burst of post-bounce checks only when the forecast changed materially."""
+
+    def __init__(self):
+        self.key = None
+        self.bounce = None
+        self.checked = -100
+        self.rechecks = 0
+        self.changed = 0
+        self.trace = []
+
+    def examine(self, pupil, eye, step, flight, angles, rates, target):
+        now = step * pupil.twin.control_dt
+        bounce = eye.bounce_time
+        if (flight is None or bounce is None or not flight.bounced or pupil.tape is None or
+                now - flight.time > .02 or now - bounce < .035 or flight.depth_sigma > .038 or flight.rms > 1.2):
+            return
+        p, v = flight.advance(now)
+        if v[1] > -1.65 or v[2] < -.18:
+            return
+        eta = delay_to_y(p, v, flight.damping, -1.29)
+        if not .074 < eta < .23:
+            return
+        downcourt, _ = flight.advance(now + eta)
+        key = np.array([downcourt[0], downcourt[2], now + eta])
+        if self.bounce == bounce:
+            if step - self.checked < 3 or np.linalg.norm((key - self.key) / [.012, .012, .010]) < 1.:
+                return
+        prior = pupil.tape
+        pupil.last_refined = step - 12
+        refine_after_bounce(pupil, step, flight, angles, rates, target)
+        if pupil.last_refined != step:
+            return
+        self.key, self.bounce, self.checked = key, bounce, step
+        self.rechecks += 1
+        changed = pupil.tape is not prior
+        self.changed += int(changed)
+        self.trace.append(dict(tick=step, bounced=bounce, depth_sigma=flight.depth_sigma,
+                               forecast=key.tolist(), replaced=changed))
+
+
 class SingleView(OpticalFlight):
     """Require a supported monocular fit for a fresh stroke, including range uncertainty."""
 
@@ -115,7 +162,7 @@ def scan_toward(pupil, goal, target):
 
 
 def capture_player(arena, twin, model, shot, *, course, memory, confidence, scan, seed, max_rally,
-                   min_frames, refine, camera=None):
+                   min_frames, refine, camera=None, late_retry=False, blend=False, progress=None):
     arena.launch(shot)
     arena.streams = ('wrist',)
     arena.partner.reset(seed=seed)
@@ -127,7 +174,10 @@ def capture_player(arena, twin, model, shot, *, course, memory, confidence, scan
     rig = Rig({}, Rig.from_arena(twin).wrist if camera is None else camera)
     eye = SingleView(rig, course, confidence=confidence, min_frames=min_frames)
     pupil = OpticalPlanner(twin, seed=290110)
-    planner = RecallPlanner(twin, memory, seed=290110)
+    planner = RecallPlanner(twin, memory, seed=290110, blend=blend)
+    if isinstance(arena, FastPartnerArena):
+        planner.flight = NativeBallFlight(twin)
+    late = FreshBounce() if late_retry else None
     pupil.nominal = planner
     target = pupil.home.copy()
     last_angle = arena.joints.copy()
@@ -142,7 +192,9 @@ def capture_player(arena, twin, model, shot, *, course, memory, confidence, scan
         rgb = arena.render_wrist()
         flight = eye.capture(now, rgb, angles)
         rates = (angles - last_angle) / arena.control_dt
-        if refine:
+        if late is not None:
+            late.examine(pupil, eye, step, flight, angles, rates, target)
+        elif refine:
             refine_after_bounce(pupil, step, flight, angles, rates, target)
         command = pupil.command(step, flight, angles, rates, target)
         if scan and pupil.tape is None and flight is None and now - eye.last_read > .07 and step % 25 < 13:
@@ -164,6 +216,8 @@ def capture_player(arena, twin, model, shot, *, course, memory, confidence, scan
             e['kind'] == 'legal_return' and e['side'] == 1 for e in info['events']
         ):
             print('live', shot['id'], arena.legal_returns, arena.rival_returns - 1, flush=True)
+            if progress is not None:
+                progress(arena, clearance_final(arena, guard, shadow), moves)
         if done or cap or arena.legal_returns + arena.rival_returns >= max_rally + 1:
             break
     outcome = audit(arena.events)
@@ -174,7 +228,9 @@ def capture_player(arena, twin, model, shot, *, course, memory, confidence, scan
                 detections=frames, missing_detections=misses, metric_estimates=estimates, gaze_commands=scans,
                 optical_track=optical_track, events=arena.events.copy(), actions=moves,
                 decisions=planner.decisions, memory_retrievals=planner.retrieved, accepted_plans=planner.fallback,
-                CAD=clearance, motor=arena.motor_audit(), seconds=perf_counter() - start)
+                CAD=clearance, motor=arena.motor_audit(), seconds=perf_counter() - start,
+                postbounce_checks=late.rechecks if late else None, postbounce_replacements=late.changed if late else None,
+                correction_trace=late.trace if late else [])
 
 
 def load_memory(path):
@@ -186,7 +242,7 @@ def load_memory(path):
 
 
 def run(feeds, output, ids, modes, *, width, height, warm, confidence, max_rally, seed_offset,
-        min_frames, refine, margin, robust):
+        min_frames, refine, margin, robust, late_retry, fast_partner, max_steps, blend, progress_path=None):
     shots = measured_launches(feeds)
     result = dict(schema='tt29-wrist-only-rally-1', source_sha256=_hash(feeds), camera_size=[width, height],
                   memory_source_sha256=_hash(warm) if warm else None, opens=list(ids),
@@ -194,30 +250,45 @@ def run(feeds, output, ids, modes, *, width, height, warm, confidence, max_rally
                                                'issued near joint targets', 'legal near return reward'],
                   gaze_target_rad=SCAN_POS, configuration=dict(min_frames=min_frames, confidence=confidence,
                                                              refine=refine, clearance_margin=margin,
-                                                             robust_contact=robust), outputs=[])
+                                                             robust_contact=robust, late_retry=late_retry,
+                                                             fast_partner=fast_partner, max_steps=max_steps, blend=blend), outputs=[])
     output.parent.mkdir(parents=True, exist_ok=True)
     for mode in modes:
         ready = False if mode == 'edge' else 'lateral'
         board = BRACKET if mode in ('offset', 'offset-scan') else None
-        optics = dict(board=board, strike_ready=ready, width=width, height=height, max_steps=1200,
+        optics = dict(board=board, strike_ready=ready, width=width, height=height, max_steps=max_steps,
                       clearance_guard=True, fast_search=True, clearance_margin=margin, robust_contact=robust)
         partner = dict(targets=OPPONENT if ready else LANES, guard_table=True)
-        arena = WristPartner(**optics, **partner)
-        cad = WristPartner(**optics, **partner, detail='cad')
+        world = FastWristPartner if fast_partner else WristPartner
+        arena = world(**optics, **partner)
+        cad = world(**optics, **partner, detail='cad')
         twin = WristReceiver(**optics)
         memory = load_memory(warm) if ready else Experience()
         course = FlightPractice()
         try:
             for sid in ids:
+                def record_progress(live, full_cad, commands):
+                    _write(progress_path, dict(schema='tt29-wrist-only-progress-1', source_sha256=_hash(feeds),
+                                               configuration=result['configuration'], mode=mode, shot=shots[sid],
+                                               native_wrist_frames=len(commands), CAD=full_cad,
+                                               result=live.point_result(), score=audit(live.events),
+                                               events=live.events.copy(), actions=commands))
+
                 row = capture_player(arena, twin, cad.model, shots[sid], course=course, memory=memory,
                                      confidence=confidence, scan=mode.endswith('scan'),
-                                     seed=sid + seed_offset, max_rally=max_rally, min_frames=min_frames, refine=refine)
+                                     seed=sid + seed_offset, max_rally=max_rally, min_frames=min_frames, refine=refine,
+                                     late_retry=late_retry, blend=blend,
+                                     progress=record_progress if progress_path is not None else None)
                 row.update(mode=mode, mount_translation=APERTURE if board else None,
                            mount_aim_deg=board[0] if board else None, mount_fov_deg=board[1] if board else arena.wrist_fovy)
                 result['outputs'].append(row)
+                result['checkpoint'] = [{'flight': e.flight.tolist(), 'targets': e.targets.tolist(),
+                                         'time_to_contact': e.time_to_contact} for e in memory.examples]
                 _write(output, result)
                 print(mode, sid, row['summary']['returns'], row['result']['reason'], row['detections'],
                       row['metric_estimates'], row['accepted_plans'], row['memory_retrievals'], row['CAD'], flush=True)
+                if max_rally >= 100 and row['summary']['returns'] >= max_rally and not row['CAD']['penetration_samples']:
+                    return result
         finally:
             twin.close()
             cad.close()
@@ -237,11 +308,20 @@ if __name__ == '__main__':
     parser.add_argument('--confidence', type=float, default=.112)
     parser.add_argument('--min-frames', type=int, default=4)
     parser.add_argument('--refine', action='store_true')
+    parser.add_argument('--late-retry', action='store_true')
+    parser.add_argument('--fast-partner', action='store_true')
+    parser.add_argument('--blend', action='store_true')
+    parser.add_argument('--progress', type=Path)
+    parser.add_argument('--max-steps', type=int, default=6500)
     parser.add_argument('--clearance-margin', type=float, default=0.)
     parser.add_argument('--robust-contact', action='store_true')
     parser.add_argument('--seed-offset', type=int, default=0)
     parser.add_argument('--target', type=int, default=20)
     a = parser.parse_args()
+    if a.max_steps < 1 or a.target < 1:
+        parser.error('control horizon and return target must be positive')
     run(a.feeds, a.output, a.ids, a.modes, width=a.width, height=a.height, warm=a.warm,
         confidence=a.confidence, seed_offset=a.seed_offset, max_rally=a.target,
-        min_frames=a.min_frames, refine=a.refine, margin=a.clearance_margin, robust=a.robust_contact)
+        min_frames=a.min_frames, refine=a.refine, margin=a.clearance_margin, robust=a.robust_contact,
+        late_retry=a.late_retry, fast_partner=a.fast_partner, max_steps=a.max_steps, blend=a.blend,
+        progress_path=a.progress)
