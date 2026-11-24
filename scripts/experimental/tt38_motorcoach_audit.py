@@ -70,7 +70,9 @@ def summarize(output):
             continue
         r=x['rows'][0]
         predecessor=output/x['source']
-        old=_read(predecessor)['rows'][0]
+        preceding=_read(predecessor)
+        old=next(row for card,row in zip(preceding['cards'],preceding['rows'],strict=True)
+                 if card==x['cards'][0])
         if r['actions'][:x['prefix_ticks']]!=old['actions'] or _hash(predecessor)!=x['source_sha256']:
             raise ValueError('Extended receipt is not an exact action-prefix continuation')
         own=r['score']['learner']
