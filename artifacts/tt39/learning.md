@@ -33,3 +33,10 @@ We compared realized incoming trajectories after the game. The height bands use 
 | At least 1.09 m | 25 / 26 | 26 / 29 | 33 / 34 |
 
 The first priority is turning the already frequent low contacts into legal, answerable shots. Across 839 preceding arm shots from 58 training releases, the private predictions of the preceding outgoing shot barely predicted the next arrival height. Prediction error dropped from 50.7 mm for a constant baseline to 49.9 mm. There was no monotonic separation of low-ball risk across the forecast quartiles. Continue learning how to handle the low arrivals themselves. [Measured opportunities and touches](incoming-height.json) · [Forecast check](next-ball.json)
+
+
+## Carried joint movements on a new random course
+
+The direct joint controller brought 47 optically credited practice returns to twelve different measured releases. Both comparison arms kept learning from their own scored movements throughout these games and had identical memory capacity. Carrying the practice made 109 legal returns and a longest rally of 35. Starting adaptive memory empty gave 103 and a longest rally of 22. These totals leave room for considerable variation among releases. Both started with the same pretrained motor policy and private physics model. [Carried course](credit-carry.json.gz) · [Matched empty memory](credit-reset.json.gz)
+
+The 35-return game replayed from the issued commands and a single launch. The opponent physically answered 36 times with 37 distinct continuous placement requests. Median outgoing speed was 5.11 m/s and the complete 58.40 seconds yielded zero penetrating CAD samples across 28,033 checks. The arm touched the last ball but it landed back on its own half. [Verified point](carried-35.json) · [Command tape](carried-35-tape.json.gz)

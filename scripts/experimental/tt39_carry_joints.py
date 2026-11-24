@@ -110,6 +110,9 @@ def run(args):
         if args.late
         else "intersected flight segments",
         previous_practice={f.name: _hash(f) for f in args.practice},
+        online_boundary="Carried scored practice followed by own score-gated updates"
+        if args.practice
+        else "Empty adaptive memory followed by own score-gated updates",
         capacity=model.online.maxlen,
         checkpoint_sha256=_hash(tape),
     )
