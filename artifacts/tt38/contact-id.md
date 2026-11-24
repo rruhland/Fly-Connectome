@@ -23,7 +23,9 @@ The fit-only constant moved the modeled ball 14 mm toward the near arm. It is an
 
 Across four releases absent from the fit, the same near planner, nominal arm, cameras, geometry, motor bounds and frozen movement archive were used. Each case had a new continuation seed. The two adjusted branches added a disturbance only to their separate camera-initialized twin. The constant was added as a comparison after the recorded-action check, before reading live comparison outcomes. This is model-assisted control, not the direct joint pupil. [Frozen motor settings and nominal commands](contact-id-live-nominal.json.gz) · [Local correction](contact-id-live-local.json.gz) · [Constant correction](contact-id-live-global.json.gz)
 
-The nominal twin made seven legal arm returns and the local correction made three. Both landed the same three opening replies. All four lost later returns came from one point on release 12380, which fell from five arm returns to one. The local correction's lower recorded-action error did not transfer to this planner's return counts. [Paired games](contact-id-live-results.json)
+Both adjusted twins made three legal arm returns, versus seven for nominal. All three arms landed the same opening replies. All four lost later returns came from one point on release 12380, which fell from five arm returns to one in both adjusted branches. The adjusted branches issued exactly the same commands on three of four games, including that loss. A disturbance that better reproduces an already issued stroke did not improve the planner's choice among prospective strokes. These four points give no evidence to replace the nominal state. [Paired games](contact-id-live-results.json)
+
+An action-only replay reproduced the referee and physical contacts of the changed scoring game from each adjusted branch. The two selected tapes were identical. Its full-CAD audit checked 1,880 solver states and found zero penetrations and 15.6 mm minimum clearance. [Independent replay](contact-id-audit.json)
 
 ## Reproduce
 

@@ -400,6 +400,9 @@ def summary():
            games={v:paired(eligible["nominal"],eligible[v]) for v in modes if v!="nominal"},
            label_categories_evaluator_only=labels,
            sync_calls={v:d["sync_calls"] for v,d in tapes.items()})
+    if "global" in tapes:
+        s["identical_local_global_actions"]=[
+            a["actions"]==b["actions"] for a,b in zip(tapes["local"]["rows"],tapes["global"]["rows"],strict=True)]
     _write(OUT/"contact-id-live-results.json",s)
     print(s,flush=True)
 
