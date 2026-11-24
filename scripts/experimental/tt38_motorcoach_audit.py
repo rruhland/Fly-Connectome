@@ -31,7 +31,7 @@ def near_departure(row, number):
 def summarize(output):
     witness=_read(SOURCE)
     champion=max(witness['rows'],key=lambda r:r['score']['learner'])
-    report=dict(archived_terminal=near_departure(champion,19),diagnostic=[],fresh=[],extended=[],long_fresh=[])
+    report=dict(archived_terminal=near_departure(champion,19),diagnostic=[],fresh=[],extended=[],long_fresh=[],rescues=[])
     for f in sorted(output.glob('motorcoach-suffix-*.json.gz')):
         doc=_read(f)
         row=doc['rows'][0] if doc['rows'] else None
@@ -83,6 +83,19 @@ def summarize(output):
             own=r['score']['learner']
             report['long_fresh'].append(dict(card=c,own=own,total=r['score']['returns'],cap=x['cap'],
                 stop=r['stop'],reason=r['physical']['reason'],last_legal=near_departure(r,own) if own else None))
+    for f in sorted(output.glob('motorcoach-rescue-*.json.gz')):
+        d=_read(f)
+        if not d.get('complete'):
+            continue
+        old=_read(output/d['source'])
+        h=next(r for c,r in zip(old['cards'],old['rows'],strict=True) if c==d['card'])
+        ev=[e for e in h['events'] if e['time']<=d['search']['time_s']+1e-7]
+        score=audit(ev,opening_side=1)['learner']
+        trials=d['search'].get('rounds',[])
+        report['rescues'].append(dict(tape=f.name,source=d['source'],previous_own=h['score']['learner'],
+            prefix_own=score,fork_tick=d['fork_tick'],selected=bool(d['rows']),
+            native_legal=sum(r['legal'] for r in trials),native_trials=sum(r['trials'] for r in trials),
+            live_own=d['rows'][0]['score']['learner'] if d['rows'] else None))
     _write(output/'motorcoach-summary.json',report)
 
 

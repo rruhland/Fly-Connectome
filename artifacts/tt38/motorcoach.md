@@ -1,6 +1,6 @@
 # Dynamic stroke timing for the physical SO-101 teacher
 
-Changing the 19th stroke reopened the previous long witness, and the dynamic teacher carried the live point to 25 legal arm returns at the 50-alternating-return cap. The first 18 SO-101 returns were preserved exactly and the far opponent was unchanged. This is a diagnostic **oracle teacher** result. It is not an independent held-point or camera-only learner result. [Action and referee tape](motorcoach-suffix-clinic.json.gz)
+Changing the 19th stroke reopened the previous long witness. The stronger of two diagnostic continuations then reached **47 legal arm returns and 94 alternating returns**, stopping naturally rather than at its 200-return cap. The first 18 SO-101 returns were preserved exactly and the far opponent was unchanged. This is a diagnostic **oracle teacher** result, not a held-point or camera-only learner result. [Full 47-return action and referee tape](motorcoach-extended-early.json.gz)
 
 ## The old point did not end on a learner failure
 
@@ -13,3 +13,32 @@ On the archived prefix, the earlier fork planned at tick 1797 and the clinic-tim
 The earlier fork produced a different physical 19th shot, landing at (+0.202, +0.687) m. The real far paddle answered that shot too. All six later SO-101 balls again landed through the cap, on a middle, left, middle, left, middle, right sequence. The two tapes reproduced all events, contacts, and placements under full-CAD replay of 38,480 solver states, with zero penetrations and 15.37 mm minimum separation among the checked pairs. [Earlier fork tape](motorcoach-suffix-early.json.gz) · [Earlier CAD proof](motorcoach-early-audit.json) · [Clinic-time CAD proof](motorcoach-audit.json)
 
 The clinic-time intervention yielded 231 supervised practice observations across seven actual legal strikes, beginning with the newly selected 19th. Inputs are RGB-derived ball estimates and joint encoders. The saved native score and event times are used only to select practice labels, and the time index is metadata, not a student input. [Practice-only demonstration arrays](motorcoach-demo.npz) · [Provenance](motorcoach-demo.json)
+
+## What happened when the caps were lifted
+
+The two 25-return recordings were intermediate stops set by the 50-alternating cap. Before extending either, we replayed every earlier action, checked the exact event and placement digests, warmed the visual tracker on that replay, and recovered the previously accepted clinic memories. Neither a new ball nor a new limb pose was installed at the checkpoint. Under cap200 the clinic-time fork ended at 33 own / 67 alternating on a learner own-half fault. The earlier fork ended at 47 own / 94 alternating after 75.01 simulated seconds, when another legal but short-wide shot landed at (+.761,+.158) m and the far opponent missed. Neither reached the cap. [Clinic-time full continuation](motorcoach-extended-clinic.json.gz) · [Earlier full continuation](motorcoach-extended-early.json.gz)
+
+The 47-return trace had 12 left, 18 center and 17 right legal near interceptions and 48 unique placement requests, including the final unanswered request. Independent replay verified all 94 native racket contacts and all scoring and placement events. Its full-CAD check covered 36,007 integration states, with zero penetrations and 15.27 mm minimum separation among the checked pairs. The 33-return continuation and the 24-return from-launch diagnostic point also reproduced exactly, with zero penetrations in 44,639 combined states. [47-return audit](motorcoach-long-audit.json) · [Other extended and fresh CAD receipts](motorcoach-fresh-audit.json)
+
+The whole-from-launch check used four independently reseeded broad random points, with the same first and continuation seeds and warm clinic bank for the two teachers. These were new seeds on release IDs from the existing clinic experiments, not unseen release IDs. The first physical balls matched exactly. On later strokes the request sequence remained independent and unchanged, but physically realized incoming balls could diverge as a consequence of the different arm strokes.
+
+| Measured release | Clinic own returns | Enhanced oracle own returns |
+| --- | ---: | ---: |
+| 6968 | 13 | 20 |
+| 5864 | 2 | 2 |
+| 6208 | 19 | 9 |
+| 11139 | 4 | 24, at the 48-alternating cap |
+
+Across these four points the own-return total rose from 38 to 55 at the diagnostic cap. That aggregate hides a large loss on one start and a tie on another. The first enhanced 20-return point ended on another unanswered short-wide shot at (+.662,+.162) m. The separate start-to-finish cap200 test on a fifth seed ended after two arm returns on a middle incoming shot. This is useful evidence for expanding the teacher's practice distribution, not consistent long-rally performance. [Whole-point clinic tapes](motorcoach-baseline.json.gz) · [Enhanced tapes](motorcoach-dynamic.json.gz) · [Separate cap200 start](motorcoach-fresh-long.json.gz)
+
+## Early and middle failures are different
+
+The early middle ball on the separate cap200 start arrived at x≈−0.007 m at the near receive line. The paddle turned it outward at +2.65 m/s along y, but it bounced at y≈−0.080 m, on its own half. The later clinic-time loss also turned outward and still landed on its own half, at (−.717,−.289) m. Replaying each exact prefix and starting the native search shortly after the opponent strike found no legal plan among 960 candidates each. An extra forward-depth sweep on the early middle ball, from −1.08 to −1.56 m, also found none. These are negative results for the sampled schedule family, not a claim the articulated arm cannot return those shots. [Early middle search](motorcoach-rescue-middle.json.gz) · [Forward-depth check](motorcoach-rescue-forward.json.gz) · [34th-stroke search](motorcoach-rescue-late.json.gz)
+
+## A cheap RGB signal for the camera-only planner
+
+An RGB-only referee for outgoing shape is useful as an escalation signal. From recent stereo frames it detects the near-blade motion change, fits a short outward trajectory, and draws a small set of sensitivity variants for first bounce and the longest contiguous receiver-height window. The model stores only camera-derived observations. Truth is opened separately to score the diagnostic. At 30 Hz it forecast all 21 selected legal strokes with a median 135 ms wait after impact and median errors of 7.8 mm laterally and 6.7 cm longitudinally. At 60 Hz the corresponding figures were 102 ms, 7.3 mm and 7.7 cm. These clips are related prefixes of the same long release, not a held calibration population. [RGB tracks](motorcoach-visual-rgb.json.gz) · [Separate evaluator labels](motorcoach-visual-evaluator.json) · [Per-stroke results](motorcoach-visual-results.json)
+
+The old unanswered 19th scored zero even under the optimistic shape variants. Both actual answered replacements scored one at the nominal 30 Hz forecast. But a hard veto on that full geometric grade would also have rejected five of the 18 genuinely answered strokes. The old high lob's bounce depth alone was off by 18 cm. A narrower, deliberately conservative rule flagged only a volley whose sensitivity variants all projected |x| above 0.55 m and y below 0.35 m. It flagged the one observed no-reply case and none of the 18 answered cases in this small sample. Two capped final balls had no reply opportunity and were not scored as misses. This is an exploratory heuristic, not a calibrated probability or independent validation. [Causal forecaster and soft grade](../../scripts/experimental/tt38_motorcoach_optics.py)
+
+For a deployed camera-only planner, use the same light geometry on estimates from the visual twin or a learned sensory motor model, preserve the existing safe stroke when depth is ambiguous, and ask for better alternatives when the wide-short alarm is confident. The post-hit RGB score can be trained against later physically observed replies, but it cannot change a shot already issued. Do not feed the native teacher's privileged state, hidden spin, reply seed or referee event time to the learner.

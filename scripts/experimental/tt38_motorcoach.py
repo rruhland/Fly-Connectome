@@ -55,12 +55,13 @@ def schedules(poses,rates,eta,params,dt,n):
 
 
 class Dynamic:
-    def __init__(self,a,surface,batch=160,rounds=6):
+    def __init__(self,a,surface,batch=160,rounds=6,depths=DEPTHS):
         self.a=a
         self.surface=surface
         self.core=Rollout(a,1)
         self.batch=batch
         self.rounds=rounds
+        self.depths=depths
 
     def basis(self):
         a=self.a
@@ -71,7 +72,7 @@ class Dynamic:
         if not len(h):
             return []
         rows=[]
-        for depth in DEPTHS:
+        for depth in self.depths:
             if depth<h[:,2].min()-.017 or depth>h[:,2].max()+.017:
                 continue
             tgt=h[np.argmin(abs(h[:,2]-depth))]
@@ -157,14 +158,19 @@ def setup(depth=-1.56):
         a.close()
 
 
-def suffix(path,output,tick,rounds,batch):
+def suffix(path,output,tick,rounds,batch,*,cap=50,release=None,automatic=False,forward=False):
     d=_read(path)
-    i=max(range(len(d['rows'])),key=lambda i:d['rows'][i]['score']['learner'])
+    eligible=[i for i,c in enumerate(d['cards'][:len(d['rows'])]) if release is None or c['id']==release]
+    i=max(eligible,key=lambda i:d['rows'][i]['score']['learner'])
     old=d['rows'][i]; c=d['cards'][i]
-    surf=setup(d['depth'])
+    surf=setup(d.get('depth',-1.56))
+    source_tick=tick
     with centered(d['ready']):
         a=arena()
         try:
+            if automatic:
+                e=next(e for e in reversed(old['events']) if e['kind']=='separation' and e.get('collider')=='rival_racket')
+                tick=int(np.ceil(e['time']/a.control_dt-1e-7))+2
             a.launch(old['shot'],card=c)
             a.partner.reset(seed=c['seed'])
             prefix=old['actions'][:tick]
@@ -173,17 +179,20 @@ def suffix(path,output,tick,rounds,batch):
             old_events=[e for e in old['events'] if e['time']<=float(a.data.time)+1e-8]
             if digest_json(a.events)!=digest_json(old_events):
                 raise ValueError('Action prefix is not the physical archived witness')
-            core=Dynamic(a,surf,batch,rounds)
+            core=Dynamic(a,surf,batch,rounds,depths=(-1.08,-1.15,-1.23,-1.30,-1.38,-1.48,-1.56) if forward else DEPTHS)
             plan,log=core.search(max_receive_cost=5.5)
             print(tick,log,flush=True)
+            header=dict(witness_sha256=_hash(path),source=path.name,card=c,ready=d['ready'],fork_tick=tick,
+                explained_auto_tick=automatic,requested_fixed_tick=source_tick,cap=cap,expanded_forward=forward,
+                exactly_replayed_prefix=True,search=log,prefix_own=audit(a.events,opening_side=1)['learner'],
+                variant=dict(grasp='straight',oracle=True),
+                explanation='Diagnostic fork from a measured legal point, not a held whole-policy result.')
+            _write(output,dict(header,rows=[],cards=[],complete=False))
             if plan is not None:
-                row=continue_point(a,surf,old['shot'],c,prefix,plan['rates'],rounds,batch,cap=50)
+                row=continue_point(a,surf,old['shot'],c,prefix,plan['rates'],rounds,batch,cap=cap)
             else:
                 row=None
-            _write(output,dict(witness_sha256=_hash(path),card=c,ready=d['ready'],fork_tick=tick,
-                exactly_replayed_prefix=True,search=log,rows=[] if row is None else [row],
-                cards=[] if row is None else [c],variant=dict(grasp='straight',oracle=True),
-                explanation='Diagnostic fork from a measured legal point, not a held whole-policy result.'))
+            _write(output,dict(header,rows=[] if row is None else [row],cards=[] if row is None else [c],complete=True))
         finally:
             a.close()
 
@@ -325,9 +334,21 @@ def extend(prefix_path,output,rounds,batch,cap):
     source=_read(SOURCE)
     d=_read(prefix_path)
     k=max(range(len(d['rows'])),key=lambda i:d['rows'][i]['score']['learner'])
-    c,r=d['cards'][k],d['rows'][k]
-    if r['stop']!='target':
+    c,capped=d['cards'][k],d['rows'][k]
+    if capped['stop']!='target':
         raise ValueError('A referee-ended point cannot be extended')
+    proof=_hash(prefix_path)
+    r=capped
+    if output.exists():
+        prior=_read(output)
+        if prior.get('source_sha256')!=proof or prior.get('cap')!=cap:
+            raise ValueError('Saved continuation belongs to a different capped source or cap')
+        if prior.get('complete'):
+            return
+        candidate=prior['rows'][0]
+        if candidate['actions'][:len(capped['actions'])]!=capped['actions'] or candidate['stop'] not in ('other','target'):
+            raise ValueError('Saved continuation does not preserve the capped prefix')
+        r=candidate
     fork=d.get('fork_tick',0)
     bank=[] if fork else list(source['bank'])
     legacy={p['tick']:p for p in r['records'] if p['previous_score'] is not None and not p.get('executed_dynamic')}
@@ -364,10 +385,11 @@ def extend(prefix_path,output,rounds,batch,cap):
                 stereo.close()
             if any(digest_json(x)!=digest_json(r[k]) for x,k in ((a.events,'events'),(a.point_placements(),'placements'))):
                 raise ValueError('Extended point did not exactly replay the capped prefix')
-            metadata=dict(cards=[c],ready=d['ready'],source=prefix_path.name,source_sha256=_hash(prefix_path),
+            metadata=dict(cards=[c],ready=d['ready'],source=prefix_path.name,source_sha256=proof,
                           variant=dict(grasp='straight',oracle=True),cap=cap,exact_physical_prefix=True,
                           restored_optical_and_memories=True,legacy_memories_restored=len(legacy),
-                          prefix_ticks=len(r['actions']),prefix_legal=r['score']['learner'])
+                          prefix_ticks=len(capped['actions']),prefix_legal=capped['score']['learner'],
+                          resume_ticks=len(r['actions']))
 
             def checkpoint(live,actions,plans):
                 at=audit(live.events,opening_side=1)
@@ -396,10 +418,15 @@ if __name__=='__main__':
     p.add_argument('--prefix',type=Path)
     p.add_argument('--start',type=int,default=0); p.add_argument('--count',type=int)
     p.add_argument('--seed-shift',type=int,default=0)
+    p.add_argument('--release',type=int)
+    p.add_argument('--automatic-reception',action='store_true')
+    p.add_argument('--forward-window',action='store_true')
     args=p.parse_args()
     out=args.out or OUT/f'motorcoach-{args.phase}.json.gz'
     out.parent.mkdir(parents=True,exist_ok=True)
-    if args.phase=='suffix': suffix(args.witness,out,args.tick,args.rounds,args.batch)
+    if args.phase=='suffix':
+        suffix(args.witness,out,args.tick,args.rounds,args.batch,cap=args.cap,release=args.release,
+               automatic=args.automatic_reception,forward=args.forward_window)
     elif args.phase=='extend':
         if args.prefix is None:
             p.error('extend needs --prefix')
