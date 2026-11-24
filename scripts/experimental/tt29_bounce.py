@@ -106,12 +106,26 @@ class WarmWrist:
         self.nominal = Decoder(cold_snapshot(), p["default"])
         self.rig = Decoder(checkpoint, p["default"])
         self.motion = PublicMotion(p["motion_mean"], p["motion_scale"], p["motion_weights"])
+        learned = checkpoint.get("continued_motion")
+        if learned is not None:
+            prior = self.motion
+            adapted = PublicMotion(*(np.asarray(learned[k]) for k in ("mean", "scale", "weights")))
+            blend = learned["blend"]
+
+            class BlendedMotion:
+                def predict(self, observation):
+                    return (1. - blend) * prior.predict(observation) + blend * adapted.predict(observation)
+
+            self.motion = BlendedMotion()
 
     def begin_release(self, obs):
         q = obs["joints"]
         self.reference = q + self.carried.reuse * (self.carried.equilibrium - q)
         self.adjustment = transport_goal(self.reference, self.nominal, self.rig, self.bounds,
                                          scale=self.checkpoint["position_scale_m"]) - self.reference
+        if "reference_bias_rad" in self.checkpoint:
+            self.adjustment = np.clip(self.reference + self.adjustment + self.checkpoint["reference_bias_rad"],
+                                      *self.bounds) - self.reference
         self.applied = np.zeros(5)
         self.issued = (q - self.reference).astype(float)
         self.sensor = ConsensusWrist(self.rig, self.motion)
@@ -157,7 +171,7 @@ def serial(array):
     return value.tolist()
 
 
-def run_drop(arena, seed, regime, split, checkpoint=None, *, collect=False, tape=None):
+def run_drop(arena, seed, regime, split, checkpoint=None, *, collect=False, tape=None, optics_ticks=FIRST_FRAMES):
     obs = arena.reset(seed=seed, split=split, regime=regime, render=tape is None)
     controller = None
     if tape is None:
@@ -167,7 +181,7 @@ def run_drop(arena, seed, regime, split, checkpoint=None, *, collect=False, tape
     reward = 0.
     for tick in range(arena.max_steps):
         ellipse = _ellipse(obs["rgb"]) if tape is None else None
-        if collect and tick < FIRST_FRAMES:
+        if collect and tick < optics_ticks:
             images = arena.fixed_images()
             enc.append(obs["joints"].tolist())
             wrist.append(np.full(3, np.nan) if ellipse is None else ellipse)
