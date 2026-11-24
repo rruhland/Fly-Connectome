@@ -1,0 +1,1 @@
+{"validation":"Same native context, unique action split, signed hits only; nearest observed action versus that anchored action plus Jacobian","contexts":136,"pairs":1981,"mean_vector_error_normalized":{"held_action":1.1173085714545892,"no_change":1.2088386225183074},"positive_direction":1448,"model_sha256":"43ad71f9ca4aeee56ae6cc911dd30c6b4224fc8b98de05ae1ac5ee0e2b68968b"}
