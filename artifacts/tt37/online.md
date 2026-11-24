@@ -18,6 +18,10 @@ Every changed held score replayed from the issued commands alone. Full-CAD repla
 
 The older controller uses RGB and encoders but also has a stroke planner, numerical body kinematics and a private forecast simulator. We ran it on three TT36-style openings with fresh independently drawn later target coordinates, using the same shots across conditions. Starting from an empty motor archive and adding actual rewarded motions in play made 13 alternating returns, versus 11 with an empty frozen archive. With the older 238-example archive loaded but frozen, it made 13. The last point grew from five alternating returns without memory to seven with live retention. This pilot does not establish a long rally or a general advantage and must not be grouped with the direct result. [Empty/frozen](online-planner-pilot-cold.json.gz) · [Empty/live retention](online-planner-pilot-carry.json.gz) · [Inherited/frozen](online-planner-pilot-warm.json.gz)
 
+A separate one-point diagnostic with the earlier 173-movement checkpoint used independently random but narrower lateral placements between +0.17 and +0.25 m. It made two own and four alternating returns despite the older long-rally schedule's much larger counts. This is a narrow warm-checkpoint ceiling test, not a training comparison. [Narrow random tape](online-planner-lane-warm.json.gz)
+
+A later direct experiment used the following exchange to grade a phase and face change. It matched the control on both held courses. [Continuation-credit experiment](online-pace.md)
+
 ## Reproduce
 
 Use the pinned measured feeds and shared `opponent-plan.json`.

@@ -2,6 +2,7 @@
 
 import argparse
 from contextlib import nullcontext
+from copy import copy
 from pathlib import Path
 from tempfile import TemporaryDirectory
 from unittest.mock import patch
@@ -50,6 +51,18 @@ class Lane(LiveArena):
         self._last_hitter = -1
         self.launches += 1
 
+    def point_placements(self):
+        # The measured opening is already incoming here, unlike the shared
+        # course. It has no requested far-goal entry and is excluded from this
+        # placement calculation while remaining in the independent referee log.
+        first_far_contact = next((i for i, e in enumerate(self.events)
+                                  if e["kind"] == "contact" and e["side"] == -1), len(self.events))
+        view = copy(self)
+        view.events = [e for i, e in enumerate(self.events)
+                       if not (i < first_far_contact and e["kind"] == "legal_return" and e["side"] == -1)]
+        view.crossings = {i-1: x for i, x in self.crossings.items() if i > 1}
+        return super(Lane, view).point_placements()
+
 
 def play(feeds, temporary, card, checkpoint, *, cap, update, protocol):
     live = []
@@ -95,7 +108,7 @@ def run(args):
     cooperative = protocol == "lane"
     checkpoint = args.checkpoint or ((COOPERATIVE if cooperative else WARM) if args.mode == "warm" else None)
     update = args.mode == "carry"
-    ready = list(LATERAL_STRIKE_READY) if cooperative else _read(READY)["ready"]
+    ready = [float(x) for x in LATERAL_STRIKE_READY] if cooperative else _read(READY)["ready"]
     output = args.output or OUT / f"online-planner-{args.phase}-{args.mode}.json.gz"
     result = dict(planner_assisted=True, mode=args.mode, phase=args.phase, protocol=protocol, cards=cards,
                   ready=ready, opening_side=-1 if cooperative else 1, cap=args.cap, feed_sha256=_hash(args.feeds),
