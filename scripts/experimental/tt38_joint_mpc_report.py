@@ -178,9 +178,38 @@ def compare_guarded(folder, *, audit_best=False):
         ))
 
 
+def within_point(folder):
+    fixed_path = folder / "joint-mpc-within-frozen.json.gz"
+    active_path = folder / "joint-mpc-held_openings-live.json.gz"
+    f, a = read_complete(fixed_path), read_complete(active_path)
+    cap = len(f["cards"])
+    a = dict(a, rows=a["rows"][:cap], cards=a["cards"][:cap])
+    result = paired(f, a)
+    early_control, early_active = f["rows"][0], a["rows"][0]
+    active, control = a["rows"][-1], f["rows"][-1]
+    if (cap != 2 or f["variant"] != a["variant"] or f["source_sha256"] != a["source_sha256"]
+            or f["optical_sha256"] != a["optical_sha256"]
+            or early_control["actions"] != early_active["actions"]
+            or early_control["events"] != early_active["events"]
+            or active["memory"]["before"] != control["memory"]["before"]
+            or active["memory"]["before"]["rows"] != 0):
+        raise ValueError("Within-point comparison did not start from the exact same reward-empty state")
+    changed = next((i for i, (x, y) in enumerate(zip(active["actions"], control["actions"])) if x != y), None)
+    elapsed = changed * DT if changed is not None else None
+    awarded = None if elapsed is None else sum(s["side"] == 1 and s["landing"] <= elapsed
+                                                for s in active["score"]["shots"])
+    _write(folder / "joint-mpc-within-results.json", dict(
+        stage="follow-up causal diagnostic chosen after observing the held result",
+        card=a["cards"][-1], exact_earlier_point=True, equal_empty_memory=True,
+        first_different_action=changed, simulation_s_at_difference=elapsed,
+        already_awarded_actual_near=awarded, fixed=metrics(f), active=metrics(a), paired=result,
+        sources=dict(active=_hash(active_path), fixed=_hash(fixed_path)),
+    ))
+
+
 if __name__ == "__main__":
     p = argparse.ArgumentParser(description=__doc__)
-    p.add_argument("phase", choices=("selection", "comparison", "audit", "extension", "guarded"))
+    p.add_argument("phase", choices=("selection", "comparison", "audit", "extension", "guarded", "within"))
     p.add_argument("--folder", type=Path, default=OUT)
     p.add_argument("--decks", nargs="+", default=("held_openings", "held_replies"))
     p.add_argument("--audit-best", action="store_true")
@@ -193,5 +222,7 @@ if __name__ == "__main__":
         audit(args.folder, args.decks)
     elif args.phase == "guarded":
         compare_guarded(args.folder, audit_best=args.audit_best)
+    elif args.phase == "within":
+        within_point(args.folder)
     else:
         extend(args.folder)
