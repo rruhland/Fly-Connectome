@@ -645,7 +645,8 @@ def rally(arena, shot, *, seed=0, target=100, display=False, checkpoint=None):
                       robust_contact=arena.robust_contact, clearance_margin=arena.clearance_margin,
                       motor_envelope=arena.motor_envelope)
         if partner is not None:
-            config.update(partner_lanes=partner.targets.tolist(), guard_table=partner.guard_table)
+            config.update(partner_lanes=partner.targets.tolist(), guard_table=partner.guard_table,
+                          partner_fast=type(partner).__name__ == "FastPracticePartner")
         return dict(seed=seed, launch=shot, returns=returns, result=arena.point_result(), events=arena.events,
                     volleys=volleys, motor=arena.motor_audit(), configuration=config, actions=actions,
                     decisions=near.decisions + (partner.reports if far is None else far.decisions),
@@ -689,6 +690,7 @@ def main():
     poses.add_argument("--side-on-ready", dest="ready", action="store_const", const="side-on")
     parser.set_defaults(ready=True)
     parser.add_argument("--partner", action="store_true")
+    parser.add_argument("--fast-partner", action="store_true")
     parser.add_argument("--guard-table", action="store_true")
     parser.add_argument("--guard-arm", action="store_true")
     parser.add_argument("--clearance-margin", type=float, default=0.0)
@@ -704,8 +706,14 @@ def main():
                     fast_search=args.fast_search, rate_scale=args.rate_scale, velocity_guard=args.guard_speed,
                     robust_contact=args.robust_contact, clearance_margin=args.clearance_margin,
                     motor_envelope=args.motor_envelope)
-    if args.partner:
+    if args.partner or args.fast_partner:
         from .tt29_partner import FOREHAND_LANES, PartnerArena
+
+        arena_type = PartnerArena
+        if args.fast_partner:
+            from .tt29_partner_fast import FastPartnerArena
+
+            arena_type = FastPartnerArena
         if args.ready == "lateral":
             zone = FOREHAND_LANES
         elif args.ready in {"deep", "high", "side-on"}:
@@ -719,7 +727,7 @@ def main():
                 (-.042, 0., 1.15, 3.30), (.042, -.012, 1.17, 3.50), (.015, .009, 1.14, 3.25),
                 (-.02, -.012, 1.18, 3.65), (0., .002, 1.16, 3.45),
             )]
-        arena = PartnerArena(targets=zone, guard_table=args.guard_table, **settings)
+        arena = arena_type(targets=zone, guard_table=args.guard_table, **settings)
     else:
         arena = RallyArena(**settings)
     rows = []

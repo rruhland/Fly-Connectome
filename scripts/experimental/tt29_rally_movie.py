@@ -21,9 +21,14 @@ WIDTH, HEIGHT = 720, 540
 def _arena(record):
     settings = record["configuration"].copy()
     lanes = settings.pop("partner_lanes", None)
+    fast = settings.pop("partner_fast", False)
     settings.update(width=WIDTH, height=HEIGHT)
     if lanes is None:
         return RallyArena(**settings)
+    if fast:
+        from .tt29_partner_fast import FastPartnerArena
+
+        return FastPartnerArena(targets=lanes, **settings)
     return PartnerArena(targets=lanes, **settings)
 
 
