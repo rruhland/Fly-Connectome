@@ -133,6 +133,22 @@ def precision_recall_curve(scores, positives, *, maximum=24):
             for i in positions]
 
 
+def grouped_gain(left, right, positives, groups):
+    """Conditional paired uncertainty, resampling whole releases and keeping model fits frozen."""
+    ids = np.unique(groups)
+    if len(ids) < 5 or int(sum(positives)) < 2:
+        return None
+    rng = np.random.default_rng(411191)
+    pools = [np.flatnonzero(groups==i) for i in ids]
+    gains = []
+    for picks in rng.integers(len(ids),size=(600,len(ids))):
+        sample = np.concatenate([pools[j] for j in picks])
+        y = positives[sample]
+        if y.any():
+            gains.append(average_precision(left[sample],y)-average_precision(right[sample],y))
+    return dict(nonempty_resamples=len(gains), interval_95=np.quantile(gains,[.025,.975]).tolist()) if gains else None
+
+
 def operation(scores, labels, cutoff, lead, bounce=None):
     direct = np.full(len(scores), False) if cutoff is None else scores <= cutoff
     z = dict(cutoff=cutoff, flagged=int(sum(direct)), true_low=int(sum(direct & labels)),
@@ -177,7 +193,7 @@ def eval_gate(train, held, gate):
                   held_gate=int(valid.sum()), held_paired=int(paired.sum()),
                   far_lead_s=times(facing), bounce_lead_s=times(bounce), receive_lead_s=times(lead),
                   held_below={str(x):int(sum(truth<x)) for x in LOW_THRESHOLDS}, fitted={})
-    bank = {}
+    bank, forecasts = {},{}
     for mode in MODELS + (("outbound_depth",) if gate.startswith("out_") else ("stock_projection",)):
         if mode == "mean":
             beta = None
@@ -204,6 +220,7 @@ def eval_gate(train, held, gate):
             ])
         if beta is not None:
             bank[mode] = beta
+        forecasts[mode] = p
         estimate = np.isfinite(p) & valid
         compare = paired & estimate
         result = dict(mae_m=float(np.mean(np.abs(truth[compare]-p[compare])))
@@ -222,6 +239,11 @@ def eval_gate(train, held, gate):
                 result[str(limit)]["fixed_short_rule"] = operation(
                     np.where(estimate&(p>.05),p,np.nan),labels,.65,lead,bounce)
         values["fitted"][mode] = result
+    if "ball" in forecasts and "ball_paddle" in forecasts:
+        gold = np.asarray([r["release"] for r in other])[paired]
+        values["paired_ap_gain_bootstrap"] = {
+            str(h):grouped_gain(forecasts["ball_paddle"][paired],forecasts["ball"][paired],truth[paired]<h,gold)
+            for h in LOW_THRESHOLDS}
     return values, bank
 
 

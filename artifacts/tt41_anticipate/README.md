@@ -34,6 +34,19 @@ The learning target is projected ball height at y = −1.53 m. After a real far 
 
 A release-held practice split compares unconditional prevalence, outgoing or inward ball fit alone, far blade motion and moments alone, the combination, and the generic rebound projection where available. Ridge penalties and operating thresholds are estimated on training releases only. We report a same-sample comparison where both cues are visible, as well as operational recall over all optically labelled receives including missing gates. Two low cuts are 0.99 m and the more rare 0.95 m. The nominal deadlines are 0.88, 1.0, 1.2 and 1.33 seconds before both the projected receive line and the actual near bounce, so a good late classifier cannot be mistaken for available early control.
 
+### Held timing and discrimination
+
+The 36 exact articulated replays used the first 12 assignments in each source. The held source contributed 33 earned later deliveries across eight releases. Stereo recovered 22 usable later height labels, including all three below 0.99 m and the only one below 0.95 m according to the separate evaluator. The optical and evaluator labels agreed on both cutoffs whenever both were available. Mean absolute height disagreement was 5.7 mm. Training used 80 optical labels from 105 earned later deliveries after removing one release shared with holdout. [Optical receipts](receipts.json.gz) · [Precision–recall curves, deadline counts, and held calibration](forecast.json) · [Frozen ridge fits](observer.json)
+
+| Causal gate | Median before actual bounce | Held with both cues | Prevalence AP | Ball AP | Paddle AP | Combined AP |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| Outbound −.70 m | 1.018 s | 22 | .136 | .487 | .545 | .550 |
+| Outbound −.10 m | .830 s | 22 | .136 | .389 | .389 | .553 |
+| Outbound +.45 m | .608 s | 21 | .143 | .437 | .350 | .300 |
+| First credible inward fit | .277 s | 19 | .158 | .792 | .533 | .567 |
+
+Average precision (AP) ranks sub-0.99 m arrivals. The earliest combined model ranked these few lows above baseline, but its AP gain versus the ball alone was not consistent under release resampling (95% interval −.017 to +.208). No model selected by requiring at least 60% precision on practice folds called an actual held low with 0.88 s still left before the near bounce. The fixed geometric rule used in the timing demonstrations called two of three held lows at the earliest comparable gate, but made 14 calls total. Only one of those two arrived at least 0.88 s before the bounce. The only severe held positive was one of the early calls, which is too little to estimate reliable severe-ball precision. The evidence supports a timely but weak risk cue for a small reversible preparation, not a trigger for committing to a long, exclusive motor route.
+
 ## Reproduce
 
 Run the following commands with the project environment and MuJoCo available. The replay saves completed matches incrementally and can be resumed with `--resume`.
