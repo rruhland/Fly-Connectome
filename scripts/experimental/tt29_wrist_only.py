@@ -162,7 +162,8 @@ def scan_toward(pupil, goal, target):
 
 
 def capture_player(arena, twin, model, shot, *, course, memory, confidence, scan, seed, max_rally,
-                   min_frames, refine, camera=None, late_retry=False, blend=False, progress=None):
+                   min_frames, refine, camera=None, late_retry=False, blend=False, progress=None,
+                   adjust=None, recall_only=False):
     arena.launch(shot)
     arena.streams = ('wrist',)
     arena.partner.reset(seed=seed)
@@ -174,7 +175,7 @@ def capture_player(arena, twin, model, shot, *, course, memory, confidence, scan
     rig = Rig({}, Rig.from_arena(twin).wrist if camera is None else camera)
     eye = SingleView(rig, course, confidence=confidence, min_frames=min_frames)
     pupil = OpticalPlanner(twin, seed=290110)
-    planner = RecallPlanner(twin, memory, seed=290110, blend=blend)
+    planner = RecallPlanner(twin, memory, seed=290110, blend=blend, recall_only=recall_only)
     if isinstance(arena, FastPartnerArena):
         planner.flight = NativeBallFlight(twin)
     late = FreshBounce() if late_retry else None
@@ -192,11 +193,14 @@ def capture_player(arena, twin, model, shot, *, course, memory, confidence, scan
         rgb = arena.render_wrist()
         flight = eye.capture(now, rgb, angles)
         rates = (angles - last_angle) / arena.control_dt
-        if late is not None:
+        changed = adjust is not None and adjust.retarget(pupil, step, flight, angles, rates, target)
+        if late is not None and not changed:
             late.examine(pupil, eye, step, flight, angles, rates, target)
-        elif refine:
+        elif refine and not changed:
             refine_after_bounce(pupil, step, flight, angles, rates, target)
         command = pupil.command(step, flight, angles, rates, target)
+        if adjust is not None:
+            command = adjust.search(pupil, eye, step, flight, target, command)
         if scan and pupil.tape is None and flight is None and now - eye.last_read > .07 and step % 25 < 13:
             command = scan_toward(pupil, SCAN_POS, target)
             scans += 1
@@ -230,7 +234,7 @@ def capture_player(arena, twin, model, shot, *, course, memory, confidence, scan
                 decisions=planner.decisions, memory_retrievals=planner.retrieved, accepted_plans=planner.fallback,
                 CAD=clearance, motor=arena.motor_audit(), seconds=perf_counter() - start,
                 postbounce_checks=late.rechecks if late else None, postbounce_replacements=late.changed if late else None,
-                correction_trace=late.trace if late else [])
+                correction_trace=late.trace if late else [], local_adjustment=adjust.report() if adjust else None)
 
 
 def load_memory(path):
