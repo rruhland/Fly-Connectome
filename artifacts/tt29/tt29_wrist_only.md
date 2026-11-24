@@ -10,6 +10,14 @@ The refined controller required at least seven usable exposures. It rechecked th
 
 The earlier four-exposure version produced four alternating legal returns on 7271, with two from the SO-101. Median departure speed was 5.29 m/s overall. The full-CAD check covered 1,824 physics states and found zero penetrations. The other three scouted openings yielded zero legal returns. Two attempted paths penetrated the table in the full-CAD check. Broader wrist-only performance remains open. [Scouting trials](tt29_wrist_only.json.gz)
 
+## Endurance trial
+
+The endurance controller carried 11 rewarded near-side strokes re-encoded from the verified 22-return point. Each added memory paired a wrist-derived flight estimate with issued joint targets. The native fast partner kept the same driven carriage and physical contacts. The receiver opened a new post-bounce check when its wrist estimate changed materially and passed the range-confidence gate. The run used a 6,500-tick control horizon for a 100-return target. [Carried strokes](tt29_wrist_only_carried.json.gz)
+
+Measured opening 7271 produced **32 alternating legal returns**, with 16 on each side and a median departure speed of 5.33 m/s. The controller ran for 1,394 control ticks and replaced 15 strokes after 18 post-bounce checks. Exact replay matched all 166 referee and contact events. The full-CAD audit checked 11,146 states, finding zero penetrations and a minimum clearance of 12.74 mm. Peak measured joint speed was 6.46 rad/s. The point took 756 wall-clock seconds on the shared machine. The second measured opening, 7345, scored zero. [Endurance trials](tt29_wrist_only_endurance.json.gz) · [Exact replay and clearance audit](tt29_wrist_only_endurance_replay.json)
+
+On the final 7271 approach, the post-bounce forecast put the ball at 0.845 m at the interception depth. The reachable-stroke search returned zero candidates. The next accepted estimate arrived three control ticks before contact. The ball center was 91 mm lateral from the paddle center at impact, and the glancing touch left it moving toward the learner. The ball went out, ending the point after 32 legal returns. [Terminal events and correction trace](tt29_wrist_only_endurance.json.gz)
+
 ## Matched solo calibration transfer
 
 A separate clamped solo station used the same physical offset board. Rotating the wrist to use the opposite paddle face gave the camera a view of the falling ball. Twelve recorded command sequences were replayed on that station and produced 14 physical rebounds. The fit used 303 paired wrist and fixed-camera observations. Whole held-out drops contributed 78 more observations. On the held solo images the median reprojection error improved from 0.214 to 0.177 pixels. The fit moved the aperture estimate by 1.09 mm and rotated it by 0.153°. [Solo calibration](tt29_wrist_only_solo_flip.json)
