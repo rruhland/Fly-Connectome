@@ -1,0 +1,1790 @@
+{
+  "schema": "tt29-outcome-feedback-1",
+  "executable": "/workspace/Fly-Connectome/.venv/bin/python",
+  "environment": {
+    "MUJOCO_GL": "egl",
+    "OMP_THREAD_LIMIT": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "LP_NUM_THREADS": "1"
+  },
+  "comparisons": [
+    {
+      "test": "varied",
+      "control_argv": [
+        "-m",
+        "scripts.experimental.tt29_action_memory",
+        "/tmp/tt25-rallies.json",
+        "/tmp/tt29-outcomes-control-varied.json.gz",
+        "--checkpoint",
+        "artifacts/tt29/envelope-carry.json.gz",
+        "--robust-contact",
+        "--rally-objective",
+        "--recent",
+        "--blend",
+        "--rated",
+        "--motor-envelope",
+        "--fast-partner",
+        "--cached-stereo",
+        "--camera-period",
+        "2",
+        "--net-rescue",
+        "--spread",
+        "varied",
+        "--ids",
+        "7271",
+        "7345",
+        "11292",
+        "4187",
+        "7345",
+        "11292",
+        "--seed-offset",
+        "62470",
+        "--return-target",
+        "32"
+      ],
+      "learn_argv": [
+        "-m",
+        "scripts.experimental.tt29_action_memory",
+        "/tmp/tt25-rallies.json",
+        "/tmp/tt29-outcomes-learn-varied.json.gz",
+        "--checkpoint",
+        "artifacts/tt29/envelope-carry.json.gz",
+        "--robust-contact",
+        "--rally-objective",
+        "--recent",
+        "--blend",
+        "--rated",
+        "--motor-envelope",
+        "--fast-partner",
+        "--cached-stereo",
+        "--camera-period",
+        "2",
+        "--net-rescue",
+        "--spread",
+        "varied",
+        "--ids",
+        "7271",
+        "7345",
+        "11292",
+        "4187",
+        "7345",
+        "11292",
+        "--seed-offset",
+        "62470",
+        "--return-target",
+        "32",
+        "--outcome-feedback",
+        "learn"
+      ],
+      "settings": {
+        "feed_sha256": "300f4bf19556dd8eb69663f46de7f642008048b746321cc98754150a4e0e1237",
+        "initial_checkpoint_sha256": "e26bed7ff5db15aca1ba21e133efa8f2873a9356bad69c5aef5ac7d1182ee116",
+        "view": "left+right",
+        "pose": "lateral",
+        "condition": "stock",
+        "seed_offset": 62470,
+        "spread": "varied",
+        "return_target": 32,
+        "camera_period": 2,
+        "size": [
+          384,
+          288
+        ],
+        "delay_probe": null,
+        "no_memory": false
+      },
+      "control_output_sha256": "67385df97b53832e5d0b541e7b218d9fbdccafd7046a3a1404a96efbb051c327",
+      "learn_output_sha256": "177489ac9148d133ff074edbdc56a97f1414c05e8aef3d59697075af518e1cc4",
+      "points": [
+        {
+          "opening": 7271,
+          "opponent_seed": 69741,
+          "first_different_action_tick": null,
+          "court_fit_px": {},
+          "control": {
+            "returns": 22,
+            "learner_returns": 11,
+            "retrieved": 9,
+            "searched": 3,
+            "cpu_s": 28.54,
+            "terminal_reason": "floor",
+            "terminal_winner": -1,
+            "control_ticks": 1010,
+            "actions_sha256": "5977a1803e2fbd39e165a8b948fb748248723c22b7d8d80f4d680bfc571e5bcd",
+            "feedback": null
+          },
+          "learn": {
+            "returns": 22,
+            "learner_returns": 11,
+            "retrieved": 9,
+            "searched": 3,
+            "cpu_s": 28.099,
+            "terminal_reason": "floor",
+            "terminal_winner": -1,
+            "control_ticks": 1010,
+            "actions_sha256": "5977a1803e2fbd39e165a8b948fb748248723c22b7d8d80f4d680bfc571e5bcd",
+            "feedback": {
+              "attempts": [
+                {
+                  "step": 79,
+                  "success": true,
+                  "contact": true,
+                  "reason": null,
+                  "penalty": 0.0
+                },
+                {
+                  "step": 161,
+                  "success": true,
+                  "contact": true,
+                  "reason": null,
+                  "penalty": 0.0
+                },
+                {
+                  "step": 241,
+                  "success": true,
+                  "contact": true,
+                  "reason": null,
+                  "penalty": 0.0
+                },
+                {
+                  "step": 327,
+                  "success": true,
+                  "contact": true,
+                  "reason": null,
+                  "penalty": 0.0
+                },
+                {
+                  "step": 405,
+                  "success": true,
+                  "contact": true,
+                  "reason": null,
+                  "penalty": 0.0
+                },
+                {
+                  "step": 485,
+                  "success": true,
+                  "contact": true,
+                  "reason": null,
+                  "penalty": 0.0
+                },
+                {
+                  "step": 566,
+                  "success": true,
+                  "contact": true,
+                  "reason": null,
+                  "penalty": 0.0
+                },
+                {
+                  "step": 646,
+                  "success": true,
+                  "contact": true,
+                  "reason": null,
+                  "penalty": 0.0
+                },
+                {
+                  "step": 730,
+                  "success": true,
+                  "contact": true,
+                  "reason": null,
+                  "penalty": 0.0
+                },
+                {
+                  "step": 815,
+                  "success": true,
+                  "contact": true,
+                  "reason": null,
+                  "penalty": 0.0
+                },
+                {
+                  "step": 922,
+                  "success": true,
+                  "contact": true,
+                  "reason": null,
+                  "penalty": 0.0
+                },
+                {
+                  "step": 1010,
+                  "success": false,
+                  "contact": true,
+                  "reason": "floor",
+                  "penalty": 0.0
+                }
+              ],
+              "reranked_batches": 0
+            }
+          }
+        },
+        {
+          "opening": 7345,
+          "opponent_seed": 69816,
+          "first_different_action_tick": null,
+          "court_fit_px": {},
+          "control": {
+            "returns": 2,
+            "learner_returns": 1,
+            "retrieved": 1,
+            "searched": 1,
+            "cpu_s": 5.03,
+            "terminal_reason": "own_half",
+            "terminal_winner": -1,
+            "control_ticks": 161,
+            "actions_sha256": "a8676abb278dffbe27a56cbee7c044680500e0c9816a687260ea4d9a949ad014",
+            "feedback": null
+          },
+          "learn": {
+            "returns": 2,
+            "learner_returns": 1,
+            "retrieved": 1,
+            "searched": 1,
+            "cpu_s": 5.39,
+            "terminal_reason": "own_half",
+            "terminal_winner": -1,
+            "control_ticks": 161,
+            "actions_sha256": "a8676abb278dffbe27a56cbee7c044680500e0c9816a687260ea4d9a949ad014",
+            "feedback": {
+              "attempts": [
+                {
+                  "step": 65,
+                  "success": true,
+                  "contact": true,
+                  "reason": null,
+                  "penalty": 0.0
+                },
+                {
+                  "step": 161,
+                  "success": false,
+                  "contact": true,
+                  "reason": "own_half",
+                  "penalty": 0.0
+                }
+              ],
+              "reranked_batches": 0
+            }
+          }
+        },
+        {
+          "opening": 11292,
+          "opponent_seed": 73764,
+          "first_different_action_tick": null,
+          "court_fit_px": {},
+          "control": {
+            "returns": 8,
+            "learner_returns": 4,
+            "retrieved": 2,
+            "searched": 2,
+            "cpu_s": 24.817,
+            "terminal_reason": "out",
+            "terminal_winner": -1,
+            "control_ticks": 391,
+            "actions_sha256": "ccb1cdc1948ded6e4cf877040a2af7cc11a5b1e826faaf5f3e29cdc758a7fb38",
+            "feedback": null
+          },
+          "learn": {
+            "returns": 8,
+            "learner_returns": 4,
+            "retrieved": 2,
+            "searched": 2,
+            "cpu_s": 25.428,
+            "terminal_reason": "out",
+            "terminal_winner": -1,
+            "control_ticks": 391,
+            "actions_sha256": "ccb1cdc1948ded6e4cf877040a2af7cc11a5b1e826faaf5f3e29cdc758a7fb38",
+            "feedback": {
+              "attempts": [
+                {
+                  "step": 67,
+                  "success": true,
+                  "contact": true,
+                  "reason": null,
+                  "penalty": 0.0
+                },
+                {
+                  "step": 143,
+                  "success": true,
+                  "contact": true,
+                  "reason": null,
+                  "penalty": 0.0
+                },
+                {
+                  "step": 245,
+                  "success": true,
+                  "contact": true,
+                  "reason": null,
+                  "penalty": 0.0
+                },
+                {
+                  "step": 329,
+                  "success": true,
+                  "contact": true,
+                  "reason": null,
+                  "penalty": 0.0
+                }
+              ],
+              "reranked_batches": 0
+            }
+          }
+        },
+        {
+          "opening": 4187,
+          "opponent_seed": 66660,
+          "first_different_action_tick": null,
+          "court_fit_px": {},
+          "control": {
+            "returns": 6,
+            "learner_returns": 3,
+            "retrieved": 3,
+            "searched": 1,
+            "cpu_s": 13.804,
+            "terminal_reason": "own_half",
+            "terminal_winner": -1,
+            "control_ticks": 342,
+            "actions_sha256": "8498b1c9105c687593d266631ae0245f071e717945cc45665aa4ec78f413a3d0",
+            "feedback": null
+          },
+          "learn": {
+            "returns": 6,
+            "learner_returns": 3,
+            "retrieved": 3,
+            "searched": 1,
+            "cpu_s": 14.839,
+            "terminal_reason": "own_half",
+            "terminal_winner": -1,
+            "control_ticks": 342,
+            "actions_sha256": "8498b1c9105c687593d266631ae0245f071e717945cc45665aa4ec78f413a3d0",
+            "feedback": {
+              "attempts": [
+                {
+                  "step": 69,
+                  "success": true,
+                  "contact": true,
+                  "reason": null,
+                  "penalty": 0.0
+                },
+                {
+                  "step": 142,
+                  "success": true,
+                  "contact": true,
+                  "reason": null,
+                  "penalty": 0.0
+                },
+                {
+                  "step": 247,
+                  "success": true,
+                  "contact": true,
+                  "reason": null,
+                  "penalty": 0.052689263268521636
+                },
+                {
+                  "step": 342,
+                  "success": false,
+                  "contact": true,
+                  "reason": "own_half",
+                  "penalty": 0.0
+                }
+              ],
+              "reranked_batches": 0
+            }
+          }
+        },
+        {
+          "opening": 7345,
+          "opponent_seed": 69819,
+          "first_different_action_tick": null,
+          "court_fit_px": {},
+          "control": {
+            "returns": 4,
+            "learner_returns": 2,
+            "retrieved": 1,
+            "searched": 1,
+            "cpu_s": 27.735,
+            "terminal_reason": "out",
+            "terminal_winner": -1,
+            "control_ticks": 231,
+            "actions_sha256": "dd890fb08e97fa8b286de1cb3fc87d12aca2511cd2d6a3f09a038d1877452074",
+            "feedback": null
+          },
+          "learn": {
+            "returns": 4,
+            "learner_returns": 2,
+            "retrieved": 1,
+            "searched": 1,
+            "cpu_s": 30.849,
+            "terminal_reason": "out",
+            "terminal_winner": -1,
+            "control_ticks": 231,
+            "actions_sha256": "dd890fb08e97fa8b286de1cb3fc87d12aca2511cd2d6a3f09a038d1877452074",
+            "feedback": {
+              "attempts": [
+                {
+                  "step": 66,
+                  "success": true,
+                  "contact": true,
+                  "reason": null,
+                  "penalty": 0.0
+                },
+                {
+                  "step": 161,
+                  "success": true,
+                  "contact": true,
+                  "reason": null,
+                  "penalty": 0.0
+                }
+              ],
+              "reranked_batches": 0
+            }
+          }
+        },
+        {
+          "opening": 11292,
+          "opponent_seed": 73767,
+          "first_different_action_tick": null,
+          "court_fit_px": {},
+          "control": {
+            "returns": 4,
+            "learner_returns": 2,
+            "retrieved": 3,
+            "searched": 0,
+            "cpu_s": 3.411,
+            "terminal_reason": "floor",
+            "terminal_winner": -1,
+            "control_ticks": 226,
+            "actions_sha256": "b97893651e650ae8490b8d8b32b1015519dce284313a0c9a2b54758719f6cb60",
+            "feedback": null
+          },
+          "learn": {
+            "returns": 4,
+            "learner_returns": 2,
+            "retrieved": 3,
+            "searched": 0,
+            "cpu_s": 3.543,
+            "terminal_reason": "floor",
+            "terminal_winner": -1,
+            "control_ticks": 226,
+            "actions_sha256": "b97893651e650ae8490b8d8b32b1015519dce284313a0c9a2b54758719f6cb60",
+            "feedback": {
+              "attempts": [
+                {
+                  "step": 67,
+                  "success": true,
+                  "contact": true,
+                  "reason": null,
+                  "penalty": 0.0
+                },
+                {
+                  "step": 144,
+                  "success": true,
+                  "contact": true,
+                  "reason": null,
+                  "penalty": 0.0
+                },
+                {
+                  "step": 226,
+                  "success": false,
+                  "contact": true,
+                  "reason": "floor",
+                  "penalty": 0.0
+                }
+              ],
+              "reranked_batches": 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "test": "compound",
+      "control_argv": [
+        "-m",
+        "scripts.experimental.tt29_action_memory",
+        "/tmp/tt25-rallies.json",
+        "/tmp/tt29-outcomes-record-compound.json.gz",
+        "--checkpoint",
+        "artifacts/tt29/envelope-carry.json.gz",
+        "--robust-contact",
+        "--rally-objective",
+        "--recent",
+        "--blend",
+        "--rated",
+        "--motor-envelope",
+        "--fast-partner",
+        "--cached-stereo",
+        "--ids",
+        "7271",
+        "7345",
+        "4187",
+        "7271",
+        "7345",
+        "4187",
+        "--seed-offset",
+        "63803",
+        "--return-target",
+        "24",
+        "--condition",
+        "combined_stereo",
+        "--register",
+        "--fit-body",
+        "--timing-checkpoint",
+        "artifacts/tt29/bounce-timing.json.gz",
+        "--outcome-feedback",
+        "record"
+      ],
+      "learn_argv": [
+        "-m",
+        "scripts.experimental.tt29_action_memory",
+        "/tmp/tt25-rallies.json",
+        "/tmp/tt29-outcomes-learn-compound.json.gz",
+        "--checkpoint",
+        "artifacts/tt29/envelope-carry.json.gz",
+        "--robust-contact",
+        "--rally-objective",
+        "--recent",
+        "--blend",
+        "--rated",
+        "--motor-envelope",
+        "--fast-partner",
+        "--cached-stereo",
+        "--ids",
+        "7271",
+        "7345",
+        "4187",
+        "7271",
+        "7345",
+        "4187",
+        "--seed-offset",
+        "63803",
+        "--return-target",
+        "24",
+        "--condition",
+        "combined_stereo",
+        "--register",
+        "--fit-body",
+        "--timing-checkpoint",
+        "artifacts/tt29/bounce-timing.json.gz",
+        "--outcome-feedback",
+        "learn"
+      ],
+      "settings": {
+        "feed_sha256": "300f4bf19556dd8eb69663f46de7f642008048b746321cc98754150a4e0e1237",
+        "initial_checkpoint_sha256": "e26bed7ff5db15aca1ba21e133efa8f2873a9356bad69c5aef5ac7d1182ee116",
+        "view": "left+right",
+        "pose": "lateral",
+        "condition": "combined_stereo",
+        "seed_offset": 63803,
+        "spread": "practice",
+        "return_target": 24,
+        "camera_period": 1,
+        "size": [
+          384,
+          288
+        ],
+        "delay_probe": {
+          "ticks": 32,
+          "tested_lags": [
+            2
+          ],
+          "mse": [
+            6.9194302226104e-06
+          ],
+          "body": {
+            "body_names": [
+              "learner_shoulder",
+              "learner_upper_arm",
+              "learner_elbow",
+              "learner_wrist",
+              "learner_gripper",
+              "learner_moving_jaw_so101_v1",
+              "learner_paddle"
+            ],
+            "mass_gain": [
+              0.9754849239190889,
+              0.895121279425758,
+              1.0196886506696363,
+              1.129867437313073,
+              1.1781740754006969,
+              0.898778762077417,
+              0.8289766406168069
+            ],
+            "damping_gain": 1.072825263266187,
+            "initial_encoder_rms": 0.002142680882094815,
+            "fitted_encoder_rms": 0.00198814644510708
+          }
+        },
+        "no_memory": false
+      },
+      "control_output_sha256": "354af388be65bde5919321513035bd080de8066392ee93e2eebe11c9a97941ee",
+      "learn_output_sha256": "617fef399e5ec6bcedb1c4c92f6e2d73af9d44b4dc6d3e3ad5701f46d2ea7c8c",
+      "points": [
+        {
+          "opening": 7271,
+          "opponent_seed": 71074,
+          "first_different_action_tick": null,
+          "court_fit_px": {
+            "left": 0.03740276320197184,
+            "right": 0.06418922027614003
+          },
+          "control": {
+            "returns": 4,
+            "learner_returns": 2,
+            "retrieved": 2,
+            "searched": 1,
+            "cpu_s": 8.432,
+            "terminal_reason": "own_half",
+            "terminal_winner": -1,
+            "control_ticks": 237,
+            "actions_sha256": "1ec8e9aaae6d49c52559604fb80f0d087c1eaaceeba0b1408861efae64939a79",
+            "feedback": {
+              "attempts": [
+                {
+                  "step": 76,
+                  "success": true,
+                  "contact": true,
+                  "reason": null,
+                  "penalty": 0.0
+                },
+                {
+                  "step": 161,
+                  "success": true,
+                  "contact": true,
+                  "reason": null,
+                  "penalty": 0.0
+                },
+                {
+                  "step": 237,
+                  "success": false,
+                  "contact": true,
+                  "reason": "own_half",
+                  "penalty": 0.0
+                }
+              ],
+              "reranked_batches": 0
+            }
+          },
+          "learn": {
+            "returns": 4,
+            "learner_returns": 2,
+            "retrieved": 2,
+            "searched": 1,
+            "cpu_s": 8.655,
+            "terminal_reason": "own_half",
+            "terminal_winner": -1,
+            "control_ticks": 237,
+            "actions_sha256": "1ec8e9aaae6d49c52559604fb80f0d087c1eaaceeba0b1408861efae64939a79",
+            "feedback": {
+              "attempts": [
+                {
+                  "step": 76,
+                  "success": true,
+                  "contact": true,
+                  "reason": null,
+                  "penalty": 0.0
+                },
+                {
+                  "step": 161,
+                  "success": true,
+                  "contact": true,
+                  "reason": null,
+                  "penalty": 0.0
+                },
+                {
+                  "step": 237,
+                  "success": false,
+                  "contact": true,
+                  "reason": "own_half",
+                  "penalty": 0.0
+                }
+              ],
+              "reranked_batches": 0
+            }
+          }
+        },
+        {
+          "opening": 7345,
+          "opponent_seed": 71149,
+          "first_different_action_tick": 96,
+          "court_fit_px": {
+            "left": 0.03740276320197184,
+            "right": 0.06418922027614003
+          },
+          "control": {
+            "returns": 2,
+            "learner_returns": 1,
+            "retrieved": 1,
+            "searched": 1,
+            "cpu_s": 6.281,
+            "terminal_reason": "own_half",
+            "terminal_winner": -1,
+            "control_ticks": 145,
+            "actions_sha256": "ba344b38636f2438eebf91d7c3f9e76877bf67d2c8c456efcdf0b968a99e129a",
+            "feedback": {
+              "attempts": [
+                {
+                  "step": 69,
+                  "success": true,
+                  "contact": true,
+                  "reason": null,
+                  "penalty": 0.0
+                },
+                {
+                  "step": 145,
+                  "success": false,
+                  "contact": true,
+                  "reason": "own_half",
+                  "penalty": 0.1884517832862107
+                }
+              ],
+              "reranked_batches": 0
+            }
+          },
+          "learn": {
+            "returns": 2,
+            "learner_returns": 1,
+            "retrieved": 1,
+            "searched": 1,
+            "cpu_s": 13.686,
+            "terminal_reason": "own_half",
+            "terminal_winner": -1,
+            "control_ticks": 151,
+            "actions_sha256": "f4370757f18cbd388af508d3ee8180f0fba038b23f97d41fd7ddb55071795735",
+            "feedback": {
+              "attempts": [
+                {
+                  "step": 69,
+                  "success": true,
+                  "contact": true,
+                  "reason": null,
+                  "penalty": 0.0
+                },
+                {
+                  "step": 151,
+                  "success": false,
+                  "contact": true,
+                  "reason": "own_half",
+                  "penalty": 0.0
+                }
+              ],
+              "reranked_batches": 1
+            }
+          }
+        },
+        {
+          "opening": 4187,
+          "opponent_seed": 67992,
+          "first_different_action_tick": 6,
+          "court_fit_px": {
+            "left": 0.03740276320197184,
+            "right": 0.06418922027614003
+          },
+          "control": {
+            "returns": 3,
+            "learner_returns": 2,
+            "retrieved": 2,
+            "searched": 0,
+            "cpu_s": 4.621,
+            "terminal_reason": "second_bounce",
+            "terminal_winner": 1,
+            "control_ticks": 178,
+            "actions_sha256": "d01e2d51fab30ca5a91729e2ec4be89f00aad07f7d78bc3e2aaffa4129256a34",
+            "feedback": {
+              "attempts": [
+                {
+                  "step": 66,
+                  "success": true,
+                  "contact": true,
+                  "reason": null,
+                  "penalty": 0.0
+                },
+                {
+                  "step": 160,
+                  "success": true,
+                  "contact": true,
+                  "reason": null,
+                  "penalty": 0.0
+                }
+              ],
+              "reranked_batches": 0
+            }
+          },
+          "learn": {
+            "returns": 6,
+            "learner_returns": 3,
+            "retrieved": 2,
+            "searched": 1,
+            "cpu_s": 35.912,
+            "terminal_reason": "own_half",
+            "terminal_winner": -1,
+            "control_ticks": 271,
+            "actions_sha256": "d8c96a2ec9078e07794cb2fdd3d60fcf4406e5421b1ca3b34955b5f2f1400de0",
+            "feedback": {
+              "attempts": [
+                {
+                  "step": 66,
+                  "success": true,
+                  "contact": true,
+                  "reason": null,
+                  "penalty": 0.0
+                },
+                {
+                  "step": 139,
+                  "success": true,
+                  "contact": true,
+                  "reason": null,
+                  "penalty": 0.06220471418900586
+                },
+                {
+                  "step": 218,
+                  "success": true,
+                  "contact": true,
+                  "reason": null,
+                  "penalty": 0.34842473879983765
+                }
+              ],
+              "reranked_batches": 0
+            }
+          }
+        },
+        {
+          "opening": 7271,
+          "opponent_seed": 71077,
+          "first_different_action_tick": 6,
+          "court_fit_px": {
+            "left": 0.03740276320197184,
+            "right": 0.06418922027614003
+          },
+          "control": {
+            "returns": 2,
+            "learner_returns": 1,
+            "retrieved": 2,
+            "searched": 0,
+            "cpu_s": 3.613,
+            "terminal_reason": "own_half",
+            "terminal_winner": -1,
+            "control_ticks": 144,
+            "actions_sha256": "48ebfbb77b027c462cf45db5c262d2292f6a28b3b4f6140d555d2815e52eec87",
+            "feedback": {
+              "attempts": [
+                {
+                  "step": 76,
+                  "success": true,
+                  "contact": true,
+                  "reason": null,
+                  "penalty": 0.0
+                },
+                {
+                  "step": 144,
+                  "success": false,
+                  "contact": true,
+                  "reason": "own_half",
+                  "penalty": 0.0
+                }
+              ],
+              "reranked_batches": 0
+            }
+          },
+          "learn": {
+            "returns": 6,
+            "learner_returns": 3,
+            "retrieved": 2,
+            "searched": 2,
+            "cpu_s": 23.288,
+            "terminal_reason": "own_half",
+            "terminal_winner": -1,
+            "control_ticks": 341,
+            "actions_sha256": "d46144d03004902d5bb16975f24d2d161f43f17947cf91983a6531adde75ba97",
+            "feedback": {
+              "attempts": [
+                {
+                  "step": 76,
+                  "success": true,
+                  "contact": true,
+                  "reason": null,
+                  "penalty": 0.0
+                },
+                {
+                  "step": 151,
+                  "success": true,
+                  "contact": true,
+                  "reason": null,
+                  "penalty": 0.0
+                },
+                {
+                  "step": 248,
+                  "success": true,
+                  "contact": true,
+                  "reason": null,
+                  "penalty": 0.0
+                },
+                {
+                  "step": 341,
+                  "success": false,
+                  "contact": true,
+                  "reason": "own_half",
+                  "penalty": 0.0
+                }
+              ],
+              "reranked_batches": 6
+            }
+          }
+        },
+        {
+          "opening": 7345,
+          "opponent_seed": 71152,
+          "first_different_action_tick": 102,
+          "court_fit_px": {
+            "left": 0.03740276320197184,
+            "right": 0.06418922027614003
+          },
+          "control": {
+            "returns": 6,
+            "learner_returns": 3,
+            "retrieved": 2,
+            "searched": 2,
+            "cpu_s": 22.266,
+            "terminal_reason": "own_half",
+            "terminal_winner": -1,
+            "control_ticks": 303,
+            "actions_sha256": "051adfdb4322ac7dec6480bde61e1fe6918a1fc425e849fb84855ed147dfc2da",
+            "feedback": {
+              "attempts": [
+                {
+                  "step": 68,
+                  "success": true,
+                  "contact": true,
+                  "reason": null,
+                  "penalty": 0.0
+                },
+                {
+                  "step": 158,
+                  "success": true,
+                  "contact": true,
+                  "reason": null,
+                  "penalty": 0.5616148399787098
+                },
+                {
+                  "step": 237,
+                  "success": true,
+                  "contact": true,
+                  "reason": null,
+                  "penalty": 0.11327724542476347
+                },
+                {
+                  "step": 303,
+                  "success": false,
+                  "contact": true,
+                  "reason": "own_half",
+                  "penalty": 0.12445523207395537
+                }
+              ],
+              "reranked_batches": 0
+            }
+          },
+          "learn": {
+            "returns": 6,
+            "learner_returns": 3,
+            "retrieved": 2,
+            "searched": 2,
+            "cpu_s": 23.08,
+            "terminal_reason": "own_half",
+            "terminal_winner": -1,
+            "control_ticks": 303,
+            "actions_sha256": "f77d791d7a8389646b3212b2564f11fd10121798ba36b8401f1d8cbb6d21b108",
+            "feedback": {
+              "attempts": [
+                {
+                  "step": 68,
+                  "success": true,
+                  "contact": true,
+                  "reason": null,
+                  "penalty": 0.0
+                },
+                {
+                  "step": 158,
+                  "success": true,
+                  "contact": true,
+                  "reason": null,
+                  "penalty": 0.0
+                },
+                {
+                  "step": 237,
+                  "success": true,
+                  "contact": true,
+                  "reason": null,
+                  "penalty": 0.0
+                },
+                {
+                  "step": 303,
+                  "success": false,
+                  "contact": true,
+                  "reason": "own_half",
+                  "penalty": 0.0
+                }
+              ],
+              "reranked_batches": 0
+            }
+          }
+        },
+        {
+          "opening": 4187,
+          "opponent_seed": 67995,
+          "first_different_action_tick": 6,
+          "court_fit_px": {
+            "left": 0.03740276320197184,
+            "right": 0.06418922027614003
+          },
+          "control": {
+            "returns": 2,
+            "learner_returns": 1,
+            "retrieved": 2,
+            "searched": 0,
+            "cpu_s": 3.692,
+            "terminal_reason": "own_half",
+            "terminal_winner": -1,
+            "control_ticks": 143,
+            "actions_sha256": "611c937d18185235d22b2a08f47570d77ca2364f3333db80cb89ae7c47d3c61b",
+            "feedback": {
+              "attempts": [
+                {
+                  "step": 67,
+                  "success": true,
+                  "contact": true,
+                  "reason": null,
+                  "penalty": 0.0
+                },
+                {
+                  "step": 143,
+                  "success": false,
+                  "contact": true,
+                  "reason": "own_half",
+                  "penalty": 0.0
+                }
+              ],
+              "reranked_batches": 0
+            }
+          },
+          "learn": {
+            "returns": 4,
+            "learner_returns": 2,
+            "retrieved": 1,
+            "searched": 2,
+            "cpu_s": 12.113,
+            "terminal_reason": "own_half",
+            "terminal_winner": -1,
+            "control_ticks": 235,
+            "actions_sha256": "bb89c5aa0b2e61e6213be1497fee31d3fd617ce6f1366afe823b9e264541b59e",
+            "feedback": {
+              "attempts": [
+                {
+                  "step": 67,
+                  "success": true,
+                  "contact": true,
+                  "reason": null,
+                  "penalty": 0.0
+                },
+                {
+                  "step": 142,
+                  "success": true,
+                  "contact": true,
+                  "reason": null,
+                  "penalty": 0.16295784642460798
+                },
+                {
+                  "step": 235,
+                  "success": false,
+                  "contact": true,
+                  "reason": "own_half",
+                  "penalty": 0.0
+                }
+              ],
+              "reranked_batches": 1
+            }
+          }
+        }
+      ]
+    },
+    {
+      "test": "repeat",
+      "control_argv": [
+        "-m",
+        "scripts.experimental.tt29_action_memory",
+        "/tmp/tt25-rallies.json",
+        "/tmp/tt29-outcomes-record-repeat.json.gz",
+        "--checkpoint",
+        "artifacts/tt29/envelope-carry.json.gz",
+        "--robust-contact",
+        "--rally-objective",
+        "--recent",
+        "--blend",
+        "--rated",
+        "--motor-envelope",
+        "--fast-partner",
+        "--cached-stereo",
+        "--camera-period",
+        "2",
+        "--net-rescue",
+        "--spread",
+        "varied",
+        "--ids",
+        "7345",
+        "7345",
+        "7345",
+        "7345",
+        "--return-target",
+        "16",
+        "--no-memory",
+        "--outcome-feedback",
+        "record"
+      ],
+      "learn_argv": [
+        "-m",
+        "scripts.experimental.tt29_action_memory",
+        "/tmp/tt25-rallies.json",
+        "/tmp/tt29-outcomes-learn-repeat.json.gz",
+        "--checkpoint",
+        "artifacts/tt29/envelope-carry.json.gz",
+        "--robust-contact",
+        "--rally-objective",
+        "--recent",
+        "--blend",
+        "--rated",
+        "--motor-envelope",
+        "--fast-partner",
+        "--cached-stereo",
+        "--camera-period",
+        "2",
+        "--net-rescue",
+        "--spread",
+        "varied",
+        "--ids",
+        "7345",
+        "7345",
+        "7345",
+        "7345",
+        "--return-target",
+        "16",
+        "--no-memory",
+        "--outcome-feedback",
+        "learn"
+      ],
+      "settings": {
+        "feed_sha256": "300f4bf19556dd8eb69663f46de7f642008048b746321cc98754150a4e0e1237",
+        "initial_checkpoint_sha256": "e26bed7ff5db15aca1ba21e133efa8f2873a9356bad69c5aef5ac7d1182ee116",
+        "view": "left+right",
+        "pose": "lateral",
+        "condition": "stock",
+        "seed_offset": 0,
+        "spread": "varied",
+        "return_target": 16,
+        "camera_period": 2,
+        "size": [
+          384,
+          288
+        ],
+        "delay_probe": null,
+        "no_memory": true
+      },
+      "control_output_sha256": "e99c8cd6a16f681c9c090b90d969edec6c11c9757be8e5b852100e28bbb6b3c5",
+      "learn_output_sha256": "601eadf828aa9549c9e0fc6a6fddfdbb09535e1e4b66c4f70089a75b411a5879",
+      "points": [
+        {
+          "opening": 7345,
+          "opponent_seed": 7345,
+          "first_different_action_tick": null,
+          "court_fit_px": {},
+          "control": {
+            "returns": 16,
+            "learner_returns": 8,
+            "retrieved": 8,
+            "searched": 1,
+            "cpu_s": 15.512,
+            "terminal_reason": null,
+            "terminal_winner": null,
+            "control_ticks": 688,
+            "actions_sha256": "a2cea962704ba876c67bfabb03fc0584fa8d591ea8499a8c48f3216b2a4e2920",
+            "feedback": {
+              "attempts": [
+                {
+                  "step": 69,
+                  "success": true,
+                  "contact": true,
+                  "reason": null,
+                  "penalty": 0.0
+                },
+                {
+                  "step": 144,
+                  "success": true,
+                  "contact": true,
+                  "reason": null,
+                  "penalty": 0.0
+                },
+                {
+                  "step": 231,
+                  "success": true,
+                  "contact": true,
+                  "reason": null,
+                  "penalty": 0.0
+                },
+                {
+                  "step": 311,
+                  "success": true,
+                  "contact": true,
+                  "reason": null,
+                  "penalty": 0.0
+                },
+                {
+                  "step": 398,
+                  "success": true,
+                  "contact": true,
+                  "reason": null,
+                  "penalty": 0.0
+                },
+                {
+                  "step": 486,
+                  "success": true,
+                  "contact": true,
+                  "reason": null,
+                  "penalty": 0.0
+                },
+                {
+                  "step": 569,
+                  "success": true,
+                  "contact": true,
+                  "reason": null,
+                  "penalty": 0.0
+                },
+                {
+                  "step": 652,
+                  "success": true,
+                  "contact": true,
+                  "reason": null,
+                  "penalty": 0.0
+                }
+              ],
+              "reranked_batches": 0
+            }
+          },
+          "learn": {
+            "returns": 16,
+            "learner_returns": 8,
+            "retrieved": 8,
+            "searched": 1,
+            "cpu_s": 15.985,
+            "terminal_reason": null,
+            "terminal_winner": null,
+            "control_ticks": 688,
+            "actions_sha256": "a2cea962704ba876c67bfabb03fc0584fa8d591ea8499a8c48f3216b2a4e2920",
+            "feedback": {
+              "attempts": [
+                {
+                  "step": 69,
+                  "success": true,
+                  "contact": true,
+                  "reason": null,
+                  "penalty": 0.0
+                },
+                {
+                  "step": 144,
+                  "success": true,
+                  "contact": true,
+                  "reason": null,
+                  "penalty": 0.0
+                },
+                {
+                  "step": 231,
+                  "success": true,
+                  "contact": true,
+                  "reason": null,
+                  "penalty": 0.0
+                },
+                {
+                  "step": 311,
+                  "success": true,
+                  "contact": true,
+                  "reason": null,
+                  "penalty": 0.0
+                },
+                {
+                  "step": 398,
+                  "success": true,
+                  "contact": true,
+                  "reason": null,
+                  "penalty": 0.0
+                },
+                {
+                  "step": 486,
+                  "success": true,
+                  "contact": true,
+                  "reason": null,
+                  "penalty": 0.0
+                },
+                {
+                  "step": 569,
+                  "success": true,
+                  "contact": true,
+                  "reason": null,
+                  "penalty": 0.0
+                },
+                {
+                  "step": 652,
+                  "success": true,
+                  "contact": true,
+                  "reason": null,
+                  "penalty": 0.0
+                }
+              ],
+              "reranked_batches": 0
+            }
+          }
+        },
+        {
+          "opening": 7345,
+          "opponent_seed": 7345,
+          "first_different_action_tick": null,
+          "court_fit_px": {},
+          "control": {
+            "returns": 16,
+            "learner_returns": 8,
+            "retrieved": 8,
+            "searched": 1,
+            "cpu_s": 15.181,
+            "terminal_reason": null,
+            "terminal_winner": null,
+            "control_ticks": 688,
+            "actions_sha256": "a2cea962704ba876c67bfabb03fc0584fa8d591ea8499a8c48f3216b2a4e2920",
+            "feedback": {
+              "attempts": [
+                {
+                  "step": 69,
+                  "success": true,
+                  "contact": true,
+                  "reason": null,
+                  "penalty": 0.0
+                },
+                {
+                  "step": 144,
+                  "success": true,
+                  "contact": true,
+                  "reason": null,
+                  "penalty": 0.0
+                },
+                {
+                  "step": 231,
+                  "success": true,
+                  "contact": true,
+                  "reason": null,
+                  "penalty": 0.0
+                },
+                {
+                  "step": 311,
+                  "success": true,
+                  "contact": true,
+                  "reason": null,
+                  "penalty": 0.0
+                },
+                {
+                  "step": 398,
+                  "success": true,
+                  "contact": true,
+                  "reason": null,
+                  "penalty": 0.0
+                },
+                {
+                  "step": 486,
+                  "success": true,
+                  "contact": true,
+                  "reason": null,
+                  "penalty": 0.0
+                },
+                {
+                  "step": 569,
+                  "success": true,
+                  "contact": true,
+                  "reason": null,
+                  "penalty": 0.0
+                },
+                {
+                  "step": 652,
+                  "success": true,
+                  "contact": true,
+                  "reason": null,
+                  "penalty": 0.0
+                }
+              ],
+              "reranked_batches": 0
+            }
+          },
+          "learn": {
+            "returns": 16,
+            "learner_returns": 8,
+            "retrieved": 8,
+            "searched": 1,
+            "cpu_s": 15.92,
+            "terminal_reason": null,
+            "terminal_winner": null,
+            "control_ticks": 688,
+            "actions_sha256": "a2cea962704ba876c67bfabb03fc0584fa8d591ea8499a8c48f3216b2a4e2920",
+            "feedback": {
+              "attempts": [
+                {
+                  "step": 69,
+                  "success": true,
+                  "contact": true,
+                  "reason": null,
+                  "penalty": 0.0
+                },
+                {
+                  "step": 144,
+                  "success": true,
+                  "contact": true,
+                  "reason": null,
+                  "penalty": 0.0
+                },
+                {
+                  "step": 231,
+                  "success": true,
+                  "contact": true,
+                  "reason": null,
+                  "penalty": 0.0
+                },
+                {
+                  "step": 311,
+                  "success": true,
+                  "contact": true,
+                  "reason": null,
+                  "penalty": 0.0
+                },
+                {
+                  "step": 398,
+                  "success": true,
+                  "contact": true,
+                  "reason": null,
+                  "penalty": 0.0
+                },
+                {
+                  "step": 486,
+                  "success": true,
+                  "contact": true,
+                  "reason": null,
+                  "penalty": 0.0
+                },
+                {
+                  "step": 569,
+                  "success": true,
+                  "contact": true,
+                  "reason": null,
+                  "penalty": 0.0
+                },
+                {
+                  "step": 652,
+                  "success": true,
+                  "contact": true,
+                  "reason": null,
+                  "penalty": 0.0
+                }
+              ],
+              "reranked_batches": 0
+            }
+          }
+        },
+        {
+          "opening": 7345,
+          "opponent_seed": 7345,
+          "first_different_action_tick": null,
+          "court_fit_px": {},
+          "control": {
+            "returns": 16,
+            "learner_returns": 8,
+            "retrieved": 8,
+            "searched": 1,
+            "cpu_s": 14.644,
+            "terminal_reason": null,
+            "terminal_winner": null,
+            "control_ticks": 688,
+            "actions_sha256": "a2cea962704ba876c67bfabb03fc0584fa8d591ea8499a8c48f3216b2a4e2920",
+            "feedback": {
+              "attempts": [
+                {
+                  "step": 69,
+                  "success": true,
+                  "contact": true,
+                  "reason": null,
+                  "penalty": 0.0
+                },
+                {
+                  "step": 144,
+                  "success": true,
+                  "contact": true,
+                  "reason": null,
+                  "penalty": 0.0
+                },
+                {
+                  "step": 231,
+                  "success": true,
+                  "contact": true,
+                  "reason": null,
+                  "penalty": 0.0
+                },
+                {
+                  "step": 311,
+                  "success": true,
+                  "contact": true,
+                  "reason": null,
+                  "penalty": 0.0
+                },
+                {
+                  "step": 398,
+                  "success": true,
+                  "contact": true,
+                  "reason": null,
+                  "penalty": 0.0
+                },
+                {
+                  "step": 486,
+                  "success": true,
+                  "contact": true,
+                  "reason": null,
+                  "penalty": 0.0
+                },
+                {
+                  "step": 569,
+                  "success": true,
+                  "contact": true,
+                  "reason": null,
+                  "penalty": 0.0
+                },
+                {
+                  "step": 652,
+                  "success": true,
+                  "contact": true,
+                  "reason": null,
+                  "penalty": 0.0
+                }
+              ],
+              "reranked_batches": 0
+            }
+          },
+          "learn": {
+            "returns": 16,
+            "learner_returns": 8,
+            "retrieved": 8,
+            "searched": 1,
+            "cpu_s": 15.271,
+            "terminal_reason": null,
+            "terminal_winner": null,
+            "control_ticks": 688,
+            "actions_sha256": "a2cea962704ba876c67bfabb03fc0584fa8d591ea8499a8c48f3216b2a4e2920",
+            "feedback": {
+              "attempts": [
+                {
+                  "step": 69,
+                  "success": true,
+                  "contact": true,
+                  "reason": null,
+                  "penalty": 0.0
+                },
+                {
+                  "step": 144,
+                  "success": true,
+                  "contact": true,
+                  "reason": null,
+                  "penalty": 0.0
+                },
+                {
+                  "step": 231,
+                  "success": true,
+                  "contact": true,
+                  "reason": null,
+                  "penalty": 0.0
+                },
+                {
+                  "step": 311,
+                  "success": true,
+                  "contact": true,
+                  "reason": null,
+                  "penalty": 0.0
+                },
+                {
+                  "step": 398,
+                  "success": true,
+                  "contact": true,
+                  "reason": null,
+                  "penalty": 0.0
+                },
+                {
+                  "step": 486,
+                  "success": true,
+                  "contact": true,
+                  "reason": null,
+                  "penalty": 0.0
+                },
+                {
+                  "step": 569,
+                  "success": true,
+                  "contact": true,
+                  "reason": null,
+                  "penalty": 0.0
+                },
+                {
+                  "step": 652,
+                  "success": true,
+                  "contact": true,
+                  "reason": null,
+                  "penalty": 0.0
+                }
+              ],
+              "reranked_batches": 0
+            }
+          }
+        },
+        {
+          "opening": 7345,
+          "opponent_seed": 7345,
+          "first_different_action_tick": null,
+          "court_fit_px": {},
+          "control": {
+            "returns": 16,
+            "learner_returns": 8,
+            "retrieved": 8,
+            "searched": 1,
+            "cpu_s": 15.624,
+            "terminal_reason": null,
+            "terminal_winner": null,
+            "control_ticks": 688,
+            "actions_sha256": "a2cea962704ba876c67bfabb03fc0584fa8d591ea8499a8c48f3216b2a4e2920",
+            "feedback": {
+              "attempts": [
+                {
+                  "step": 69,
+                  "success": true,
+                  "contact": true,
+                  "reason": null,
+                  "penalty": 0.0
+                },
+                {
+                  "step": 144,
+                  "success": true,
+                  "contact": true,
+                  "reason": null,
+                  "penalty": 0.0
+                },
+                {
+                  "step": 231,
+                  "success": true,
+                  "contact": true,
+                  "reason": null,
+                  "penalty": 0.0
+                },
+                {
+                  "step": 311,
+                  "success": true,
+                  "contact": true,
+                  "reason": null,
+                  "penalty": 0.0
+                },
+                {
+                  "step": 398,
+                  "success": true,
+                  "contact": true,
+                  "reason": null,
+                  "penalty": 0.0
+                },
+                {
+                  "step": 486,
+                  "success": true,
+                  "contact": true,
+                  "reason": null,
+                  "penalty": 0.0
+                },
+                {
+                  "step": 569,
+                  "success": true,
+                  "contact": true,
+                  "reason": null,
+                  "penalty": 0.0
+                },
+                {
+                  "step": 652,
+                  "success": true,
+                  "contact": true,
+                  "reason": null,
+                  "penalty": 0.0
+                }
+              ],
+              "reranked_batches": 0
+            }
+          },
+          "learn": {
+            "returns": 16,
+            "learner_returns": 8,
+            "retrieved": 8,
+            "searched": 1,
+            "cpu_s": 15.661,
+            "terminal_reason": null,
+            "terminal_winner": null,
+            "control_ticks": 688,
+            "actions_sha256": "a2cea962704ba876c67bfabb03fc0584fa8d591ea8499a8c48f3216b2a4e2920",
+            "feedback": {
+              "attempts": [
+                {
+                  "step": 69,
+                  "success": true,
+                  "contact": true,
+                  "reason": null,
+                  "penalty": 0.0
+                },
+                {
+                  "step": 144,
+                  "success": true,
+                  "contact": true,
+                  "reason": null,
+                  "penalty": 0.0
+                },
+                {
+                  "step": 231,
+                  "success": true,
+                  "contact": true,
+                  "reason": null,
+                  "penalty": 0.0
+                },
+                {
+                  "step": 311,
+                  "success": true,
+                  "contact": true,
+                  "reason": null,
+                  "penalty": 0.0
+                },
+                {
+                  "step": 398,
+                  "success": true,
+                  "contact": true,
+                  "reason": null,
+                  "penalty": 0.0
+                },
+                {
+                  "step": 486,
+                  "success": true,
+                  "contact": true,
+                  "reason": null,
+                  "penalty": 0.0
+                },
+                {
+                  "step": 569,
+                  "success": true,
+                  "contact": true,
+                  "reason": null,
+                  "penalty": 0.0
+                },
+                {
+                  "step": 652,
+                  "success": true,
+                  "contact": true,
+                  "reason": null,
+                  "penalty": 0.0
+                }
+              ],
+              "reranked_batches": 0
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

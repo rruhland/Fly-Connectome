@@ -242,6 +242,7 @@ def run(
     refine=False,
     reset_memory=False,
     no_memory=False,
+    outcome_feedback=None,
     robust_contact=False,
     rally_objective=False,
     risk_screen=False,
@@ -337,6 +338,10 @@ def run(
         )
     nominal = FlightPractice()
     memory = Experience()
+    if outcome_feedback:
+        from .tt29_outcome_feedback import OutcomeFeedback, OutcomeMemory
+
+        outcomes = OutcomeMemory()
     delay_ident = EncoderDelay()
     if checkpoint is not None:
         from .tt4_transfer_trial import _read
@@ -407,6 +412,8 @@ def run(
         for point, sid in enumerate(ids):
             if reset_memory:
                 memory = Experience()
+                if outcome_feedback:
+                    outcomes = OutcomeMemory()
             arena.launch(shots[sid])
             opponent_seed = sid if seed_offset == 0 else sid + seed_offset + point
             arena.partner.reset(seed=opponent_seed)
@@ -445,6 +452,12 @@ def run(
                 planner.predict = CandidateUncertainty(planner)
             if fast_partner:
                 planner.flight = NativeBallFlight(twin)
+            feedback = None
+            if outcome_feedback:
+                feedback = OutcomeFeedback(
+                    planner, outcomes, learn=outcome_feedback == "learn"
+                )
+                planner.predict = feedback
             policy.nominal = planner
             arena.streams = tuple(view.split("+"))
             registrations = {}
@@ -511,6 +524,8 @@ def run(
                 applied = pipeline.command(u)
                 _, _, done, cap, info = arena.exchange(applied, np.zeros(5))
                 actions.append(applied.tolist())
+                if feedback is not None:
+                    feedback.observe(policy.tape, info["events"])
                 if any(
                     e["kind"] == "legal_return" and e["side"] == 1
                     for e in info["events"]
@@ -550,6 +565,10 @@ def run(
                     events=arena.events.copy(),
                 )
             )
+            if feedback is not None:
+                rows[-1]["outcome_feedback"] = dict(
+                    attempts=feedback.log, reranked_batches=feedback.changed
+                )
             print(
                 sid,
                 stats["returns"],
@@ -579,6 +598,7 @@ def run(
                     refine=refine,
                     reset_memory=reset_memory,
                     no_memory=no_memory,
+                    outcome_feedback=outcome_feedback,
                     robust_contact=robust_contact,
                     rally_objective=rally_objective,
                     risk_screen=risk_screen,
@@ -632,6 +652,10 @@ if __name__ == "__main__":
     p.add_argument("--refine", action="store_true")
     p.add_argument("--reset-memory", action="store_true")
     p.add_argument("--no-memory", action="store_true")
+    p.add_argument(
+        "--outcome-feedback", choices=("record", "learn"),
+        help="Log executed rollout outcomes or also use them to rerank candidates",
+    )
     p.add_argument("--seed-offset", type=int, default=0)
     p.add_argument("--return-target", type=int, default=100)
     p.add_argument("--condition", default="stock")
@@ -678,6 +702,7 @@ if __name__ == "__main__":
         refine=args.refine,
         reset_memory=args.reset_memory,
         no_memory=args.no_memory,
+        outcome_feedback=args.outcome_feedback,
         robust_contact=args.robust_contact,
         rally_objective=args.rally_objective,
         risk_screen=args.risk_screen,
