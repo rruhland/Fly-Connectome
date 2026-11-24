@@ -271,6 +271,7 @@ def summary(output):
     plan = _read(path)
     fit_path = output / "learn-checkpoint.json"
     trained = _read(fit_path)
+    checkpoint = trained["base_movement_and_optical_checkpoint_sha256"]
     comparison = {}
     for phase, base_path in HELD.items():
         learned_path = output / f"learn-held-{phase}.json.gz"
@@ -279,10 +280,12 @@ def summary(output):
         if (learned["plan_sha256"] != _hash(path) or learned["choices"] != trained["chosen"]
                 or learned["cards"] != base["cards"] or len(learned["rows"]) != len(base["rows"])
                 or learned["caps"] != plan["caps"] or learned["ready"] != base["ready"]
-                or base["checkpoint_sha256"] != trained["base_movement_and_optical_checkpoint_sha256"]
-                or base["optical_sha256"] != trained["base_movement_and_optical_checkpoint_sha256"]):
+                or base["checkpoint_sha256"] != checkpoint):
             raise ValueError(f"Incomplete or changed held assessment for {phase}")
         rows, prior = learned["rows"], base["rows"]
+        if any(r[field] != checkpoint for r in rows + prior
+               for field in ("initial_checkpoint_sha256", "initial_optical_checkpoint_sha256")):
+            raise ValueError(f"Movement or optical checkpoint mismatch for {phase}")
         same = {field: sum(digest_json(a[field]) == digest_json(b[field]) for a, b in zip(rows, prior, strict=True))
                 for field in ("actions", "events", "placements")}
         comparison[phase] = dict(fixed=stats(prior), learned=stats(rows), fixed_sha256=_hash(base_path),
