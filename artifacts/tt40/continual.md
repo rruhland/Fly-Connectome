@@ -36,3 +36,18 @@ The geometric controller completed all 192 games, carrying its motor and reward 
 | Second | 313 / 402 | 2 | 28 / 96 | 24 |
 
 On the second pass the arm improved on 37 recordings, tied on 12, and regressed on 47. The longer best rally coexisted with a lower total. Opponent replies changed, so this is a longitudinal workload comparison. The frozen, identical-assignment tests above isolate the effect of carrying a checkpoint. Training used 1,731 CPU seconds for 1,418 simulated seconds, including both cameras and both physical players. [Final game block and motor memory](../tt39/endurance-08.json.gz) · [Final reward model](../tt39/judgement-08.json.gz)
+
+## What happens when practice doubles
+
+We ran both groups of twelve untouched assessment openings at the 96- and 192-game checkpoints. Both groups use the original value estimate, the same upcoming physical shots up to action divergence, and frozen motor memory. The original 68 successful movements grew to 406 and then 719.
+
+| Motor repertoire | First twelve | Second twelve | All 24 |
+| --- | ---: | ---: | ---: |
+| Before practice | 36 | 40 | 76 |
+| After 96 practice games | 31 | 66 | 97 |
+| After 192 practice games | 45 | 27 | 72 |
+| After 192, protecting the earlier candidate when reliable in the private model | 31 | 58 | 89 |
+
+The second pass improved the first group by 14 and lost 39 on the second. Every previously stored movement was still present. Enlarging the bank changed which movements came up for nearby observations. Preserving the first-pass search recovered 31 returns on the second group. The protected controller actually selected a later movement on one decision there, which shortened a game from nine to one. It selected none on the first group. The combined 89 therefore demonstrates preservation with a cost in subsequent gains. Selecting the most successful checkpoint separately *after seeing each test result* would inflate the apparent competence. [First-pass first group](../tt41/motor96-first.json.gz) · [Final first](../tt41/motor192-first.json.gz) · [Final second](../tt41/motor192-second.json.gz) · [Protected first](../tt41/consolidated-first.json.gz) · [Protected second](../tt41/consolidated-second.json.gz)
+
+The practice partner also tested an adaptive curriculum. It used recent scores to sample more heavily from moderately difficult parts of the continuous range during 24 practice games. A matched uniform practice partner produced 63 legal arm returns during learning compared with 55 for the adaptive partner. After freezing both learned motor banks, the uniform group made **51** returns on twelve ordinary games and the adaptive group made **35**. Both assessments reproduced every original uniform target draw. [Uniform assessment](../tt41/curriculum-uniform-assessment.json.gz) · [Adaptive assessment](../tt41/curriculum-adaptive-assessment.json.gz)

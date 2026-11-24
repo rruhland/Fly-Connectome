@@ -96,10 +96,16 @@ SCALE = np.r_[
 ]
 
 
-def practice(sources, out):
+def practice(sources, out, *, known=None):
     rng = policies()
     xs = []
     ys = []
+    candidate_effects = []
+    if known is not None:
+        with np.load(known) as z:
+            labels = {k: z[k] for k in z.files}
+        if not np.array_equal(labels["moves"], rng):
+            raise ValueError("Changed paired actions")
     groups = []
     ticks = []
     tapes = {}
@@ -169,9 +175,28 @@ def practice(sources, out):
                             cmds = motions(
                                 fit, params, obs[0], a.control_dt, surf.ready, rng
                             )
-                            _, score = evaluation.trajectories(cmds, AIM, obs[0] + 0.12)
+                            if known is None:
+                                _, score = evaluation.trajectories(
+                                    cmds, AIM, obs[0] + 0.12
+                                )
+                                ys.append(np.isfinite(score[:, 0]))
+                            else:
+                                i = len(xs)
+                                if (
+                                    card["id"] != labels["release"][i]
+                                    or tick != labels["tick"][i]
+                                    or not np.allclose(
+                                        x, labels["x"][i], atol=1e-8, rtol=0
+                                    )
+                                ):
+                                    raise ValueError("Paired training snapshot changed")
+                                from .tt41_effect_rank import outcome_features
+
+                                candidate_effects.append(
+                                    outcome_features(private, cmds, obs[0])
+                                )
+                                ys.append(labels["y"][i])
                             xs.append(x)
-                            ys.append(np.isfinite(score[:, 0]))
                             groups.append(card["id"])
                             ticks.append(tick)
                         ref = np.clip(ref + np.asarray(u) * stride, lo, hi)
@@ -182,7 +207,13 @@ def practice(sources, out):
                         card["id"], len(xs), round(process_time() - start), flush=True
                     )
                     np.savez_compressed(
-                        out, x=xs, y=ys, release=groups, tick=ticks, moves=rng
+                        out,
+                        x=xs,
+                        y=ys,
+                        release=groups,
+                        tick=ticks,
+                        moves=rng,
+                        **({"effects": candidate_effects} if known is not None else {}),
                     )
             finally:
                 renderer.close()
@@ -193,6 +224,7 @@ def practice(sources, out):
         out.with_suffix(".json"),
         {
             "n": len(xs),
+            **({"matched_labels": _hash(known)} if known is not None else {}),
             "sources": tapes,
             "sha256": _hash(out),
             "physics_forks": len(xs) * len(rng),

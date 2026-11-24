@@ -1,5 +1,9 @@
 # M1B research handoff
 
+## Random-rally learning and retention
+
+The longest verified broad-random rally remains 35 legal arm returns. On 24 independent assignments, the geometric controller produced 76 arm returns before practice, 97 after 96 games, and 72 after 192. Newer motor memories helped on one half of the course and interfered strongly on the other. Protecting the earlier lookup recovered part of the loss. For direct joints, repeated replanning produced 223 arm returns on 24 assignments versus 117 when limited to one commitment per incoming shot. Tests of the conditional motor choices, camera timing, and continued teaching are recorded with their matched controls. [Retention across checkpoints](../../artifacts/tt40/continual.md) · [Direct hits and misses](../../artifacts/tt41/joint-learning.md) · [Preassigned new games](../../artifacts/tt42/direct-course.json)
+
 ## What carried experience changes
 
 On twelve complete random points, letting the arm learn inside each point made 109 returns versus 95 with the same earlier experience restored and frozen throughout that point. The record point improved from 17 to 35 while another fell from 24 to 17. On a separate release-held course, 96 practice games raised motor-only performance from 40 returns to 66. The action-value update interfered with that improvement. All three formerly unresolved severe low arrivals have complete physically answered, CAD-clean practice rescues, taken early on the rise. The teacher used advance information to find those motions. Online selection and broad transfer remain open. [Continual learning controls](../../artifacts/tt40/continual.md) · [Physical low-return evidence](../../artifacts/tt40/long-low.md)
