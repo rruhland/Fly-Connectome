@@ -79,8 +79,8 @@ class Surface:
         self.q = np.array(path[::-1])
         self.ready = np.r_[self.q[len(self.xs) // 2], -0.10]
 
-    def solution(self, x, z, normal):
-        p = np.array([x, self.depth, z]) - 0.025 * normal
+    def solution(self, x, z, normal, *, depth=None):
+        p = np.array([x, self.depth if depth is None else depth, z]) - 0.025 * normal
         seed = np.array([np.interp(x, self.xs, q) for q in self.q.T])
         q, (_at, _face, j, jrot) = self.ik.fit(p, normal, seed)
         direction = np.linalg.lstsq(

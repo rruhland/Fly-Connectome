@@ -5,7 +5,7 @@
 #include <limits>
 #include <vector>
 
-extern "C" void trial_strokes_v3(
+extern "C" void trial_strokes_v4(
     const mjModel* nominal, const mjData* source, const double* goals,
     int count, int frames, int micro, int side,
     const int* active, int active_count, const int* other, int other_count,
@@ -14,7 +14,7 @@ extern "C" void trial_strokes_v3(
     const double* target, double* rates, double* scores,
     const int* first, const int* second, int pairs, double rate_scale, double speed_limit,
     const int* active_dofs, double rim_penalty, double clearance_margin,
-    double envelope_no_load, const int* near_actuators, const int* near_dofs, int near_count, double* feedback) {
+    double envelope_no_load, const int* near_actuators, const int* near_dofs, int near_count, double* feedback, double* traces) {
     const int ball = ids[0], blade = ids[1], table = ids[2], table2 = ids[3], net = ids[4];
     const int ball_body = ids[5], pos = ids[6], vel = ids[7];
     const double start = source->time;
@@ -54,6 +54,19 @@ extern "C" void trial_strokes_v3(
                                                    -rate_scale, rate_scale);
                     rates[k] = rate;
                     step_control[motor] = rate * increments[motor];
+                }
+                if (traces) {
+                    // Pre-command state and the six references issued for this tick.
+                    double* record = traces + (static_cast<size_t>(i) * frames + t) * 17;
+                    std::copy(d->qpos + pos, d->qpos + pos + 3, record);
+                    std::copy(d->qvel + vel, d->qvel + vel + 3, record + 3);
+                    for (int j = 0; j < 6; ++j) {
+                        const int motor = active[j];
+                        const int joint = model->actuator_trnid[2 * motor];
+                        if (j < 5) record[6 + j] = d->qpos[model->jnt_qposadr[joint]];
+                        record[11 + j] = std::clamp(d->ctrl[motor] + micro * step_control[motor],
+                                                    low[motor], high[motor]);
+                    }
                 }
                 for (int j = 0; j < other_count; ++j) {
                     const int motor = other[j];

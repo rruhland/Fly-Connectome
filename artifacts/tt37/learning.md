@@ -1,0 +1,30 @@
+# Continuous random rallies on the table-clamped arm
+
+The unassisted direct joint policy has physically returned five incoming balls in one point on the broad opponent. The point contained eleven alternating legal returns. A separate five-point test of a privileged teaching controller produced consecutive arm counts of 6, 1, 6, 4, and 19. A hundred arm returns on this opponent remains an open target. The opponent must intercept and send a real incoming ball with a finite-mass paddle. Each reply gets a fresh continuous lateral location, depth, height and pace. The physical ball can depart from the requested target. [Opponent design and capacity](opponent.md) · [Direct action replay](inertia-pupil-held_openings.json.gz) · [Independent teacher replays](clinic-witness-audit.json)
+
+## What the arm learns from practice
+
+| Direct joint policy | Measured opening releases | Own legal first | Own legal later | Best own / alternating |
+| --- | ---: | ---: | ---: | ---: |
+| Stationary arm at the same centered pose | 24 novel | 0 | 0 | 0 / 1 |
+| After 86 rewarded mentor returns | 24 novel | 8 | 2 | 2 / 5 |
+| After 289 rewarded mentor returns | Same 24 novel | 10 | 6 | 4 / 9 |
+| 86-return policy, velocity correction trained on later camera frames | Same 24 novel | 5 | 5 | 5 / 11 |
+
+The pupil chooses a fresh joint target each control tick from camera-derived ball position and velocity, plus its measured joint angles. The 289-return bank includes more random later flights, in addition to more frames. These rows measure the benefit of the larger practice corpus as a whole. The arm made returns on both wings. The earlier frozen pupil scored six later returns on 32 familiar openings with redrawn continuations, versus zero for a stationary centered arm. [Observation bank and practice provenance](long-rgb.json) · [Held larger-bank action tapes](long-rgb-held_openings.json.gz) · [Original frozen results and controls](joint-deep.md)
+
+The arm has also made one specific improvement using its own misses alone. Four scoreless attempts at release 6208 supplied signed changes in outgoing flight. The selected timing and drive converted that opening into a legal return under both new continuation seeds. The binary-score ablation missed both, and testing the correction on 12 unfamiliar releases produced zero legal returns. This experiment used the receiving-plane scaffold. [Live online credit experiment](online-drive.md)
+
+## Why the camera timing matters
+
+Immediately after the table bounce, a position fit can be plausible even when the fitted upward velocity is wrong enough to put the striking surface above or below the future ball. In the development simulation, we held the arm and candidate motions fixed and changed the state supplied to an independent prediction model. At 33 early decision states, with 386 truly legal candidate actions, the camera-only model recognized 17. Substituting the true translation and velocity recognized 320. Substituting both the true translation/velocity and spin recognized 356. At seven late decision states the same comparison found a larger error in reconstructing the moving arm. The counts describe many correlated motor alternatives at the same physical states. [Component substitution audit](optical-gap-training.json.gz)
+
+A new visual readout learns a velocity adjustment by predicting later synchronized stereo observations. During play it applies the adjustment from earlier images and the current image. The gated version waits until an actual change of motion appears. On 283 receiving frames from the 24 held points, vertical speed mean absolute error fell from 0.366 to 0.076 m/s and errors above 0.6 m/s in total velocity fell from 36 to 5. Only stereo and timestamps supply the training targets. Simulator readings are stored in a separate array solely for scoring. A smoother sensor can also change which shots work with an older frozen motor field. The ungated readout reached five own returns on the novel deck, but its total remained ten, and it lost eight total returns on the 32 redrawn continuations. [Optical calibration result](visual-gated.json) · [Calibration code](../../scripts/experimental/tt37_visual_inertia.py) · [Unfiltered motor comparison](inertia-pupil-fresh_replies.json.gz)
+
+## What the training and diagnostic controllers contribute
+
+The geometric coach can compare candidate joint commands in copies of the live physical state and use the velocity of failed contacts. A two-parameter timing or speed adjustment can change a ball that hits the learner's own half into a legal landing. Trying different receiving depths helps on some flights. The best 19-return physical arm point lasted 32.35 simulated seconds and replayed all referee events with zero penetrations in 15,526 audited solver steps. The stronger two-carriage demonstration establishes that the independent opponent can sustain long rallies. The autonomous joint policy receives neither copy of the simulation. [Five coach points](clinic-long-replication.json.gz) · [Arm and carriage comparison](bodycoach.md)
+
+We also tested an independently constructed nominal simulator initialized with camera readings, encoder angles and the arm's issued controls. On eight matched development releases the baseline scored two real legal arm returns. The trained visual readout scored twelve. Carrying the arm's own command history in a separate calibrated body simulation, adding gated vision and reconsidering strokes late scored thirteen. These tests still use a geometric movement generator and a physics prior. The end-to-end joint pupil is tested separately above. [Baseline](optical-baseline.json.gz) · [Trained vision](optical-trained.json.gz) · [Body prediction](optical-body.json.gz)
+
+The next research comparison uses independent random practice openings and interventions on poses actually reached by the direct pupil. A 48-release roster was reserved before training for subsequent confirmation. Online adaptation, robust performance on later returns, and efficiency on the path to 100 need paired live tests. [Training and confirmation rosters](school-plan.json)

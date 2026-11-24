@@ -22,12 +22,12 @@ AIM = np.array([0.0, 1.29, 1.05, 3.6], dtype=float)
 SCALE = np.array([0.15, 0.1, 0.8, 1.2, 1.7, 0.9, 0.9, 0.9, 0.9, 0.9])
 
 
-def geometry(surf, opt):
+def geometry(surf, opt, *, depth=None):
     x, z = opt[1:3]
     vx, _, vz = opt[3:6]
     normal = np.array([-0.18 * x - 0.085 * vx, 1.0, 0.29 - 0.095 * vz])
     normal /= np.linalg.norm(normal)
-    qs, v = surf.solution(x, z, normal)
+    qs, v = surf.solution(x, z, normal, depth=depth)
     return qs, v
 
 
@@ -129,7 +129,17 @@ def landing_error(feedback):
 
 
 def search(
-    engine, fit, eta, choices, dt, home, rounds, rng, guided=False, experience=None
+    engine,
+    fit,
+    eta,
+    choices,
+    dt,
+    home,
+    rounds,
+    rng,
+    guided=False,
+    experience=None,
+    frame_log=None,
 ):
     evaluations = []
     history = []
@@ -139,7 +149,14 @@ def search(
     for round_index in range(max(1, rounds)):
         goals = schedules(*fit, eta, choices, dt, home, round((eta + 1.05) / dt))
         feedback = np.zeros((len(choices), 9))
-        _, outcomes = engine.trajectories(goals, AIM, eta + 0.12, feedback=feedback)
+        traces = (
+            np.full((*goals.shape[:2], 17), np.nan) if frame_log is not None else None
+        )
+        _, outcomes = engine.trajectories(
+            goals, AIM, eta + 0.12, feedback=feedback, traces=traces
+        )
+        if frame_log is not None:
+            frame_log.add(traces, outcomes, feedback, eta, dt, round_index)
         ok = np.flatnonzero(np.isfinite(outcomes[:, 0]))
         if experience is not None:
             value = np.where(np.isfinite(outcomes[:, 0]), outcomes[:, 0], -1.0)
@@ -175,6 +192,12 @@ def search(
             }
         )
         if len(ok):
+            if getattr(engine, "robust", False):
+                selected, nominal, audit_row = engine.select(
+                    choices[ok], outcomes[ok], fit, eta, dt, home, rng
+                )
+                distance.append(audit_row)
+                return selected, nominal, distance
             idx = ok[np.argmin(outcomes[ok, 0])]
             return choices[idx], outcomes[idx].tolist(), distance
         if rounds == 0:
@@ -193,6 +216,16 @@ def search(
             choices[: len(inverse)] = inverse
 
     return min(evaluations, key=lambda x: x[0])[1], None, distance
+
+
+def alternate_reach(surface, obs, shift):
+    time = shift / obs[4]
+    forecast = obs.copy()
+    forecast[0] += time
+    forecast[1] += obs[3] * time
+    forecast[2] += obs[5] * time - 4.905 * time * time
+    forecast[5] -= 9.81 * time
+    return forecast, geometry(surface, forecast, depth=surface.depth + shift)
 
 
 def point(
@@ -216,12 +249,28 @@ def point(
     archive,
     response,
     refine,
+    variable,
+    frame_log,
+    optical_engine=None,
+    visual=None,
+    refresh=False,
+    pupil=None,
 ):
     actor = joint.JointPolicy(model | {"ready": surf.ready.tolist()}, stride, lo, hi)
     eye = joint.Vision(rig, a.control_dt)
+    if visual:
+        from .tt37_visual_inertia import LearnedOptics
+
+        eye.eye = LearnedOptics(eye.eye, visual)
     a.launch(shot, card=card)
     a.partner.reset(seed=card["seed"])
     engine = Rollout(a, 1) if mode == "coach" else None
+    if optical_engine is not None:
+        engine = optical_engine
+        engine.previous = None
+        engine.bounced = False
+    pending = None
+    sensed_inbound = False
     records = []
     actions = []
     tape = None
@@ -235,6 +284,8 @@ def point(
     for tick in range(a.max_steps):
         q = a.joints.copy()
         obs = eye.update(tick, stereo.capture() if tick % 2 == 0 else None, q)
+        if optical_engine is not None:
+            optical_engine.observe(tick, eye.eye, q, actor.reference.copy())
         now = tick * a.control_dt
         if refine:
             obs = history.update(now, obs)
@@ -247,8 +298,17 @@ def point(
             and 0.035 < obs[0] < 0.22
             and 0.76 < obs[2] < 1.38
         ):
-            tape = None
-            deadline = -100
+            keep = False
+            if refresh and optical_engine is not None and optical_engine.sync():
+                # Check the previously issued motion against the newer images first.
+                remainder = tape[tick - tape_start :]
+                extra = round(1.08 / a.control_dt)
+                follow = np.concatenate([remainder, np.tile(remainder[-1], (extra, 1))])
+                _, repeat = engine.trajectories(follow[None], AIM, obs[0] + 0.12)
+                keep = np.isfinite(repeat[0, 0])
+            if not keep:
+                tape = None
+                deadline = -100
         if tape is not None and tick - tape_start < len(tape):
             desired = tape[tick - tape_start]
         else:
@@ -269,11 +329,21 @@ def point(
                         if engine is None
                         else np.vstack((remembered, params))
                     )
+                    shift = 0.0
                     selected = remembered
                     trace = []
                     score = None
-                    if engine is not None:
+                    if engine is not None and (
+                        optical_engine is None or optical_engine.sync()
+                    ):
                         experience = []
+                        if frame_log is not None:
+                            frame_log.group = (
+                                card["id"],
+                                card["seed"],
+                                card["reply_seed"],
+                                tick,
+                            )
                         selected, score, trace = search(
                             engine,
                             fit,
@@ -285,6 +355,7 @@ def point(
                             np.random.default_rng([37173, len(bank), tick]),
                             guided,
                             experience,
+                            frame_log,
                         )
                         if archive is not None:
                             table = np.concatenate(experience)
@@ -293,7 +364,46 @@ def point(
                                     np.repeat(x[None], len(table), axis=0), table
                                 ].astype(np.float32)
                             )
-                        if score is not None:
+                        if variable and score is None:
+                            for other_shift in (0.17, -0.105, 0.08, 0.25):
+                                alternative, other_fit = alternate_reach(
+                                    surf, obs, other_shift
+                                )
+                                if not (
+                                    0.035 < alternative[0] < 0.45
+                                    and 0.78 < alternative[2] < 1.38
+                                ):
+                                    continue
+                                proposal, other_score, notes = search(
+                                    engine,
+                                    other_fit,
+                                    alternative[0],
+                                    choices,
+                                    a.control_dt,
+                                    surf.ready,
+                                    min(rounds, 3),
+                                    np.random.default_rng(
+                                        [37619, tick, round((other_shift + 1) * 1000)]
+                                    ),
+                                    guided,
+                                )
+                                trace.extend(notes)
+                                if other_score is not None:
+                                    shift = other_shift
+                                    selected, score, fit, eta = (
+                                        proposal,
+                                        other_score,
+                                        other_fit,
+                                        alternative[0],
+                                    )
+                                    break
+                        if optical_engine is not None:
+                            pending = (
+                                {"x": x.tolist(), "change": selected.tolist()}
+                                if shift == 0
+                                else None
+                            )
+                        elif score is not None and shift == 0:
                             bank.append({"x": x.tolist(), "change": selected.tolist()})
                     tape = schedules(
                         *fit,
@@ -308,12 +418,13 @@ def point(
                     deadline = now + eta + 0.26
                     retry_tick = (
                         tick + max(3, round((eta - 0.092) / a.control_dt))
-                        if score is None and eta > 0.13
+                        if (score is None or refresh) and eta > 0.13
                         else -1
                     )
                     records.append(
                         {
                             "tick": tick,
+                            "surface_shift": shift,
                             "context": x.tolist(),
                             "choices": sum(t["trials"] for t in trace),
                             "good": sum(t["legal"] for t in trace),
@@ -328,8 +439,33 @@ def point(
                         prep = np.r_[p - 0.075 * v, GRIP]
                         lastprep = tick
                     desired = prep
+        if pupil is not None and tape is None:
+            # Visit the posture the pupil would actually reach. The physics coach
+            # intervenes only inside the receiving window during training.
+            desired = surf.ready
+            f = eye.eye.latest
+            if (
+                f is not None
+                and now - f.time < 0.105
+                and f.rms < 2.4
+                and f.depth_sigma < 0.16
+            ):
+                optical = np.r_[*f.advance(now)]
+                sensed_inbound |= optical[4] < -0.9 and optical[1] < -0.9
+                if optical[4] < -0.9 or (
+                    sensed_inbound and optical[4] > 0.9 and optical[1] < 0.5
+                ):
+                    proposed, weight = pupil.get(optical, q)
+                    if proposed is not None:
+                        desired = surf.ready + weight * (proposed - surf.ready)
         action = actor.drive(desired, q, 0.8)
         _, _, done, capped, info = a.exchange(action, FAR)
+        if pending is not None and any(
+            e["kind"] == "legal_return" and e["side"] == 1 for e in info["events"]
+        ):
+            if mode == "optical-learn":
+                bank.append(pending)
+            pending = None
         if response is not None and response.last is not None:
             success = any(
                 e["kind"] == "legal_return" and e["side"] == 1 for e in info["events"]
@@ -371,6 +507,13 @@ def run(args):
         "bank": bank,
     }
     out.update(
+        robust=args.robust,
+        body=args.body,
+        visual=str(args.visual) if args.visual else None,
+        refresh=args.refresh,
+        variable=args.variable,
+        cap=args.cap,
+        depth=args.depth,
         refine=args.refine,
         rounds=args.rounds,
         samples=args.samples,
@@ -385,12 +528,30 @@ def run(args):
         out["pretraining"] = [str(p) for p in args.response]
     if args.forest:
         from .tt37_value import Forest
+
         response = Forest(args.forest, surface, adaptive=args.online)
         out["forest"] = str(args.forest)
+    from .tt37_native_frames import NativeFrames
+
+    frame_log = NativeFrames(args.frames) if args.frames else None
     archive = [] if args.archive else None
+    pupil = None
+    if args.rollin:
+        from .tt37_joint_deep import DeepField
+
+        with np.load(args.rollin) as z:
+            pupil = DeepField(z, "local")
+        out["pupil_rollin"] = str(args.rollin)
     changes = generate(args.samples)
     with centered(surface.ready):
         a = arena()
+        from .tt37_optical_clinic import OpticalClinic
+
+        optical_engine = (
+            OpticalClinic(body=args.body, robust=args.robust)
+            if args.mode.startswith("optical-")
+            else None
+        )
         stereo, rig, stride, lo, hi = joint.resources(a)
         try:
             for c in cards:
@@ -415,6 +576,12 @@ def run(args):
                     archive,
                     response,
                     args.refine,
+                    args.variable,
+                    frame_log,
+                    optical_engine,
+                    args.visual,
+                    args.refresh,
+                    pupil,
                 )
                 if response is not None:
                     out["online_outcomes"] = [
@@ -423,6 +590,8 @@ def run(args):
                     ]
                 out["rows"].append(r)
                 _write(args.out, out)
+                if frame_log is not None:
+                    frame_log.save()
                 if archive:
                     tmp = args.archive.with_suffix(".partial.npz")
                     np.savez_compressed(tmp, rows=np.concatenate(archive))
@@ -434,13 +603,17 @@ def run(args):
                     flush=True,
                 )
         finally:
+            if optical_engine is not None:
+                optical_engine.twin.close()
             stereo.close()
             a.close()
 
 
 if __name__ == "__main__":
     p = argparse.ArgumentParser(description=__doc__)
-    p.add_argument("mode", choices=("coach", "recall"))
+    p.add_argument(
+        "mode", choices=("coach", "recall", "optical-learn", "optical-fixed")
+    )
     p.add_argument("out", type=Path)
     p.add_argument("--feeds", type=Path, default=Path("/tmp/tt25-rallies.json"))
     p.add_argument(
@@ -462,4 +635,11 @@ if __name__ == "__main__":
     p.add_argument("--online", action="store_true")
     p.add_argument("--refine", action="store_true")
     p.add_argument("--forest", type=Path)
+    p.add_argument("--variable", action="store_true")
+    p.add_argument("--frames", type=Path)
+    p.add_argument("--visual", type=Path)
+    p.add_argument("--refresh", action="store_true")
+    p.add_argument("--body", action="store_true")
+    p.add_argument("--robust", action="store_true")
+    p.add_argument("--rollin", type=Path)
     run(p.parse_args())
