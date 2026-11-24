@@ -12,8 +12,9 @@ from .tt4_arena import AIR_DRAG, BALL_MASS, BALL_RADIUS, MODEL_PATH, mujoco
 from .tt18_plant import _resize_table
 from .tt19_so101 import (AXES, BLADE, CAMERA_BODY, GRIP_BODY, MINI_TABLE, RATES,
                         SOURCE_MODEL, WRIST_CAMERA, _GRASP_POS, _paddle, _robot)
-from .tt20_fixture import (BALL_ORANGE, BLADE_RED, CLAMP_FORWARD, CLAMP_RISE,
-                           WRIST_APERTURE, _clamp, _outboard, _vector)
+from .tt20_fixture import (ARCHIVED_FIXTURE, BALL_ORANGE, BLADE_RED, CLAMP_FORWARD, CLAMP_RISE,
+                           EDGE_BASE_HEIGHT, EDGE_BASE_INSET, TABLE_EDGE, WRIST_APERTURE,
+                           _board_camera, _clamp, _edge_clamp, _outboard, _vector, default_fixture)
 
 
 CONTROL_INTERVAL = 1 / 60
@@ -24,6 +25,8 @@ MIN_IMPACT_SPEED = .25
 MIN_LAUNCH_SPEED = .25
 MAX_CONTACT_TIME = .032
 _HOME = np.array((.01689, -.49254, -.48437, .97690, -.73672, -.10))
+_ARCHIVED_BASE_DEPTH = MINI_TABLE.table_half_length + .375 - CLAMP_FORWARD
+_ARCHIVED_BASE_HEIGHT = .49 + CLAMP_RISE
 _EXTERNAL_CAMERA = 'tt24_external'
 _CHANGED_DRIVE = np.array((.81, .55, .68, .62, .75, 1.))
 _CHANGED_FORCE = np.array((.91, .75, .83, .80, .85, 1.))
@@ -66,7 +69,7 @@ def _alternate_arm(document, arm, camera):
                   mass='.042', rgba='.18 .21 .24 1', contype='0', conaffinity='1')
 
 
-def _model_document(width, height, detail, arm_design):
+def _model_document(width, height, detail, arm_design, fixture=TABLE_EDGE):
     document = ET.parse(MODEL_PATH).getroot()
     document.set('model', 'TT24 end-clamped SO-101 paddle bouncing')
     world = document.find('worldbody')
@@ -84,25 +87,29 @@ def _model_document(width, height, detail, arm_design):
                 parent.remove(item)
 
     _resize_table(world, MINI_TABLE)
-    base_depth = MINI_TABLE.table_half_length + .375 - CLAMP_FORWARD
-    base_height = .49 + CLAMP_RISE
+    edge = fixture == TABLE_EDGE
+    base_depth = MINI_TABLE.table_half_length - EDGE_BASE_INSET if edge else _ARCHIVED_BASE_DEPTH
+    base_height = EDGE_BASE_HEIGHT if edge else _ARCHIVED_BASE_HEIGHT
     _robot(document, base_depth, base_height, detail)
     _paddle(document)
-    _clamp(document, base_depth, base_height, MINI_TABLE.table_half_length, MINI_TABLE.table_half_width)
-    aperture = _ALTERNATE_APERTURE if arm_design == 'alternate' else WRIST_APERTURE
-    _outboard(document, 108., aperture)
+    if edge:
+        _edge_clamp(document, MINI_TABLE.table_half_length)
+        _board_camera(document, alternate=arm_design == 'alternate')
+    else:
+        _clamp(document, base_depth, base_height, MINI_TABLE.table_half_length, MINI_TABLE.table_half_width)
+        aperture = _ALTERNATE_APERTURE if arm_design == 'alternate' else WRIST_APERTURE
+        _outboard(document, 108., aperture)
+        boom = world.find(".//geom[@name='tt20_camera_boom']")
+        # Put the archived support behind the reversed lens on the solo arm.
+        boom_tip = np.add(aperture, (-.008, .022, .011))
+        boom.set('fromto', _vector((-.014, .036, -.040, *boom_tip)))
 
     # Recover the upstream arm collision meshes for ball-only collision. The
     # clamp and tabletop still collide with the blade through the TT19 masks.
     arm = world.find("body[@name='learner_base']")
-    boom = arm.find(".//geom[@name='tt20_camera_boom']")
-    # The horizontal task uses the opposite side of the outboard camera boom.
-    # Attach the bar behind the aperture at this orientation to leave it clear.
-    boom_tip = np.add(aperture, (-.008, .022, .011))
-    boom.set('fromto', _vector((-.014, .036, -.040, *boom_tip)))
     for source in ET.parse(SOURCE_MODEL).getroot().find('worldbody/body').iter('body'):
         name = source.get('name')
-        if name == 'wrist_camera':
+        if name == 'wrist_camera' or (edge and name == 'wrist_camera_mount'):
             continue
         name = 'learner_elbow' if name == 'lower_arm' else f'learner_{name}'
         target = arm if name == 'learner_base' else arm.find(f".//body[@name='{name}']")
@@ -127,8 +134,9 @@ def _model_document(width, height, detail, arm_design):
     visual.find('global').attrib.update(offwidth=str(width), offheight=str(height))
     ET.SubElement(visual, 'quality', offsamples='0', shadowsize='0')
     visual.find('map').set('zfar', '4')
-    eye = np.array((.88, -1.53, 1.24))
-    axes = _camera_axes(eye, np.array((0., -.93, .86)))
+    eye = np.array((.93, -1.42, 1.48) if edge else (.88, -1.53, 1.24))
+    look = np.array((0., -.65, 1.04) if edge else (0., -.93, .86))
+    axes = _camera_axes(eye, look)
     ET.SubElement(world, 'camera', name=_EXTERNAL_CAMERA, pos=_vector(eye), fovy='40',
                   xyaxes=_vector(axes[:, :2].T.ravel()))
     document.find('option').set('timestep', str(CONTROL_INTERVAL / SUBSTEPS))
@@ -194,15 +202,14 @@ class BounceArena:
     _changed_drive = _CHANGED_DRIVE
     _changed_force = _CHANGED_FORCE
 
-    @staticmethod
-    def _document(width, height, detail, arm):
-        return _model_document(width, height, detail, arm)
+    def _document(self, width, height, detail, arm):
+        return _model_document(width, height, detail, arm, self.fixture)
 
     def _actuated_pose(self, pose):
         return pose
 
     def __init__(self, *, view='wrist', proprioception=True, width=96, height=72,
-                 max_steps=300, detail='preview', arm='stock', apex_reward_weight=0.):
+                 max_steps=300, detail='preview', arm='stock', apex_reward_weight=0., fixture=None):
         if view not in ('wrist', 'external', 'none'):
             raise ValueError("view must be 'wrist', 'external' or 'none'")
         if min(width, height, max_steps) < 1:
@@ -211,10 +218,15 @@ class BounceArena:
             raise ValueError("detail must be 'cad' or 'preview'")
         if arm not in ('stock', 'alternate'):
             raise ValueError("arm must be 'stock' or 'alternate'")
+        if fixture is None:
+            fixture = default_fixture()
+        if fixture not in (TABLE_EDGE, ARCHIVED_FIXTURE):
+            raise ValueError("expected fixture='table-edge' or fixture='archived'")
         if not math.isfinite(apex_reward_weight) or apex_reward_weight < 0.:
             raise ValueError('apex_reward_weight must be finite and nonnegative')
         self.view = view
         self.arm = arm
+        self.fixture = fixture
         self.apex_reward_weight = apex_reward_weight
         self.proprioception = proprioception
         self.width, self.height, self.max_steps = width, height, max_steps
@@ -242,16 +254,19 @@ class BounceArena:
         self._ball_force = self._data.xfrc_applied[self._ball_body, :3]
         self._paddle = model.joint('learner_paddle_free').qposadr[0]
         self._grip = model.body(GRIP_BODY).id
+        base = model.body('learner_base').pos
+        self._workspace_shift = (float(base[1] + _ARCHIVED_BASE_DEPTH), float(base[2] - _ARCHIVED_BASE_HEIGHT))
         self._renderer = None
         self._scene_option = mujoco.MjvOption()
         self._scene_option.geomgroup[3] = 0
         self._prepare_pose(_HOME)
-        blade_position = self._data.geom_xpos[self._blade]
-        camera = model.body(CAMERA_BODY)
-        eye = self._data.xpos[camera.id].copy()
-        gripper = self._data.xmat[self._grip].reshape(3, 3)
-        matrix = gripper.T @ _camera_axes(eye, blade_position + (0., 0., .13))
-        mujoco.mju_mat2Quat(camera.quat, np.ascontiguousarray(matrix).ravel())
+        if fixture == ARCHIVED_FIXTURE:
+            blade_position = self._data.geom_xpos[self._blade]
+            camera = model.body(CAMERA_BODY)
+            eye = self._data.xpos[camera.id].copy()
+            gripper = self._data.xmat[self._grip].reshape(3, 3)
+            matrix = gripper.T @ _camera_axes(eye, blade_position + (0., 0., .13))
+            mujoco.mju_mat2Quat(camera.quat, np.ascontiguousarray(matrix).ravel())
         self._done = True
 
     def _prepare_pose(self, pose):
@@ -382,7 +397,9 @@ class BounceArena:
                 flight.apex_time = float(t)
                 self._flight = flight
 
-        if z < .51 or z > 2.1 or abs(x) > .66 or not -1.65 < y < -.33:
+        shift_y, shift_z = self._workspace_shift
+        local_y, local_z = y - shift_y, z - shift_z
+        if local_z < .51 or local_z > 2.1 or abs(x) > .66 or not -1.65 < local_y < -.33:
             self._end('out_of_bounce_area')
             return 0.
         flight = self._flight

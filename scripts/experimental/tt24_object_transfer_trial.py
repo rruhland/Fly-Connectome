@@ -29,9 +29,8 @@ WIDTH,HEIGHT=192,144
 class TwoBallBounce(BounceArena):
     """Render a second sphere along a physical replay with no collision or reward."""
 
-    @staticmethod
-    def _document(width,height,detail,arm):
-        doc=BounceArena._document(width,height,detail,arm)
+    def _document(self,width,height,detail,arm):
+        doc=super()._document(width,height,detail,arm)
         ET.SubElement(doc.find('worldbody'),'geom',name='visual_yoked_sphere',type='sphere',
                       size=str(BALL_RADIUS),pos='0 0 3',rgba='1 1 1 1',contype='0',conaffinity='0')
         return doc

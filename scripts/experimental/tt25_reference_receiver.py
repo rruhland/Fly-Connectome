@@ -12,6 +12,7 @@ from .tt4_arena import AIR_DRAG, BALL_MASS, MAGNUS_COEFFICIENT, TABLE_HEIGHT
 from .tt4_transfer_trial import _hash, _write
 from .tt18_plant import PlantSettings
 from .tt19_view_full_game import digest_json
+from .tt20_fixture import ARCHIVED_FIXTURE, TABLE_EDGE, default_fixture
 from .tt23_sequence import CONFIG
 from .tt24_rally_bank import CACHE, DIMS
 from .tt24_rally_improve_trial import policy_for
@@ -24,13 +25,16 @@ from .tt25_recorded_flight import OUTPUT
 class ReferenceReceiver(SolidArm):
     """Real post-strike launch, regular physical referee, far body at rest."""
 
-    def __init__(self, *, stationary_opponent=True):
+    def __init__(self, *, stationary_opponent=True, fixture=None, view_mode="fixed",
+                 width=DIMS[0], height=DIMS[1], **settings):
         report = json.loads((OUTPUT / "recorded-flight.json").read_text())
         drag, lift = report["held_scores"]["match_fit"]["coefficients"]
         self.delta_drag, self.delta_lift = drag - AIR_DRAG, lift - MAGNUS_COEFFICIENT
-        super().__init__(
-            **dict(CONFIG, plant=PlantSettings(), width=DIMS[0], height=DIMS[1], max_steps=110)
-        )
+        fixture = default_fixture() if fixture is None else fixture
+        optics = "board" if fixture == TABLE_EDGE else CONFIG["wrist_optics"]
+        configuration = dict(CONFIG, plant=PlantSettings(), max_steps=110, wrist_optics=optics,
+                             fixture=fixture, view_mode=view_mode, width=width, height=height)
+        super().__init__(**(configuration | settings))
         stationary = np.zeros(len(self._arm_ids[-1][2]))
         if stationary_opponent:
             self._aim = self._command_to = lambda *args: stationary
@@ -98,7 +102,7 @@ def run(path):
         raise ValueError("Unexpected DeepMind file")
     lookup = {r["id"]: r for r in json.loads(raw)}
     roster = json.loads((OUTPUT / "recorded-reach.json").read_text())["cases"][:32]
-    arena = ReferenceReceiver()
+    arena = ReferenceReceiver(fixture=ARCHIVED_FIXTURE)
     with np.load(CACHE, allow_pickle=False) as bank:
         actor = policy_for("retina_rate", bank)
     cases = []

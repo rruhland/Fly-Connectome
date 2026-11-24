@@ -31,6 +31,11 @@ def enable_table_contacts(document):
                 "tt20_camera_boom",
                 "tt20_rgb_housing",
                 "tt20_rgb_barrel",
+                "tt29_camera_foot",
+                "tt29_camera_bracket",
+                "tt29_camera_board",
+                "tt29_camera_sensor",
+                "tt29_camera_barrel",
             }:
                 geom.set("conaffinity", str(int(geom.get("conaffinity", "0")) | _TABLE_MASK))
                 links.append(geom)

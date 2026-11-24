@@ -1,6 +1,7 @@
 """An end-clamped SO-101 station with an external, physically opaque wrist camera."""
 
 import math
+import os
 import xml.etree.ElementTree as ET
 
 import numpy as np
@@ -24,15 +25,105 @@ NEAR_M = .003
 BALL_ORANGE = (.97, .42, .05)
 BLADE_RED = (.79, .085, .105)
 RIVAL_RUBBER = (.19, .20, .22)
+TABLE_EDGE = 'table-edge'
+ARCHIVED_FIXTURE = 'archived'
+EDGE_BASE_INSET = .026
+EDGE_PLATE_HEIGHT = .004
+EDGE_BASE_HEIGHT = TABLE_HEIGHT + EDGE_PLATE_HEIGHT + .0024
+BOARD_FOV = 124.
+EDGE_READY = (.0259, -.4730, -.9703, 1.4467, -1.2492, -.10)
 
 
 def _vector(values):
     return ' '.join(f'{value:.10g}' for value in values)
 
 
+def default_fixture():
+    """Allow a historical command-line run to select its published geometry."""
+    return os.environ.get('SO101_FIXTURE', TABLE_EDGE)
+
+
 def _box(parent, name, position, half_size, rgba):
     return ET.SubElement(parent, 'geom', name=name, type='box', pos=_vector(position),
                          size=_vector(half_size), rgba=_vector((*rgba, 1.)), contype='2', conaffinity='5')
+
+
+def _edge_clamp(document, table_half_length):
+    world = document.find('worldbody')
+    world.remove(world.find("geom[@name='tt19_pedestal']"))
+    support = ET.SubElement(world, 'body', name='tt20_table_end_clamp')
+    table = world.find("geom[@name='table']")
+    underside = float(table.get('pos').split()[2]) - float(table.get('size').split()[2])
+    end = -table_half_length
+    steel, zinc, rubber = (.17, .20, .23), (.52, .56, .59), (.12, .13, .14)
+    _box(support, 'tt29_clamp_top_plate', (0., end + .049, TABLE_HEIGHT + EDGE_PLATE_HEIGHT / 2),
+         (.084, .050, EDGE_PLATE_HEIGHT / 2), steel)
+    for index, x in enumerate((-.068, .068)):
+        prefix = f'tt29_clamp_{index}'
+        _box(support, prefix + '_upper_jaw', (x, end + .005, TABLE_HEIGHT + .0025),
+             (.016, .030, .0025), steel)
+        low = underside - .039
+        _box(support, prefix + '_spine', (x, end - .015, (low + TABLE_HEIGHT) / 2),
+             (.013, .010, (TABLE_HEIGHT - low) / 2), steel)
+        _box(support, prefix + '_lower_jaw', (x, end + .006, low),
+             (.013, .031, .006), steel)
+        _box(support, prefix + '_shoe', (x, end + .023, underside - .002),
+             (.0115, .013, .002), rubber)
+        ET.SubElement(support, 'geom', name=prefix + '_screw', type='cylinder',
+                      pos=_vector((x, end + .023, underside - .031)), size='.005 .028',
+                      rgba=_vector((*zinc, 1.)), contype='2', conaffinity='5')
+        ET.SubElement(support, 'geom', name=prefix + '_handle', type='capsule',
+                      fromto=_vector((x - .021, end + .023, underside - .054,
+                                      x + .021, end + .023, underside - .054)),
+                      size='.0035', rgba=_vector((*zinc, 1.)), contype='2', conaffinity='5')
+
+
+def _board_camera(document, fovy=BOARD_FOV, *, alternate=False):
+    gripper = document.find(f".//body[@name='{GRIP_BODY}']")
+    dock = gripper.find("body[@name='learner_wrist_camera_mount']")
+    dock.attrib.update(pos='0 0 0', quat='1 0 0 0')
+    dock.find('inertial').set('pos', '0 .031 -.041')
+    dock.remove(dock.find('geom'))
+    camera = dock.find(f"body[@name='{CAMERA_BODY}']")
+    aperture = np.array((.006, .054, -.035))
+    if alternate:
+        aperture += (-.005, .003, -.005)
+    forward = np.array((-.055, -.13, -1.))
+    forward /= np.linalg.norm(forward)
+    right = np.cross(forward, (.43, .90, 0.))
+    right /= np.linalg.norm(right)
+    camera.attrib.update(pos=_vector(aperture),
+                         xyaxes=_vector((*right, *np.cross(right, forward))))
+    camera.attrib.pop('quat')
+    camera.find('inertial').set('pos', '0 0 .011')
+    camera.remove(camera.find('geom'))
+    camera.find(f"camera[@name='{WRIST_CAMERA}']").attrib.update(pos='0 0 0', fovy=str(fovy))
+    # A thin foot beds against the wrist shell. The inclined upper face
+    # supports the bottom edge of the PCB and keeps its lens clear of the jaws.
+    shell = '.94 .93 .89 1'
+    contact = {'contype': '0', 'conaffinity': '1'}
+    ET.SubElement(dock, 'geom', name='tt29_camera_foot', type='box', pos='0 .023 -.035',
+                  size='.014 .003 .014', rgba=shell, **contact)
+    ET.SubElement(document.find('asset'), 'mesh', name='tt29_camera_bracket',
+                  vertex='-.013 .026 -.048  -.013 .026 -.024  -.013 .044 -.015 '
+                         '.013 .026 -.048   .013 .026 -.024   .013 .044 -.015',
+                  face='0 1 2  3 5 4  0 3 4  0 4 1  1 4 5  1 5 2  2 5 3  2 3 0')
+    ET.SubElement(dock, 'geom', name='tt29_camera_bracket', type='mesh', mesh='tt29_camera_bracket',
+                  rgba=shell, **contact)
+    ET.SubElement(camera, 'geom', name='tt29_camera_board', type='box', pos='0 0 .0135',
+                  size='.015 .014 .002', rgba='.055 .15 .105 1', **contact)
+    ET.SubElement(camera, 'geom', name='tt29_camera_sensor', type='box', pos='0 0 .0105',
+                  size='.010 .009 .003', rgba='.095 .104 .108 1', **contact)
+    ET.SubElement(camera, 'geom', name='tt29_camera_barrel', type='cylinder', pos='0 0 .0055',
+                  size='.0068 .005', rgba='.043 .047 .051 1', **contact)
+    ET.SubElement(camera, 'geom', name='tt29_camera_glass', type='cylinder', pos='0 0 .0012',
+                  size='.0048 .0007', rgba='.045 .086 .10 1', **contact)
+    for x in (-.0115, .0115):
+        for y in (-.0105, .0105):
+            ET.SubElement(camera, 'geom', type='cylinder', pos=_vector((x, y, .011)),
+                          size='.0015 .0007', rgba='.57 .57 .53 1')
+    extent = float(document.find('statistic').get('extent', '8'))
+    document.find('visual/map').set('znear', str(NEAR_M / extent))
 
 
 def _clamp(document, depth, flange_height, table_half_length, table_half_width):
@@ -119,29 +210,48 @@ def _unmarked(document):
 
 
 class TT20Arena(SO101ViewArena):
-    """Select a physically moved clamp, an externally mounted lens, and public RGB streams."""
+    """Use the table-edge clamp and rigid wrist board with selectable public RGB streams."""
 
-    def __init__(self, *args, mount='clamp', wrist_optics='outboard', marked=False,
+    def __init__(self, *args, mount='clamp', wrist_optics=None, fixture=None, marked=False,
                  view_mode='wrist+fixed', width=None, height=None, wrist_fovy=None,
                  role_palette='natural', base_height=None, venue='hall', **kwargs):
         if mount not in ('clamp', 'pedestal'):
             raise ValueError('expected clamp or pedestal')
-        if wrist_optics not in ('outboard', 'raised', 'ultrawide', 'legacy') or view_mode not in STREAMS:
+        if fixture is None:
+            if wrist_optics == 'board':
+                fixture = TABLE_EDGE
+            elif mount == 'clamp' and wrist_optics is None and base_height is None:
+                fixture = default_fixture()
+            else:
+                fixture = ARCHIVED_FIXTURE
+        if fixture not in (TABLE_EDGE, ARCHIVED_FIXTURE):
+            raise ValueError("expected fixture='table-edge' or fixture='archived'")
+        if wrist_optics is None:
+            wrist_optics = 'board' if fixture == TABLE_EDGE else 'outboard'
+        if fixture == TABLE_EDGE and (mount != 'clamp' or wrist_optics != 'board' or base_height is not None):
+            raise ValueError('the table-edge fixture has a fixed clamp, board camera and base height')
+        if fixture == ARCHIVED_FIXTURE and wrist_optics == 'board':
+            raise ValueError('the board camera belongs to the table-edge fixture')
+        if wrist_optics not in ('board', 'outboard', 'raised', 'ultrawide', 'legacy') or view_mode not in STREAMS:
             raise ValueError('unknown wrist optic or stream selection')
         if role_palette not in ('natural', 'legacy'):
             raise ValueError('expected natural or legacy role colors')
         if wrist_fovy is not None and (not math.isfinite(wrist_fovy) or not 45. <= wrist_fovy <= 135.):
             raise ValueError('expected a vertical wrist field of view between 45 and 135 degrees')
-        fovy = {'legacy': WRIST_FOV, 'ultrawide': ULTRAWIDE_FOV}.get(wrist_optics, OUTBOARD_FOV)
+        fovy = {'board': BOARD_FOV, 'legacy': WRIST_FOV, 'ultrawide': ULTRAWIDE_FOV}.get(wrist_optics, OUTBOARD_FOV)
         dimensions = (960, 720) if wrist_optics == 'ultrawide' else (480, 360)
         width = dimensions[0] if width is None else width
         height = dimensions[1] if height is None else height
         self.mount = mount
+        self.fixture = fixture
         self.wrist_optics = wrist_optics
         self.marked = marked
         self.role_palette = role_palette
         self.wrist_fovy = fovy if wrist_fovy is None else wrist_fovy
-        base_height = .49 + (CLAMP_RISE if mount == 'clamp' else 0.) if base_height is None else base_height
+        if fixture == TABLE_EDGE:
+            base_height = EDGE_BASE_HEIGHT
+        elif base_height is None:
+            base_height = .49 + (CLAMP_RISE if mount == 'clamp' else 0.)
         inherited_mode = view_mode if view_mode in TT19_STREAMS else 'fixed'
         self.streams = STREAMS[view_mode]
         super().__init__(*args, view_mode=inherited_mode, width=width, height=height, base_height=base_height,
@@ -153,19 +263,32 @@ class TT20Arena(SO101ViewArena):
                                      for index in range(self.model.ngeom) if index not in self._collider_names})
 
     def _model_document(self):
-        if self.mount == 'clamp':
+        if self.fixture == TABLE_EDGE:
+            self.base_depth = self.plant.table_half_length - EDGE_BASE_INSET
+        elif self.mount == 'clamp':
             self.base_depth = self.plant.table_half_length + .375 - CLAMP_FORWARD
         document = super()._model_document()
-        if self.mount == 'clamp':
-            _clamp(document, self.base_depth, self.base_height, self.plant.table_half_length, self.plant.table_half_width)
-        if self.wrist_optics != 'legacy':
-            aperture = RAISED_APERTURE if self.wrist_optics == 'raised' else WRIST_APERTURE
-            _outboard(document, self.wrist_fovy, aperture)
+        if self.fixture == TABLE_EDGE:
+            _edge_clamp(document, self.plant.table_half_length)
+            _board_camera(document, self.wrist_fovy)
+        else:
+            if self.mount == 'clamp':
+                _clamp(document, self.base_depth, self.base_height, self.plant.table_half_length, self.plant.table_half_width)
+            if self.wrist_optics != 'legacy':
+                aperture = RAISED_APERTURE if self.wrist_optics == 'raised' else WRIST_APERTURE
+                _outboard(document, self.wrist_fovy, aperture)
         if not self.marked:
             _unmarked(document)
         return document
 
+    def _arm_home(self, side):
+        if side == 1 and self.fixture == TABLE_EDGE:
+            return EDGE_READY, ()
+        return super()._arm_home(side)
+
     def _orient_wrist(self):
+        if self.wrist_optics == 'board':
+            return
         if self.wrist_optics == 'legacy':
             super()._orient_wrist()
             self.model.camera(WRIST_CAMERA).fovy[0] = self.wrist_fovy
@@ -219,6 +342,18 @@ class TT20Arena(SO101ViewArena):
             result[key] = dict(width=self.width, height=self.height, fovy=fovy,
                                center=((self.width - 1) / 2, (self.height - 1) / 2),
                                focal=self.height / (2 * math.tan(math.radians(fovy) / 2)))
+        return result
+
+    def camera_calibration(self):
+        """Read intrinsics and current world pose for the delivered RGB streams."""
+        mujoco.mj_kinematics(self.model, self.data)
+        mujoco.mj_camlight(self.model, self.data)
+        intrinsics = self.lens_intrinsics()
+        result = {}
+        for stream in self.streams:
+            camera = self.data.camera(WRIST_CAMERA if stream == 'wrist' else CAMERAS[stream][0])
+            result[stream] = dict(intrinsics[stream], position=camera.xpos.copy(),
+                                  rotation=camera.xmat.reshape(3, 3).copy())
         return result
 
     def _color_roles(self):

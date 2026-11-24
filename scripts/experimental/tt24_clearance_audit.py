@@ -9,6 +9,7 @@ from pathlib import Path
 
 import numpy as np
 
+from .tt20_fixture import ARCHIVED_FIXTURE
 from .tt24_bounce import BounceArena, mujoco
 
 
@@ -20,9 +21,9 @@ def surface(name):
         return 'blade'
     if name == 'learner_handle':
         return 'paddle_handle'
-    if name.startswith('tt20_clamp_'):
+    if name.startswith(('tt20_clamp_', 'tt29_clamp_')):
         return 'table_clamp'
-    if name.startswith(('tt20_rgb_', 'tt20_camera_', 'tt24_payload_')) or 'camera_mount' in name:
+    if name.startswith(('tt20_rgb_', 'tt20_camera_', 'tt24_payload_', 'tt29_camera_')) or 'camera_mount' in name:
         return 'camera_mounting_hardware'
     if name.startswith(('learner_gripper_', 'learner_moving_jaw_')):
         return 'hand_or_jaw'
@@ -171,7 +172,7 @@ def audit(source):
     d = _load(source)
     output = dict(schema='tt24-clearance-contact-replay-1', privileged_diagnostic=True,
                   source=str(source), arm=d['arm'], horizon=d['horizon'], outcomes={})
-    arena = ClearanceAudit(view='none', arm=d['arm'], max_steps=d['horizon'])
+    arena = ClearanceAudit(view='none', arm=d['arm'], max_steps=d['horizon'], fixture=ARCHIVED_FIXTURE)
     try:
         for key, treatment in d['outcomes'].items():
             rows = []

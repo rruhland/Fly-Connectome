@@ -4,8 +4,10 @@ import pytest
 pytest.importorskip('mujoco')
 
 from scripts.experimental.tt4_arena import mujoco
-from scripts.experimental.tt19_so101 import WRIST_CAMERA
-from scripts.experimental.tt20_fixture import CLAMP_FORWARD, CLAMP_RISE, TT20Arena
+from scripts.experimental.tt19_so101 import GRIP_BODY, WRIST_CAMERA
+from scripts.experimental.tt20_fixture import ARCHIVED_FIXTURE, CLAMP_FORWARD, CLAMP_RISE, TT20Arena
+from scripts.experimental.tt24_bounce import BounceArena
+from scripts.experimental.tt25_reference_receiver import ReferenceReceiver
 
 
 @pytest.mark.parametrize('hardware', ('clamp', 'camera'))
@@ -16,8 +18,8 @@ def test_nonplaying_hardware_contact_is_dead_and_does_not_score_a_bounce(hardwar
         arena.reset(seed=7, server=-1, render=False)
         arena._received_bounce = landed
         if hardware == 'clamp':
-            support = arena.data.geom('tt20_clamp_0_beam')
-            arena.ball[:] = support.xpos + (0., 0., .034)
+            support = arena.data.geom('tt29_clamp_0_upper_jaw')
+            arena.ball[:] = support.xpos + (0., -.010, .022)
             arena.velocity[:] = (0., 0., -.3)
         else:
             camera = arena.data.camera(WRIST_CAMERA)
@@ -30,7 +32,7 @@ def test_nonplaying_hardware_contact_is_dead_and_does_not_score_a_bounce(hardwar
         assert arena.reason == 'fixture_contact'
         fixture, point = arena.events
         assert fixture['kind'] == 'fixture_contact'
-        assert fixture['collider'].startswith('tt20_clamp_' if hardware == 'clamp' else 'tt20_rgb_')
+        assert fixture['collider'].startswith('tt29_clamp_' if hardware == 'clamp' else 'tt29_camera_')
         assert point['kind'] == 'point'
         assert arena.contacts == arena.legal_returns == arena.rival_contacts == arena.rival_returns == 0
     finally:
@@ -38,7 +40,7 @@ def test_nonplaying_hardware_contact_is_dead_and_does_not_score_a_bounce(hardwar
 
 
 def test_moved_end_clamp_sits_below_table_surface():
-    arena = TT20Arena()
+    arena = TT20Arena(fixture=ARCHIVED_FIXTURE)
     pedestal = TT20Arena(mount='pedestal', wrist_optics='legacy')
     try:
         base = arena.data.body('learner_base').xpos
@@ -53,6 +55,64 @@ def test_moved_end_clamp_sits_below_table_surface():
     finally:
         arena.close()
         pedestal.close()
+
+
+@pytest.mark.parametrize('arena_type', (ReferenceReceiver, BounceArena))
+def test_table_edge_fixture_has_fixed_base_and_opposing_jaws(arena_type):
+    arena = arena_type()
+    try:
+        if isinstance(arena, BounceArena):
+            model, data = arena._model, arena._data
+        else:
+            model, data = arena.model, arena.data
+        assert arena.fixture == 'table-edge'
+        base = model.body('learner_base')
+        assert base.parentid[0] == base.jntnum[0] == 0
+        assert model.body('tt20_table_end_clamp').jntnum[0] == 0
+        table = model.geom('table')
+        near_edge = -table.size[1]
+        table_top = table.pos[2] + table.size[2]
+        underside = table.pos[2] - table.size[2]
+        plate = model.geom('tt29_clamp_top_plate')
+        assert plate.pos[2] - plate.size[2] == pytest.approx(table_top)
+        assert base.pos[2] - .0024 == pytest.approx(plate.pos[2] + plate.size[2])
+        assert base.pos[1] - near_edge == pytest.approx(.026)
+        for index in range(2):
+            prefix = f'tt29_clamp_{index}'
+            upper, lower, shoe = (model.geom(prefix + suffix) for suffix in ('_upper_jaw', '_lower_jaw', '_shoe'))
+            assert upper.pos[2] - upper.size[2] == pytest.approx(table_top)
+            assert lower.pos[2] + lower.size[2] < underside
+            assert shoe.pos[2] + shoe.size[2] == pytest.approx(underside)
+            assert shoe.pos[1] - shoe.size[1] > near_edge
+            assert data.geom(prefix + '_handle').xpos[2] < lower.pos[2]
+    finally:
+        arena.close()
+
+
+def test_board_lens_is_rigid_and_reaches_the_court_at_ready_pose():
+    arena = ReferenceReceiver(view_mode='wrist+fixed')
+    try:
+        arena.reset(seed=42, render=False)
+        handed = arena.data.body(GRIP_BODY)
+        camera = arena.camera_calibration()['wrist']
+        grip_pose = handed.xmat.reshape(3, 3).copy()
+        offset = grip_pose.T @ (camera['position'] - handed.xpos)
+        rotation = grip_pose.T @ camera['rotation']
+        np.testing.assert_allclose(offset, (.006, .054, -.035), atol=1e-9)
+        assert np.dot(-camera['rotation'][:, 2], (0., 1., 0.)) > .95
+        hit = np.empty(1, dtype=np.int32)
+        distance = mujoco.mj_ray(arena.model, arena.data, camera['position'],
+                                 -np.ascontiguousarray(camera['rotation'][:, 2]), None, True, -1, hit)
+        assert distance > .2
+        joint = arena.model.joint('learner_wrist_roll')
+        arena.data.qpos[joint.qposadr[0]] += .35
+        moved = arena.camera_calibration()['wrist']
+        next_grip = handed.xmat.reshape(3, 3)
+        np.testing.assert_allclose(next_grip.T @ (moved['position'] - handed.xpos), offset, atol=1e-9)
+        np.testing.assert_allclose(next_grip.T @ moved['rotation'], rotation, atol=1e-9)
+        assert np.linalg.norm(moved['position'] - camera['position']) > .015
+    finally:
+        arena.close()
 
 
 def test_marking_ablation_preserves_role_palette():
@@ -72,7 +132,7 @@ def test_marking_ablation_preserves_role_palette():
 
 
 def test_outboard_aperture_has_no_opaque_neutral_center_hit_before_near_plane():
-    arena = TT20Arena(view_mode='wrist')
+    arena = TT20Arena(view_mode='wrist', fixture=ARCHIVED_FIXTURE)
     try:
         camera = arena.data.camera(WRIST_CAMERA)
         forward = -camera.xmat.reshape(3, 3)[:, 2]
@@ -85,7 +145,7 @@ def test_outboard_aperture_has_no_opaque_neutral_center_hit_before_near_plane():
 
 
 def test_ultrawide_wrist_keeps_the_aperture_and_raises_the_aim():
-    standard = TT20Arena(view_mode='wrist')
+    standard = TT20Arena(view_mode='wrist', fixture=ARCHIVED_FIXTURE)
     wide = TT20Arena(view_mode='wrist', wrist_optics='ultrawide')
     try:
         original = standard.data.camera(WRIST_CAMERA)

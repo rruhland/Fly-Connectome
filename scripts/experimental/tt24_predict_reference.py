@@ -7,6 +7,7 @@ from pathlib import Path
 
 import numpy as np
 
+from .tt20_fixture import ARCHIVED_FIXTURE, TABLE_EDGE
 from .tt24_bounce import BounceArena, mujoco
 from .tt24_bounce_ceiling import PrivilegedCeiling
 from .tt24_bounce_ident import DirectPupil, _ellipse, pack, select_pair, summarize
@@ -33,15 +34,15 @@ COMMAND_UNIT = 5.2 / 60
 class TrainingEyes(BounceArena):
     """Two stationary training viewpoints aimed at the table-end workspace."""
 
-    def __init__(self, *, view='wrist', orthographic=False):
-        super().__init__(view=view, height=HEIGHT, width=WIDTH, max_steps=360)
+    def __init__(self, *, view='wrist', orthographic=False, fixture=ARCHIVED_FIXTURE):
+        super().__init__(view=view, height=HEIGHT, width=WIDTH, max_steps=360, fixture=fixture)
         self._model.vis.global_.orthographic = int(orthographic)
         self._model.vis.global_.fovy = .61 if orthographic else 22.
         self.eyes = []
         for azimuth in (0., 90.):
             camera = mujoco.MjvCamera()
             camera.type = mujoco.mjtCamera.mjCAMERA_FREE
-            camera.lookat[:] = (0., -.94, .92)
+            camera.lookat[:] = (0., -.574, 1.1744) if fixture == TABLE_EDGE else (0., -.94, .92)
             camera.distance = 1.60
             camera.elevation = -2. if orthographic else -12.
             camera.azimuth = azimuth

@@ -11,6 +11,7 @@ from scipy.spatial.transform import Rotation
 
 from .tt4_transfer_trial import _hash, _write
 from .tt19_factory import FactoryModel
+from .tt20_fixture import ARCHIVED_FIXTURE, TABLE_EDGE
 from .tt24_bounce_ident import WristState, _ellipse, _unit_camera_ray
 from .tt24_metric_stereo import Camera, triangulate
 from .tt24_predict_reference import HEIGHT, TrainingEyes
@@ -36,12 +37,12 @@ RIM = np.column_stack((np.cos(2*np.pi*np.arange(44)/44), np.sin(2*np.pi*np.arang
 FOCAL = HEIGHT/(2*np.tan(np.deg2rad(54.)))
 
 
-def stock():
-    arena = TrainingEyes()
+def stock(*, fixture=ARCHIVED_FIXTURE):
+    arena = TrainingEyes(fixture=fixture)
     arena.max_steps = 72
     arena._model.vis.global_.fovy = 23.
     for eye, yaw, tilt in zip(arena.eyes, (12.,102.), (-36.,-33.), strict=True):
-        eye.lookat[:] = (0.,-.94,.93)
+        eye.lookat[:] = (0., -.574, 1.1844) if fixture == TABLE_EDGE else (0., -.94, .93)
         eye.distance = 1.48
         eye.azimuth = yaw
         eye.elevation = tilt
