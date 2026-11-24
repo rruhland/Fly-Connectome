@@ -91,7 +91,7 @@ class DeepField:
                 raise ValueError("Not enough camera-visible states in the deep corpus")
             self.branches[sign] = cKDTree(x), x, labels[use]
 
-    def get(self, optical, q):
+    def get(self, optical, q, *, reference=None):
         center = np.r_[optical, q[:5]] / self.scale
         tree, x, label = self.branches[-1 if optical[4] < 0. else 1]
         dist, idx = tree.query(center, 12)
@@ -117,29 +117,42 @@ def play(environment, renderer, rig, stride, lower, upper, ready, card, shot, fi
     sensed_inbound = False
     commands = []
     field_ticks = 0
+    if hasattr(field, "begin_point"):
+        field.begin_point()
+    score_feedback = getattr(field, "score_feedback", None)
     started = process_time()
     for tick in range(environment.max_steps):
         q = environment.joints
+        if hasattr(field, "clock_tick"):
+            field.clock_tick(tick)
         optical = observed(eye, tick, renderer.capture() if tick % 2 == 0 else None, q) if field is not None else None
         if optical is not None and optical[4] < -.9 and optical[1] < -.90:
             sensed_inbound = True
         desired = home
         if optical is not None and (optical[4] < -.9 or (sensed_inbound and optical[1] < .50)):
-            goal, confidence = field.get(optical, q)
+            goal, confidence = field.get(optical, q, reference=reference)
             if goal is not None:
                 desired = home + confidence * (goal - home)
                 field_ticks += 1
         command = np.clip((np.clip(desired, lower, upper) - reference) / stride, -.8, .8)
         reference = np.clip(reference + command * stride, lower, upper)
-        _, _, done, capped, _ = environment.exchange(command, FAR_COMMAND)
+        _, _, done, capped, referee = environment.exchange(command, FAR_COMMAND)
         commands.append(command.tolist())
+        if score_feedback is not None and any(e["kind"] == "legal_return" and e["side"] == 1
+                                              for e in referee["events"]):
+            score_feedback(audit(environment.events, opening_side=1)["learner"])
         if done or capped or environment.legal_returns + environment.rival_returns - 1 >= cap:
             break
-    return dict(
+    if hasattr(field, "end_point"):
+        field.end_point(terminal=bool(done and not capped))
+    row = dict(
         shot=shot, opponent_seed=card["seed"], actions=commands, events=environment.events,
         score=audit(environment.events, opening_side=1), placements=environment.point_placements(),
         field_ticks=field_ticks, motor_audit=environment.motor_audit(), runtime_cpu_s=process_time() - started,
     )
+    if hasattr(field, "diagnostics"):
+        row["controller_diagnostics"] = field.diagnostics
+    return row
 
 
 def cards_for(receipt, plan, deck):
@@ -156,11 +169,12 @@ def cards_for(receipt, plan, deck):
     return _read(plan)[deck]
 
 
-def run(feeds, archive, plan, deck, mode, output, *, cap, limit=None):
+def run(feeds, archive, plan, deck, mode, output, *, cap, limit=None, field_hook=None, details=None,
+        cards_override=None):
     source = _read(archive.with_suffix(".json"))
     if source["bank_sha256"] != _hash(archive):
         raise ValueError("Deep model receipt changed")
-    cards = cards_for(source, plan, deck)
+    cards = cards_for(source, plan, deck) if cards_override is None else cards_override
     if limit is not None:
         cards = cards[:limit]
     if deck == "held_openings" and {card["id"] for card in cards}.intersection(
@@ -170,8 +184,12 @@ def run(feeds, archive, plan, deck, mode, output, *, cap, limit=None):
     ready = source["ready"]
     result = dict(ready=ready, mode=mode, deck=deck, cards=cards, opening_side=1, cap=cap, rows=[],
                   source_sha256=_hash(archive), plan_sha256=_hash(plan))
+    if details is not None:
+        result["candidate_source"] = details
     with np.load(archive) as bank:
         field = DeepField(bank, mode) if mode != "ready" else None
+    if field_hook is not None:
+        field = field_hook(field)
     with centered(ready):
         environment = arena(protocol="random")
         try:
