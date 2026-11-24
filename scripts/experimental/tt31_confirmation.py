@@ -8,7 +8,14 @@ import numpy as np
 
 from .tt4_transfer_trial import _hash, _read, _write
 from .tt29_rally_physics import measured_launches
-from .tt31_curriculum import card, neutral_delivery, opening_candidates, play_card
+from .tt31_curriculum import (
+    ERRORS,
+    MOVEMENTS,
+    card,
+    neutral_delivery,
+    opening_candidates,
+    play_card,
+)
 from .tt31_curriculum_opponent import replay_arena
 from .tt31_ready import centered
 
@@ -56,10 +63,14 @@ def evaluate(feeds, folder, mode):
         if mode == "before"
         else "transition-checkpoint.json.gz"
     )
+    optical = checkpoint
+    if mode == "original":
+        checkpoint, optical = MOVEMENTS, ERRORS
     result = {
         "phase": "periodic",
         "cards": plan["cards"],
         "checkpoint_sha256": _hash(checkpoint),
+        "initial_optical_sha256": _hash(optical),
         "opening_side": 1,
         "ready": ready,
         "rows": [],
@@ -70,7 +81,7 @@ def evaluate(feeds, folder, mode):
                 feeds,
                 c,
                 checkpoint,
-                checkpoint,
+                optical,
                 Path(tmp) / "point.json.gz",
                 practice=False,
                 cap=24,
@@ -84,7 +95,7 @@ if __name__ == "__main__":
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("folder", type=Path)
     p.add_argument("feeds", type=Path)
-    p.add_argument("mode", choices=("plan", "before", "after"))
+    p.add_argument("mode", choices=("plan", "before", "after", "original"))
     a = p.parse_args()
     if a.mode == "plan":
         select(a.feeds, a.folder)

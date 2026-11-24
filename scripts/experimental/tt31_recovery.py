@@ -49,7 +49,7 @@ class Recovery(motor.RallyObjective):
         return rates, score
 
 
-def run(folder, feeds, reference, output):
+def run(folder, feeds, reference, output, *, unpracticed=False):
     matched = _read(reference)
     if len(matched["rows"]) != len(matched["cards"]):
         raise ValueError("Reference games incomplete")
@@ -65,8 +65,11 @@ def run(folder, feeds, reference, output):
         "initial_optical_sha256", source_hash
     ):
         raise ValueError("Unrecognized movement or optical checkpoint")
+    if unpracticed:
+        checkpoint, optical = MOVEMENTS, ERRORS
     result = {
         "ready": matched["ready"],
+        "unpracticed": unpracticed,
         "opening_side": 1,
         "phase": matched["phase"],
         "cards": matched["cards"],
@@ -113,5 +116,6 @@ if __name__ == "__main__":
     p = argparse.ArgumentParser(description=__doc__)
     for name in ("folder", "feeds", "reference", "output"):
         p.add_argument(name, type=Path)
+    p.add_argument("--unpracticed", action="store_true")
     a = p.parse_args()
-    run(a.folder, a.feeds, a.reference, a.output)
+    run(a.folder, a.feeds, a.reference, a.output, unpracticed=a.unpracticed)

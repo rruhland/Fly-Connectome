@@ -91,24 +91,62 @@ def main(root):
         p.stem[:-5]: measured(measured_plan, p)
         for p in sorted(root.glob("measured-*.json.gz"))
     }
-    courses = {
-        p.stem[:-5]: full(full_plan, p)
-        for p in sorted(root.glob("full-*.json.gz"))
-        if "plan" not in p.name and "checkpoint" not in p.name
-    }
-    courses.update(
-        {
-            p.stem[:-5]: full(full_plan, p)
-            for p in sorted(root.glob("ready-full-*.json.gz"))
-        }
+
+    def compare(plan, names):
+        results = {name: full(plan, root / (name + ".json.gz")) for name in names}
+        baseline = next(iter(results.values()))["identical_first_offer_check"]
+        if any(
+            row["identical_first_offer_check"] != baseline for row in results.values()
+        ):
+            raise ValueError("The physical first offer changed between learners")
+        return results
+
+    courses = compare(
+        full_plan,
+        [
+            "full-original",
+            "full-staged",
+            "full-mixed",
+            "ready-full-original",
+            "ready-full-staged",
+            "ready-full-mixed",
+            "ready-full-original-recall",
+            "ready-full-staged-recall",
+            "ready-full-mixed-recall",
+            "transition-full",
+            "recovery-full",
+            "recovery-original-full",
+        ],
     )
-    if any(
-        item["identical_first_offer_check"]
-        != courses["full-original"]["identical_first_offer_check"]
-        for item in courses.values()
-    ):
-        raise ValueError("The physical first offer changed between learners")
-    _write(root / "results.json", {"measured": measurements, "full_interval": courses})
+    periodic = compare(
+        _read(root / "ready-periodic-original.json.gz"),
+        [
+            "ready-periodic-original",
+            "ready-periodic-staged",
+            "transition-periodic",
+            "recovery-original-periodic",
+            "recovery-periodic",
+        ],
+    )
+    confirmation = compare(
+        _read(root / "confirm-plan.json.gz"),
+        [
+            "confirm-original",
+            "confirm-before",
+            "confirm-after",
+            "confirm-original-recovery",
+            "confirm-recovery",
+        ],
+    )
+    _write(
+        root / "results.json",
+        {
+            "measured": measurements,
+            "full_interval": courses,
+            "periodic": periodic,
+            "fresh_periodic": confirmation,
+        },
+    )
 
 
 if __name__ == "__main__":
