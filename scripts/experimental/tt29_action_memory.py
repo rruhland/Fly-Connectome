@@ -247,6 +247,9 @@ def run(
     reset_memory=False,
     no_memory=False,
     outcome_feedback=None,
+    optical_outcomes=None,
+    optical_checkpoint=None,
+    freeze_optical_outcomes=False,
     robust_contact=False,
     rally_objective=False,
     risk_screen=False,
@@ -278,7 +281,7 @@ def run(
     condition="stock",
     bounce=None,
 ):
-    from .tt4_transfer_trial import _hash, _write
+    from .tt4_transfer_trial import _hash, _read, _write
     from .tt29_endurance import audit
     from .tt29_partner import PartnerArena
     from .tt29_conditions import cooperative_targets, table_settings
@@ -292,7 +295,19 @@ def run(
         rally_objective = True
     if return_target < 1:
         raise ValueError("Return target must be positive")
+    if (optical_checkpoint or freeze_optical_outcomes) and not optical_outcomes:
+        raise ValueError("An optical checkpoint or freeze requires optical outcome mode")
+    if optical_outcomes and (view != "left+right" or not verify):
+        raise ValueError("Optical outcome learning requires verified plans and fixed stereo")
     incoming_checkpoint = _hash(checkpoint) if checkpoint is not None else None
+    incoming_optical = _hash(optical_checkpoint) if optical_checkpoint is not None else None
+    if optical_outcomes:
+        from .tt29_optical_outcomes import OpticalOutcomes, ShotResiduals
+
+        optical_values = (
+            _read(optical_checkpoint)["optical_outcome_checkpoint"] if optical_checkpoint else None
+        )
+        residuals = ShotResiduals(optical_values)
     measured_source = _hash(path)
     shots = measured_launches(path)
     settings = dict(
@@ -353,8 +368,6 @@ def run(
         outcomes = OutcomeMemory()
     delay_ident = EncoderDelay()
     if checkpoint is not None:
-        from .tt4_transfer_trial import _read
-
         for e in _read(checkpoint)["checkpoint"]:
             memory.add(
                 np.array(e["flight"]), np.array(e["targets"]), e["time_to_contact"]
@@ -400,8 +413,6 @@ def run(
     calibration = None
     fixed_lag = None
     if timing_checkpoint is not None:
-        from .tt4_transfer_trial import _read
-
         if probe_delay:
             raise ValueError("Choose prior solo timing or a new table probe")
         fixed_lag = int(_read(timing_checkpoint)["carried_lag"])
@@ -423,6 +434,8 @@ def run(
                 memory = Experience()
                 if outcome_feedback:
                     outcomes = OutcomeMemory()
+                if optical_outcomes:
+                    residuals = ShotResiduals(optical_values)
             arena.launch(shots[sid])
             opponent_seed = sid if seed_offset == 0 else sid + seed_offset + point
             arena.partner.reset(seed=opponent_seed)
@@ -469,6 +482,12 @@ def run(
                     planner, outcomes, learn=outcome_feedback == "learn"
                 )
                 planner.predict = feedback
+            optical_feedback = None
+            if optical_outcomes:
+                optical_feedback = OpticalOutcomes(
+                    planner, residuals, learn=optical_outcomes == "learn", freeze=freeze_optical_outcomes
+                )
+                planner.predict = optical_feedback
             policy.nominal = planner
             arena.streams = tuple(view.split("+"))
             registrations = {}
@@ -508,6 +527,8 @@ def run(
                 )
                 if captured is not None:
                     eye.observe(*captured)
+                    if optical_feedback is not None:
+                        optical_feedback.observe(eye)
                 dq = (q - prev) / arena.control_dt
                 if refine:
                     refine_after_bounce(policy, step, eye.latest, q, dq, x)
@@ -530,10 +551,12 @@ def run(
                     if step % 12 == 0:
                         lag_history.append(ahead)
                 u = policy.command(step + ahead, sample, q_control, dq_control, x)
+                if optical_feedback is not None:
+                    optical_feedback.command(policy.tape)
                 x = np.clip(x + u * planner.rates * arena.control_dt, lo, hi)
                 prev = q
                 applied = pipeline.command(u)
-                _, _, done, cap, info = arena.exchange(applied, np.zeros(5))
+                _, reward, done, cap, info = arena.exchange(applied, np.zeros(5))
                 actions.append(applied.tolist())
                 if feedback is not None:
                     feedback.observe(policy.tape, info["events"])
@@ -552,6 +575,8 @@ def run(
                             flush=True,
                         )
                 if done or cap or arena.legal_returns + arena.rival_returns - 1 >= return_target:
+                    if optical_feedback is not None:
+                        optical_feedback.finish(reward)
                     break
             stats = audit(arena.events)
             rows.append(
@@ -579,6 +604,10 @@ def run(
             if feedback is not None:
                 rows[-1]["outcome_feedback"] = dict(
                     attempts=feedback.log, reranked_batches=feedback.changed
+                )
+            if optical_feedback is not None:
+                rows[-1]["optical_outcomes"] = dict(
+                    attempts=optical_feedback.log, reranked_batches=optical_feedback.changed
                 )
             print(
                 sid,
@@ -641,6 +670,12 @@ def run(
                     spread=spread,
                     rows=rows,
                     checkpoint=retained,
+                    **(dict(
+                        optical_outcomes=optical_outcomes,
+                        optical_outcome_checkpoint=residuals.checkpoint(),
+                        initial_optical_checkpoint_sha256=incoming_optical,
+                        frozen_optical_outcomes=freeze_optical_outcomes,
+                    ) if optical_outcomes else {}),
                 ),
             )
     finally:
@@ -667,6 +702,16 @@ if __name__ == "__main__":
     p.add_argument(
         "--outcome-feedback", choices=("record", "learn"),
         help="Log executed rollout outcomes or also use them to rerank candidates",
+    )
+    p.add_argument(
+        "--optical-outcomes", choices=("record", "learn"),
+        help="Observe outgoing shots with RGB and optionally apply the signed model error",
+    )
+    p.add_argument(
+        "--optical-checkpoint", type=Path, help="Load the optical samples from an earlier course output"
+    )
+    p.add_argument(
+        "--freeze-optical-outcomes", action="store_true", help="Keep the optical samples fixed during play"
     )
     p.add_argument("--seed-offset", type=int, default=0)
     p.add_argument("--return-target", type=int, default=100)
@@ -716,6 +761,9 @@ if __name__ == "__main__":
         reset_memory=args.reset_memory,
         no_memory=args.no_memory,
         outcome_feedback=args.outcome_feedback,
+        optical_outcomes=args.optical_outcomes,
+        optical_checkpoint=args.optical_checkpoint,
+        freeze_optical_outcomes=args.freeze_optical_outcomes,
         robust_contact=args.robust_contact,
         rally_objective=args.rally_objective,
         risk_screen=args.risk_screen,

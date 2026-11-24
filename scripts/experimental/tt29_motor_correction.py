@@ -249,13 +249,13 @@ def run(
             from . import tt29_optical_outcomes
 
             class EditedOpticalOutcomes(tt29_optical_outcomes.OpticalOutcomes):
-                def command(self, tape, step):
+                def command(self, tape):
                     # Concatenation makes an independent command array. The
                     # original tail view identifies the checked rollout row.
                     edited = getattr(self.planner, "edited_rollout", None)
                     if edited is not None and tape is edited[0]:
                         tape = edited[1]
-                    super().command(tape, step)
+                    super().command(tape)
 
             stack.enter_context(
                 patch.object(
