@@ -4,7 +4,9 @@ from types import SimpleNamespace
 
 import numpy as np
 
-from scripts.experimental.tt29_optical_outcomes import OpticalOutcomes, OutgoingFlight, ShotResiduals
+from scripts.experimental.tt29_optical_outcomes import (
+    OpticalOutcomes, OutgoingFlight, ShotResiduals, censored_forward_reach,
+)
 from scripts.experimental.tt29_vision import VERTICAL, flight_terms
 
 
@@ -62,3 +64,50 @@ def test_selected_shot_uses_the_rollout_clock():
     arena.data.time = 2.
     feedback.command(commands[0])
     assert feedback.pending[0].strike == 1.375
+
+
+def test_censored_reach_requires_observed_discontinuity_and_clear_shortfall():
+    strike = .20
+    times = np.array([.137, .17, .203, .236, .27, .303])
+    paddle = np.array([.18, -1.24, 1.12])
+    incoming = np.array([.25, -3.25, .7])
+
+    def samples(departure):
+        departure = np.asarray(departure)
+        return [
+            (t, paddle + (t - strike) * (incoming if t < strike else departure)
+             + .5 * (t - strike)**2 * VERTICAL)
+            for t in times
+        ]
+
+    for short in [(-2.5, -.5, -.2), (0., .1, -1.), (-1., 1.0, -2.7)]:
+        bound = censored_forward_reach(samples(short), strike)
+        assert bound is not None and bound < -.5
+
+    assert censored_forward_reach(samples((.2, 4.2, 2.2)), strike) is None
+    assert censored_forward_reach(samples(incoming), strike) is None
+    assert censored_forward_reach(samples(incoming)[:2] + samples(incoming)[3:], strike) is None
+    assert censored_forward_reach(samples((-2.5, -.5, -.2))[:3], strike) is None
+
+
+def test_three_outward_frames_can_bound_a_short_visible_descent():
+    samples = [
+        (.215, np.array([.17, -1.24, .976])),
+        (.248, np.array([.15, -1.21, .890])),
+        (.281, np.array([.13, -1.19, .789])),
+    ]
+    assert censored_forward_reach(samples, .20) < -1.
+
+
+def test_censored_sample_preserves_only_the_upper_bound_on_forward_error():
+    memory = ShotResiduals()
+    near = np.zeros(6)
+    contexts = np.array([near, near, near + 8.])
+    reach = np.array([.30, .95, .30])
+    memory.add_censored(near, -1.5)
+    state = memory.checkpoint()
+    assert state["samples"] == []
+    assert state["censored_samples"][0]["error_upper_m"] == -1.5
+    penalty = ShotResiduals(state).censored_penalty(contexts, reach)
+    assert penalty[0] > penalty[1] > .0
+    assert penalty[2] < 1e-10

@@ -250,6 +250,7 @@ def run(
     optical_outcomes=None,
     optical_checkpoint=None,
     freeze_optical_outcomes=False,
+    censored_optical_outcomes=False,
     robust_contact=False,
     rally_objective=False,
     risk_screen=False,
@@ -295,8 +296,8 @@ def run(
         rally_objective = True
     if return_target < 1:
         raise ValueError("Return target must be positive")
-    if (optical_checkpoint or freeze_optical_outcomes) and not optical_outcomes:
-        raise ValueError("An optical checkpoint or freeze requires optical outcome mode")
+    if (optical_checkpoint or freeze_optical_outcomes or censored_optical_outcomes) and not optical_outcomes:
+        raise ValueError("Optical outcome options require an optical outcome mode")
     if optical_outcomes and (view != "left+right" or not verify):
         raise ValueError("Optical outcome learning requires verified plans and fixed stereo")
     incoming_checkpoint = _hash(checkpoint) if checkpoint is not None else None
@@ -485,7 +486,8 @@ def run(
             optical_feedback = None
             if optical_outcomes:
                 optical_feedback = OpticalOutcomes(
-                    planner, residuals, learn=optical_outcomes == "learn", freeze=freeze_optical_outcomes
+                    planner, residuals, learn=optical_outcomes == "learn",
+                    freeze=freeze_optical_outcomes, censored=censored_optical_outcomes,
                 )
                 planner.predict = optical_feedback
             policy.nominal = planner
@@ -520,6 +522,8 @@ def run(
             for step in range(arena.max_steps):
                 q = arena.joints.copy()
                 t = step * arena.control_dt
+                if optical_feedback is not None:
+                    optical_feedback.step = step
                 captured = (
                     pipeline.observe(t, capture(), q)
                     if step % camera_period == 0
@@ -675,6 +679,7 @@ def run(
                         optical_outcome_checkpoint=residuals.checkpoint(),
                         initial_optical_checkpoint_sha256=incoming_optical,
                         frozen_optical_outcomes=freeze_optical_outcomes,
+                        censored_optical_outcomes=censored_optical_outcomes,
                     ) if optical_outcomes else {}),
                 ),
             )
@@ -712,6 +717,10 @@ if __name__ == "__main__":
     )
     p.add_argument(
         "--freeze-optical-outcomes", action="store_true", help="Keep the optical samples fixed during play"
+    )
+    p.add_argument(
+        "--censored-optical-outcomes", action="store_true",
+        help="Learn from visible shots that stay on the near side after the paddle deflects them",
     )
     p.add_argument("--seed-offset", type=int, default=0)
     p.add_argument("--return-target", type=int, default=100)
@@ -764,6 +773,7 @@ if __name__ == "__main__":
         optical_outcomes=args.optical_outcomes,
         optical_checkpoint=args.optical_checkpoint,
         freeze_optical_outcomes=args.freeze_optical_outcomes,
+        censored_optical_outcomes=args.censored_optical_outcomes,
         robust_contact=args.robust_contact,
         rally_objective=args.rally_objective,
         risk_screen=args.risk_screen,
