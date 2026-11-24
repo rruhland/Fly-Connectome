@@ -14,7 +14,7 @@ from .tt29_rally_physics import measured_launches
 from .tt31_curriculum import card, opening_candidates
 from .tt31_ready import centered
 from .tt37_joint_deep import DeepField
-from .tt37_joint_report import paired, read_complete
+from .tt37_joint_report import paired, read_complete, replay_case
 from .tt38_joint_mpc_report import metrics
 from .tt39_hindsight import DT, OPTICS, OUT, flight, paths, propose
 
@@ -175,6 +175,20 @@ def report(folder):
     ))
 
 
+def audit(folder):
+    p = paths(folder, "prospective-commit")
+    d = read_complete(p)
+    stock = read_complete(paths(folder, "prospective-stock"))
+    if d["cards"] != stock["cards"]:
+        raise ValueError("The committed and stock assessment cards do not match")
+    i = max(range(len(d["cards"])), key=lambda i: (
+        d["rows"][i]["score"]["learner"] - stock["rows"][i]["score"]["learner"]))
+    a = replay_case(d["ready"], "random", d["cards"][i], d["rows"][i])
+    _write(folder / "hindsight-prospective-audit.json", dict(
+        stock_own=stock["rows"][i]["score"]["learner"], source_sha256=_hash(p), **a,
+    ))
+
+
 def replay_cost(folder):
     """Time the already pinned practice decisions without trying a second physical action."""
     practice = read_complete(paths(folder, "practice"))
@@ -222,7 +236,7 @@ def replay_cost(folder):
 
 if __name__ == "__main__":
     p = argparse.ArgumentParser(description=__doc__)
-    p.add_argument("stage", choices=("plan", "stock", "commit", "report", "timing"))
+    p.add_argument("stage", choices=("plan", "stock", "commit", "report", "timing", "audit"))
     p.add_argument("--folder", type=Path, default=OUT)
     p.add_argument("--feeds", type=Path, default=Path("/tmp/tt25-rallies.json"))
     p.add_argument("--optic", type=Path, default=OPTICS)
@@ -233,5 +247,7 @@ if __name__ == "__main__":
         report(cli.folder)
     elif cli.stage == "timing":
         replay_cost(cli.folder)
+    elif cli.stage == "audit":
+        audit(cli.folder)
     else:
         evaluate(cli.folder, cli.feeds, cli.optic, cli.stage)
