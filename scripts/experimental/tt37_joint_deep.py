@@ -120,6 +120,7 @@ def play(environment, renderer, rig, stride, lower, upper, ready, card, shot, fi
     if hasattr(field, "begin_point"):
         field.begin_point()
     score_feedback = getattr(field, "score_feedback", None)
+    record_command = getattr(field, "record_command", None)
     started = process_time()
     for tick in range(environment.max_steps):
         q = environment.joints
@@ -136,6 +137,8 @@ def play(environment, renderer, rig, stride, lower, upper, ready, card, shot, fi
                 field_ticks += 1
         command = np.clip((np.clip(desired, lower, upper) - reference) / stride, -.8, .8)
         reference = np.clip(reference + command * stride, lower, upper)
+        if record_command is not None:
+            record_command(tick, optical, q, reference)
         _, _, done, capped, referee = environment.exchange(command, FAR_COMMAND)
         commands.append(command.tolist())
         if score_feedback is not None and any(e["kind"] == "legal_return" and e["side"] == 1

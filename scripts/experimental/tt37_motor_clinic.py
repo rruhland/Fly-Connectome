@@ -261,6 +261,12 @@ def point(
     repair=False,
     camera_stride=2,
     economy=False,
+    servo=None,
+    settled=False,
+    rescue=None,
+    joint_experience=None,
+    fallback=None,
+    impact=None,
 ):
     actor = joint.JointPolicy(model | {"ready": surf.ready.tolist()}, stride, lo, hi)
     eye = joint.Vision(rig, a.control_dt)
@@ -275,8 +281,15 @@ def point(
         engine = optical_engine
         engine.previous = None
         engine.bounced = False
+    if joint_experience is not None:
+        joint_experience.begin_point()
     start_time = process_time()
     perception_cpu = arena_cpu = 0.0
+    online_value = getattr(engine, "motor_value", None)
+    if not hasattr(online_value, "feedback"):
+        online_value = None
+    if online_value is not None:
+        online_value.begin_point()
     pending = None
     sensed_inbound = False
     records = []
@@ -284,9 +297,14 @@ def point(
     tape = None
     deadline = -100
     tape_start = retry_tick = -1
+    fallback_until = -1
+    fallback_ticks = 0
     lastprep = -100
     prep = surf.ready
     history = ArrivalHistory()
+    if servo is not None:
+        servo.begin()
+    last_servo = -100
     if response is not None:
         response.last = None
     for tick in range(a.max_steps):
@@ -301,6 +319,27 @@ def point(
         now = tick * a.control_dt
         if refine:
             obs = history.update(now, obs)
+        if (
+            servo is not None
+            and tape is not None
+            and obs is not None
+            and tick % camera_stride == 0
+            and tick - last_servo >= 3
+            and tick - tape_start >= 2
+            and 0.022 < obs[0] < 0.158
+            and optical_engine.sync()
+        ):
+            adjusted = servo.inspect(
+                optical_engine, tape[tick - tape_start :], obs[0], a.control_dt, tick, q
+            )
+            last_servo = tick
+            if adjusted is not None:
+                if online_value is not None:
+                    online_value.issued(None)
+                tape = adjusted
+                tape_start = tick
+                pending = None
+                retry_tick = -1
         if (
             refine
             and engine is not None
@@ -325,6 +364,8 @@ def point(
                     keep = True
                     if note["status"] == "corrected":
                         pending = None
+                        if online_value is not None:
+                            online_value.issued(None)
             elif refresh and optical_engine is not None and optical_engine.sync():
                 # Check the previously issued motion against the newer images first.
                 remainder = tape[tick - tape_start :]
@@ -341,7 +382,14 @@ def point(
             tape = None
             desired = surf.ready
             if obs is not None and 0.03 < obs[0] < 0.80 and now > deadline:
-                if obs[0] <= cut and (not guided or 0.76 < obs[2] < 1.38):
+                ready_to_commit = (
+                    not settled or obs[0] < 0.12 or eye.eye.filter.settled(now)
+                )
+                if (
+                    obs[0] <= cut
+                    and ready_to_commit
+                    and (not guided or 0.76 < obs[2] < 1.38)
+                ):
                     eta = obs[0]
                     fit = geometry(surf, obs)
                     x = np.r_[obs[1:6], q[:5]]
@@ -357,6 +405,8 @@ def point(
                     )
                     shift = 0.0
                     selected = remembered
+                    rescued = None
+                    impact_review = None
                     trace = []
                     score = None
                     if engine is not None and (
@@ -435,24 +485,54 @@ def point(
                                         alternative[0],
                                     )
                                     break
+                        if rescue is not None and score is None:
+                            rescued = rescue.plan(optical_engine, surf, obs, selected)
+                            trace.extend(rescued["trace"])
+                            if rescued["tape"] is not None:
+                                score = rescued["score"]
+                                eta = rescued["eta"]
+                        if impact is not None and optical_engine is not None and (
+                            rescued is None or rescued["tape"] is None
+                        ):
+                            impact_review = impact.plan(
+                                optical_engine, surf, obs, selected, score, fit, eta
+                            )
+                            trace.extend(impact_review["trace"])
+                            if impact_review["tape"] is not None:
+                                score = impact_review["score"]
+                                eta = impact_review["eta"]
                         if optical_engine is not None:
                             pending = (
                                 {"x": x.tolist(), "change": selected.tolist()}
                                 if shift == 0
+                                and (rescued is None or rescued["tape"] is None)
+                                and (impact_review is None or impact_review["tape"] is None)
                                 else None
                             )
                         elif score is not None and shift == 0:
                             bank.append({"x": x.tolist(), "change": selected.tolist()})
-                    tape = schedules(
-                        *fit,
-                        eta,
-                        np.array([selected]),
-                        a.control_dt,
-                        surf.ready,
-                        max(1, round((eta + 0.075) / a.control_dt)),
-                    )[0]
+                    if online_value is not None:
+                        online_value.issued(score)
+                    if impact_review is not None and impact_review["tape"] is not None:
+                        tape = impact_review["tape"]
+                    elif rescued is not None and rescued["tape"] is not None:
+                        tape = rescued["tape"]
+                    else:
+                        tape = schedules(
+                            *fit,
+                            eta,
+                            np.array([selected]),
+                            a.control_dt,
+                            surf.ready,
+                            max(1, round((eta + 0.075) / a.control_dt)),
+                        )[0]
                     desired = tape[0]
                     tape_start = tick
+                    fallback_until = (
+                        tick + len(tape)
+                        if score is None and fallback is not None
+                        else -1
+                    )
                     deadline = now + eta + 0.26
                     retry_tick = (
                         tick + max(3, round((eta - 0.092) / a.control_dt))
@@ -463,6 +543,9 @@ def point(
                         {
                             "tick": tick,
                             "surface_shift": shift,
+                            "camera_rescue": None
+                            if rescued is None
+                            else rescued["note"],
                             "context": x.tolist(),
                             "choices": sum(t["trials"] for t in trace),
                             "good": sum(t["legal"] for t in trace),
@@ -471,6 +554,8 @@ def point(
                             "action": selected.tolist(),
                         }
                     )
+                    if impact_review is not None:
+                        records[-1]["impact_margin"] = impact_review["note"]
                 elif not guided or 0.76 < obs[2] < 1.38:
                     if tick - lastprep >= 4:
                         p, v = geometry(surf, obs)
@@ -496,10 +581,38 @@ def point(
                     proposed, weight = pupil.get(optical, q)
                     if proposed is not None:
                         desired = surf.ready + weight * (proposed - surf.ready)
+        if fallback is not None and tick < fallback_until:
+            from .tt38_scored_joints import optical_state
+
+            view = optical_state(eye.eye, now)
+            if view is not None and abs(view[4]) > 0.9:
+                proposal, confidence = fallback.get(view, q)
+                if proposal is not None and confidence > 0.35:
+                    desired = surf.ready + confidence * (proposal - surf.ready)
+                    fallback_ticks += 1
+                    pending = None
+                    if online_value is not None:
+                        online_value.issued(None)
         action = actor.drive(desired, q, 0.8)
+        if joint_experience is not None:
+            from .tt38_scored_joints import optical_state
+
+            joint_experience.step(tick, optical_state(eye.eye, now), q, actor.reference)
         started = process_time()
         _, _, done, capped, info = a.exchange(action, FAR)
         arena_cpu += process_time() - started
+        if joint_experience is not None and any(
+            e["kind"] == "legal_return" and e["side"] == 1 for e in info["events"]
+        ):
+            joint_experience.credit()
+        if online_value is not None:
+            online_value.feedback(
+                [e["side"] for e in info["events"] if e["kind"] == "legal_return"], done
+            )
+        if servo is not None and any(
+            e["kind"] == "legal_return" and e["side"] == 1 for e in info["events"]
+        ):
+            servo.repay()
         if pending is not None and any(
             e["kind"] == "legal_return" and e["side"] == 1 for e in info["events"]
         ):
@@ -521,6 +634,8 @@ def point(
         "perception_cpu_s": perception_cpu,
         "simulation_s": float(a.data.time),
         "actions": actions,
+        "servo": list(servo.notes) if servo is not None else [],
+        "direct_fallback_ticks": fallback_ticks,
         "records": records,
         "events": a.events,
         "placements": a.point_placements(),
@@ -531,6 +646,8 @@ def point(
 
 
 def run(args):
+    if args.learn_value and not (args.motor_value or args.empty_value):
+        raise ValueError("Supply a starting motor-value model")
     plan = _read(args.plan)
     cards = plan[args.group][args.start : args.start + args.n]
     shots = measured_launches(args.feeds)
@@ -592,6 +709,13 @@ def run(args):
         with np.load(args.rollin) as z:
             pupil = DeepField(z, "local")
         out["pupil_rollin"] = str(args.rollin)
+    fallback = None
+    if args.fallback_bank:
+        from .tt37_joint_deep import DeepField
+
+        with np.load(args.fallback_bank) as z:
+            fallback = DeepField(z, "local")
+        out["direct_fallback"] = str(args.fallback_bank)
     vision_source = args.visual
     if args.blank_vision:
         if args.visual or args.learn_vision:
@@ -605,6 +729,45 @@ def run(args):
 
         vision_source = StreamingInertia(args.visual, period=args.camera_stride / 60)
         out["online_visual_checkpoint"] = str(args.learn_vision)
+    servo = None
+    if args.servo:
+        from .tt38_joint_servo import JointServo
+
+        if args.mode != "optical-learn":
+            raise ValueError("Servo learning requires an optical learning run")
+        servo = JointServo()
+    if args.settled:
+        if not args.visual:
+            raise ValueError(
+                "A calibrated rebound camera is required to time the command"
+            )
+        with np.load(args.visual) as z:
+            if "rebound_states" not in z:
+                raise ValueError("The camera must be trained on visible reversals")
+        out["settled"] = True
+    rescue = None
+    if args.camera_rescue:
+        from .tt38_camera_rescue import CameraRescue
+
+        if not args.mode.startswith("optical-"):
+            raise ValueError(
+                "Private rescue requires a sensor-initialized nominal model"
+            )
+        rescue = CameraRescue(
+            search_seed=args.rescue_seed,
+            batch=args.rescue_batch,
+            rounds=args.rescue_rounds,
+        )
+        out["camera_rescue"] = {
+            "seed": args.rescue_seed,
+            "batch": args.rescue_batch,
+            "rounds": args.rescue_rounds,
+        }
+    joint_experience = None
+    if args.record_joints:
+        from .tt38_scored_joints import ScoredJoints
+
+        joint_experience = ScoredJoints()
     changes = generate(args.samples)
     with centered(surface.ready):
         a = arena()
@@ -615,14 +778,29 @@ def run(args):
             if args.mode.startswith("optical-")
             else None
         )
-        if args.motor_value:
-            from .tt38_motor_value import MotorValue
+        if args.motor_value or args.empty_value:
+            from .tt38_motor_value import MotorValue, OnlineMotorValue
 
             if optical_engine is None:
                 raise ValueError(
                     "Physical value learning requires an independent sensor-driven model"
                 )
-            optical_engine.motor_value = MotorValue(_read(args.motor_value))
+            cls = OnlineMotorValue if args.learn_value else MotorValue
+            start_value = (
+                _read(args.motor_value)
+                if args.motor_value
+                else {"x": [np.zeros(11)], "y": [[0.5, 0.5]]}
+            )
+            if args.rally_value:
+                from .tt38_rally_value import OnlineRallyValue, RallyValue
+
+                cls = OnlineRallyValue if args.learn_value else RallyValue
+                if args.empty_value:
+                    start_value["y"] = [[0.5, 0.5, 0.5, 0.5]]
+                if len(start_value["y"][0]) != 4:
+                    raise ValueError("Rally value requires a four-outcome checkpoint")
+                out["rally_value"] = True
+            optical_engine.motor_value = cls(start_value)
             out["motor_value"] = str(args.motor_value)
         stereo, rig, stride, lo, hi = joint.resources(a)
         try:
@@ -660,7 +838,17 @@ def run(args):
                     args.repair,
                     args.camera_stride,
                     args.economy,
+                    servo,
+                    args.settled,
+                    rescue,
+                    joint_experience,
+                    fallback,
                 )
+                if servo is not None:
+                    out["late_motor_memory"] = [
+                        {"state": y.tolist(), "delta": v.tolist()}
+                        for y, v in servo.memory
+                    ]
                 r["memory_size"] = [start_size, len(bank)]
                 if response is not None:
                     out["online_outcomes"] = [
@@ -670,8 +858,16 @@ def run(args):
                 if args.learn_vision:
                     r["optical_labels_so_far"] = vision_source.added
                     vision_source.save(args.learn_vision)
+                if args.learn_value:
+                    out["value_experience"] = optical_engine.motor_value.examples
+                    r["value_examples_so_far"] = len(out["value_experience"])
                 out["rows"].append(r)
                 _write(args.out, out)
+                if joint_experience is not None:
+                    joint_experience.complete(c)
+                    joint_experience.save(
+                        args.record_joints, surface.ready, args.depth, args.out
+                    )
                 if frame_log is not None:
                     frame_log.save()
                 if archive:
@@ -707,6 +903,9 @@ if __name__ == "__main__":
     p.add_argument("--samples", type=int, default=80)
     p.add_argument("--memory", type=Path)
     p.add_argument("--motor-value", type=Path)
+    p.add_argument("--learn-value", action="store_true")
+    p.add_argument("--empty-value", action="store_true")
+    p.add_argument("--rally-value", action="store_true")
     p.add_argument("--cap", type=int, default=24)
     p.add_argument("--depth", type=float, default=-1.13)
     p.add_argument("--surface", type=float, default=0.35)
@@ -720,15 +919,23 @@ if __name__ == "__main__":
     p.add_argument("--forest", type=Path)
     p.add_argument("--variable", action="store_true")
     p.add_argument("--frames", type=Path)
+    p.add_argument("--record-joints", type=Path)
     p.add_argument("--visual", type=Path)
     p.add_argument("--refresh", action="store_true")
     p.add_argument("--body", action="store_true")
     p.add_argument("--robust", action="store_true")
     p.add_argument("--rollin", type=Path)
+    p.add_argument("--fallback-bank", type=Path)
     p.add_argument("--blank-vision", action="store_true")
     p.add_argument("--learn-vision", type=Path)
     p.add_argument("--repair", action="store_true")
     p.add_argument("--camera-stride", type=int, choices=(1, 2), default=2)
     p.add_argument("--economy", action="store_true")
+    p.add_argument("--servo", action="store_true")
+    p.add_argument("--settled", action="store_true")
+    p.add_argument("--camera-rescue", action="store_true")
+    p.add_argument("--rescue-seed", type=int, default=3814647)
+    p.add_argument("--rescue-batch", type=int, default=56)
+    p.add_argument("--rescue-rounds", type=int, default=3)
     p.add_argument("--forget-between-points", action="store_true")
     run(p.parse_args())

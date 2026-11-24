@@ -42,7 +42,10 @@ class MotorValue:
         self.coef = np.linalg.solve(z.T @ z + penalty, z.T @ self.y)
 
     def predict(self, outcomes):
-        x = features(outcomes) / SCALE
+        return self.predict_features(features(outcomes))
+
+    def predict_features(self, data):
+        x = np.asarray(data) / SCALE
         logits = np.c_[np.ones(len(x)), x] @ self.coef
         ds = np.mean((x[:, None, :] - self.x[None, :, :]) ** 2, axis=2)
         w = np.exp(-1.5 * np.minimum(ds, 100.0))
@@ -54,6 +57,50 @@ class MotorValue:
     def cost(self, outcomes):
         p = self.predict(outcomes)
         return 7 * (1.0 - p[:, 0]) + 4 * (1.0 - p[:, 1]) + 0.23 * outcomes[:, 0]
+
+
+class OnlineMotorValue(MotorValue):
+    """Credit the last issued proposal once both physical scores have resolved."""
+
+    def __init__(self, dataset):
+        super().__init__(dataset)
+        self.prior_x = list(dataset["x"])
+        self.prior_y = list(dataset["y"])
+        self.examples = []
+        self.begin_point()
+
+    def begin_point(self):
+        self.pending = None
+        self.awaiting = None
+
+    def issued(self, prediction):
+        self.pending = (
+            features(prediction)[0].tolist() if prediction is not None else None
+        )
+
+    def learn(self, x, y):
+        self.examples.append((x, y))
+        online = self.examples[-512:]
+        super().__init__(
+            {
+                "x": self.prior_x + [v[0] for v in online],
+                "y": self.prior_y + [v[1] for v in online],
+            }
+        )
+
+    def feedback(self, sides, terminal):
+        for side in sides:
+            if side == 1:
+                self.awaiting, self.pending = self.pending, None
+            elif self.awaiting is not None:
+                self.learn(self.awaiting, [1.0, 1.0])
+                self.awaiting = None
+        if terminal:
+            if self.awaiting is not None:
+                self.learn(self.awaiting, [1.0, 0.0])
+            if self.pending is not None:
+                self.learn(self.pending, [0.0, 0.0])
+            self.begin_point()
 
 
 def records(paths):
@@ -120,15 +167,7 @@ def fit(paths, output):
         if not test.any():
             continue
         model = MotorValue({"x": x[~test], "y": y[~test]})
-        raw = x[test] / SCALE
-        z = np.c_[np.ones(len(raw)), raw]
-        wt = np.exp(
-            -1.5 * np.mean((raw[:, None, :] - model.x[None, :, :]) ** 2, axis=2)
-        )
-        res = model.y - np.c_[np.ones(len(model.x)), model.x] @ model.coef
-        pred[test] = np.clip(
-            z @ model.coef + wt @ res / (8 + wt.sum(axis=1, keepdims=True)), 0.01, 0.99
-        )
+        pred[test] = model.predict_features(x[test])
         naive[test] = model.mean
     dataset.update(
         n=len(y),

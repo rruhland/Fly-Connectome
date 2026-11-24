@@ -72,6 +72,24 @@ class ReboundReadout(VisualInertia):
         self.track = deque(maxlen=16)
         self.turn = None
 
+    def settled(self, now):
+        """The recently observed rise supplies velocity independently of the pre-bounce fit."""
+        if len(self.track) < 3:
+            return False
+        a, b, c = list(self.track)[-3:]
+        times = np.asarray([a[0], b[0], c[0]])
+        if (
+            now - times[-1] > self.period + 0.001
+            or np.max(np.diff(times)) > 1.5 * self.period
+        ):
+            return False
+        secants = (
+            np.diff(np.asarray([a[1], b[1], c[1]]), axis=0) / np.diff(times)[:, None]
+        )
+        if min(secants[:, 2]) > 0.16 and np.linalg.norm(secants[1] - secants[0]) < 0.75:
+            return True
+        return self.turn is not None and 0.075 < now - self.turn[0] < 0.32
+
     def update(self, now, point, state):
         if (
             self.last_time is None
