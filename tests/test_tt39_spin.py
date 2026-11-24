@@ -73,3 +73,29 @@ def test_delayed_label_rejects_other_point_and_reversal():
     assert delayed(opposed, groups, 0, 1/60) is None
     groups[-1, 1] = 2
     assert delayed(r, groups, 0, 1/60) is None
+
+
+def test_live_multirate_bridge_leaves_translation_on_old_exposures():
+    from collections import Counter, deque
+    from types import SimpleNamespace
+
+    from scripts.experimental.tt39_spin_live import MultirateOptics
+
+    class Original:
+        def __init__(self, tracker, checkpoint):
+            self.filter = SimpleNamespace(track=deque(), rotation=lambda now: np.array([1., 2., 3.]))
+            self.observations = []
+
+        def observe(self, time, frames, q):
+            self.observations.append(time)
+            return SimpleNamespace(time=time, position=np.array([0., .94, 1.04]),
+                                   velocity=np.array([0., -3.9, .26]))
+
+    f = MultirateOptics(Original, None, 'ignored', {'settings': SETTINGS}, Counter())
+    frames = {}
+    first = f.observe(0., frames, None)
+    assert f.observe(1/60, frames, None) is first
+    second = f.observe(2/60, frames, None)
+    assert f.observe(3/60, frames, None) is second
+    assert f.base.observations == [0., 2/60]
+    np.testing.assert_allclose(f.filter.rotation(3/60), [1., 2., 3.])

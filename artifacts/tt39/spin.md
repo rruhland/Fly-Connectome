@@ -34,3 +34,11 @@ A separate holdout replay used nine issued physical action tapes from the contac
 | Actual spin, evaluator only | 16 / 17 | 1.86 m/s |
 
 All variants produced the **same** contact classification. The coupled estimate reduced mean departure error by 0.33 m/s versus the old impulse, but the median paired change was a 0.015 m/s worsening, with five improvements and eight worsenings greater than 0.01 m/s. The mean gain comes from reducing large errors. Leaving one release out gave mean changes from −0.72 to −0.01 m/s. This is enough to justify a small live check, not to infer a general gain from spin alone.
+
+## Paired live check
+
+The same four random-opponent starts and continuation seeds were played using the unchanged optical mentor's archived nominal comparator. The experimental arm retained the old 30 Hz p/v algorithm, identical issued-reference search settings and initial memory. Additional frames were read only by the angular branch, which fell back to the old impulse estimate unless a fitting tabletop reversal was already visible. This was an optical mentor with a private contact model, **not** the planner-free direct-joint pupil. The first physical far collision records matched exactly across arms.
+
+The coupled spin arm scored 0, 2, 1 and 1 near-side legal returns, versus 1, 0, 1 and 5 under the old angular readout (4 vs. 7 total). One point improved, one tied and two worsened. The absolute readiness refit difference was below 3e−16 rad. All eight legal-score histories independently rescored and their saved action tapes reproduced the full physical event logs exactly.
+
+**Result:** some rotation is observable and predicted departure can improve under fixed issued actions. It did not improve contact classification or live play in this test. Keep the existing translational and motor defaults. The arc estimate remains a diagnostic, not a deployable change.
