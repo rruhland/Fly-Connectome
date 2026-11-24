@@ -13,6 +13,41 @@ from .tt29_endurance import audit
 from .tt41_early_optics_carry import CONTROL
 
 
+def offer_at_cut(events,k):
+    # Only offers not already struck below the first actual changed command.
+    offers=[e for e in events if e["kind"]=="legal_return" and e["side"]==-1]
+    for e in reversed([e for e in offers if e["step"]<=k]):
+        if any(r["kind"]=="contact" and r["side"]==1 and e["time"]<r["time"]
+               and r["step"]<=k for r in events):
+            break
+        return e
+    return next((e for e in offers if e["step"]>k),None)
+
+
+def outcome(events,offer):
+    if offer is None:
+        return None
+    strike=None; legal=None; end=None
+    for e in events:
+        if e["time"]<=offer["time"]:
+            continue
+        if e["kind"]=="contact" and e["side"]==1 and strike is None:
+            strike=e
+        if e["kind"]=="legal_return" and e["side"]==1:
+            legal=e
+            break
+        if e["kind"]=="point" or e["kind"]=="timeout":
+            end=e
+            break
+        if e["kind"]=="legal_return" and e["side"]==-1:
+            break
+    return dict(contact=strike is not None,legal=legal is not None,
+                fault=end.get("reason") if end is not None else None,
+                departure=next((q["velocity"] for q in events if strike is not None and
+                                   q.get("collider")=="learner_racket" and q["kind"]=="separation" and
+                                   q["time"]>=strike["time"] and (legal is None or q["time"]<legal["time"])),None))
+
+
 def summarize(tape, output):
     current=_read(tape)
     source=_read(CONTROL)
@@ -56,7 +91,15 @@ def summarize(tape, output):
         prefix=[digest_json([e for e in r["events"] if e["step"]<=to]) for r in (old,new)]
         if exact is None and prefix[0]!=prefix[1]:
             raise ValueError("Identical commands did not yield identical actual events")
+        shared=None
+        next_at=None
+        if exact is not None:
+            offers=[offer_at_cut(r["events"],exact) for r in (old,new)]
+            if offers[0] is not None and offers[0]==offers[1]:
+                shared=offers[0]
+                next_at=[outcome(r["events"],shared) for r in (old,new)]
         rows.append(dict(card=c,own=near,alternating=both,opponent=answered,
+                         same_received_offer_at_first_diff=shared,first_shared_next=next_at,
                          paired_prefix_physical_events_exact=prefix[0]==prefix[1],
                          first_different_tick=exact,same_starting_memory=old["memory"]["before"]==new["memory"]["before"],
                          memory_after=after,

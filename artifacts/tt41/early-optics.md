@@ -32,6 +32,30 @@ The same elastic MPC, same motor bank, same frozen memory, same randomly varying
 
 Both changed points matched physical histories before the first different action, and the first affected incoming offer was actually returned by both arms. Later physical replies diverged. This is a small rally outcome comparison, not evidence of two newly saved first offers. The inserted readout took 74.6 ms of additional CPU across 661 altered-arm camera exposures, about 0.113 ms/exposure. That number excludes the already present renderer, stock filter and motor search. These results don't establish broad transfer or continuous 100-return play. [Paired physical runs](early-optics-live.json.gz)
 
+## Stronger carried online comparison
+
+The optical-only player did not beat the 109-return carried controller. I reused all twelve replication cards in the original order, 47 initially credited physical practice strokes, the exact 321-row starting digest, a 768-row memory limit, intersected camera credit, the original random opponent and the 200-stroke cap. Every game continued to update memory. The archived stock column and the alternate column are whole physical courses. They do not hold the learned state fixed after the first game.
+
+| Release | Stock own legal | Earlier optics own legal |
+| --- | ---: | ---: |
+| 12109 | 8 | 6 |
+| 9812 | 6 | 20 |
+| 5098 | 17 | 9 |
+| 3173 | 5 | 7 |
+| 12259 | 1 | 16 |
+| 8510 | 0 | 0 |
+| 9171 | 13 | 8 |
+| 4570 | 9 | 1 |
+| 5481 | 8 | 8 |
+| 11023 | 6 | 6 |
+| 10873 | 1 | 6 |
+| 14390 | 35 | 17 |
+| **Total** | **109** | **104** |
+
+There were four gains, five losses and three ties. Total alternating strokes were 230 versus 220, and the longest point fell from 35 near legal returns and 71 alternating strokes to 20 near legal returns and 41 alternating strokes. No game reached the cap. Independent rescoring verified all twelve physical prefixes through the first changed command. One game's entire tapes matched. Of the eleven changed games, the first common incoming opportunity was returned by both players ten times. The alternate earned one local rescue on 12259. On that moderate-low shared offer, stock contacted the ball but sent it out toward the near player. The alternate produced a legal strike and the rally continued for 16 own returns. The memory had already diverged from previous games, so this is not an isolated proof that phase alone caused the rescue.
+
+The inserted estimator cost 0.733 seconds of CPU across 5,593 actual camera exposures in the twelve alternate games, or 0.131 ms/exposure on average. The whole alternate pipeline took 335.2 seconds of CPU and the archived stock pipeline took 374.9. Different action tapes and point lengths prevent treating that as a speedup. The independent 30 Hz stereo replay had a .89 ms 99th percentile added CPU cost, while the simulation's full motor-planning and rendering pipeline remains much more expensive. The final independently hashed memory checkpoint contains 768 actual credited segments. This observer is therefore retained as an experimental option, not recommended as a new default for the stronger controller. [Whole-course commands](early-optics-carry.json.gz) · [Paired scoring and timing](early-optics-carry-score.json) · [Final online bank](early-optics-carry.npz) · [Observer CPU profile](early-optics-cpu.json)
+
 ## Reproduce
 
 ```sh
@@ -43,5 +67,6 @@ python -m scripts.experimental.tt41_early_optics artifacts/tt41/early-optics-ind
 python -m scripts.experimental.tt41_early_optics_contact artifacts/tt41/early-optics-rising-contact.json
 python -m scripts.experimental.tt41_early_optics_live artifacts/tt41/early-optics-live.json.gz
 python -m scripts.experimental.tt41_early_optics_carry artifacts/tt41/early-optics-carry.json.gz
+python -m scripts.experimental.tt41_early_optics_carry_report artifacts/tt41/early-optics-carry.json.gz artifacts/tt41/early-optics-carry-score.json
 python -m pytest -q tests/test_tt41_early_optics.py
 ```
