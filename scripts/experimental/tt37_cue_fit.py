@@ -91,8 +91,9 @@ def group_rows(docs, phase, later=None):
                 if identity in seen:
                     raise ValueError('Forecast sample counted twice')
                 seen.add(identity)
-                if not row['tick_s'] < row['contact_s'] < row['label_capture_s']:
-                    raise ValueError('Forecast marker crosses a physical contact boundary')
+                if (row['contact_s'] not in p['far_contacts_s']
+                        or not row['tick_s'] < row['contact_s'] < row['label_capture_s']):
+                    raise ValueError('Forecast marker crosses or does not match an audited far contact')
                 rows.append(dict(row, release=card['id'], seed=card['seed'], reply_seed=card['reply_seed']))
     return rows
 

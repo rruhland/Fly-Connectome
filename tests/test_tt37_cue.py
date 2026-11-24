@@ -4,6 +4,7 @@ import numpy as np
 
 from scripts.experimental.tt18_view import CameraFit
 from scripts.experimental.tt29_vision import Flight
+from scripts.experimental.tt37_cue_audit import matching_delivery
 from scripts.experimental.tt37_cue_capture import match
 from scripts.experimental.tt37_cue_fit import predict, solve
 from scripts.experimental.tt37_cue_motor import EarlyJoint, to_plane
@@ -67,6 +68,16 @@ def test_visual_label_plane_and_contact_time_fence():
 def test_group_balancing_for_uniform_baseline():
     f = solve(np.empty((4, 0)), np.array([[0.], [0.], [0.], [2.]]), [0, 0, 0, 1], 0.)
     np.testing.assert_allclose(predict(f, np.empty((2, 0))), [[1.], [1.]])
+
+
+def test_first_delivery_pair_allows_solver_roundoff_but_not_physical_change():
+    first = dict(target=[.2], far_contact={'time': .8},
+                 near_bounce={'time': 1.4, 'step': 84, 'ball': [.2, -.72, .78]})
+    rounding = dict(first, near_bounce=dict(first['near_bounce'], ball=[.2, -.72+1e-12, .78]))
+    different = dict(first, near_bounce=dict(first['near_bounce'], ball=[.2, -.71, .78]))
+    assert matching_delivery(first, rounding)
+    assert not matching_delivery(first, different)
+    assert not matching_delivery(first, None)
 
 
 def test_early_joint_releases_the_arm_at_first_inbound_estimate():

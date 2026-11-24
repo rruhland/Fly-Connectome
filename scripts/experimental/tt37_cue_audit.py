@@ -21,6 +21,20 @@ def first_delivery(row):
     return {key: delivered[0][key] for key in ('target', 'far_contact', 'near_bounce')}
 
 
+def matching_delivery(left, right):
+    if left is None or right is None:
+        return left is right
+    if left['target'] != right['target'] or left['far_contact'] != right['far_contact']:
+        return False
+    a, b = left['near_bounce'], right['near_bounce']
+    if set(a) != set(b):
+        return False
+    # The native coupled solver can shift the billiard rounding on the near
+    # table bounce when the arm has a different pose. Compare physical units.
+    return all(np.allclose(a[k], b[k], rtol=0., atol=1e-8)
+               if isinstance(a[k], (list, float)) else a[k] == b[k] for k in a)
+
+
 def check(receipt):
     if not receipt.get('complete') or receipt['protocol'] != 'random':
         raise ValueError('Incomplete or incompatible deployment')
@@ -28,7 +42,8 @@ def check(receipt):
     for row in receipt['rows']:
         if set(row) != set(receipt['modes']):
             raise ValueError('Unpaired arm')
-        if len({digest_json(first_delivery(a)) for a in row.values()}) != 1:
+        deliveries = [first_delivery(a) for a in row.values()]
+        if not all(matching_delivery(deliveries[0], x) for x in deliveries[1:]):
             raise ValueError('First delivered ball differs across arms')
         for arm in row.values():
             expected_launches += 1
@@ -93,6 +108,8 @@ def summarize(paths, output, replay):
                       events_independently_scored=len(rows)*len(modes), fresh_physical_replays=0)
         if replay:
             sample = set(np.linspace(0, len(rows)-1, min(len(rows), replay), dtype=int))
+            sample.update(i for i, r in enumerate(rows) if {'cue', 'off'} <= set(r)
+                          and r['cue']['score']['learner'] != r['off']['score']['learner'])
             with centered(_read(BASE)['ready']):
                 a = arena(protocol='random')
                 try:
@@ -113,6 +130,6 @@ if __name__ == '__main__':
     p.add_argument('inputs', type=Path, nargs='+')
     p.add_argument('--output', type=Path, default=OUT / 'cue-motor-summary.json')
     p.add_argument('--replay', type=int, default=0,
-                   help='number of evenly spaced card pairs to reproduce from the saved actions')
+                   help='replay this many evenly spaced pairs plus all cue-versus-off score changes')
     args = p.parse_args()
     summarize(args.inputs, args.output, args.replay)
