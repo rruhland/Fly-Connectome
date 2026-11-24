@@ -121,7 +121,36 @@ def run(output):
     )
 
 
+def verify(output):
+    """Replay the original physical commands independently of visual inference."""
+    archive = _read(output)
+    arena = stock(fixture="table-edge")
+    try:
+        for row in archive["rows"]:
+            obs = arena.reset(
+                seed=row["seed"], split="held", regime="standard", render=False
+            )
+            encoders = [obs["joints"].tolist()]
+            for actual in row["applied"]:
+                obs, _, _ = arena.step(actual, render=False)
+                encoders.append(obs["joints"].tolist())
+            if (
+                encoders != row["encoders"]
+                or arena.judge_metrics()["rebounds"] != row["rebounds"]
+            ):
+                raise ValueError("Solo encoder or rebound trajectory changed on replay")
+    finally:
+        arena.close()
+    archive["verified_encoder_tapes"] = len(archive["rows"])
+    _write(output, archive)
+    print("verified", archive["verified_encoder_tapes"], flush=True)
+
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("output", type=Path)
-    run(parser.parse_args().output)
+    parser.add_argument("--verify-only", action="store_true")
+    args = parser.parse_args()
+    if not args.verify_only:
+        run(args.output)
+    verify(args.output)

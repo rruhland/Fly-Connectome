@@ -257,6 +257,8 @@ def run(
     fast_partner=False,
     cached_stereo=False,
     probe_delay=False,
+    queue_model=False,
+    infer_spin=False,
     timing_checkpoint=None,
     fit_body=False,
     register=False,
@@ -266,7 +268,7 @@ def run(
     condition="stock",
     bounce=None,
 ):
-    from .tt4_transfer_trial import _write
+    from .tt4_transfer_trial import _hash, _write
     from .tt29_endurance import audit
     from .tt29_partner import PartnerArena
     from .tt29_conditions import cooperative_targets, table_settings
@@ -274,6 +276,8 @@ def run(
     from .tt29_vision import FlightPractice, OpticalFlight, Rig
     from .tt29_vision_twin import OpticalPlanner
 
+    incoming_checkpoint = _hash(checkpoint) if checkpoint is not None else None
+    measured_source = _hash(path)
     shots = measured_launches(path)
     settings = dict(
         strike_ready=pose,
@@ -404,7 +408,16 @@ def run(
             twin.reset(seed=sid, server=-1, render=False)
             rig.begin()
             eye = OpticalFlight(rig, nominal, learn=True, detector=detector)
-            policy = OpticalPlanner(twin, seed=290110)
+            if queue_model:
+                from .tt29_queued_arm import QueuedArmPlanner
+
+                policy = QueuedArmPlanner(twin, delay_ident, seed=290110)
+            elif infer_spin:
+                from .tt29_spin_observer import SpinPlanner
+
+                policy = SpinPlanner(twin, eye, seed=290110)
+            else:
+                policy = OpticalPlanner(twin, seed=290110)
             planner = RecallPlanner(
                 twin,
                 memory,
@@ -473,8 +486,9 @@ def run(
                 if identify_delay or fixed_lag is not None:
                     delay_ident.observe(q, x, fixed=fixed_lag)
                     ahead = delay_ident.lag
-                    q_control, delta = delay_ident.predict(q, q - prev)
-                    dq_control = delta / arena.control_dt
+                    if not queue_model:
+                        q_control, delta = delay_ident.predict(q, q - prev)
+                        dq_control = delta / arena.control_dt
                     if step % 12 == 0:
                         lag_history.append(ahead)
                 u = policy.command(step + ahead, sample, q_control, dq_control, x)
@@ -510,6 +524,8 @@ def run(
                     retrieved=planner.retrieved,
                     planned=planner.fallback,
                     corrections=getattr(policy, "corrections", 0),
+                    queue_forecasts=getattr(policy, "forecasts", 0),
+                    optical_spin_updates=getattr(policy, "spin_updates", []),
                     delay_estimates=lag_history,
                     court_fit_px=registrations,
                     elapsed=perf_counter() - cpu,
@@ -527,7 +543,7 @@ def run(
                 planner.retrieved,
                 flush=True,
             )
-            checkpoint = [
+            retained = [
                 dict(
                     flight=e.flight.tolist(),
                     time_to_contact=float(e.time_to_contact),
@@ -538,6 +554,8 @@ def run(
             _write(
                 output,
                 dict(
+                    feed_sha256=measured_source,
+                    initial_checkpoint_sha256=incoming_checkpoint,
                     view=view,
                     pose=pose,
                     condition=condition,
@@ -565,12 +583,14 @@ def run(
                     if timing_checkpoint
                     else None,
                     delay_probe=calibration,
+                    queue_model=queue_model,
+                    infer_spin=infer_spin,
                     fit_body=fit_body,
                     register=register,
                     table_survey=survey_result,
                     spread=spread,
                     rows=rows,
-                    checkpoint=checkpoint,
+                    checkpoint=retained,
                 ),
             )
     finally:
@@ -616,6 +636,8 @@ if __name__ == "__main__":
     p.add_argument("--register", action="store_true")
     p.add_argument("--fit-body", action="store_true")
     p.add_argument("--timing-checkpoint", type=Path)
+    p.add_argument("--infer-spin", action="store_true")
+    p.add_argument("--queue-model", action="store_true")
     p.add_argument("--probe-delay", action="store_true")
     p.add_argument(
         "--rated",
@@ -649,6 +671,8 @@ if __name__ == "__main__":
         fast_partner=args.fast_partner,
         cached_stereo=args.cached_stereo,
         probe_delay=args.probe_delay,
+        queue_model=args.queue_model,
+        infer_spin=args.infer_spin,
         timing_checkpoint=args.timing_checkpoint,
         fit_body=args.fit_body,
         register=args.register,

@@ -39,6 +39,8 @@ Each pair used offset 289065 plus point ordinal and the original shot ID to seed
 
 Longer solo practice did not improve monotonically. On eight held releases, the 0-, 4-, 12- and 24-drop checkpoints made 6, 33, 42 and 25 qualified rebounds. A separate validation course promoted the four-drop checkpoint, which made 10 rebounds versus four cold on another eight held releases. The retained controller reproduced those scores after the table matches. Wrist calibration learned during bouncing improved subsequent optical estimates and beginner feeding results. An initial full-match warm/cold comparison gave equal rally lengths in all four pairs. [Warm-up and retention](tt29_bounce.md) · [Full-game transfer controls](tt29_warm_rallies.md)
 
+[Online adaptation, bounce-to-match transfer and runtime](adaptation.md) · [Single wrist-camera results](tt29_wrist_only.md)
+
 ## Reproduce the live learner
 
 The raw opening comes from the pinned CC BY 4.0 DeepMind dataset. The runner checks its SHA-256 before accepting any shot. Run these commands from the repository root with the table-tennis dependencies installed. Compilation of the isolated motion trials requires a C++ compiler and OpenMP. Video export also uses FFmpeg.
