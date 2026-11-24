@@ -199,5 +199,28 @@
       "cpu_s_per_return": 2.599,
       "longest": 24
     }
-  }
+  },
+  "archives": {
+    "signed": {
+      "file": "optical-signed-47027.json.gz",
+      "bytes": 417842,
+      "sha256": "854fc85430518a820f7ee850f54134f8d1571d689c31bf9963fa257e443942e9",
+      "motor_samples": 252,
+      "optical_full_samples": 29,
+      "optical_censored_samples": 0,
+      "motor_checkpoint_sha256": "3aca5139bf7905d2fc1d9ae27154132a0c5002fcbefe66b9dc563b66c912a700",
+      "optical_checkpoint_sha256": "24f6409beda24524d0619fd9effab278942bc849370f7775fc529e340a65120e"
+    },
+    "censored": {
+      "file": "optical-censored-47027.json.gz",
+      "bytes": 423486,
+      "sha256": "d58c9627f254f3b504aceabec668b7cf4489e8d2901376924bbddc584f383eb5",
+      "motor_samples": 254,
+      "optical_full_samples": 33,
+      "optical_censored_samples": 1,
+      "motor_checkpoint_sha256": "35f80f2561be9515a2e68405643ddb9c0feeadf085dae04adcaac0e30f99ee7a",
+      "optical_checkpoint_sha256": "b85431f9a6490a46da7fbc1e28329218a3897c758158165f56d467b9d1ff62cd"
+    }
+  },
+  "checkpoint_hash_encoding": "SHA-256 over UTF-8 JSON with recursively sorted keys and compact separators"
 }
