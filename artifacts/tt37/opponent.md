@@ -27,6 +27,8 @@ The feasibility control replaces the near arm's paddle with a separate mirrored 
 
 The witness replay matched every referee event and identified all 200 hits as active native ball/blade solver contacts from their assigned physical carriages. It checked all 74,584 integration states. None of the tested moving-carriage pairs came within the 25 mm clearance horizon of the table or net. [Long-point contact and clearance proof](opponent-capacity-audit.json)
 
+All four predeclared stable-near capacity starts, 5530, 14832, 3025 and 8239, reached 200 without a point stop, each on its own continuation seed. That gave 396/396 further legal opponent replies after eligible near returns across the four points. Only the first point was independently replayed with the continuous CAD audit. [Complete four-start capacity check](opponent-capacity-central-random.json.gz)
+
 A second diagnostic deliberately changed the near carriage's desired outgoing side, depth, height and pace independently to stress the far responder. Four physical games each reached the 24-return diagnostic cap. Among their 44 eligible legal near returns, 30 met the unusual-shot threshold above. The far opponent answered all 44, with near-side strike departure speeds as high as 6.99 m/s and actual far-table bounce x up to 0.353 m from center. None of these measured trials established a miss rate for more extreme shots. [Four wider-reply stress tapes](opponent-capacity-wide-random.json.gz)
 
 ## Reproduce
