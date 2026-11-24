@@ -1,6 +1,7 @@
 """Rephase and translate a planned stroke with later RGB and encoder observations."""
 
 import argparse
+from contextlib import ExitStack
 from dataclasses import dataclass
 from pathlib import Path
 from unittest.mock import patch
@@ -43,6 +44,7 @@ class ContactPlan:
 class AnchoredRecall(RecallPlanner):
     def plan(self):
         self.anchor = None
+        self.edited_rollout = None
         arena = self.arena
         self.initial_target = arena.data.ctrl[self.axes].copy()
         prediction = self.predict
@@ -197,7 +199,9 @@ class ContactEditor(OpticalPlanner):
         if not accept or self.mode != "edit":
             return original
         self.corrections += 1
-        self.tape = np.concatenate((self.tape[:age], rates[winner]))
+        edited_tail = rates[winner]
+        self.tape = np.concatenate((self.tape[:age], edited_tail))
+        planner.edited_rollout = (self.tape, edited_tail)
         if planner.pending is not None:
             key, _, delay = planner.pending
             targets = np.clip(
@@ -214,7 +218,17 @@ class ContactEditor(OpticalPlanner):
         return self.tape[age]
 
 
-def run(feeds, output, ids, checkpoint, *, mode, seed_offset, return_target):
+def run(
+    feeds,
+    output,
+    ids,
+    checkpoint,
+    *,
+    mode,
+    seed_offset,
+    return_target,
+    optical_checkpoint=None,
+):
     from . import tt29_vision_twin
 
     policies = []
@@ -224,10 +238,30 @@ def run(feeds, output, ids, checkpoint, *, mode, seed_offset, return_target):
         policies.append(policy)
         return policy
 
-    with (
-        patch.object(tt29_action_memory, "RecallPlanner", AnchoredRecall),
-        patch.object(tt29_vision_twin, "OpticalPlanner", make_policy),
-    ):
+    with ExitStack() as stack:
+        stack.enter_context(
+            patch.object(tt29_action_memory, "RecallPlanner", AnchoredRecall)
+        )
+        stack.enter_context(
+            patch.object(tt29_vision_twin, "OpticalPlanner", make_policy)
+        )
+        if optical_checkpoint is not None:
+            from . import tt29_optical_outcomes
+
+            class EditedOpticalOutcomes(tt29_optical_outcomes.OpticalOutcomes):
+                def command(self, tape, step):
+                    # Concatenation makes an independent command array. The
+                    # original tail view identifies the checked rollout row.
+                    edited = getattr(self.planner, "edited_rollout", None)
+                    if edited is not None and tape is edited[0]:
+                        tape = edited[1]
+                    super().command(tape, step)
+
+            stack.enter_context(
+                patch.object(
+                    tt29_optical_outcomes, "OpticalOutcomes", EditedOpticalOutcomes
+                )
+            )
         tt29_action_memory.run(
             feeds,
             output,
@@ -248,6 +282,15 @@ def run(feeds, output, ids, checkpoint, *, mode, seed_offset, return_target):
             blend=True,
             net_rescue=True,
             spread="varied",
+            **(
+                {
+                    "optical_outcomes": "learn",
+                    "optical_checkpoint": optical_checkpoint,
+                    "freeze_optical_outcomes": True,
+                }
+                if optical_checkpoint is not None
+                else {}
+            ),
         )
     receipt = _read(output)
     receipt["motor_correction"] = mode
@@ -261,6 +304,11 @@ if __name__ == "__main__":
     parser.add_argument("feeds", type=Path)
     parser.add_argument("output", type=Path)
     parser.add_argument("--checkpoint", type=Path, required=True)
+    parser.add_argument(
+        "--optical-checkpoint",
+        type=Path,
+        help="Apply a frozen optical outcome residual checkpoint",
+    )
     parser.add_argument("--ids", type=int, nargs="+", required=True)
     parser.add_argument("--mode", choices=("observe", "edit"), default="edit")
     parser.add_argument("--seed-offset", type=int, default=62470)
@@ -274,4 +322,5 @@ if __name__ == "__main__":
         mode=args.mode,
         seed_offset=args.seed_offset,
         return_target=args.return_target,
+        optical_checkpoint=args.optical_checkpoint,
     )
