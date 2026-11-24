@@ -134,6 +134,7 @@ if __name__=='__main__':
     p.add_argument('--verify',type=Path,nargs='+')
     p.add_argument('--baseline',type=Path)
     a=p.parse_args()
+    a.output.mkdir(parents=True,exist_ok=True)
     if a.verify:
         verify(a.verify,a.output)
     elif a.baseline:
