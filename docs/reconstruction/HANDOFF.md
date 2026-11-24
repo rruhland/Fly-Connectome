@@ -1,5 +1,9 @@
 # M1B research handoff
 
+## What carried experience changes
+
+On twelve complete random points, letting the arm learn inside each point made 109 returns versus 95 with the same earlier experience restored and frozen throughout that point. The record point improved from 17 to 35 while another fell from 24 to 17. On a separate release-held course, 96 practice games raised motor-only performance from 40 returns to 66. The action-value update interfered with that improvement. All three formerly unresolved severe low arrivals have complete physically answered, CAD-clean practice rescues, taken early on the rise. The teacher used advance information to find those motions. Online selection and broad transfer remain open. [Continual learning controls](../../artifacts/tt40/continual.md) · [Physical low-return evidence](../../artifacts/tt40/long-low.md)
+
 ## Sustained returns and learning from the lowest arrivals
 
 The strongest audited fully random point reached 35 own arm returns and 71 alternating returns in 58.4 seconds with carried direct joint control. The controller without that earlier practice reached 22 on the same 12 assignments, with 103 returns in total versus 109 with carry. A separate geometric controller reached 31. The 31-return game replayed exactly for 63 alternating legal returns. On two 24-game courses the combined preparation, return valuation and late joint corrections landed 121 of 143 and 134 of 156 deliveries. Learning with empty memories beat freezing them on both courses. The outstanding weakness is low incoming balls. The combined player returned 5 of 16 of those on replication, compared with 55 of 55 just above 1.04 m. New work targets transferable, score-earning changes to the arm's actual movements. The 100-arm-return target is open. [Scores, learning controls and replay receipts](../../artifacts/tt39/learning.md)
