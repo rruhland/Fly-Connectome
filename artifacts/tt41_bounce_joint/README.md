@@ -27,6 +27,8 @@ The learned law predicted forward pace much better but made the combined estimat
 
 At 9812 the four operators replayed 647 identical command ticks through six previous arm returns and the same opponent strike and bounce. The stationary and textbook corrections changed the outgoing forward/upward pair, from 4.10 / 1.24 m/s at stock to 3.90 / 1.78 and 4.00 / −0.60 m/s, respectively. Neither scored. The solo branch tested extra proposals but declined all of them and reproduced the stock miss. This is a matched failure, not an additional scored action. [Matched commands](fork-9812.json.gz) · [Prefix audit](fork-9812-audit.json)
 
+On the preserved 14390 game, all four arms issued the same 3,457 archived prefix commands, including 35 legal arm returns. Reconstructed camera/encoder history and earned motor memory then handed control back at the first logged search after the final near bounce. Every arm received the same physical far strike, bounce and receive-line crossing. The rearmed stock missed with 4.12 m/s forward and 1.25 m/s up. The stationary correction lowered lift to 0.66 m/s with 4.11 m/s forward and also failed. Textbook and solo declined the extra proposals and exactly reproduced the rearmed stock commands and events. Post-fork computation was 1.89, 2.55, 3.20 and 3.28 CPU seconds respectively, excluding the identical prefix. No 36th return or physical answer was obtained. [Four matched continuations](fork-14390.json.gz) · [Independent comparison of their prefixes and scores](fork-14390-audit.json)
+
 ## Reproduce
 
 ```sh
@@ -37,5 +39,7 @@ python -m scripts.experimental.tt41_bounce_joint_audit verify "$out/live-audit.j
 python -m scripts.experimental.tt41_bounce_joint_audit spectrum "$out/terminal-effects.json"
 python -m scripts.experimental.tt41_bounce_joint fork "$out/fork-9812.json.gz" --ids 9812
 python -m scripts.experimental.tt41_bounce_joint_audit verify "$out/fork-9812-audit.json" --tape "$out/fork-9812.json.gz"
+python -m scripts.experimental.tt41_bounce_joint fork "$out/fork-14390.json.gz" --ids 14390 --cache-prefix
+python -m scripts.experimental.tt41_bounce_joint_audit verify "$out/fork-14390-audit.json" --tape "$out/fork-14390.json.gz"
 python -m pytest -q tests/test_tt41_bounce_joint.py tests/test_tt41_bounce_effect.py
 ```

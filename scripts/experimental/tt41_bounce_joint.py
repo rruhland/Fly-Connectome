@@ -446,7 +446,7 @@ def assess(args):
         raise ValueError("Prior bundle differs from the credited point")
     with np.load(mpc.BANK) as bank:
         raw = mpc.DeepField(bank, "local")
-    ids = args.ids or [9812, 14390, 12109]
+    ids = args.ids or [9812, 14390]
     modes = args.modes or MODES
     out = {
         "schema": "tt41-signed-bounce-joint-1",
