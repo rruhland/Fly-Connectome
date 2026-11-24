@@ -5,6 +5,7 @@ from collections import Counter
 from pathlib import Path
 
 from .tt4_transfer_trial import _hash, _read, _write
+from .tt19_view_full_game import digest_json
 from .tt37_joint_deep_report import totals
 from .tt37_joint_report import paired, read_complete, replay_case
 from .tt38_joint_mpc import DT, OUT
@@ -40,7 +41,8 @@ def metrics(doc):
             due += 1
             contacted += any(abs(t - prediction) <= .042 for t in physical)
     result.update(planner=dict(planner), accepted_sources=dict(sources),
-                  imminent_predictions=due, actual_nearby_contacts=contacted, terminal_offer=dict(ends))
+                  imminent_predictions=due, actual_nearby_contacts=contacted, terminal_offer=dict(ends),
+                  simulated_control_s=sum(len(row["actions"]) for row in doc["rows"]) * DT)
     return result
 
 
@@ -117,15 +119,79 @@ def audit(folder, decks):
     _write(folder / "joint-mpc-audit.json", dict(rows=output))
 
 
+def extend(folder):
+    """Validate that the longer natural replay did not alter any of the scored prefix."""
+    short_path = folder / "joint-mpc-development-elastic.json.gz"
+    long_path = folder / "joint-mpc-extended.json.gz"
+    short, long = read_complete(short_path), read_complete(long_path)
+    count = len(long["rows"])
+    if (short["cap"] != 36 or long["cap"] != 200 or short["cards"][:count] != long["cards"]
+            or short["source_sha256"] != long["source_sha256"]
+            or short["optical_sha256"] != long["optical_sha256"]):
+        raise ValueError("The natural extended point changed the course or the learner prior")
+    matches = []
+    for i, (before, after) in enumerate(zip(short["rows"][:count], long["rows"], strict=True)):
+        split = i == count - 1
+        expected_events = (after["events"][:len(before["events"])] if split else after["events"])
+        expected_actions = (after["actions"][:len(before["actions"])] if split else after["actions"])
+        matches.append(digest_json(before["events"]) == digest_json(expected_events)
+                       and digest_json(before["actions"]) == digest_json(expected_actions))
+    if not all(matches) or short["rows"][count - 1]["score"]["returns"] != short["cap"]:
+        raise ValueError("Autonomous extension diverged before the original referee cutoff")
+    card, long_row = long["cards"][-1], long["rows"][-1]
+    proof = replay_case(long["ready"], "random", card, long_row)
+    _write(folder / "joint-mpc-extended-audit.json", dict(
+        short_sha256=_hash(short_path), extended_sha256=_hash(long_path), exact_prefix=matches,
+        earlier_point_count=count - 1, old_cap=short["cap"], new_cap=long["cap"],
+        search=long_row["planner"], runtime_cpu_s=long_row["runtime_cpu_s"],
+        found_credited=sum(str(s["chosen"]).startswith("credited") for s in long_row["searches"]),
+        **proof,
+    ))
+
+
+def compare_guarded(folder, *, audit_best=False):
+    paths = {kind: folder / f"joint-mpc-guarded-challenge-{kind}.json.gz"
+             for kind in ("raw", "elastic", "guarded")}
+    docs = {mode: read_complete(p) for mode, p in paths.items()}
+    raw = docs["raw"]
+    for mode, doc in docs.items():
+        if (doc["source_sha256"] != raw["source_sha256"] or doc["optical_sha256"] != raw["optical_sha256"]
+                or doc["protocol_sha256"] != raw["protocol_sha256"] or doc["cards"] != raw["cards"]):
+            raise ValueError("The incumbent challenge is not actually matched")
+        if mode != "raw" and (doc["mode"] != "live" or doc["variant"] != mode
+                              or doc["rows"][0]["memory"]["before"]["rows"] != 0):
+            raise ValueError("Guarded and elastic must start with the same empty live memory")
+    d = dict(
+        results={k: metrics(v) for k, v in docs.items()},
+        against_raw={k: paired(raw, v) for k, v in docs.items() if k != "raw"},
+        against_elastic=paired(docs["elastic"], docs["guarded"]),
+        sources={mode: _hash(p) for mode, p in paths.items()},
+    )
+    _write(folder / "joint-mpc-guarded-results.json", d)
+    if audit_best:
+        doc = docs["guarded"]
+        k = max(range(len(doc["cards"])), key=lambda i: doc["rows"][i]["score"]["learner"])
+        proof = replay_case(doc["ready"], "random", doc["cards"][k], doc["rows"][k])
+        _write(folder / "joint-mpc-guarded-audit.json", dict(
+            source_sha256=_hash(paths["guarded"]), elastic_own=docs["elastic"]["rows"][k]["score"]["learner"],
+            raw_own=raw["rows"][k]["score"]["learner"], **proof,
+        ))
+
+
 if __name__ == "__main__":
     p = argparse.ArgumentParser(description=__doc__)
-    p.add_argument("phase", choices=("selection", "comparison", "audit"))
+    p.add_argument("phase", choices=("selection", "comparison", "audit", "extension", "guarded"))
     p.add_argument("--folder", type=Path, default=OUT)
     p.add_argument("--decks", nargs="+", default=("held_openings", "held_replies"))
+    p.add_argument("--audit-best", action="store_true")
     args = p.parse_args()
     if args.phase == "selection":
         selection(args.folder)
     elif args.phase == "comparison":
         compare(args.folder, args.decks)
-    else:
+    elif args.phase == "audit":
         audit(args.folder, args.decks)
+    elif args.phase == "guarded":
+        compare_guarded(args.folder, audit_best=args.audit_best)
+    else:
+        extend(args.folder)

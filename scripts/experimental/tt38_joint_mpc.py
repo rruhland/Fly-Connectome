@@ -34,6 +34,7 @@ OFFSET = np.array([.12, .12, .14, .18, .20])
 OPEN_NORM = np.array([.16, .15, .13, .85, 1.1, 1.3, 1.0, .9, 1.05, .86, .95, .32, .32, .36, .38, .4])
 DEVELOPMENT_INDICES = (0, 1, 3, 5, 8, 12)
 ASSESSMENT_LIMITS = {"held_openings": 12, "held_replies": 8}
+GUARDED_INDICES = (12, 13, 14, 15, 17, 19, 21, 23)
 
 
 def query(x, q, reference):
@@ -58,6 +59,23 @@ def protocol(bank, plan, feeds, optic, output):
         selection="Variants compared only on six development cases. Held comparison uses same RGB "
                   "preprocessing, packet of training examples, and identical card/seed pairs; live "
                   "starts empty on each deck and remembers only reward-credited observed joint commands.",
+    ))
+
+
+def guarded_protocol(bank, plan, feeds, optic, output):
+    course = _read(plan)
+    cards = [course["held_openings"][i] for i in GUARDED_INDICES]
+    receipt = _read(bank.with_suffix(".json"))
+    used = {c["id"] for c in course["held_openings"][:ASSESSMENT_LIMITS["held_openings"]]}
+    used.update(row["card"]["id"] for row in receipt["practice"])
+    used.update(c["id"] for c in course["held_replies"][:ASSESSMENT_LIMITS["held_replies"]])
+    if used & {card["id"] for card in cards}:
+        raise ValueError("The new guarded course overlaps established tests or training")
+    _write(output, dict(
+        held={"guarded_challenge": cards}, plan_sha256=_hash(plan), feeds_sha256=_hash(feeds),
+        prior_sha256=_hash(bank), optics_sha256=_hash(optic) if optic else None,
+        provenance="Eight disjoint measured opening recordings from the reserved second half of TT37 novel. "
+                   "Neither score nor any actor rollout informs which recordings to select.",
     ))
 
 
@@ -260,7 +278,7 @@ class MPC:
             output.append(last)
         return np.array(output)
 
-    def robust(self, goals, rank, nominal):
+    def uncertainty(self, goals, nominal):
         a = self.engine.twin
         ball, velocity = a.ball.copy(), a.velocity.copy()
         spin = a.data.qvel[a._ball_dof + 3:a._ball_dof + 6]
@@ -280,34 +298,78 @@ class MPC:
         agreement = np.sum([t[1] for t in trials], axis=0)
         margins = np.mean([np.where(t[1], t[0], 2.75 + .12 * np.minimum(t[0], 10.))
                            for t in trials], axis=0)
-        val = .43 * nominal + .57 * margins
+        return agreement, .43 * nominal + .57 * margins
+
+    def robust(self, goals, rank, nominal):
+        agreement, val = self.uncertainty(goals, nominal)
+        if self.variant == "guarded":
+            val = np.where(agreement == 2, val, val + 15.)
         winner = int(np.argmin(val))
         return int(rank[winner]), int(agreement[winner]), float(val[winner])
+
+    def preserve(self, tick, base):
+        """Check the currently issued branch before looking for a replacement."""
+        if self.best is not None and 0 <= tick - self.tick < HORIZON - 2:
+            warm = tail(self.best[tick - self.tick:], HORIZON)
+            loss, valid, _, values, _ = self.trial([warm], long=True)
+            if valid[0] and loss[0] < -1.25:
+                agree, risk = self.uncertainty([warm], loss)
+                if agree[0]:
+                    self.best, self.tick, self.lease = warm, tick, LEASE + 3
+                    self.diag["incumbent_kept"] += 1
+                    return warm, ("warm_incumbent", int(agree[0]), float(risk[0]), values[0])
+        # Roll the actual raw feedback law forward twice on nominal p/v and q.
+        # This is not a constant motor command billed as the raw controller.
+        raw = np.broadcast_to(base, (HORIZON, 6)).copy()
+        for _ in range(2):
+            _, _, trace, _, _ = self.trial([raw], traces=True)
+            raw = self.pupil_prior(trace[0], base)
+        loss, valid, _, values, _ = self.trial([raw], long=True)
+        if valid[0]:
+            agree, risk = self.uncertainty([raw], loss)
+            if agree[0]:
+                self.best = None
+                self.diag["raw_preserved"] += 1
+                return raw, ("raw_incumbent", int(agree[0]), float(risk[0]), values[0])
+        return raw, None
 
     def search(self, tick, x, q, reference, base):
         start = process_time()
         if not self.engine.sync():
             return
         observed_bounce = self.engine.bounced
+        guarded = self.variant == "guarded"
+        elastic = self.variant != "fragment"
+        raw_prior = None
+        if guarded:
+            raw_prior, winner = self.preserve(tick, base)
+            if winner:
+                name, robust, quality, values = winner
+                self.diag["searches"] += 1
+                self.diag["search_cpu_s"] += process_time() - start
+                self.notes.append(dict(tick=tick, bounced=bool(observed_bounce), p=x[:3].tolist(),
+                                       legal_trials=1, chosen=name, robust=robust, score=quality,
+                                       contact_delay_s=float(values[1]), target_errors=values[3:10].tolist()))
+                return
         # Three arms of the search: raw one-step feedback, warm replan, and local demonstrated actions.
         goals = [np.broadcast_to(base, (HORIZON, 6)).copy()]
         source = ["field"]
         if self.best is not None and tick - self.tick < HORIZON - 1:
             goals.append(tail(self.best[tick - self.tick:], HORIZON))
             source.append("warm")
-        for seq, online in self.priors.priors(x, q, reference, 7):
+        for seq, online in self.priors.priors(x, q, reference, 4 if guarded else 7):
             goals.append(seq)
             source.append("credited" if online else "demo")
         prior_loss, _, tr, _, _ = self.trial(goals, traces=True)
         seeds = [g.copy() for g in goals]
-        anchors = list(np.argsort(prior_loss)[:min(6, len(goals))])
-        if self.variant == "elastic":
-            goals.append(self.pupil_prior(tr[0], base))
+        anchors = list(np.argsort(prior_loss)[:min(3 if guarded else 6, len(goals))])
+        if elastic:
+            goals.append(raw_prior if raw_prior is not None else self.pupil_prior(tr[0], base))
             source.append("pupil_rollin")
         for i in anchors:
             adjust = self.transport(tr[i])
             if adjust is not None:
-                second = self.transport(tr[i], face=True) if self.variant == "elastic" else adjust
+                second = self.transport(tr[i], face=True) if elastic else adjust
                 scale = .64 if self.variant == "fragment" else .72
                 goals.extend([seeds[i] + scale * adjust, seeds[i] + second])
                 source.extend([source[i] + "_transport"] * 2)
@@ -323,10 +385,10 @@ class MPC:
             goals.append(structured(sample, noise, .72))
             source.append(source[i] + "_sample")
         near, _, _, _, f = self.trial(goals)
-        rank = np.unique(np.r_[0, np.argsort(near)[:8], 1 if source[1:2] == ["warm"] else 0])
+        rank = np.unique(np.r_[0, np.argsort(near)[:6 if guarded else 8], 1 if source[1:2] == ["warm"] else 0])
         loss, legal, _, y, _ = self.trial([goals[j] for j in rank], long=True)
         valid = np.flatnonzero(legal)
-        if not len(valid) and np.any(f[:, 1] > 0):
+        if not guarded and not len(valid) and np.any(f[:, 1] > 0):
             # A second light, local sweep only when a contact had plausible geometry.
             elite = np.argsort(near)[:4]
             extra = [structured(goals[i], self.rng.normal(size=10), .42)
@@ -348,14 +410,17 @@ class MPC:
         if len(valid):
             best = valid[np.argsort(loss[valid])[:4]]
             choice, robust, score = self.robust([goals[i] for i in rank[best]], rank[best], loss[best])
-            ix = int(np.flatnonzero(rank == choice)[0])
-            self.best = goals[choice]
-            self.tick = tick
-            self.lease = LEASE
-            note.update(chosen=source[choice], robust=robust, score=score,
-                        contact_delay_s=float(y[ix, 1]), target_errors=y[ix, 3:10].tolist())
-            self.diag["accepted"] += 1
-            self.diag["robust_accepted"] += bool(robust)
+            if not guarded or robust == 2:
+                ix = int(np.flatnonzero(rank == choice)[0])
+                self.best = goals[choice]
+                self.tick = tick
+                self.lease = LEASE + 3 if guarded else LEASE
+                note.update(chosen=source[choice], robust=robust, score=score,
+                            contact_delay_s=float(y[ix, 1]), target_errors=y[ix, 3:10].tolist())
+                self.diag["accepted"] += 1
+                self.diag["robust_accepted"] += bool(robust)
+            else:
+                self.diag["declined_weak_replacement"] += 1
         elif self.variant == "elastic" and x[1] > -1.30:
             sharp = np.array([k.startswith(("demo", "credited", "warm", "pupil")) for k in source[:len(f)]])
             possible = np.where(sharp & (f[:, 0] < .145) & (f[:, 0] + .018 < f[0, 0]))[0]
@@ -373,7 +438,7 @@ class MPC:
         if x is not None and x[4] > .9:
             self.best = None
             return base
-        early = self.variant == "elastic"
+        early = self.variant != "fragment"
         if (x is not None and x[4] < -.9 and (-.49 if early else -.62) > x[1] > -1.62
                 and x[2] > .77 and (self.engine.bounced or early) and tick >= self.next):
             self.next = tick + 5
@@ -384,7 +449,7 @@ class MPC:
         return base
 
 
-def play(a, renderer, rig, stride, lower, upper, ready, card, shot, raw, model, optical, mode, cap):
+def play(a, renderer, rig, stride, lower, upper, ready, card, shot, raw, model, optical, mode, cap, progress=0):
     a.launch(shot, card=card)
     a.partner.reset(seed=card["seed"])
     eye = Vision(rig, a.control_dt, raw=True)
@@ -424,6 +489,9 @@ def play(a, renderer, rig, stride, lower, upper, ready, card, shot, raw, model, 
                     model.diag["credited_fragments"] += learned
                     model.diag["updates"] += bool(learned)
                     previous_reward = score
+                    if progress and score % progress == 0:
+                        print("in_progress", card["id"], score,
+                              a.legal_returns + a.rival_returns - 1, tick, flush=True)
         reference = sent
         if done or capped or a.legal_returns + a.rival_returns - 1 >= cap:
             break
@@ -436,13 +504,15 @@ def play(a, renderer, rig, stride, lower, upper, ready, card, shot, raw, model, 
 
 
 def run(feeds, bank, plan, deck, mode, output, *, optic=None, cap=200, limit=None, budget=28,
-        variant="fragment", protocol_path=None):
+        variant="fragment", protocol_path=None, progress=0):
     receipt = _read(bank.with_suffix(".json"))
     if receipt["bank_sha256"] != _hash(bank):
         raise ValueError("Joint instruction archive changed")
     if deck == "development":
         base = _read(plan)["practice"]
         cards = [dict(base[i], reply_seed=3831100 + 13 * j) for j, i in enumerate(DEVELOPMENT_INDICES)]
+    elif deck == "guarded_challenge":
+        cards = [_read(plan)["held_openings"][i] for i in GUARDED_INDICES]
     else:
         cards = cards_for(receipt, plan, deck)
     if limit is not None:
@@ -479,7 +549,7 @@ def run(feeds, bank, plan, deck, mode, output, *, optic=None, cap=200, limit=Non
             model = MPC(bank, raw, variant=variant, budget=budget) if mode != "raw" else None
             for c in cards:
                 r = play(a, renderer, rig, stride, lower, upper, ready, c, shots[c["id"]],
-                         raw, model, optic, mode, cap)
+                         raw, model, optic, mode, cap, progress)
                 results["rows"].append(r)
                 _write(output, results)
                 print(mode, deck, c["id"], r["score"]["learner"], r["score"]["returns"],
@@ -493,8 +563,8 @@ def run(feeds, bank, plan, deck, mode, output, *, optic=None, cap=200, limit=Non
 
 if __name__ == "__main__":
     p = argparse.ArgumentParser(description=__doc__)
-    p.add_argument("mode", choices=("protocol", "raw", "frozen", "live"))
-    p.add_argument("deck", choices=("development", "held_openings", "held_replies", "fresh_replies"))
+    p.add_argument("mode", choices=("protocol", "guarded-protocol", "raw", "frozen", "live"))
+    p.add_argument("deck", choices=("development", "held_openings", "held_replies", "fresh_replies", "guarded_challenge"))
     p.add_argument("output", type=Path)
     p.add_argument("--bank", type=Path, default=BANK)
     p.add_argument("--plan", type=Path, default=PLAN)
@@ -504,10 +574,14 @@ if __name__ == "__main__":
     p.add_argument("--cap", type=int, default=200)
     p.add_argument("--limit", type=int)
     p.add_argument("--budget", type=int, default=28)
-    p.add_argument("--variant", choices=("fragment", "elastic"), default="fragment")
+    p.add_argument("--variant", choices=("fragment", "elastic", "guarded"), default="fragment")
+    p.add_argument("--progress-every", type=int, default=0)
     cli = p.parse_args()
     if cli.mode == "protocol":
         protocol(cli.bank, cli.plan, cli.feeds, cli.optic, cli.output)
+    elif cli.mode == "guarded-protocol":
+        guarded_protocol(cli.bank, cli.plan, cli.feeds, cli.optic, cli.output)
     else:
         run(cli.feeds, cli.bank, cli.plan, cli.deck, cli.mode, cli.output, optic=cli.optic,
-            cap=cli.cap, limit=cli.limit, budget=cli.budget, variant=cli.variant, protocol_path=cli.protocol)
+            cap=cli.cap, limit=cli.limit, budget=cli.budget, variant=cli.variant, protocol_path=cli.protocol,
+            progress=cli.progress_every)
