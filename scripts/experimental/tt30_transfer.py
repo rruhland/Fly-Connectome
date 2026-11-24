@@ -11,6 +11,9 @@ from .tt30_openings import nearest_openings
 
 
 def evaluate(feeds, movements, output, mode, donor, openings, offset):
+    uses_donor = mode in ("carried", "reversed", "combined")
+    if uses_donor != (donor is not None):
+        raise ValueError("Provide a donor only for a carried, reversed or combined comparison")
     results = []
     with TemporaryDirectory() as scratch:
         scratch = Path(scratch)
@@ -25,15 +28,20 @@ def evaluate(feeds, movements, output, mode, donor, openings, offset):
             temporary = scratch / "point.json.gz"
             if mode in ("motor", "combined", "repair"):
                 from .tt29_motor_correction import run as edit
-                edit(feeds, temporary, [shot], movements, mode="repair" if mode == "repair" else "edit", seed_offset=offset + i,
-                     return_target=24, optical_checkpoint=bank)
+                edit(
+                    feeds, temporary, [shot], movements,
+                    mode="repair" if mode == "repair" else "edit", seed_offset=offset + i,
+                    return_target=24, optical_checkpoint=bank,
+                )
             else:
-                run(feeds, temporary, [shot], "left+right", "lateral", checkpoint=movements,
-                rated=True, motor_envelope=True, robust_contact=True, rally_objective=True,
-                recent=True, blend=True, fast_partner=True, cached_stereo=True, net_rescue=True,
-                camera_period=2, spread="varied", seed_offset=offset + i, return_target=24,
-                optical_outcomes="record" if mode == "control" else "learn",
-                freeze_optical_outcomes=mode != "online", optical_checkpoint=bank)
+                run(
+                    feeds, temporary, [shot], "left+right", "lateral", checkpoint=movements,
+                    rated=True, motor_envelope=True, robust_contact=True, rally_objective=True,
+                    recent=True, blend=True, fast_partner=True, cached_stereo=True, net_rescue=True,
+                    camera_period=2, spread="varied", seed_offset=offset + i, return_target=24,
+                    optical_outcomes="record" if mode == "control" else "learn",
+                    freeze_optical_outcomes=mode != "online", optical_checkpoint=bank,
+                )
             report = _read(temporary)
             row = report["rows"][0]
             results.append(row)

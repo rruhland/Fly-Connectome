@@ -39,10 +39,10 @@ def main(directory):
     donor = ShotResiduals(_read(directory / "wide-shot-errors.json.gz")["optical_outcome_checkpoint"])
     out = {}
     for name in ("fresh-control", "fresh-online", "fresh-carried", "fresh-reversed",
-                 "fresh-motor", "fresh-combined", "repair", "confirm-control", "confirm-repair"):
+                 "fresh-motor", "fresh-combined", "repair", "confirm-control", "confirm-repair", "confirm-combined"):
         result = summarize(directory / (name + ".json.gz"), donor)
         if out:
-            comparison = out["confirm-control" if name == "confirm-repair" else "fresh-control"]
+            comparison = out["confirm-control" if name.startswith("confirm-") and name != "confirm-control" else "fresh-control"]
             if result["openings"] != comparison["openings"] or result["starting_examples"] != comparison["starting_examples"]:
                 raise ValueError(f"Opening or starting movement library mismatch: {name}")
             if name != "confirm-control" and result["seeds"] != comparison["seeds"]:
