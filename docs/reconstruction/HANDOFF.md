@@ -1,5 +1,10 @@
 # M1B research handoff
 
+## Table-edge SO-101 and continuous regulation rallies
+
+Use the table-edge fixture. The compact board camera and two tabletop clamps are present in the actual simulator. A stereo RGB controller that stores successful joint movements played 66 alternating legal returns on measured opening 7271. Exact replay checked 21,952 states against the CAD and reproduced every event. The four initial practice openings scored 0, 0, 14 and 66, illustrating the dependence on the incoming shot. The far paddle is a force-limited cooperative carriage, and the near controller uses a supplied nominal physics model. [Receiving results and failure analysis](../../artifacts/tt29/receiving.md) · [Fixture views](../../artifacts/tt29/fixture.md) · [Warm-up, transfer and retention](../../artifacts/tt29/tt29_bounce.md)
+
+
 ## How long to pretrain on solo bouncing
 
 On two hidden paddle mounts the same wrist controller accrued 2,071 physical rebounds over two streams of 192 drops, with visual tool-angle and reward updates after every release. On 24 paired held drops the total rebound counts at 0, 4, 16, 64, and 192 practice drops were 21, 216, 136, 126, and 175. After zero, four, and 192 drops it made 29, 30, and 30 legal opening returns on 96 fresh variations of demonstrated feeds. On 192 unrestricted measured launches across both mounts it made 1, 1, and 1. Across 54 full points it returned 15, 20, and 20 openings at 0, 16, and 192 drops respectively. The 16- and 192-drop players returned two and one of their 16 opposing replies. A source-only rule judged the visible grip estimate stable after seven drops on each tool. Use these checkpoints for comparisons. This experiment transferred grip calibration between existing task policies. [Full result and fixed-budget comparison](../../artifacts/tt28/transfer.md) · [Dose curves](../../artifacts/tt28/bounce-practice.png) · [Matched wrist replay](../../artifacts/tt28/wrist-bouncing.mp4)
