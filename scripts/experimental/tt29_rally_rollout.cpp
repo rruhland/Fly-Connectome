@@ -13,7 +13,7 @@ extern "C" void trial_strokes(
     const int* ids, bool received, double cutoff, double drag, double lift,
     const double* target, double* rates, double* scores,
     const int* first, const int* second, int pairs, double rate_scale, double speed_limit,
-    const int* active_dofs, double rim_penalty) {
+    const int* active_dofs, double rim_penalty, double clearance_margin) {
     const int ball = ids[0], blade = ids[1], table = ids[2], table2 = ids[3], net = ids[4];
     const int ball_body = ids[5], pos = ids[6], vel = ids[7];
     const double start = source->time;
@@ -76,16 +76,21 @@ extern "C" void trial_strokes(
                         }
                     }
                     if (fault) break;
-                    if (pairs && tick % 4 == 0) {
+                    if (pairs && (clearance_margin > 0.0 || tick % 4 == 0)) {
+                        const double threshold = clearance_margin > 0.0 ? clearance_margin : -.003;
+                        const double horizon = std::max(.001, clearance_margin + .0001);
+                        if (clearance_margin > 0.0)
+                            mj_kinematics(model, d);
                         for (int k = 0; k < pairs; ++k) {
                             const int first_geom = first[k], second_geom = second[k];
-                            const double radius = model->geom_rbound[first_geom] + model->geom_rbound[second_geom];
+                            const double radius = model->geom_rbound[first_geom] + model->geom_rbound[second_geom]
+                                                + clearance_margin;
                             const double* p1 = d->geom_xpos + 3 * first_geom;
                             const double* p2 = d->geom_xpos + 3 * second_geom;
                             double delta[3];
                             mju_sub3(delta, p1, p2);
                             if (mju_dot3(delta, delta) > radius * radius) continue;
-                            if (mj_geomDistance(model, d, first_geom, second_geom, .001, nullptr) < -.003) {
+                            if (mj_geomDistance(model, d, first_geom, second_geom, horizon, nullptr) < threshold) {
                                 fault = true;
                                 landed = false;
                                 break;

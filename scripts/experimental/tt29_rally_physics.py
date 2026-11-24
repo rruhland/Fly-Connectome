@@ -51,11 +51,14 @@ class RallyArena(ReferenceReceiver):
 
     def __init__(self, *, fixture="table-edge", width=192, height=144, frameskip=4, max_steps=9000,
                  strike_ready=False, clearance_guard=False, fast_search=False, rate_scale=1.0,
-                 velocity_guard=False, robust_contact=False, **settings):
+                 velocity_guard=False, robust_contact=False, clearance_margin=0.0, **settings):
         if not 0.0 < rate_scale <= 1.0:
             raise ValueError("expected a target slew scale in (0, 1]")
+        if clearance_margin < 0.0:
+            raise ValueError("expected a nonnegative clearance margin")
         self.strike_ready = strike_ready
-        self.clearance_guard = clearance_guard
+        self.clearance_margin = clearance_margin
+        self.clearance_guard = clearance_guard or clearance_margin > 0.0
         self.fast_search = fast_search
         self.rate_scale = rate_scale
         self.velocity_guard = velocity_guard
@@ -323,7 +326,7 @@ def _native_trials():
     function.argtypes = (
         pointer, pointer, pointer, integer, integer, integer, integer, pointer, integer, pointer,
         integer, pointer, pointer, pointer, pointer, pointer, ctypes.c_bool, number, number, number,
-        pointer, pointer, pointer, pointer, pointer, integer, number, number, pointer, number,
+        pointer, pointer, pointer, pointer, pointer, integer, number, number, pointer, number, number,
     )
     function.restype = None
     return function, workspace
@@ -371,7 +374,7 @@ class Rollout:
             self.first.ctypes.data, self.second.ctypes.data, len(self.first),
             a.rate_scale if self.side == 1 else 1.0,
             NOMINAL_NO_LOAD if self.side == 1 and a.velocity_guard else 0.0, self.velocity_dofs.ctypes.data,
-            45.0 if self.side == 1 and a.robust_contact else 0.0,
+            45.0 if self.side == 1 and a.robust_contact else 0.0, a.clearance_margin,
         )
         return rates, result
 
@@ -404,6 +407,13 @@ class MotionPlanner:
             return self.tape[a.steps - self.start]
         if (a._last_hitter == self.side or self.side * a.velocity[1] > -.3
                 or a._racket_ids[-self.side] in a._previous_touches):
+            if a.velocity_guard and self.side == 1:
+                age = a.steps - self.start
+                if a._last_hitter == self.side and self.tape is not None and 0 <= age < len(self.tape):
+                    # The complete follow-through already passed the simulated
+                    # speed screen. A separate home sweep has no such guarantee.
+                    return self.tape[age]
+                return np.zeros(len(self.axes))
             return self.home_command()
         reception = a.contacts + a.rival_contacts
         if reception != self.reception:
@@ -418,6 +428,8 @@ class MotionPlanner:
             self.attempts += 1
             if self.tape is not None:
                 return self.tape[0]
+        if a.velocity_guard and self.side == 1:
+            return np.zeros(len(self.axes))
         return self.home_command()
 
     def home_command(self):
@@ -608,7 +620,7 @@ def rally(arena, shot, *, seed=0, target=100, display=False, checkpoint=None):
         config = dict(fixture=arena.fixture, strike_ready=arena.strike_ready, frameskip=arena.frameskip,
                       clearance_guard=arena.clearance_guard, fast_search=arena.fast_search,
                       velocity_guard=arena.velocity_guard, rate_scale=arena.rate_scale,
-                      robust_contact=arena.robust_contact)
+                      robust_contact=arena.robust_contact, clearance_margin=arena.clearance_margin)
         if partner is not None:
             config.update(partner_lanes=partner.targets.tolist(), guard_table=partner.guard_table)
         return dict(seed=seed, launch=shot, returns=returns, result=arena.point_result(), events=arena.events,
@@ -656,6 +668,7 @@ def main():
     parser.add_argument("--partner", action="store_true")
     parser.add_argument("--guard-table", action="store_true")
     parser.add_argument("--guard-arm", action="store_true")
+    parser.add_argument("--clearance-margin", type=float, default=0.0)
     parser.add_argument("--fast-search", action="store_true")
     parser.add_argument("--rate-scale", type=float, default=1.0)
     parser.add_argument("--guard-speed", action="store_true")
@@ -665,7 +678,7 @@ def main():
     launches = measured_launches(args.feeds)
     settings = dict(fixture=args.fixture, strike_ready=args.ready, clearance_guard=args.guard_arm,
                     fast_search=args.fast_search, rate_scale=args.rate_scale, velocity_guard=args.guard_speed,
-                    robust_contact=args.robust_contact)
+                    robust_contact=args.robust_contact, clearance_margin=args.clearance_margin)
     if args.partner:
         from .tt29_partner import FOREHAND_LANES, PartnerArena
         if args.ready == "lateral":
