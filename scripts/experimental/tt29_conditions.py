@@ -46,6 +46,12 @@ CONDITIONS = {
         outside_shift_m=0.08, camera_yaw_deg=5.0, streams=("left", "wrist")
     ),
     "latency": Conditions(command_delay=2, image_delay=1, command_noise=0.025),
+    "combined_stereo": Conditions(
+        ball_mass=1.08, table_damping=31.0, paddle_damping=33.0, paddle_friction=0.47,
+        paddle_mass=1.13, elbow_mass=1.16, wrist_mass=1.20, joint_damping=1.22,
+        outside_shift_m=0.08, camera_yaw_deg=5.0, command_delay=2, image_delay=1,
+        command_noise=0.025,
+    ),
     "combined_wrist": Conditions(
         ball_mass=0.96,
         table_damping=29.0,

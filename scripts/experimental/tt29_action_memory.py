@@ -244,6 +244,8 @@ def run(
     no_memory=False,
     robust_contact=False,
     rally_objective=False,
+    risk_screen=False,
+    material_ensemble=False,
     recent=False,
     blend=False,
     observe_until=0.0,
@@ -255,6 +257,7 @@ def run(
     rated=False,
     motor_envelope=False,
     fast_partner=False,
+    net_rescue=False,
     cached_stereo=False,
     probe_delay=False,
     queue_model=False,
@@ -265,6 +268,7 @@ def run(
     survey=False,
     spread="practice",
     seed_offset=0,
+    return_target=100,
     condition="stock",
     bounce=None,
 ):
@@ -276,6 +280,8 @@ def run(
     from .tt29_vision import FlightPractice, OpticalFlight, Rig
     from .tt29_vision_twin import OpticalPlanner
 
+    if return_target < 1:
+        raise ValueError("Return target must be positive")
     incoming_checkpoint = _hash(checkpoint) if checkpoint is not None else None
     measured_source = _hash(path)
     shots = measured_launches(path)
@@ -285,16 +291,17 @@ def run(
         height=size[1],
         clearance_guard=True,
         fast_search=True,
-        max_steps=9000,
+        max_steps=max(9000, 90 * return_target),
         rate_scale=0.8 if rated else 1.0,
         velocity_guard=rated,
         motor_envelope=motor_envelope,
     )
     twin = RallyArena(**settings, robust_contact=robust_contact)
+    if net_rescue and not fast_partner:
+        raise ValueError("Net rescue requires the native-flight partner")
     if fast_partner:
         from .tt29_partner_fast import (
             FastPartnerArena,
-            FastPracticePartner,
             NativeBallFlight,
         )
 
@@ -304,18 +311,17 @@ def run(
         targets=cooperative_targets(pose, spread),
         plant=table_settings(condition),
         guard_table=True,
+        **({"net_rescue": True} if net_rescue else {}),
     )
     from .tt29_conditions import CONDITIONS, Delay, apply
     from .tt29_encoder_delay import EncoderDelay
-    from .tt29_partner import PracticePartner
 
     conditions = CONDITIONS[condition]
     # The camera rig knows the nominal installation. Perturbations happen afterward.
     rig = Rig.from_arena(arena)
     if condition not in ("stock", "two_surface", "narrow_table"):
         apply(arena, conditions)
-        partner_class = FastPracticePartner if fast_partner else PracticePartner
-        arena.partner = partner_class(
+        arena.partner = type(arena.partner)(
             arena, targets=arena.partner.targets, guard_table=True
         )
     if bounce is not None:
@@ -382,7 +388,7 @@ def run(
     if timing_checkpoint is not None:
         from .tt4_transfer_trial import _read
 
-        if probe_delay or fit_body:
+        if probe_delay:
             raise ValueError("Choose prior solo timing or a new table probe")
         fixed_lag = int(_read(timing_checkpoint)["carried_lag"])
         if not 0 <= fixed_lag <= delay_ident.maximum:
@@ -394,7 +400,7 @@ def run(
 
             calibration_pipeline = Delay(conditions, 294601)
             fixed_lag, calibration = calibrate_delay(
-                arena, twin, calibration_pipeline.command, body=fit_body
+                arena, twin, calibration_pipeline.command, body=fit_body, known_lag=fixed_lag
             )
             delay_ident.lag = fixed_lag
             print("calibration", fixed_lag, calibration, flush=True)
@@ -427,8 +433,16 @@ def run(
                 verify=verify,
                 recent=recent,
             )
-            if rally_objective:
+            if material_ensemble:
+                from .tt29_material_ensemble import MaterialEnsemble
+
+                planner.predict = MaterialEnsemble(planner.predict, RallyObjective if rally_objective else None)
+            elif rally_objective:
                 planner.predict = RallyObjective(planner.predict)
+            if risk_screen:
+                from .tt29_vision_twin import CandidateUncertainty
+
+                planner.predict = CandidateUncertainty(planner)
             if fast_partner:
                 planner.flight = NativeBallFlight(twin)
             policy.nominal = planner
@@ -511,7 +525,7 @@ def run(
                             arena.rival_returns - 1,
                             flush=True,
                         )
-                if done or cap or arena.legal_returns + arena.rival_returns >= 101:
+                if done or cap or arena.legal_returns + arena.rival_returns - 1 >= return_target:
                     break
             stats = audit(arena.events)
             rows.append(
@@ -561,11 +575,14 @@ def run(
                     condition=condition,
                     bounce_checkpoint=str(bounce) if bounce else None,
                     seed_offset=seed_offset,
+                    return_target=return_target,
                     refine=refine,
                     reset_memory=reset_memory,
                     no_memory=no_memory,
                     robust_contact=robust_contact,
                     rally_objective=rally_objective,
+                    risk_screen=risk_screen,
+                    material_ensemble=material_ensemble,
                     recent=recent,
                     blend=blend,
                     observe_until=observe_until,
@@ -577,6 +594,7 @@ def run(
                     rated=rated,
                     motor_envelope=motor_envelope,
                     fast_partner=fast_partner,
+                    net_rescue=net_rescue,
                     cached_stereo=cached_stereo,
                     calibrated_lag=fixed_lag,
                     timing_checkpoint=str(timing_checkpoint)
@@ -615,9 +633,12 @@ if __name__ == "__main__":
     p.add_argument("--reset-memory", action="store_true")
     p.add_argument("--no-memory", action="store_true")
     p.add_argument("--seed-offset", type=int, default=0)
+    p.add_argument("--return-target", type=int, default=100)
     p.add_argument("--condition", default="stock")
     p.add_argument("--bounce", type=Path)
     p.add_argument("--rally-objective", action="store_true")
+    p.add_argument("--risk-screen", action="store_true")
+    p.add_argument("--material-ensemble", action="store_true")
     p.add_argument("--recent", action="store_true")
     p.add_argument("--robust-contact", action="store_true")
     p.add_argument("--blend", action="store_true")
@@ -631,6 +652,7 @@ if __name__ == "__main__":
     p.add_argument("--cached-stereo", action="store_true")
     p.add_argument("--motor-envelope", action="store_true")
     p.add_argument("--fast-partner", action="store_true")
+    p.add_argument("--net-rescue", action="store_true")
     p.add_argument("--spread", choices=("practice", "varied"), default="practice")
     p.add_argument("--survey", action="store_true")
     p.add_argument("--register", action="store_true")
@@ -658,6 +680,8 @@ if __name__ == "__main__":
         no_memory=args.no_memory,
         robust_contact=args.robust_contact,
         rally_objective=args.rally_objective,
+        risk_screen=args.risk_screen,
+        material_ensemble=args.material_ensemble,
         recent=args.recent,
         blend=args.blend,
         observe_until=args.observe_until,
@@ -669,6 +693,7 @@ if __name__ == "__main__":
         rated=args.rated,
         motor_envelope=args.motor_envelope,
         fast_partner=args.fast_partner,
+        net_rescue=args.net_rescue,
         cached_stereo=args.cached_stereo,
         probe_delay=args.probe_delay,
         queue_model=args.queue_model,
@@ -679,6 +704,7 @@ if __name__ == "__main__":
         survey=args.survey,
         spread=args.spread,
         seed_offset=args.seed_offset,
+        return_target=args.return_target,
         condition=args.condition,
         bounce=args.bounce,
     )

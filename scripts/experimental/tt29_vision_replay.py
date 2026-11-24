@@ -35,11 +35,11 @@ def label(canvas, position, text, size, *, bold=False, color='#e9efee'):
     draw.text(position, text, font=ImageFont.truetype(face, size), fill=color)
 
 
-def frame(arena, renderer, tick, count, streams, shot_id):
+def frame(arena, renderer, tick, count, streams, shot_id, capture=None):
     scene = Image.new('RGB', (WIDTH, HEIGHT), '#1b252d')
     label(scene, (18, 13), 'Camera-controlled rally', 27, bold=True)
     label(scene, (18, 49), f'Simulated SO-101 near end · Measured opening {shot_id}', 16, color='#a9bbc4')
-    native = arena.render_cameras()
+    native = (capture or arena.render_cameras)()
     witness = Image.fromarray(arena.render_broadcast(renderer)).resize(BROADCAST, Image.Resampling.LANCZOS)
     scene.paste(witness, (18, 83))
     label(scene, (902, 23), f'{count:02d} legal returns', 23, bold=True, color='#a7e5c4')
@@ -59,10 +59,10 @@ def frame(arena, renderer, tick, count, streams, shot_id):
     return scene
 
 
-def start_encoder(output):
+def start_encoder(output, fps=FPS):
     return subprocess.Popen([
         'ffmpeg', '-y', '-loglevel', 'error', '-f', 'rawvideo', '-pixel_format', 'rgb24',
-        '-s', f'{WIDTH}x{HEIGHT}', '-r', str(FPS), '-i', '-', '-an', '-c:v', 'libx264',
+        '-s', f'{WIDTH}x{HEIGHT}', '-r', str(fps), '-i', '-', '-an', '-c:v', 'libx264',
         '-threads', '1', '-crf', '20', '-pix_fmt', 'yuv420p', '-movflags', '+faststart', str(output),
     ], stdin=subprocess.PIPE)
 
@@ -89,7 +89,7 @@ def clearance_final(arena, guard, data):
     return clearance
 
 
-def replay(feeds, source, shot_id, receipt, movie=None, *, fast_partner=False, last_frame=None):
+def replay(feeds, source, shot_id, receipt, movie=None, *, fast_partner=False, last_frame=None, fps=FPS):
     archived_bytes = source.read_bytes()
     source_digest = sha256(archived_bytes).hexdigest()
     archive = json.loads(gzip.decompress(archived_bytes) if source.suffix == '.gz' else archived_bytes)
@@ -102,20 +102,22 @@ def replay(feeds, source, shot_id, receipt, movie=None, *, fast_partner=False, l
     condition = archive.get('condition', 'stock')
     width, height = archive.get('size', (384, 288))
     settings = dict(strike_ready=pose, width=width, height=height, clearance_guard=True, fast_search=True,
-                    max_steps=9000, targets=targets, guard_table=True, plant=table_settings(condition),
+                    max_steps=max(9000, 90 * archive.get('return_target', 100)), targets=targets, guard_table=True, plant=table_settings(condition),
                     rate_scale=.8 if archive.get('rated') else 1., velocity_guard=archive.get('rated', False),
                     motor_envelope=archive.get('motor_envelope', False))
+    fast_partner = fast_partner or archive.get('fast_partner', False)
     if fast_partner:
         from .tt29_partner_fast import FastPartnerArena
     arena_type = FastPartnerArena if fast_partner else PartnerArena
-    arena = arena_type(**settings)
+    arena = arena_type(**settings, **({'net_rescue': True} if archive.get('net_rescue') else {}))
     cad = PartnerArena(**settings, detail='cad')
     if condition not in ('stock', 'two_surface', 'narrow_table'):
         for station in (arena, cad):
             apply(station, CONDITIONS[condition])
             station.partner = type(station.partner)(station, targets=targets, guard_table=True)
     digest = sha256()
-    renderer = process = None
+    renderer = process = stereo = None
+    capture = None
     frames = count = 0
     far = np.zeros(5)
     try:
@@ -128,11 +130,15 @@ def replay(feeds, source, shot_id, receipt, movie=None, *, fast_partner=False, l
         arena._cad_reader = guard, shadow
         if movie is not None or last_frame is not None:
             renderer = start_renderer(arena)
+            if archive.get('cached_stereo'):
+                from .tt29_fast_camera import CachedStereoRenderer
+                stereo = CachedStereoRenderer(arena)
+                capture = stereo.capture
         if movie is not None:
-            process = start_encoder(movie)
+            process = start_encoder(movie, fps)
         for tick, action in enumerate(row['actions']):
-            if process is not None and tick % 2 == 0:
-                process.stdin.write(frame(arena, renderer, tick, count, streams, shot_id).tobytes())
+            if process is not None and tick % round(1.0 / (fps * arena.control_dt)) == 0:
+                process.stdin.write(frame(arena, renderer, tick, count, streams, shot_id, capture).tobytes())
                 frames += 1
             _, _, done, capped, info = arena.exchange(action, far)
             # The initial launch already represents a far stroke, so subtract it from the displayed total.
@@ -153,7 +159,7 @@ def replay(feeds, source, shot_id, receipt, movie=None, *, fast_partner=False, l
             raise ValueError(f'CAD audit sampled {clearance["samples"]} of {checked} physics states')
         if renderer is not None:
             # The final landing can fall between two video exposures.
-            final_image = frame(arena, renderer, arena.steps, count, streams, shot_id)
+            final_image = frame(arena, renderer, arena.steps, count, streams, shot_id, capture)
             if last_frame is not None:
                 final_image.save(last_frame)
             if process is not None:
@@ -175,7 +181,7 @@ def replay(feeds, source, shot_id, receipt, movie=None, *, fast_partner=False, l
                      learning=dict(initial_examples=row['initial_examples'], final_examples=row['final_examples'],
                                    retrieved=row['retrieved'], planned=row['planned'],
                                    original_retrieval_wall_s=row['retrieval_s'], original_search_wall_s=row['search_s']),
-                     video=None if movie is None else dict(sha256=_hash(movie), frames=frames, frame_rate=FPS,
+                     video=None if movie is None else dict(sha256=_hash(movie), frames=frames, frame_rate=fps,
                                                           native_camera_size=[arena.width, arena.height]))
         _write(receipt, brief)
         print(shot_id, outcome['returns'], clearance, 'exact events', len(arena.events), flush=True)
@@ -184,6 +190,8 @@ def replay(feeds, source, shot_id, receipt, movie=None, *, fast_partner=False, l
         if process is not None and process.poll() is None:
             process.terminate()
             process.wait()
+        if stereo is not None:
+            stereo.close()
         if renderer is not None:
             renderer.close()
         arena.close()
@@ -197,17 +205,18 @@ def main():
     parser.add_argument('--id', type=int, default=7345)
     parser.add_argument('--receipt', type=Path, default=OUT / 'tt29_vision_memory_audit.json')
     parser.add_argument('--movie', type=Path)
+    parser.add_argument('--fps', type=int, choices=(10, 15, 30), default=FPS)
     parser.add_argument('--fast-partner', action='store_true')
     parser.add_argument('--last-frame', type=Path)
     args = parser.parse_args()
     args.receipt.parent.mkdir(parents=True, exist_ok=True)
     if args.movie is None:
-        replay(args.feeds, args.source, args.id, args.receipt, fast_partner=args.fast_partner, last_frame=args.last_frame)
+        replay(args.feeds, args.source, args.id, args.receipt, fast_partner=args.fast_partner, last_frame=args.last_frame, fps=args.fps)
     else:
         args.movie.parent.mkdir(parents=True, exist_ok=True)
         with TemporaryDirectory(prefix='tt29-replay-', dir=args.movie.parent) as work:
             temporary = Path(work) / 'rally.mp4'
-            replay(args.feeds, args.source, args.id, args.receipt, temporary, fast_partner=args.fast_partner, last_frame=args.last_frame)
+            replay(args.feeds, args.source, args.id, args.receipt, temporary, fast_partner=args.fast_partner, last_frame=args.last_frame, fps=args.fps)
             temporary.replace(args.movie)
 
 

@@ -99,18 +99,19 @@ def predicted_trace(nominal, commands, lag):
     return encoder_trace(nominal, commands, deliver)
 
 
-def calibrate_delay(plant, nominal, deliver, maximum=4, *, body=False):
+def calibrate_delay(plant, nominal, deliver, maximum=4, *, body=False, known_lag=None):
     """Fit transport lag from a paired physical and nominal encoder-motion probe."""
     commands = excitation(plant.action_size)
     observed = encoder_trace(plant, commands, deliver)
     errors = []
-    for length in range(maximum + 1):
+    lengths = range(maximum + 1) if known_lag is None else [known_lag]
+    for length in lengths:
         prediction = predicted_trace(nominal, commands, length)
         n = min(len(prediction), len(observed))
         residual = np.diff(prediction[:n], axis=0) - np.diff(observed[:n], axis=0)
         errors.append(np.mean(residual[:, :-1] ** 2))
-    lag = int(np.argmin(errors))
-    result = dict(ticks=len(observed), mse=list(map(float, errors)))
+    lag = int(lengths[np.argmin(errors)])
+    result = dict(ticks=len(observed), tested_lags=list(lengths), mse=list(map(float, errors)))
     if body:
         from .tt29_body_fit import fit
 

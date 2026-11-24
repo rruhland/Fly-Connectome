@@ -40,7 +40,8 @@ class CandidateUncertainty:
         if candidates.size < 2:
             return rates, scored
         a = self.planner.arena
-        position, velocity, spin = a.ball.copy(), a.velocity.copy(), a.spin.copy()
+        angular = a.data.qvel[a._ball_dof + 3:a._ball_dof + 6]
+        position, velocity, local_spin = a.ball.copy(), a.velocity.copy(), angular.copy()
         accumulated = scored[candidates, 0].copy()
         try:
             for dy, dz, dvy, wx in self.OFFSETS:
@@ -53,7 +54,7 @@ class CandidateUncertainty:
         finally:
             a.ball[:] = position
             a.velocity[:] = velocity
-            a.data.qvel[a._ball_dof + 3:a._ball_dof + 6] = spin
+            angular[:] = local_spin
         result = scored.copy()
         result[:, 0] = np.inf
         result[candidates, 0] = accumulated
