@@ -209,7 +209,19 @@
       "optical_full_samples": 29,
       "optical_censored_samples": 0,
       "motor_checkpoint_sha256": "3aca5139bf7905d2fc1d9ae27154132a0c5002fcbefe66b9dc563b66c912a700",
-      "optical_checkpoint_sha256": "24f6409beda24524d0619fd9effab278942bc849370f7775fc529e340a65120e"
+      "optical_checkpoint_sha256": "24f6409beda24524d0619fd9effab278942bc849370f7775fc529e340a65120e",
+      "closing_point_replay": {
+        "opening": 11292,
+        "returns": 20,
+        "exact_events": true,
+        "exact_score": true,
+        "event_count": 106,
+        "events_sha256": "f86fb71d33520236f90247821b589b3073ba25366dbe46c43955767b3fc81a9d",
+        "state_sha256": "66d563e20017cf845968300b11049c429fe29c58861f31df587c6f80496662df",
+        "cad_states": 7398,
+        "minimum_clearance_m": 0.018599998316249804,
+        "max_measured_joint_speed_rad_s": 3.5063299704439506
+      }
     },
     "censored": {
       "file": "optical-censored-47027.json.gz",
@@ -219,7 +231,19 @@
       "optical_full_samples": 33,
       "optical_censored_samples": 1,
       "motor_checkpoint_sha256": "35f80f2561be9515a2e68405643ddb9c0feeadf085dae04adcaac0e30f99ee7a",
-      "optical_checkpoint_sha256": "b85431f9a6490a46da7fbc1e28329218a3897c758158165f56d467b9d1ff62cd"
+      "optical_checkpoint_sha256": "b85431f9a6490a46da7fbc1e28329218a3897c758158165f56d467b9d1ff62cd",
+      "closing_point_replay": {
+        "opening": 11292,
+        "returns": 24,
+        "exact_events": true,
+        "exact_score": true,
+        "event_count": 123,
+        "events_sha256": "78915740cddcf0201385987e995a973417828f328d4205264ee436ccad54b50c",
+        "state_sha256": "90d42a56ca79c22aaf36cc075547325df53ca965072c269e499c4e648e8dc3cd",
+        "cad_states": 8585,
+        "minimum_clearance_m": 0.018599998316249804,
+        "max_measured_joint_speed_rad_s": 3.341819521320862
+      }
     }
   },
   "checkpoint_hash_encoding": "SHA-256 over UTF-8 JSON with recursively sorted keys and compact separators"
