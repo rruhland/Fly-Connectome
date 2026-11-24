@@ -281,6 +281,9 @@ def run(
     return_target=100,
     condition="stock",
     bounce=None,
+    arena_factory=None,
+    opponent_seeds=None,
+    opening_side=-1,
 ):
     from .tt4_transfer_trial import _hash, _read, _write
     from .tt29_endurance import audit
@@ -296,6 +299,12 @@ def run(
         rally_objective = True
     if return_target < 1:
         raise ValueError("Return target must be positive")
+    if opening_side not in (-1, 1):
+        raise ValueError("The measured opening must come from one of the two court sides")
+    if opponent_seeds is not None:
+        ids = tuple(ids)
+        if len(ids) != len(opponent_seeds):
+            raise ValueError("Provide one opponent seed per measured opening")
     if (optical_checkpoint or freeze_optical_outcomes or censored_optical_outcomes) and not optical_outcomes:
         raise ValueError("Optical outcome options require an optical outcome mode")
     if optical_outcomes and (view != "left+right" or not verify):
@@ -331,7 +340,7 @@ def run(
             NativeBallFlight,
         )
 
-    arena_class = FastPartnerArena if fast_partner else PartnerArena
+    arena_class = arena_factory or (FastPartnerArena if fast_partner else PartnerArena)
     arena = arena_class(
         **settings,
         targets=cooperative_targets(pose, spread),
@@ -438,7 +447,10 @@ def run(
                 if optical_outcomes:
                     residuals = ShotResiduals(optical_values)
             arena.launch(shots[sid])
-            opponent_seed = sid if seed_offset == 0 else sid + seed_offset + point
+            if opponent_seeds is not None:
+                opponent_seed = opponent_seeds[point]
+            else:
+                opponent_seed = sid if seed_offset == 0 else sid + seed_offset + point
             arena.partner.reset(seed=opponent_seed)
             pipeline = Delay(conditions, opponent_seed + 29003)
             twin.reset(seed=sid, server=-1, render=False)
@@ -582,7 +594,7 @@ def run(
                     if optical_feedback is not None:
                         optical_feedback.finish(reward)
                     break
-            stats = audit(arena.events)
+            stats = audit(arena.events, opening_side=opening_side)
             rows.append(
                 dict(
                     shot=shots[sid],
@@ -636,6 +648,7 @@ def run(
                     view=view,
                     pose=pose,
                     condition=condition,
+                    **({"opening_side": opening_side} if opening_side != -1 else {}),
                     bounce_checkpoint=str(bounce) if bounce else None,
                     seed_offset=seed_offset,
                     return_target=return_target,

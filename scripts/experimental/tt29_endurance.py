@@ -20,7 +20,7 @@ def summarize(values):
     )
 
 
-def audit(events):
+def audit(events, *, opening_side=-1):
     """Exclude the launch. Pair each real racket collision with its subsequent legal bounce."""
     rackets = {"learner_racket": 1, "rival_racket": -1}
     shots = []
@@ -65,7 +65,7 @@ def audit(events):
                 pending is None
                 and not shots
                 and not opening_counted
-                and event["side"] == -1
+                and event["side"] == opening_side
             ):
                 opening_counted = True
                 continue  # ReferenceReceiver counts the physical landing of the recorded opening.
@@ -107,8 +107,10 @@ if __name__ == "__main__":
     parser.add_argument("file", type=Path)
     args = parser.parse_args()
     doc = _read(args.file)
+    opening_side = doc.get("opening_side", -1) if isinstance(doc, dict) else -1
     for row in doc if isinstance(doc, list) else doc["rows"]:
         report = audit(
-            row.get("result", row)["events"] if "events" not in row else row["events"]
+            row.get("result", row)["events"] if "events" not in row else row["events"],
+            opening_side=opening_side,
         )
         print({k: v for k, v in report.items() if k != "shots"})
