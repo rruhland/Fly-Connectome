@@ -37,3 +37,27 @@ def test_swing_and_earned_window_emit_six_dimensional_tapes_and_clip_time():
     tapes, labels = earned_candidates([sample],obs,np.zeros(6),.17,10)
     assert np.asarray(tapes).shape == (32, 78, 6)
     assert labels == [(17,100)]*32
+
+
+def test_wrist_pulse_keeps_zero_motion_as_exact_control_and_lifts_late():
+    from scripts.experimental.tt40_low_pulse import MOVES, pulse
+    from scripts.experimental.tt37_motor_clinic import schedules
+
+    q, motion, action = np.zeros(5), np.ones(5), np.zeros(10)
+    home = np.zeros(6)
+    args = q, motion, action, .13, 1/60, home
+    control = pulse(*args, MOVES[0])
+    np.testing.assert_array_equal(control, schedules(q, motion, .13, action[None], 1/60, home, 22)[0])
+    corrected = pulse(*args, MOVES[5])
+    assert np.all(corrected[:,3] < control[:,3])
+    assert corrected[0,1] == control[0,1]
+    assert corrected[-1,1] > control[-1,1]
+
+
+def test_physical_learning_does_not_promote_unchanged_or_nonlegal_trials():
+    from scripts.experimental.tt40_low_pulse import Pulse
+
+    no = dict(rows=[dict(trials=[dict(index=0,legal=False),dict(index=1,legal=False)])])
+    assert not Pulse(no).rank
+    yes = dict(rows=[dict(trials=[dict(index=0,legal=False),dict(index=4,legal=True)])])
+    assert Pulse(yes).rank == [4]
