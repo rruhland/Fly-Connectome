@@ -26,7 +26,7 @@ def trials(engine, calls, eta):
     ]
 
 
-def audit(path, out, budget):
+def audit(path, out, budget, *, visual=None, body=False):
     d = _read(path)
     joint.RECEIVE_Y = d["depth"]
     rows = []
@@ -34,18 +34,22 @@ def audit(path, out, budget):
     with centered(d["ready"]):
         a = arena()
         camera, rig, stride, lo, hi = joint.resources(a)
-        twin = OpticalClinic()
+        twin = OpticalClinic(body=body)
         t = twin.twin
         oracle = Rollout(a, 1)
         ik = BladeIK(a)
-        surface = Surface(ik, sample(ik), d["depth"])
+        surface = Surface(ik, sample(ik), d["depth"], 0.35)
         try:
             for card, row in zip(d["cards"], d["rows"], strict=True):
                 indexed = {r["tick"]: r for r in row["records"]}
-                ref = surface.ready.copy()
+                ref = np.array(d["ready"])
                 a.launch(row["shot"], card=card)
                 a.partner.reset(seed=card["seed"])
                 eye = joint.Vision(rig, a.control_dt)
+                if visual:
+                    from .tt37_visual_inertia import LearnedOptics
+
+                    eye.eye = LearnedOptics(eye.eye, visual)
                 twin.previous = None
                 twin.bounced = False
                 hist = ArrivalHistory()
@@ -110,7 +114,16 @@ def audit(path, out, budget):
                             mujoco.mj_forward(t.model, t.data)
                             event[name] = trials(twin, calls, eta)
                         rows.append(event)
-                        _write(out, {"rows": rows, "source": str(path)})
+                        _write(
+                            out,
+                            {
+                                "rows": rows,
+                                "source": str(path),
+                                "visual": str(visual) if visual else None,
+                                "body": body,
+                                "tilt": 0.35,
+                            },
+                        )
                         if len(rows) >= budget:
                             return
                     a.exchange(cmd, np.zeros(5))
@@ -126,5 +139,7 @@ if __name__ == "__main__":
     p.add_argument("source", type=Path)
     p.add_argument("out", type=Path)
     p.add_argument("--budget", type=int, default=32)
+    p.add_argument("--visual", type=Path)
+    p.add_argument("--body", action="store_true")
     args = p.parse_args()
-    audit(args.source, args.out, args.budget)
+    audit(args.source, args.out, args.budget, visual=args.visual, body=args.body)

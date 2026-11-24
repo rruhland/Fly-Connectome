@@ -13,7 +13,7 @@ from .tt36_impact import triangulate
 from .tt37_opponent import arena
 
 
-def capture(paths, out, limit):
+def capture(paths, out, limit, stride=2):
     groups = []
     sensor = []
     evaluator = []
@@ -33,7 +33,7 @@ def capture(paths, out, limit):
                     a.partner.reset(seed=card["seed"])
                     eye = Vision(rig, a.control_dt, raw=True)
                     for tick, cmd in enumerate(row["actions"]):
-                        if tick % 2 == 0:
+                        if tick % stride == 0:
                             imgs = stereo.capture()
                             eye.update(tick, imgs, a.joints)
                             f = eye.eye.latest
@@ -77,7 +77,13 @@ def capture(paths, out, limit):
                 a.close()
         if len(keys) >= limit:
             break
-    np.savez_compressed(out, sensor=sensor, evaluation=evaluator, groups=groups)
+    np.savez_compressed(
+        out,
+        sensor=sensor,
+        evaluation=evaluator,
+        groups=groups,
+        period=stride * a.control_dt,
+    )
 
 
 if __name__ == "__main__":
@@ -85,5 +91,6 @@ if __name__ == "__main__":
     p.add_argument("output", type=Path)
     p.add_argument("source", type=Path, nargs="+")
     p.add_argument("--limit", type=int, default=12)
+    p.add_argument("--stride", type=int, choices=(1, 2), default=2)
     args = p.parse_args()
-    capture(args.source, args.output, args.limit)
+    capture(args.source, args.output, args.limit, args.stride)

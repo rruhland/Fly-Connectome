@@ -1,5 +1,9 @@
 # M1B research handoff
 
+## Carrying motor memory into randomly changing physical rallies
+
+On twelve matched unfamiliar measured releases, the camera-based physics controller made 14 legal arm returns with memory frozen, 26 when learning from empty, and 32 when carrying 86 previous successful corrections and continuing to learn. The direct camera-to-joint learner's body-relative position representation made 23 returns versus 16 across 24 unfamiliar releases, but lost eight across 16 familiar openings with new replies. The six-arm-return point on a novel release replayed with identical scoring and zero penetrations. The 100-arm-return milestone remains open. [Motor learning and compute](../../artifacts/tt37/carry.md) · [Direct control and retention](../../artifacts/tt38-body-relative/README.md) · [Simulator-assisted teacher](../../artifacts/tt38/motorcoach.md)
+
 ## Continuously random physical opponent and joint learning
 
 On 24 previously unseen random openings, expanding the joint pupil's practice from 86 to 289 rewarded arm returns raised legal openings from eight to ten and legal later replies from two to six. The best point on this comparison rose from two to four arm returns. A separate visual readout gave a five-arm-return point, but its total across the course was level with the original. A privileged practice controller reached nineteen legal arm returns, and the independent opponent demonstrated a hundred per side against a second privileged carriage. A sustained hundred on the autonomous SO-101 against broad random placement remains open. [Results and physical replays](../../artifacts/tt37/learning.md) · [Actual online learning from misses](../../artifacts/tt37/online-drive.md)

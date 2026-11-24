@@ -37,3 +37,26 @@ def test_missing_images_reset_recent_history(tmp_path):
     assert len(filt.samples) == 3
     assert filt.update(3 * DT, None, state) is state
     assert not filt.samples
+
+
+def test_online_calibration_waits_three_observations_and_respects_cadence(tmp_path):
+    from scripts.experimental.tt37_online_vision import BlankInertia, StreamingInertia
+
+    dt = DT / 2
+    model = StreamingInertia(period=dt)
+    blank = BlankInertia()
+    state = np.array([0.0, 0.0, 1.2, 0.1, -2.0, 0.0])
+    for i in range(7):
+        t = i * dt
+        point = state[:3] + state[3:] * t + np.array([0.0, 0.0, -4.905]) * t**2
+        assert blank.update(t, point, state) is state
+        model.update(t, point, state)
+        assert model.added == int(i == 6)
+    for i in range(6):
+        model.update(i * dt, None, state)
+    assert model.added == 1
+    path = tmp_path / "stream.npz"
+    model.save(path)
+    assert np.load(path)["period"] == dt
+    with np.testing.assert_raises(ValueError):
+        StreamingInertia(path, period=DT)

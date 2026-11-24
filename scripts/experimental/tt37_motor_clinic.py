@@ -2,6 +2,7 @@
 
 import argparse
 from pathlib import Path
+from time import process_time
 
 import numpy as np
 from scipy.stats import qmc
@@ -198,7 +199,9 @@ def search(
                 )
                 distance.append(audit_row)
                 return selected, nominal, distance
-            idx = ok[np.argmin(outcomes[ok, 0])]
+            value = getattr(engine, "motor_value", None)
+            cost = outcomes[ok, 0] if value is None else value.cost(outcomes[ok])
+            idx = ok[np.argmin(cost)]
             return choices[idx], outcomes[idx].tolist(), distance
         if rounds == 0:
             return choices[0], None, distance
@@ -255,6 +258,9 @@ def point(
     visual=None,
     refresh=False,
     pupil=None,
+    repair=False,
+    camera_stride=2,
+    economy=False,
 ):
     actor = joint.JointPolicy(model | {"ready": surf.ready.tolist()}, stride, lo, hi)
     eye = joint.Vision(rig, a.control_dt)
@@ -269,6 +275,8 @@ def point(
         engine = optical_engine
         engine.previous = None
         engine.bounced = False
+    start_time = process_time()
+    perception_cpu = arena_cpu = 0.0
     pending = None
     sensed_inbound = False
     records = []
@@ -283,7 +291,11 @@ def point(
         response.last = None
     for tick in range(a.max_steps):
         q = a.joints.copy()
-        obs = eye.update(tick, stereo.capture() if tick % 2 == 0 else None, q)
+        started = process_time()
+        obs = eye.update(
+            tick, stereo.capture() if tick % camera_stride == 0 else None, q
+        )
+        perception_cpu += process_time() - started
         if optical_engine is not None:
             optical_engine.observe(tick, eye.eye, q, actor.reference.copy())
         now = tick * a.control_dt
@@ -299,7 +311,21 @@ def point(
             and 0.76 < obs[2] < 1.38
         ):
             keep = False
-            if refresh and optical_engine is not None and optical_engine.sync():
+            if repair and (optical_engine is None or optical_engine.sync()):
+                from .tt37_motion_repair import revise
+
+                residual, note = revise(
+                    engine, tape[tick - tape_start :], obs[0], a.control_dt, tick
+                )
+                if note is not None:
+                    records[-1]["late_repair"] = note
+                if residual is not None:
+                    tape = residual
+                    tape_start = tick
+                    keep = True
+                    if note["status"] == "corrected":
+                        pending = None
+            elif refresh and optical_engine is not None and optical_engine.sync():
                 # Check the previously issued motion against the newer images first.
                 remainder = tape[tick - tape_start :]
                 extra = round(1.08 / a.control_dt)
@@ -344,20 +370,32 @@ def point(
                                 card["reply_seed"],
                                 tick,
                             )
-                        selected, score, trace = search(
-                            engine,
-                            fit,
-                            eta,
-                            choices,
-                            a.control_dt,
-                            surf.ready,
-                            rounds,
-                            np.random.default_rng([37173, len(bank), tick]),
-                            guided,
-                            experience,
-                            frame_log,
-                        )
-                        if archive is not None:
+                        cheap = []
+                        if economy:
+                            from .tt37_reuse import propose
+
+                            selected, score, check = propose(
+                                engine, bank, x, fit, eta, a.control_dt, surf.ready
+                            )
+                            cheap.append(check)
+                        if score is None:
+                            selected, score, trace = search(
+                                engine,
+                                fit,
+                                eta,
+                                choices,
+                                a.control_dt,
+                                surf.ready,
+                                rounds,
+                                np.random.default_rng(
+                                    [37173, 0 if economy else len(bank), tick]
+                                ),
+                                guided,
+                                experience,
+                                frame_log,
+                            )
+                        trace = cheap + trace
+                        if archive is not None and experience:
                             table = np.concatenate(experience)
                             archive.append(
                                 np.c_[
@@ -459,7 +497,9 @@ def point(
                     if proposed is not None:
                         desired = surf.ready + weight * (proposed - surf.ready)
         action = actor.drive(desired, q, 0.8)
+        started = process_time()
         _, _, done, capped, info = a.exchange(action, FAR)
+        arena_cpu += process_time() - started
         if pending is not None and any(
             e["kind"] == "legal_return" and e["side"] == 1 for e in info["events"]
         ):
@@ -476,6 +516,10 @@ def point(
         if done or capped or a.legal_returns + a.rival_returns - 1 >= cap:
             break
     return {
+        "cpu_s": process_time() - start_time,
+        "arena_cpu_s": arena_cpu,
+        "perception_cpu_s": perception_cpu,
+        "simulation_s": float(a.data.time),
         "actions": actions,
         "records": records,
         "events": a.events,
@@ -497,8 +541,10 @@ def run(args):
     a.close()
     joint.RECEIVE_Y = args.depth
     bank = _read(args.memory)["bank"] if args.memory else []
+    initial_bank = list(bank)
     out = {
         "cards": cards,
+        "forget_between_points": args.forget_between_points,
         "ready": surface.ready.tolist(),
         "depth": args.depth,
         "cut": args.cut,
@@ -507,6 +553,10 @@ def run(args):
         "bank": bank,
     }
     out.update(
+        economy=args.economy,
+        memory_start=len(bank),
+        camera_stride=args.camera_stride,
+        repair=args.repair,
         robust=args.robust,
         body=args.body,
         visual=str(args.visual) if args.visual else None,
@@ -542,6 +592,19 @@ def run(args):
         with np.load(args.rollin) as z:
             pupil = DeepField(z, "local")
         out["pupil_rollin"] = str(args.rollin)
+    vision_source = args.visual
+    if args.blank_vision:
+        if args.visual or args.learn_vision:
+            raise ValueError("Frozen blank vision must run without a visual checkpoint")
+        from .tt37_online_vision import BlankInertia
+
+        vision_source = BlankInertia()
+        out["blank_vision"] = True
+    if args.learn_vision:
+        from .tt37_online_vision import StreamingInertia
+
+        vision_source = StreamingInertia(args.visual, period=args.camera_stride / 60)
+        out["online_visual_checkpoint"] = str(args.learn_vision)
     changes = generate(args.samples)
     with centered(surface.ready):
         a = arena()
@@ -552,9 +615,21 @@ def run(args):
             if args.mode.startswith("optical-")
             else None
         )
+        if args.motor_value:
+            from .tt38_motor_value import MotorValue
+
+            if optical_engine is None:
+                raise ValueError(
+                    "Physical value learning requires an independent sensor-driven model"
+                )
+            optical_engine.motor_value = MotorValue(_read(args.motor_value))
+            out["motor_value"] = str(args.motor_value)
         stereo, rig, stride, lo, hi = joint.resources(a)
         try:
             for c in cards:
+                if args.forget_between_points:
+                    bank[:] = initial_bank
+                start_size = len(bank)
                 r = point(
                     a,
                     stereo,
@@ -579,15 +654,22 @@ def run(args):
                     args.variable,
                     frame_log,
                     optical_engine,
-                    args.visual,
+                    vision_source,
                     args.refresh,
                     pupil,
+                    args.repair,
+                    args.camera_stride,
+                    args.economy,
                 )
+                r["memory_size"] = [start_size, len(bank)]
                 if response is not None:
                     out["online_outcomes"] = [
                         {"context": x.tolist(), "action": u.tolist(), "reward": v}
                         for x, u, v in response.experience
                     ]
+                if args.learn_vision:
+                    r["optical_labels_so_far"] = vision_source.added
+                    vision_source.save(args.learn_vision)
                 out["rows"].append(r)
                 _write(args.out, out)
                 if frame_log is not None:
@@ -624,6 +706,7 @@ if __name__ == "__main__":
     p.add_argument("--n", type=int, default=6)
     p.add_argument("--samples", type=int, default=80)
     p.add_argument("--memory", type=Path)
+    p.add_argument("--motor-value", type=Path)
     p.add_argument("--cap", type=int, default=24)
     p.add_argument("--depth", type=float, default=-1.13)
     p.add_argument("--surface", type=float, default=0.35)
@@ -642,4 +725,10 @@ if __name__ == "__main__":
     p.add_argument("--body", action="store_true")
     p.add_argument("--robust", action="store_true")
     p.add_argument("--rollin", type=Path)
+    p.add_argument("--blank-vision", action="store_true")
+    p.add_argument("--learn-vision", type=Path)
+    p.add_argument("--repair", action="store_true")
+    p.add_argument("--camera-stride", type=int, choices=(1, 2), default=2)
+    p.add_argument("--economy", action="store_true")
+    p.add_argument("--forget-between-points", action="store_true")
     run(p.parse_args())

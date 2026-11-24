@@ -16,6 +16,7 @@ class OpticalClinic(OpticalPlanner):
         super().__init__(arena(), seed=371840)
         self.predict = self.nominal.predict
         self.robust = robust
+        self.motor_value = None
         self.body_model = copy(self.twin.model) if body else None
         if body:
             ball = self.body_model.geom("ball")
@@ -85,6 +86,11 @@ class OpticalClinic(OpticalPlanner):
         if self.latest is None:
             return False
         self._refresh(self.tick, self.latest, self.previous, self.rate, self.reference)
+        readout = getattr(self.tracker, "filter", None)
+        if hasattr(readout, "rotation"):
+            a = self.twin
+            i = a._ball_dof + 3
+            a.data.qvel[i : i + 3] = readout.rotation(self.tick * a.control_dt)
         if self.body_model is not None:
             a = self.twin
             b = self.body_state
@@ -146,6 +152,9 @@ class OpticalClinic(OpticalPlanner):
                     1.0 + 0.10 * np.exp(-0.45 * np.nan_to_num(y[:, 0], nan=100)),
                     0.16 * f[:, 1] * np.exp(-landing_error(f)),
                 )
+                if self.motor_value is not None and okay.any():
+                    chance = self.motor_value.predict(y[okay])
+                    score[okay] += 0.70 * chance[:, 0] + 0.40 * chance[:, 1]
                 quality.append(score)
                 traces.append(okay)
         finally:
