@@ -1,0 +1,203 @@
+{
+  "schema": "tt29-censored-forward-reach-fresh-1",
+  "settings": {
+    "feed_sha256": "300f4bf19556dd8eb69663f46de7f642008048b746321cc98754150a4e0e1237",
+    "initial_checkpoint_sha256": "e26bed7ff5db15aca1ba21e133efa8f2873a9356bad69c5aef5ac7d1182ee116",
+    "view": "left+right",
+    "pose": "lateral",
+    "condition": "stock",
+    "camera_period": 2,
+    "cached_stereo": true,
+    "rated": true,
+    "motor_envelope": true,
+    "fast_partner": true,
+    "net_rescue": true,
+    "robust_contact": true,
+    "rally_objective": true,
+    "recent": true,
+    "blend": true,
+    "seed_offset": 47027,
+    "spread": "varied",
+    "optical_outcomes": "learn",
+    "return_target": 24
+  },
+  "input_artifact_sha256": {
+    "signed": "854fc85430518a820f7ee850f54134f8d1571d689c31bf9963fa257e443942e9",
+    "censored": "d58c9627f254f3b504aceabec668b7cf4489e8d2901376924bbddc584f383eb5"
+  },
+  "points": [
+    {
+      "opening": 10542,
+      "opponent_seed": 57569,
+      "first_changed_tick": null,
+      "censored_samples_before_point": 0,
+      "censored_samples_available_at_first_changed_tick": null,
+      "new_censored_samples": [],
+      "signed": {
+        "returns": 6,
+        "arm_returns": 3,
+        "cpu_s": 21.437,
+        "actions_sha256": "3f3e0f67d7b6e371551f6d925b9b03a4bb7a9a6d72988678f1ae3b128d5da181",
+        "terminal_reason": "own_half"
+      },
+      "censored": {
+        "returns": 6,
+        "arm_returns": 3,
+        "cpu_s": 21.524,
+        "actions_sha256": "3f3e0f67d7b6e371551f6d925b9b03a4bb7a9a6d72988678f1ae3b128d5da181",
+        "terminal_reason": "own_half"
+      }
+    },
+    {
+      "opening": 4230,
+      "opponent_seed": 51258,
+      "first_changed_tick": null,
+      "censored_samples_before_point": 0,
+      "censored_samples_available_at_first_changed_tick": null,
+      "new_censored_samples": [
+        {
+          "predicted_strike_s": 0.6083333333333315,
+          "predicted": [
+            0.13820603734387016,
+            0.4004389936004497,
+            0.18674120723614307
+          ],
+          "measured": null,
+          "forward_reach_upper_m": -1.0880736607159924,
+          "available_step": 43,
+          "features": [
+            0.7332225089799134,
+            10.00594995775427,
+            -0.35537061768965217,
+            -2.47283195694516,
+            2.1276381070351644,
+            2.4898827631485743
+          ],
+          "samples": 0,
+          "last_position": null,
+          "reward": -1,
+          "penalty": 0.0
+        }
+      ],
+      "signed": {
+        "returns": 0,
+        "arm_returns": 0,
+        "cpu_s": 12.338,
+        "actions_sha256": "b7d8eabddb466d3fd3a9f84e1440a229a7a1766a2b21137902d1bdcc8e0f6982",
+        "terminal_reason": "own_half"
+      },
+      "censored": {
+        "returns": 0,
+        "arm_returns": 0,
+        "cpu_s": 12.452,
+        "actions_sha256": "b7d8eabddb466d3fd3a9f84e1440a229a7a1766a2b21137902d1bdcc8e0f6982",
+        "terminal_reason": "own_half"
+      }
+    },
+    {
+      "opening": 7271,
+      "opponent_seed": 54300,
+      "first_changed_tick": 366,
+      "censored_samples_before_point": 1,
+      "censored_samples_available_at_first_changed_tick": 1,
+      "new_censored_samples": [],
+      "signed": {
+        "returns": 18,
+        "arm_returns": 9,
+        "cpu_s": 35.123,
+        "actions_sha256": "2fbfeddbeb3f3ebc0e0b125ba54e23d27393697c5b42ecf71e916bf7ca2f619e",
+        "terminal_reason": "out"
+      },
+      "censored": {
+        "returns": 14,
+        "arm_returns": 7,
+        "cpu_s": 18.639,
+        "actions_sha256": "7b443700d2573559f72536af1c1e5d4991c4cb9c224826d60046257753b843e7",
+        "terminal_reason": "fixture_contact"
+      }
+    },
+    {
+      "opening": 4187,
+      "opponent_seed": 51217,
+      "first_changed_tick": 200,
+      "censored_samples_before_point": 1,
+      "censored_samples_available_at_first_changed_tick": 1,
+      "new_censored_samples": [],
+      "signed": {
+        "returns": 10,
+        "arm_returns": 5,
+        "cpu_s": 27.222,
+        "actions_sha256": "92adc7f5181ec347f24dd51903133c1955f9860938fd7d2d6456540518352b56",
+        "terminal_reason": "floor"
+      },
+      "censored": {
+        "returns": 14,
+        "arm_returns": 7,
+        "cpu_s": 54.705,
+        "actions_sha256": "5467228137ecdd2d09607a4c3058042f0024cfe3ef97486a8557dbd95370f3ae",
+        "terminal_reason": "own_half"
+      }
+    },
+    {
+      "opening": 7345,
+      "opponent_seed": 54376,
+      "first_changed_tick": 99,
+      "censored_samples_before_point": 1,
+      "censored_samples_available_at_first_changed_tick": 1,
+      "new_censored_samples": [],
+      "signed": {
+        "returns": 4,
+        "arm_returns": 2,
+        "cpu_s": 17.834,
+        "actions_sha256": "3efba4f064ef3f28e0e7a593d88cd126bcd05ea856867df5b21ad1eccf3bcd0b",
+        "terminal_reason": "out"
+      },
+      "censored": {
+        "returns": 4,
+        "arm_returns": 2,
+        "cpu_s": 23.426,
+        "actions_sha256": "6fd52230f255ac568795be499dc40ab930bc4d17f572e5bb0010ca3e6b9eb559",
+        "terminal_reason": "out"
+      }
+    },
+    {
+      "opening": 11292,
+      "opponent_seed": 58324,
+      "first_changed_tick": 4,
+      "censored_samples_before_point": 1,
+      "censored_samples_available_at_first_changed_tick": 1,
+      "new_censored_samples": [],
+      "signed": {
+        "returns": 20,
+        "arm_returns": 10,
+        "cpu_s": 37.732,
+        "actions_sha256": "2b646555fdba99687fbafe3de042c0ef2a65f0e7fe9e4eea8d226f10a5b537b6",
+        "terminal_reason": "out"
+      },
+      "censored": {
+        "returns": 24,
+        "arm_returns": 12,
+        "cpu_s": 30.422,
+        "actions_sha256": "37a881de8272433c4b074a8d05147622af30c0094de0b54baddd39555cac29b1",
+        "terminal_reason": null
+      }
+    }
+  ],
+  "total_censored_samples": 1,
+  "totals": {
+    "signed": {
+      "returns": 58,
+      "arm_returns": 29,
+      "cpu_s": 151.686,
+      "cpu_s_per_return": 2.615,
+      "longest": 20
+    },
+    "censored": {
+      "returns": 62,
+      "arm_returns": 31,
+      "cpu_s": 161.168,
+      "cpu_s_per_return": 2.599,
+      "longest": 24
+    }
+  }
+}
