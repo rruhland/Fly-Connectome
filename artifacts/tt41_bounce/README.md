@@ -20,7 +20,7 @@ The two fixtures use the same shoulder-through-wrist axes with a nominal 5.2 rad
 
 The low fallback checks the stock stroke only when it finds no nominal legal shot and the camera estimates a low ball with a near receive time. The frozen solo policy estimates the effect of blade motion and proposes bounded, joint-local changes in approach, face angle, and face speed. The stock geometry and independent, sensor-initialized physics model still check every candidate. The equal-budget stationary-face control uses the same seed, initial candidate batch, runtime inputs and number of candidate simulations but removes the moving-face contribution from the directed additions. It still evaluates general joint-rate changes. Each fall-back attempt can test 512 independent nominal motions. The online branch starts with the solo prior and adjusts the directed search's gain on receipt of actual legal-return reward or a fault. No release ID, court truth, future image, opponent target, or prior table outcome labels enter the added action selector. [Physical fallback and matching runner](../../scripts/experimental/tt41_bounce_return.py)
 
-On the first preassigned assessment release, 9550, all five variants issued identical commands up to tick 170 after the same opponent strike and near bounce. The recipient saw a predicted receive height of 0.997 m and acted about 100 ms before contact. The stock ball left at 2.56 m/s forward and 3.16 m/s upward, then faulted. The solo-fit policy put 2.87 m/s forward and 3.18 m/s upward into the same incoming shot. It landed legally and received a physical answer. More forward drive, not a large increase in lift, made this motion useful. The fixed evaluation height projection to −1.53 m places the ball at 1.003 m, immediately above the strict <0.99 m failure band. This is an adjacent-low rescue, not a demonstration that the deepest low balls are solved. [Full matched commands](held-first.json.gz) · [Nominal moving-face control](held-nominal.json.gz)
+On the first preassigned assessment release, 9550, all five variants issued identical commands up to tick 170 after the same opponent strike and near bounce. The recipient saw a predicted receive height of 0.997 m and acted about 100 ms before contact. The stock ball left at 2.56 m/s forward and 3.16 m/s upward, then faulted. The solo-fit policy put 2.87 m/s forward and 3.18 m/s upward into the same incoming shot. It landed legally and received a physical answer. More forward drive, not a large increase in lift, made this motion useful. The fixed evaluation height projection to −1.53 m places the ball at 1.003 m, immediately above the strict <0.99 m failure band. This is an adjacent-low rescue, not a demonstration that the deepest low balls are solved. [Full matched commands](held-first.json.gz) · [Nominal moving-face control](held-nominal.json.gz) · [Its matched replay](held-nominal-audit.json)
 
 | 9550, one uninterrupted game per condition | Arm returns | Alternating legal returns | Simulated seconds | CPU seconds |
 | --- | ---: | ---: | ---: | ---: |
@@ -34,6 +34,19 @@ All four extra searches returned the first shared low delivery legally. The two 
 
 On the five deeper development failures from the feasibility report no new physical return scored. Both extra searches tested 512 nominal motions twice per case. On 8519 the first window supplied one independently chosen stroke per branch, but both physically touched and missed. The four other cases did not produce a nominally legal movement within the search cap, and no alternative was issued. Earlier privileged feasibility work succeeded on two of these cases. [Matched development attempts](witness.json.gz) · [Prior physical feasibility](../tt40/low-feasibility.md)
 
+### Three preassigned matched games
+
+The first three assignments in the frozen assessment plan are disjoint from the training used for this comparison. The two companion games, 15665 and 11884, ended with three and seven arm returns respectively in every branch. The fallback never activated on either, and every issued command and physical event matched. Their online block restarted from the solo fit, with no 9550 update carried into it. The shorter renewed course therefore measured one active low intervention, not repeated success over several different low balls. [Companion tapes](held-extra.json.gz) · [Matching audit](held-extra-audit.json)
+
+| Three assigned releases | Arm returns | Simulated seconds | CPU seconds | Legal arm returns per CPU minute |
+| --- | ---: | ---: | ---: | ---: |
+| Stock fixed | 11 | 24.52 | 30.83 | 21.41 |
+| Equal-budget stationary face | 14 | 28.82 | 40.78 | 20.60 |
+| Solo-fit frozen | 16 | 31.81 | 45.61 | 21.05 |
+| Solo-fit online | 16 | 31.81 | 45.52 | 21.09 |
+
+The extra search increased the number of returns but not the return rate per CPU minute on this small course. The 53.97 simulated seconds of source practice are separately charged and were not repeated for each table arm. There is no evidence here of an additional online advantage or of progress from six to the previous best of 35, let alone 100. The next useful test is more active low offers with the newly verified early body preparation, under camera-only selection and an explicit computation cap.
+
 ## Reproduce
 
 ```sh
@@ -43,7 +56,10 @@ python -m scripts.experimental.tt41_bounce_effect "$out/effect.json"
 python -m scripts.experimental.tt41_bounce_table_audit "$out/table-audit.json"
 python -m scripts.experimental.tt41_bounce_return witness "$out/witness.json.gz" --batch 128 --rounds 4
 python -m scripts.experimental.tt41_bounce_return held "$out/held-first.json.gz" --batch 128 --rounds 4 --limit 1
+python -m scripts.experimental.tt41_bounce_return held "$out/held-extra.json.gz" --batch 128 --rounds 4 --start 1 --limit 2
 python -m scripts.experimental.tt41_bounce_return held "$out/held-nominal.json.gz" --batch 128 --rounds 4 --limit 1 --modes elastic
 python -m scripts.experimental.tt41_bounce_verify --tape "$out/held-first.json.gz" --out "$out/held-audit.json" --cad
+python -m scripts.experimental.tt41_bounce_verify --tape "$out/held-extra.json.gz" --out "$out/held-extra-audit.json"
+python -m scripts.experimental.tt41_bounce_verify --tape "$out/held-first.json.gz" --supplement "$out/held-nominal.json.gz" --out "$out/held-nominal-audit.json" --cad
 python -m pytest -q tests/test_tt41_bounce_effect.py
 ```
