@@ -15,12 +15,16 @@ def summarize(path, donor):
     if [r["shot"]["id"] for r in rows] != data["ids"]:
         raise ValueError(f"Incomplete or misaligned opening sequence: {path}")
     errors = []
+    observed = 0
     for row in rows:
         checked = audit(row["events"])
         if any(checked[k] != row["score"][k] for k in ("returns", "learner", "opponent")):
             raise ValueError(f"Saved events disagree with the scored point in {path}")
         for attempt in (row.get("optical_outcomes") or {}).get("attempts", []):
-            if attempt.get("measured") is None or "features" not in attempt:
+            if attempt.get("measured") is None:
+                continue
+            observed += 1
+            if "features" not in attempt:
                 continue
             bias, _ = donor.predict(np.asarray(attempt["features"])[None, :])
             observed_error = np.asarray(attempt["measured"]) - attempt["predicted"]
@@ -33,7 +37,7 @@ def summarize(path, donor):
                 starting_examples=[r["initial_examples"] for r in rows], returns=returns,
                 arm=sum(r["score"]["learner"] for r in rows), total=sum(returns),
                 process_cpu_s=cpu, simulated_s=simulated, cpu_per_return_s=cpu / max(1, sum(returns)),
-                placement_samples=len(errors),
+                observed_placements=observed, rescorable_placements=len(errors),
                 mean_absolute_error_m=None if not errors else np.abs(np.asarray(errors)).mean(axis=0).tolist())
 
 
