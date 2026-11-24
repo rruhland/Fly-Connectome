@@ -16,7 +16,8 @@ from .tt4_transfer_trial import _hash, _write
 from .tt19_view_full_game import digest_json
 from .tt29_arm_clearance import ArmClearance
 from .tt29_endurance import audit
-from .tt29_partner import DEEP_LANES, FOREHAND_LANES, PartnerArena
+from .tt29_partner import PartnerArena
+from .tt29_conditions import CONDITIONS, apply, cooperative_targets, table_settings
 from .tt29_rally_physics import measured_launches
 
 
@@ -88,7 +89,7 @@ def clearance_final(arena, guard, data):
     return clearance
 
 
-def replay(feeds, source, shot_id, receipt, movie=None):
+def replay(feeds, source, shot_id, receipt, movie=None, *, fast_partner=False):
     archived_bytes = source.read_bytes()
     source_digest = sha256(archived_bytes).hexdigest()
     archive = json.loads(gzip.decompress(archived_bytes) if source.suffix == '.gz' else archived_bytes)
@@ -97,17 +98,27 @@ def replay(feeds, source, shot_id, receipt, movie=None):
         raise ValueError('The archived opening differs from the pinned measured ball launch')
     pose = archive['pose']
     streams = tuple(archive['view'].split('+'))
-    targets = FOREHAND_LANES if pose == 'lateral' else DEEP_LANES
+    targets = cooperative_targets(pose, archive.get('spread', 'practice'))
+    condition = archive.get('condition', 'stock')
     settings = dict(strike_ready=pose, width=384, height=288, clearance_guard=True, fast_search=True,
-                    max_steps=9000, targets=targets, guard_table=True)
-    arena = PartnerArena(**settings)
+                    max_steps=9000, targets=targets, guard_table=True, plant=table_settings(condition),
+                    rate_scale=.8 if archive.get('rated') else 1., velocity_guard=archive.get('rated', False))
+    if fast_partner:
+        from .tt29_partner_fast import FastPartnerArena
+    arena_type = FastPartnerArena if fast_partner else PartnerArena
+    arena = arena_type(**settings)
     cad = PartnerArena(**settings, detail='cad')
+    if condition not in ('stock', 'two_surface', 'narrow_table'):
+        for station in (arena, cad):
+            apply(station, CONDITIONS[condition])
+            station.partner = type(station.partner)(station, targets=targets, guard_table=True)
     digest = sha256()
     renderer = process = None
     frames = count = 0
     far = np.zeros(5)
     try:
         arena.launch(row['shot'])
+        arena.partner.reset(seed=row.get('opponent_seed', shot_id))
         arena.streams = streams
         arena.sample_clearance(True)
         guard = ArmClearance(cad.model, tolerance=0.)
@@ -175,15 +186,16 @@ def main():
     parser.add_argument('--id', type=int, default=7345)
     parser.add_argument('--receipt', type=Path, default=OUT / 'tt29_vision_memory_audit.json')
     parser.add_argument('--movie', type=Path)
+    parser.add_argument('--fast-partner', action='store_true')
     args = parser.parse_args()
     args.receipt.parent.mkdir(parents=True, exist_ok=True)
     if args.movie is None:
-        replay(args.feeds, args.source, args.id, args.receipt)
+        replay(args.feeds, args.source, args.id, args.receipt, fast_partner=args.fast_partner)
     else:
         args.movie.parent.mkdir(parents=True, exist_ok=True)
         with TemporaryDirectory(prefix='tt29-replay-', dir=args.movie.parent) as work:
             temporary = Path(work) / 'rally.mp4'
-            replay(args.feeds, args.source, args.id, args.receipt, temporary)
+            replay(args.feeds, args.source, args.id, args.receipt, temporary, fast_partner=args.fast_partner)
             temporary.replace(args.movie)
 
 

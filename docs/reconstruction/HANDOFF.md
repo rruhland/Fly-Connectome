@@ -2,8 +2,7 @@
 
 ## Table-edge SO-101 and continuous regulation rallies
 
-Use the table-edge fixture. The compact board camera and two tabletop clamps are present in the actual simulator. A stereo RGB controller that stores successful joint movements played 66 alternating legal returns on measured opening 7271. Exact replay checked 21,952 states against the CAD and reproduced every event. The four initial practice openings scored 0, 0, 14 and 66, illustrating the dependence on the incoming shot. The far paddle is a force-limited cooperative carriage, and the near controller uses a supplied nominal physics model. [Receiving results and failure analysis](../../artifacts/tt29/receiving.md) · [Fixture views](../../artifacts/tt29/fixture.md) · [Warm-up, transfer and retention](../../artifacts/tt29/tt29_bounce.md)
-
+The simulated SO-101 has played **100 consecutive legal returns** against a physical cooperative practice carriage on two distinct measured openings, 50 landed by each player. One point lasted 69.37 s at a median departure speed of 5.70 m/s, and the other lasted 69.57 s at 5.65 m/s. Stereo RGB, encoders and retained joint movements drove the near arm. Each point reproduced all 502 referee and contact events with positive geometric clearance at every solver step. Both exceeded the unloaded motor speed reference on at least one joint. Changed physics, latency and camera placement still affect endurance. The hardware-like clamp and wrist board are present in the simulator used for play. [Results and controls](../../artifacts/tt29/endurance.md) · [Fixture views](../../artifacts/tt29/fixture.md) · [Solo retention](../../artifacts/tt29/tt29_bounce.md)
 
 ## How long to pretrain on solo bouncing
 

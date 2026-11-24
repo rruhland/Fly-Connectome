@@ -491,10 +491,11 @@ class MotionPlanner:
                         params.append([time, p.tolist(), normal.tolist(), pace, motion, lead])
         return np.asarray(goals), params
 
-    def plan(self):
+    def plan(self, path=None):
         started = perf_counter()
         a = self.arena
-        path = self.flight.path(a.ball, a.velocity, a.spin, self.side, a._received_bounce)
+        if path is None:
+            path = self.flight.path(a.ball, a.velocity, a.spin, self.side, a._received_bounce)
         if self.ik:
             if a.strike_ready == "lateral":
                 depths = np.array([1.38, 1.35, 1.32, 1.29, 1.26, 1.23, 1.20])

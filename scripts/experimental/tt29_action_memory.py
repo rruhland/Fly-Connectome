@@ -1,7 +1,7 @@
 """Retrieve and time prior joint commands during a rally, with an optional dynamics check."""
 
 from dataclasses import dataclass
-from time import perf_counter
+from time import perf_counter, process_time
 
 import numpy as np
 
@@ -41,10 +41,14 @@ def context(path, depth):
 class RecallPlanner(MotionPlanner):
     """The motor memory is updated only when the point supplies a legal-return reward."""
 
-    def __init__(self, arena, memory, *, seed, verify=True):
+    def __init__(
+        self, arena, memory, *, seed, verify=True, blend=False, recall_only=False
+    ):
         super().__init__(arena, side=1, seed=seed)
         self.memory = memory
         self.verify = verify
+        self.blend = blend
+        self.recall_only = recall_only
         self.pending = None
         self.retrieved = 0
         self.fallback = 0
@@ -62,14 +66,15 @@ class RecallPlanner(MotionPlanner):
         path = self.flight.path(a.ball, a.velocity, a.spin, 1, a._received_bounce)
         packet = context(path, -1.29)
         if packet is None:
-            return super().plan()
+            return None if self.recall_only else super().plan(path)
         key, delay = packet
         dt = a.control_dt
         inc = self.rates * dt
         q = a.data.ctrl[self.axes].copy()
         lo, hi = a._joint_low[self.axes], a._joint_high[self.axes]
         proposed = []
-        for e in self.memory.nearest(key, 6):
+        neighbors = self.memory.nearest(key, 6)
+        for e in neighbors:
             interval = np.arange(max(1, round((delay + 0.65) / dt))) + 1.0
             ix = interval + (e.time_to_contact - delay) / dt
             goals = np.stack(
@@ -80,6 +85,22 @@ class RecallPlanner(MotionPlanner):
                 axis=1,
             )
             proposed.append(goals)
+        if self.blend and len(neighbors) > 1:
+            # Interpolate practiced motor outputs along the line joining each pair of observed flights.
+            raw = list(proposed)
+            scale = np.array([0.12, 0.18, 1.2, 1.4, 1.2])
+            for j in range(1, len(neighbors)):
+                vector = (neighbors[j].flight - neighbors[0].flight) / scale
+                weight = (
+                    ((key - neighbors[0].flight) / scale)
+                    @ vector
+                    / max(1e-6, vector @ vector)
+                )
+                weight = np.clip(weight, -0.20, 1.10)
+                if abs(weight) > 0.05:
+                    proposed.append(
+                        np.clip(raw[0] + weight * (raw[j] - raw[0]), lo, hi)
+                    )
         if proposed:
             if self.verify:
                 rates, score = self.predict.trajectories(
@@ -107,8 +128,10 @@ class RecallPlanner(MotionPlanner):
                 self.retrieval_seconds += perf_counter() - start
                 return tape
         self.retrieval_seconds += perf_counter() - start
+        if self.recall_only:
+            return None
         start = perf_counter()
-        tape = super().plan()
+        tape = super().plan(path)
         self.fallback_seconds += perf_counter() - start
         if tape is not None:
             current = q.copy()
@@ -181,13 +204,25 @@ def run(
     reset_memory=False,
     no_memory=False,
     robust_contact=False,
+    blend=False,
+    observe_until=0.0,
+    recall_only=False,
+    verify=True,
+    camera_period=1,
+    identify_delay=False,
+    rated=False,
+    fast_partner=False,
+    probe_delay=False,
+    fit_body=False,
+    spread="practice",
     seed_offset=0,
     condition="stock",
     bounce=None,
 ):
     from .tt4_transfer_trial import _write
     from .tt29_endurance import audit
-    from .tt29_partner import FOREHAND_LANES, DEEP_LANES, PartnerArena
+    from .tt29_partner import PartnerArena
+    from .tt29_conditions import cooperative_targets, table_settings
     from .tt29_rally_physics import RallyArena, measured_launches
     from .tt29_vision import FlightPractice, OpticalFlight, Rig
     from .tt29_vision_twin import OpticalPlanner
@@ -200,22 +235,35 @@ def run(
         clearance_guard=True,
         fast_search=True,
         max_steps=9000,
+        rate_scale=0.8 if rated else 1.0,
+        velocity_guard=rated,
     )
     twin = RallyArena(**settings, robust_contact=robust_contact)
-    arena = PartnerArena(
+    if fast_partner:
+        from .tt29_partner_fast import (
+            FastPartnerArena,
+            FastPracticePartner,
+            NativeBallFlight,
+        )
+
+    arena_class = FastPartnerArena if fast_partner else PartnerArena
+    arena = arena_class(
         **settings,
-        targets=FOREHAND_LANES if pose == "lateral" else DEEP_LANES,
+        targets=cooperative_targets(pose, spread),
+        plant=table_settings(condition),
         guard_table=True,
     )
     from .tt29_conditions import CONDITIONS, Delay, apply
+    from .tt29_encoder_delay import EncoderDelay
     from .tt29_partner import PracticePartner
 
     conditions = CONDITIONS[condition]
     # The camera rig knows the nominal installation. Perturbations happen afterward.
     rig = Rig.from_arena(arena)
-    if condition != "stock":
+    if condition not in ("stock", "two_surface", "narrow_table"):
         apply(arena, conditions)
-        arena.partner = PracticePartner(
+        partner_class = FastPracticePartner if fast_partner else PracticePartner
+        arena.partner = partner_class(
             arena, targets=arena.partner.targets, guard_table=True
         )
     if bounce is not None:
@@ -231,6 +279,7 @@ def run(
         )
     nominal = FlightPractice()
     memory = Experience()
+    delay_ident = EncoderDelay()
     if checkpoint is not None:
         from .tt4_transfer_trial import _read
 
@@ -239,7 +288,18 @@ def run(
                 np.array(e["flight"]), np.array(e["targets"]), e["time_to_contact"]
             )
     rows = []
+    calibration = None
+    fixed_lag = None
     try:
+        if probe_delay or fit_body:
+            from .tt29_encoder_delay import calibrate_delay
+
+            calibration_pipeline = Delay(conditions, 294601)
+            fixed_lag, calibration = calibrate_delay(
+                arena, twin, calibration_pipeline.command, body=fit_body
+            )
+            delay_ident.lag = fixed_lag
+            print("calibration", fixed_lag, calibration, flush=True)
         for point, sid in enumerate(ids):
             if reset_memory:
                 memory = Experience()
@@ -251,7 +311,16 @@ def run(
             rig.begin()
             eye = OpticalFlight(rig, nominal, learn=True)
             policy = OpticalPlanner(twin, seed=290110)
-            planner = RecallPlanner(twin, memory, seed=290110)
+            planner = RecallPlanner(
+                twin,
+                memory,
+                seed=290110,
+                blend=blend,
+                recall_only=recall_only,
+                verify=verify,
+            )
+            if fast_partner:
+                planner.flight = NativeBallFlight(twin)
             policy.nominal = planner
             arena.streams = tuple(view.split("+"))
             x = arena.joints.copy()
@@ -261,18 +330,44 @@ def run(
                 twin._joint_high[policy.actuators],
             )
             actions = []
+            # Point reset starts a new time series while retaining the learned delay.
+            delay_ident.targets.clear()
+            delay_ident.encoders.clear()
+            lag_history = []
             initial = len(memory.examples)
             cpu = perf_counter()
+            started_cpu = process_time()
             for step in range(arena.max_steps):
                 q = arena.joints.copy()
                 t = step * arena.control_dt
-                captured = pipeline.observe(t, arena.render_cameras(), q)
+                captured = (
+                    pipeline.observe(t, arena.render_cameras(), q)
+                    if step % camera_period == 0
+                    else None
+                )
                 if captured is not None:
                     eye.observe(*captured)
                 dq = (q - prev) / arena.control_dt
                 if refine:
                     refine_after_bounce(policy, step, eye.latest, q, dq, x)
-                u = policy.command(step, eye.latest, q, dq, x)
+                sample = eye.latest
+                if observe_until and not policy.incoming and sample is not None:
+                    position, velocity = sample.advance(t)
+                    if (
+                        velocity[1] < -1.0
+                        and (-1.29 - position[1]) / velocity[1] > observe_until
+                    ):
+                        sample = None
+                ahead = 0
+                q_control, dq_control = q, dq
+                if identify_delay or probe_delay or fit_body:
+                    delay_ident.observe(q, x, fixed=fixed_lag)
+                    ahead = delay_ident.lag
+                    q_control, delta = delay_ident.predict(q, q - prev)
+                    dq_control = delta / arena.control_dt
+                    if step % 12 == 0:
+                        lag_history.append(ahead)
+                u = policy.command(step + ahead, sample, q_control, dq_control, x)
                 x = np.clip(x + u * planner.rates * arena.control_dt, lo, hi)
                 prev = q
                 applied = pipeline.command(u)
@@ -305,7 +400,9 @@ def run(
                     retrieved=planner.retrieved,
                     planned=planner.fallback,
                     corrections=getattr(policy, "corrections", 0),
+                    delay_estimates=lag_history,
                     elapsed=perf_counter() - cpu,
+                    process_cpu_s=process_time() - started_cpu,
                     retrieval_s=planner.retrieval_seconds,
                     search_s=planner.fallback_seconds,
                     actions=actions,
@@ -339,6 +436,18 @@ def run(
                     reset_memory=reset_memory,
                     no_memory=no_memory,
                     robust_contact=robust_contact,
+                    blend=blend,
+                    observe_until=observe_until,
+                    recall_only=recall_only,
+                    verify=verify,
+                    camera_period=camera_period,
+                    identify_delay=identify_delay,
+                    rated=rated,
+                    fast_partner=fast_partner,
+                    calibrated_lag=fixed_lag,
+                    delay_probe=calibration,
+                    fit_body=fit_body,
+                    spread=spread,
                     rows=rows,
                     checkpoint=checkpoint,
                 ),
@@ -366,6 +475,21 @@ if __name__ == "__main__":
     p.add_argument("--condition", default="stock")
     p.add_argument("--bounce", type=Path)
     p.add_argument("--robust-contact", action="store_true")
+    p.add_argument("--blend", action="store_true")
+    p.add_argument("--observe-until", type=float, default=0.0)
+    p.add_argument("--recall-only", action="store_true")
+    p.add_argument("--no-verify", action="store_true")
+    p.add_argument("--camera-period", type=int, choices=(1, 2, 3), default=1)
+    p.add_argument("--fast-partner", action="store_true")
+    p.add_argument("--spread", choices=("practice", "varied"), default="practice")
+    p.add_argument("--fit-body", action="store_true")
+    p.add_argument("--probe-delay", action="store_true")
+    p.add_argument(
+        "--rated",
+        action="store_true",
+        help="Screen candidate motor speed and retain its checked follow-through",
+    )
+    p.add_argument("--identify-delay", action="store_true")
     args = p.parse_args()
     run(
         args.feeds,
@@ -378,6 +502,17 @@ if __name__ == "__main__":
         reset_memory=args.reset_memory,
         no_memory=args.no_memory,
         robust_contact=args.robust_contact,
+        blend=args.blend,
+        observe_until=args.observe_until,
+        recall_only=args.recall_only,
+        verify=not args.no_verify,
+        camera_period=args.camera_period,
+        identify_delay=args.identify_delay,
+        rated=args.rated,
+        fast_partner=args.fast_partner,
+        probe_delay=args.probe_delay,
+        fit_body=args.fit_body,
+        spread=args.spread,
         seed_offset=args.seed_offset,
         condition=args.condition,
         bounce=args.bounce,

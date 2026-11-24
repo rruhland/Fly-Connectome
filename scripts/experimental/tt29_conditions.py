@@ -31,6 +31,8 @@ class Conditions:
 
 CONDITIONS = {
     "stock": Conditions(),
+    "two_surface": Conditions(),
+    "narrow_table": Conditions(),
     "outside": Conditions(streams=("left",)),
     "wrist": Conditions(streams=("wrist",)),
     "materials": Conditions(
@@ -119,3 +121,32 @@ class Delay:
         if self.cfg.command_noise:
             cmd = cmd + self.rng.normal(0, self.cfg.command_noise, len(cmd))
         return np.clip(cmd, -1.0, 1.0)
+
+
+def cooperative_targets(pose, spread):
+    """Select independent partner target positions and arrival speeds inside a reachable region."""
+    from .tt29_partner import FOREHAND_LANES, DEEP_LANES
+
+    familiar = FOREHAND_LANES if pose == "lateral" else DEEP_LANES
+    if spread == "practice":
+        return familiar
+    if spread != "varied" or pose != "lateral":
+        raise ValueError(
+            "The varied challenge uses the lateral receiving configuration"
+        )
+    rng = np.random.default_rng(290804)
+    lo = np.array([0.126, -1.365, 0.985, 3.12])
+    hi = np.array([0.320, -1.237, 1.117, 4.08])
+    # Stratify each dimension independently, then draw a different target on each far return.
+    strata = np.stack([rng.permutation(96) for _ in range(4)], axis=1)
+    return lo + (strata + rng.uniform(size=(96, 4))) / 96 * (hi - lo)
+
+
+def table_settings(name):
+    from .tt18_plant import PlantSettings
+
+    if name == "two_surface":
+        return PlantSettings(left_damping=18.0, right_damping=32.0)
+    if name == "narrow_table":
+        return PlantSettings(table_half_width=0.705, table_half_length=1.34)
+    return PlantSettings()

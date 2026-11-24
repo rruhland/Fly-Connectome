@@ -119,9 +119,13 @@ class OpticalPlanner:
         reads = flight is not None and now - flight.time < .105
         if reads and flight.velocity[1] > 1.05:
             if self.incoming:
-                self.tape, self.bounced = None, False
+                if not self.twin.velocity_guard:
+                    self.tape = None
+                self.bounced = False
             self.incoming = False
         elif reads and flight.velocity[1] < -.90:
+            if self.twin.velocity_guard and not self.incoming:
+                self.tape = None
             if self.tape is not None:
                 elapsed = (step - self.first) * self.twin.control_dt
                 # The old command may outlast a briefly occluded reversal. A
@@ -141,6 +145,8 @@ class OpticalPlanner:
             self.first = step
             if self.tape is not None:
                 return self.tape[0]
+        if self.twin.velocity_guard:
+            return np.zeros_like(target)
         goal = self.home if not self.incoming or self.tape is None else target
         return np.clip((goal - target) / (self.twin.control_dt * self.nominal.rates), -.80, .80)
 
