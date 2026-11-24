@@ -5,7 +5,7 @@
 #include <limits>
 #include <vector>
 
-extern "C" void trial_strokes_v2(
+extern "C" void trial_strokes_v3(
     const mjModel* nominal, const mjData* source, const double* goals,
     int count, int frames, int micro, int side,
     const int* active, int active_count, const int* other, int other_count,
@@ -14,7 +14,7 @@ extern "C" void trial_strokes_v2(
     const double* target, double* rates, double* scores,
     const int* first, const int* second, int pairs, double rate_scale, double speed_limit,
     const int* active_dofs, double rim_penalty, double clearance_margin,
-    double envelope_no_load, const int* near_actuators, const int* near_dofs, int near_count) {
+    double envelope_no_load, const int* near_actuators, const int* near_dofs, int near_count, double* feedback) {
     const int ball = ids[0], blade = ids[1], table = ids[2], table2 = ids[3], net = ids[4];
     const int ball_body = ids[5], pos = ids[6], vel = ids[7];
     const double start = source->time;
@@ -39,6 +39,12 @@ extern "C" void trial_strokes_v2(
             double land_x = 0.0, land_y = 0.0, best = std::numeric_limits<double>::infinity();
             double x_best = 0.0, y_best = 0.0, z_best = 0.0, v_best = 0.0, v_after = 0.0, v_before = 0.0;
             double contact_radius = 0.0;
+            // Optional practice observation, including candidates that failed to land.
+            double* observation = feedback ? feedback + 9 * i : nullptr;
+            if (observation) {
+                std::fill(observation, observation + 9, 0.);
+                observation[0] = 2.;  // Closest center separation before touching.
+            }
             for (int t = 0; t < frames && !fault; ++t) {
                 for (int j = 0; j < active_count; ++j) {
                     const int motor = active[j];
@@ -113,6 +119,11 @@ extern "C" void trial_strokes_v2(
                     }
                     if (fault) break;
                     const double x = d->qpos[pos], y = side * d->qpos[pos + 1], z = d->qpos[pos + 2];
+                    if (observation && !struck) {
+                        double offset[3];
+                        mju_sub3(offset, d->qpos + pos, d->geom_xpos + 3 * blade);
+                        observation[0] = std::min(observation[0], mju_norm3(offset));
+                    }
                     const mjContact* blade_contact = nullptr;
                     bool hit_table = false;
                     for (int c = 0; c < d->ncon; ++c) {
@@ -141,8 +152,15 @@ extern "C" void trial_strokes_v2(
                         const double height = radial[0] * axes[2] + radial[1] * axes[5] + radial[2] * axes[8];
                         contact_radius = std::sqrt(std::max(0., mju_dot3(radial, radial) - height * height));
                     }
-                    if (!hit && touching_blade)
+                    if (!hit && touching_blade) {
                         v_after = std::hypot(velocity[0], velocity[1]);
+                        if (observation) {
+                            observation[1] = 1.;
+                            std::copy(velocity, velocity + 3, observation + 2);
+                            std::copy(d->qpos + pos, d->qpos + pos + 3, observation + 5);
+                            observation[8] = contact_radius;
+                        }
+                    }
                     touching_blade = hit;
                     if (struck && old_y <= 0. && y > 0.) {
                         net_crossed = true;
