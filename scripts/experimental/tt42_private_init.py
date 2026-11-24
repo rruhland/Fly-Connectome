@@ -369,12 +369,15 @@ def compare(args):
                         a.partner.reset(seed=card["seed"])
                         for cmd in r["actions"]:
                             a.exchange(cmd, mpc.FAR_COMMAND)
-                        if (
-                            digest_json(a.events) != digest_json(r["events"])
-                            or audit(a.events, opening_side=1) != r["score"]
+                        if digest_json(a.events) != digest_json(r["events"]):
+                            raise ValueError(
+                                f"{card['id']} {mode}: independently replayed events differ"
+                            )
+                        if digest_json(audit(a.events, opening_side=1)) != digest_json(
+                            r["score"]
                         ):
                             raise ValueError(
-                                "Independent action-only replay differs from physical score"
+                                f"{card['id']} {mode}: independent point score differs"
                             )
                         summary.update(
                             exact_replay=True, clearance=a.clearance_result()
