@@ -1,6 +1,7 @@
 """Retrieve and time prior joint commands during a rally, with an optional dynamics check."""
 
 from dataclasses import dataclass
+from functools import partial
 from time import perf_counter, process_time
 
 import numpy as np
@@ -41,8 +42,9 @@ def context(path, depth):
 class RallyObjective:
     """Prefer robust predicted legal landings throughout a playable region of the far half."""
 
-    def __init__(self, solver):
+    def __init__(self, solver, minimum_pace=None):
         self.solver = solver
+        self.minimum_pace = minimum_pace
 
     def trajectories(self, goals, target, cutoff):
         commands, scores = self.solver.trajectories(goals, target, cutoff)
@@ -60,6 +62,8 @@ class RallyObjective:
                 + 4.0 * np.maximum(0.0, r[:, 4] - 1.15)
                 + 0.45 * np.maximum(0.0, 3.65 - r[:, 11])
             )
+            if self.minimum_pace is not None:
+                scores[ok, 0] += 1.6 * np.maximum(0.0, self.minimum_pace - r[:, 11])
         return commands, scores
 
 
@@ -247,6 +251,7 @@ def run(
     rally_objective=False,
     risk_screen=False,
     material_ensemble=False,
+    minimum_pace=None,
     recent=False,
     blend=False,
     observe_until=0.0,
@@ -281,6 +286,10 @@ def run(
     from .tt29_vision import FlightPractice, OpticalFlight, Rig
     from .tt29_vision_twin import OpticalPlanner
 
+    if minimum_pace is not None:
+        if not np.isfinite(minimum_pace) or minimum_pace <= 0:
+            raise ValueError("A pace floor requires a positive finite speed")
+        rally_objective = True
     if return_target < 1:
         raise ValueError("Return target must be positive")
     incoming_checkpoint = _hash(checkpoint) if checkpoint is not None else None
@@ -443,9 +452,11 @@ def run(
             if material_ensemble:
                 from .tt29_material_ensemble import MaterialEnsemble
 
-                planner.predict = MaterialEnsemble(planner.predict, RallyObjective if rally_objective else None)
+                planner.predict = MaterialEnsemble(
+                    planner.predict, partial(RallyObjective, minimum_pace=minimum_pace) if rally_objective else None
+                )
             elif rally_objective:
-                planner.predict = RallyObjective(planner.predict)
+                planner.predict = RallyObjective(planner.predict, minimum_pace)
             if risk_screen:
                 from .tt29_vision_twin import CandidateUncertainty
 
@@ -603,6 +614,7 @@ def run(
                     rally_objective=rally_objective,
                     risk_screen=risk_screen,
                     material_ensemble=material_ensemble,
+                    minimum_pace=minimum_pace,
                     recent=recent,
                     blend=blend,
                     observe_until=observe_until,
@@ -663,6 +675,7 @@ if __name__ == "__main__":
     p.add_argument("--rally-objective", action="store_true")
     p.add_argument("--risk-screen", action="store_true")
     p.add_argument("--material-ensemble", action="store_true")
+    p.add_argument("--minimum-pace", type=float)
     p.add_argument("--recent", action="store_true")
     p.add_argument("--robust-contact", action="store_true")
     p.add_argument("--blend", action="store_true")
@@ -707,6 +720,7 @@ if __name__ == "__main__":
         rally_objective=args.rally_objective,
         risk_screen=args.risk_screen,
         material_ensemble=args.material_ensemble,
+        minimum_pace=args.minimum_pace,
         recent=args.recent,
         blend=args.blend,
         observe_until=args.observe_until,
