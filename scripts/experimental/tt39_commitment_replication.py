@@ -6,6 +6,8 @@ from unittest.mock import patch
 
 from . import tt38_joint_mpc as mpc
 from .tt4_transfer_trial import _hash, _read, _write
+from .tt19_view_full_game import digest_json
+from .tt29_endurance import audit as score_events
 from .tt37_joint_report import paired, read_complete, replay_case
 from .tt38_joint_mpc_report import metrics
 from .tt39_carry_joints import Carried
@@ -127,6 +129,17 @@ def archived_counts(d):
     )
 
 
+def verify_assignment(card, row):
+    if row["placements"]["card"] != card or row["opponent_seed"] != card["seed"]:
+        raise ValueError("A result is out of order or used another assignment")
+    actual = score_events(row["events"], opening_side=1)
+    if digest_json(actual) != digest_json(row["score"]) or actual["returns"] > CAP:
+        raise ValueError("The physical event stream does not reproduce the point's score")
+    if actual["returns"] != CAP and not any(
+            event["kind"] in {"point", "let", "timeout"} for event in row["events"]):
+        raise ValueError("The recorded game ended before point termination or the cap")
+
+
 def check(folder, *, audit=False):
     p = folder / "commitment-replication-plan.json"
     manifest = _read(p)
@@ -135,16 +148,21 @@ def check(folder, *, audit=False):
         path = destination(folder, arm)
         d = read_complete(path)
         if (d["cards"] != manifest[DECK] or d["cap"] != CAP or d["arm"] != arm or d["mode"] != "frozen"
-                or len(d["rows"]) != 24 or d["source_sha256"] != manifest["instructions_sha256"]
+                or d["budget"] != manifest["budget"] or len(d["rows"]) != 24
+                or d["source_sha256"] != manifest["instructions_sha256"]
+                or d["practice_sha256"] != (manifest["practice_sha256"] if arm == "carry" else None)
                 or d["optical_sha256"] != manifest["optics_sha256"] or d["plan_sha256"] != _hash(p)):
             raise ValueError("A declared start was omitted or the matched physical run changed")
+        for card, row in zip(d["cards"], d["rows"], strict=True):
+            verify_assignment(card, row)
         memories = [r["memory"] for r in d["rows"]]
         if any(r["before"] != r["after"] or r["before"] != memories[0]["before"] for r in memories):
             raise ValueError("The frozen controller learned from held play")
         if bool(memories[0]["before"]["rows"]) != (arm == "carry"):
             raise ValueError("Unexpected carried-state boundary")
         all_results[arm] = d
-    if any(x["model_source_sha256"] != all_results["stock"]["model_source_sha256"]
+    if any(x["ready"] != all_results["stock"]["ready"]
+           or x["model_source_sha256"] != all_results["stock"]["model_source_sha256"]
            or x["actor_source_sha256"] != all_results["stock"]["actor_source_sha256"]
            for x in all_results.values()):
         raise ValueError("Arms ran on different core simulation or cue implementations")
@@ -162,6 +180,7 @@ def check(folder, *, audit=False):
         "stock_to_fixed_carry": paired(all_results["stock"], all_results["carry"]),
         "no_offer_assignments": {k: sum(not r["placements"]["delivered"] for r in d["rows"])
                                  for k, d in all_results.items()},
+        "independent_referee_rescores": {k: len(d["rows"]) for k, d in all_results.items()},
         "archived_references": archived,
         "source_hashes": {k: _hash(destination(folder, k)) for k in ARMS},
     }
