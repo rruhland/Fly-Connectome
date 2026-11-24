@@ -20,6 +20,12 @@ The severe receive persisted when only the upcoming wide random aim changed. All
 
 In 4322 the far camera regions were pixel-identical across both redraws through at least 0.367 s after the normal enabled preparation start. In the other two releases a few pixels changed at most 67 ms before that start, but ten pixels of material contrast changed only 17–33 ms after it. The short-bounce cue is a drag-and-gravity projection of the **outgoing** observed ball hitting the far surface at y < 0.65 m. It was visible while the ball was still near y = −1.04 to −1.16 m on all three cases, about half a second to a second sooner than the inward estimate. Three known positives do not establish its precision. They suggest a short, risk-based initial move or a shared starting move before trusting the inferred far-face pose.
 
+## The arm can still act after seeing the cue
+
+All three practice balls were returned and physically answered when the arm waited for the causal shortness cue. The camera, running live during exact replay, triggered the delayed paths at ticks 96, 456 and 300. The controller time-compressed each **assigned** physically earned preparation to its already tested ready tick and preserved the reference suffix under the standard rate and slew limits. All three achieved the identical actual far hit and near bounce as before. CAD checked all 3,400 integration states from the changed force onward with no penetrations. Minimum audited clearances were 18.3, 2.4 and 14.8 mm. This establishes a useful timing window for this sensor. It does not establish a causal way to select or retime the right motor route on an unseen point. [Original practice retiming, 14843](identified-preparation.json.gz) · [Strict-CAD retiming, 4322 and 8302](strict-preparation.json.gz)
+
+The first two 4322 and 8302 preparations in the older original archive still involved table rim penetrations in the delayed replay. They are diagnostic only. The two later archived strict-CAD variants are the controls used to count clean results above.
+
 ## Causal observer study
 
 The observer uses the existing fixed 384×288 stereo cameras at 30 Hz with no changes to physics or opponents. It can mark the first outward passage of y = −.70, −.10, +.45 and +.95 m, the first credible optical reversal, four inward lines, and the optically inferred near rebound. Those gates run continuously over unchanged, already-issued articulated arm actions. They receive no referee event, seed, release ID, clock relative to actual contact or hidden geometry. Raw optical clocking and the camera fit must earn the gate. A separate scoring step mates its calls to real far native contacts and excludes a mislabeled phase. Missed or late calls reduce deadline recall. This separates pose/motion visibility from the ability to turn it into a useful early decision.
@@ -37,4 +43,6 @@ PYTHONPATH=.:src OPENBLAS_NUM_THREADS=1 python -m scripts.experimental.tt41_anti
 PYTHONPATH=.:src OPENBLAS_NUM_THREADS=1 python -m scripts.experimental.tt41_anticipate_fit --models artifacts/tt41_anticipate/observer.json
 PYTHONPATH=.:src OPENBLAS_NUM_THREADS=1 python -m scripts.experimental.tt41_anticipate_fit --teachers --out artifacts/tt41_anticipate/teacher-timing.json
 PYTHONPATH=.:src OPENBLAS_NUM_THREADS=1 python -m scripts.experimental.tt41_anticipate_reveal
+PYTHONPATH=.:src OPENBLAS_NUM_THREADS=1 python -m scripts.experimental.tt41_anticipate_prepare
+PYTHONPATH=.:src OPENBLAS_NUM_THREADS=1 python -m scripts.experimental.tt41_anticipate_prepare --witness artifacts/tt40/long-low-alternate-strict-optical.json.gz --output artifacts/tt41_anticipate/strict-preparation.json.gz
 ```
