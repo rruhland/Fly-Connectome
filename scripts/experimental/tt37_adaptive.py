@@ -232,7 +232,8 @@ def body_direction(q, gap, rows):
 def bouts(detections, current, view, qs, dt, body):
     optical=[(round(t/dt),p,b) for t,p,b in view.stereo if b is not None]
     frames=[np.r_[qs[i],b].tolist() for i,_,b in optical if i in qs]
-    for item,following in zip(current,current[1:]+[{"tick":10**7}],strict=True):
+    following_strokes=current[1:]+[{"tick":10**7}] if current else []
+    for item,following in zip(current,following_strokes,strict=True):
         i,j=item["tick"],following["tick"]
         candidates=[d for d in detections if i*dt<=d["time"]<min(j,i+58)*dt]
         hit=min(candidates,key=lambda d:d["time"]) if candidates else None
@@ -325,11 +326,19 @@ def run(args):
     result=dict(cards=cards,rows=[],ready=ready,opening_side=1,mode=args.mode,cap=CAP,protocol="random",
                 source_sha256=_hash(FIELD),model_sha256=_hash(OUT/"adaptive-model.npz"),
                 memory_sha256=_hash(snap) if use else None)
+    if args.resume:
+        if args.mode in ("learn", "scrambled"):
+            raise ValueError("Resume applies only to an unchanged frozen policy")
+        old=_read(path)
+        if any(old[k]!=v for k,v in result.items() if k!="rows") or len(old["rows"])>len(cards):
+            raise ValueError("Resuming would mix different physical or motor settings")
+        result=old
+    offset=len(result["rows"])
     with centered(ready):
         sim=arena(protocol="random")
         camera,rig,stride,lo,hi=joint.resources(sim)
         try:
-            for i,c in enumerate(cards):
+            for i,c in enumerate(cards[offset:],offset):
                 r=point(sim,camera,rig,stride,lo,hi,ready,field,store,observer,c,shots[c["id"]],
                         args.mode,np.random.default_rng(382734+i))
                 result["rows"].append(r)
@@ -427,6 +436,16 @@ def summary():
             data[phase][m]=dict(stats=metrics(d["rows"]), comparison=paired(base_short,s),
                                 actual_first_balls=len(idx), both_signed_openings=len(f),
                                 mean_signed_opening_velocity=None if not f else np.mean(f,axis=0).tolist())
+    path=OUT/"adaptive-practice-scrambled.json.gz"
+    if path.is_file():
+        probe=_read(path)
+        aligned=_read(OUT/"adaptive-practice-learn.json.gz")
+        first=len(probe["cards"])
+        if probe["cards"]!=aligned["cards"][:first] or len(probe["rows"])!=first:
+            raise ValueError("The matched actuator-axis challenge is incomplete")
+        chosen=dict(aligned,cards=aligned["cards"][:first],rows=aligned["rows"][:first])
+        data["actuator_axis_challenge"]=dict(aligned=metrics(chosen["rows"]),scrambled=metrics(probe["rows"]),
+                                             comparison=paired(probe,chosen))
     _write(OUT/"adaptive-results.json",data)
 
 
@@ -455,6 +474,7 @@ if __name__=="__main__":
     p.add_argument("mode",choices=("frozen","learn","carry","reverse","scrambled"),nargs="?")
     p.add_argument("--feeds",type=Path,default=Path("/tmp/tt25-rallies.json"))
     p.add_argument("--limit",type=int)
+    p.add_argument("--resume",action="store_true")
     args=p.parse_args()
     step={"fit":fit,"plan":plan,"validate":validate,"summary":summary,"audit":verify}.get(args.phase)
     step() if step else run(args)
