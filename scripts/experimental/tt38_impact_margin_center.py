@@ -4,6 +4,7 @@ import argparse
 from copy import copy
 from pathlib import Path
 from time import process_time
+from unittest.mock import patch
 
 import mujoco
 import numpy as np
@@ -158,7 +159,6 @@ def run(role, output):
                 c,r=targets[release]
                 note=next(x for x in r['records'] if x['tick']==tick)
                 started=process_time()
-                before=len(r['score']['shots'])
                 old_events=r['events']; old_actions=r['actions']
                 a.launch(r['shot'],card=c); a.partner.reset(seed=c['seed'])
                 engine.previous=None; engine.bounced=False
@@ -212,9 +212,65 @@ def run(role, output):
             stereo.close(); engine.twin.close(); a.close()
 
 
+def radial_audit(path, output):
+    """After play, measure the actual signed contact point on full replayed tapes."""
+    result=_read(path)
+    control_path=ROOT/result['source']
+    if _hash(control_path)!=result['source_sha256']:
+        raise ValueError('Archived unmodified comparison changed')
+    original=_read(control_path)
+    cases={c['id']:(c,r) for c,r in zip(original['cards'],original['rows'],strict=True)}
+    out=dict(source_sha256=_hash(path),replays=[])
+    with centered(original['ready']):
+        a=arena()
+        try:
+            for modified in result['rows']:
+                if 'new_score' not in modified:
+                    continue
+                c,old=cases[modified['id']]
+                fork=modified['tick']
+                prefix=old['actions'][:fork]
+                ledger=[e for e in old['events'] if e['time']<=fork*a.control_dt+1e-8]
+                for name,tape,expected in (
+                    ('stock',old['actions'],old['events']),('centered',prefix+modified['commands'],ledger+modified['events_after'])
+                ):
+                    a.launch(old['shot'],card=c); a.partner.reset(seed=c['seed'])
+                    contacts=[]
+                    r=a._racket_contact
+                    def read_contact(side, location, incoming):
+                        if side==1 and a.data.time+a.model.opt.timestep>=fork*a.control_dt:
+                            blade=a._racket_ids[1]; ball=a._geom_ids['ball']
+                            native=[m for m in a.data.contact if m.efc_address>=0 and set(m.geom)=={blade,ball}]
+                            if not native:
+                                raise ValueError('Recorded racket hit had no native contact')
+                            touch=min(native,key=lambda m:np.linalg.norm(m.pos-location))
+                            axis=a.data.geom_xmat[blade].reshape(3,3)[:,2]
+                            radial=touch.pos-a.data.geom_xpos[blade]
+                            radial-=axis*(axis@radial)
+                            contacts.append(dict(t=float(a.data.time),radius=float(np.linalg.norm(radial)),
+                                                 world_tangent=radial.tolist()))
+                        return r(side,location,incoming)
+                    with patch.object(a,'_racket_contact',read_contact):
+                        for command in tape:
+                            a.exchange(command,clinic.FAR)
+                    if digest_json(a.events)!=digest_json(expected):
+                        raise ValueError('Actual radius replay changed the physical events')
+                    out['replays'].append(dict(condition=name,id=c['id'],fork_tick=fork,contacts=contacts,
+                        events_sha256=digest_json(a.events),own=audit(a.events,opening_side=1)['learner']))
+        finally:
+            a.close()
+    _write(output,out)
+
+
 if __name__=='__main__':
     p=argparse.ArgumentParser(description=__doc__)
-    p.add_argument('role', choices=tuple(FORKS))
+    p.add_argument('role', choices=(*FORKS,'audit'))
     p.add_argument('output',type=Path)
+    p.add_argument('--tested',type=Path)
     args=p.parse_args()
-    run(args.role,args.output)
+    if args.role=='audit':
+        if args.tested is None:
+            p.error('Supply an intervention archive for physical radius replay')
+        radial_audit(args.tested,args.output)
+    else:
+        run(args.role,args.output)
