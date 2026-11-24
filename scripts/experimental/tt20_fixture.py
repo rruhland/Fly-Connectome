@@ -8,7 +8,7 @@ import numpy as np
 
 from .tt4_arena import TABLE_HEIGHT, mujoco
 from .tt18_view_trial import configure_view_colors
-from .tt19_so101 import CAMERA_BODY, GRIP_BODY, TIP, WRIST_CAMERA
+from .tt19_so101 import CAMERA_BODY, GRIP_BODY, SIDE_ON_JAW, TIP, WRIST_CAMERA
 from .tt19_view import STREAMS as TT19_STREAMS, WRIST_FOV
 from .tt19_view_trial import CAMERAS, SO101ViewArena
 
@@ -32,6 +32,7 @@ EDGE_PLATE_HEIGHT = .004
 EDGE_BASE_HEIGHT = TABLE_HEIGHT + EDGE_PLATE_HEIGHT + .0024
 BOARD_FOV = 124.
 EDGE_READY = (.0259, -.4730, -.9703, 1.4467, -1.2492, -.10)
+SIDE_ON_READY = (-.78736, -1.501574, -.890527, 1.654627, 1.290903, SIDE_ON_JAW)
 
 
 def _vector(values):
@@ -102,9 +103,16 @@ def _board_camera(document, fovy=BOARD_FOV, *, alternate=False):
     # supports the bottom edge of the PCB and keeps its lens clear of the jaws.
     shell = '.94 .93 .89 1'
     contact = {'contype': '0', 'conaffinity': '1'}
-    ET.SubElement(dock, 'geom', name='tt29_camera_foot', type='box', pos='0 .023 -.035',
-                  size='.014 .003 .014', rgba=shell, **contact)
-    ET.SubElement(document.find('asset'), 'mesh', name='tt29_camera_bracket',
+    # A bevel clears the moving jaw at the closed end of its travel.
+    assets = document.find('asset')
+    ET.SubElement(assets, 'mesh', name='tt29_camera_foot',
+                  vertex='-.014 .020 -.049 .005 .020 -.049 .008 .026 -.049 -.014 .026 -.049 '
+                         '-.014 .020 -.021 .005 .020 -.021 .008 .026 -.021 -.014 .026 -.021',
+                  face='0 2 1  0 3 2  4 5 6  4 6 7  0 1 5  0 5 4  1 2 6  1 6 5 '
+                       '2 3 7  2 7 6  3 0 4  3 4 7')
+    ET.SubElement(dock, 'geom', name='tt29_camera_foot', type='mesh', mesh='tt29_camera_foot',
+                  rgba=shell, **contact)
+    ET.SubElement(assets, 'mesh', name='tt29_camera_bracket',
                   vertex='-.013 .026 -.048  -.013 .026 -.024  -.013 .044 -.015 '
                          '.013 .026 -.048   .013 .026 -.024   .013 .044 -.015',
                   face='0 1 2  3 5 4  0 3 4  0 4 1  1 4 5  1 5 2  2 5 3  2 3 0')
@@ -283,7 +291,7 @@ class TT20Arena(SO101ViewArena):
 
     def _arm_home(self, side):
         if side == 1 and self.fixture == TABLE_EDGE:
-            return EDGE_READY, ()
+            return (SIDE_ON_READY if self.paddle_grip == 'side-on' else EDGE_READY), ()
         return super()._arm_home(side)
 
     def _orient_wrist(self):

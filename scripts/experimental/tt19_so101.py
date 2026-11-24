@@ -29,6 +29,9 @@ PADDLE_BODY = 'learner_paddle'
 GRIP_BODY = 'learner_gripper'
 CAMERA_BODY = 'learner_wrist_camera'
 _GRASP_POS = np.array((-.0079, -.000218121, -.085))
+_STRAIGHT_GRASP = (*_GRASP_POS, 1., 0., 0., 0.)
+_SIDE_ON_GRASP = (-.0014, -.000218121, -.085, math.sqrt(.5), math.sqrt(.5), 0., 0.)
+SIDE_ON_JAW = -.045
 _BLADE_DEPTH = .092
 _BASE_QUAT = '.7071067811865476 0 0 .7071067811865476'
 _RELEASE_ANGLE = .44
@@ -80,7 +83,7 @@ def _robot(document, base_depth, base_height, detail):
                   size=_vector((.105, .101, base_height / 2)), rgba='.21 .25 .29 1')
 
 
-def _paddle(document):
+def _paddle(document, grasp=_STRAIGHT_GRASP):
     paddle = ET.SubElement(document.find('worldbody'), 'body', name=PADDLE_BODY, pos='0 -1 1')
     ET.SubElement(paddle, 'freejoint', name='learner_paddle_free')
     ET.SubElement(paddle, 'geom', name='learner_handle', type='capsule', fromto='0 0 .022 0 0 -.043',
@@ -91,14 +94,15 @@ def _paddle(document):
                   pos=_vector((0., 0., -_BLADE_DEPTH)), size='.076 .006',
                   quat=_vector(quat), mass='.10', rgba='.89 .25 .19 1')
     ET.SubElement(document.find('equality'), 'weld', name='tt19_grasp', body1=GRIP_BODY, body2=PADDLE_BODY,
-                  relpose=_vector((*_GRASP_POS, 1., 0., 0., 0.)), torquescale='.075', solref='.0042 1',
+                  relpose=_vector(grasp), torquescale='.075', solref='.0042 1',
                   solimp='.98 .999 .0005 .5 2')
 
 
 class SO101Arena(TT18PlantArena):
     """Use the six physical follower joints and ordinary TT8 public point interface."""
 
-    def __init__(self, *args, plant=None, strict_endline=False, base_height=.49, wrist_size=None, wrist_near=None, detail='cad', **kwargs):
+    def __init__(self, *args, plant=None, strict_endline=False, base_height=.49, wrist_size=None, wrist_near=None,
+                 detail='cad', paddle_grip='straight', **kwargs):
         self.strict_endline = strict_endline
         settings = MINI_TABLE if plant is None else plant
         if isinstance(settings, dict):
@@ -109,6 +113,10 @@ class SO101Arena(TT18PlantArena):
             raise ValueError('expected full CAD or preview visual detail')
         if wrist_near is not None and (not math.isfinite(wrist_near) or wrist_near <= 0):
             raise ValueError('expected a positive near clip distance in metres')
+        if paddle_grip not in ('straight', 'side-on'):
+            raise ValueError("expected paddle_grip='straight' or paddle_grip='side-on'")
+        self.paddle_grip = paddle_grip
+        self._grasp = _STRAIGHT_GRASP if paddle_grip == 'straight' else _SIDE_ON_GRASP
         self.detail = detail
         self.base_height = base_height
         self.base_depth = settings.table_half_length + .375
@@ -126,7 +134,7 @@ class SO101Arena(TT18PlantArena):
         ball.set('mass', str(float(ball.get('mass')) * self.plant.ball_mass_scale))
         world.find("body[@name='rival_base']").set('pos', _vector((0., self.rival_base_depth, .96)))
         _robot(document, self.base_depth, self.base_height, self.detail)
-        _paddle(document)
+        _paddle(document, self._grasp)
         return document
 
     def _arm_axes(self, side):
@@ -143,10 +151,16 @@ class SO101Arena(TT18PlantArena):
         super().reset(seed=seed, render=False, server=server)
         gripper = self.model.body(GRIP_BODY).id
         paddle = self.model.joint('learner_paddle_free').qposadr[0]
-        position = self.data.xpos[gripper] + self.data.xmat[gripper].reshape(3, 3) @ _GRASP_POS
-        self.data.qpos[paddle:paddle + 7] = np.r_[position, self.data.xquat[gripper]]
-        self._grasp_id = self.model.equality('tt19_grasp').id
         self._jaw_position = self.model.joint('learner_gripper').qposadr[0]
+        if self.paddle_grip == 'side-on':
+            self.data.qpos[self._jaw_position] = SIDE_ON_JAW
+            self.data.ctrl[self.model.actuator('learner_gripper').id] = SIDE_ON_JAW
+        position = self.data.xpos[gripper] + self.data.xmat[gripper].reshape(3, 3) @ self._grasp[:3]
+        self.data.qpos[paddle:paddle + 7] = np.r_[position, self.data.xquat[gripper]]
+        if self.paddle_grip == 'side-on':
+            mujoco.mju_mulQuat(self.data.qpos[paddle + 3:paddle + 7], self.data.xquat[gripper],
+                              np.asarray(self._grasp[3:]))
+        self._grasp_id = self.model.equality('tt19_grasp').id
         self.data.eq_active[self._grasp_id] = 1
         mujoco.mj_forward(self.model, self.data)
         return self.render_cameras() if render else None

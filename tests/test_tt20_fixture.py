@@ -8,6 +8,7 @@ from scripts.experimental.tt19_so101 import GRIP_BODY, WRIST_CAMERA
 from scripts.experimental.tt20_fixture import ARCHIVED_FIXTURE, CLAMP_FORWARD, CLAMP_RISE, TT20Arena
 from scripts.experimental.tt24_bounce import BounceArena
 from scripts.experimental.tt25_reference_receiver import ReferenceReceiver
+from scripts.experimental.tt29_arm_clearance import ArmClearance
 
 
 @pytest.mark.parametrize('hardware', ('clamp', 'camera'))
@@ -111,6 +112,65 @@ def test_board_lens_is_rigid_and_reaches_the_court_at_ready_pose():
         np.testing.assert_allclose(next_grip.T @ (moved['position'] - handed.xpos), offset, atol=1e-9)
         np.testing.assert_allclose(next_grip.T @ moved['rotation'], rotation, atol=1e-9)
         assert np.linalg.norm(moved['position'] - camera['position']) > .015
+    finally:
+        arena.close()
+
+
+def test_camera_foot_and_bracket_clear_the_travel_of_the_moving_jaw():
+    arena = ReferenceReceiver(detail='cad')
+    try:
+        model, data = arena.model, arena.data
+        jaw = model.body('learner_moving_jaw_so101_v1').id
+        moving = next(index for index, body in enumerate(model.geom_bodyid) if body == jaw)
+        hardware = [model.geom(name).id for name in ('tt29_camera_foot', 'tt29_camera_bracket')]
+        hinge = model.joint('learner_gripper')
+        for q in np.linspace(*hinge.range, 31):
+            data.qpos[hinge.qposadr[0]] = q
+            mujoco.mj_kinematics(model, data)
+            for geom in hardware:
+                assert mujoco.mj_geomDistance(model, data, geom, moving, .030, None) > 0.
+    finally:
+        arena.close()
+
+
+def test_side_on_handle_fits_both_jaws_and_holds_the_lower_pose():
+    arena = ReferenceReceiver(detail='cad', paddle_grip='side-on')
+    try:
+        arena.reset(seed=42, render=False)
+        model, data = arena.model, arena.data
+        clearance = ArmClearance(model)
+        gripper = model.body(GRIP_BODY).id
+        moving_jaw = model.body('learner_moving_jaw_so101_v1').id
+        moving = next(index for index, body in enumerate(model.geom_bodyid) if body == moving_jaw)
+        fixed = next(index for index, body in enumerate(model.geom_bodyid)
+                     if body == gripper and model.mesh(model.geom_dataid[index]).name == 'wrist_roll_follower_so101_v1')
+        for tick in range(21):
+            assert arena.grasped
+            assert not clearance.violations(data)
+            if tick in (0, 20):
+                paddle = data.body('learner_paddle')
+                grip_rotation = data.xmat[gripper].reshape(3, 3)
+                handle_axis = paddle.xmat.reshape(3, 3)[:, 2]
+                assert -grip_rotation[:, 1] @ handle_axis > np.cos(np.deg2rad(1.))
+                finger_axis = np.ascontiguousarray(grip_rotation[:, 0])
+                for jaw, ray in ((fixed, -finger_axis), (moving, finger_axis)):
+                    contact = mujoco.mj_rayMesh(model, data, jaw, paddle.xpos, ray)
+                    assert contact == pytest.approx(.0085, abs=.0001)
+                assert data.geom('learner_racket').xpos[2] == pytest.approx(1.040, abs=.005)
+            if tick < 20:
+                arena.step(np.zeros(arena.action_size), render=False)
+    finally:
+        arena.close()
+
+
+def test_arm_clearance_rejects_a_pose_that_intersects_nonadjacent_links():
+    arena = ReferenceReceiver(detail='preview')
+    try:
+        guard = ArmClearance(arena.model)
+        assert not guard.violations(arena.data)
+        arena.data.qpos[arena._arm_ids[1][0][:5]] = (-.097, 1.745, 1.093, 1.584, -.642)
+        assert any('learner_shoulder' in first and 'learner_wrist' in second and value < -.030
+                   for first, second, value in guard.violations(arena.data))
     finally:
         arena.close()
 

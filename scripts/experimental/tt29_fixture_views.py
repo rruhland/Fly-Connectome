@@ -55,6 +55,18 @@ def render(output):
     finally:
         regulation.close()
 
+    side_on = ReferenceReceiver(paddle_grip='side-on', **dimensions)
+    try:
+        side_on.reset(seed=SEED, render=False)
+        side_on._color_roles()
+        grip = side_on.data.body('learner_gripper').xpos
+        blade = side_on.data.geom('learner_racket').xpos
+        _outside(side_on.model, side_on.data, output, (
+            ('fixture-side-on', .45 * grip + .55 * blade, .57, 60, -30),
+        ))
+    finally:
+        side_on.close()
+
     solo = BounceArena(**dimensions)
     try:
         solo.reset(seed=SEED, render=False)
