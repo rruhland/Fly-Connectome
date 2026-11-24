@@ -21,6 +21,21 @@ This grid issued 72 physical receiving attempts with 55 contacts with a recorded
 
 Only a motion rewarded on at least two distinct practice opportunities is eligible. In assessment the rule is frozen. The stock policy chooses the underlying action, and keeps it unchanged on higher trajectories, when the candidate is already well centered, or when the current camera flight and ETA are outside observed successful practice support. The added pulse neither reads live simulator state nor performs a private physics query to choose an action. Six preassigned release-disjoint full-random assessments retain the original opponent targets and governor. These are exploratory held games for transfer, not additional training data.
 
+## Held transfer result
+
+The frozen specialist added **no legal returns** on six release-disjoint, preassigned full-random pairs. Each arm made 26 near-side legal returns and 57 alternating legal strokes in total. Both arms' longest point was 11 near-side returns and 23 alternating strokes.
+
+| Held release | Stock own legal | Specialist own legal | First different issued tick |
+| --- | ---: | ---: | ---: |
+| 9550 | 1 | 1 | 171 |
+| 15665 | 3 | 3 | None |
+| 11884 | 11 | 11 | 1126 |
+| 3401 | 1 | 1 | None |
+| 14760 | 0 | 0 | None |
+| 7901 | 10 | 10 | None |
+
+The other four games were exactly unchanged in actions and all referee events. The two affected games had common physical offers and the same pre-intervention actions and events. The pulse was selected three times, including one earlier proposal in 11884 that did not yet change the issued command. Both changed receiving attempts still failed to return. In 9550 it increased upward speed from 3.16 to 3.60 m/s but reduced forward speed from 2.56 to .96 m/s. In 11884 it caused a real contact on a ball that stock missed, but the departure was still toward the near player at −3.37 m/s. Previously earned physical returns around the visible low band were enough to identify a plausible motor primitive, not enough to decide when a new low ball needs more lift versus more forward drive. A broader learner should condition its trial selection on the already planned stroke and reachable arm state as well as incoming optical height and velocity. [Paired physical tapes](low-pulse-held.json.gz) · [Matched outcome audit](low-pulse-held-summary.json)
+
 ## Reproduce
 
 ```sh

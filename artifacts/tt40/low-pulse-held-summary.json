@@ -1,0 +1,278 @@
+{
+  "source": "artifacts/tt40/low-pulse-held.json.gz",
+  "source_sha256": "9659879a482d2f1566fabb8cf20773126fb216198a27cda47111ba0bdf06f5d7",
+  "rows": [
+    {
+      "card": {
+        "id": 9550,
+        "mode": "full",
+        "index": 192,
+        "seed": 37561728,
+        "key": "full-192-37561728",
+        "profile": "reach",
+        "opening": "random",
+        "reply_seed": 139064126
+      },
+      "own": [
+        1,
+        1
+      ],
+      "alternating": [
+        3,
+        3
+      ],
+      "first_different_tick": 171,
+      "first_shared_offer": {
+        "kind": "legal_return",
+        "step": 162,
+        "time": 2.6895833333333403,
+        "ball": [
+          -0.06666386664109833,
+          -0.6492972281232484,
+          0.7748001021986548
+        ],
+        "velocity": [
+          -0.0019509254843619755,
+          -4.367608474375736,
+          -2.1520055746774855
+        ],
+        "spin": [
+          8.521702499952013,
+          -0.4333504107253332,
+          -5.795782871712457
+        ],
+        "side": -1,
+        "location": [
+          -0.06665980221300591,
+          -0.6401980438016323,
+          0.7596417235729498
+        ]
+      },
+      "first_next": [
+        {
+          "physical_contact": true,
+          "outgoing": [
+            -0.4095779780175227,
+            2.5641147135426694,
+            3.155302184491305
+          ],
+          "legal": false,
+          "point_fault": "own_half"
+        },
+        {
+          "physical_contact": true,
+          "outgoing": [
+            -0.4726759444591563,
+            0.9627713022482884,
+            3.600119856825511
+          ],
+          "legal": false,
+          "point_fault": "own_half"
+        }
+      ],
+      "selected_pulses": [
+        {
+          "tick": 170,
+          "active": true,
+          "low_estimate": 0.9969631798079639,
+          "issued": true,
+          "pulse_id": 5,
+          "distance": 1.3600751411182193,
+          "supporting_play_wins": 2
+        }
+      ]
+    },
+    {
+      "card": {
+        "id": 15665,
+        "mode": "full",
+        "index": 193,
+        "seed": 428011759,
+        "key": "full-193-428011759",
+        "profile": "reach",
+        "opening": "random",
+        "reply_seed": 820818337
+      },
+      "own": [
+        3,
+        3
+      ],
+      "alternating": [
+        7,
+        7
+      ],
+      "first_different_tick": null,
+      "first_shared_offer": null,
+      "first_next": null,
+      "selected_pulses": []
+    },
+    {
+      "card": {
+        "id": 11884,
+        "mode": "full",
+        "index": 194,
+        "seed": 126792659,
+        "key": "full-194-126792659",
+        "profile": "reach",
+        "opening": "random",
+        "reply_seed": 854563446
+      },
+      "own": [
+        11,
+        11
+      ],
+      "alternating": [
+        23,
+        23
+      ],
+      "first_different_tick": 1126,
+      "first_shared_offer": {
+        "kind": "legal_return",
+        "step": 1114,
+        "time": 18.564583333334625,
+        "ball": [
+          -0.10022476092118773,
+          -0.4688644966421053,
+          0.7739202205657095
+        ],
+        "velocity": [
+          0.4680897847594325,
+          -4.267451005126952,
+          -1.9353559836828875
+        ],
+        "spin": [
+          26.476672042107214,
+          -5.030727039051859,
+          7.750990770998126
+        ],
+        "side": -1,
+        "location": [
+          -0.10119994797276989,
+          -0.45997397371475746,
+          0.7589761060991911
+        ]
+      },
+      "first_next": [
+        {
+          "physical_contact": false,
+          "outgoing": null,
+          "legal": false,
+          "point_fault": "out"
+        },
+        {
+          "physical_contact": true,
+          "outgoing": [
+            0.35115611008856207,
+            -3.3651332606955777,
+            -1.224827369481525
+          ],
+          "legal": false,
+          "point_fault": "out"
+        }
+      ],
+      "selected_pulses": [
+        {
+          "tick": 1121,
+          "active": true,
+          "low_estimate": 0.9765982413981248,
+          "issued": true,
+          "pulse_id": 5,
+          "distance": 1.3906000714759783,
+          "supporting_play_wins": 2
+        },
+        {
+          "tick": 1126,
+          "active": true,
+          "low_estimate": 0.9614316560392298,
+          "issued": true,
+          "pulse_id": 5,
+          "distance": 1.5571437000525539,
+          "supporting_play_wins": 2
+        }
+      ]
+    },
+    {
+      "card": {
+        "id": 3401,
+        "mode": "full",
+        "index": 195,
+        "seed": 112171910,
+        "key": "full-195-112171910",
+        "profile": "reach",
+        "opening": "random",
+        "reply_seed": 736663045
+      },
+      "own": [
+        1,
+        1
+      ],
+      "alternating": [
+        3,
+        3
+      ],
+      "first_different_tick": null,
+      "first_shared_offer": null,
+      "first_next": null,
+      "selected_pulses": []
+    },
+    {
+      "card": {
+        "id": 14760,
+        "mode": "full",
+        "index": 196,
+        "seed": 557148404,
+        "key": "full-196-557148404",
+        "profile": "reach",
+        "opening": "random",
+        "reply_seed": 597041810
+      },
+      "own": [
+        0,
+        0
+      ],
+      "alternating": [
+        0,
+        0
+      ],
+      "first_different_tick": null,
+      "first_shared_offer": null,
+      "first_next": null,
+      "selected_pulses": []
+    },
+    {
+      "card": {
+        "id": 7901,
+        "mode": "full",
+        "index": 197,
+        "seed": 579568694,
+        "key": "full-197-579568694",
+        "profile": "reach",
+        "opening": "random",
+        "reply_seed": 532016778
+      },
+      "own": [
+        10,
+        10
+      ],
+      "alternating": [
+        21,
+        21
+      ],
+      "first_different_tick": null,
+      "first_shared_offer": null,
+      "first_next": null,
+      "selected_pulses": []
+    }
+  ],
+  "total_own": [
+    26,
+    26
+  ],
+  "total_alternating": [
+    57,
+    57
+  ],
+  "exact_unaffected": 4,
+  "next_shared_offers": 2,
+  "selected_pulse_attempts": 3
+}
