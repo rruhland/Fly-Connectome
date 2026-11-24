@@ -39,3 +39,13 @@ Replaying the rated-motion tape under the original plant showed that 35.4% of mo
 A separate coach planned with the same linear torque cap used by its live arm. It reached a prespecified **12-return cutoff** on launch 10542 in 9.2 simulated seconds. This was a continuous point with signed servo commands. Replay reproduced the full trajectory and referee events. It found zero CAD penetrations and zero violations among 22,080 signed speed–torque samples. The selected solver trials also reproduced the six live near-side contact times and landing centers. This shows that fresh planning can play through the capped drive model on the measured launch. The later endurance trials above extended this result to 100 returns. [Matched torque-envelope replay](rally-physics-envelope-12.json.gz)
 
 The same readout on the verified 7271 stereo pupil trace counted 100 legal returns and 59.1% of motoring joint samples outside the linear envelope. The excess accounted for 66.8% of positive mechanical work. Its braking samples stayed inside the model. [Signed camera-action replay audit](rally-physics-torque-envelope.json)
+
+## Coupled-model audit of the camera rallies
+
+The two 100-return stereo command tapes reproduced their recorded referee events under the coupled model. The audit paired the actual solver torque with pre-integration velocity on the five stroke joints at every 2.083 ms step. Every motoring and braking sample stayed within the signed curve. [Per-joint audit and source digests](rally-physics-torque-envelope.json)
+
+| Replay | Simulated point duration | Joint samples | Samples outside the signed envelope | Peak joint rate |
+| --- | ---: | ---: | ---: | ---: |
+| Stereo pupil, launch 7271 | 71.12 s | 170,680 | 0 | 3.495 rad/s |
+| Stereo pupil, launch 4187 | 69.18 s | 166,040 | 0 | 3.475 rad/s |
+| Exact-state recall coach, launch 10542 | 74.33 s | 178,400 | 0 | 3.516 rad/s |
