@@ -133,6 +133,9 @@ class WarmWrist:
         self.opening = []
         self.tick = 0
 
+    def motion_adjustment(self, state, joints, ellipse):
+        return self.adjustment
+
     def act(self, obs, ellipse=None):
         # Preserve the earlier release alignment to the first photographed ball.
         if self.tick < 10 and len(self.opening) < 3:
@@ -160,7 +163,8 @@ class WarmWrist:
         self.tick += 1
         state = self.sensor.read(ellipse, obs["joints"])
         base = commands(state, self.carried.weights, self.issued)
-        physical = np.clip(base + (self.adjustment - self.applied) / (5.2 / 60), -1, 1)
+        desired = self.motion_adjustment(state, obs["joints"], ellipse)
+        physical = np.clip(base + (desired - self.applied) / (5.2 / 60), -1, 1)
         self.applied += (physical - base) * (5.2 / 60)
         return physical
 
@@ -171,11 +175,12 @@ def serial(array):
     return value.tolist()
 
 
-def run_drop(arena, seed, regime, split, checkpoint=None, *, collect=False, tape=None, optics_ticks=FIRST_FRAMES):
+def run_drop(arena, seed, regime, split, checkpoint=None, *, collect=False, tape=None, optics_ticks=FIRST_FRAMES,
+             policy=WarmWrist):
     obs = arena.reset(seed=seed, split=split, regime=regime, render=tape is None)
     controller = None
     if tape is None:
-        controller = WarmWrist(checkpoint, (arena._control_low[:5], arena._control_high[:5]))
+        controller = policy(checkpoint, (arena._control_low[:5], arena._control_high[:5]))
         controller.begin_release(obs)
     actions, enc, wrist, stereo, blade = [], [], [], [], []
     reward = 0.
