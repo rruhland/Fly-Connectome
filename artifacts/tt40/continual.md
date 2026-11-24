@@ -25,3 +25,14 @@ On twelve independent games, a direct joint controller with a larger library ret
 We replayed each of the twelve games in the 35-return study with adaptation disabled only inside that point. Before each pair the arm had exactly the same practice and earlier-game memory. Reconstructing updates from the archived stereo images, encoders and issued commands reproduced every live memory hash. Every command before the first earned update matched between conditions.
 
 The live arm made 109 returns, versus 95 with within-point updates frozen. Nine games tied. Updating improved one from 10 to 13, improved the record game from 17 to 35, and shortened one from 24 to 17. The largest gain began after the two policies had issued the same first 1,144 commands. That comparison shows that a learner can benefit during one sustained point and that the same update rule can hurt another. The aggregate gain does not establish that the arm improves predictably with every hit. [Matched interventions and command tapes](matched-within.json.gz)
+
+## Two passes with new physical replies
+
+The geometric controller completed all 192 games, carrying its motor and reward memories without a reset. The second pass repeated the 96 measured launch recordings in a different order, with a new independent opening request and new random subsequent requests in every game.
+
+| Pass | Arm returns / deliveries | Median per assigned game | Games reaching five | Longest |
+| --- | ---: | ---: | ---: | ---: |
+| First | 338 / 429 | 3 | 31 / 96 | 18 |
+| Second | 313 / 402 | 2 | 28 / 96 | 24 |
+
+On the second pass the arm improved on 37 recordings, tied on 12, and regressed on 47. The longer best rally coexisted with a lower total. Opponent replies changed, so this is a longitudinal workload comparison. The frozen, identical-assignment tests above isolate the effect of carrying a checkpoint. Training used 1,731 CPU seconds for 1,418 simulated seconds, including both cameras and both physical players. [Final game block and motor memory](../tt39/endurance-08.json.gz) · [Final reward model](../tt39/judgement-08.json.gz)
