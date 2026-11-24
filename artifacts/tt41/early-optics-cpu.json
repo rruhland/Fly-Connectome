@@ -1,0 +1,51 @@
+{
+  "method": "CPU-only charge of the inserted observer per incoming camera exposure, on already triangulated points. Added linear fits only.",
+  "cases": [
+    {
+      "source": "artifacts/tt37/hz60-diagnosis.npz",
+      "sha256": "3ec6ecb717c47ca3dfa56abc285990e58845afd950caa254d08d09e896a04d3c",
+      "all_exposures": 3427,
+      "active_exposures": 203,
+      "mean_all_ms": 0.06433247038225853,
+      "quantiles": {
+        "p50_p90_p95_p99_max_all_ms": [
+          0.002194,
+          0.12438540000000001,
+          0.3613397999999984,
+          1.2252470799999982,
+          4.402852
+        ],
+        "p50_p90_p95_p99_max_active_ms": [
+          0.800935,
+          1.4373846000000001,
+          1.6643441999999993,
+          2.077151479999999,
+          4.402852
+        ]
+      }
+    },
+    {
+      "source": "artifacts/tt41/early-optics-independent30.npz",
+      "sha256": "59e33f12633cd552d1b9f7ce9190930aa3b571802d028e82c5160330c6b03fac",
+      "all_exposures": 158,
+      "active_exposures": 26,
+      "mean_all_ms": 0.13941198101265823,
+      "quantiles": {
+        "p50_p90_p95_p99_max_all_ms": [
+          0.0027140000000000003,
+          0.5580494000000003,
+          0.65433375,
+          0.8914432500000018,
+          1.068192
+        ],
+        "p50_p90_p95_p99_max_active_ms": [
+          0.6034295000000001,
+          0.7535585,
+          0.967883,
+          1.0607235,
+          1.068192
+        ]
+      }
+    }
+  ]
+}

@@ -8,6 +8,7 @@ import numpy as np
 
 from . import tt38_joint_mpc as mpc, tt41_early_optics as optical
 from .tt4_transfer_trial import _hash, _read, _write
+from .tt19_view_full_game import digest_json
 from .tt37_visual_inertia import LearnedOptics
 from .tt39_carry_joints import Carried
 
@@ -104,8 +105,9 @@ def run(args):
                 row["first_action_diff_from_archived_stock"]=k
                 row["same_starting_memory"]=row["memory"]["before"]==old["memory"]["before"]
                 t=len(row["actions"]) if k is None else k
-                row["exact_physical_prefix"]=[e for e in old["events"] if e["step"]<=t]==[
-                    e for e in row["events"] if e["step"]<=t]
+                row["exact_physical_prefix"] = (
+                    digest_json([e for e in old["events"] if e["step"]<=t]) ==
+                    digest_json([e for e in row["events"] if e["step"]<=t]))
                 document["rows"].append(row)
                 document["checkpoint_sha256"]=save(model,checkpoint)
                 document["complete"]=len(document["rows"])==len(cards)
