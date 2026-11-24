@@ -142,6 +142,9 @@ def search(
     experience=None,
     frame_log=None,
 ):
+    beliefs = getattr(engine, "belief_search", None)
+    if beliefs is not None:
+        beliefs.start()
     evaluations = []
     history = []
     sizes = np.array([0.23, 0.33, 0.38, 0.36, 0.50, 2.2, 3.0, 2.8, 3.0, 3.6])
@@ -156,6 +159,8 @@ def search(
         _, outcomes = engine.trajectories(
             goals, AIM, eta + 0.12, feedback=feedback, traces=traces
         )
+        if beliefs is not None:
+            beliefs.observe(choices, goals, feedback)
         if frame_log is not None:
             frame_log.add(traces, outcomes, feedback, eta, dt, round_index)
         ok = np.flatnonzero(np.isfinite(outcomes[:, 0]))
@@ -218,6 +223,13 @@ def search(
             inverse = consequence_search(history, elite, rng, sizes, count // 2)
             choices[: len(inverse)] = inverse
 
+    if beliefs is not None:
+        answer = beliefs.select(engine, eta)
+        if answer is not None:
+            candidate, result, audit_row = answer
+            distance.append(audit_row)
+            if candidate is not None:
+                return candidate, result, distance
     return min(evaluations, key=lambda x: x[0])[1], None, distance
 
 
@@ -287,6 +299,8 @@ def point(
         outcome_pupil.begin_point()
     if preparation is not None:
         preparation.begin()
+    if impact is not None and hasattr(impact, "begin"):
+        impact.begin()
     if joint_experience is not None:
         joint_experience.begin_point()
     start_time = process_time()
@@ -430,6 +444,8 @@ def point(
                         if economy:
                             from .tt37_reuse import propose
 
+                            if hasattr(engine, "skill_memory"):
+                                propose = engine.skill_memory.propose
                             selected, score, check = propose(
                                 engine, bank, x, fit, eta, a.control_dt, surf.ready
                             )
@@ -573,6 +589,14 @@ def point(
                         prep = np.r_[p - 0.075 * v, GRIP]
                         lastprep = tick
                     desired = prep
+                    if (
+                        impact is not None
+                        and hasattr(impact, "prepare")
+                        and optical_engine is not None
+                    ):
+                        desired = impact.prepare(
+                            optical_engine, surf, obs, bank, desired
+                        )
         if preparation is not None:
             from .tt38_scored_joints import optical_state
 
@@ -842,6 +866,27 @@ def run(args):
             if args.mode.startswith("optical-")
             else None
         )
+        if args.skill_memory:
+            from .tt39_skilled_memory import SkilledMemory
+
+            if optical_engine is None or not args.economy:
+                raise ValueError(
+                    "Scored skill proposals require the optical economy controller"
+                )
+            skill_card_ids = _read(args.skill_memory)["practice"]
+            if set(skill_card_ids) & {r["id"] for r in cards}:
+                raise ValueError("The skill was trained on this test release")
+            optical_engine.skill_memory = SkilledMemory(args.skill_memory)
+            out["skill_memory"] = str(args.skill_memory)
+        if args.belief_search:
+            from .tt39_belief_search import BeliefSearch
+
+            if optical_engine is None:
+                raise ValueError(
+                    "Visual uncertainty requires the independent camera model"
+                )
+            optical_engine.belief_search = BeliefSearch(args.belief_search)
+            out["belief_search"] = str(args.belief_search)
         if args.motor_value or args.empty_value:
             from .tt38_motor_value import MotorValue, OnlineMotorValue
 
@@ -972,6 +1017,8 @@ if __name__ == "__main__":
     p.add_argument("--motor-value", type=Path)
     p.add_argument("--learn-value", action="store_true")
     p.add_argument("--empty-value", action="store_true")
+    p.add_argument("--belief-search", type=Path)
+    p.add_argument("--skill-memory", type=Path)
     p.add_argument("--rally-value", action="store_true")
     p.add_argument("--cap", type=int, default=24)
     p.add_argument("--depth", type=float, default=-1.13)

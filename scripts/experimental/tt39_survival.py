@@ -21,7 +21,7 @@ def summary(path):
     starts = []
     endings = {}
     for c, r in zip(d["cards"], d["rows"], strict=True):
-        if c.get("opening") != "random" or c.get("profile") != "reach":
+        if c.get("opening", "random") != "random" or c.get("profile", "reach") != "reach":
             raise ValueError("Random first and all later deliveries required")
         source = audit(r["events"], opening_side=1)
         if (source["learner"], source["opponent"]) != (

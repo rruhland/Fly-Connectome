@@ -1,5 +1,9 @@
 # M1B research handoff
 
+## Sustained returns and learning from the lowest arrivals
+
+The strongest fully random points reached 32 own returns with direct joint search and 31 with a geometric controller. The 31-return game replayed exactly for 63 alternating legal returns. On two 24-game courses the combined preparation, return valuation and late joint corrections landed 121 of 143 and 134 of 156 deliveries. Learning with empty memories beat freezing them on both courses. The outstanding weakness is low incoming balls. The combined player returned 5 of 16 of those on replication, compared with 55 of 55 just above 1.04 m. New work targets transferable, score-earning changes to the arm's actual movements. The 100-arm-return target is open. [Scores, learning controls and replay receipts](../../artifacts/tt39/learning.md)
+
 ## Learning during play against the continuous opponent
 
 A camera/encoder controller that searches short sequences of direct joint references sustained 24 arm returns, 49 alternating, in one physical rally. Action-only replay reproduced all scores and every sampled CAD clearance remained positive. It used 83.5 CPU seconds for 40.7 seconds of simulated play, including rendering. A separate camera-based controller with a geometric movement prior started a 24-opening course with empty reward and motor memories. Learning from actual returns and misses gave 68 arm returns and a longest point of 18, versus 43 total and eight at best with memories frozen empty. A carried reward model reached 53 and the simpler motor memory alone reached 39. These are distinct comparisons. The 100-arm-return target is open. [Direct joint search and audit](../../artifacts/tt38/joint-mpc.md) · [Paired reward-learning results](../../artifacts/tt37/carry.md) · [Why additional simulated contacts failed to improve rallies](../../artifacts/tt38/camera-rescue.md)

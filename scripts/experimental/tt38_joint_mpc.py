@@ -463,6 +463,7 @@ def play(a, renderer, rig, stride, lower, upper, ready, card, shot, raw, model, 
     sensed_inbound = False
     commands, memory = [], deque(maxlen=150)
     previous_reward = 0
+    open_offer = False
     started = process_time()
     for tick in range(a.max_steps):
         q = a.joints
@@ -482,6 +483,9 @@ def play(a, renderer, rig, stride, lower, upper, ready, card, shot, raw, model, 
         commands.append(u.tolist())
         if mode == "live":
             memory.append((tick, x, q, reference, sent))
+            for event in info["events"]:
+                if event["kind"] == "legal_return":
+                    open_offer = event["side"] == -1
             if any(e["kind"] == "legal_return" and e["side"] == 1 for e in info["events"]):
                 score = audit(a.events, opening_side=1)["learner"]
                 if score > previous_reward:
@@ -495,6 +499,8 @@ def play(a, renderer, rig, stride, lower, upper, ready, card, shot, raw, model, 
         reference = sent
         if done or capped or a.legal_returns + a.rival_returns - 1 >= cap:
             break
+    if mode == "live" and done and open_offer and hasattr(model, "missed"):
+        model.missed(list(memory))
     return dict(shot=shot, opponent_seed=card["seed"], actions=commands, events=a.events,
                 score=audit(a.events, opening_side=1), placements=a.point_placements(),
                 motor_audit=a.motor_audit(), runtime_cpu_s=process_time() - started,

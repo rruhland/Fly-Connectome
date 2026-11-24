@@ -25,6 +25,12 @@ class ActionValue:
         self.added = []
         self.begin_point()
 
+    def restore(self, path):
+        with np.load(path) as z:
+            self.added = list(zip(z["states"], z["offsets"], z["reward"], strict=True))
+        if self.added:
+            self.recent = cKDTree(np.array([r[0] for r in self.added]) / SENSOR_SCALE)
+
     def begin_point(self):
         self.flight = []
         self.score = 0
@@ -157,6 +163,23 @@ def run(a):
     practiced.update(
         r["card"]["id"] for r in _read(a.bank.with_suffix(".json"))["practice"]
     )
+    prior = None
+    if a.carry is not None:
+        prior = _read(a.carry)
+        weights = a.carry.with_suffix("").with_suffix(".npz")
+        if (
+            prior["online_checkpoint_sha256"] != _hash(weights)
+            or prior["source_sha256"] != _hash(a.bank)
+            or prior["candidate_source"]["source_sha256"]
+            != {p.name: _hash(p) for p in a.data}
+            or prior["candidate_source"]["future_fraction"] != a.lead
+            or prior["candidate_source"]["optical_sha256"] != _hash(a.optics)
+        ):
+            raise ValueError(
+                "Carried direct learning uses different sensors, command labels or prior"
+            )
+        practiced.update(prior["candidate_source"]["practice_ids"])
+        practiced.update(c["id"] for c in prior["cards"])
     if practiced & {c["id"] for c in cards}:
         raise ValueError("Training and assessment release IDs overlap")
     original = deep.Vision
@@ -174,6 +197,8 @@ def run(a):
         players.append(
             ActionValue(field, dataset, learn=a.mode == "learn", future_mix=a.lead)
         )
+        if prior is not None:
+            players[-1].restore(weights)
         return players[-1]
 
     with patch.object(deep, "Vision", CalibratedVision):
@@ -190,6 +215,7 @@ def run(a):
             details={
                 "source_sha256": {p.name: _hash(p) for p in a.data},
                 "mode": a.mode,
+                "previous_course_sha256": _hash(a.carry) if a.carry else None,
                 "future_fraction": a.lead,
                 "optical_sha256": _hash(a.optics),
                 "practice_ids": sorted(practiced),
@@ -225,4 +251,5 @@ if __name__ == "__main__":
     p.add_argument("--feeds", type=Path, default=Path("/tmp/tt25-rallies.json"))
     p.add_argument("--optics", type=Path, default=Path("artifacts/tt37/rebound.npz"))
     p.add_argument("--lead", type=float, default=0.0)
+    p.add_argument("--carry", type=Path)
     run(p.parse_args())
