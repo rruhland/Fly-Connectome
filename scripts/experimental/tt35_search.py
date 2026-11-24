@@ -30,6 +30,13 @@ HELD = {
         ARTIFACTS / "tt33" / "joint-fresh-raw.json.gz",
     ),
 }
+CONFIRMATION = {
+    "confirmation": (
+        ARTIFACTS / "tt35" / "confirmation-plan.json.gz",
+        ARTIFACTS / "tt35" / "confirm-nominal.json.gz",
+    ),
+}
+ASSESSMENTS = HELD | CONFIRMATION
 STEPS = (.075, .065, .055, .045)
 MAX_BIAS = .16
 SEED = 350883
@@ -144,12 +151,20 @@ def assess(feeds, output, cohort):
         raise ValueError("Does not match the completed frozen checkpoint")
     base = _read(BASE)
     model = adjusted(base, np.asarray(checkpoint["bias_rad"]))
-    plan_path, control_path = HELD[cohort]
+    plan_path, control_path = ASSESSMENTS[cohort]
     plan = _read(plan_path)
     baseline = _read(control_path)
     cards = plan["cards"]
-    if cards != baseline["cards"] or _hash(feeds) != plan["feed_sha256"]:
-        raise ValueError("The fixed control differs from the requested cohort")
+    if cards != baseline["cards"] or len(baseline["rows"]) != len(cards) or _hash(feeds) != plan["feed_sha256"]:
+        raise ValueError("The fixed control is incomplete or differs from the requested cohort")
+    if cohort == "confirmation":
+        if (baseline["pupil_sha256"] != _hash(BASE) or baseline["image_frames"] != 0
+                or baseline["initial_lag"] != 0 or any(baseline["schedule"])):
+            raise ValueError("Confirmation control is not the exact nominal raw policy")
+        earlier = {entry["id"] for prior, _ in HELD.values() for entry in _read(prior)["cards"]}
+        earlier.update(base["training_release_ids"])
+        if any(card["id"] in earlier for card in cards):
+            raise ValueError("Confirmation overlaps the initial demonstrations or an earlier held roster")
     if {c["id"] for c in cards}.intersection(checkpoint["practice_release_ids"]):
         raise ValueError("Final assessment overlaps practice releases")
     report = dict(
@@ -172,7 +187,7 @@ def first_contact_counts(rows):
                 landed=sum(p["near_landed"] for p in first))
 
 
-def summary(output):
+def summary(output, *, confirmation=False):
     checkpoint_path = output / "search-checkpoint.json"
     checkpoint = _read(checkpoint_path)
     practice_path = output / "search-practice.json.gz"
@@ -180,7 +195,8 @@ def summary(output):
         raise ValueError("Practice and the learned checkpoint differ")
     practice = _read(practice_path)
     all_scores = {}
-    for cohort, (_, baseline) in HELD.items():
+    courses = CONFIRMATION if confirmation else HELD
+    for cohort, (_, baseline) in courses.items():
         fixed = _read(baseline)
         held = _read(output / f"search-held-{cohort}.json.gz")
         if len(held["rows"]) != len(fixed["rows"]) or held["cards"] != fixed["cards"]:
@@ -207,7 +223,8 @@ def summary(output):
          for candidate in t["rows"][1:]]
         for t in practice["rounds"]
     ]
-    _write(output / "search-results.json", dict(
+    name = "search-confirmation-results.json" if confirmation else "search-results.json"
+    _write(output / name, dict(
         practice=dict(rounds=len(practice["rounds"]), accepted=sum(t["winner"] > 0 for t in practice["rounds"]),
                       scores=[t["scores"] for t in practice["rounds"]], first_deliveries=practice_matches,
                       cpu_s=checkpoint["cpu_s"],
@@ -270,10 +287,11 @@ def main():
     fit_parser.add_argument("--output", type=Path, default=OUTPUT)
     held_parser = phases.add_parser("assess")
     held_parser.add_argument("feeds", type=Path)
-    held_parser.add_argument("cohort", choices=HELD)
+    held_parser.add_argument("cohort", choices=ASSESSMENTS)
     held_parser.add_argument("--output", type=Path, default=OUTPUT)
     summary_parser = phases.add_parser("summary")
     summary_parser.add_argument("--output", type=Path, default=OUTPUT)
+    summary_parser.add_argument("--confirmation", action="store_true")
     replay_parser = phases.add_parser("audit")
     replay_parser.add_argument("source", type=Path)
     replay_parser.add_argument("output", type=Path)
@@ -286,7 +304,7 @@ def main():
     elif args.phase == "assess":
         assess(args.feeds, args.output, args.cohort)
     elif args.phase == "summary":
-        summary(args.output)
+        summary(args.output, confirmation=args.confirmation)
     elif args.phase == "audit":
         audit_positive(args.source, args.output)
     else:
