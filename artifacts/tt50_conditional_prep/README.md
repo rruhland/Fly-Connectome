@@ -11,6 +11,12 @@ The receiving challenge starts at the original native outgoing state after the 4
 
 The optical gate deadline is physical, not an evaluation-time hidden label. The original hard source was successfully answered when delayed preparation began at outward gate 0, but came too late for that taught family at around gate 0.45. Thus only the earlier gates are permitted to open the strong body phase. Actual inbound motion can cancel a route. Actuator limits and the physical referee remain unchanged. Without a supported forecast the actor uses the ordinary controls. [Physical timing bracket](../tt49_terminal_blind/handoff.json)
 
+## Frozen native result
+
+All 24 traces completed and the four motions for each stream received the exact same actual far impact and near bounce. Stock, continuous map, body-only and body-plus-stroke each scored **3/6** on the first matched offer. The three returns are the same held streams in every condition. The original hard source and two of the five held streams did not come back. The small continuous correction genuinely changed release commands from tick 4022 on every stream, including all three misses, with no new legal return. Neither body variant opened its strong route, and their commands remained bit-for-bit stock on every stream. This is a negative result for the frozen integrated forecast and arm policy, not a native test of an active conditional shallow stroke. [Native controls, public observations, forecasts and referee records](physical.json.gz)
+
+The hard source had projected receive height .953 m at y = −1.53 m. The −.45 and 0 m outgoing visual gates predicted 1.010 m and 1.028 m at that same depth, despite predicting negative lateral coordinates. The registered preparation ceiling was .987 m. The .45 m gate was already beyond the best known answered handoff and predicted a still higher 1.085 m. The native abstention is therefore explained by the projected height, without needing to invoke a model or fixture failure during the taught route.
+
 ## Reproduce
 
 ```sh
