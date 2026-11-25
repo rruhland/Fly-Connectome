@@ -85,10 +85,36 @@ def report(path, out, verify=False):
     _write(out,notes)
 
 
+def practice_witness(receipt_path, archive_path, out):
+    """Independently replay the first new exact-state legal edge witness."""
+    case, archive = _read(receipt_path), _read(archive_path)
+    if not case["complete"] or case["source_sha256"]!=_hash(archive_path):
+        raise ValueError("Changed exact-state source")
+    row=next(r for r in case["rows"] if r["arms"].get("edge",{}).get("landed")
+             and r["arms"]["edge"]["answered"])
+    original=archive["rows"][row["index"]]
+    a=row["arms"]["edge"]
+    tape=dict(shot=original["shot"], actions=original["actions"][:row["fork"]]+a["controls"],
+              events=original["events"][:a["stock_prefix_events"]]+a["events"],score=a["score"])
+    if digest_json(tape["events"])!=a["event_sha256"]:
+        raise ValueError("Malformed full exact-state witness")
+    _write(out,dict(id=row["id"],card=row["card"],source_sha256=_hash(archive_path),
+                    exact_state_receipt_sha256=_hash(receipt_path),matched_offer=row["leg"],
+                    stock_contact=row["arms"]["stock"]["actual"],replacement_contact=a["actual"],
+                    stock_landed=False,new_landed=True,next_answered=True,
+                    changed=replay(archive["ready"],row["card"],tape),
+                    stock=replay(archive["ready"],row["card"],original)))
+
+
 if __name__=="__main__":
     p=argparse.ArgumentParser(description=__doc__)
     p.add_argument("--held",type=Path,default=ROOT/"held.json.gz")
     p.add_argument("--out",type=Path,default=ROOT/"report.json")
     p.add_argument("--verify",action="store_true")
+    p.add_argument("--practice-witness",type=Path)
+    p.add_argument("--archive",type=Path)
     a=p.parse_args()
-    report(a.held,a.out,a.verify)
+    if a.practice_witness:
+        practice_witness(a.practice_witness,a.archive,a.out)
+    else:
+        report(a.held,a.out,a.verify)

@@ -7,6 +7,15 @@ inner-face contact was at 57 mm and still failed. Steering the impact was
 useful, but forcing it toward the blade center was not a prerequisite.
 [Exact-state practice, bounded commands and referee events](causal.json.gz)
 
+An unchanged-grid replication on four later, distinct measured releases
+added one new same-ball rescue on 9114. It moved the native alignment
+from .74 to .997 while keeping the contact at roughly 76 mm radius.
+The fixed opponent answered the newly scored shot. Both control tapes
+replayed exactly from launch with no penetrations in 6,610 full-CAD
+solver samples. The other three probes still missed. This replicate was
+not added to the three deployed treatment donors.
+[New offers](new-offers.json.gz) · [Independent replay](new-offer-audit.json)
+
 | Previous missed release | Projected height | Stock contact radius | Tested edge radius | Edge response |
 | --- | ---: | ---: | ---: | --- |
 | 9230 | .998 m | 73.8 mm | 74.9 mm | Legal and answered |
@@ -68,6 +77,8 @@ returns is unchanged. [Fixed assessment and physically earned deltas](held.proto
 ```sh
 export PYTHONPATH=.:src MUJOCO_GL=egl OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 OMP_THREAD_LIMIT=1 LP_NUM_THREADS=1
 python -m scripts.experimental.tt48_contact_patch
+python -m scripts.experimental.tt48_contact_patch --source artifacts/tt46_season/learning-48.json.gz --output artifacts/tt48_contact_patch/new-offers.json.gz --indices 27 37 40 43
+python -m scripts.experimental.tt48_contact_patch_report --practice-witness artifacts/tt48_contact_patch/new-offers.json.gz --archive artifacts/tt46_season/learning-48.json.gz --out artifacts/tt48_contact_patch/new-offer-audit.json
 python -m scripts.experimental.tt48_rim_recovery plan
 python -m scripts.experimental.tt48_rim_recovery run
 python -m scripts.experimental.tt48_contact_patch_report --verify
