@@ -33,7 +33,8 @@ def run():
                             old_event=v['event_sha256']
                             cmd=np.vstack((v['controls'],np.zeros((68,6))))
                             extended=school.physical(a,saved,c,stock,spec,cmd,guard)
-                            if v['events']!=extended['events'][:len(v['events'])] or not extended['landed']:
+                            if (school.digest_json(v['events'])!=school.digest_json(extended['events'][:len(v['events'])])
+                                or not extended['landed']):
                                 raise ValueError('Censoring follow-up did not preserve original scored prefix')
                             v.update(extended,initial_censored_event_sha256=old_event)
                             if v['clearance']['penetration_samples']:

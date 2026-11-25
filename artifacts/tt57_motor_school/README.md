@@ -24,7 +24,10 @@ gradients. Batch scores are advisory. A small shortlisted set is executed
 against the actual referee and ordinary opponent from the same state. Each
 real success must preserve the exact incoming far contact and near bounce.
 Export only a scored response with no CAD penetration and a subsequent legal
-opponent answer. The coach may use privileged native state or an archived
+opponent answer. If the 103-tick branch expires with a response still in
+flight, continue the identical tape under the original opponent and longer
+quiescent follow-through. Do not confuse a censored reply with no reply.
+The coach may use privileged native state or an archived
 failed command continuation only inside training. The movement readout
 receives only prior stereo and encoder observations and the physically
 issued direct control sequence.
@@ -37,15 +40,30 @@ batch cannot credit. The untouched stock commands failed all eight. This
 is mining yield, not transfer. No held action selects on a private replay.
 [Progressive practice receipt](practice.json.gz)
 
+The held check compares school paths and original atlas paths with the same
+maximum number of options, RGB/encoder-only twin test, and uncertainty
+offsets. A supported stock move keeps priority. The additional eight
+ordinary held hits are locked independently of any treatment, including
+seven cases where stock did not have its robust prediction at the fork.
+They distinguish failure to issue a correction from damaging a routinely
+scored delivery. [Ordinary positive controls](routine.protocol.json)
+
 ## Reproduce
 
 ```sh
 export PYTHONPATH=.:src MUJOCO_GL=egl PYOPENGL_PLATFORM=egl OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 OMP_THREAD_LIMIT=1 LP_NUM_THREADS=1
+# Initialize the byte-identical numbered checkpoint alias only when absent.
+test -e artifacts/tt52_practice_dose/live-from-48-96.json.gz || ln -s live-from-48.json.gz artifacts/tt52_practice_dose/live-from-48-96.json.gz
 python -m scripts.experimental.tt57_motor_school plan
+python -m scripts.experimental.tt57_motor_school_transfer plan-routine
 python -m scripts.experimental.tt57_motor_school run --n 8
 python -m scripts.experimental.tt57_motor_school run --n 40
+python -m scripts.experimental.tt57_motor_school_mature
 python -m scripts.experimental.tt57_motor_school_transfer fit
 python -m scripts.experimental.tt57_motor_school_transfer held
+python -m scripts.experimental.tt57_motor_school_transfer routine
+python -m scripts.experimental.tt57_motor_school_transfer audit-training --n 8
 python -m scripts.experimental.tt57_motor_school_transfer games
+python -m scripts.experimental.tt57_motor_school_report --verify
 python -m pytest -q tests/test_tt57_motor_school.py
 ```

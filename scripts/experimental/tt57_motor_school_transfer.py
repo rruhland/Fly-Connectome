@@ -242,11 +242,11 @@ def test(readout_path,count,out=HELD,routine=False):
                         baseline=school.physical(a,saved,card,row,spec,row['actions'][tick:],guard=None)
                         n=baseline['stock_prefix_events']
                         stock_robust=next(v.get('robust',0) for v in row['searches'] if v['tick']==tick)
-                        if (baseline['events']!=row['events'][n:n+len(baseline['events'])]
+                        if (school.digest_json(baseline['events'])!=school.digest_json(row['events'][n:n+len(baseline['events'])])
                             or bool(baseline['landed'])!=bool(routine)
                             or (not routine and baseline['event_sha256']!=school.digest_json(row['events']))):
                             raise ValueError('Held exact baseline failed')
-                        arms={}; optics=x is not None and feature is not None and x[4]<-.9 and -1.03<x[1]<-.47
+                        arms={}; optics=bool(x is not None and feature is not None and x[4]<-.9 and -1.03<x[1]<-.47)
                         if optics and stock_robust<=0:
                             warm_clinic(clinic,rig,a.control_dt,hist,eye,tick,q,ref)
                             key=ATLAS.key(tick,x[:3],bool(eye.eye.latest.bounced),ref,old)
