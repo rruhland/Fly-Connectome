@@ -32,3 +32,22 @@ def test_broad_body_receipt_and_no_native_position_discrepancy_on_stock():
     for key in measures:
         base,learned=[np.median([r[arm][key] for r in held]) for arm in ('baseline','learned')]
         assert learned<.75*base
+
+
+def test_learned_motor_transfer_gets_real_repeatable_mounted_routine_answers():
+    root=study.ROOT/'installed'
+    bf=_read(root/'body-benchmark.json')
+    assert bf['complete'] and len(bf['rows'])==30
+    groups=('kinematic','centered_reused','mounted_learned')
+    for k in ('weighted','pos_m','velocity_mps'):
+        a,b,c=[np.median([r['achieved'][g][k] for r in bf['rows']]) for g in groups]
+        assert c<b<a
+    proof=_read(root/'public-matched.json.gz')
+    assert proof['complete']
+    routine=next(r for r in proof['rows'] if r['role']=='routine')
+    a,b,c=routine['assay']
+    assert a['issued'] and not a['landed']
+    for x in (b,c):
+        assert x['issued'] and x['landed'] and x['answered'] and not x['clearance']['penetration_samples']
+        assert x['contact']['radial_m']<=.058
+        assert x['repeat_sha256']==study.tt72.digest_json(x['events'])

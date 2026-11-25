@@ -1,3 +1,6 @@
 /babble.npy
 /babble-held.npy
 /*.tmp.npy
+/installed/babble.npy
+/installed/babble-held.npy
+/installed/*.tmp.npy
