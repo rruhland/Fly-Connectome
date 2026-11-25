@@ -1,0 +1,36 @@
+seed 0 0 0 [('cold', False, False, 0), ('rgb-seed', True, True, 1), ('growing', True, True, 1)]
+seed 1 1 0 [('cold', False, False, 0), ('rgb-seed', True, True, 1), ('growing', True, True, 1)]
+neighbors 2 0 0 [('cold', False, False, 0), ('rgb-seed', True, True, 1), ('growing', True, True, 1)]
+neighbors 3 0 0 [('cold', False, False, 0), ('rgb-seed', True, True, 1), ('growing', True, True, 1)]
+neighbors 4 0 0 [('cold', False, False, 0), ('rgb-seed', False, False, 0), ('growing', False, False, 0)]
+neighbors 5 0 0 [('cold', False, False, 0), ('rgb-seed', True, True, 1), ('growing', True, True, 1)]
+neighbors 6 1 0 [('cold', False, False, 0), ('rgb-seed', True, True, 1), ('growing', True, True, 1)]
+neighbors 7 1 0 [('cold', False, False, 0), ('rgb-seed', True, True, 1), ('growing', True, True, 1)]
+neighbors 8 1 0 [('cold', False, False, 0), ('rgb-seed', True, True, 1), ('growing', True, True, 1)]
+neighbors 9 1 0 [('cold', False, False, 0), ('rgb-seed', True, True, 1), ('growing', True, True, 1)]
+earlier_held 10 0 6 [('cold', False, False, 0), ('rgb-seed', False, False, 0), ('growing', False, False, 0)]
+earlier_held 11 0 6 [('cold', False, False, 0), ('rgb-seed', False, False, 0), ('growing', False, False, 0)]
+earlier_held 12 1 6 [('cold', False, False, 0), ('rgb-seed', True, True, 1), ('growing', True, True, 1)]
+earlier_held 13 1 6 [('cold', False, False, 0), ('rgb-seed', True, True, 1), ('growing', True, True, 1)]
+untouched_broad_late_state 14 0 6 [('cold', False, False, 0), ('rgb-seed', False, False, 0), ('growing', False, False, 0)]
+untouched_broad_late_state 15 1 6 [('cold', False, False, 0), ('rgb-seed', False, False, 0), ('growing', False, False, 0)]
+untouched_broad_late_state 16 0 6 [('cold', False, False, 0), ('rgb-seed', False, False, 0), ('growing', False, False, 0)]
+untouched_broad_late_state 17 1 6 [('cold', False, False, 0), ('rgb-seed', False, False, 0), ('growing', False, False, 0)]
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/workspace/Fly-Connectome-m1b/scripts/experimental/tt51_low_reverse_curriculum.py", line 243, in <module>
+    p.add_argument('--seed-only',action='store_true');run(p.parse_args())
+                                                      ^^^^^^^^^^^^^^^^^^^
+  File "/workspace/Fly-Connectome-m1b/scripts/experimental/tt51_low_reverse_curriculum.py", line 237, in run
+    finish('completed_reverse_curriculum_diagnostic_no_official_promotion')
+  File "/workspace/Fly-Connectome-m1b/scripts/experimental/tt51_low_reverse_curriculum.py", line 124, in finish
+    dependencies_frozen=all(arm._hash(p)==h for p,h in doc['dependency_hashes'].items()))
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/Fly-Connectome-m1b/scripts/experimental/tt51_low_reverse_curriculum.py", line 124, in <genexpr>
+    dependencies_frozen=all(arm._hash(p)==h for p,h in doc['dependency_hashes'].items()))
+                            ^^^^^^^^^^^^
+  File "/workspace/Fly-Connectome-m1b/scripts/experimental/tt4_transfer_trial.py", line 41, in _hash
+    return sha256(path.read_bytes()).hexdigest()
+                  ^^^^^^^^^^^^^^^
+AttributeError: 'str' object has no attribute 'read_bytes'
