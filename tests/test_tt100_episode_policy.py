@@ -32,6 +32,9 @@ def test_sealed_schedule_has_disjoint_practice_and_true_held_releases():
     assert len({i["id"] for i in held}) == len(held) == 6
     assert not {i["id"] for i in held}.intersection(bank | set(train))
     assert all(i in _read(ep.transfer.PLAN)["practice"] for i in held)
+    x = _read(ep.NEXT)
+    ext = {i["card"]["id"] for i in x["held"]}
+    assert len(ext) == 4 and not ext.intersection(bank | set(train) | {i["id"] for i in held})
     for b in spec["practices"]:
         assert np.isclose(np.linalg.norm(b["direction"]), 1)
         assert all(set(i["order"]) == {"plus", "minus"} for i in b["cards"])

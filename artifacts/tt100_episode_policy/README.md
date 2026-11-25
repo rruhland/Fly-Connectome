@@ -8,14 +8,19 @@ The installed motor library was paid for on the .12 m translated TT73 clamp. Bot
 
 Three antithetic blocks each run two native launch assignments with plus and minus whole-point policies. A scaled difference of log-return utilities moves the common weights only between blocks. Opposite signs across releases shrink the step. No per-shot reward shaping, synthetic success, simulator truth, rerun lottery, GPU training, or backpropagation enters the update.
 
+Each native point runs to its referee outcome, with a 240 alternating-return safety cap and the stock 24,000-control limit. Evaluator-only logs report actual own returns every twenty if reached. A second withheld deck of four distinct release recordings was fixed before any primary held outcome. It is used only if the primary paired gain is at least six total returns, at least three points improve, and fewer get worse. The weights are never changed by either held deck. [Optional continuation schedule](extension-protocol.json)
+
 ## Reproduce
 
 ```sh
 export PYTHONPATH=.:src MUJOCO_GL=egl PYOPENGL_PLATFORM=egl
 export OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 OMP_THREAD_LIMIT=1 LP_NUM_THREADS=1
 python -m scripts.experimental.tt100_episode_policy plan --feeds /tmp/tt25-rallies.json
+python -m scripts.experimental.tt100_episode_policy plan-extension --feeds /tmp/tt25-rallies.json
 python -m scripts.experimental.tt100_episode_policy practice
 python -m scripts.experimental.tt100_episode_policy held
+python -m scripts.experimental.tt100_episode_report --verify
+python -m scripts.experimental.tt100_episode_policy extension
 ```
 
 The protocol embeds the measured initial balls. Re-running from the sealed plan does not need the original launch export.

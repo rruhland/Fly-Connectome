@@ -12,6 +12,12 @@ from .tt48_contact_patch_report import replay
 OUT=tt.ROOT/"report.json"
 
 
+def same_inbound(a,b):
+    return (a is not None and a.get("far_contact") is not None
+            and same_trace(a["far_contact"],b["far_contact"])
+            and same_trace(a["near_bounce"],b["near_bounce"]))
+
+
 def first_difference(a,b):
     t=next((j for j,(u,v) in enumerate(zip(a["actions"],b["actions"])) if u!=v),None)
     if t is None:return None
@@ -22,14 +28,14 @@ def first_difference(a,b):
     if o is None:return dict(tick=t,same_delivery=None)
     j=o["leg"]
     current=base[j] if j<len(base) else None
-    same=bool(current and same_trace(current["far_contact"],o["far_contact"])
-              and same_trace(current["near_bounce"],o["near_bounce"]))
+    same=same_inbound(current,o)
     return dict(tick=t,leg=j,same_delivery=same,baseline_scored=None if not same else current["near_landed"],
                 candidate_scored=o["near_landed"])
 
 
-def summarize(verify):
+def summarize(verify, extension=False):
     d=tt.design()
+    check,tape,out=(tt.NEXT,tt.EXTRA,tt.ROOT/"extension-report.json") if extension else (tt.PLAN,tt.OUT,OUT)
     practice=_read(tt.PRACTICE)
     if practice["plan"]!=_hash(tt.PLAN):raise ValueError("Wrong exploration docket")
     result=dict(protocol=_hash(tt.PLAN),practice=_hash(tt.PRACTICE),practice_done=practice["complete"],
@@ -43,12 +49,12 @@ def summarize(verify):
         if b["updated"]:
             r.update(next=b["next"],paired=b["paired"])
         result["rounds"].append(r)
-    if tt.OUT.exists():
-        h=_read(tt.OUT)
-        if h["plan"]!=_hash(tt.PLAN) or h["policy"]!=_hash(tt.CHECK):raise ValueError("Wrong frozen weights or schedule")
-        old=_read(OUT) if OUT.exists() else {}
+    if tape.exists():
+        h=_read(tape)
+        if h["plan"]!=_hash(check) or h["policy"]!=_hash(tt.CHECK):raise ValueError("Wrong frozen weights or schedule")
+        old=_read(out) if out.exists() else {}
         prior={r["id"]:r.get("replays",{}) for r in (old.get("held") or {}).get("rows",[])}
-        hd=dict(receipt=_hash(tt.OUT),complete=h["complete"],rows=[],summary={})
+        hd=dict(receipt=_hash(tape),complete=h["complete"],rows=[],summary={})
         paired=[]
         indexed=list(r for r in h["rows"] if len(r["arms"])==2)
         longest=max(indexed,key=lambda r:r["arms"]["episode"]["score"]["learner"],default=None)
@@ -58,14 +64,23 @@ def summarize(verify):
             a,b=(r["arms"][k] for k in ("ordinary","episode"))
             if a["memory"]["before"]!=b["memory"]["before"]:
                 raise ValueError("Rematched episode policies changed motor bank")
+            still_matched=[]
+            for old,now in zip(a["placements"]["delivered"],b["placements"]["delivered"]):
+                if not same_inbound(old,now):break
+                still_matched.append(dict(leg=old["leg"],returns=[old["near_landed"],now["near_landed"]],
+                     exact_near_contact=same_trace(old["near_contact"],now["near_contact"])))
             current=dict(id=c["id"],same_commands=a["actions"]==b["actions"],
                          first_effect=first_difference(a,b),arms={},
+                         same_incoming_initial_legs=still_matched,
                          replays=prior.get(c["id"],{}))
             for k,v in r["arms"].items():
                 arr=v["placements"]["delivered"]
                 current["arms"][k]=dict(legal=v["score"]["learner"],offers=len(arr),
                     touches=sum(o.get("near_contact") is not None for o in arr),
-                    complete=v["complete"],cpu_s=v["cpu_s"])
+                    complete=v["complete"],cpu_s=v["cpu_s"],ticks=len(v["actions"]),
+                    searches=v["planner"].get("searches",0),
+                    native_candidates=v["planner"].get("native_candidates",0),
+                    accepted=v["planner"].get("accepted",0))
                 selected=(verify and (r is gain or r is longest or v["score"]["learner"]>=100))
                 if selected and k not in current["replays"]:
                     with tt.enabled(cameras=False):
@@ -83,8 +98,11 @@ def summarize(verify):
                               gain=int(diff.sum()),wins=int((diff>0).sum()),losses=int((diff<0).sum()),
                               ties=int((diff==0).sum()),two_sided_paired_randomization=p_exact,
                               reaches_100=np.sum(pair>=100,axis=0).tolist())
+            hd["summary"]["pooled_work"]={k:{f:sum(r["arms"][k][f] for r in hd["rows"])
+                 for f in ("offers","touches","ticks","cpu_s","searches","native_candidates","accepted")}
+                 for k in ("ordinary","episode")}
         result["held"]=hd
-    _write(OUT,result)
+    _write(out,result)
     print("practice",[(r["block"],r["updated"],r.get("paired")) for r in result["rounds"]],flush=True)
     if result["held"] is not None:print(result["held"]["complete"],result["held"]["summary"],flush=True)
 
@@ -92,4 +110,6 @@ def summarize(verify):
 if __name__=="__main__":
     p=argparse.ArgumentParser(description=__doc__)
     p.add_argument("--verify",action="store_true")
-    summarize(p.parse_args().verify)
+    p.add_argument("--extension",action="store_true")
+    a=p.parse_args()
+    summarize(a.verify,a.extension)

@@ -19,13 +19,14 @@ PLAN=ROOT/"protocol.json"
 PRACTICE=ROOT/"practice.json.gz"
 CHECK=ROOT/"policy.json"
 OUT=ROOT/"held.json.gz"
+NEXT=ROOT/"extension-protocol.json"
+EXTRA=ROOT/"extension.json.gz"
 PARENTS=tuple(Path("artifacts")/(r+".json.gz") for r in ("tt42/after48","tt42/diverse-evaluation"))
 MOTOR=transfer.PRACTICE.with_suffix("").with_suffix(".npz")
 SIGMA=.68
 BOUND=1.2
 STEP=.46
 RNG=1000721
-NORMAL=8700
 NTRAIN=6
 NHELD=6
 
@@ -156,6 +157,26 @@ def design():
     return p
 
 
+def plan_extension(feeds):
+    """Preassign another independent small control deck if held signal warrants it."""
+    p=design()
+    used,_,_,_=available()
+    seen=used|set(p["train_release_ids"])|{e["card"]["id"] for e in p["held"]}
+    shots=mpc.measured_launches(feeds)
+    rows=[]
+    for c in _read(transfer.PLAN)["practice"]:
+        if c["id"] not in seen:
+            rows.append(dict(card=c,shot=shots[c["id"]]))
+            seen.add(c["id"])
+            if len(rows)==4:break
+    if len(rows)!=4:raise ValueError("Not enough independent full point releases")
+    spec=dict(main=_hash(PLAN),held=rows,trigger=dict(min_paired_gain=6,min_wins=3),
+              role="Optional validation only if first six paired gains sum to at least six with at least three positive and fewer negative results. Same once-frozen policy, ordinary physical opponent, one ordinary point per arm per assigned release. Never use these points to train or select a policy.")
+    if NEXT.exists() and _read(NEXT)!=spec:raise ValueError("Changed optional protocol")
+    _write(NEXT,spec)
+    print("TT100 independent optional extension",[e["card"]["id"] for e in rows],flush=True)
+
+
 def utility(r):
     return float(np.log1p(r)+.015*r)
 
@@ -173,7 +194,6 @@ def update(theta,direction,values):
 class Course:
     """Identical original physical body and frozen installed motor memory."""
     def __init__(self, p):
-        self.p=p
         self.ready=np.asarray(p["ready"])
         self.rank=season.fresh.shot.Coverage(_read(season.fresh.RISK))
         self.work=mpc.arena()
@@ -200,7 +220,8 @@ class Course:
             def watched(u,far):
                 nonlocal next_return
                 packet=exchange(u,far)
-                if self.work.legal_returns>=next_return:
+                if self.work.legal_returns>=next_return and any(
+                        e["kind"]=="legal_return" and e["side"]==1 for e in packet[-1]["events"]):
                     actual=audit(self.work.events,opening_side=1)["learner"]
                     if actual>=next_return:
                         print("whole point progress",c["id"],actual,"near legal returns",
@@ -275,19 +296,31 @@ def learn(n):
                          start_m=settings(d["theta"])[0],noise_multiplier=settings(d["theta"])[1]))
 
 
-def held(n):
+def held(n, *, extension=False):
     p=design()
     ck=_read(CHECK)
     if _hash(PLAN)!=ck["protocol"] or _hash(PRACTICE)!=ck["evidence"]:
         raise ValueError("Changed sealed policy")
-    d=dict(plan=_hash(PLAN),policy=_hash(CHECK),rows=[],complete=False)
-    if OUT.exists():d=_read(OUT)
-    if d["policy"]!=_hash(CHECK) or d["plan"]!=_hash(PLAN):raise ValueError("Wrong frozen comparison")
+    path,out,rows=PLAN,OUT,p["held"]
+    if extension:
+        spec=_read(NEXT)
+        primary=_read(OUT)
+        if not primary["complete"] or spec["main"]!=_hash(PLAN) or primary["plan"]!=_hash(PLAN) or primary["policy"]!=_hash(CHECK):
+            raise ValueError("Main frozen comparison not complete")
+        gains=[r["arms"]["episode"]["score"]["learner"]-r["arms"]["ordinary"]["score"]["learner"] for r in primary["rows"]]
+        wins=sum(g>0 for g in gains)
+        if sum(gains)<spec["trigger"]["min_paired_gain"] or wins<spec["trigger"]["min_wins"] or wins<=sum(g<0 for g in gains):
+            print("TT100 independent extension trigger not met",gains,flush=True)
+            return
+        path,out,rows=NEXT,EXTRA,spec["held"]
+    d=dict(plan=_hash(path),policy=_hash(CHECK),rows=[],complete=False)
+    if out.exists():d=_read(out)
+    if d["policy"]!=_hash(CHECK) or d["plan"]!=_hash(path):raise ValueError("Wrong frozen comparison")
     options={"ordinary":np.zeros(2),"episode":np.asarray(ck["theta"])}
     with mpc.centered(p["ready"]),enabled():
         runner=Course(p)
         try:
-            for j,item in enumerate(p["held"][:n]):
+            for j,item in enumerate(rows[:n]):
                 if j>=len(d["rows"]):
                     d["rows"].append(dict(item,arms={}))
                 a=d["rows"][j]
@@ -296,8 +329,8 @@ def held(n):
                     if k in a["arms"]:continue
                     r=runner.play(item,options[k])
                     a["arms"][k]=r
-                    d["complete"]=len(d["rows"])==len(p["held"]) and all(len(a0["arms"])==2 for a0 in d["rows"])
-                    _write(OUT,d)
+                    d["complete"]=len(d["rows"])==len(rows) and all(len(a0["arms"])==2 for a0 in d["rows"])
+                    _write(out,d)
                     print("held",item["card"]["id"],k,r["score"]["learner"],len(r["actions"]),
                           round(r["cpu_s"],2),flush=True)
         finally:
@@ -306,10 +339,11 @@ def held(n):
 
 if __name__=="__main__":
     p=argparse.ArgumentParser(description=__doc__)
-    p.add_argument("mode",choices=("plan","practice","held"))
+    p.add_argument("mode",choices=("plan","plan-extension","practice","held","extension"))
     p.add_argument("--n",type=int)
     p.add_argument("--feeds",type=Path,default=Path("/tmp/tt25-rallies.json"))
     a=p.parse_args()
     if a.mode=="plan":plan(a.feeds)
+    elif a.mode=="plan-extension":plan_extension(a.feeds)
     elif a.mode=="practice":learn(a.n or 3)
-    else:held(a.n or NHELD)
+    else:held(a.n or (4 if a.mode=="extension" else NHELD),extension=a.mode=="extension")
