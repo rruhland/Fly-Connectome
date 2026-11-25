@@ -1,0 +1,925 @@
+{
+  "source_sha256": "194d492dd902106d3976981466d214b0ed07044de7b5986f6ec807059cc18da9",
+  "raw_releases": 24,
+  "actual_streams": 144,
+  "gates": {
+    "4/-0.45": {
+      "n": 144,
+      "low": 19,
+      "pairs": 360,
+      "identical_pairs": 15,
+      "lead_s": [
+        0.4916666666666965,
+        0.5812500000000189,
+        0.6562500000000165
+      ],
+      "max_future_spread": [
+        0.5533524483698977,
+        0.12831669759558828
+      ]
+    },
+    "4/0.0": {
+      "n": 144,
+      "low": 19,
+      "pairs": 360,
+      "identical_pairs": 0,
+      "lead_s": [
+        0.30000000000003124,
+        0.4218750000000251,
+        0.4966666666666766
+      ],
+      "max_future_spread": null
+    },
+    "4/0.45": {
+      "n": 144,
+      "low": 19,
+      "pairs": 360,
+      "identical_pairs": 15,
+      "lead_s": [
+        0.10000000000002937,
+        0.2770833333333523,
+        0.3633333333333433
+      ],
+      "max_future_spread": [
+        0.4101794169953244,
+        0.12579771121260963
+      ]
+    },
+    "4/0.85": {
+      "n": 112,
+      "low": 15,
+      "pairs": 273,
+      "identical_pairs": 0,
+      "lead_s": [
+        0.050000000000028424,
+        0.13750000000001564,
+        0.22708333333335323
+      ],
+      "max_future_spread": null
+    },
+    "12/-0.45": {
+      "n": 72,
+      "low": 4,
+      "pairs": 180,
+      "identical_pairs": 15,
+      "lead_s": [
+        0.4800000000000303,
+        0.5552083333333584,
+        0.6083333333333546
+      ],
+      "max_future_spread": [
+        0.5533524483698977,
+        0.12831669759558828
+      ]
+    },
+    "12/0.0": {
+      "n": 144,
+      "low": 19,
+      "pairs": 360,
+      "identical_pairs": 0,
+      "lead_s": [
+        0.30000000000003124,
+        0.4218750000000251,
+        0.4966666666666766
+      ],
+      "max_future_spread": null
+    },
+    "12/0.45": {
+      "n": 144,
+      "low": 19,
+      "pairs": 360,
+      "identical_pairs": 0,
+      "lead_s": [
+        0.10000000000002937,
+        0.2770833333333523,
+        0.3633333333333433
+      ],
+      "max_future_spread": null
+    },
+    "12/0.85": {
+      "n": 112,
+      "low": 15,
+      "pairs": 273,
+      "identical_pairs": 0,
+      "lead_s": [
+        0.050000000000028424,
+        0.13750000000001564,
+        0.22708333333335323
+      ],
+      "max_future_spread": null
+    }
+  },
+  "collisions": [
+    {
+      "file": "artifacts/tt50_opponent_vision/observations/case-21.npz",
+      "release": 14071,
+      "gate": -0.45,
+      "history": 4,
+      "streams": [
+        0,
+        1
+      ],
+      "lead_s": [
+        0.7333333333333418,
+        0.7791666666666723
+      ],
+      "future_observed_spread": [
+        0.19922596002601337,
+        0.07212186784782482
+      ]
+    },
+    {
+      "file": "artifacts/tt50_opponent_vision/observations/case-21.npz",
+      "release": 14071,
+      "gate": -0.45,
+      "history": 4,
+      "streams": [
+        0,
+        2
+      ],
+      "lead_s": [
+        0.7333333333333418,
+        0.7791666666666723
+      ],
+      "future_observed_spread": [
+        0.5358492696866215,
+        0.0641183093060651
+      ]
+    },
+    {
+      "file": "artifacts/tt50_opponent_vision/observations/case-21.npz",
+      "release": 14071,
+      "gate": -0.45,
+      "history": 4,
+      "streams": [
+        0,
+        3
+      ],
+      "lead_s": [
+        0.7333333333333418,
+        0.7791666666666723
+      ],
+      "future_observed_spread": [
+        0.09563393650259552,
+        0.048029477476830174
+      ]
+    },
+    {
+      "file": "artifacts/tt50_opponent_vision/observations/case-21.npz",
+      "release": 14071,
+      "gate": -0.45,
+      "history": 4,
+      "streams": [
+        0,
+        4
+      ],
+      "lead_s": [
+        0.7333333333333418,
+        0.7791666666666723
+      ],
+      "future_observed_spread": [
+        0.278496714323358,
+        0.12831669759558828
+      ]
+    },
+    {
+      "file": "artifacts/tt50_opponent_vision/observations/case-21.npz",
+      "release": 14071,
+      "gate": -0.45,
+      "history": 4,
+      "streams": [
+        0,
+        5
+      ],
+      "lead_s": [
+        0.7333333333333418,
+        0.7333333333333418
+      ],
+      "future_observed_spread": [
+        0.017503178683276277,
+        0.027922373716541715
+      ]
+    },
+    {
+      "file": "artifacts/tt50_opponent_vision/observations/case-21.npz",
+      "release": 14071,
+      "gate": -0.45,
+      "history": 4,
+      "streams": [
+        1,
+        2
+      ],
+      "lead_s": [
+        0.7791666666666723,
+        0.7791666666666723
+      ],
+      "future_observed_spread": [
+        0.33662330966060805,
+        0.008003558541759714
+      ]
+    },
+    {
+      "file": "artifacts/tt50_opponent_vision/observations/case-21.npz",
+      "release": 14071,
+      "gate": -0.45,
+      "history": 4,
+      "streams": [
+        1,
+        3
+      ],
+      "lead_s": [
+        0.7791666666666723,
+        0.7791666666666723
+      ],
+      "future_observed_spread": [
+        0.10359202352341784,
+        0.024092390370994643
+      ]
+    },
+    {
+      "file": "artifacts/tt50_opponent_vision/observations/case-21.npz",
+      "release": 14071,
+      "gate": -0.45,
+      "history": 4,
+      "streams": [
+        1,
+        4
+      ],
+      "lead_s": [
+        0.7791666666666723,
+        0.7791666666666723
+      ],
+      "future_observed_spread": [
+        0.0792707542973446,
+        0.056194829747763464
+      ]
+    },
+    {
+      "file": "artifacts/tt50_opponent_vision/observations/case-21.npz",
+      "release": 14071,
+      "gate": -0.45,
+      "history": 4,
+      "streams": [
+        1,
+        5
+      ],
+      "lead_s": [
+        0.7791666666666723,
+        0.7333333333333418
+      ],
+      "future_observed_spread": [
+        0.21672913870928964,
+        0.0441994941312831
+      ]
+    },
+    {
+      "file": "artifacts/tt50_opponent_vision/observations/case-21.npz",
+      "release": 14071,
+      "gate": -0.45,
+      "history": 4,
+      "streams": [
+        2,
+        3
+      ],
+      "lead_s": [
+        0.7791666666666723,
+        0.7791666666666723
+      ],
+      "future_observed_spread": [
+        0.44021533318402595,
+        0.01608883182923493
+      ]
+    },
+    {
+      "file": "artifacts/tt50_opponent_vision/observations/case-21.npz",
+      "release": 14071,
+      "gate": -0.45,
+      "history": 4,
+      "streams": [
+        2,
+        4
+      ],
+      "lead_s": [
+        0.7791666666666723,
+        0.7791666666666723
+      ],
+      "future_observed_spread": [
+        0.25735255536326346,
+        0.06419838828952318
+      ]
+    },
+    {
+      "file": "artifacts/tt50_opponent_vision/observations/case-21.npz",
+      "release": 14071,
+      "gate": -0.45,
+      "history": 4,
+      "streams": [
+        2,
+        5
+      ],
+      "lead_s": [
+        0.7791666666666723,
+        0.7333333333333418
+      ],
+      "future_observed_spread": [
+        0.5533524483698977,
+        0.03619593558952339
+      ]
+    },
+    {
+      "file": "artifacts/tt50_opponent_vision/observations/case-21.npz",
+      "release": 14071,
+      "gate": -0.45,
+      "history": 4,
+      "streams": [
+        3,
+        4
+      ],
+      "lead_s": [
+        0.7791666666666723,
+        0.7791666666666723
+      ],
+      "future_observed_spread": [
+        0.18286277782076246,
+        0.0802872201187581
+      ]
+    },
+    {
+      "file": "artifacts/tt50_opponent_vision/observations/case-21.npz",
+      "release": 14071,
+      "gate": -0.45,
+      "history": 4,
+      "streams": [
+        3,
+        5
+      ],
+      "lead_s": [
+        0.7791666666666723,
+        0.7333333333333418
+      ],
+      "future_observed_spread": [
+        0.1131371151858718,
+        0.02010710376028846
+      ]
+    },
+    {
+      "file": "artifacts/tt50_opponent_vision/observations/case-21.npz",
+      "release": 14071,
+      "gate": -0.45,
+      "history": 4,
+      "streams": [
+        4,
+        5
+      ],
+      "lead_s": [
+        0.7791666666666723,
+        0.7333333333333418
+      ],
+      "future_observed_spread": [
+        0.29599989300663426,
+        0.10039432387904657
+      ]
+    },
+    {
+      "file": "artifacts/tt50_opponent_vision/observations/case-13.npz",
+      "release": 4214,
+      "gate": 0.45,
+      "history": 4,
+      "streams": [
+        0,
+        1
+      ],
+      "lead_s": [
+        0.12291666666669461,
+        0.12291666666669461
+      ],
+      "future_observed_spread": [
+        0.1469933438504713,
+        0.030670164719284854
+      ]
+    },
+    {
+      "file": "artifacts/tt50_opponent_vision/observations/case-13.npz",
+      "release": 4214,
+      "gate": 0.45,
+      "history": 4,
+      "streams": [
+        0,
+        2
+      ],
+      "lead_s": [
+        0.12291666666669461,
+        0.10000000000002937
+      ],
+      "future_observed_spread": [
+        0.06898170342571064,
+        0.05272230540482026
+      ]
+    },
+    {
+      "file": "artifacts/tt50_opponent_vision/observations/case-13.npz",
+      "release": 4214,
+      "gate": 0.45,
+      "history": 4,
+      "streams": [
+        0,
+        3
+      ],
+      "lead_s": [
+        0.12291666666669461,
+        0.07916666666669699
+      ],
+      "future_observed_spread": [
+        0.04076414949725671,
+        0.05367599615121188
+      ]
+    },
+    {
+      "file": "artifacts/tt50_opponent_vision/observations/case-13.npz",
+      "release": 4214,
+      "gate": 0.45,
+      "history": 4,
+      "streams": [
+        0,
+        4
+      ],
+      "lead_s": [
+        0.12291666666669461,
+        0.10000000000002937
+      ],
+      "future_observed_spread": [
+        0.34119771356961376,
+        0.021041551841625816
+      ]
+    },
+    {
+      "file": "artifacts/tt50_opponent_vision/observations/case-13.npz",
+      "release": 4214,
+      "gate": 0.45,
+      "history": 4,
+      "streams": [
+        0,
+        5
+      ],
+      "lead_s": [
+        0.12291666666669461,
+        0.10000000000002937
+      ],
+      "future_observed_spread": [
+        0.00249875655545459,
+        0.07212171506139775
+      ]
+    },
+    {
+      "file": "artifacts/tt50_opponent_vision/observations/case-13.npz",
+      "release": 4214,
+      "gate": 0.45,
+      "history": 4,
+      "streams": [
+        1,
+        2
+      ],
+      "lead_s": [
+        0.12291666666669461,
+        0.10000000000002937
+      ],
+      "future_observed_spread": [
+        0.21597504727618194,
+        0.08339247012410511
+      ]
+    },
+    {
+      "file": "artifacts/tt50_opponent_vision/observations/case-13.npz",
+      "release": 4214,
+      "gate": 0.45,
+      "history": 4,
+      "streams": [
+        1,
+        3
+      ],
+      "lead_s": [
+        0.12291666666669461,
+        0.07916666666669699
+      ],
+      "future_observed_spread": [
+        0.10622919435321458,
+        0.08434616087049673
+      ]
+    },
+    {
+      "file": "artifacts/tt50_opponent_vision/observations/case-13.npz",
+      "release": 4214,
+      "gate": 0.45,
+      "history": 4,
+      "streams": [
+        1,
+        4
+      ],
+      "lead_s": [
+        0.12291666666669461,
+        0.10000000000002937
+      ],
+      "future_observed_spread": [
+        0.19420436971914246,
+        0.05171171656091067
+      ]
+    },
+    {
+      "file": "artifacts/tt50_opponent_vision/observations/case-13.npz",
+      "release": 4214,
+      "gate": 0.45,
+      "history": 4,
+      "streams": [
+        1,
+        5
+      ],
+      "lead_s": [
+        0.12291666666669461,
+        0.10000000000002937
+      ],
+      "future_observed_spread": [
+        0.14949210040592587,
+        0.0414515503421129
+      ]
+    },
+    {
+      "file": "artifacts/tt50_opponent_vision/observations/case-13.npz",
+      "release": 4214,
+      "gate": 0.45,
+      "history": 4,
+      "streams": [
+        2,
+        3
+      ],
+      "lead_s": [
+        0.10000000000002937,
+        0.07916666666669699
+      ],
+      "future_observed_spread": [
+        0.10974585292296735,
+        0.0009536907463916222
+      ]
+    },
+    {
+      "file": "artifacts/tt50_opponent_vision/observations/case-13.npz",
+      "release": 4214,
+      "gate": 0.45,
+      "history": 4,
+      "streams": [
+        2,
+        4
+      ],
+      "lead_s": [
+        0.10000000000002937,
+        0.10000000000002937
+      ],
+      "future_observed_spread": [
+        0.4101794169953244,
+        0.03168075356319444
+      ]
+    },
+    {
+      "file": "artifacts/tt50_opponent_vision/observations/case-13.npz",
+      "release": 4214,
+      "gate": 0.45,
+      "history": 4,
+      "streams": [
+        2,
+        5
+      ],
+      "lead_s": [
+        0.10000000000002937,
+        0.10000000000002937
+      ],
+      "future_observed_spread": [
+        0.06648294687025605,
+        0.12484402046621801
+      ]
+    },
+    {
+      "file": "artifacts/tt50_opponent_vision/observations/case-13.npz",
+      "release": 4214,
+      "gate": 0.45,
+      "history": 4,
+      "streams": [
+        3,
+        4
+      ],
+      "lead_s": [
+        0.07916666666669699,
+        0.10000000000002937
+      ],
+      "future_observed_spread": [
+        0.30043356407235705,
+        0.032634444309586064
+      ]
+    },
+    {
+      "file": "artifacts/tt50_opponent_vision/observations/case-13.npz",
+      "release": 4214,
+      "gate": 0.45,
+      "history": 4,
+      "streams": [
+        3,
+        5
+      ],
+      "lead_s": [
+        0.07916666666669699,
+        0.10000000000002937
+      ],
+      "future_observed_spread": [
+        0.0432629060527113,
+        0.12579771121260963
+      ]
+    },
+    {
+      "file": "artifacts/tt50_opponent_vision/observations/case-13.npz",
+      "release": 4214,
+      "gate": 0.45,
+      "history": 4,
+      "streams": [
+        4,
+        5
+      ],
+      "lead_s": [
+        0.10000000000002937,
+        0.10000000000002937
+      ],
+      "future_observed_spread": [
+        0.3436964701250683,
+        0.09316326690302357
+      ]
+    },
+    {
+      "file": "artifacts/tt50_opponent_vision/observations/case-21.npz",
+      "release": 14071,
+      "gate": -0.45,
+      "history": 12,
+      "streams": [
+        0,
+        1
+      ],
+      "lead_s": [
+        0.7333333333333418,
+        0.7791666666666723
+      ],
+      "future_observed_spread": [
+        0.19922596002601337,
+        0.07212186784782482
+      ]
+    },
+    {
+      "file": "artifacts/tt50_opponent_vision/observations/case-21.npz",
+      "release": 14071,
+      "gate": -0.45,
+      "history": 12,
+      "streams": [
+        0,
+        2
+      ],
+      "lead_s": [
+        0.7333333333333418,
+        0.7791666666666723
+      ],
+      "future_observed_spread": [
+        0.5358492696866215,
+        0.0641183093060651
+      ]
+    },
+    {
+      "file": "artifacts/tt50_opponent_vision/observations/case-21.npz",
+      "release": 14071,
+      "gate": -0.45,
+      "history": 12,
+      "streams": [
+        0,
+        3
+      ],
+      "lead_s": [
+        0.7333333333333418,
+        0.7791666666666723
+      ],
+      "future_observed_spread": [
+        0.09563393650259552,
+        0.048029477476830174
+      ]
+    },
+    {
+      "file": "artifacts/tt50_opponent_vision/observations/case-21.npz",
+      "release": 14071,
+      "gate": -0.45,
+      "history": 12,
+      "streams": [
+        0,
+        4
+      ],
+      "lead_s": [
+        0.7333333333333418,
+        0.7791666666666723
+      ],
+      "future_observed_spread": [
+        0.278496714323358,
+        0.12831669759558828
+      ]
+    },
+    {
+      "file": "artifacts/tt50_opponent_vision/observations/case-21.npz",
+      "release": 14071,
+      "gate": -0.45,
+      "history": 12,
+      "streams": [
+        0,
+        5
+      ],
+      "lead_s": [
+        0.7333333333333418,
+        0.7333333333333418
+      ],
+      "future_observed_spread": [
+        0.017503178683276277,
+        0.027922373716541715
+      ]
+    },
+    {
+      "file": "artifacts/tt50_opponent_vision/observations/case-21.npz",
+      "release": 14071,
+      "gate": -0.45,
+      "history": 12,
+      "streams": [
+        1,
+        2
+      ],
+      "lead_s": [
+        0.7791666666666723,
+        0.7791666666666723
+      ],
+      "future_observed_spread": [
+        0.33662330966060805,
+        0.008003558541759714
+      ]
+    },
+    {
+      "file": "artifacts/tt50_opponent_vision/observations/case-21.npz",
+      "release": 14071,
+      "gate": -0.45,
+      "history": 12,
+      "streams": [
+        1,
+        3
+      ],
+      "lead_s": [
+        0.7791666666666723,
+        0.7791666666666723
+      ],
+      "future_observed_spread": [
+        0.10359202352341784,
+        0.024092390370994643
+      ]
+    },
+    {
+      "file": "artifacts/tt50_opponent_vision/observations/case-21.npz",
+      "release": 14071,
+      "gate": -0.45,
+      "history": 12,
+      "streams": [
+        1,
+        4
+      ],
+      "lead_s": [
+        0.7791666666666723,
+        0.7791666666666723
+      ],
+      "future_observed_spread": [
+        0.0792707542973446,
+        0.056194829747763464
+      ]
+    },
+    {
+      "file": "artifacts/tt50_opponent_vision/observations/case-21.npz",
+      "release": 14071,
+      "gate": -0.45,
+      "history": 12,
+      "streams": [
+        1,
+        5
+      ],
+      "lead_s": [
+        0.7791666666666723,
+        0.7333333333333418
+      ],
+      "future_observed_spread": [
+        0.21672913870928964,
+        0.0441994941312831
+      ]
+    },
+    {
+      "file": "artifacts/tt50_opponent_vision/observations/case-21.npz",
+      "release": 14071,
+      "gate": -0.45,
+      "history": 12,
+      "streams": [
+        2,
+        3
+      ],
+      "lead_s": [
+        0.7791666666666723,
+        0.7791666666666723
+      ],
+      "future_observed_spread": [
+        0.44021533318402595,
+        0.01608883182923493
+      ]
+    },
+    {
+      "file": "artifacts/tt50_opponent_vision/observations/case-21.npz",
+      "release": 14071,
+      "gate": -0.45,
+      "history": 12,
+      "streams": [
+        2,
+        4
+      ],
+      "lead_s": [
+        0.7791666666666723,
+        0.7791666666666723
+      ],
+      "future_observed_spread": [
+        0.25735255536326346,
+        0.06419838828952318
+      ]
+    },
+    {
+      "file": "artifacts/tt50_opponent_vision/observations/case-21.npz",
+      "release": 14071,
+      "gate": -0.45,
+      "history": 12,
+      "streams": [
+        2,
+        5
+      ],
+      "lead_s": [
+        0.7791666666666723,
+        0.7333333333333418
+      ],
+      "future_observed_spread": [
+        0.5533524483698977,
+        0.03619593558952339
+      ]
+    },
+    {
+      "file": "artifacts/tt50_opponent_vision/observations/case-21.npz",
+      "release": 14071,
+      "gate": -0.45,
+      "history": 12,
+      "streams": [
+        3,
+        4
+      ],
+      "lead_s": [
+        0.7791666666666723,
+        0.7791666666666723
+      ],
+      "future_observed_spread": [
+        0.18286277782076246,
+        0.0802872201187581
+      ]
+    },
+    {
+      "file": "artifacts/tt50_opponent_vision/observations/case-21.npz",
+      "release": 14071,
+      "gate": -0.45,
+      "history": 12,
+      "streams": [
+        3,
+        5
+      ],
+      "lead_s": [
+        0.7791666666666723,
+        0.7333333333333418
+      ],
+      "future_observed_spread": [
+        0.1131371151858718,
+        0.02010710376028846
+      ]
+    },
+    {
+      "file": "artifacts/tt50_opponent_vision/observations/case-21.npz",
+      "release": 14071,
+      "gate": -0.45,
+      "history": 12,
+      "streams": [
+        4,
+        5
+      ],
+      "lead_s": [
+        0.7791666666666723,
+        0.7333333333333418
+      ],
+      "future_observed_spread": [
+        0.29599989300663426,
+        0.10039432387904657
+      ]
+    }
+  ],
+  "limitation": "Equality applies to stored fixed crops and past-history length only. Contact time is lead metadata, never predictor input. It cannot establish whole-scene impossibility."
+}

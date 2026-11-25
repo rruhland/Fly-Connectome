@@ -1,0 +1,127 @@
+{
+  "files": [
+    {
+      "file": "artifacts/tt50_opponent_vision/observations/case-00.npz",
+      "rows": 24,
+      "exact_raw_to_cached_features_and_labels": true
+    },
+    {
+      "file": "artifacts/tt50_opponent_vision/observations/case-01.npz",
+      "rows": 24,
+      "exact_raw_to_cached_features_and_labels": true
+    },
+    {
+      "file": "artifacts/tt50_opponent_vision/observations/case-02.npz",
+      "rows": 24,
+      "exact_raw_to_cached_features_and_labels": true
+    },
+    {
+      "file": "artifacts/tt50_opponent_vision/observations/case-03.npz",
+      "rows": 18,
+      "exact_raw_to_cached_features_and_labels": true
+    },
+    {
+      "file": "artifacts/tt50_opponent_vision/observations/case-04.npz",
+      "rows": 18,
+      "exact_raw_to_cached_features_and_labels": true
+    },
+    {
+      "file": "artifacts/tt50_opponent_vision/observations/case-05.npz",
+      "rows": 18,
+      "exact_raw_to_cached_features_and_labels": true
+    },
+    {
+      "file": "artifacts/tt50_opponent_vision/observations/case-06.npz",
+      "rows": 24,
+      "exact_raw_to_cached_features_and_labels": true
+    },
+    {
+      "file": "artifacts/tt50_opponent_vision/observations/case-07.npz",
+      "rows": 19,
+      "exact_raw_to_cached_features_and_labels": true
+    },
+    {
+      "file": "artifacts/tt50_opponent_vision/observations/case-08.npz",
+      "rows": 24,
+      "exact_raw_to_cached_features_and_labels": true
+    },
+    {
+      "file": "artifacts/tt50_opponent_vision/observations/case-09.npz",
+      "rows": 24,
+      "exact_raw_to_cached_features_and_labels": true
+    },
+    {
+      "file": "artifacts/tt50_opponent_vision/observations/case-10.npz",
+      "rows": 24,
+      "exact_raw_to_cached_features_and_labels": true
+    },
+    {
+      "file": "artifacts/tt50_opponent_vision/observations/case-11.npz",
+      "rows": 24,
+      "exact_raw_to_cached_features_and_labels": true
+    },
+    {
+      "file": "artifacts/tt50_opponent_vision/observations/case-12.npz",
+      "rows": 24,
+      "exact_raw_to_cached_features_and_labels": true
+    },
+    {
+      "file": "artifacts/tt50_opponent_vision/observations/case-13.npz",
+      "rows": 6,
+      "exact_raw_to_cached_features_and_labels": true
+    },
+    {
+      "file": "artifacts/tt50_opponent_vision/observations/case-14.npz",
+      "rows": 24,
+      "exact_raw_to_cached_features_and_labels": true
+    },
+    {
+      "file": "artifacts/tt50_opponent_vision/observations/case-15.npz",
+      "rows": 24,
+      "exact_raw_to_cached_features_and_labels": true
+    },
+    {
+      "file": "artifacts/tt50_opponent_vision/observations/case-16.npz",
+      "rows": 21,
+      "exact_raw_to_cached_features_and_labels": true
+    },
+    {
+      "file": "artifacts/tt50_opponent_vision/observations/case-17.npz",
+      "rows": 24,
+      "exact_raw_to_cached_features_and_labels": true
+    },
+    {
+      "file": "artifacts/tt50_opponent_vision/observations/case-18.npz",
+      "rows": 24,
+      "exact_raw_to_cached_features_and_labels": true
+    },
+    {
+      "file": "artifacts/tt50_opponent_vision/observations/case-19.npz",
+      "rows": 24,
+      "exact_raw_to_cached_features_and_labels": true
+    },
+    {
+      "file": "artifacts/tt50_opponent_vision/observations/case-20.npz",
+      "rows": 24,
+      "exact_raw_to_cached_features_and_labels": true
+    },
+    {
+      "file": "artifacts/tt50_opponent_vision/observations/case-21.npz",
+      "rows": 24,
+      "exact_raw_to_cached_features_and_labels": true
+    },
+    {
+      "file": "artifacts/tt50_opponent_vision/observations/case-22.npz",
+      "rows": 24,
+      "exact_raw_to_cached_features_and_labels": true
+    },
+    {
+      "file": "artifacts/tt50_opponent_vision/observations/case-23.npz",
+      "rows": 24,
+      "exact_raw_to_cached_features_and_labels": true
+    }
+  ],
+  "total_rows": 532,
+  "all_exact": true,
+  "source_sha256": "194d492dd902106d3976981466d214b0ed07044de7b5986f6ec807059cc18da9"
+}
