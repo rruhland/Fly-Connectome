@@ -81,6 +81,28 @@ is already present before cross-release borrowing. The new school was not
 promoted or tested in full games.
 [Held terminal tapes](held-forks.json.gz) · [Routine hit tapes](routine-forks.json.gz) · [Recognition audit](optical-witnesses.json) · [Full report](report.json)
 
+## Train a movement the cameras can recognize
+
+The second teacher co-optimizes exact practice physics and an independently
+initialized RGB/encoder shadow, including the same two input stress tests as
+the pupil. It considers the first six answered practice examples with native
+agreement, selected before inspecting their optical results. Both objectives
+rank the same 192 candidates per case. Ranking for exact dynamics alone
+finds six safe physical scores that the opponent answers, but only one of
+the six chosen moves passes the RGB authorization. The joint objective
+finds five simulations with authorization and all five actually score and
+are answered without suffix CAD penetration. It does not find a qualifying
+movement on the sixth case. [Fixed teaching cases](joint.protocol.json) · [Physical branch tapes](joint-teacher.json.gz)
+
+Replacing these five paths in the 16-example readout preserves the same
+keys, releases, and search cost. Both libraries get 32 optical proposals in
+each of ten other, exactly matched physical offers excluded from the first
+qualification. Neither rescues any of the six archived misses, and both keep
+all four routine successes. The one issued routine action comes from a
+shared, unreplaced path. Optical recognition and cross-offer transfer are
+separate problems. The improved teacher helps the former on these known
+origins but does not justify whole-game deployment. [Frozen new offers](joint-transfer.protocol.json) · [Matched transfer tapes](joint-transfer.json.gz) · [Joint readout](joint-readout.npz) · [Independent audit](joint-summary.json)
+
 ## Reproduce
 
 ```sh
@@ -97,5 +119,11 @@ python -m scripts.experimental.tt57_motor_school_transfer held
 python -m scripts.experimental.tt57_motor_school_transfer routine
 python -m scripts.experimental.tt57_motor_school_transfer audit-training --n 8
 python -m scripts.experimental.tt57_motor_school_report --verify
+python -m scripts.experimental.tt57_motor_school_joint_teacher plan
+python -m scripts.experimental.tt57_motor_school_joint_teacher run
+python -m scripts.experimental.tt57_motor_school_joint_transfer plan
+python -m scripts.experimental.tt57_motor_school_joint_transfer fit
+python -m scripts.experimental.tt57_motor_school_joint_transfer run
+python -m scripts.experimental.tt57_motor_school_joint_transfer audit
 python -m pytest -q tests/test_tt57_motor_school.py
 ```

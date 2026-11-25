@@ -143,6 +143,37 @@ def test():
             cad.close()
 
 
+def audit():
+    from .tt57_motor_school_report import replay_arm
+
+    training,tested=_read(teacher.OUT),_read(OUT)
+    if not training['complete'] or not tested['complete']:
+        raise ValueError('Cannot audit an incomplete experiment')
+    stats=dict(training_tape=_hash(teacher.OUT),qualification_tape=_hash(OUT),
+          training=dict(cases=len(training['rows']),cpu_s=sum(r['cpu_s'] for r in training['rows']),
+              native_candidates=sum(len(r['batches'])*teacher.R for r in training['rows']),
+              original_authorized=sum(r['original']['optical'] and r['original']['votes']>=1 for r in training['rows']),ranking={}),
+          fresh=dict(cases=len(tested['rows']),stock_misses=sum(not r['case']['stock'] for r in tested['rows']),
+                     stock_hits=sum(r['case']['stock'] for r in tested['rows']),matched={}))
+    for mode in ('exact_only','joint'):
+        arms=[r['responses'].get(mode,{}) for r in training['rows']]
+        stats['training']['ranking'][mode]=dict(exact_models_scored=sum(v.get('exact',False) for v in arms),
+               optically_authorized=sum(v.get('optical',False) and v.get('votes',0)>=1 for v in arms),
+               actual_scored_answered_clear=sum(bool(v.get('issued_relative')) for v in arms))
+    for mode in ('exact_teacher','joint_teacher'):
+        stats['fresh']['matched'][mode]=dict(rescues=sum(r['arms'][mode]['landed'] for r in tested['rows'] if not r['case']['stock']),
+               protected_hits=sum(r['arms'][mode]['landed'] for r in tested['rows'] if r['case']['stock']),
+               issued=sum(r['arms'][mode]['issued'] for r in tested['rows']))
+    first=next((r for r in training['rows'] if r['responses'].get('joint',{}).get('issued_relative')),None)
+    if first is not None:
+        proof=replay_arm(first['case'],first['responses']['joint'])
+        if proof['clearance']['penetration_samples']:
+            raise ValueError('Whole exact CAD path penetrated')
+        stats['first_joint_full_cad']=dict(id=first['case']['id'],**proof)
+    _write(ROOT/'joint-summary.json',stats)
+    print(stats,flush=True)
+
+
 if __name__=='__main__':
-    a=argparse.ArgumentParser(description=__doc__); a.add_argument('mode',choices=('plan','fit','run')); m=a.parse_args().mode
-    {'plan':plan,'fit':fit,'run':test}[m]()
+    a=argparse.ArgumentParser(description=__doc__); a.add_argument('mode',choices=('plan','fit','run','audit')); m=a.parse_args().mode
+    {'plan':plan,'fit':fit,'run':test,'audit':audit}[m]()
