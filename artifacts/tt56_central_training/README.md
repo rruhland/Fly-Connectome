@@ -12,11 +12,15 @@ All 48 scouts yielded a usable later RGB track. The eight admitted offers were p
 
 The follow-up uses a practice-only no-render prefilter on fresh full-law draws to find tougher actual trajectories before spending stereo frames. Later RGB readings still select the physical comparisons. It tests a separate earlier body and both signed faces instead of expanding the same narrow waveform perturbations.
 
+## Earlier signed-face practice
+
+All 128 prefilter draws produced actual receiving-line crossings under the original TT37 law. Eight were truly below 1.00 m and within the 20 cm deep central lane. Twelve independent targets were paid for as stereo scouts, compared with 48 in the fixed neighborhood. Later RGB admitted seven distinct actual offers. The ordinary arm answered one and missed six. The earlier signed-geometric teacher tried 1,152 native trajectories across those misses, predicting 511 contacts and zero legal returns. This cost is separate from the earlier 576 native trials. No model-qualified candidate existed for actual reward practice. The two mechanisms therefore yielded no newly rewarded motion across the ten missed opportunities. The held roster remained unopened and no full game was run. These are finite attempts from the stated bodies, not a bound on the stock arm's absolute reach. [All 128 unmodified actual scout draws](scout-native.json.gz) · [Active optical protocol](active-protocol.json) · [Actual offers and early signed coach results](active-training.json.gz) · [Unopened validation receipt](held.json.gz)
+
 ```sh
 export PYTHONPATH=.:src MUJOCO_GL=egl OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 OMP_THREAD_LIMIT=1 LP_NUM_THREADS=1
 python -m scripts.experimental.tt56_central_training train
 python -m scripts.experimental.tt56_central_training_active
 python -m scripts.experimental.tt56_central_training train --protocol artifacts/tt56_central_training/active-protocol.json --out artifacts/tt56_central_training/active-training.json.gz
-python -m scripts.experimental.tt56_central_training held
+python -m scripts.experimental.tt56_central_training held --earned-training artifacts/tt56_central_training/active-training.json.gz
 python -m pytest -q tests/test_tt56_central_training.py
 ```

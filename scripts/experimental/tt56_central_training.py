@@ -294,7 +294,8 @@ def experiment(stage,out):
             raise ValueError('Do not open prospective hold until practice concludes')
         novel=prior['templates']; releases={r['release'] for r in novel}
         if len(releases)<2:
-            optical.save(out,dict(complete=True,rows=[],status='Fewer than two independently coached release conversions. Held draw set unopened.'))
+            optical.save(out,dict(complete=True,rows=[],plan_sha256=_hash(PLAN),practice_sha256=_hash(TRAINING),
+                practice_new_releases=sorted(releases),status='Fewer than two independently coached release conversions. Held draw set unopened.'))
             return
         base=[dict(t,release=t['case']['release']) for t in seeds['rows'] if t['case']['release'] not in VALID]
         lots=[dict(t) for t in earned['templates'] if t['release'] not in VALID]
