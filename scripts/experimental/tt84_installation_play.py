@@ -199,6 +199,24 @@ def pilot_witness():
         finally:real.close();cad.close()
 
 
+def season_witness(index):
+    p=_read(SEASON_PLAN); d=_read(ROOT/'season-live.json.gz'); b=_read(system.BUILD)
+    r=b['rows'][b['chosen']]; m=r['candidate']; ready=r['commission']['ready']
+    if d['protocol']!=_hash(SEASON_PLAN) or d['fixture_receipt']!=_hash(system.BUILD) or d['cards']!=p['cards']:
+        raise ValueError('Changed normal installed season conditions')
+    if index is None:index=max(range(len(d['rows'])),key=lambda i:d['rows'][i]['score']['learner'])
+    if not 0<=index<len(d['rows']):raise ValueError('Only completed archived points can be independently audited')
+    c=p['cards'][index]
+    with system.fixture.school.enabled(cameras=False),system.installed(m['v'],m['mount']),MP.centered(ready):
+        real=MP.arena(width=64,height=48); cad=MP.arena(width=64,height=48,detail='cad')
+        try:
+            out=audit_witness(d['rows'][index],c,real,system.q.GripClearance(cad.model,stock=True),
+                              'installed',index,'season-independent',ready,m)
+            check=_read(out)
+            print('exact mounted season',index,c['id'],check['score']['learner'],check['clearance']['samples'],flush=True)
+        finally:real.close();cad.close()
+
+
 def summary():
     def snapshot(path):
         copied=path.read_bytes()
@@ -263,12 +281,13 @@ def summary():
 
 
 if __name__=='__main__':
-    a=argparse.ArgumentParser(description=__doc__);a.add_argument('mode',choices=('plan','stock','installed','pilot-frozen','pilot-audit','season-plan','season-live','season-frozen','summary'))
+    a=argparse.ArgumentParser(description=__doc__);a.add_argument('mode',choices=('plan','stock','installed','pilot-frozen','pilot-audit','season-plan','season-live','season-frozen','season-audit','summary'))
     a.add_argument('--feeds',type=Path,default=Path('/tmp/tt25-rallies.json'));a.add_argument('--n',type=int)
     p=a.parse_args()
     if p.mode=='plan':freeze()
     elif p.mode=='summary':summary()
     elif p.mode=='pilot-audit':pilot_witness()
+    elif p.mode=='season-audit':season_witness(p.n)
     elif p.mode=='pilot-frozen':run('installed',p.feeds,8 if p.n is None else p.n,'preliminary',True)
     elif p.mode=='season-plan':season_plan()
     elif p.mode.startswith('season-'):run('installed',p.feeds,128 if p.n is None else p.n,'season',p.mode=='season-frozen')
