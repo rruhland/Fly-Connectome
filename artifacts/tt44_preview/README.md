@@ -1,5 +1,21 @@
 # Real-return learning of early optical preview
 
+The delays learned from physical rewards transferred to **different joint
+commands, not more returns**. All 18 practice pairs were exact command
+matches under the shared exploration calendar and both arms scored 9.
+The learner accumulated 26 physical outcomes, including 17 misses.
+In 12 fresh frozen games it changed commands on four releases, using
+two- and four-tick delays for a total of 59 changed early reference requests.
+Each release scored the same number of learner returns as zero delay.
+Both arms scored 7 total, with a peak of 4 on one rally. On release 6411,
+the learned four-tick preview shifted the first arm contact by 4.46 mm.
+The unchanged reactive opponent then delivered a different path toward the
+same matched target draw. This is real physical control transfer, but
+does not establish better return performance.
+[Adaptive tape](adapt.json.gz) · [No-update and zero-delay tape](control.json.gz)
+
+## Early readout
+
 This experiment keeps the existing direct stereo-and-encoder joint field and
 changes how far ahead that field looks in the early inbound phase. One delay
 of 0, 2, 4, or 7 control ticks is chosen for a visually confirmed approach,
