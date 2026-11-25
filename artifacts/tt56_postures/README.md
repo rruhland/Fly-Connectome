@@ -48,6 +48,38 @@ requested random draws. The paired effect on an identical delivered
 ball is therefore logged separately from branch-dependent total scores.
 [Frozen comparison and unchanged controller inputs](protocol.json)
 
+## Six matched short games
+
+| Release | Stock | Fixed hub | Encoder-selected hub |
+| --- | ---: | ---: | ---: |
+| 10762 | 5 | 6 | 6 |
+| 15541 | 6 | 4 | 6 |
+| 13344 | 6 | 6 | 6 |
+| 5212 | 6 | 6 | 6 |
+| 7398 | 0 | 0 | 0 |
+| 12246 | 4 | 6 | 6 |
+| **Total** | **27** | **28** | **30** |
+
+The two adapted arms preserved all seven ordinary-height hits on
+exactly matched far impact and near bounce, and neither arm changed
+the score on any of the eleven identical deliveries. Their higher
+short-game totals followed earlier changes to the player's own shots
+and different actual future deliveries. This is not a proof of a
+previously lost easy ball being returned. The fixed hub also shortened
+15541 from six to four. The body history selector used the more restrained
+third hub on 28 of 30 active recoveries. It keeps the elbow about .05 rad
+from stock, instead of the .29 rad change of the fixed hub, while retaining
+most of the changed wrist posture. The result does not establish that
+switching frequently between hubs is better. [Actual commands and referee records](held.json.gz)
+
+A separate, very small terminal docket reserves the first two completed
+older same-law ordinary misses with optical projected height above
+1.025 m and one to three preceding learner returns. Their full ordinary
+stock prefixes remain fixed. The treatment becomes admissible only after
+the already completed preceding strike and still needs the same causal
+outgoing cue. No known successful endpoint enters its decision.
+[Sealed ordinary-miss docket](ordinary.protocol.json)
+
 ## Reproduce
 
 ```sh
@@ -55,6 +87,8 @@ export PYTHONPATH=.:src MUJOCO_GL=egl PYOPENGL_PLATFORM=egl OPENBLAS_NUM_THREADS
 python -m scripts.experimental.tt56_postures fit
 python -m scripts.experimental.tt56_postures plan
 python -m scripts.experimental.tt56_postures run
-python -m scripts.experimental.tt56_postures_report
+python -m scripts.experimental.tt56_postures_terminal plan
+python -m scripts.experimental.tt56_postures_terminal run
+python -m scripts.experimental.tt56_postures_report --verify
 python -m pytest -q tests/test_tt56_postures.py
 ```
