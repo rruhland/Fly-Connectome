@@ -72,6 +72,50 @@ per release. The reference is the season-before matched frozen stock actor
 with the same parent-48 memory, scene and rules. A cap of 240 alternating
 returns is unchanged. [Fixed assessment and physically earned deltas](held.protocol.json)
 
+## Why the camera twin missed the remedies
+
+On the original known command tapes for 9230, 11809 and 9114, the
+camera-initialized twin rejected all three actual edge rescues.
+Substituting the exact achieved arm and paddle state left those
+predictions unchanged to solver precision. Substituting exact ball
+position, velocity and rotation restored all three scored edge shots
+and all three stock failures without needing exact body state.
+Substituting only ball rotation restored one edge shot but also
+incorrectly counted its stock arm. On 11809 the camera model predicted
+the edge action would leave at −3.29 m/s vertically. The exact ball
+state restored +3.18 m/s, consistent with the +3.19 m/s actually
+measured by RGB. None of these privileged substitutions enters the
+actor. [Field-swap diagnostic](optical-factors.json)
+
+## Signed RGB evidence override
+
+The two same-delivery sets yield eight scored or failed rim contrasts
+on eight different practice releases. A post-impact stereo estimate
+was recoverable on all eight edge actions and six stock actions.
+No native departure was used to fill a missing optical label.
+The learned correction estimates the signed difference between a
+camera-initialized virtual departure and the measured RGB departure.
+Matching supports must include both real scored and failed movements.
+When the original virtual stroke is weak, a new candidate can bypass
+nominal ball-flight rejection only if its evidence-adjusted outgoing
+arc is plausible. The negative control reverses this signed residual
+while keeping all supports and thresholds fixed.
+
+Leave-one-release-out on that selected practice set, the learned rule
+recommended two actual rescues and no failures, compared with zero
+rescues for the reversed direction. Departure RMSE was 1.95 m/s,
+versus 1.99 without correction and 2.13 for reversal. Permitting all
+three structurally eligible archived alternatives would have yielded
+three rescues, so this is evidence for direction versus reversal,
+not evidence that the signed gate is superior to permissive use.
+
+In the separate native pilot on four untrained measured openings,
+none of the learned or reverse variants met the issuance gate. All
+three missed offers remained misses, and all arms reproduced the one
+productive control opening exactly. This does not establish online
+transfer. The pilot does not change the separate sealed season run.
+[RGB matched practice](discrepancy-rgb.json.gz) · [Leave-release-out fit](discrepancy-fit.json) · [Physical pilot](discrepancy-pilot.json.gz)
+
 ## Reproduce
 
 ```sh
@@ -82,5 +126,10 @@ python -m scripts.experimental.tt48_contact_patch_report --practice-witness arti
 python -m scripts.experimental.tt48_rim_recovery plan
 python -m scripts.experimental.tt48_rim_recovery run
 python -m scripts.experimental.tt48_contact_patch_report --verify
+python -m scripts.experimental.tt48_contact_optical_check artifacts/tt48_contact_patch/optical-factors.json --factors
+python -m scripts.experimental.tt48_edge_evidence
+python -m scripts.experimental.tt48_edge_evidence_fit
+python -m scripts.experimental.tt48_edge_override plan
+python -m scripts.experimental.tt48_edge_override run
 python -m pytest -q tests/test_tt48_contact_patch.py
 ```

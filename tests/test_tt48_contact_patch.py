@@ -30,3 +30,20 @@ def test_held_roster_has_three_real_streams_per_untrained_release():
     assert len({(x["id"], x["seed"], x["reply_seed"]) for x in p["cards"]}) == 24
     assert not ({x["id"] for x in p["cards"]} & {y["release"] for y in p["corrections"]})
     assert p["cap"] == 240
+
+
+def test_real_signed_discrepancy_is_not_equivalent_to_reversing_it():
+    from scripts.experimental.tt48_edge_evidence_fit import Evidence
+
+    rows = [dict(id=k, x=[0.] * 9, virtual_contact=True, actual_legal=(k != 3),
+                 nominal=[0., 2.2, 3.1], rgb_after=[0., 3.35, 3.2])
+            for k in (1,2,3)]
+    probe=dict(id=4, x=[0.] * 9, weak=True, virtual_contact=True,
+               native_legal=False, face=.90, nominal=[0., 2.2, 3.1],
+               nominal_p=[0.,-1.55,1.01])
+    model=Evidence(rows)
+    assert model.assess(probe,"learned")["accepted"]
+    assert not model.assess(probe,"reverse")["accepted"]
+    assert not model.assess(dict(probe,weak=False),"learned")["accepted"]
+    # An identical release cannot authorize its own override.
+    assert not model.assess(dict(probe,id=1),"learned")["accepted"]
