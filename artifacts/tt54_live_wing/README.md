@@ -10,12 +10,24 @@ Both branches replayed the same normal starting game, with the original issued c
 
 The second controller retained progress for a bounded time when a newer view was ambiguous, but continued to allow clear rightward or high evidence to veto further travel. During brief missing RGB fits it held the last safe target rather than starting to undo its motion. From the same natural setup, with no imposed preparation after the preceding stock swing, it made the original .952849 m ball physically legal and the unchanged opponent answered. At the last issued preparation the body was within .074 rad of the demonstrated endpoint. The frozen template was accepted at the regular stock window on tick 4078 after both perturbation checks, and actual contact was at y = −1.271 m. The clearance audit found zero penetrations in all 1,376 altered-tail samples with a 17.596 mm minimum. This is a causal paired intervention with the previous 42 actual scores reproduced, not a new autonomous 43-return record from release. [Actual controls and event proof](retained-exact.json.gz)
 
+## Earlier held neutral suite with the first controller
+
+The first controller rescued the physically identical .964 m left-wing redraw 515671963 from an unchanged early arm. Stock and stock plus late templates missed. The controller reached +.515 rad elbow and +1.275 rad wrist by the ordinary stock window, selected the frozen low stroke, and received a legal answer. A separate fresh actor replayed every RGB-driven command and each far prediction exactly. Another neutral, 767799421, changed in the wrong direction. Both controls returned it, while the early controller missed after investing in the wrong posture. Native totals were four of five each. This supports the conditional mechanism without showing an overall rate gain. [Five matched neutral draws](../tt51_low_reverse/live-wing-neutral-report.json) · [Independent fresh-camera positive replay](../tt51_low_reverse/live-wing-positive-replay.json)
+
+## First live controller on fresh whole points
+
+The fixed first design scored **12 rather than 33** across all four preassigned starts against the same broad opponent. Per-game results were 15→2, 7→7, 11→3 and 0→0. The two ties had identical commands. In both shortened points, both variants returned the same first two physical offers. An early reserve under weak evidence changed the second outgoing stroke and all later play was then reactive to that genuinely different stroke. Neither affected game selected a low template. The low finishing skill is not enough to justify speculative changes to ordinary readiness. [Complete points from release](whole.json.gz) · [Locked starts](whole-plan.json)
+
+The checked scout reserves a compatible path without moving its arm. In this separate candidate, only a strong supported far update by outgoing gate 0 can authorize travel. It can rejoin the recorded path faster within the same installed bounds and uses multiple compatible incoming observations before acting on a moderate high or opposite limit. Its calibration is kept separate from the two earlier actors and their reported tests.
+
 ## Reproduce
 
 ```sh
 export PYTHONPATH=.:src MUJOCO_GL=egl OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 OMP_THREAD_LIMIT=1 LP_NUM_THREADS=1
 python -m scripts.experimental.tt54_live_wing
 python -m scripts.experimental.tt54_live_wing_v2
+python -m scripts.experimental.tt54_live_wing_v3
 python -m scripts.experimental.tt54_live_wing_games plan
+python -m scripts.experimental.tt54_live_wing_games run
 python -m pytest -q tests/test_tt54_live_wing.py
 ```
