@@ -64,6 +64,9 @@ class Composed(servo.Temporal):
         note = self.notes[-1]
         if note.get("robust", 0) > 0 or not -1.13 < x[1] < -0.49:
             return
+        self.recover(tick, x, q, reference, base, note)
+
+    def recover(self, tick, x, q, reference, base, note):
         steps = 6 if x[1] > -0.78 else 3
         constant = np.tile(base, (mpc.HORIZON, 1))
         prefixes = [constant]

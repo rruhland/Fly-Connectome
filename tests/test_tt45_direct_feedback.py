@@ -136,3 +136,20 @@ def test_delayed_recovery_reward_credits_the_preceding_incoming_attempt_once():
     Actor.confirm(state)
     assert state.fit.pairs == [sample]
     assert state.diag["earned_next_position"] == 1
+
+
+def test_online_motor_forecast_matches_batch_ridge_on_observed_examples():
+    from scripts.experimental.tt47_predictive_motor import Forecast
+
+    rng = np.random.default_rng(11)
+    rows = rng.normal(size=(7, 3))
+    targets = rng.normal(size=(7, 5))
+    model = Forecast.__new__(Forecast)
+    model.n = 0
+    model.inverse = np.eye(3) / 3.0
+    model.weights = np.zeros((3, 5))
+    for x, y in zip(rows, targets, strict=True):
+        model.update(x, y)
+    batch = np.linalg.solve(rows.T @ rows + 3.0 * np.eye(3), rows.T @ targets)
+    np.testing.assert_allclose(model.weights, batch, rtol=1e-12, atol=1e-12)
+    assert model.n == 7

@@ -1,0 +1,5 @@
+# When does the ordinary learner actually need help?
+
+The question is whether a delivery that looks difficult during the approach would still end in a real loss if the ordinary controller finished playing. The estimator sees recent camera-derived positions and the ordinary controller's current modeled contact and reach results. Each training target comes from the eventual actual landing or miss. Repeated identical early decisions across controllers share one target. All season releases were excluded from fitting, and the accuracy checks withhold whole measured opening releases.
+
+Across 384 weak decisions, the held-release Brier score improved from 0.239 for the training prevalence to 0.169. Among the 127 decisions assigned at least an 80% probability of eventual loss, 93.7% were followed by a loss. These are decision counts, and a single failed delivery can contribute several decisions. This identifies where extra motor search could be spent while avoiding many ordinary returns. Whether that search saves a real ball is measured separately. [Fit, calibration bands and training fingerprints](fit.json)
