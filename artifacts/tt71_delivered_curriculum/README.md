@@ -1,0 +1,3 @@
+# How precisely can a practice partner request a difficult ball?
+
+On 3,944 distinct physical arrivals from 133 training releases, the fitted partner response predicted lateral position to an average 11 mm on release-disjoint validation folds. Projected height error was 31 mm, with correlation 0.33. Using only the requested aim gave 30 mm and 0.32. That precision cannot reliably distinguish the narrow height bands used to select training challenges. The next teaching trial previews candidate deliveries in a private physical copy during practice and assesses the student against ordinary independent opponent draws. [Response fit and validation](fit.json) · [Preview pilot](../tt73_partner_rehearsal/pilot/accuracy.json)
