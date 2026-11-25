@@ -101,6 +101,46 @@ def run(a):
         bank = exploration.Memory
     rank = fresh.shot.Coverage(_read(fresh.RISK))
     native = course.mpc.play
+    source = getattr(a, "resume_from", None)
+    if source is not None:
+        if a.actor != "plain" or a.mode != "live" or source == a.out:
+            raise ValueError("Continuation requires an independent plain-live output")
+        prior = _read(source)
+        prefix = prior["rows"]
+        cards = _read(use_plan)[a.deck][: a.n]
+        if (
+            not prefix
+            or len(prefix) != len(prior["cards"])
+            or len(prefix) >= len(cards)
+            or prior.get("actor") != a.actor
+            or prior["cards"] != cards[: len(prefix)]
+            or prior["mode"] != a.mode
+            or prior["carry_sha256"] != _hash(a.carry)
+            or prior["policy"] != _hash(a.policy)
+            or prior["plan_sha256"] != _hash(use_plan)
+            or any(
+                u["memory"]["after"] != v["memory"]["before"]
+                for u, v in zip(prefix, prefix[1:])
+            )
+        ):
+            raise ValueError(
+                "Changed practice policy, opening sequence or point-boundary memory"
+            )
+        original = source.with_suffix("").with_suffix(".npz")
+        if _hash(original) != prior["checkpoint_sha256"]:
+            raise ValueError("Invalid continuation checkpoint")
+        if not a.out.exists():
+            a.out.with_suffix("").with_suffix(".npz").write_bytes(original.read_bytes())
+            _write(a.out, dict(prior, cards=cards, continuation_source=_hash(source)))
+        elif _read(a.out).get("continuation_source") != _hash(source):
+            raise ValueError("Another course already owns this output")
+        a.resume = True
+
+    def restore(model, path, document):
+        if model.serial == 0:
+            retention.ancestral_restore(model, path, document, season.CARRY)
+        else:
+            retention.season_original(model, path, document)
 
     def play(*args, **kw):
         row = native(*args, **kw)
@@ -119,9 +159,7 @@ def run(a):
         patch.object(
             course,
             "resume",
-            lambda model, p, doc: retention.ancestral_restore(
-                model, p, doc, season.CARRY
-            ),
+            restore,
         ),
     ):
         course.run(a)
@@ -144,6 +182,7 @@ if __name__ == "__main__":
     p.add_argument("--mode", choices=("frozen", "live"), default="live")
     p.add_argument("--carry", type=Path, default=SOURCE)
     p.add_argument("--policy", type=Path, default=SOURCE)
+    p.add_argument("--resume-from", type=Path)
     p.add_argument("--feeds", type=Path, default=Path("/tmp/tt25-rallies.json"))
     p.set_defaults(cap=240, resume=False)
     a = p.parse_args()

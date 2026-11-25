@@ -2,7 +2,7 @@
 
 ## Current verified rally
 
-The active learner made **42 legal arm returns and 43 opponent returns** in 68.62 seconds on the second preassigned game of a 128-game course. It had made 27 on the previous release and carried that learning forward. Every action, score and random request was replayed independently, with positive clearance across 32,937 solver steps. The 100-arm-return milestone is open. [Replay, full command tape and learning protocol](../../artifacts/tt46_season/README.md)
+The SO-101 made **63 legal arm returns and 64 opponent returns** in one 100.15-second point, the tenth preassigned game on a fresh 32-release course. A separate dynamics replay matched all referee events and independent opponent draws. Clearance stayed positive in all 48,070 CAD checks. The arm entered with experience from 48 exploratory games, then used ordinary direct joint control and updated its motor memory after all 63 returns. Its previous verified peak was 42. The 100-return target and reliable coverage of low shots remain open. [Full command tape](../../artifacts/tt48_transfer/random-63-tape.json.gz) · [Independent replay](../../artifacts/tt48_transfer/random-63.json) · [Earlier 42-return point and learning controls](../../artifacts/tt46_season/README.md)
 
 ## Transfer to a new continuous opponent stream
 
