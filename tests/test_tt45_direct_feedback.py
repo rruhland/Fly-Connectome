@@ -109,3 +109,30 @@ def test_optical_feedback_corrects_the_moving_hand_not_just_the_ball():
     np.testing.assert_array_equal(
         corrected(goal, new, q * 0, at_search, jac, 0.02), goal
     )
+
+
+def test_mixing_needs_complementary_errors_in_the_same_contact_mode():
+    from scripts.experimental.tt47_interpolate import bracket
+
+    action = np.stack([np.zeros((21, 6)), np.ones((21, 6))])
+    opposite = np.array([[-1.0, 0.0, 0.0], [1.0, 0.0, 0.0]])
+    costs = np.zeros(2)
+    p = bracket(action, opposite, costs, [False, False])
+    assert len(p) == 2
+    np.testing.assert_allclose(p[0], 0.5, atol=0.0001)
+    assert not bracket(action, opposite, costs, [False, True])
+    assert not bracket(action, abs(opposite), costs, [True, True])
+
+
+def test_delayed_recovery_reward_credits_the_preceding_incoming_attempt_once():
+    from collections import Counter
+    from scripts.experimental.tt46_recovery_learning import Actor
+
+    sample = (np.zeros(11), np.ones(5))
+    state = SimpleNamespace(
+        pending=sample, fit=SimpleNamespace(pairs=[]), diag=Counter()
+    )
+    Actor.confirm(state)
+    Actor.confirm(state)
+    assert state.fit.pairs == [sample]
+    assert state.diag["earned_next_position"] == 1
