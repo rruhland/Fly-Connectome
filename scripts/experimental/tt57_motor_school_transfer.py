@@ -8,6 +8,7 @@ import numpy as np
 from scipy.spatial import cKDTree
 
 from . import tt57_motor_school as school
+from . import tt57_motor_school_mature as maturity
 from . import tt56_postures as recorded
 from .tt4_transfer_trial import _hash, _read, _write
 from .tt37_optical_clinic import OpticalClinic
@@ -21,7 +22,10 @@ course=school.course
 ROOT=school.ROOT
 SCHOOL=ROOT/'readout.npz'
 HELD=ROOT/'held-forks.json.gz'
+CONTROL_PLAN=ROOT/'routine.protocol.json'
+CONTROL_OUT=ROOT/'routine-forks.json.gz'
 GAMES=ROOT/'games.json.gz'
+DIAG=ROOT/'optical-witnesses.json'
 ATLAS=school.atlas
 H=school.H
 K=12
@@ -29,7 +33,9 @@ SCALE=np.r_[np.ones(6),np.ones(5)*.62,np.ones(5)*.46,np.ones(5)*.34,.65]
 
 
 def fit(out):
-    design=_read(school.PLAN); train=_read(school.OUT)
+    design=_read(school.PLAN); train=_read(maturity.OUT)
+    if train['original_practice_sha256']!=_hash(school.OUT):
+        raise ValueError('Changed original practice receipt')
     if train['protocol_sha256']!=_hash(school.PLAN) or any(x['case']['id'] not in {v['id'] for v in design['practice']} for x in train['rows']):
         raise ValueError('School contains a release outside the practice roster')
     keep=[(r,a) for r in train['rows'] for a in r.get('arms',[]) if a['answered'] and a.get('issued_relative')]
@@ -40,7 +46,7 @@ def fit(out):
                         ref=[r['inputs']['ref'] for r,a in keep],
                         paths=[a['issued_relative'] for r,a in keep],
                         ids=[r['case']['id'] for r,a in keep],
-                        source=_hash(school.OUT),protocol=_hash(school.PLAN))
+                        source=_hash(maturity.OUT),protocol=_hash(school.PLAN))
     print('distilled',len(keep),len({r['case']['id'] for r,_ in keep}),flush=True)
 
 
@@ -134,13 +140,88 @@ def check(p):
     return plan
 
 
-def test(readout_path,count,out=HELD):
+def plan_routine():
+    plan=_read(school.PLAN); ids={r['id'] for r in plan['held']}; available=[]
+    for name in school.SOURCES['held']:
+        doc=_read(name)
+        if _hash(name)!=plan['sources'][str(name)]:
+            raise ValueError('Changed routine control source')
+        for i,(c,r) in enumerate(zip(doc['cards'],doc['rows'])):
+            if c['id'] not in ids or c['profile']!='reach' or any(d['draw']!='random' for d in r['placements']['requested']):
+                continue
+            for o in r['placements']['delivered'][:4]:
+                if not o['near_landed'] or not all(o.get(k) for k in ('near_contact','far_contact','near_bounce','receive_line')):
+                    continue
+                z=float(school.projected_height(o['receive_line'])); x=float(o['receive_line']['xyz'][0])
+                if not 1.026<=z<=1.14:continue
+                windows=[n for n in r['searches'] if n.get('p') and -.99<n['p'][1]<-.51
+                         and o['far_contact']['step']+3<n['tick']<o['near_contact']['step']-9]
+                if not windows:continue
+                s=windows[0]
+                lane='left' if x<=-.10 else 'right' if x>=.10 else 'middle'
+                available.append(dict(id=c['id'],i=i,leg=o['leg'],tick=s['tick'],x=x,height=z,lane=lane,
+                       source=str(name),stock_robust=int(s.get('robust',0)),stock_scored=True,
+                       late_offer_sha256=school.digest_json(o['near_bounce'])))
+    selected=[]; left=available.copy()
+    while left and len(selected)<8:
+        r=min(left,key=lambda v:(v['stock_robust']>0,sum(w['lane']==v['lane'] for w in selected),v['tick'],abs(v['height']-1.06)))
+        selected.append(r); left=[v for v in left if v['id']!=r['id']]
+    if len(selected)<6:raise ValueError('Too few independent routine held positive controls')
+    _write(CONTROL_PLAN,dict(base_sha256=_hash(school.PLAN),rows=selected,
+        policy='Routine already-scored ordinary RGB windows, one per held release ID, balancing lanes and prioritizing unprotected stock decisions. Frozen without new holdout actions or outcomes. Six to eight trials use identical donor check, command budget, native referee, and matched incoming requirement as the terminal misses.'))
+    print('routine control roster',[(r['id'],r['lane'],round(r['height'],3),r['stock_robust']) for r in selected],flush=True)
+
+
+def warm_clinic(clinic,rig,dt,history,eye,tick,q,ref):
+    prefix_eye=mpc.Vision(rig,dt,raw=True)
+    prefix_eye.eye=mpc.LearnedOptics(prefix_eye.eye,course.OPTIC)
+    for j,im,q0,r0 in history:
+        mpc.observed(prefix_eye,j,im,q0)
+        clinic.observe(j,prefix_eye.eye,q0,r0.copy())
+    clinic.observe(tick,eye.eye,q,ref.copy())
+
+
+def audit_training(count):
+    """Can RGB/encoder simulation even recognize a known physical practice win?"""
+    data={}; practice=_read(school.OUT)
+    result=dict(practice_sha256=_hash(school.OUT),rows=[],
+                scope='Recognition on physically earned training commands only, not transfer.')
+    with school.enabled():
+        for r in practice['rows']:
+            cmd=next((v for v in r.get('arms',[]) if v.get('issued_relative') and v['answered']),None)
+            if cmd is None:continue
+            spec=r['case']; source=spec['source']; tick=spec['tick']
+            if source not in data:data[source]=_read(Path(source))
+            doc=data[source]; old=doc['rows'][spec['i']]
+            with mpc.centered(spec['ready']):
+                a=mpc.arena(); cam,rig,*_=mpc.resources(a)
+                clinic=OpticalClinic(body=True)
+                try:
+                    eye,x,q,ref,_,features,hist=school.observed_prefix(a,cam,rig,spec['card'],old,tick,a._arm_ids[1][2])
+                    warm_clinic(clinic,rig,a.control_dt,hist,eye,tick,q,ref)
+                    selected,d=choose(clinic,[cmd['issued_relative']],[dict(release=spec['id'])],ref)
+                    result['rows'].append(dict(id=spec['id'],lane=spec['lane'],tick=tick,x=x.tolist(),
+                            exact_native_legal=cmd['native_legal'],observed_native=d,would_issue=selected is not None))
+                    _write(DIAG,result)
+                    print('optical witness',spec['id'],cmd['native_legal'],d,flush=True)
+                finally:
+                    clinic.twin.close(); cam.close(); a.close()
+            if len(result['rows'])>=count:break
+
+
+def test(readout_path,count,out=HELD,routine=False):
     plan=check(readout_path)
+    if routine:
+        c=_read(CONTROL_PLAN)
+        if c['base_sha256']!=_hash(school.PLAN):raise ValueError('Changed routine controls')
+        cohort=c['rows']
+    else:cohort=plan['held']
     receipt=dict(schema='tt57-rgb-encoders-only-action-1',plan_sha256=_hash(school.PLAN),
-                 motor_readout_sha256=_hash(readout_path),rows=[],complete=False)
+                 motor_readout_sha256=_hash(readout_path),rows=[],complete=False,
+                 cohort_sha256=_hash(CONTROL_PLAN) if routine else _hash(school.PLAN))
     if out.exists():
         old=_read(out)
-        if any(old[k]!=receipt[k] for k in ('plan_sha256','motor_readout_sha256')):
+        if any(old[k]!=receipt[k] for k in ('plan_sha256','motor_readout_sha256','cohort_sha256')):
             raise ValueError('Changed held readout')
         receipt=old
     library=Readout(readout_path); donors=school.Donors(); data={}
@@ -148,7 +229,7 @@ def test(readout_path,count,out=HELD):
         cad=mpc.arena(width=64,height=48,detail='cad')
         try:
             guard=CourtClearance(cad.model,articulated=True)
-            for spec in plan['held'][len(receipt['rows']):count]:
+            for spec in cohort[len(receipt['rows']):count]:
                 src=spec['source']; doc=data.setdefault(src,_read(Path(src))) if src not in data else data[src]
                 idx=spec['i']; card,row=doc['cards'][idx],doc['rows'][idx]; tick=spec['tick']
                 with mpc.centered(doc['ready']):
@@ -158,17 +239,16 @@ def test(readout_path,count,out=HELD):
                         axes=a._arm_ids[1][2]
                         eye,x,q,ref,old,feature,hist=school.observed_prefix(a,cam,rig,card,row,tick,axes)
                         saved=State(a)
-                        baseline=school.physical(a,saved,card,row,spec,row['actions'][tick:])
-                        if baseline['event_sha256']!=school.digest_json(row['events']):
+                        baseline=school.physical(a,saved,card,row,spec,row['actions'][tick:],guard=None)
+                        n=baseline['stock_prefix_events']
+                        stock_robust=next(v.get('robust',0) for v in row['searches'] if v['tick']==tick)
+                        if (baseline['events']!=row['events'][n:n+len(baseline['events'])]
+                            or bool(baseline['landed'])!=bool(routine)
+                            or (not routine and baseline['event_sha256']!=school.digest_json(row['events']))):
                             raise ValueError('Held exact baseline failed')
                         arms={}; optics=x is not None and feature is not None and x[4]<-.9 and -1.03<x[1]<-.47
-                        if optics:
-                            prefix_eye=mpc.Vision(rig,a.control_dt,raw=True)
-                            prefix_eye.eye=mpc.LearnedOptics(prefix_eye.eye,course.OPTIC)
-                            for j,im,q0,r0 in hist:
-                                mpc.observed(prefix_eye,j,im,q0)
-                                clinic.observe(j,prefix_eye.eye,q0,r0.copy())
-                            clinic.observe(tick,eye.eye,q,ref.copy())
+                        if optics and stock_robust<=0:
+                            warm_clinic(clinic,rig,a.control_dt,hist,eye,tick,q,ref)
                             key=ATLAS.key(tick,x[:3],bool(eye.eye.latest.bounced),ref,old)
                             offers={'school':library(x,feature,ref),'atlas':archive(donors,x,key)}
                         else:offers={k:([],[]) for k in ('school','atlas')}
@@ -177,7 +257,7 @@ def test(readout_path,count,out=HELD):
                             if decision is None:
                                 result=baseline
                             else:
-                                cmd=np.vstack((decision,np.zeros((school.T+26-H,6))))
+                                cmd=np.vstack((decision,np.zeros((school.T+94-H,6))))
                                 result=school.physical(a,saved,card,row,spec,cmd)
                                 if result['landed']:
                                     audit=school.physical(a,saved,card,row,spec,cmd,guard)
@@ -185,11 +265,13 @@ def test(readout_path,count,out=HELD):
                                         raise ValueError('CAD changed actual rescue tape')
                                     result.update(clearance=audit['clearance'])
                             arms[mode]=dict(decision=verdict,issued=decision is not None,**result)
-                        r=dict(case=dict(spec,card=card,ready=doc['ready']),stock=baseline,arms=arms,optical=optics)
+                        r=dict(case=dict(spec,card=card,ready=doc['ready']),stock=baseline,arms=arms,optical=optics,
+                               stock_robust=stock_robust,public_context=None if not optics else dict(x=x.tolist(),q=q.tolist(),
+                               ref=ref.tolist(),features=feature.tolist(),bounced=bool(eye.eye.latest.bounced)))
                         receipt['rows'].append(r)
-                        receipt['complete']=len(receipt['rows'])==len(plan['held'])
+                        receipt['complete']=len(receipt['rows'])==len(cohort)
                         _write(out,receipt)
-                        print('held',len(receipt['rows']),spec['id'],spec['lane'],
+                        print('routine' if routine else 'held',len(receipt['rows']),spec['id'],spec['lane'],stock_robust,
                               [(k,v['decision'],v['landed'],v['answered']) for k,v in arms.items()],flush=True)
                     finally:
                         clinic.twin.close(); cam.close(); a.close()
@@ -272,10 +354,13 @@ def games(path,out=GAMES):
 
 if __name__=='__main__':
     p=argparse.ArgumentParser(description=__doc__)
-    p.add_argument('mode',choices=('fit','held','games'))
+    p.add_argument('mode',choices=('fit','held','games','audit-training','plan-routine','routine'))
     p.add_argument('--n',type=int,default=12)
     p.add_argument('--readout',type=Path,default=SCHOOL)
     a=p.parse_args()
     if a.mode=='fit':fit(a.readout)
     elif a.mode=='held':test(a.readout,a.n)
+    elif a.mode=='routine':test(a.readout,a.n,CONTROL_OUT,routine=True)
+    elif a.mode=='plan-routine':plan_routine()
+    elif a.mode=='audit-training':audit_training(a.n)
     else:games(a.readout)
