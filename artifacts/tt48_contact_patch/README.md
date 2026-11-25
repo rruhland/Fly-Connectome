@@ -103,6 +103,33 @@ error records and a broad nuisance spin prior. A legal hypothesis alone
 does not identify the correct command when the same bank supports the
 known failed command even more often. [Camera-only alternatives](optical-alternatives.json)
 
+## Synchronized dense stereo and action deadline
+
+Sampling the same lenses at 60 Hz with a 4× wider and taller pixel grid,
+using actual RGB, a wider pre-bounce capture window and a fitted smooth
+flight with optional transverse curvature, distinguished one of the three
+fixed command pairs. Position error on that offer was 0.42 mm and
+velocity error was 0.009 m/s. The optically fitted 9114 state was even
+closer translationally but still rejected both commands. Its fitted spin
+remained about 6 rad/s off. Neither this specific selected-offer result
+nor the earlier uncertainty vote establishes a deployable policy.
+[Actual 2× and 4× RGB readouts](precise-commands.json)
+
+| Release | Exact ball fields that recover the correct ranking | Latest tested late issue that scored | Opponent answered that issue |
+| --- | --- | ---: | --- |
+| 9230 | Position, velocity and angular velocity together | First post-bounce image, 14.6 ms | No |
+| 11809 | Position alone, position plus velocity, or all three | Second image, 27.1 ms | Yes |
+| 9114 | Position plus angular velocity, or all three | Third image, 37.5 ms | Yes |
+
+The factorial diagnostic keeps the body encoder-initialized throughout.
+No exact angular state alone recovered the ranking. The delay test keeps
+the stock physical prefix longer, then follows the previously earned
+bounded direct joint references under the same slew cap. All 18 changed
+suffixes were strict CAD clean. The outcomes establish particular catch-up
+windows, not the full playable set or a camera-only rule. In particular,
+waiting for several post-bounce pictures cannot rescue the original strongest
+spin case with this same learned movement. [Exact p/v/spin factors](precise-field-ablation.json) · [Timed physical action tapes](bounce-window.json.gz)
+
 ## Signed RGB evidence override
 
 The two same-delivery sets yield eight scored or failed rim contrasts
@@ -144,9 +171,12 @@ python -m scripts.experimental.tt48_rim_recovery run
 python -m scripts.experimental.tt48_contact_patch_report --verify
 python -m scripts.experimental.tt48_contact_optical_check artifacts/tt48_contact_patch/optical-factors.json --factors
 python -m scripts.experimental.tt48_optical_alternatives
+python -m scripts.experimental.tt48_precise_receive witness
+python -m scripts.experimental.tt48_precise_receive exact
+python -m scripts.experimental.tt48_bounce_window
 python -m scripts.experimental.tt48_edge_evidence
 python -m scripts.experimental.tt48_edge_evidence_fit
 python -m scripts.experimental.tt48_edge_override plan
 python -m scripts.experimental.tt48_edge_override run
-python -m pytest -q tests/test_tt48_contact_patch.py
+python -m pytest -q tests/test_tt48_contact_patch.py tests/test_tt48_precise_receive.py
 ```
