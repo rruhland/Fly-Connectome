@@ -12,7 +12,7 @@ def report(tape, output, audit):
     d, plan = _read(tape), _read(trial.HELD)
     if d["evaluation_sha256"] != _hash(trial.HELD) or [r["case"] for r in d["rows"]] != plan["held"][:len(d["rows"])]:
         raise ValueError("Unmatched challenge slate")
-    rows, wins = [], []
+    rows, wins, added_contacts = [], [], []
     for i,r in enumerate(d["rows"]):
         q={}
         for m,a in r["arms"].items():
@@ -25,6 +25,10 @@ def report(tape, output, audit):
                                                            if a["borrowed"] and p["tick"]>=a["borrowed"][0]["tick"]))
             if q[m]["landed"] and q[m]["same_offer"] and not bool(r["arms"]["stock"]["score"]["learner"]):
                 wins.append((i,m,a))
+            if q[m]["touched"] and q[m]["same_offer"] and m!="stock":
+                b=r["arms"]["stock"]["placements"]["delivered"]
+                if b and b[0]["near_contact"] is None:
+                    added_contacts.append((i,m,a))
         rows.append(dict(r["case"],arms=q))
     totals={}
     for m in trial.MODES:
@@ -43,6 +47,16 @@ def report(tape, output, audit):
         result["first_rescue_audit"]=verify(witness,0)|dict(mode=mode)
         p=output.with_name("first-rescue-tape.json.gz")
         _write(p,witness);result["first_rescue_audit"]["tape_sha256"]=_hash(p)
+    elif audit and added_contacts:
+        i,mode,arm=added_contacts[0]
+        original=_read(data.BASELINE)
+        row=d["rows"][i]
+        evidence={}
+        for k, sample in (("stock",row["arms"]["stock"]),(mode,arm)):
+            witness=dict(cards=[row["case"]["card"]],rows=[sample],ready=original["ready"],opening_side=1)
+            evidence[k]=verify(witness,0)
+            evidence[k]["actual_near_contact"]=sample["placements"]["delivered"][0]["near_contact"]
+        result["added_contact_without_legal_return"]=evidence
     _write(output,result)
     print(totals,flush=True)
 
