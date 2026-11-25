@@ -32,6 +32,13 @@ def report(source,output):
                 clearance=value['clearance'])
         q={name:v['stock_window']['q'] for name,v in result['variants'].items() if v['stock_window']}
         if 'cold' in q and 'warm' in q:result['warm_cold_window_max_joint_difference']=float(np.max(abs(np.asarray(q['warm'])-q['cold'])))
+        if 'cold' in row['variants'] and 'warm' in row['variants']:
+            cold=row['variants']['cold']['controls'];warm=row['variants']['warm']['controls']
+            start=row['variants']['warm']['observations'][0]['tick']
+            result['first_warm_cold_action_difference']=next((start+i for i,(a,b) in enumerate(zip(cold,warm)) if a!=b),None)
+            result['all_warm_cold_actions_identical']=cold==warm
+            result['first_acquired_body_command']=next((s['tick'] for s in row['variants']['warm'].get('body_trace',[])
+                if s['action']=='toward acquired body'),None)
         rows.append(result)
     totals={name:sum(r['variants'][name]['legal'] for r in rows) for name in ('stock','cold','warm')}
     pairs={name:dict(gains=sum(r['variants']['warm']['legal'] and not r['variants'][name]['legal'] for r in rows),

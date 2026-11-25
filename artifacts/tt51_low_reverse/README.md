@@ -184,6 +184,23 @@ CAD had zero penetrations, and source/evaluator stayed frozen. Cost6103 actual
 control ticks,450.914 wall seconds and123.794 CPU seconds. The executed evaluator
 snapshot is retained before adding the explicit registered first-three switch.
 
-A V3 first-three mechanism diagnostic is now running under the lead agent's
-request. Those labels have been inspected; it is not new held evidence. The lead
-agent owns the separate unopened full-game qualification.
+## V3 known-label mechanism diagnostic
+
+The lead agent's frozen V3 was run on the registered first three cases only.
+Their labels had already been inspected, so these are **diagnostic results, not
+new held evidence**. Warm scored3/3 versus stock2/3 and cold2/3. Every counted
+return was answered, actual incoming matched, protected controls were exact,
+all CAD records had zero penetrations and both source hashes stayed frozen.
+
+Both ordinary cases791162625 and767799421 now have entire warm/cold command
+sequences identical byte for byte. The low515671963 still gains: the first
+additional actuator command and first learned-body command are both exactly4022,
+at the early far RGB gate. At stock window4078, actual warm q is approximately
+[-1.403,-1.676,.490,1.589,1.275,-.1], and normal search again accepts the frozen
+training-new-left-reply stroke. Thus the proposed no-reserve-motion mechanism
+behaves as intended on these known examples.
+
+Cost5407 actual control ticks,229.809 wall seconds and81.720 CPU seconds. The
+receipts, complete posture/action-difference report, source snapshot and input
+hashes are retained. The lead agent owns separate unopened full-game qualification;
+these three cases do not establish broader robustness. No native worker remains.
