@@ -40,3 +40,33 @@ def test_prospective_games_release_disjoint_from_teacher_roster():
     assessment={r["card"]["id"] for r in plan["releases"]}
     assert len(assessment)==tt.ASSESS and not training & assessment
     assert len(training)>=tt.TRAIN
+
+
+def test_runtime_reward_retains_real_sent_shape_with_shrunken_inherited_authority():
+    from types import SimpleNamespace
+
+    x,q,bank=setup_bank()
+    teacher=bank.source[0]
+    player=SimpleNamespace(credit_context=(x,q,q,teacher,[]), pending_tick=100, readout=bank, learned_here=0)
+    for tick in range(100,155):
+        tt.Conditional.sensory_credit(player,tick,np.full(6,(tick-100)*.002),tick==154)
+    assert player.learned_here==1 and len(bank.acquired)==1
+    assert bank.acquired[0]["authority"]==teacher["authority"]*.80
+    assert bank.acquired[0]["J"]==teacher["J"]
+    assert bank.acquired[0]["source"]=="paid-online"
+    assert np.allclose(bank.acquired[0]["shape"][-1],np.full(6,(tt.H-1)*.002))
+    assert player.credit_context is None
+
+
+def test_all_twenty_continuous_points_terminate_with_identical_measured_actions():
+    from scripts.experimental import tt74_sensitivity_report as result
+    from scripts.experimental.tt4_transfer_trial import _hash
+
+    r=_read(result.REPORT)
+    assert r["complete"] and r["games"]==_hash(tt.OUT)
+    assert len(r["rows"])==tt.ASSESS
+    assert all(row["exact_commands"] and row["exact_referee"] and row["exact_placements"] for row in r["rows"])
+    assert r["summary"]["stock"]["returns"]==r["summary"]["conditional"]["returns"]==54
+    assert r["summary"]["conditional"]["projection-not-robust"]==6
+    assert not r["summary"]["conditional"]["learned"]
+    assert sum(t["clearance"]["samples"] for row in r["rows"] for t in row["replays"].values())==24349

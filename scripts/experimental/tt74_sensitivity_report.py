@@ -29,16 +29,17 @@ def counts(tape):
             for label in sorted({g for g,k in points})}
 
 
-def assumptions(r, stock):
+def assumptions(r, stock, *, issued_only=True):
     offers=[]
     for s in r["repairs"]:
-        if not s["issued"]:
+        if issued_only and not s["issued"]:
             continue
+        selection=s.get("selection", {})
         near = [o for o in r["placements"]["delivered"] if o.get("far_contact")
                 and o["far_contact"]["step"]<=s["tick"]]
         o=max(near,key=lambda x:x["leg"],default=None)
         if not o:
-            offers.append(dict(tick=s["tick"],delivered=False, source=s["selection"]["experience"]))
+            offers.append(dict(tick=s["tick"],delivered=False, source=selection.get("experience"), reason=s.get("reason","issued")))
             continue
         l=o["leg"]
         old=stock["placements"]["delivered"]
@@ -48,7 +49,8 @@ def assumptions(r, stock):
                            stock_score=bool(old[l]["near_landed"]) if matched else None,
                            touched=touched, scored=bool(touched and o["near_landed"]),
                            answered=bool(touched and o["near_landed"] and len(r["placements"]["delivered"])>l+1),
-                           source=s["selection"]["experience"]))
+                           source=selection.get("experience"),reason=s.get("reason","issued"),
+                           nominal_legal=s.get("nominal_legal"), candidates=s.get("candidates")))
     return offers
 
 
@@ -63,6 +65,8 @@ def report(verify):
                 catalog=Counter(r["entry"]["authority"]>=tt.AUTHORITY
                               for r in bank["observations"] if "entry" in r),
                 summary={k:Counter() for k in tt.MODES})
+    longest = max(doc["rows"], key=lambda r:r["arms"]["stock"]["score"]["learner"], default=None)
+    longest_id = None if longest is None else longest["card"]["id"]
     for row,spec in zip(doc["rows"],p["releases"]):
         c=row["card"]
         if c!=spec["card"] or row["shot"]!=spec["shot"]:
@@ -70,10 +74,16 @@ def report(verify):
         stock,learn=(row["arms"][k] for k in tt.MODES)
         delta=next((i for i,(x,y) in enumerate(zip(stock["actions"],learn["actions"])) if x!=y),None)
         x=dict(id=c["id"],first_difference=delta, exact_changes=learn["same_offer_changes"],
-               interventions=assumptions(learn,stock), replays=replayed.get(c["id"],{}), arms={})
-        if verify and delta is not None and not x["replays"]:
+               interventions=assumptions(learn,stock),
+               gates=assumptions(learn,stock,issued_only=False),
+               exact_commands=stock["actions"]==learn["actions"],
+               exact_referee=tt.school.digest_json(stock["events"])==tt.school.digest_json(learn["events"]),
+               exact_placements=tt.school.digest_json(stock["placements"])==tt.school.digest_json(learn["placements"]),
+               replays=replayed.get(c["id"],{}), arms={})
+        if verify and not x["replays"] and (delta is not None or c["id"]==longest_id):
             with tt.school.enabled(cameras=False):
-                for mode,a in row["arms"].items():
+                audited = row["arms"].items() if delta is not None else (("stock",stock),)
+                for mode,a in audited:
                     audit=tt.game.check.replay(p["ready"],c,a)
                     audit["clearance_positive"]=not audit["clearance"]["penetration_samples"] and audit["clearance"]["nearest"]["signed_m"]>0.
                     x["replays"][mode]=audit
