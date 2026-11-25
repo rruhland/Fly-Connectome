@@ -71,6 +71,18 @@ ordinary practice return by this measure. All are pre-coach evidence.
 
 [40-point issued tape and optical learning packets](practice.json.gz) · [40-point earned bank](practice.npz)
 
+On the exact attained body, practice-only resampling converted 6 of 11
+previously lost deliveries into audited scores with a real legal
+opponent answer. That was 3 of 8 low and 3 of 3 other deliveries. No
+eligible wing miss met the fixed wing threshold in this practice
+roster. Low continuations on 10778 and 6514 gave 31.61 mm and 39.76 mm
+contact radii. The mounted library contains 759 optical/encoder windows
+from 147 actually rewarded strokes across 34 releases. On the practice
+archive, 734 windows met the fixed evidence gate after removing their
+own entire release. This measures coverage, not held play.
+
+[Exact rescue attempts and optical traces](coached.json.gz) · [Library fit receipt](body-library.json) · [Motor library](body-library.npz)
+
 ## Reproduce
 
 ```sh
