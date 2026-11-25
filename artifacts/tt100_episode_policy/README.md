@@ -24,9 +24,11 @@ The plus and minus trials differed by `(+2, −4)`, `(0, +1)` and `(−5, −5)`
 | 10053 | 4 | 2 |
 | **Total** | **64** | **43** |
 
-The medians fell from 9.5 to 5.5. One pair improved, three regressed, and two tied. Every point ended naturally and the opponent won all twelve. Neither policy exceeded 17 own returns. The optional deck was not opened because the frozen policy missed its advancement rule. [All held commands and referee tapes](held.json.gz) · [Paired measurements and replay witnesses](report.json)
+The medians fell from 9.5 to 5.5. One pair improved, three regressed, and two tied. This is poor deployment evidence, not a precise estimate of the general effect across releases (two-sided paired sign randomization p = .25). Every point ended naturally and the opponent won all twelve. Neither policy exceeded 17 own returns. The optional deck was not opened because the frozen policy missed its advancement rule. [All held commands and referee tapes](held.json.gz) · [Paired measurements and replay witnesses](report.json)
 
 All six pairs had identical first incoming racket contact and table bounce. Both policies returned that first ball legally in every pair, but the actual near racket contact differed each time. The regression on 2741 was therefore not a failure to open the rally. Changing the global search policy altered which legal balls were sent back and which subsequent rallies occurred. This result rejects deployment of these two learned weights, not the use of whole-point reward in general. The next experiment should favor perturbations that preserve known-good receiving and show repeatable benefits over multiple distinct physical continuations before updating a general policy.
+
+Independent native replay reproduced every referee event and the score for both arms of 2741 and 11242 from one launch per tape. Across those four tapes, 114 referee racket events were backed by solver contacts, and no penetration was found in 44,690 full-CAD solver samples.
 
 ## Reproduce
 
