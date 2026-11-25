@@ -24,6 +24,28 @@ def stats(rows):
                 low=sum(h < .99 for h in projected), tracked_later=len(projected))
 
 
+def first_followup(stock, new):
+    """Compare first directly affected outbound episode before point lengths diverge."""
+    k = new["first_changed_action"]
+    if k is None:
+        return None
+    a, b = (row["placements"]["delivered"] for row in (stock, new))
+    for i, (old, changed) in enumerate(zip(a, b)):
+        if old["near_bounce"] != changed["near_bounce"] or old["far_contact"] != changed["far_contact"]:
+            return None
+        tips = [p["near_contact"] for p in (old, changed) if p["near_contact"]]
+        if tips and max(p["step"] for p in tips) > k:
+            result = dict(leg=i, identical_incoming=True, own_legal=[old["near_landed"], changed["near_landed"]])
+            height, far_y = [], []
+            for received in (a, b):
+                f = received[i + 1] if i + 1 < len(received) else {}
+                h, contact = f.get("receive_line"), f.get("far_contact")
+                height.append(projected_height(h) if h else None)
+                far_y.append(contact["location"][1] if contact else None)
+            return result | dict(followup_height=height, followup_far_impact_y=far_y)
+    return None
+
+
 def verify(doc, index):
     card, row = doc["cards"][index], doc["rows"][index]
     with mpc.centered(doc["ready"]):
@@ -53,25 +75,34 @@ def verify(doc, index):
 
 
 def report(args):
+    observed_version = _hash(args.live)
     doc, control = _read(args.live), _read(args.control)
+    if _hash(args.live) != observed_version:
+        raise RuntimeError("The live recording advanced while being read. Run again.")
     if _hash(args.control) != doc["baseline_sha256"] or doc["cards"] != control["cards"][:len(doc["cards"])]:
         raise ValueError("Incorrect archived stock branch")
     rows = doc["rows"]
     stock = control["rows"][:len(rows)]
     changed = [i for i, r in enumerate(rows) if r["first_changed_action"] is not None]
     r = dict(complete=doc["complete"], points=len(rows), assigned=len(doc["cards"]),
-             baseline_sha256=_hash(args.control), candidate_sha256=_hash(args.live),
+             baseline_sha256=_hash(args.control), candidate_sha256=observed_version,
              stock=stats(stock), candidate=stats(rows), changed=len(changed),
              changed_assignments=[
                  dict(index=i, id=doc["cards"][i]["id"],
                       first_changed_action=rows[i]["first_changed_action"],
                       stock=stock[i]["score"]["learner"], new=rows[i]["score"]["learner"],
-                      reranks=len(rows[i]["reranks"]))
+                      reranks=len(rows[i]["reranks"]),
+                      first_followup=first_followup(stock[i], rows[i]))
                  for i in changed
              ])
     if args.verify and changed:
         longest = max(changed, key=lambda i: rows[i]["score"]["learner"])
         r["longest_changed_cad_replay"] = verify(doc, longest)
+    if args.verify_id is not None:
+        index = next((i for i in changed if doc["cards"][i]["id"] == args.verify_id), None)
+        if index is None:
+            raise ValueError("The requested changed point is not in the tape")
+        r["selected_cad_replay"] = verify(doc, index)
     _write(args.output, r)
     print(r, flush=True)
 
@@ -82,4 +113,5 @@ if __name__ == "__main__":
     parser.add_argument("--control", type=Path, default=course.ROOT / "no-more-practice.json.gz")
     parser.add_argument("--output", type=Path, default=ROOT / "outgoing-coverage-report.json")
     parser.add_argument("--verify", action="store_true")
+    parser.add_argument("--verify-id", type=int)
     report(parser.parse_args())
