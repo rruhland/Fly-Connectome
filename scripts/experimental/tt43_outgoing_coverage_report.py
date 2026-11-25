@@ -98,6 +98,7 @@ def report(args):
                       first_changed_action=rows[i]["first_changed_action"],
                       stock=stock[i]["score"]["learner"], new=rows[i]["score"]["learner"],
                       reranks=len(rows[i]["reranks"]),
+                      first_predicted_risks=rows[i]["reranks"][0]["risks"],
                       first_followup=first_followup(stock[i], rows[i]))
                  for i in changed
              ])
