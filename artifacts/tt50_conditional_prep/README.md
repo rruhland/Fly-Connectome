@@ -17,6 +17,10 @@ All 24 traces completed and the four motions for each stream received the exact 
 
 The hard source had projected receive height .953 m at y = −1.53 m. The −.45 and 0 m outgoing visual gates predicted 1.010 m and 1.028 m at that same depth, despite predicting negative lateral coordinates. The registered preparation ceiling was .987 m. The .45 m gate was already beyond the best known answered handoff and predicted a still higher 1.085 m. The native abstention is therefore explained by the projected height, without needing to invoke a model or fixture failure during the taught route.
 
+## What works once the physical posture is reached
+
+On two teaching balls, separately replay the physically achieved body trajectory up to a fixed native handoff. Stop using the teacher's controls there. Both actors start with the same actual cameras, encoder state, motor references and incoming ball. Ordinary camera control scored **0/2** from those held postures. The same optical shallow-motion readout that abstained in the frozen test scored **2/2**, and the unchanged opponent legally answered both. At the original .953 m hard ball it chose a new contact at y = −1.271 m, rather than the teacher's −1.299 m. On the separate .995 m left training ball it chose y = −1.282 m, rather than the teacher's −1.242 m. Both independently varied trajectories had zero penetrations over 1,504 full CAD samples over the altered tails. This is training-only evidence for an RGB and encoder contact skill once the arm is prepared. The replayed preparation is not an earned live point and does not establish that the readiness decision transfers. [Native outcomes after teacher withdrawal](contact-school.json.gz)
+
 ## Reproduce
 
 ```sh
@@ -25,5 +29,6 @@ python -m scripts.experimental.tt50_conditional_training map
 python -m scripts.experimental.tt50_conditional_training extract
 python -m scripts.experimental.tt50_conditional_prep plan
 python -m scripts.experimental.tt50_conditional_prep run
+python -m scripts.experimental.tt50_optical_contact_school
 python -m pytest -q tests/test_tt50_conditional_prep.py
 ```
