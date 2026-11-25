@@ -1,9 +1,11 @@
 from types import SimpleNamespace
 
 import numpy as np
+import pytest
 
 from scripts.experimental.tt29_vision import Flight, VERTICAL, flight_terms
 from scripts.experimental.tt42_camera_precision import DRAG, DT, Suffix, installed
+from scripts.experimental.tt42_feedback_verification import action_prefix
 
 
 def camera_spec():
@@ -61,3 +63,16 @@ def test_old_image_pairs_cannot_be_reused_as_a_fresh_fit():
     for k in range(6):
         fit.update(k*DT,project(camera,pv[:3]+(k-5)*DT*pv[3:]),pv)
     assert fit.estimate(8*DT,pv,bounced=True) is None
+
+
+def test_match_uses_only_events_before_the_first_different_action_or_tape_end():
+    e1, e2 = {"step": 1, "kind": "bounce"}, {"step": 2, "kind": "contact"}
+    before = dict(actions=[[0], [1]], events=[e1, e2])
+    shorter = dict(actions=[[0]], events=[e1])
+    changed = dict(actions=[[0], [2]], events=[e1, {**e2, "kind": "separation"}])
+    assert action_prefix(before, before) == (None, [e1, e2])
+    assert action_prefix(before, shorter) == (1, [e1])
+    assert action_prefix(before, changed) == (1, [e1])
+    changed["events"][0] = {**e1, "kind": "contact"}
+    with pytest.raises(ValueError, match="before the first"):
+        action_prefix(before, changed)

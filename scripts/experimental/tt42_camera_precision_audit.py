@@ -9,55 +9,52 @@ from .tt31_ready import centered
 from .tt33_joint import FAR_COMMAND
 from .tt37_opponent import arena
 from .tt37_opponent_audit import CourtClearance, contact_observer, guarded, verify_clearance
-from .tt42_camera_precision import DT, LIVE_ARCHIVE, OUT
+from .tt42_camera_precision import LIVE_ARCHIVE, OUT
+from .tt42_camera_precision_live import match
+from .tt42_feedback_verification import action_prefix, offer_contrast, verify_checkpoint, verify_row
 
 
-def verdict(d, tick):
-    t=tick*DT
-    previous=None
-    for p in d["placements"]["delivered"]:
-        hit, bounce = p["far_contact"], p["near_bounce"]
-        if hit is None:
-            continue
-        if hit["time"] > t+1e-7:
-            return p
-        previous=p
-        contact=p["near_contact"]
-        if contact is None or contact["time"]>t:
-            return p
-    return previous
-
-
-def contrast(before,after,tick):
-    if tick is None:
-        return None
-    a,b=verdict(before,tick),verdict(after,tick)
-    if a is None or b is None:
-        return None
-    # Everything in this body is outcome evaluation, not a live observation.
-    match=all(digest_json(a[k])==digest_json(b[k]) for k in ("far_contact","near_bounce","target"))
-    r=dict(same_incoming=match,leg=[p["leg"] for p in (a,b)],
-           touches=[p["near_contact"] is not None for p in (a,b)],
-           landed=[p["near_landed"] for p in (a,b)])
-    if match and a["receive_line"] is not None:
-        r["native_receive_line"]=a["receive_line"]
-    return r
-
-
-def report(path,out,*, cad_enabled):
+def report(path,out,*, cad_enabled, sensor):
     data=_read(path)
     base=_read(LIVE_ARCHIVE)
-    if data["stock_sha256"]!=_hash(LIVE_ARCHIVE):
-        raise ValueError("Expected archived stock source")
+    fit=_read(sensor)
+    if (data["stock_sha256"]!=_hash(LIVE_ARCHIVE) or data["sensor_report_sha256"]!=_hash(sensor)
+            or data["sensor_variant"]!=fit["selection"]["mode"]):
+        raise ValueError("Stock or frozen sensor provenance changed")
+    if any(_hash(Path(__file__).with_name(n))!=h for n,h in data["source_code"].items()):
+        raise ValueError("Treatment source no longer matches the archived run")
+    n=len(data["rows"])
+    if (not n or n>len(data["cards"]) or data["complete"]!=(n==len(data["cards"]))
+            or data["cards"]!=base["cards"][:len(data["cards"])]):
+        raise ValueError("Paired card roster or completion receipt changed")
+    fresh=data["rows"][0]["control_fresh"]
+    keys=("actions","events","placements","score","memory")
+    exact=all(digest_json(fresh[k])==digest_json(base["rows"][0][k]) for k in keys)
+    if data["archived_control_verified"]!=exact:
+        raise ValueError("Fresh control receipt does not match archived control equality")
+    checkpoint=path.with_suffix("").with_suffix(".npz")
+    memory=verify_checkpoint(checkpoint,[s["precision"] for s in data["rows"]],data["checkpoint_sha256"])
     records=[]
+    previous=base["rows"][0]["memory"]["before"]
     for i,s in enumerate(data["rows"]):
         before=base["rows"][i] if data["archived_control_verified"] else s["control_fresh"]
-        rs=s["comparison"]
-        item=dict(id=s["card"]["id"],**rs,first_offer=contrast(
-            before,s["precision"],rs["first_changed_action_tick"]),additional_camera=s["add_camera"])
+        after=s["precision"]
+        card=data["cards"][i]
+        if s["card"]!=card or after["memory"]["before"]!=previous:
+            raise ValueError("Unexpected card or discontinuous treatment memory")
+        previous=after["memory"]["after"]
+        for row in (before,after):
+            verify_row(card,row)
+        fork,prefix=action_prefix(before,after)
+        rs=match(before,after)
+        if rs!=s["comparison"] or rs["first_changed_action_tick"]!=fork:
+            raise ValueError("Archived paired comparison differs on recomputation")
+        item=dict(id=s["card"]["id"],**rs,first_offer=offer_contrast(
+            before,after,fork),prefix_events=len(prefix),additional_camera=s["add_camera"])
         records.append(item)
     total=lambda k:[sum(s[k][j] for s in records) for j in (0,1)]
-    audit=dict(source_sha256=_hash(path),complete=data["complete"],n=len(records),
+    audit=dict(source_sha256=_hash(path),sensor_sha256=_hash(sensor),stock_sha256=_hash(LIVE_ARCHIVE),
+               checkpoint=memory,complete=data["complete"],n=len(records),
                legal_near=total("legal_near"),alternating=total("alternating"),
                longest_near=[max(s["legal_near"][j] for s in records) for j in (0,1)],
                gained=sum(s["legal_near"][1]>s["legal_near"][0] for s in records),
@@ -103,6 +100,7 @@ if __name__=="__main__":
     p=argparse.ArgumentParser(description=__doc__)
     p.add_argument("--live",type=Path,default=OUT/"live.json.gz")
     p.add_argument("--output",type=Path,default=OUT/"outcomes.json")
+    p.add_argument("--sensor",type=Path,default=OUT/"practice-frozen.json")
     p.add_argument("--cad",action="store_true")
     args=p.parse_args()
-    report(args.live,args.output,cad_enabled=args.cad)
+    report(args.live,args.output,cad_enabled=args.cad,sensor=args.sensor)
