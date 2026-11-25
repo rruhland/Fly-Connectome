@@ -1,5 +1,6 @@
 """Prospective, paired continuous live credit on the exact TT93 wrist fixture."""
 import argparse
+from collections import Counter
 from pathlib import Path
 from time import process_time
 
@@ -257,33 +258,54 @@ def summarize():
     p=design()
     existing={f:_read(filename(f)) if filename(f).exists() else dict(rows=[]) for f in MODES}
     count=min(len(r["rows"]) for r in existing.values()); rows=[]
+    actual={k:Counter() for k in MODES}
+    matched=Counter()
     for i,r in enumerate(p["cards"][:count]):
         before,after=(existing[k]["rows"][i] for k in MODES)
         summary=dict(id=r["card"]["id"],paired=index_pair(before,after),
                      terminal=[before["complete_point"],after["complete_point"]],
                      updates=[int(s["planner"].get("updates",0)) for s in (before,after)],
+                     fragments=[int(s["planner"].get("credited_fragments",0)) for s in (before,after)],
                      wrist=len(after["corrections"]),
                      cad=[s["cad"]["global_cad"]["samples"] for s in (before,after)],
                      global_penetrations=[s["cad"]["global_cad"]["penetration_samples"] for s in (before,after)],
                      local_penetrations=[len(s["cad"]["local_module_penetrations"]) for s in (before,after)])
         rows.append(summary)
+        for key,a in zip(MODES,(before,after),strict=True):
+            for o in a["placements"]["delivered"]:
+                group=lane(o)
+                actual[key][group]+=1
+                actual[key][group+"_returned"]+=bool(o["near_landed"])
+        for o in summary["paired"]["matched_offers"]:
+            group=o["lane"]
+            matched[group]+=1;matched[group+"_stereo"]+=bool(o["stock"]);matched[group+"_fused"]+=bool(o["fused"])
     paired=np.array([r["paired"]["scores"] for r in rows],dtype=int).reshape(-1,2)
     update=np.array([r["updates"] for r in rows],dtype=int).reshape(-1,2)
-    data=dict(plan_sha256=_hash(PLAN),complete=count==N,closed_pairs=count,rows=rows,aggregate={})
+    data=dict(plan_sha256=_hash(PLAN),complete=count==N,closed_pairs=count,rows=rows,aggregate={},
+              all_physical_deliveries={f:dict(v) for f,v in actual.items()},matched_by_lane=dict(matched))
     if count:
         data["aggregate"]=dict(total=paired.sum(axis=0).tolist(),max=paired.max(axis=0).tolist(),
             median=np.median(paired,axis=0).tolist(),learning_updates=update.sum(axis=0).tolist(),
+            learning_fragments=np.sum([r["fragments"] for r in rows],axis=0).tolist(),
             fused_better=int(np.sum(paired[:,1]>paired[:,0])),fused_worse=int(np.sum(paired[:,1]<paired[:,0])),
             at_least={str(j):np.sum(paired>=j,axis=0).tolist() for j in (1,5,10,25,60,100)})
     _write(SUMMARY,data)
     print("TT93 paired live",count,data["aggregate"],flush=True)
 
 
+def lane(o):
+    line=o.get("receive_line")
+    if not line:
+        return "no_line"
+    x,z,*_=optical.old_look.central.deep(np.r_[line["xyz"],line["velocity"]])
+    return ("central_low" if abs(x)<.10 else "wing_low") if z<1.00 else "ordinary"
+
+
 def index_pair(old,new):
     t=[]
     for i,(a,b) in enumerate(zip(old["placements"]["delivered"],new["placements"]["delivered"])):
         if all(same_trace(a[n],b[n]) for n in ("far_contact","near_bounce")):
-            t.append(dict(leg=i,stock=a["near_landed"],fused=b["near_landed"]))
+            t.append(dict(leg=i,lane=lane(a),stock=a["near_landed"],fused=b["near_landed"]))
     return dict(scores=[x["score"]["learner"] for x in (old,new)],matched_offers=t)
 
 
