@@ -64,6 +64,10 @@ The pilot logged 40 optical updates from its own earned hits and 19 retained mis
 
 A retrospective replay with the pilot teacher allowed but own updates frozen ended at one return on 3401. Its whole command tape was identical to the stock point, despite 16 admitted teacher candidates. Its first two delivered balls and commands through tick 164 were the same as the successful chronological pilot point. The teacher demonstration archive alone was therefore insufficient at that physical offer. [Frozen 3401 control](3401-frozen-pilot.json.gz)
 
+A second retrospective control allowed own updates from the first scored stroke of 3401 but excluded the preceding 11884 point. The new learner stored four optical frames from its first hit, yet ended at the same natural own-half fault with an action tape identical to stock and frozen pilot. This control was capped at a possible second own return, but it faults before the cap. Within-point credit alone did not reproduce the repair. In this context it helped to bring the pilot learner's prior own practice, and the same actor continued to acquire effects during the long point. [Cold updating 3401 control](3401-cold-live-repair.json.gz)
+
+On the next two untouched assessment releases, both fixed before seeing either result, the pilot bank gained from the ordinary own-history updates again. Starting from the same carried memory, 7901 improved from 3 to 5. Its first four balls were physically identical across arms. On the fourth, the updating learner added 0.350 m/s forward and 0.303 m/s upward and landed legally where the frozen learner faulted its own half. Carrying the real hits and misses from 7901 into 8772, the updating pilot got 9 versus 1 for its frozen version. The total was 14 versus 4. This tests updating with the same sparse bank, not a new archive or a change to the visual front end. All four exact replays had zero CAD penetrations over 16,749 samples. [Frozen fresh points](fresh-frozen-pilot.json.gz) · [Updating fresh points](fresh-live-pilot.json.gz) · [Exact referee, same-offer and CAD audit](fresh-pilot-audit.json)
+
 ### Was a different useful movement crowded out?
 
 Replaying the successful point's camera and encoders gave identical retrieval keys at ticks 159, 164 and 169. Passing those same keys to the older and expanded banks reproduced the pilot ranks and showed that the expanded bank displaced the second pilot fragment at both 164 and 169. The two admitted reference curves' RMS distance shrank from .241/.249 radians to .129/.179 radians over their first 15 frames. At 164 the displaced reference requested an incident face normal with vertical component .477, versus −.057 for the new nearest candidate that displaced it. This is a difference in requested motor behavior, not proof that the replaced fragment was the one actually used after native screening and adaptation. [Exact sensor lookup comparison](3401-recall-ranks.json.gz)
@@ -92,5 +96,14 @@ python -m scripts.experimental.tt42_commit_teacher_course stock "$out/course-sto
 python -m scripts.experimental.tt42_commit_teacher_course pilot "$out/course-pilot.json.gz"
 python -m scripts.experimental.tt42_commit_teacher_course all "$out/course-all.json.gz"
 python -m scripts.experimental.tt42_commit_teacher_course_verify --cad
+python -m scripts.experimental.tt42_commit_teacher_course pilot "$out/3401-frozen-pilot.json.gz" --freeze --indices 3
+python -m scripts.experimental.tt42_commit_teacher_course pilot "$out/3401-cold-live-repair.json.gz" --indices 3 --cap 4
+python -m scripts.experimental.tt42_commit_teacher_recalls
+python -m scripts.experimental.tt42_commit_teacher_course pilot "$out/fresh-frozen-pilot.json.gz" --freeze --indices 5 6
+python -m scripts.experimental.tt42_commit_teacher_course pilot "$out/fresh-live-pilot.json.gz" --indices 5 6
+python -m scripts.experimental.tt42_commit_teacher_course_verify --comparison learning --cad
+python -m scripts.experimental.tt42_commit_teacher_course all "$out/coverage-nearest-control.json.gz" --indices 7 8
+python -m scripts.experimental.tt42_commit_teacher_course coverage "$out/coverage-diverse.json.gz" --indices 7 8
+python -m scripts.experimental.tt42_commit_teacher_course_verify --comparison coverage --cad
 python -m pytest -q tests/test_tt42_commit_teacher.py tests/test_tt42_commit_teacher_course.py tests/test_tt42_private_init.py
 ```
