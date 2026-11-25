@@ -1,0 +1,229 @@
+{
+  "status": "REJECTED_NO_LOW_SKILL_OR_LIVE_TRANSFER",
+  "stages": [
+    {
+      "stage": "pilot-practice",
+      "points": 6,
+      "returns": 0,
+      "control_ticks": 690,
+      "wall_seconds": 75.00894555700506,
+      "cpu_seconds": 13.342495652,
+      "bins": {
+        "below_.95": {
+          "offers": 0,
+          "touched": 0,
+          "legal": 0
+        },
+        ".95_to_1.00": {
+          "offers": 0,
+          "touched": 0,
+          "legal": 0
+        },
+        "at_least_1.00": {
+          "offers": 5,
+          "touched": 0,
+          "legal": 0
+        }
+      }
+    },
+    {
+      "stage": "low-practice",
+      "points": 8,
+      "returns": 0,
+      "control_ticks": 875,
+      "wall_seconds": 87.94122483499814,
+      "cpu_seconds": 18.25491733,
+      "bins": {
+        "below_.95": {
+          "offers": 0,
+          "touched": 0,
+          "legal": 0
+        },
+        ".95_to_1.00": {
+          "offers": 2,
+          "touched": 0,
+          "legal": 0
+        },
+        "at_least_1.00": {
+          "offers": 5,
+          "touched": 0,
+          "legal": 0
+        }
+      }
+    },
+    {
+      "stage": "contact-practice",
+      "points": 8,
+      "returns": 2,
+      "control_ticks": 1164,
+      "wall_seconds": 104.13545455600251,
+      "cpu_seconds": 22.156373136000003,
+      "bins": {
+        "below_.95": {
+          "offers": 0,
+          "touched": 0,
+          "legal": 0
+        },
+        ".95_to_1.00": {
+          "offers": 1,
+          "touched": 1,
+          "legal": 0
+        },
+        "at_least_1.00": {
+          "offers": 9,
+          "touched": 7,
+          "legal": 2
+        }
+      }
+    },
+    {
+      "stage": "lower-practice",
+      "points": 8,
+      "returns": 2,
+      "control_ticks": 1081,
+      "wall_seconds": 87.90107304399862,
+      "cpu_seconds": 20.75782444,
+      "bins": {
+        "below_.95": {
+          "offers": 0,
+          "touched": 0,
+          "legal": 0
+        },
+        ".95_to_1.00": {
+          "offers": 5,
+          "touched": 4,
+          "legal": 0
+        },
+        "at_least_1.00": {
+          "offers": 5,
+          "touched": 4,
+          "legal": 2
+        }
+      }
+    },
+    {
+      "stage": "slow-practice",
+      "points": 8,
+      "returns": 2,
+      "control_ticks": 1135,
+      "wall_seconds": 79.73657159999857,
+      "cpu_seconds": 22.262159638,
+      "bins": {
+        "below_.95": {
+          "offers": 2,
+          "touched": 2,
+          "legal": 0
+        },
+        ".95_to_1.00": {
+          "offers": 2,
+          "touched": 1,
+          "legal": 0
+        },
+        "at_least_1.00": {
+          "offers": 6,
+          "touched": 4,
+          "legal": 2
+        }
+      }
+    }
+  ],
+  "official": {
+    "stock": {
+      "returns": 9,
+      "per_point": [
+        6,
+        0,
+        1,
+        2
+      ],
+      "control_ticks": 1235,
+      "bins": {
+        "below_.95": {
+          "offers": 0,
+          "touched": 0,
+          "legal": 0
+        },
+        ".95_to_1.00": {
+          "offers": 1,
+          "touched": 1,
+          "legal": 0
+        },
+        "at_least_1.00": {
+          "offers": 12,
+          "touched": 12,
+          "legal": 9
+        }
+      },
+      "all_physically_ended": true
+    },
+    "cold": {
+      "returns": 0,
+      "per_point": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "control_ticks": 438,
+      "bins": {
+        "below_.95": {
+          "offers": 0,
+          "touched": 0,
+          "legal": 0
+        },
+        ".95_to_1.00": {
+          "offers": 0,
+          "touched": 0,
+          "legal": 0
+        },
+        "at_least_1.00": {
+          "offers": 4,
+          "touched": 2,
+          "legal": 0
+        }
+      },
+      "all_physically_ended": true
+    },
+    "frozen": {
+      "returns": 0,
+      "per_point": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "control_ticks": 440,
+      "bins": {
+        "below_.95": {
+          "offers": 0,
+          "touched": 0,
+          "legal": 0
+        },
+        ".95_to_1.00": {
+          "offers": 0,
+          "touched": 0,
+          "legal": 0
+        },
+        "at_least_1.00": {
+          "offers": 4,
+          "touched": 2,
+          "legal": 0
+        }
+      },
+      "all_physically_ended": true
+    }
+  },
+  "official_wall_seconds": 137.7836661419933,
+  "official_cpu_seconds": 50.15929002,
+  "official_control_ticks": 2113,
+  "total_physical_points": 50,
+  "total_control_ticks": 7058,
+  "total_recorded_cpu_seconds": 146.933060216,
+  "total_recorded_wall_seconds": 572.5069357339962,
+  "same_controller_learning_control": "Both cold and practiced policies scored0 on four disjoint official draws; stock scored9. All frozen memory digests checked unchanged. No official online extension after this failure.",
+  "retained_action_outcomes": 26,
+  "retained_true_rewards": 6,
+  "no_hidden_live_inputs": true,
+  "one_concurrent_native_worker": true,
+  "no_promotion": true
+}

@@ -1,0 +1,12 @@
+10762 stock 6 {'low': 1, 'low_returned': 0, 'ordinary': 6, 'ordinary_returned': 6}
+10762 cold 0 {'low': 0, 'low_returned': 0, 'ordinary': 1, 'ordinary_returned': 0}
+10762 frozen 0 {'low': 0, 'low_returned': 0, 'ordinary': 1, 'ordinary_returned': 0}
+15541 stock 0 {'low': 0, 'low_returned': 0, 'ordinary': 1, 'ordinary_returned': 0}
+15541 cold 0 {'low': 0, 'low_returned': 0, 'ordinary': 1, 'ordinary_returned': 0}
+15541 frozen 0 {'low': 0, 'low_returned': 0, 'ordinary': 1, 'ordinary_returned': 0}
+13344 stock 1 {'low': 0, 'low_returned': 0, 'ordinary': 2, 'ordinary_returned': 1}
+13344 cold 0 {'low': 0, 'low_returned': 0, 'ordinary': 1, 'ordinary_returned': 0}
+13344 frozen 0 {'low': 0, 'low_returned': 0, 'ordinary': 1, 'ordinary_returned': 0}
+5212 stock 2 {'low': 0, 'low_returned': 0, 'ordinary': 3, 'ordinary_returned': 2}
+5212 cold 0 {'low': 0, 'low_returned': 0, 'ordinary': 1, 'ordinary_returned': 0}
+5212 frozen 0 {'low': 0, 'low_returned': 0, 'ordinary': 1, 'ordinary_returned': 0}
