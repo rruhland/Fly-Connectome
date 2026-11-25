@@ -120,3 +120,9 @@ experience and still need a causal activation test from ordinary games. The lead
 deployable wing-control agent has this bank; duplicate full-game qualification is
 intentionally avoided. Five focused tests verify privacy, admission and body-state
 continuation contracts.
+
+`tt51_low_early_neutrals.py` is prepared for the lead integration's `install`
+factory. It fixes the existing five TT50 neutral draws, preserves source controls
+through4003, restores legal camera/readiness history and uses the official raw
+camera base with unchanged original carry. It has not yet run; there is no neutral
+transfer result or duplicate full-game qualification in this artifact.
