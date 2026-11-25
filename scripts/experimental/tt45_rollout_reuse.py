@@ -4,10 +4,29 @@ No rollout state, engine pointer, or native memory is cached. The only saved
 objects are the input goals and scores of the first call in one search.
 """
 from dataclasses import dataclass
+from hashlib import sha256
+from inspect import getsource
 
 import numpy as np
 
 from . import tt38_joint_mpc as mpc
+
+STOCK_MPC = mpc.MPC
+REVIEWED = {
+    "search": "3f8d69065ff59562b00c7d6b1ade67db6729c1c39fbcc1038309eebccee25090",
+    "trial": "bb862bc27cee953d7260cf334ba8e9f6cac471666f2aa8e0c9a69bf73a5dc5d8",
+    "transport": "46d68d01e15f69239f6bb81e726db999cb5bc327db13116a8ffcc00ab01cf745",
+    "pupil_prior": "b06a8782e0d5f87d12a79ec15f9a59d92b6689703f28d208a1d6170526126d0a",
+}
+
+
+def compatible():
+    """A different search implementation may deliberately reinitialize physics."""
+    try:
+        return all(sha256(getsource(getattr(STOCK_MPC, name)).encode()).hexdigest() == signature
+                   for name, signature in REVIEWED.items())
+    except (OSError, TypeError):
+        return False
 
 
 @dataclass
@@ -47,13 +66,14 @@ class Prefix:
         )
 
 
-class ReuseMPC(mpc.MPC):
+class ReuseMPC(STOCK_MPC):
     """Same stock planner, except it does not simulate identical prefix rows twice."""
 
     def __init__(self, *args, reuse=True, audit_prefix=False, **kw):
         super().__init__(*args, **kw)
         self.reuse = reuse
         self.audit_prefix = audit_prefix
+        self.reviewed = compatible()
         self.open = False
         self.calls = 0
         self.prefix = None
@@ -64,11 +84,14 @@ class ReuseMPC(mpc.MPC):
         # queries (separate BladeIK data), and raw field reads separate the
         # initial trace call and its enlarged short screen. Guarded has a
         # different preamble with deliberate ball-state perturbations.
-        self.open = self.variant in ("elastic", "fragment")
+        self.open = self.reviewed and self.variant in ("elastic", "fragment") and all(
+            getattr(getattr(self, name), "__func__", None) is getattr(STOCK_MPC, name)
+            for name in ("transport", "pupil_prior")
+        )
         self.calls = 0
         self.prefix = None
         try:
-            return mpc.MPC.search(self, tick, x, q, reference, base)
+            return STOCK_MPC.search(self, tick, x, q, reference, base)
         finally:
             self.open = False
             self.calls = 0

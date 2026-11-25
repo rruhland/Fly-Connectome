@@ -46,6 +46,7 @@ def setup(monkeypatch, variant):
     model.variant = variant
     model.reuse = True
     model.audit_prefix = False
+    model.reviewed = True
     model.diag = Counter()
     model.g = sample(8)
     return model, calls, answers
@@ -85,3 +86,14 @@ def test_stock_audit_rejects_a_nonidentical_short_prefix(monkeypatch):
     with pytest.raises(ValueError, match="prefix"):
         model.search(0, None, None, None, None)
     assert not model.open and model.prefix is None
+
+
+def test_changed_stock_source_falls_back_and_class_patch_does_not_recurse(monkeypatch):
+    assert fast.compatible()
+    model, calls, _ = setup(monkeypatch, "elastic")
+    assert not fast.compatible()
+    model.reviewed = False
+    monkeypatch.setattr(fast.mpc, "MPC", fast.ReuseMPC)
+    model.search(0, None, None, None, None)
+    assert calls == [(3, False, True), (8, False, False), (8, True, False)]
+    assert model.diag["reused_native_candidates"] == 0
