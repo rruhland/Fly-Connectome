@@ -103,7 +103,7 @@ def survey(kind):
             a.close()
             est.twin.close()
     metrics = {}
-    for group in ("all", "scored", "missed", "false_accept", "false_reject"):
+    for group in ("all", "scored", "missed", "nominal_candidate_eventual_miss", "no_nominal_candidate_eventual_return"):
         samples = [
             r
             for g in rows
@@ -113,10 +113,10 @@ def survey(kind):
             and r["landed"]
             or group == "missed"
             and not r["landed"]
-            or group == "false_accept"
+            or group == "nominal_candidate_eventual_miss"
             and r["nominal"]
             and not r["landed"]
-            or group == "false_reject"
+            or group == "no_nominal_candidate_eventual_return"
             and not r["nominal"]
             and r["landed"]
         ]
