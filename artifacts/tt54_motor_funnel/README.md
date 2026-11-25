@@ -23,6 +23,8 @@ All eight archived games reproduced every submitted action, placement, physics e
 
 The median worst per-path difference between the desired reference and the signed, executable one was .142 rad for missed offers. The 90th percentile was .324 rad. Despite this, feasible-reference recentering yielded zero legal proposals across all 13 preassigned empty searches on four different failed offers. There was no candidate to physically promote. The nominal body position and the attached encoder measurements agreed to about `1.5e-11` rad throughout these checks, which also argues against ordinary precontact joint position initialization as the source of these particular misses. It does not rule out ball tracking errors, unreachable geometry or motion representations that cannot enter useful poses. [Exact shortlist and motor projection receipt](funnels.json.gz)
 
+An evaluator-only reach check fit nominal blade center, face and tangential margin on the exact old incoming flight and measured encoders. Its permissive position box allows every joint to accelerate instantly to rated no-load speed, so it cannot establish dynamical feasibility. The local search found such a pose in all seven scored control offers and six of eight misses. For two misses even this particular optimistic constrained fit failed. The result separates some kinematic pose support from an actual physically legal motor trajectory. [Exact-prefix local geometric audit](geometric-reach.json.gz)
+
 ## Reproduce
 
 ```sh

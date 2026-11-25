@@ -14,6 +14,8 @@ The standard RGB/encoder controller and optical retiming of the earned waveform 
 
 A bounded true-state coach ran only during practice on the four physically delivered neighboring failures. It explored signed direct drive and contact adjustments and preferred shorter radial distance among the shortlisted strokes, then submitted at most two physical candidates per neighbor. The small lateral and lower-height variants each yielded a separately landed and answered arm strike on the same original physical offer. Both scored tapes passed complete independent strict CAD verification and were then turned into two new RGB/encoder templates. Both remained rim contacts, with model-estimated radial positions of about 76 and 73 mm. Neither a center-hit solution nor robust forecourt coverage was established during practice. [Preassigned companion training and held aims](refine-protocol.json) · [Bounded physical training and RGB observations](refine.json.gz)
 
+The held test compared stock, the original optical waveform and all three physically acquired optical waveforms on four new independent TT37 aims in the preassigned neighboring rectangle. All three conditions went 0/4. The expanded family issued three times, so abstention does not account for the result. The earlier positive geometry is real, but this rim-stroke family should not enter full play. [All fresh held physical branches](family-transfer.json.gz)
+
 ```sh
 export PYTHONPATH=.:src MUJOCO_GL=egl OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 OMP_THREAD_LIMIT=1 LP_NUM_THREADS=1
 python -m scripts.experimental.tt54_midline run
