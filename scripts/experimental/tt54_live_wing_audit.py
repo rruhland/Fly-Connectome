@@ -74,9 +74,37 @@ def whole(path,output):
     out['complete']=True;rp._write(output,out)
 
 
+def record(path,output):
+    from . import tt54_live_wing_record as receipt
+    data=rp._read(path);bond,old,_=receipt.facts()
+    if data['plan_sha256']!=rp._hash(receipt.PLAN) or not data.get('complete'):
+        raise ValueError('Missing recorded full-point recovery')
+    card=bond['card'];tape=data['run']
+    with mpc.centered(old['ready']):
+        a=mpc.arena(width=64,height=48);c=mpc.arena(width=64,height=48,detail='cad')
+        try:
+            a.launch(tape['shot'],card=card);a.partner.reset(seed=card['seed'])
+            guarded(a,CourtClearance(c.model,articulated=True))
+            for u in tape['actions']:a.exchange(u,mpc.FAR_COMMAND)
+            got=a.point_placements()
+            score=mpc.audit(a.events,opening_side=1)
+            if prior.digest_json(a.events)!=prior.digest_json(tape['events']) or not same_trace(got,tape['placements']):
+                raise ValueError('Recovered complete native tape did not independently reproduce')
+            if score['learner']!=data['score'] or any(x['target']!=list(rp.draw(card,k,'random',None)[0])
+                                                     for k,x in enumerate(got['requested'])):
+                raise ValueError('Recorded score or randomized draw changed')
+            out=dict(source_sha256=rp._hash(path),independent_native_score=True,own=score['learner'],opponent=score['opponent'],
+                     physical_events_sha256=prior.digest_json(a.events),clearance=a.clearance_result(),
+                     first_changed_tick=data['first_changed_tick'],prefix_exact=data['event_prefix_exact'],
+                     prefix_within_roundoff=data['event_prefix_within_roundoff'])
+            rp._write(output,out)
+            print(out,flush=True)
+        finally:a.close();c.close()
+
+
 if __name__=='__main__':
     p=argparse.ArgumentParser(description=__doc__)
-    p.add_argument('phase',choices=('exact','whole'))
+    p.add_argument('phase',choices=('exact','whole','record'))
     p.add_argument('source',type=Path)
     p.add_argument('output',type=Path)
-    a=p.parse_args();(exact if a.phase=='exact' else whole)(a.source,a.output)
+    a=p.parse_args();{'exact':exact,'whole':whole,'record':record}[a.phase](a.source,a.output)
