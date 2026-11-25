@@ -1,6 +1,6 @@
 # Learning which outgoing shots leave coverable balls
 
-The 38-return TT42 point ended on an unusually low reply. The preceding arm return landed at far y = +0.59 m. The opponent contacted it close to the net, at y = +0.65 m, and placed the next delivery at a projected height of 0.86 m at the learner's deep receiving line. The arm made no contact. The preceding arm strike's accepted private predictions had a very slow far receiving pace of 1.67–1.89 m/s. In a separate RGB-only replay, the ball already projected a short far bounce when the current outgoing ball was near y = −1.05 m, 0.78 seconds before the next far contact. The early incoming optical projection recognized the low ball much later. These measurements motivate avoiding difficult future offers by discriminating between already playable outgoing strokes. They do not establish that the proposed ranker would extend the record point. [TT42 physical witness](../tt42/random-38.json)
+The 38-return TT42 point ended on an unusually low reply. The preceding arm return landed at far y = +0.59 m. The opponent contacted it close to the net, at y = +0.65 m, and placed the next delivery at a projected height of 0.86 m at the learner's deep receiving line. The arm made no contact. The preceding arm strike's accepted private predictions had a very slow far receiving pace of 1.67–1.89 m/s. In the exact RGB-only replay, the ball already projected a short far bounce when the current outgoing ball was near y = −1.14 m, 0.812 seconds before the next far contact. The first incoming optical estimate below 0.95 m arrived with 0.383 seconds left to its projected deep receive. These measurements motivate avoiding difficult future offers by discriminating between already playable outgoing strokes. They do not establish that the proposed ranker would extend the record point. [TT42 physical witness](../tt42/random-38.json) · [Exact optical cue replay](record-terminal-cues.json)
 
 ## Learned association
 
@@ -16,6 +16,10 @@ Rerank-negative points are checked for bitwise-identical archived actions and ev
 
 The first three changed physical points illustrate why this measure is worth separating from rally length. In each case the altered own stroke was legal on the same physical incoming offer and the following reply was higher. On release 11884 the stock point ended on the 0.974 m follow-up. The altered shot elicited a 1.025 m follow-up on the identical random placement draw and the arm extended the point from four to seven returns. A command-only replay reproduced this point, including its reactive returns, and checked 6,041 solver steps with zero full-CAD penetrations. The other two points got a higher immediate follow-up but ended sooner on later deliveries. [11884 replay](outgoing-11884-cad.json)
 
+## Generating alternatives for coverage
+
+The original finalists can all predict a bad follow-up. A separate pilot uses the same learned objective directly when searching around the stock winner. When enough time and local practice support remain, the controller samples signed changes to early joint displacement and final contact drive, then samples again around the lowest combined current cost and predicted next risk. This search is bounded and uses a separate random stream. The generated choice must be legal under the nominal camera-initialized twin and both original uncertainty settings, lie inside the learned practice support for all three, and improve the next-ball estimate without incurring substantial extra current-return cost. A separate score check is still needed because these are hypothetical screenings. The pilot reuses the first six broad matched starts as a mechanism check, so it is not a fresh release-held confirmation of the earlier comparison.
+
 ## Reproduce
 
 ```sh
@@ -23,5 +27,7 @@ export PYTHONPATH=.:src MUJOCO_GL=egl OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 O
 python -m scripts.experimental.tt43_outgoing_coverage fit
 python -m scripts.experimental.tt43_outgoing_coverage run
 python -m scripts.experimental.tt43_outgoing_coverage_report --verify
-python -m pytest -q tests/test_tt43_outgoing_coverage.py
+python -m scripts.experimental.tt43_terminal_cues
+python -m scripts.experimental.tt43_outgoing_generation
+python -m pytest -q tests/test_tt43_outgoing_coverage.py tests/test_tt43_outgoing_generation.py
 ```
