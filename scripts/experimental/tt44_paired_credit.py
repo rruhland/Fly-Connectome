@@ -160,14 +160,14 @@ class Teacher(mpc.MPC):
         return base
 
 
-def prefix(a,c,row,tick,image,axes):
+def prefix(a,c,row,tick,image,axes,window=22):
     a.launch(row["shot"],card=c)
     a.partner.reset(seed=c["seed"])
     readings=[]
     for k,u in enumerate(row["actions"][:tick]):
         # Replay every body reference, but warm the RGB fit only on the
         # recent outgoing segment. It sees no future exposures.
-        frame=image.capture() if k>=tick-22 and k%2==0 else None
+        frame=image.capture() if k%2==0 and (window is None or k>=tick-window) else None
         readings.append((k,frame,a.joints.copy(),a.data.ctrl[axes].copy()))
         a.exchange(u,mpc.FAR_COMMAND)
     expected=[e for e in row["events"] if e["time"]<=a.data.time+1e-8]
