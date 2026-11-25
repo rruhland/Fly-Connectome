@@ -78,7 +78,7 @@ def run(a):
 
 if __name__ == "__main__":
     p = argparse.ArgumentParser(description=__doc__)
-    p.add_argument("phase", choices=("plan", "live"))
+    p.add_argument("phase", choices=("plan", "live", "frozen"))
     p.add_argument("--resume", action="store_true")
     p.add_argument("--feeds", type=Path, default=Path("/tmp/tt25-rallies.json"))
     p.set_defaults(
@@ -90,4 +90,8 @@ if __name__ == "__main__":
         out=ROOT / "live.json.gz",
     )
     a = p.parse_args()
+    if a.phase == "frozen":
+        a.mode = "frozen"
+        a.n = 32
+        a.out = ROOT / "frozen.json.gz"
     freeze() if a.phase == "plan" else run(a)
