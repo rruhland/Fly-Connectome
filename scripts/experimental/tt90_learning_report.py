@@ -1,6 +1,7 @@
 """Summarize native TT90 practice and frozen matched generalization."""
 
 from collections import Counter
+import argparse
 
 import numpy as np
 
@@ -82,4 +83,38 @@ def report():
     print(out,flush=True)
 
 
-if __name__=="__main__":report()
+def audit_practice(prefix="practice-dose16"):
+    p=tt.contract(tt.FEEDS);m,ready,_=tt.material(); src=tt.path(prefix);d=_read(src)
+    cases=[]
+    peak=max(range(len(d["rows"])),key=lambda i:d["rows"][i]["score"]["learner"])
+    for i,(c,r) in enumerate(zip(d["cards"],d["rows"])):
+        low=[v for v in r["placements"]["delivered"] if v["near_landed"] and v["receive_line"] and
+             tt.optics.projected_height(v["receive_line"])<1.0]
+        if i==peak or low:cases.append((c,r,low,i==peak))
+    result=[]
+    with tt.school.enabled(),tt.system.installed(m["v"],m["mount"]),tt.BASE.centered(ready):
+        a=tt.BASE.arena(width=64,height=48); cad=tt.BASE.arena(width=64,height=48,detail="cad")
+        guard=tt.school.physical.GripClearance(cad.model,stock=True)
+        try:
+            for c,r,low,peak in cases:
+                found=[]
+                with tt.school.contact.physical_contacts(a,found):
+                    clear=tt.validate_game(a,c,r["shot"],r,guard)
+                impacts=[]
+                for offer in low:
+                    e=offer["near_contact"]; t=e["time"]
+                    hit=min((w for w in found if w["side"]==1),key=lambda w:abs(w["time_s"]-t))
+                    if abs(hit["time_s"]-t)>1e-7:raise ValueError("Archive low differs from actual replay")
+                    impacts.append(dict(leg=offer["leg"],height=tt.optics.projected_height(offer["receive_line"]),contact=hit))
+                result.append(dict(id=c["id"],index=c["index"],peak=peak,scored=r["score"]["learner"],
+                                   strict_cad=clear,matched_events=True,hard_contacts=impacts))
+        finally:cad.close();a.close()
+    _write(tt.ROOT/(prefix+"-audit.json"),dict(native_source=_hash(src),protocol=_hash(tt.PLAN),rows=result))
+    print(result,flush=True)
+
+
+if __name__=="__main__":
+    p=argparse.ArgumentParser(description=__doc__)
+    p.add_argument("--audit-practice")
+    a=p.parse_args()
+    audit_practice(a.audit_practice) if a.audit_practice else report()

@@ -47,6 +47,18 @@ replay of the complete issued tape.
 
 [Frozen full roster](protocol.json) · [Neutral hard roster](hard.protocol.json)
 
+## First exposure checkpoint
+
+The first 16 live practice points produced 39 native returns. The
+largest uninterrupted point scored 14 and passed exact event and CAD
+replay. Two recorded openings yielded optical- and encoder-controlled
+returns below 1 m before any exact-state coaching. On release 6737 the
+0.9834 m ball hit the negative face at 55.72 mm radius. On 8129 the
+0.9853 m ball hit at 74.91 mm. Neither tape had CAD penetration. These
+are practice results, not a matched gain from the new library.
+
+[16-point issued tape](practice-dose16.json.gz) · [Earned motor checkpoint](practice-dose16.npz) · [Exact physical replay](practice-dose16-audit.json)
+
 ## Reproduce
 
 ```sh
