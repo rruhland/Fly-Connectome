@@ -65,3 +65,38 @@ def test_actuator_effect_targets_are_measured_only_on_rewarded_training_motion()
     assert hit.tolist() == [False, True]
     assert np.array_equal(delta[0, 3:], np.zeros(3))
     assert delta[1, 1] == 0.0
+
+
+def test_delayed_return_uses_only_scored_deliveries_and_real_point_end():
+    from scripts.experimental.tt44_delayed_score import labels
+
+    f = list(range(7))
+    search = {"tick": 10, "target_errors": f, "contact_delay_s": 0.1}
+    later = {"tick": 110, "target_errors": f[::-1], "contact_delay_s": 0.1}
+
+    def score(tick, side):
+        return {"kind": "legal_return", "step": tick, "side": side}
+
+    events = [score(5, -1), score(56, 1), score(96, -1), score(156, 1), score(195, -1)]
+    doc = {"events": events.copy(), "searches": [search, later]}
+    assert list(labels(doc)) == [(f, 0.0)]
+    doc["events"].append({"kind": "point", "step": 220})
+    assert list(labels(doc)) == [(f, 0.0), (f[::-1], 1.0)]
+    doc["events"] = events[:2] + [{"kind": "point", "step": 99}]
+    assert list(labels(doc)) == []
+
+
+def test_preserve_credit_multiset_in_misaligned_control():
+    from scripts.experimental.tt43_credit_control import rotate
+
+    initial = row(9.0, 9.0)
+    bank = deque([initial, row(0.1, 0.1), row(0.2, 0.2), row(0.3, 0.3)], maxlen=4)
+    before = list(bank)
+    rotate(bank, 3)
+    assert bank[0] is initial
+    assert all(
+        new[0] is old[0] and new[2] == old[2]
+        for new, old in zip(bank, before, strict=True)
+    )
+    assert all(bank[i][1] is not before[i][1] for i in range(1, 4))
+    assert {id(x[1]) for x in bank} == {id(x[1]) for x in before}
