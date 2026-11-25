@@ -49,7 +49,7 @@ def scan(geometry,path,encoder):
     return records
 
 
-def run(out=ROOT/'geometric-reach.json'):
+def run(out=ROOT/'geometric-reach.json.gz'):
     plan=_read(PLAN)
     if plan['source_sha256']!=_hash(STOCK):
         raise ValueError('Changed precise physical offer source')
