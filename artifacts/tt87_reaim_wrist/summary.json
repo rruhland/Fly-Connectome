@@ -1,0 +1,55 @@
+{
+  "frame_window_ms": [
+    66.66666666666667,
+    125
+  ],
+  "occlusion": {
+    "training": {
+      "counts": {
+        "frames": 55,
+        "full_ball_rays": 35,
+        "upper_ball_rays": 35,
+        "full_any_clear": 5,
+        "upper_any_clear": 5,
+        "full_center_clear": 4,
+        "upper_center_clear": 4,
+        "cases_two_frames_full": 1,
+        "cases_two_frames_upper": 1
+      },
+      "full_blocker": {
+        "tt29_camera_bracket": 50
+      },
+      "no_module_blocker": {
+        "tt29_camera_bracket": 50
+      }
+    },
+    "held": {
+      "counts": {
+        "frames": 37,
+        "full_ball_rays": 36,
+        "upper_ball_rays": 36,
+        "full_any_clear": 5,
+        "upper_any_clear": 5,
+        "full_center_clear": 4,
+        "upper_center_clear": 4,
+        "cases_two_frames_full": 2,
+        "cases_two_frames_upper": 2
+      },
+      "full_blocker": {
+        "tt29_camera_bracket": 32
+      },
+      "no_module_blocker": {
+        "tt29_camera_bracket": 32
+      }
+    }
+  },
+  "held_rgb": {
+    "shots": 10,
+    "stock_useful": 0,
+    "reaimed_useful": 1,
+    "reaimed_useful_id": 9230,
+    "reaimed_frustum_frames": 36,
+    "stock_frustum_frames": 0,
+    "decision_frames": 37
+  }
+}
