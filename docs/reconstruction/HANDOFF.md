@@ -1,12 +1,16 @@
 # M1B research handoff
 
+## Current verified rally
+
+The active learner made **42 legal arm returns and 43 opponent returns** in 68.62 seconds on the second preassigned game of a 128-game course. It had made 27 on the previous release and carried that learning forward. Every action, score and random request was replayed independently, with positive clearance across 32,937 solver steps. The 100-arm-return milestone is open. [Replay, full command tape and learning protocol](../../artifacts/tt46_season/README.md)
+
 ## Transfer to a new continuous opponent stream
 
 On 24 previously unused releases with new opening and reply draws, the combined history and outgoing-choice controller earned 197 legal arm returns on 218 real offers. The original made 101 on 123. Median rally length rose from two to seven arm returns, and 14 games improved versus three that shortened. Below 0.95 m at the deep receiving line, the new arm returned 16 of 26. Each motor bank learned throughout its own 24-game course. [Factor comparison and all game scores](../../artifacts/tt44_combined/README.md)
 
 ## Early motor feedback against the continuously random opponent
 
-The verified endurance record is 41 legal arm returns and 42 opponent returns on a single measured launch. Early joint feedback used the last six control ticks of camera-derived flight and joint motion. On the same assessment game, the carried controller without this change made ten returns. Both entered with identical motor memory from 12 practice games, frozen during the game. Over 12 matched launches the temporal readout made 85 to the original’s 77. The 38-return point below remains the strongest audited example with learning active inside the rally. [41-return command tape and native replay](../../artifacts/tt43_servo/random-41.json) · [Sensor history and training](../../artifacts/tt43_servo/README.md)
+The frozen temporal policy reached 41 legal arm returns and 42 opponent returns on a single measured launch. Early joint feedback used the last six control ticks of camera-derived flight and joint motion. On the same assessment game, the carried controller without this change made ten returns. Both entered with identical motor memory from 12 practice games, frozen during the game. Over 12 matched launches the temporal readout made 85 to the original’s 77. The 38-return point below gives a separate matched test of learning active inside a rally. [41-return command tape and native replay](../../artifacts/tt43_servo/random-41.json) · [Sensor history and training](../../artifacts/tt43_servo/README.md)
 
 ## Random-rally learning and retention
 
