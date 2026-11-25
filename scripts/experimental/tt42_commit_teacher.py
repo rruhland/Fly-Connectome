@@ -11,7 +11,7 @@ from . import tt38_joint_mpc as mpc
 from .tt4_transfer_trial import _hash, _read, _write
 from .tt19_view_full_game import digest_json
 from .tt29_endurance import audit
-from .tt29_rally_physics import Rollout
+from .tt29_rally_physics import BladeIK, Rollout
 from .tt33_joint import FAR_COMMAND
 from .tt37_motor_clinic import landing_error
 from .tt38_motorcoach import AIM, SIZES, answerable, schedules
@@ -115,7 +115,18 @@ class MultiBank:
 
 
 class Teacher:
-    def __init__(self, a, ready, batch, rounds, paths, *, stop_quality, fragments_only):
+    def __init__(
+        self,
+        a,
+        ready,
+        batch,
+        rounds,
+        paths,
+        *,
+        stop_quality,
+        fragments_only,
+        phase_adjust=False,
+    ):
         self.a = a
         self.ready = np.asarray(ready)
         self.batch = batch
@@ -128,6 +139,9 @@ class Teacher:
         self.bank = MultiBank(a, paths)
         self.rng = np.random.default_rng(420188)
         self.last_valid = []
+        # The geometric seed explicitly distinguishes blade faces. Feedback
+        # needs the court-oriented incident normal even on the other face.
+        self.phase_geometry = BladeIK(a) if phase_adjust else None
 
     def wave(self, curves, frames):
         return mpc.tail(curves, frames)
@@ -149,7 +163,6 @@ class Teacher:
             for i in range(3):
                 order.extend(b[i] for b in buckets.values() if len(b) > i)
         if order and not self.fragments_only:
-            np.array([1.0, 0.0, 0.0])
             z = np.zeros(len(SIZES))
             for i, base in enumerate(order[: self.batch // 2]):
                 g = schedules(
@@ -306,12 +319,21 @@ class Teacher:
                 f2.append(origin[j])
                 c2.append(clock[j])
                 app = approach[j]
-                if np.isfinite(app[0]) and 0.04 < app[0] < 0.40:
+                bound = stop if self.phase_geometry is not None else 0.40
+                if np.isfinite(app[0]) and 0.04 < app[0] < bound:
                     stem = path[np.argmin(abs(path[:, 0] - app[0])), 4:7]
-                    terms = adjustment(self.probe.ik, app, f[j], stem, mpc.HORIZON)
+                    geometry = self.phase_geometry or self.probe.ik
+                    frames = n if self.phase_geometry is not None else mpc.HORIZON
+                    terms = adjustment(geometry, app, f[j], stem, frames)
                     if terms is not None:
                         a0, b, c = terms
-                        for w, z, m in ((0.76, 0.64, 0.8), (1.06, 1.0, 1.15)):
+                        gains = ((0.76, 0.64, 0.8), (1.06, 1.0, 1.15))
+                        if self.phase_geometry is not None:
+                            # Occupy the available time with a smooth approach
+                            # rather than changing the initial motor reference.
+                            # Keep one move for contact and one for departure.
+                            gains = ((1.0, 0.24, 0.38), (0.56, 1.1, 1.28))
+                        for w, z, m in gains:
                             correction = self.wave(w * a0 + z * b + m * c, n)
                             p.append(gs[j] + correction)
                             f2.append(origin[j] + "-centered")
@@ -581,6 +603,8 @@ def run(args):
         "fragment_only": args.fragments_only,
         "rows": [],
     }
+    if args.phase_adjust:
+        out["phase_adjust"] = True
     with mpc.centered(ready):
         a = mpc.arena(protocol="random")
         a.sample_clearance(live=False)
@@ -593,6 +617,7 @@ def run(args):
                 args.banks,
                 stop_quality=args.quality,
                 fragments_only=args.fragments_only,
+                phase_adjust=args.phase_adjust,
             )
             out["earned_segments_available"] = teacher.bank.total
             for i, c, r in chosen:
@@ -717,6 +742,7 @@ if __name__ == "__main__":
     p.add_argument("--limit", type=int, default=3)
     p.add_argument("--prepare", action="store_true")
     p.add_argument("--fragments-only", action="store_true")
+    p.add_argument("--phase-adjust", action="store_true")
     a = p.parse_args()
     a.out.parent.mkdir(parents=True, exist_ok=True)
     run(a)
