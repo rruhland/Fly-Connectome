@@ -10,6 +10,10 @@ The online bank uses actual legal arm landings to credit its original joint frag
 
 The live protocol uses eight unfiltered initial season starts with the exact same starting checkpoint and complete points under the original continuous-wide TT37 opponent. The comparison is the earlier complete history-and-risk season, which also learned inside and between the games. Already captured season outcomes do not enter the fit, goal annotations, or live policy. [Frozen official schedule](official.json)
 
+## Is the next ball actually returned?
+
+A separate diagnostic freezes three already documented pairs of actual achieved strokes. It includes a hard incoming case, an ordinary case with a lower next-height tail and one where the lower-risk shape had a lower mean reply height. Each matched pair receives four fresh common draws from the original independent continuous target law. The prefix until after the earlier physical outgoing separation follows the recorded actions, keeping the actual different body states both strokes leave. The same ordinary stereo/encoder direct learner takes over and attempts the next own legal return. It starts with the same frozen motor bank in both worlds and never reads the draw, the recorded hit time or the branch label. The evaluator's timed handoff is not a new live cue. This is not a full-game or whole-policy test. [Frozen receiver comparison](receiver-plan.json)
+
 ## Reproduce
 
 ```sh
@@ -17,4 +21,8 @@ export PYTHONPATH=.:src MUJOCO_GL=egl OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 O
 python -m scripts.experimental.tt49_goal_retrieval plan
 python -m scripts.experimental.tt49_goal_retrieval run
 python -m scripts.experimental.tt49_goal_retrieval report
+python -m scripts.experimental.tt49_tactical_compare
+python -m scripts.experimental.tt49_tactical_receive plan
+python -m scripts.experimental.tt49_tactical_receive run
+python -m scripts.experimental.tt49_tactical_receive report
 ```
