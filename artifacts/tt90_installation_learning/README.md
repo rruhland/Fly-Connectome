@@ -61,6 +61,16 @@ are practice results, not a matched gain from the new library.
 
 [16-point issued tape](practice-dose16.json.gz) · [Earned motor checkpoint](practice-dose16.npz) · [Exact physical replay](practice-dose16-audit.json)
 
+The full 40-point shuffled practice scored 142 native returns across
+33 scoring points. Two different releases reached 14. The first and
+last 20 yielded 50 and 92 returns on different draws, so this is not a
+matched learning effect. The actor returned 9 of 26 sub-1 m arrivals,
+50 of 57 transition arrivals (1.000–1.047 m), and 83 of 96 ordinary
+arrivals. A scored 0.9509 m opening on release 14993 was the lowest
+ordinary practice return by this measure. All are pre-coach evidence.
+
+[40-point issued tape and optical learning packets](practice.json.gz) · [40-point earned bank](practice.npz)
+
 ## Reproduce
 
 ```sh
