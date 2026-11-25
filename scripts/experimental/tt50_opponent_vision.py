@@ -9,7 +9,7 @@ import numpy as np
 from . import tt38_joint_mpc as mpc
 from . import tt42_learning_course as course
 from .tt44_paired_credit import State, prefix
-from .tt4_transfer_trial import _read, _write
+from .tt4_transfer_trial import _read
 
 ROOT = Path("artifacts/tt50_opponent_vision")
 SRC = course.ROOT / "learning-48.json.gz"

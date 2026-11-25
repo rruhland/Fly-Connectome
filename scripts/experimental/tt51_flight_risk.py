@@ -1,6 +1,5 @@
 """Learn the conditional lower tail of a future sensory trajectory without simulator inputs."""
 
-from pathlib import Path
 
 import numpy as np
 from scipy.linalg import solve
@@ -121,7 +120,8 @@ def load():
     # Natural chronological practice retains common afterstates and their
     # class frequencies. Exclude both rare and ordinary held release IDs.
     reserved = set(rare_hold) | {r[4] for r in rows if r[1]}
-    for path in sorted((ROOT / "practice-episodes").glob("game-*.json.gz")):
+    # The deployed model was frozen at the first 35 complete chronological games.
+    for path in sorted((ROOT / "practice-episodes").glob("game-*.json.gz"))[:35]:
         episode = _read(path)
         if episode["id"] in reserved:
             continue

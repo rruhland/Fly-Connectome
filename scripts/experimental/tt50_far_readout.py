@@ -1,8 +1,6 @@
 """Forecast observed incoming ball motion before the opponent strikes, from public video."""
 
-import argparse
 from collections import deque
-from pathlib import Path
 
 import numpy as np
 from scipy.ndimage import label as connected

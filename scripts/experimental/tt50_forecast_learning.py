@@ -1,7 +1,5 @@
 """Learn residual forecaster calibration from the next ball the cameras actually see."""
 
-import argparse
-from pathlib import Path
 
 import numpy as np
 

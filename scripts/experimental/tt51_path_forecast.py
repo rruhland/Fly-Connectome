@@ -2,8 +2,7 @@
 
 import numpy as np
 from .tt4_transfer_trial import _read, _write
-from .tt50_far_readout import Predictor, appearance, descriptor, ROOT, GATES, TARGET
-from .tt50_opponent_vision import crop
+from .tt50_far_readout import Predictor, appearance, ROOT, GATES, TARGET
 from .tt51_flight_risk import Kernel, assess, sensor_future
 
 

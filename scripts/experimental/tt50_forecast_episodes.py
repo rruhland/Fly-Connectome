@@ -2,12 +2,11 @@
 
 import argparse
 from pathlib import Path
-import numpy as np
 
 from . import tt38_joint_mpc as mpc
 from . import tt42_learning_course as course
 from .tt19_view_full_game import digest_json
-from .tt4_transfer_trial import _hash, _read, _write
+from .tt4_transfer_trial import _read, _write
 from .tt50_far_readout import GATES, Predictor, ROOT, TARGET, descriptor
 
 

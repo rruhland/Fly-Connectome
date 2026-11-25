@@ -1,6 +1,5 @@
 """Select robust markerless-motion features on practice releases, then measure new streams."""
 
-from pathlib import Path
 
 import numpy as np
 
