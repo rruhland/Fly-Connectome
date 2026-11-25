@@ -61,6 +61,9 @@ def report():
         }
         result = compare(paths, 16)
         result["groups"]["rehearsal"] = result["groups"].pop("responsive")
+        result["uniform_minus_before"] = compare(
+            {"responsive": paths["uniform"], "before": paths["before"]}, 16
+        )["comparisons"]["before"]
         assessment[fixture] = result
     _write(
         folder / "results.json",
