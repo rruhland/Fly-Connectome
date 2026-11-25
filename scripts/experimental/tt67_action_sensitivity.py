@@ -321,11 +321,20 @@ def held():
         raise ValueError("Unsealed held scout or fit")
     docs={str(f):_read(f) for f in SOURCES}
     result=dict(protocol=_hash(PLAN), fit=_hash(MODEL), scouts=_hash(SCOUT), rows=[],complete=False)
+    if OUT.exists():
+        previous = _read(OUT)
+        if any(previous[k] != result[k] for k in ("protocol", "fit", "scouts")):
+            raise ValueError("Cannot resume a different frozen local sensitivity experiment")
+        result = previous
     with school.enabled():
         cad=mpc.arena(width=64,height=48,detail="cad")
         guard=school.CourtClearance(cad.model,articulated=True)
         try:
             for ci,(c,saved,lesson) in enumerate(zip(d["cases"],s["rows"],m["rows"],strict=True)):
+                if ci < len(result["rows"]):
+                    if result["rows"][ci]["id"] != c["id"]:
+                        raise ValueError("Held receipt is not an ordered prefix of this plan")
+                    continue
                 doc=docs[c["source"]]; row=doc["rows"][c["index"]]; leg=c["leg"]
                 source=dict(seed=None,target=c["original"],offered=row["placements"]["delivered"][leg],state=c["state"])
                 orders=[source]+[saved["candidates"][j] for j in saved["retained"]]

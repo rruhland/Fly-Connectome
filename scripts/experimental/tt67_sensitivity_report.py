@@ -21,18 +21,22 @@ def summarize():
             or result["protocol"] != _hash(tt.PLAN)):
         raise ValueError("Result and sealed fit/physical assignments differ")
     targets = {r["id"]: r for r in plan["cases"]}
+    strength = {r["id"]: float(np.linalg.svd(np.asarray(r["J"])[[0, 2]], compute_uv=False)[-1])
+                for r in model["rows"] if "J" in r}
     modes = ("replay", "forward")
     report = dict(fit=_hash(tt.MODEL), protocol=_hash(tt.PLAN), receipt=_hash(tt.OUT),
                   complete=result["complete"], modes=modes, rows=[], counts={}, min_clearance_mm=None,
                   cad_samples=0)
-    for group in ("source", "neighbor", "easy_neighbor", "low_neighbor"):
+    for group in ("source", "neighbor", "easy_neighbor", "low_neighbor", "strong_j_neighbor", "weak_j_neighbor"):
         report["counts"][group] = {m: Counter() for m in modes}
     for r in result["rows"]:
         source = targets[r["id"]]
         for t in r["trials"]:
             matched = t.get("results")
             original = t["order"]["seed"] is None
-            groups = ["source"] if original else ["neighbor", r["phase"]+"_neighbor"]
+            is_strong = strength.get(r["id"], 0.) >= .05
+            groups = ["source"] if original else ["neighbor", r["phase"]+"_neighbor",
+                                                    "strong_j_neighbor" if is_strong else "weak_j_neighbor"]
             if matched is None:
                 for g in groups:
                     for mode in modes:
@@ -41,7 +45,8 @@ def summarize():
             shift = np.array(t["order"]["state"])-source["state"]
             margin = float(np.linalg.norm(shift[:2]))
             m = dict(id=r["id"], phase=r["phase"], original=original, dx_cm=float(shift[0]*100),
-                     dz_cm=float(shift[1]*100), shift_cm=margin*100., seed=t["order"]["seed"], modes={})
+                     dz_cm=float(shift[1]*100), shift_cm=margin*100., seed=t["order"]["seed"], modes={},
+                     weakest_lateral_vertical_m_per_rad=strength.get(r["id"]))
             for mode in modes:
                 outcome = matched[mode]
                 safe = returning(outcome)
