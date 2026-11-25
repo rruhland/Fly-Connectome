@@ -27,3 +27,17 @@ def test_nominal_forecast_never_train_on_prospective_roster():
     assert set(p['training_ids']).isdisjoint(p['calibration_ids']+p['assessment_ids'])
     a=_read(study.ACHIEVED)
     assert a['usable']==17 and a['protocol']==_hash(study.PLAN)
+
+
+def test_real_frozen_rebound_reranks_keep_first_real_stroke_legal_but_do_not_help_rally():
+    d=_read(study.GAME)
+    assert d['complete'] and len(d['rows'])==6
+    assert sum(r['baseline'] for r in d['rows'])==30
+    assert sum(r['score']['learner'] for r in d['rows'])==16
+    changed=[r for r in d['rows'] if not r['comparison']['unchanged']]
+    assert [r['id'] for r in changed]==[14645,12265,4888]
+    for row in changed:
+        assert row['comparison']['matched_offer']
+        assert row['comparison']['first_landed']==[True,True]
+        for note in row['choices']:
+            assert note['agreed'][note['chosen']]>=note['agreed'][note['ordinary']]

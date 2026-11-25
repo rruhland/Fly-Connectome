@@ -1,7 +1,6 @@
 """Rank equally robust real strokes by the next reception predicted from the far rebound."""
 
 import argparse
-from collections import deque
 from pathlib import Path
 from unittest.mock import patch
 
@@ -412,10 +411,85 @@ def run(stage):
             m.close();cam.close();a.close()
 
 
+def report():
+    t=Teacher()
+    original=_read(CONTROL)
+    out=dict(protocol=_hash(PLAN))
+    for file in (SEE,GAME):
+        if not file.exists():
+            continue
+        d=_read(file)
+        rows=d['rows']
+        compared=[r['comparison'] for r in rows if r['comparison']['tick'] is not None]
+        same=[z for z in compared if z['matched_offer']]
+        changed=[r for r in rows if not r['comparison']['unchanged']]
+        windows=[c for r in rows for c in r['choices']]
+        observations=[o for r in rows for o in r['observed_arcs']]
+        matched=[o for o in observations if o.get('plan')]
+        s=dict(complete=d['complete'],points=len(rows),
+               scores=[[r['id'],r['baseline'],r['score']['learner']] for r in rows],
+               stock=sum(r['baseline'] for r in rows),experiment=sum(r['score']['learner'] for r in rows),
+               physical_changed_points=len(changed),first_same_incoming=len(same),
+               same_first_both_legal=sum(all(z['first_landed']) for z in same),
+               decisions=len(windows),warm_from_plan=sum(c['metrics'][c['chosen']][0][0] is not None for c in windows),
+               headline_candidates=sum(c['suggested']!=c['ordinary'] for c in windows),
+               used_motion_choices=sum(c['chosen']!=c['ordinary'] for c in windows),
+               observed_rebounds=len(observations),mapped_plan_bounce=len(matched))
+        draws=[]
+        for game in rows:
+            for o in game['observed_arcs']:
+                i=next((u for u in game['placements']['delivered']
+                        if u.get('far_contact') and u['far_contact']['step']>o['bounce_tick']
+                        and u['far_contact']['step']-o['bounce_tick']<50),None)
+                if i is None or i.get('receive_line') is None:
+                    continue
+                r=i['receive_line']
+                h=sense.response.projected(np.r_[r['xyz'],r['velocity']])[0]
+                draws.append((h,o['observed_prediction'][0],o['observed_prediction'][2],int(i['near_landed'])))
+        if len(draws)>=3:
+            g=np.asarray(draws)
+            s['compared_actual_single_draws']=dict(n=len(g),median_height_error_mm=float(1000*np.median(abs(g[:,0]-g[:,1]))),
+                corr_single_draw=float(np.corrcoef(g[:,0],g[:,1])[0,1]),next_actual_rate=float(g[:,3].mean()),
+                probability_mae=float(np.mean(abs(g[:,3]-g[:,2]))))
+        details=[]
+        for z in changed:
+            r=z['comparison']
+            if not r['matched_offer'] or r.get('leg') is None or not all(r.get('first_landed',[])):
+                continue
+            leg=r['leg']
+            forecasts=[]
+            for world in (original['rows'][z['index']],z):
+                d0=world['placements']['delivered']
+                near=d0[leg]['near_contact']['time']
+                far=d0[leg+1]['far_contact']['time'] if len(d0)>leg+1 and d0[leg+1]['far_contact'] else np.inf
+                f=rebound(world['events'],near,far)
+                forecasts.append(t.predict(f).tolist() if f is not None else None)
+            c=next(a for a in z['choices'] if a['chosen']!=a['ordinary'])
+            comp=dict(id=z['id'],tick=r['tick'],completed=[z['baseline'],z['score']['learner']],
+                      plan=[c['metrics'][c[key]][0] for key in ('ordinary','chosen')],
+                      achieved=forecasts,first_actual_next=r['next'])
+            details.append(comp)
+        if details:s['matched_first_afterstates']=details
+        if matched:
+            a=np.array([o['actual'] for o in matched])
+            b=np.array([o['plan']['feature'] for o in matched])
+            pred=np.array([t.predict(o) for o in b])
+            cal=np.array([t.predict(o+np.array(d['bias'])) for o in b])
+            target=np.array([o['observed_prediction'] for o in matched])
+            s['plan_to_camera']=dict(median_scaled_drift=float(np.median(np.linalg.norm((a-b)/t.scale,axis=1))),
+                projected_height_gap_median_mm=float(1000*np.median(abs(pred[:,0]-target[:,0]))),
+                calibrated_height_gap_median_mm=float(1000*np.median(abs(cal[:,0]-target[:,0]))),
+                median_plan_support=float(np.median(pred[:,3])),median_real_support=float(np.median(target[:,3])))
+        out[d['mode']]=s
+    _write(ROOT/'summary.json',out)
+    print(out,flush=True)
+
+
 if __name__=='__main__':
     cli=argparse.ArgumentParser(description=__doc__)
-    cli.add_argument('stage',choices=('fit','pairs','calibration','games'))
+    cli.add_argument('stage',choices=('fit','pairs','calibration','games','report'))
     t=cli.parse_args().stage
     if t=='fit':fit()
     elif t=='pairs':verify()
+    elif t=='report':report()
     else:run(t)
