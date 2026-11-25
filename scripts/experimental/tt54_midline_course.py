@@ -191,7 +191,7 @@ def restore_body(engine,saved,eye):
     engine.latest=eye.eye.latest
 
 
-def one(a,res,actor,root_state,camera_state,engine_state,c,live,p,template,seed,target,stage,index,check):
+def one(a,res,actor,root_state,camera_state,engine_state,c,live,p,template,seed,target,stage,index,check,*,family=None):
     camera,rig,stride,lo,hi=res;axes=a._arm_ids[1][2];leg=p['leg'];cut=p['cut']
     root_state.restore(a);a.card=dict(c,reply_seed=seed)
     eye=deepcopy(camera_state)
@@ -204,13 +204,13 @@ def one(a,res,actor,root_state,camera_state,engine_state,c,live,p,template,seed,
             return dict(index=index,stage=stage,status='ended_during_fixed_posture',variants={})
     common=State(a);q0=a.joints.copy(); home=a.data.ctrl[axes].copy(); states={}
     engine_common=body_snapshot(actor.engine)
-    for mode in ('stock','learned'):
+    for mode in ('stock','learned') if family is None else ('stock','learned','family'):
         common.restore(a); e=deepcopy(eye)
         actor.begin()
         # The isolated body was warmed on encoder and issued-reference
         # history. No native dynamic state or future teacher pose is copied.
         restore_body(actor.engine,engine_common,e)
-        actor.templates=template if mode=='learned' else None
+        actor.templates=template if mode=='learned' else family if mode=='family' else None
         guarded(a,check);began=float(a.data.time);controls=[];log=[]
         try:
             for t in range(cut,cut+145):
@@ -233,9 +233,10 @@ def one(a,res,actor,root_state,camera_state,engine_state,c,live,p,template,seed,
                 clearance=shape,offer=o)
         finally:
             a.sample_clearance(False)
-    u,v=(states[k]['offer'] for k in ('stock','learned'))
-    matched=bool(u and v and all(same_trace(u[k],v[k]) for k in ('far_contact','near_bounce')))
-    if u and v and not matched:
+    u=states['stock']['offer']
+    matched=bool(u and all(v['offer'] and all(same_trace(u[k],v['offer'][k]) for k in ('far_contact','near_bounce'))
+                           for v in states.values()))
+    if all(v['offer'] for v in states.values()) and not matched:
         raise ValueError('Causal contrast changed incoming physical ball')
     if any(z['placements']['requested'][leg]['target']!=list(target) for z in states.values()):
         raise ValueError('Unexpected physical target')

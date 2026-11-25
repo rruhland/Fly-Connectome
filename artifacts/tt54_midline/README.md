@@ -8,10 +8,18 @@ The prepared branch begins 1.2 s before its finish-ready state. The largest join
 
 The optical packet uses the shared `RGBTaught` waveform schema. Nominal paddle geometry and encoder readouts identify the closest optically observed ball-to-blade phase. The template at virtual y = −1.10 m is extrapolated from the last uninterrupted RGB fit because the physical strike came earlier. The true contact tick and true plane coordinates are not consulted by extraction or issuance. Actual scalar legal and answered rewards authorize the stored waveform.
 
+## What can be learned from the acquired body?
+
+The standard RGB/encoder controller and optical retiming of the earned waveform both returned the exact teacher ball from the same physically attained posture. Both missed all four small graded neighbors and all four independent same-law TT37 draws in a fixed nearby-request rectangle. The similar contact times were not enough. The same first template could turn centimeters of incoming variation into sharply different rebounds, from strongly upward with no forward motion to softly downward despite positive forward motion. No broad block was opened. Those are matched local start-state exercises, not a whole-rally comparison. [Fixed optically phased cohort](forecourt-protocol.json) · [Paired actual results](forecourt-course.json.gz)
+
+A bounded true-state coach ran only during practice on the four physically delivered neighboring failures. It explored signed direct drive and contact adjustments and preferred shorter radial distance among the shortlisted strokes, then submitted at most two physical candidates per neighbor. The small lateral and lower-height variants each yielded a separately landed and answered arm strike on the same original physical offer. Both scored tapes passed complete independent strict CAD verification and were then turned into two new RGB/encoder templates. Both remained rim contacts, with model-estimated radial positions of about 76 and 73 mm. Neither a center-hit solution nor robust forecourt coverage was established during practice. [Preassigned companion training and held aims](refine-protocol.json) · [Bounded physical training and RGB observations](refine.json.gz)
+
 ```sh
 export PYTHONPATH=.:src MUJOCO_GL=egl OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 OMP_THREAD_LIMIT=1 LP_NUM_THREADS=1
 python -m scripts.experimental.tt54_midline run
 python -m scripts.experimental.tt54_midline_posture run
 python -m scripts.experimental.tt54_midline_course capture
 python -m scripts.experimental.tt54_midline_course run
+python -m scripts.experimental.tt54_midline_refine run
+python -m scripts.experimental.tt54_midline_transfer
 ```
