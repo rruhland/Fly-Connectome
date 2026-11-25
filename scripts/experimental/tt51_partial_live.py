@@ -145,7 +145,8 @@ def run(path,n,predict_path=None):
                                                 observed_future_forecasts=[] if predict is None else predict.estimates)
                     finally:
                         p.close()
-                if len({v["memory"]["before"] for v in row["runs"].values()})!=1:
+                memories=[v["memory"]["before"] for v in row["runs"].values()]
+                if memories[0]!=memories[1]:
                     raise ValueError("Opening motor memory differed between variants")
                 doc["rows"].append(row);_write(path,doc)
                 print(c["id"],[(k,v["score"]["learner"],v["readiness_ticks"],v["optical_updates"])
