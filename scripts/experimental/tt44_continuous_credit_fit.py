@@ -69,7 +69,8 @@ class Local:
 
 def fit(new,paired,out):
     data=_read(new); base=_read(paired)
-    if not data.get("complete") or data["outbound"] or data["pairs_sha256"]!=_hash(paired):
+    if (not data.get("complete") or data["outbound"] or data.get("keep_to",-.53)!=-.53
+            or data["pairs_sha256"]!=_hash(paired)):
         raise ValueError("Fit only complete early-after-far practice")
     packets=[]
     guard=[]

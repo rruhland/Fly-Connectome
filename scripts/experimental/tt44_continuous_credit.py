@@ -28,7 +28,7 @@ ARM_CUE=(-.53,1.32)
 def sensed_look(x,ticks):
     h=np.clip(ticks*mpc.DT,-.06,.18)
     if h>0.:
-        h=min(h,(x[1]+.56)/max(-x[4],1.15))
+        h=min(h,max(0.,(x[1]+.56)/max(-x[4],1.15)))
     look=x.copy()
     look[:3]+=h*x[3:6]
     look[2]-=4.905*h*h
@@ -39,11 +39,12 @@ def sensed_look(x,ticks):
 
 
 class Continuous(Teacher):
-    def __init__(self,*args,parameter=None,outbound=False,chooser=None,**kwargs):
+    def __init__(self,*args,parameter=None,outbound=False,chooser=None,keep_to=-.53,**kwargs):
         super().__init__(*args,**kwargs)
         self.parameter=np.zeros(6) if parameter is None else np.asarray(parameter)
         self.outbound=outbound
         self.chooser=chooser
+        self.keep_to=keep_to
         self.active=None
 
     def begin(self):
@@ -64,7 +65,7 @@ class Continuous(Teacher):
                 self.diag["outbound_prep_ticks"]+=1
                 return out
             self.active=None
-        if x[4]>=-.90 or not ARM_CUE[0]<x[1]<ARM_CUE[1]:
+        if x[4]>=-.90 or not self.keep_to<x[1]<ARM_CUE[1]:
             return base
         if self.active is None:
             if self.chooser is None:
@@ -79,7 +80,7 @@ class Continuous(Teacher):
         look=sensed_look(x,k[0]*ENVELOPE[0])
         move,conf=self.raw.get(look,q)
         lead=base.copy() if move is None else home+conf*(move-home)
-        frame=np.clip((x[1]+.53)/.31,0.,1.)*np.clip((1.32-x[1])/.47,0.,1.)
+        frame=np.clip((x[1]-self.keep_to)/.31,0.,1.)*np.clip((1.32-x[1])/.47,0.,1.)
         # Encoder position and its error relative to prior references guard
         # the offsets against forcing a motor already far behind.
         offset=k[1:]*ENVELOPE[1:]
@@ -139,7 +140,7 @@ def reset_setup(a,c,old,image,boot,outbound):
     return current,readings,frozen
 
 
-def collect(plan,paired,output,limit,batch,refine,outbound,ids=None):
+def collect(plan,paired,output,limit,batch,refine,outbound,ids=None,keep_to=-.53):
     ps=_read(plan)
     base=_read(paired)
     if base["plan_sha256"]!=_hash(plan) or not base.get("complete"):
@@ -153,10 +154,10 @@ def collect(plan,paired,output,limit,batch,refine,outbound,ids=None):
     boot=np.asarray(_read(mpc.BANK.with_suffix(".json"))["ready"])
     motor=servo.reload(servo.ROOT/"prior.npz")
     report=dict(schema="tt44-continuous-causal-practice-1",pairs_sha256=_hash(paired),plan_sha256=_hash(plan),
-                batch=batch,refine=refine,outbound=outbound,bounds=ENVELOPE.tolist(),roster=roster,rows=[])
+                batch=batch,refine=refine,outbound=outbound,keep_to=keep_to,bounds=ENVELOPE.tolist(),roster=roster,rows=[])
     if output.exists():
         before=_read(output)
-        if any(before.get(k)!=v for k,v in report.items() if k!="rows"):
+        if any(before.get(k,-.53 if k=="keep_to" else None)!=v for k,v in report.items() if k!="rows"):
             raise ValueError("Output is from a different practice condition")
         report=before
     with mpc.centered(boot):
@@ -165,7 +166,7 @@ def collect(plan,paired,output,limit,batch,refine,outbound,ids=None):
         with patch.object(mpc,"Fragments",lambda b,e:Carried(b,e,practice=[course.PRACTICE],
                                                              held={c["id"] for c in ps["held"]})):
             actor=Continuous(mpc.BANK,raw,variant="elastic",budget=28,policy="stock",
-                             motor=motor,outbound=outbound)
+                             motor=motor,outbound=outbound,keep_to=keep_to)
         try:
             for c in roster[len(report["rows"]):]:
                 _,source=old_series[c["source"]]
@@ -223,6 +224,7 @@ if __name__=="__main__":
     p.add_argument("--refine",type=int,default=2)
     p.add_argument("--outbound",action="store_true")
     p.add_argument("--ids",type=int,nargs="+")
+    p.add_argument("--keep-to",type=float,choices=(-.53,-.91),default=-.53)
     a=p.parse_args()
     a.output.parent.mkdir(parents=True,exist_ok=True)
-    collect(a.plan,a.paired,a.output,a.limit,a.batch,a.refine,a.outbound,a.ids)
+    collect(a.plan,a.paired,a.output,a.limit,a.batch,a.refine,a.outbound,a.ids,a.keep_to)
