@@ -27,6 +27,12 @@ The optical actor starts in the original boot state. Outbound stereo motion trig
 
 The first frozen pilot used the first two direct-course assessment cards and the stock checkpoint after 12 live practice games. Pilot scores were 1 and 1 versus 5 and 10 stock. The optical policy reached within 0.02–0.06 rad of the new hub on recorded inbound cues in 9550 and returned its first ordinary ball on a new early negative-face movement. It also made a physical first return in the second game. One of its next nominally legal early plans on 9550 actually sent the ball back into its own half. The initial pilot commits a pre-bounce plan without adjusting it to the rebound, an avoidable limitation. In the follow-up on those identical cards, giving the deep trajectory back to the stock robust planner at observed rebound raised 9550 from 1 to 2 and left 15665 at 1. This does not preserve ordinary performance. A separate live practice card, 10329, started with the physically earned 4322 correction and made no legal arm return, so it did not update that correction bank. Exact independent action replay verified every referee event and original random target draw. The opening deliveries match stock within 1e−8 numerical tolerance. In all four pilot games, full CAD found zero penetrations across 7,610 states, with a 15.0 mm minimum clearance. These are small pilots, not a score-improving qualification. [Original fixed-hub games](held.json.gz) · [Deep bounce handoff](handoff.json.gz) · [Disjoint practice](practice.json.gz) · [Matched frozen control](../tt42/after12.json.gz) · [Original replay](held-audit.json) · [Handoff replay](handoff-audit.json)
 
+## Low approaches with a camera-initialized actor
+
+The cold fixed-hub actor was given the original continuous physical histories until just after the previous outbound collision on 4322 and 8302. The beginning of the intervention was scheduled for evaluation, but afterward the controller saw only RGB, own encoders and own issued commands. It reached the declared posture within 0.89 mrad and 7.38 mrad when it first saw the incoming balls. Both incoming events and bounces matched stock. It returned neither. On 4322, its first reliable inbound fit had no admissible geometry, and later it evaluated 160 low-hub proposals without a legal landing in its isolated model. On 8302 it never admitted a low-hub proposal. CAD found zero penetrations across 7,595 states. The gap to exact-state low 4322 is not an inability to reach the starting posture. [Matched camera forks](camera-low.json.gz)
+
+A narrower low specialist is available for testing. It augments the camera fit with five fixed plausibly different vertical/longitudinal states, generates direct signed shallow strikes using each, and may seed their motor corrections with one physically scored example from a disjoint source. Before rebound, a proposal outside the nominal fit can only issue a temporary approach, not a full stroke. A refreshed fit must produce a nominal legal isolated rollout before a candidate commits. This is a motion-generation change, and preserves the ordinary policy when a viable normal-depth sequence already exists or the easy projected height is above 1.027 m.
+
 ## Reproduce
 
 ```sh
@@ -42,5 +48,7 @@ python -m scripts.experimental.tt43_stance_audit "$out/held.json.gz" "$out/held-
 python -m scripts.experimental.tt43_stance_live --handoff --output "$out/handoff.json.gz"
 python -m scripts.experimental.tt43_stance_audit "$out/handoff.json.gz" "$out/handoff-audit.json"
 python -m scripts.experimental.tt43_stance_live --handoff --teacher "$out/native-teacher.json.gz" --mode live --deck practice --start 12 --limit 1 --output "$out/practice.json.gz"
+python -m scripts.experimental.tt43_stance_matched
+python -m scripts.experimental.tt43_stance_matched --ensemble --teacher "$out/native-teacher.json.gz" --cases 1 2 --output "$out/camera-low-transfer.json.gz"
 python -m pytest -q tests/test_tt43_stance.py
 ```

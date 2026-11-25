@@ -35,10 +35,10 @@ def geometry(chart, row, with_replay=True):
     return candidates
 
 
-def path_options(chart, path, phase=0., *, seed=None, signed_seed=0, quick=False):
+def path_options(chart, path, phase=0., *, seed=None, signed_seed=0, quick=False, depths=DEPTHS):
     positions = []
     if len(path):
-        for y in DEPTHS:
+        for y in depths:
             if path[:, 2].min() <= y <= path[:, 2].max():
                 positions.append(path[np.argmin(abs(path[:, 2]-y))])
     ik = chart.ik
