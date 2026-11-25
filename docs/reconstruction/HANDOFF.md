@@ -1,5 +1,9 @@
 # M1B research handoff
 
+## Early motor feedback against the continuously random opponent
+
+The verified endurance record is 41 legal arm returns and 42 opponent returns on a single measured launch. Early joint feedback used the last six control ticks of camera-derived flight and joint motion. On the same assessment game, the carried controller without this change made ten returns. Both entered with identical motor memory from 12 practice games, frozen during the game. The separate 38-return point below remains the strongest audited example with learning active inside the rally. [41-return command tape and native replay](../../artifacts/tt43_servo/random-41.json) · [Sensor history and training](../../artifacts/tt43_servo/README.md)
+
 ## Random-rally learning and retention
 
 The new prospective direct-joint course produced 38 legal arm returns and 39 opponent returns in one 61.96-second rally. Replaying the 3,718 issued joint commands reproduced every score and all 39 continuous opponent draws. All 29,739 sampled CAD clearances were positive. [Physical replay receipt](../../artifacts/tt42/random-38.json) · [Joint command tape](../../artifacts/tt42/random-38-tape.json.gz)
