@@ -73,7 +73,10 @@ def run(a):
         actor = servo.Temporal
     else:
         risk = shot.Coverage(_read(RISK))
-        actor = lambda *args, **kwargs: Hybrid(*args, **kwargs, coverage=risk)
+        controller = shot.Actor if a.actor == "risk" else Hybrid
+
+        def actor(*args, **kwargs):
+            return controller(*args, **kwargs, coverage=risk)
     ordinary = course.mpc.play
 
     def play(*args, **kwargs):
@@ -95,7 +98,7 @@ def run(a):
 
 if __name__ == "__main__":
     p = argparse.ArgumentParser(description=__doc__)
-    p.add_argument("actor", choices=("plan", "stock", "history", "hybrid"))
+    p.add_argument("actor", choices=("plan", "stock", "history", "risk", "hybrid"))
     p.add_argument("out", type=Path, nargs="?")
     p.add_argument("--mode", default="live", choices=("live", "frozen"))
     p.add_argument("--n", default=24, type=int)

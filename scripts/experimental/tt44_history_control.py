@@ -28,6 +28,8 @@ def fit():
 
 
 def run(a):
+    if a.out.with_suffix("").with_suffix(".npz").resolve() == OUT.resolve():
+        raise ValueError("Choose a game output separate from the input readout")
     read = servo.reload
     with patch.object(servo, "reload", lambda path: read(OUT)):
         servo.run(a)
