@@ -41,3 +41,20 @@ def test_actuator_template_is_smooth_and_saturating():
     ramp = model.smooth(10)
     assert ramp[0, 0] > 0 and ramp[-1, 0] == 1
     assert np.all(np.diff(ramp[:,0]) >= 0)
+
+
+def test_native_primary_receipt_matches_incoming_and_keeps_original_controls():
+    from scripts.experimental import tt67_sensitivity_report as report
+    from scripts.experimental.tt4_transfer_trial import _hash, _read
+
+    r = _read(report.REPORT)
+    assert r["complete"] and r["receipt"] == _hash(model.OUT)
+    assert r["counts"]["source"]["replay"]["answered"] == 6
+    assert r["counts"]["source"]["forward"]["answered"] == 6
+    assert r["counts"]["neighbor"]["forward"]["matched"] == 18
+    assert r["counts"]["neighbor"]["replay"]["matched"] == 18
+    assert [r["counts"]["neighbor"][m]["safe"] for m in r["modes"]] == [9, 10]
+    assert r["min_clearance_mm"] > 0
+    witness = next(x for x in r["rows"] if x["id"] == 5463 and x["recovered"])
+    assert witness["shift_cm"] > 5.5
+    assert witness["modes"]["forward"]["contact_radius_cm"] < 5.
