@@ -1,6 +1,6 @@
 # 63 legal arm returns on new opponent draws
 
-A clamped SO-101 made 63 consecutive legal returns. The simulated opponent landed 64. Both stayed in the same point for 100.15 seconds. A second simulation replayed all 6,009 arm commands, checked every random target against its assigned stream, and reproduced all native referee events and placements. The minimum arm clearance across 48,070 physics steps was 15.29 mm. Median post-impact ball speed was 5.04 m/s. [Physical replay receipt](random-63.json) · [Complete command and event tape](random-63-tape.json.gz)
+A clamped SO-101 made 63 consecutive legal returns. The simulated opponent landed 64. Both stayed in the same point for 100.15 seconds. A second simulation replayed all 6,009 arm commands, checked every random target against its assigned stream, and reproduced all native referee events and placements. The minimum arm clearance across 48,070 physics steps was 15.29 mm. Median post-impact ball speed was 5.04 m/s. [Watch the uninterrupted point](watch-63.mp4) · [Physical replay receipt](random-63.json) · [Complete command and event tape](random-63-tape.json.gz)
 
 ## Did the arm learn while the ball was in play?
 
