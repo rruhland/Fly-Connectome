@@ -59,3 +59,53 @@ def test_later_joint_control_is_queried_at_the_result_of_each_prefix():
         np.testing.assert_array_equal(tape[:3], prefixes[i, :3])
         np.testing.assert_allclose(tape[3:], np.full((21, 6), seen[i][1][0]))
         np.testing.assert_allclose(seen[i][2], 0.25)
+
+
+def test_shared_body_miss_feedback_learns_signed_reachable_motion():
+    from scripts.experimental.tt45_error_learning import Learning
+
+    geometry = SimpleNamespace(
+        pose=lambda q, jacobian: (
+            np.zeros(3),
+            np.array([0.0, 1.0, 0.0]),
+            np.eye(3, 5),
+            np.zeros((3, 5)),
+        )
+    )
+    key = np.zeros(16)
+    model = Learning()
+    zero = np.zeros(5)
+    assert (
+        model.update(
+            key, (zero, np.array([0.1, 0.0, 0.0]), None), zero, False, geometry
+        )
+        == "no_scored_example"
+    )
+    model.update(key, (zero, np.zeros(3), None), zero, True, geometry)
+    assert (
+        model.update(
+            key, (zero, np.array([0.1, 0.0, 0.0]), None), zero, False, geometry
+        )
+        == "proximity_error"
+    )
+    assert 0.02 < model.apply(key)[0] < 0.1
+    np.testing.assert_allclose(model.apply(key)[1:], 0.0)
+
+
+def test_optical_feedback_corrects_the_moving_hand_not_just_the_ball():
+    from scripts.experimental.tt45_visual_tracking import corrected
+
+    goal = np.zeros(6)
+    at_search = np.zeros(17)
+    at_search[4] = -3.0
+    new = at_search[:6].copy()
+    new[0] += 0.01
+    jac = np.eye(3, 5)
+    q = np.zeros(5)
+    ahead = corrected(goal, new, q, at_search, jac, 0.08)
+    assert 0.0 < ahead[0] < 0.02
+    q[0] = 0.01
+    np.testing.assert_array_equal(corrected(goal, new, q, at_search, jac, 0.08), goal)
+    np.testing.assert_array_equal(
+        corrected(goal, new, q * 0, at_search, jac, 0.02), goal
+    )
