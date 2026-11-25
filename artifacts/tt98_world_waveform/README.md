@@ -24,6 +24,8 @@ On 11133 the correction issued one genuinely different legal, answered stroke. I
 
 The independent eight-release paired schedule was registered before held results. It excludes TT84, TT90, TT98 teacher and matched-fork releases. Both variants play the identical canted installation, standard reactive opponent and 48-point starting carry. Both can earn actual online movement credit. On each point the only optional difference is the ordinary waveform correction. [Frozen normal-game roster](games.protocol.json)
 
+Both sides scored **44 total**, with a peak of **26**. All eight joint-rate and native event tapes matched exactly, and the ending learned banks were byte-identical. Two eligible camera windows proposed 12 counterfactual motions, none of which were cleared under the optical gate. This is a completed whole-point result with no intervention, rather than evidence of an improved ordinary game. All 82,624 CAD solver samples across both sides were clear. [Exact paired results](whole-point-comparison.json) · [Normal tapes](normal.json.gz) · [Correction tapes](transport.json.gz)
+
 ## Reproduce
 
 ```sh
@@ -34,5 +36,6 @@ python -m scripts.experimental.tt98_world_waveform fit
 python -m scripts.experimental.tt98_world_waveform held
 python -m scripts.experimental.tt98_world_waveform normal
 python -m scripts.experimental.tt98_world_waveform transport
+python -m scripts.experimental.tt98_world_waveform paired
 python -m pytest -q tests/test_tt98_world_waveform.py
 ```
