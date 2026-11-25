@@ -11,6 +11,7 @@ from . import tt46_continuous_season as season
 from . import tt51_low_reverse_curriculum as optical
 from . import tt54_earned_low_flights as bank
 from . import tt54_midline_course as cams
+from .tt55_midline_margin import physical_contacts
 from . import tt40_low_feasibility as physical
 from .tt4_transfer_trial import _hash, _read
 from .tt19_view_full_game import digest_json
@@ -78,13 +79,15 @@ def photo(eye,a,cam,t):
     return q,x,b
 
 
-def peek(a,actor,cam,c,old,case,anchor,root,eye0,body0,want):
+def peek(a,actor,cam,c,old,case,anchor,root,eye0,body0,want,*,earlier=False):
     a.card=dict(c);root.restore(a);leg=case['leg'];a.card=changed(c,leg,want['seed'])
     axes=a._arm_ids[1][2];eye=deepcopy(eye0);cams.restore_body(actor.engine,body0,eye)
     gate=None;rgb=[];end=False
     for t in range(anchor,min(anchor+112,len(old['actions']))):
         q,x,b=photo(eye,a,cam,t);ref=a.data.ctrl[axes].copy()
-        if gate is None and b and -.91<x[1]<-.60 and x[2]>.774:
+        before_bounce=x is not None and x[4]<-.95 and -.43<x[1]<-.14 and x[2]>.79
+        settled=b and -.91<x[1]<-.60 and x[2]>.774
+        if gate is None and (before_bounce if earlier else settled):
             gate=dict(time=t,eye=deepcopy(eye),body=cams.body_snapshot(actor.engine),native=State(a),
                       first=(q,x,b),ref=ref.tolist())
         if x is not None and b and -1.31<x[1]<-.98:
@@ -177,17 +180,24 @@ def proof(a,ready,card,seed,case,anchor,old,gate,earned,clear):
     try:
         arena.launch(old['shot'],card=card);arena.partner.reset(seed=card['seed']);guarded(arena,clear)
         tape=old['actions'][:gate]+earned['controls']
-        for t,u in enumerate(tape):
-            if t==anchor:arena.card=changed(card,case['leg'],seed)
-            if max(abs(np.asarray(u)))>.8+1e-10:
-                raise ValueError('Signed rated bounds changed')
-            arena.exchange(u,mpc.FAR_COMMAND)
+        seen=[]
+        with physical_contacts(arena,seen):
+            for t,u in enumerate(tape):
+                if t==anchor:arena.card=changed(card,case['leg'],seed)
+                if max(abs(np.asarray(u)))>.8+1e-10:
+                    raise ValueError('Signed rated bounds changed')
+                arena.exchange(u,mpc.FAR_COMMAND)
         if any(digest_json(a)!=digest_json(b) for a,b in ((earned['events'],arena.events),
                                                           (earned['placements'],arena.point_placements()))):
             raise ValueError('Independent actual train conversion failed exact replay')
         c=arena.clearance_result()
         if c['samples']!=round(arena.data.time/arena.model.opt.timestep):
             raise ValueError('Full witness skipped physical states')
+        hit=earned['offer']['near_contact']['time']
+        selected=[r for r in seen if r['side']==1 and abs(r['time_s']-hit)<1e-7]
+        leave=next((e for e in earned['events'] if e.get('collider')=='learner_racket' and hit<e['time']<hit+.09),None)
+        c['credited_contact']=selected[0] if selected else None
+        c['credited_departure_velocity']=leave['velocity'] if leave else None
         return c
     finally:
         arena.close()
@@ -277,6 +287,7 @@ def experiment(stage,out):
     if schedule['sources_sha256']!=_hash(SOURCES) or schedule['earned_sha256']!=_hash(EARNED):
         raise ValueError('Reward source bundle changed')
     coach_library=None
+    initial_library=None
     if stage=='held':
         prior=_read(TRAINING)
         if not prior['complete']:
@@ -287,7 +298,8 @@ def experiment(stage,out):
             return
         base=[dict(t,release=t['case']['release']) for t in seeds['rows'] if t['case']['release'] not in VALID]
         lots=[dict(t) for t in earned['templates'] if t['release'] not in VALID]
-        coach_library=base+lots+novel
+        initial_library=base+lots
+        coach_library=initial_library+novel
         if {r['release'] for r in coach_library}&set(VALID):
             raise ValueError('Held sources contributed a trained motor')
     receipt=_read(out) if out.exists() else dict(plan_sha256=_hash(PLAN),stage=stage,rows=[],templates=[],complete=False)
@@ -305,7 +317,8 @@ def experiment(stage,out):
             a=mpc.arena();cad=mpc.arena(detail='cad',width=64,height=48);clear=CourtClearance(cad.model,articulated=True)
             res=mpc.resources(a);cam,rig,*_=res; axes=a._arm_ids[1][2]
             actor=Viewer(mpc.BANK,raw,variant='elastic',budget=28,coverage=fresh.shot.Coverage(_read(fresh.RISK)))
-            teacher=physical.TapeProbe(a,steering=True) if stage=='train' else None
+            geometry=bool(schedule.get('coaching_family')=='signed_geometry')
+            teacher=(physical.Probe(a) if geometry else physical.TapeProbe(a,steering=True)) if stage=='train' else None
             try:
                 a.launch(old['shot'],card=c);a.partner.reset(seed=c['seed']);actor.begin()
                 eye=mpc.Vision(rig,a.control_dt,raw=True);eye.eye=mpc.LearnedOptics(eye.eye,course.OPTIC)
@@ -319,7 +332,8 @@ def experiment(stage,out):
                     raise ValueError('Previous physical stroke or opponent boundary changed')
                 root=State(a);engine=cams.body_snapshot(actor.engine);starts={}
                 for draw_id,p in enumerate(item['draws']):
-                    got,g=peek(a,actor,cam,c,old,case,anchor,root,eye,engine,p)
+                    got,g=peek(a,actor,cam,c,old,case,anchor,root,eye,engine,p,
+                               earlier=schedule.get('public_earlier_gate',False))
                     if g is not None: starts[p['seed']]=g
                     report['scouts'].append(got|{'draw_index':draw_id})
                 picked=choose(report['scouts'],case,schedule['limits']['maximum_variants'])
@@ -331,13 +345,17 @@ def experiment(stage,out):
                     result=dict(scout=p,stock=stock,trained=None)
                     report['branches'].append(result)
                     if stage=='held':
+                        actor.repertoire=initial_library
+                        older=play(a,actor,res,gate,p,'initial',c,case,home)
+                        result['initial']=older|{'candidate_decisions':actor.augmentation}
                         actor.repertoire=coach_library
                         test=play(a,actor,res,gate,p,'learned',c,case,home)
-                        result['learned']=test|{'candidate_decisions':actor.augmentation}
-                        if not same(stock['offer'],test['offer']):raise ValueError('Held comparison changed actual delivered opportunity')
                         if test['answered']:
                             test['full_cad']=proof(a,home,c,p['seed'],case,anchor,old,gate['time'],test,clear)
-                        print('held',c['id'],stock['answered'],test['answered'],len(actor.augmentation),flush=True)
+                        result['learned']=test|{'candidate_decisions':actor.augmentation}
+                        if not all(same(stock['offer'],r['offer']) for r in (older,test)):
+                            raise ValueError('Held comparison changed actual delivered opportunity')
+                        print('held',c['id'],stock['answered'],older['answered'],test['answered'],len(actor.augmentation),flush=True)
                         continue
                     if stock['answered'] or stock['offer'] is None:
                         continue
@@ -350,7 +368,8 @@ def experiment(stage,out):
                     guide['placements']['delivered'][leg]['near_contact']={'time':float(a.data.time)+arrival}
                     try:
                         a.clearance_margin=.0006
-                        options,stats=teacher.search([560321,c['seed'],p['seed']],schedule['limits']['batch'],schedule['limits']['rounds'],guide,tick,leg)
+                        tuning=([560321,c['seed'],p['seed']],schedule['limits']['batch'],schedule['limits']['rounds'])
+                        options,stats=teacher.search(*tuning) if geometry else teacher.search(*tuning,guide,tick,leg)
                     finally:a.clearance_margin=0.
                     options.sort(key=lambda z:(z['feedback'][8]>.065,z['cost']+8*z['feedback'][8]))
                     result['trained']=dict(stats=stats,actual=[])
@@ -383,6 +402,10 @@ def experiment(stage,out):
 if __name__=='__main__':
     ap=argparse.ArgumentParser(description=__doc__)
     ap.add_argument('phase',choices=('plan','train','held'));ap.add_argument('--out',type=Path)
+    ap.add_argument('--protocol',type=Path,default=PLAN)
+    ap.add_argument('--earned-training',type=Path,default=TRAINING)
     args=ap.parse_args()
+    PLAN=args.protocol
+    TRAINING=args.earned_training
     if args.phase=='plan':plan()
     else:experiment(args.phase,args.out or (TRAINING if args.phase=='train' else HELD))
