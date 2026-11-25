@@ -31,12 +31,24 @@ class WithTeacher(Carried):
         stock = super().priors(x, q, reference, limit)
         if not self.use or x[4] > -0.9 or len(self.teacher.rows) == 0 or len(stock) < 3:
             return stock
+        proposals = []
+        for adjusted, _, d in self.offers(x, q, reference):
+            proposals.append((adjusted, True))
+            self.admissions.append(d)
+            if len(proposals) >= min(2, max(0, len(stock) - 2)):
+                break
+        return stock[: len(stock) - len(proposals)] + proposals
+
+    def offers(self, x, q, reference, diag=None):
+        if not self.use or x[4] > -0.9 or len(self.teacher.rows) == 0:
+            return
         key = mpc.query(x, q, reference)
         ds, ids = self.teacher.tree.query(key, min(len(self.teacher.rows), 140))
-        proposals = []
         used = set()
         for d, i in zip(np.atleast_1d(ds), np.atleast_1d(ids), strict=True):
             if d > 2.65:
+                if diag is not None:
+                    diag.append(["outside support", float(d)])
                 break
             context, seq, label = self.teacher.rows[i]
             if label in used:
@@ -51,12 +63,8 @@ class WithTeacher(Carried):
             adjusted[:, :5] += (
                 0.28 * (1.0 - np.arange(mpc.HORIZON)[:, None] / mpc.HORIZON) * offset
             )
-            proposals.append((adjusted, True))
             used.add(label)
-            self.admissions.append(float(d))
-            if len(proposals) >= min(2, max(0, len(stock) - 2)):
-                break
-        return stock[: len(stock) - len(proposals)] + proposals
+            yield adjusted, label, float(d)
 
 
 def run(a):

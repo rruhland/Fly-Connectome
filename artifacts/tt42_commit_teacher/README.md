@@ -36,6 +36,21 @@ Only complete actual teacher returns with an actual subsequent opponent answer a
 
 On the matched low 8519 fork, a separate 60 Hz stereo-based export recovered the incident and departure motion for the failed original as well as all five alternatives, and joined it to the actual encoder, target-reference and normalized-rate traces. It verified a common RGB-and-action prefix through the intervention and the same physical referee event history on replay. The five privately measured departures are used only to verify this sensory fit. Median optical 3D velocity error was 0.139 m/s. The output records all 15 pairwise observed differences, plus each physical landing label, to distinguish interventions that changed timing or direction from interventions that simply hit the ball. [Stereo effect labels](same-offer-camera.json.gz) · [Encoder and rate traces](same-offer-camera.npz)
 
+Relative to the missed original, one visible remedy added 0.47 m/s forward and 0.65 m/s upward. The opposite-face option added 1.42 m/s upward while taking 0.46 m/s off its forward velocity. Both landed. This is why a useful motor memory retains alternative timed reference sequences instead of averaging the signed correction vectors or turning them into a single lift command.
+
+The first held comparison froze both ordinary carried memories. The live solver kept its original budget and only swapped in up to two proposed reference trajectories at a time when a nearby precontact RGB and encoder example existed. This needs no training labels at runtime and no backpropagation. It did not count virtual hits as learning. The 16 transported clips came from 4179, and neither 9550 nor 15665 appears in any of the three stock, carried or teacher banks. [Earned sensory archive](earned-camera.npz) · [Provenance and clip support](earned-camera.json)
+
+| Held release | Stock returns | Pilot teacher returns | First different issued tick | Shared random targets | Teacher candidate admissions |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| 9550 | 5 | 12 | 173 | 6 | 108 |
+| 15665 | 12 | 11 | 91 | 12 | 92 |
+
+The total was 23 to 17, at 69.0 versus 53.5 CPU seconds across both complete points. Same first physical far contact and first legal bounce on both, and identical real referee events leading up to the first changed command. Independent CAD replay reproduced the four scores exactly, with zero penetration samples over 33,195 checked states. The 9550 treatment changed a motion on an approach both arms returned and changed the unpredictable rally that followed. The other release lost one return. The number of admitted candidate snippets is not the number of motions issued. [Paired camera-only games](held-camera.json.gz) · [Independent replay](held-audit.json)
+
+### Can more physical teaching complement the pilot?
+
+The next three fixed assessment releases in the parent course, 11884, 3401 and 14760, are disjoint from the two frozen comparisons, the teacher's three practice starts, and the base direct and carried camera archives. Each arm carries its own physically scored, optically aligned hit history across this sequence. A completed miss to a legal incoming ball may retain a bounded set of its observed incoming situations and actually issued nine-frame motor prefixes. In a later situation it can demote a stock proposal or reject a new teacher proposal only when both the observed ball/joint context and the relative command profile are close. An optically unobserved miss is not a motor label. All treatments get the same new hit and miss update rules. The only factor changed is no teacher, the 16 clips from 4179, or the 41 clips from all three points. The budget stays at 28 with up to two substituted candidates per lookup. [Chronological learner](../../scripts/experimental/tt42_commit_teacher_course.py) · [Expanded optical archive](earned-camera-41.npz) · [Expanded provenance](earned-camera-41.json)
+
 ## Reproduce
 
 ```sh
@@ -51,6 +66,12 @@ python -m scripts.experimental.tt42_commit_teacher fork "$out/phase-adjust-cold.
 python -m scripts.experimental.tt42_commit_teacher_diversity "$out/same-offer-diversity.json.gz"
 python -m scripts.experimental.tt42_commit_teacher_effects
 python -m scripts.experimental.tt42_commit_teacher_export --source "$out/pilot-4179.json.gz"
+python -m scripts.experimental.tt42_commit_teacher_export --source "$out/live.json.gz" --output "$out/earned-camera-41.npz"
 python -m scripts.experimental.tt42_commit_teacher_student "$out/held-camera.json.gz" --limit 2
-python -m pytest -q tests/test_tt42_commit_teacher.py tests/test_tt42_private_init.py
+python -m scripts.experimental.tt41_bounce_joint_audit verify "$out/held-audit.json" --tape "$out/held-camera.json.gz" --cad
+python -m scripts.experimental.tt42_commit_teacher_course stock "$out/course-stock.json.gz"
+python -m scripts.experimental.tt42_commit_teacher_course pilot "$out/course-pilot.json.gz"
+python -m scripts.experimental.tt42_commit_teacher_course all "$out/course-all.json.gz"
+python -m scripts.experimental.tt42_commit_teacher_course_verify --cad
+python -m pytest -q tests/test_tt42_commit_teacher.py tests/test_tt42_commit_teacher_course.py tests/test_tt42_private_init.py
 ```
