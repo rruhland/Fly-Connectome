@@ -1,11 +1,11 @@
 """Compare earned and uniformly sampled memory choices on exactly matched normal-game schedules."""
 
-from pathlib import Path
 import argparse
 import numpy as np
 
 from . import tt66_memory_choice as memories
-from .tt4_transfer_trial import _hash, _read, _write
+from .tt4_transfer_trial import _read, _write
+from .tt19_view_full_game import digest_json
 from .tt68_clamp_transfer import describe
 from .tt29_endurance import audit
 
@@ -34,7 +34,13 @@ def compare(paths, n):
             **describe(rows),
             cpu_s=sum(r["runtime_cpu_s"] for r in rows),
             survival={i: int(sum(totals[k] >= i)) for i in (1, 5, 10, 15, 25, 50, 100)},
-            source=_hash(p),
+            source=str(p),
+            played_prefix_sha256=digest_json(
+                [
+                    [c, r["actions"], r["placements"], r["events"], r["memory"]]
+                    for c, r in zip(cards, rows, strict=True)
+                ]
+            ),
         )
     ids = np.array([c["id"] for c in ref])
     comparisons = {}
