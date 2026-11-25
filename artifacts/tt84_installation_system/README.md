@@ -57,6 +57,8 @@ The wider distribution reversed the small pilot's total gain. On the same first 
 
 The cumulative 64-point paired block confirms the tradeoff. The mounted live learner scored 219 own returns versus 355 centered, with peaks 19 and 45. It had 15 zero points versus 17 centered. First incoming deliveries reproduce in 59 of 64 pairs. After the trajectories diverge, the mounted live learner received and landed **36 of 70** lows versus **24 of 78** centered, but **183 of 209** routine balls versus **331 of 337** centered. The peak 25 from the separately initialized eight-point pilot remains the stronger mounted optical witness at this point. [Raw mounted first 64 tapes](season-prefix64.json.gz) · [Paired 64-point block and counts](season-prefix64-summary.json)
 
+The causes differ above and near the low band. On the higher routine shelf at or above 1.045 m the mounted learner landed 107 of 122 versus centered 214 of 214. Ten of its 15 misses never touched the paddle. On transition balls between 1.01 and 1.045 m, 10 of the mounted learner's 11 misses had touched. Those ten ended in its own half or on the floor. Better preparation is the first target on high routine balls. Better outgoing impulse is needed on the contacted transitions. This is an opportunity breakdown after point paths diverged, not a counterfactual assignment of the same high balls. [Height-stratified contact and terminal causes](season-prefix64-strata.json)
+
 The mounted standard season later overtook its pilot with **27 uninterrupted own returns** on release 14645 at zero-based index 66. A separate native replay reconstructed 27 learner and 28 opponent returns, all 28 standard random draw targets, 56 solver-backed contacts and all 22,171 CAD states without penetration. It is an improved mounted witness, not a 100-return qualification. [Exact 27-return witness, joint tape and actual contacts](season-independent-installed-witness-066-14645.json.gz)
 
 ## Reproduce
@@ -78,6 +80,7 @@ python -m scripts.experimental.tt84_installation_play season-plan
 python -m scripts.experimental.tt84_installation_play season-live
 python -m scripts.experimental.tt84_installation_play season-audit --n 66
 python -m scripts.experimental.tt84_season_prefix --count 128
+python -m scripts.experimental.tt84_season_prefix --count 128 --strata-only
 python -m scripts.experimental.tt84_installation_play summary
 python -m pytest -q tests/test_tt84_installation_system.py
 ```

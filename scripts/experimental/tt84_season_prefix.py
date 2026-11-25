@@ -39,6 +39,29 @@ def categories(rows):
     return dict(counts)
 
 
+def strata(count):
+    mpath=ROOT/f'season-prefix{count}.json.gz'; cpath=play.TT80.with_name('live.json.gz')
+    mounted,mh=raw(mpath); stock,_=raw(cpath)
+    if len(mounted['rows'])!=count or len(stock['rows'])<count or mounted['cards']!=stock['cards'][:count]:
+        raise ValueError('Need a fully sealed matched comparison block')
+    stats={}
+    for name,rows in (('mounted',mounted['rows']),('centered',stock['rows'][:count])):
+        levels={k:Counter() for k in ('low','transition','routine')}
+        for r in rows:
+            for o in r['placements']['delivered']:
+                if not o.get('near_bounce') or not o.get('receive_line'):continue
+                h=projected_height(o['receive_line'])
+                p=levels['low' if h<1.01 else 'transition' if h<1.045 else 'routine']
+                p['offered']+=1;p['landed']+=bool(o['near_landed'])
+                if o['near_landed']:continue
+                p['miss_touched' if o.get('near_contact') else 'miss_untouched']+=1
+                p['terminal_'+r['events'][-1].get('reason',r['events'][-1]['kind'])]+=1
+        stats[name]={k:dict(p) for k,p in levels.items()}
+    out=dict(n=count,mounted_tape_sha256=mh,centered_prefix_sha256=digest_json(stock['rows'][:count]),
+             heights_m=[1.01,1.045],descriptive_after_different_outgoing_ball=True,stats=stats)
+    _write(ROOT/f'season-prefix{count}-strata.json',out);print(out,flush=True)
+
+
 def run(count=COUNT):
     mname=ROOT/'season-live.json.gz'; cname=play.TT80.with_name('live.json.gz')
     m,mh=raw(mname);c,ch=raw(cname)
@@ -68,4 +91,6 @@ def run(count=COUNT):
 
 
 if __name__=='__main__':
-    p=argparse.ArgumentParser(description=__doc__);p.add_argument('--count',type=int,default=COUNT);run(p.parse_args().count)
+    p=argparse.ArgumentParser(description=__doc__);p.add_argument('--count',type=int,default=COUNT)
+    p.add_argument('--strata-only',action='store_true');a=p.parse_args()
+    (strata if a.strata_only else run)(a.count)
