@@ -16,6 +16,19 @@ Stock and partial mode both returned the same four of six native offers. All twe
 
 The same three-way test on six disjoint releases scored **4/6 stock, 4/6 partial and 3/6 partial plus the learned finish**. All 18 branches received the same physical far hit and near bounce as their paired reference. The arm generated a new held, legal contact on 12866, which stock also returned. The learned finish turned another stock success, 5212, into a bounce on our side of the table, despite both model perturbation checks passing. Two other low held offers were still missed while a third low was returned by all conditions. Zero penetrations were recorded across 18,208 changed-tail CAD samples. The safe reversible preparation transferred more readily than the policy for deciding when to replace a future stock strike. [Complete held test, including rejected and selected motion candidates](matched.json.gz)
 
+## Complete points on broad independent streams
+
+The preregistered four-game pilot used the frozen kernel risk model `4478d3b7…`, only to scale the size of the small readiness move. It made 172 actual precontact stereo forecasts. The two controllers scored **43 stock vs 41 with preparation and learned finishing**, so there is no improvement over stock in this pilot. [All native controls, forecasts and reward-triggered adaptation](whole.json.gz)
+
+| Release | Stock returns | Prepared plus finish | Exact common initial offers |
+|---|---:|---:|---:|
+| 7901 | 6 | 9 | 2 |
+| 12068 | 17 | 1 | 2 |
+| 11884 | 3 | 16 | 1 |
+| 10294 | 17 | 15 | 1 |
+
+The action choices produced 35 new scored, observation-derived waveforms. Points 7901 and 11884 later reused a waveform acquired during that same point and physically scored again. The first action difference in 11884 was an opening stroke before any new readiness motion, so the improvement cannot be assigned to the forecast or preparation alone. On 12068 the second physical ball was still identical and the preparation-plus-finish actor scored nothing from it. The selected learned stroke had passed both simulator perturbations. Later exchanges follow the different ball the opponent actually saw, not identical trajectories or matched outcomes.
+
 ## Reproduce
 
 ```sh
@@ -25,6 +38,8 @@ python -m scripts.experimental.tt51_partial_finish school
 python -m scripts.experimental.tt51_partial_finish held
 python -m scripts.experimental.tt51_partial_live plan
 python -m scripts.experimental.tt51_partial_live run --n 4 --predictor artifacts/tt50_opponent_vision/risk-model.npz
+python -m scripts.experimental.tt51_partial_live_audit
+python -m scripts.experimental.tt51_partial_live_audit --isolate 12068
 python -m pytest -q tests/test_tt51_partial_finish.py
 ```
 
