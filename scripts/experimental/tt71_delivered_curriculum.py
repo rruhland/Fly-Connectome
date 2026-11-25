@@ -1,6 +1,7 @@
 """A practice partner learns which continuous request actually produces a given receiving ball."""
 
 import argparse
+from contextlib import nullcontext
 from pathlib import Path
 from unittest.mock import patch
 
@@ -197,10 +198,12 @@ class Partner:
                 self.counts[cell(y), int(bool(o["near_landed"]))] += 1
 
 
-def practice(kind, feeds, teacher_factory=Partner):
+def practice(kind, feeds, teacher_factory=Partner, *, centered=False):
     p = _read(PLAN)
     d = _read(body.PLAN)
-    ready = d["ready"]
+    ready = (
+        _read(body.mpc.BANK.with_suffix(".json"))["ready"] if centered else d["ready"]
+    )
     if (
         p["model"] != _hash(MODEL)
         or p["base"] != _hash(body.season.CARRY)
@@ -212,7 +215,9 @@ def practice(kind, feeds, teacher_factory=Partner):
     ids = {c["id"] for c in cards}
     shots = body.mpc.measured_launches(feeds)
     with np.load(body.mpc.BANK) as f:
-        raw = body.fixture.BodyRelativeRaw(body.mpc.DeepField(f, "local"), body.DX)
+        raw = body.mpc.DeepField(f, "local")
+        if not centered:
+            raw = body.fixture.BodyRelativeRaw(raw, body.DX)
     original = opponent.LivePartner.advance
 
     def advance(partner):
@@ -248,10 +253,11 @@ def practice(kind, feeds, teacher_factory=Partner):
         ready=ready,
         rows=[],
         mode="live",
-        fixture_dx_m=body.DX,
+        fixture_dx_m=0.0 if centered else body.DX,
     )
     rank = body.season.fresh.shot.Coverage(_read(body.season.fresh.RISK))
-    with body.enabled(), body.fixture.slid(body.DX), body.mpc.centered(ready):
+    installation = nullcontext() if centered else body.fixture.slid(body.DX)
+    with body.enabled(), installation, body.mpc.centered(ready):
         arena = body.mpc.arena()
         cam, rig, stride, lo, hi = body.mpc.resources(arena)
         try:
@@ -262,7 +268,8 @@ def practice(kind, feeds, teacher_factory=Partner):
                     file, engine, practice=[body.course.PRACTICE], held=ids
                 ),
             ):
-                actor = body.Registered(
+                cls = body.season.Player if centered else body.Registered
+                actor = cls(
                     body.mpc.BANK, raw, variant="elastic", budget=28, coverage=rank
                 )
             try:
