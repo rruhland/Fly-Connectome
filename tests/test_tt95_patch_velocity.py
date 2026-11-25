@@ -56,3 +56,15 @@ def test_temporal_pressure_can_recover_the_same_stock_hard_ball_without_learned_
             x=r[k]
             assert x['same'] and not x['clearance']['penetration_samples']
             assert x['repeat_sha256']==lessons.digest_json(x['events'])
+
+
+def test_exact_later_clock_control_separates_time_from_window_fit():
+    base=_read(lessons.ROOT/'window-matched.json.gz')
+    late=_read(lessons.ROOT/'same-clock-terminal.json.gz')
+    a,b=base['rows'][0],late['rows'][0]
+    assert a['case']['id']==b['case']['id']==14429
+    assert a['cut']==b['cut'] and a['stop']==b['stop']
+    assert a['variants'][0]['commands']==b['variants'][0]['commands']
+    assert a['variants'][0]['events']==b['variants'][0]['events']
+    assert not late['rows'][1]['variants'][0]['landed']
+    assert late['rows'][1]['variants'][1]['landed'] and not late['rows'][1]['variants'][1]['answered']

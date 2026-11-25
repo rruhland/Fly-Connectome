@@ -25,3 +25,11 @@ At 14429, the terminal proposal clipped the rim and ultimately struck a fixture.
 ## Equal-clock control
 
 The equal-clock single-terminal condition separates using the later aim time from tracking multiple points. On 14429 the later projected-normal terminal condition reproduced the **exact same commands and score** as the projected-normal window. On 7398 the later projected-normal terminal still missed, while the projected-normal window produced an answer. A later full-velocity terminal legally landed on 7398, but the opponent did not return it. Thus the later clock alone explains the main 14429 recovery, and the multi-sample objective mattered to the chosen motion on 7398. Neither comparison shows that adding tangent itself improves legal answering. [Equal-clock stroke control](same-clock-terminal.json.gz)
+
+## Receding public correction
+
+The two previously issued public contact-window paths were replayed exactly until a new decision. At five later stereo windows, the actor compared continuing that same tape with generating a new patch-window proposal from the closer observation. The newer estimates made the original path nonlegal in all five nominal checks. The new proposals found two nominal legal paths, and separate stress placements sometimes found legal paths, but no single replacement passed both criteria. The real commands and event tapes therefore stayed identical. This shows a failure to replace an increasingly implausible plan, not a successful real improvement or proof that late correction cannot help.
+
+The TT84 diagnostic labels 14429 and 7398 are in that study's hard low class. With the stricter projected-height threshold of 1.005 m, 14429 and 7398 are above it. The stricter 15541 case, projected to 0.998 m, is the public near-rim failure.
+
+[Receding optical correction assay](refresh-matched.json.gz)
