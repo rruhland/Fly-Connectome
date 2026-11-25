@@ -132,7 +132,7 @@ def run(kind,feeds,n,schedule='preliminary',frozen=False):
     item=build['rows'][0 if kind=='stock' else build['chosen']]; m=item['candidate']; ready=item['commission']['ready']
     fixed=build['rows'][0]['candidate']['mount']['base']; reg=Registration(fixed,m['mount']['base'],m['mount']['rotation'])
     shots=MP.measured_launches(feeds); cards=p['cards']; ids={c['id'] for c in cards}
-    mark=kind+'-online' if schedule=='preliminary' else 'season-'+('frozen' if frozen else 'live')
+    mark=kind+('-frozen' if frozen else '-online') if schedule=='preliminary' else 'season-'+('frozen' if frozen else 'live')
     out=ROOT/(mark+'.json.gz'); bank=ROOT/(mark+'.npz'); mode='frozen' if frozen else 'live'
     docket=dict(protocol=_hash(schedule_path),body=kind,fixture_receipt=_hash(system.BUILD),rows=[],cap=p['cap'],cards=cards,
                 mode=mode,schedule=schedule)
@@ -180,9 +180,25 @@ def run(kind,feeds,n,schedule='preliminary',frozen=False):
         finally:cam.close();cad.close();a.close();replayer.close()
 
 
+def pilot_witness():
+    p=_read(PLAN); b=_read(system.BUILD); d=_read(ROOT/'installed-online.json.gz'); item=b['rows'][b['chosen']]; m=item['candidate'];
+    if d['protocol']!=_hash(PLAN) or d['fixture_receipt']!=_hash(system.BUILD) or len(d['rows'])!=len(p['cards']):
+        raise ValueError('Complete mounted pilot before independently verifying its maximum')
+    j=max(range(len(d['rows'])),key=lambda i:d['rows'][i]['score']['learner']); ready=item['commission']['ready']
+    with system.fixture.school.enabled(cameras=False),system.installed(m['v'],m['mount']),MP.centered(ready):
+        real=MP.arena(width=64,height=48); cad=MP.arena(width=64,height=48,detail='cad')
+        try:
+            out=audit_witness(d['rows'][j],p['cards'][j],real,system.q.GripClearance(cad.model,stock=True),'installed',j,'pilot',ready,m)
+            check=_read(out)
+            if check['clearance']!=d['rows'][j]['clearance']:
+                raise ValueError('Pilot clearance receipt differs from the independent CAD replay')
+            print('exact mounted pilot',j,p['cards'][j]['id'],check['score']['learner'],check['clearance']['samples'],flush=True)
+        finally:real.close();cad.close()
+
+
 def summary():
     readouts={}
-    for name in ('stock-online','installed-online','season-live','season-frozen'):
+    for name in ('stock-online','installed-online','installed-frozen','season-live','season-frozen'):
         path=ROOT/(name+'.json.gz')
         if not path.exists():continue
         d=_read(path); a=np.asarray([r['score']['learner'] for r in d['rows']]); low=np.zeros(2,dtype=int); other=low.copy()
@@ -203,11 +219,13 @@ def summary():
 
 
 if __name__=='__main__':
-    a=argparse.ArgumentParser(description=__doc__);a.add_argument('mode',choices=('plan','stock','installed','season-plan','season-live','season-frozen','summary'))
+    a=argparse.ArgumentParser(description=__doc__);a.add_argument('mode',choices=('plan','stock','installed','pilot-frozen','pilot-audit','season-plan','season-live','season-frozen','summary'))
     a.add_argument('--feeds',type=Path,default=Path('/tmp/tt25-rallies.json'));a.add_argument('--n',type=int)
     p=a.parse_args()
     if p.mode=='plan':freeze()
     elif p.mode=='summary':summary()
+    elif p.mode=='pilot-audit':pilot_witness()
+    elif p.mode=='pilot-frozen':run('installed',p.feeds,8 if p.n is None else p.n,'preliminary',True)
     elif p.mode=='season-plan':season_plan()
     elif p.mode.startswith('season-'):run('installed',p.feeds,128 if p.n is None else p.n,'season',p.mode=='season-frozen')
     else:run(p.mode,p.feeds,8 if p.n is None else p.n)

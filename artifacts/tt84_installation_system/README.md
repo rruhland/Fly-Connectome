@@ -33,6 +33,22 @@ All four reserved ordinary controls also landed and drew an ordinary answer on t
 
 The eight-game preliminary stream and subsequent unfiltered 128-game season use the original archived carry, actual stereo and own encoders. Installation registration changes only action-memory coordinates and the private body's known geometry. The extensive season is the same release and reply-seed roster as the centered TT80 comparator, and starts from the original carry again. Uninterrupted points end at the standard physical loss or existing cap. Any 100 own returns would be saved and audited on the *actual canted body* before being counted. [Preliminary stream](games.protocol.json) · [Full mounted season's frozen roster](season.protocol.json)
 
+## Optical pilot versus the ordinary centered actor
+
+| Release | Centered online | Canted online |
+|---|---:|---:|
+| 4888 | 0 | 1 |
+| 6299 | 4 | 5 |
+| 5222 | 2 | 2 |
+| 8883 | 0 | 5 |
+| 5335 | 11 | 8 |
+| 12866 | 1 | 25 |
+| 12144 | 6 | 2 |
+| 3482 | 0 | 0 |
+| **Total** | **24** | **48** |
+
+All eight points in each arm were played once and all 68,287 CAD samples had no penetration. The entire +24 net gain came from the one distinct 12866 rally. The remaining seven points tie at 23 own returns. This confirms a working real RGB/encoder controller and one longer witness on the canted body. It does not show uniform improvement or a 100-return qualifier. [Centered camera-controlled pilot](stock-online.json.gz) · [Mounted camera-controlled pilot](installed-online.json.gz)
+
 ## Reproduce
 
 ```sh
@@ -44,6 +60,12 @@ python -m scripts.experimental.tt84_installation_system physical
 python -m scripts.experimental.tt84_installation_compare
 python -m scripts.experimental.tt84_installation_report
 python -m scripts.experimental.tt84_installation_play plan
+python -m scripts.experimental.tt84_installation_play stock
+python -m scripts.experimental.tt84_installation_play installed
+python -m scripts.experimental.tt84_installation_play pilot-audit
+python -m scripts.experimental.tt84_installation_play pilot-frozen
 python -m scripts.experimental.tt84_installation_play season-plan
+python -m scripts.experimental.tt84_installation_play season-live
+python -m scripts.experimental.tt84_installation_play summary
 python -m pytest -q tests/test_tt84_installation_system.py
 ```
