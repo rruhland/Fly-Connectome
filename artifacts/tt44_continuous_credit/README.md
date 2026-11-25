@@ -25,6 +25,10 @@ In the initial low screen, 4239 was the only low touched. Its four touches still
 
 The local score-driven selector freezes at the first eligible incoming RGB and encoder row, before the corrected action begins. Failed moves dilute nearby support, and each physically distinct training offer votes once. The four ordinary controls were all retained, three by choosing identity and one by a fresh nonidentity physical replay from the same incoming state. [Frozen local model](policy.json) · [Easy controls](easy.json.gz)
 
+## Release-disjoint normal play
+
+The frozen readout was exercised on three preassigned disjoint releases with the same normally initialized stock player and late physical evaluator. It tied 8772 at one, fell from five to four on 9965, and improved 3905 from three to 24. Total fell by one outside the record witness and rose from 9 to 29 overall. The first changed action on 3905 was at tick 154, after the second far impact. The original physical far contact and near table bounce both match on that ball, and both actors returned it. Thus the longer point is a genuine trajectory-dependent full-game gain, not a direct rescue of that first altered ball. The treatment applied learned corrections on 23 receptions and reached 49 alternating returns in its single full launch before an out fault. [Three disjoint optical points and stock margins](held.json.gz)
+
 ## Reproduce
 
 ```sh

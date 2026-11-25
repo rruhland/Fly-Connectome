@@ -122,7 +122,7 @@ class Deployment(Amortized):
         return super().step(tick,eye,x,q,reference,self.get_base(tick,x,q,reference,self.priors.home))
 
 
-def trial(mode,path,plan,feeds,out,limit,paired):
+def trial(mode,path,plan,feeds,out,limit,paired,resume=False):
     learned=_read(path); spec=_read(plan); base=_read(paired)
     if learned["paired_sha256"]!=_hash(paired):
         raise ValueError("The chosen practice corpus changed")
@@ -140,6 +140,17 @@ def trial(mode,path,plan,feeds,out,limit,paired):
     cards=[c for c in _read(course.PLAN)["assessment"][6:10] if c["id"] not in excluded|reserved][:limit]
     receipt=dict(schema="tt44-continuous-transfer-1",mode=mode,model_sha256=_hash(path),
                  plan_sha256=_hash(plan),rows=[],ready=home.tolist())
+    if mode=="held":
+        receipt["cards"]=cards
+    if resume:
+        previous_receipt=_read(out)
+        if any(previous_receipt.get(k)!=v for k,v in receipt.items() if k!="rows"):
+            raise ValueError("Cannot resume a different evaluation")
+        if previous_receipt.get("complete"):
+            return
+        if [r["id"] for r in previous_receipt["rows"]]!=[c["id"] for c in cards[:len(previous_receipt["rows"])]]:
+            raise ValueError("Completed evaluation does not match the assigned prefix")
+        receipt=previous_receipt
     with mpc.centered(home):
         a=mpc.arena();camera,rig,stride,lo,hi=mpc.resources(a)
         clazz=Deployment if mode=="held" else Amortized
@@ -168,8 +179,7 @@ def trial(mode,path,plan,feeds,out,limit,paired):
                     _write(out,receipt)
             elif mode=="held":
                 shots=mpc.measured_launches(feeds)
-                receipt["cards"]=cards
-                for c in cards:
+                for c in cards[len(receipt["rows"]):]:
                     card,ref=delivery_map[c["key"]]
                     if card!=c or shots[c["id"]]!=ref["shot"]:
                         raise ValueError("Different official evaluation tape")
@@ -203,9 +213,10 @@ if __name__=="__main__":
     p.add_argument("--output",type=Path)
     p.add_argument("--feeds",type=Path,default=Path("/tmp/tt25-rallies.json"))
     p.add_argument("--limit",type=int,default=3)
+    p.add_argument("--resume",action="store_true")
     a=p.parse_args()
     if a.phase=="fit":
         fit(a.training,a.paired,a.policy)
     else:
         out=a.output or ROOT/f"{a.phase}.json.gz"
-        trial(a.phase,a.policy,a.plan,a.feeds,out,a.limit,a.paired)
+        trial(a.phase,a.policy,a.plan,a.feeds,out,a.limit,a.paired,a.resume)
