@@ -2,6 +2,8 @@
 
 ## Current verified rally
 
+The original centered SO-101 has now made **67 legal arm returns and 68 opponent returns** from one launch in 109.04 simulated seconds. Replay matched all 6,543 controls and found no penetration across 52,337 CAD samples. The same initial motor bank with updates frozen made 15. Both returned the first 11 balls with identical actions, then the trajectories diverged. The record included two low wings and no low-central delivery. This was the first of 96 prospectively assigned points. [Independent replay and learning control](../../artifacts/tt107_continued_interception/README.md)
+
 The SO-101 made **63 legal arm returns and 64 opponent returns** in one 100.15-second point, the tenth preassigned game on a fresh 32-release course. A separate dynamics replay matched all referee events and independent opponent draws. Clearance stayed positive in all 48,070 CAD checks. The arm entered with experience from 48 exploratory games, then used ordinary direct joint control and updated its motor memory after all 63 returns. Its previous verified peak was 42. The 100-return target and reliable coverage of low shots remain open. [Watch the full 63-return point](../../artifacts/tt48_transfer/watch-63.mp4) · [Within-point learning comparison, 63 versus 14](../../artifacts/tt48_transfer/README.md) · [Full command tape](../../artifacts/tt48_transfer/random-63-tape.json.gz) · [Independent replay](../../artifacts/tt48_transfer/random-63.json) · [Earlier 42-return point and learning controls](../../artifacts/tt46_season/README.md)
 
 
