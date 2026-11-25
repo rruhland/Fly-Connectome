@@ -19,6 +19,8 @@ The record game delivered one more legal incoming ball after the arm’s 42nd su
 
 The fresh strong stock replay, its guarded local reader, two separately earned ordinary corrections, and two variants that sustain those corrections through rebound tested the same live physical delivery. None touched. None increased the original 42 legal arm returns. [Six native matched counterfactuals](terminal-43.json.gz)
 
+A separate privileged diagnostic gave a bounded native teacher exact state at the first inbound RGB cue. It screened both signed faces across 13 admitted contact windows. Across 288 private dynamics trials none touched, so no physical stroke was issued. This does not rule out earlier preparation or other contact families. It rules out blaming the optical state alone for the tested post-cue branch. [Exact-state post-cue comparison](terminal-native-coach.json.gz)
+
 ## Reproduce
 
 ```sh
@@ -27,4 +29,5 @@ python -m scripts.experimental.tt48_exact_repair
 python -m scripts.experimental.tt48_exact_repair --limit 1 --full-observer --output artifacts/tt48_exact_repair/full-7398.json.gz
 python -m scripts.experimental.tt48_exact_repair_audit
 python -m scripts.experimental.tt48_terminal_repair
+python -m scripts.experimental.tt48_terminal_coach
 ```
