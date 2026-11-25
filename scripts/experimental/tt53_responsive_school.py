@@ -170,4 +170,7 @@ if __name__ == "__main__":
     p.add_argument("--budget", type=int, default=192)
     p.add_argument("--feeds", type=Path, default=Path("/tmp/tt25-rallies.json"))
     p.set_defaults(resume=False, cap=240)
-    run(p.parse_args())
+    from .tt54_training_speedups import enabled
+
+    with enabled():
+        run(p.parse_args())
