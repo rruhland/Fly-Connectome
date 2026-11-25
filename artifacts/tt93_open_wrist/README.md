@@ -18,4 +18,18 @@ Twenty-four fresh, ordinary TT37 native first-offer draws supplied the first com
 
 Eleven of 12 fresh arrivals supplied at least two useful wrist RGB frames with an unclipped ball and visible blade between 67–150 ms before impact or virtual crossing. That includes all four low-center and seven of eight total hard shots. Local fitted module-to-shell checks observed no new penetration on the captured trajectories. On 25 paired 3-D frames, median errors were 0.829 mm with left+right, 1.109 mm with left+wrist, and 1.086 mm with all three. The close wrist view is a usable second triangulation baseline, but adding its ray indiscriminately degraded the already precise exterior stereo. A narrower causal transverse update from the wrist angle, which preserved the exterior range, reduced median paddle-plane error from 0.750 to 0.637 mm on matched deadline frames. That qualified the four paired new full points. It did not qualify a wrist-only policy.
 
+## Four fresh full-game pairs
+
+| Release | Same hardware, exterior stereo | Same hardware, wrist fusion | Applied wrist updates |
+| --- | ---: | ---: | ---: |
+| 8510 | 1 | 28 | 276 |
+| 8314 | 6 | 4 | 52 |
+| 7715 | 3 | 3 | 38 |
+| 14305 | 0 | 0 | 0 |
+| Total | 10 | 35 | 366 |
+
+The same changed physical rig, ordinary broad TT37 goal stream, initial memory, command limits and RGB policy ran in both arms. Only the bounded causal wrist update to transverse ball position differed. All eight points terminated normally. The independently replayed native game tapes matched the full events and placements, checked 39,903 CAD substates without penetration, and caused no new module-to-host penetration in the per-control checks. The largest point contributed most of the gain. Its initial physically identical offer was returned by both, then the changed outgoing strike caused different subsequent deliveries. This demonstrates an actual return-count gain in a paired full point, not a rescued exact terminal ball or reliable broad uplift. The shorter result on 8314 remains in the comparison and neither receiver was promoted as the default.
+
 [Fixture and native mass properties](fixture.json) · [Preassigned releases](protocol.json) · [Physical first-offer scout tapes](scouts.json.gz) · [Native RGB and triangulation readings](optical.json.gz) · [Prospective cue results](optical-summary.json) · [Raw low-center wrist RGB](frames/rgb-central-low-3395-tick69.png)
+
+[All full game scores and clearance receipts](game-summary.json) · [Independent native action tapes](games.json.gz)
