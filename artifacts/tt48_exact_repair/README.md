@@ -1,6 +1,6 @@
-# An earned early correction transfers to one exact new offer on the strong player
+# An earned early correction can rescue one exact new offer, but depends on the optical history
 
-The 9519 correction returned an unchanged physical ball from a different release, 7398, on the stronger pre-season carried player. The reset stock arm and guarded selector both contacted it and faulted into their own half. The deliberately unguarded nearest of two independently earned motor examples landed. The ordinary held probe is evidence for a transferable motor move, not for adopting the nearest-example policy in full rallies.
+The 9519 correction returned an unchanged physical ball from a different release, 7398, on the stronger pre-season carried player. The reset stock arm and guarded selector both contacted it and faulted into their own half. The deliberately unguarded nearest of two independently earned motor examples landed. This rescue held only with the common 22-tick optical warmup. On a second branch that observed the complete original launch, neither reset stock nor the borrowed action landed. The shorter-warmup physical witness is reproducible, not robust deployment transfer.
 
 The strong exact-offer comparison replays the original physical prefix, including native referee and opponent state. It clones the solver after the far separation, verifies the archived continuation from the clone, then runs three fresh camera-initialized branches with the same 768 prior fragments and unchanged temporal, direct, and late coverage code. No branch sees the true ball state or the archived event labels. The physical far impact and near bounce are retained on every branch. The reset controller does not in general reproduce the archived controller’s prior solver or planner history. Its score and the original score are reported separately.
 
@@ -11,7 +11,13 @@ The strong exact-offer comparison replays the original physical prefix, includin
 | 14429, third | 0.989 m | 0 | 1 | 0 | 1 |
 | 12246, third | 1.134 m | 1 | 1 | 1 | 1 |
 
-The 14429 outcome is not a learned low rescue. Reset stock already lands, and the gated local policy regresses it. Thus there is one demonstrated same-ball transfer and one learned regression on this four-offer diagnostic. No terminal miss from these held releases was used to fit the two motion examples. [Actual commands, optical traces, and outcome receipts](transfer.json.gz) · [Original training interventions](../tt44_continuous_credit/training.json.gz)
+The 14429 outcome is not a learned low rescue. Reset stock already lands, and the gated local policy regresses it. Thus there is one demonstrated same-ball transfer and one learned regression on this four-offer diagnostic. No terminal miss from these held releases was used to fit the two motion examples. An independent replay from launch reproduced all six audited tapes without CAD penetration in 9,701 solver states. On 7398, the successful altered strike used the same deep negative face with better solver alignment, −0.991 instead of −0.921. [Native replay and contact-face audit](audit.json) · [Full-RGB-prefix negative control](full-7398.json.gz) [Actual commands, optical traces, and outcome receipts](transfer.json.gz) · [Original training interventions](../tt44_continuous_credit/training.json.gz)
+
+## The original 43rd offer on release 2741
+
+The record game delivered one more legal incoming ball after the arm’s 42nd successful return. That same physical prefix and the original terminal failure were replayed bit-for-bit. Because no subsequent return or miss update changed the memory, the verified final 768-fragment bank is also the bank at the fork. The original received path projected below the earlier ordinary regime, at 0.953 m. The closest sampled sphere-to-disc clearance was still 34.5 mm. The ball was at x = −0.120 m, y = −1.569 m and z = 0.936 m. Tangential offset was 128.6 mm and the elbow was already at about −1.692 rad. This is an actual native-record diagnostic, not a global reachable-set bound.
+
+The fresh strong stock replay, its guarded local reader, two separately earned ordinary corrections, and two variants that sustain those corrections through rebound tested the same live physical delivery. None touched. None increased the original 42 legal arm returns. [Six native matched counterfactuals](terminal-43.json.gz)
 
 ## Reproduce
 
