@@ -1,0 +1,5 @@
+# Continuing to learn after returning to the original mount
+
+The learner starts from the motor memory earned on the shifted clamp and plays on the centered arm with continuous updates inside and between points. Its comparison starts from the original centered practice memory. Both receive the same release order, opening seeds and reply seeds across 128 scheduled points. Each scored return changes what the physical opponent receives. [Prespecified course and starting bank](protocol.json)
+
+In the first 32 assigned points, the returned learner made 181 own returns versus 232 for the original learner. Median rally length was two versus three and four versus seven points reached 15. Ten games improved, twelve shortened and ten tied, with a release-cluster interval of −4.84 to +1.53 returns per game. The earlier frozen transfer gain has yet to translate into reliable continuous performance. [Scores by block, identical incoming balls and referee-verified evidence hashes](first32.json) · [Checkpoint after 36 points](live-36.json.gz) · [Learned motor memory at the same boundary](live-36.npz)

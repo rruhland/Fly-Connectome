@@ -85,24 +85,38 @@ def assess(which, feeds):
         )
 
 
-def report():
+def report(complete=True):
     from .tt53_responsive_report import compare
 
     centers = {
         k: ROOT / (k + "-held.json.gz") for k in ("before", "lateral", "centered")
     }
     out = {}
-    for k, others in [("lateral", ("before", "centered")), ("centered", ("before",))]:
+    pairs = (
+        [("lateral", ("before", "centered")), ("centered", ("before",))]
+        if complete
+        else [("lateral", ("before",))]
+    )
+    for k, others in pairs:
         r = compare(dict(responsive=centers[k], **{j: centers[j] for j in others}), 24)
         r["groups"][k] = r["groups"].pop("responsive")
         out[k] = r
-    _write(ROOT / "results.json", out)
+    _write(ROOT / ("results.json" if complete else "replication.json"), out)
 
 
 if __name__ == "__main__":
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument(
-        "stage", choices=("plan", "train", "before", "lateral", "centered", "report")
+        "stage",
+        choices=(
+            "plan",
+            "train",
+            "before",
+            "lateral",
+            "centered",
+            "report",
+            "replication",
+        ),
     )
     p.add_argument("--feeds", type=Path, default=Path("/tmp/tt25-rallies.json"))
     a = p.parse_args()
@@ -110,7 +124,7 @@ if __name__ == "__main__":
         plan(a.feeds)
     elif a.stage == "train":
         train(a.feeds)
-    elif a.stage == "report":
-        report()
+    elif a.stage in ("report", "replication"):
+        report(complete=a.stage == "report")
     else:
         assess(a.stage, a.feeds)
