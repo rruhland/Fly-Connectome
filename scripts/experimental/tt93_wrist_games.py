@@ -1,6 +1,8 @@
 """Run bounded fresh matched full points only after the changed wrist cue earns admission."""
 import argparse
+from collections import deque
 from dataclasses import replace
+from time import process_time
 
 import numpy as np
 
@@ -18,7 +20,7 @@ SUMMARY=mount.ROOT/"game-summary.json"
 COUNT=4
 
 
-def play(a,res,actor,home,entry,fuse):
+def play(a,res,actor,home,entry,fuse,*,live=False,progress=0,on_hundred=None):
     cam,rig,stride,lower,upper=res
     c=entry["card"]
     vision=mpc.Vision(rig,a.control_dt,raw=True)
@@ -27,6 +29,9 @@ def play(a,res,actor,home,entry,fuse):
     a.launch(entry["shot"],card=c);a.partner.reset(seed=c["seed"])
     ref=np.asarray(home).copy()
     moves=[]; corrections=[]; inbound=False
+    previous_reward=0;offer=False
+    before=actor.priors.digest();recent=deque(maxlen=150)
+    start_cpu=process_time()
     for j in range(a.max_steps):
         q=a.joints.copy()
         x=mpc.observed(vision,j,cam.capture() if j%2==0 else None,q)
@@ -53,16 +58,39 @@ def play(a,res,actor,home,entry,fuse):
         # The learned optical history past this tick remains calibrated on
         # standard stereo. Wrist correction is a causal near-field update.
         vision.eye.latest=raw
-        u=np.clip((np.clip(target,lower,upper)-ref)/stride,-.8,.8); ref=np.clip(ref+u*stride,lower,upper)
-        _,_,done,cap,_=a.exchange(u,mpc.FAR_COMMAND)
+        u=np.clip((np.clip(target,lower,upper)-ref)/stride,-.8,.8); sent=np.clip(ref+u*stride,lower,upper)
+        _,_,done,cap,info=a.exchange(u,mpc.FAR_COMMAND)
         moves.append(u.tolist())
+        if live:
+            recent.append((j,x,q,ref,sent))
+            for e in info["events"]:
+                if e["kind"]=="legal_return":
+                    offer=e["side"]==-1
+            if any(e["kind"]=="legal_return" and e["side"]==1 for e in info["events"]):
+                reward=audit(a.events,opening_side=1)["learner"]
+                if reward>previous_reward:
+                    kept=actor.priors.keep(list(recent),("live",actor.serial,reward))
+                    actor.diag["credited_fragments"]+=kept
+                    actor.diag["updates"]+=bool(kept)
+                    if on_hundred is not None and previous_reward<100<=reward:
+                        on_hundred(dict(actions=moves,events=a.events,placements=a.point_placements(),
+                                      score=audit(a.events,opening_side=1),complete_point=False,
+                                      corrections=corrections))
+                    previous_reward=reward
+                    if progress and reward%progress==0:
+                        print("TT93 in point",c["id"],"fused" if fuse else "stereo",reward,j,flush=True)
+        ref=sent
         if done or cap:break
+    if live and done and offer and hasattr(actor,"missed"):
+        actor.missed(list(recent))
     place=a.point_placements()
     for leg,row in enumerate(place["requested"]):
         if row["target"]!=list(course.draw(c,leg,"random",None)[0]):
             raise ValueError("Native goal law changed")
     return dict(score=audit(a.events,opening_side=1),events=a.events,placements=place,actions=moves,
-                corrections=corrections,complete_point=a.events[-1]["kind"]=="point")
+                corrections=corrections,complete_point=a.events[-1]["kind"]=="point",
+                memory=dict(before=before,after=actor.priors.digest()),planner=dict(actor.diag),
+                runtime_cpu_s=process_time()-start_cpu)
 
 
 def verify(a,guard,entry,match):
