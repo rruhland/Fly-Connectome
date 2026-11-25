@@ -58,3 +58,19 @@ def test_native_primary_receipt_matches_incoming_and_keeps_original_controls():
     witness = next(x for x in r["rows"] if x["id"] == 5463 and x["recovered"])
     assert witness["shift_cm"] > 5.5
     assert witness["modes"]["forward"]["contact_radius_cm"] < 5.
+
+
+def test_wider_assessment_uses_unused_draws_and_reaches_more_balls():
+    from scripts.experimental import tt67_sensitivity_wide as wide
+    from scripts.experimental.tt4_transfer_trial import _hash, _read
+
+    primary = _read(model.SCOUT)
+    fresh = _read(wide.SCOUT)
+    old = {r["source"]: set(r["retained"]) for r in primary["rows"]}
+    assert all(not set(r["retained"]) & old[r["source"]] for r in fresh["rows"])
+    result = _read(wide.ROOT / "report.json")
+    assert result["complete"] and result["receipt"] == _hash(wide.OUT)
+    before, after = (result["counts"]["neighbor"][m] for m in ("replay", "forward"))
+    assert before["matched"] == after["matched"] == 4
+    assert (before["touched"], after["touched"]) == (0, 3)
+    assert (before["answered"], after["answered"]) == (0, 1)

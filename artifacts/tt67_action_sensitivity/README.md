@@ -15,11 +15,15 @@ All scored branches repeated their referee events under CAD observation. The 21,
 
 ## What the transport law learned
 
-Take six ordinary, scored and answered strokes with inner-face contact, three from relatively low source flights. At a pre-impact clock, issue each of five smooth joint offsets in both directions and estimate the motion of the blade center and normal. Nineteen nearby exact-physics worlds per stroke perturb the initial joint positions and velocities. There are 114 perturbed native worlds and 1,254 nominal and paired-offset probes. No contact reward is differentiated, no backpropagation is used, and this source-only teacher never scores a held candidate. [Native fits](fit.json.gz)
+Take six ordinary, scored and answered strokes with inner-face contact, three from relatively low source flights. At a pre-impact clock, issue each of five smooth joint offsets in both directions and estimate the motion of the blade center and normal. One exact source world and 18 nearby worlds per stroke expose sensitivity to joint position and velocity perturbations. There are 114 native worlds total and 1,254 nominal and paired-offset probes. No contact reward is differentiated, no backpropagation is used, and this source-only teacher never scores a held candidate. [Native fits](fit.json.gz)
 
 The actor starts the same RGB observation clock in both arms and waits for the same public after-bounce optical gate. It extrapolates the incoming displacement from the current visible track to the source stroke's contact plane, compares the measured encoder/reference error, and solves the damped five-joint inverse of that learned action response. The outgoing commands stay inside ordinary actuator slew and joint limits. Both arms use the same optical time warp and source movement. Only the sensitivity arm adds the joint correction. Neither receives a held target, referee position, simulator pose, future image, or private bounce time.
 
 The difference between sources matters. At 5463 and 5349 the weaker singular response in the lateral and vertical plane was .193 and .128 m/rad. The remaining four were .034 m/rad or lower at their attained, generally later body states. The standalone geometric distinction was not a decision gate in the primary experiment. It is an exploratory analysis of the primary results and a frozen source criterion in the wider follow-up.
+
+## Wider independently drawn replies
+
+The separately frozen wide check kept both sources whose minimum lateral/vertical response exceeded .05 m/rad, without changing their learned policy. Four additional, previously unused opponent seeds differed by 74.8–95.3 mm in the physical incoming measure. Replay made **no contacts**. Sensitivity made **three contacts**, landed one return, and received a legal answer from the original opponent. The 74.8 mm winner on 5463 touched at a 59 mm radius. Both modes still scored and got an answer on the two original controls. The evidence is useful for bounded practice and leaves wider cross-release transfer and full games open. [Wide protocol](wide/protocol.json) · [Issued wide tapes](wide/held.json.gz) · [Wide results](wide/report.json)
 
 ## Reproduce
 
