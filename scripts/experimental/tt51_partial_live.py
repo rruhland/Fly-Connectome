@@ -87,6 +87,21 @@ class Arm(pf.Player):
         return self.choose(tick,self.tap.frame if tick%2==0 else None,eye,x,q,reference,base)
 
 
+def logged_predictor(path):
+    from .tt51_flight_risk import RiskForecast
+
+    class LoggedRisk(RiskForecast):
+        def update(self, frames, x, tick):
+            candidate=super().update(frames,x,tick)
+            if candidate is not None:
+                self.estimates.append(dict(tick=int(tick),gate=float(candidate[0]),distribution=self.future.tolist()))
+            return candidate
+
+    p=LoggedRisk(path)
+    p.estimates=[]
+    return p
+
+
 def run(path,n,predict_path=None):
     plan=_read(WHOLE)
     if plan["prep_plan_sha256"]!=_hash(pf.plan_path):raise ValueError("Changed shooting roster")
@@ -97,7 +112,12 @@ def run(path,n,predict_path=None):
     shots=mpc.measured_launches(Path("/tmp/tt25-rallies.json"))
     doc=dict(schema="tt51-complete-point-shootout-1",plan_sha256=_hash(WHOLE),school_sha256=_hash(pf.school_path),
              cards=cards,controller_sha256=_hash(Path(pf.__file__)),
-             predictor_sha256=None if predict_path is None else _hash(predict_path),rows=[])
+             shootout_sha256=_hash(Path(__file__)),predictor_sha256=None if predict_path is None else _hash(predict_path),rows=[])
+    if path.exists():
+        receipt=_read(path)
+        if any(receipt.get(k)!=v for k,v in doc.items() if k!="rows"):
+            raise ValueError("Cannot resume a different physical shooting protocol")
+        doc=receipt
     base={**old,"rows":[None]*len(_read(prior.season.CARRY)["rows"])+old["rows"]}
     with np.load(mpc.BANK) as z:
         raw=mpc.DeepField(z,"local")
@@ -106,13 +126,10 @@ def run(path,n,predict_path=None):
         camera,rig,stride,lo,hi=mpc.resources(a); tap=Tap(camera)
         checker=prior.Reach(cad,old["ready"],old["ready"])
         try:
-            for c in cards:
+            for c in cards[len(doc["rows"]):]:
                 row={"id":c["id"],"runs":{}}
                 for mode in ("stock","partial-finish"):
-                    predict=None
-                    if predict_path is not None and mode!="stock":
-                        from .tt51_flight_risk import RiskForecast
-                        predict=RiskForecast(predict_path)
+                    predict=logged_predictor(predict_path) if predict_path is not None and mode!="stock" else None
                     with patch.object(mpc,"Fragments",lambda f,e:Tail(f,e,practice=[prior.course.PRACTICE],held={z["id"] for z in cards})):
                         p=Arm(mpc.BANK,raw,mode=mode,finish=pf.Finish(school),checker=checker,predictor=predict,
                               coverage=prior.fresh.shot.Coverage(_read(prior.fresh.RISK)),budget=old["budget"],variant=old["variant"])
@@ -124,7 +141,8 @@ def run(path,n,predict_path=None):
                             if req["target"]!=list(draw(c,k,"random",None)[0]):
                                 raise ValueError("Changed the fresh broad opponent")
                         row["runs"][mode]=r|dict(readiness_ticks=p.native_readiness_ticks,followthrough=p.pick,
-                                                optical_updates=p.priors.serial_skills)
+                                                optical_updates=p.priors.serial_skills,
+                                                observed_future_forecasts=[] if predict is None else predict.estimates)
                     finally:
                         p.close()
                 if len({v["memory"]["before"] for v in row["runs"].values()})!=1:
