@@ -55,6 +55,12 @@ class ExposureSession:
 
     def close(self):
         self.arena._contacts = self.original
+        # MuJoCo's Renderer.close frees GL resources without selecting its own
+        # context. The wide renderer may be current after the last actor tick.
+        # Freeing crop buffer IDs there corrupts the still-live stock camera.
+        context = self.retina.crop.renderer._gl_context
+        if context is not None:
+            context.make_current()
         self.retina.close()
 
 

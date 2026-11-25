@@ -54,7 +54,15 @@ def run(args):
         return actor(*a, coverage=coverage, **kw)
 
     def play(*pos, **kw):
-        arena, wide, rig = pos[:3]
+        # A temporary crop renderer must not share lifetime across game resets
+        # with the archived cached wide renderer. Fresh physical/camera objects
+        # preserve the same ready pose and draws; the actual actor, paid bank
+        # and serial remain the normally initialized course objects.
+        arena = tt80.course.mpc.arena()
+        wide, rig, stride, low, high = tt80.course.mpc.resources(arena)
+        if not all(np.array_equal(x,y) for x,y in zip((stride,low,high),pos[3:6])):
+            raise ValueError('Fresh physical installation differs')
+        pos = (arena,wide,rig,stride,low,high,*pos[6:])
         raw, model = pos[9:11]
         model.observation_enabled = enabled
         model.observer_home = np.asarray(pos[6]).copy()
@@ -82,6 +90,10 @@ def run(args):
         finally:
             if model.exposures is not None:
                 model.exposures.close()
+            if wide.renderer._gl_context is not None:
+                wide.renderer._gl_context.make_current()
+            wide.close()
+            arena.close()
 
     with tt80.enabled(), patch.object(tt80.course,'PLAN',tt80.PLAN), \
          patch.object(tt80.course.mpc,'MPC',make), patch.object(tt80.course.mpc,'play',play):

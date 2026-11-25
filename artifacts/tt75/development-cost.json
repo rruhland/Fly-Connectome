@@ -7,5 +7,11 @@
   "ordinary_disabled_parity_ticks": 327,
   "ordinary_numpy_bool_audit_abort_ticks": 109,
   "ordinary_zero_native_hash_rejection": 1,
-  "ordinary_abort_wall_cpu_seconds_unavailable": true
+  "ordinary_abort_wall_cpu_seconds_unavailable": true,
+  "invalid_reset_camera_course_ticks": 3243,
+  "invalid_reset_camera_course_wall_seconds": 161.56991576700239,
+  "invalid_reset_camera_course_cpu_seconds": 41.39330599,
+  "lifecycle_diagnostic_ticks": 340,
+  "lifecycle_diagnostic_wall_seconds": 97.19380860200181,
+  "lifecycle_diagnostic_cpu_seconds": 23.657902723
 }

@@ -32,7 +32,9 @@ TT83 independently paired the same exact observer bytes on four paid-motion fork
 
 The first dense game completed 0 returns versus the parent's 0, with 29 dense and 80 fallback decisions. Its audit write then rejected a NumPy boolean; only the recorded flag was converted to a Python boolean, with no inference or action change. This additional 109-tick completed game is charged and its failure log is retained. The identical fixed first32 course was restarted after that serialization correction.
 
-The actual dense first32 course is running. Its receipt is `ordinary-dense.json.gz`; all completed assigned games, fallback counts, selected observations, physical actions, true uniform requests and returns are retained. This file is not a result claim before the complete comparison is reported.
+An initial32-game run is invalid instrumentation (`ordinary-context-failure.json.gz`): after closing the first crop renderer with the wide GL context current, the stock camera kept a frozen prior frame. It cost3,243ticks/161.57s wall/41.39s CPU and is fully retained. A340-tick issued-prefix causal comparison proved the failure and fix: unsafe secondgame0/171valid stereo, own-context close secondgame170/171. No sensing/fit/motor rule changed. The initial static-scene close check was nondiagnostic because a frozen identical frame passes it.
+
+The corrected runner also uses a fresh actual arena and camera per game, maintaining the normally initialized persistent actor, bank and serial. Two complete disabled games must reproduce the archived parent exactly before restart. The valid actual dense first32 course uses `ordinary-dense-fixed.json.gz`; all completed assigned games, fallback counts, selected observations, physical actions, true uniform requests and returns are retained. This file is not a result claim before the complete comparison is reported.
 
 Reproduction (from repository root):
 
