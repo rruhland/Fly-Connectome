@@ -162,6 +162,16 @@ with those evaluator fields. These are bounds on this private initializer,
 not licenses to see physical state inside the player.
 [Causal rebound readout and evaluator bounds](optical-bounce.json)
 
+The separate predeclared physical pilot ran eight matched first-offer
+pairs with fresh broad random target streams, each disjoint from the
+sensor and stroke training releases. The new sensor took 312 exposures,
+but no correction passed the initial weak-stock and fresh pre-bounce
+support gate. The two arms issued identical commands, matched all referee
+events, scored seven returns each and missed the same eighth offer. This
+tests retention of normal stock commands under the additional sensor,
+not efficacy on eligible new low contacts. It does not justify replacing
+the stock policy. [Fresh physical protocol](precise-live.protocol.json) · [Native command and referee tapes](precise-live.json.gz)
+
 ## Signed RGB evidence override
 
 The two same-delivery sets yield eight scored or failed rim contrasts
