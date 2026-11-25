@@ -66,11 +66,43 @@ releases with no known scored alternate in the training materials.
 It was not executed. The guided update did not improve upon equal-
 budget exploration on the fixed first screen. [Unrun reserved roster](fresh.protocol.json)
 
+## The four practice probes without feedback
+
+The later signed-choice test cannot tell whether the shared probes
+themselves benefited from learned coordination. The separate geometry
+comparison flips the sign of individual joints in each learned direction,
+independently of the other joints and of all current outcomes. The positive
+and negative attempts for each axis are retained. Under the same actuator
+limits and slew, the four planned commands therefore have exactly the same
+multiset of rates at every time and on each joint. Only simultaneous joint
+combinations change. All 68 sham attempts physically received the exact
+same far impact and near bounce.
+
+| Budget of four attempts | Learned coordination | Equal-rate sham |
+| --- | ---: | ---: |
+| Legal probes out of 68 | 11 | 7 |
+| Decision forks rescued out of 17 | 7 | 5 |
+| Measured releases with a rescue out of 13 | 5 | 3 |
+| First fork only, releases with a rescue | 4 | 3 |
+
+3401 and 12116 were unique to the learned probes at any fork. No
+release was unique to the sham. On 3401, the gain occurred only at the
+later fork. This modest difference motivates a short real-game screening
+test, not deployment. That separate arm replaces four of the twelve
+ordinary fallback candidates only after the primary native screen finds
+zero legal paths. There are no extra simulation slots and the signed RGB
+feedback rule is not enabled. [Rate-matched physical probe comparison](geometry-report.json) · [Frozen whole-game protocol](geometry-live.protocol.json)
+
 ## Reproduce
 
 ```sh
 export PYTHONPATH=.:src MUJOCO_GL=egl OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 OMP_THREAD_LIMIT=1 LP_NUM_THREADS=1
 python -m scripts.experimental.tt53_signed_practice
 python -m scripts.experimental.tt53_signed_practice_report --span --verify
-python -m pytest -q tests/test_tt53_signed_practice.py
+python -m scripts.experimental.tt53_probe_geometry plan
+python -m scripts.experimental.tt53_probe_geometry run
+python -m scripts.experimental.tt53_probe_geometry_report
+python -m scripts.experimental.tt53_geometry_live plan
+python -m scripts.experimental.tt53_geometry_live run
+python -m pytest -q tests/test_tt53_signed_practice.py tests/test_tt53_probe_geometry.py tests/test_tt53_geometry_live.py
 ```
