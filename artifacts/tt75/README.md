@@ -4,7 +4,7 @@ The original unmarked orange ball, fixed camera mounts, ordinary uniform physica
 
 An RGB-only ROI translation calibration measured magnification 3× horizontally and 6× vertically (the requested renderer zoom is 6). The ball's ellipse is evaluated in calibrated source-pixel coordinates. Calibration moves only the optical ROI on a fixed startup scene; no true ball coordinates enter it. See `sensor-calibration.json`.
 
-`DenseFlight` adapts TT39's joint translation/spin linearized physical least-squares fit to physical-time windows and the higher-resolution center noise. It fits the causal recent inbound arc or an observed rebound and estimates p/v and spin together. No backpropagation, markings, live state, opponent intent labels, targets, release IDs, or future observations enter sensing or action selection. The existing standard tracker remains an explicit fallback.
+`DenseFlight` adapts TT39's joint translation/spin linearized physical least-squares fit to physical-time windows and the higher-resolution center noise. It fits the causal recent inbound arc or an observed rebound and estimates p/v and spin together. The inherited TT39 height/restitution calibration uses observed RGB rebounds; spin regularization and effective slip were selected by delayed future RGB positions on its separate practice set. Its tuning code reads no native p/v or spin labels. The new center-noise scales were fixed from optical geometry before these held results. No backpropagation, markings, live state, opponent intent labels, targets, release IDs, or future observations enter sensing or action selection. The existing standard tracker remains an explicit fallback.
 
 ## Six sealed held action replays
 

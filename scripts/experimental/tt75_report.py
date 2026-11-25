@@ -21,12 +21,31 @@ def totals(rows):
 
 def report(path,out):
  data=_read(path);base=_read(tt.BASELINE);rows=data['rows'];n=len(rows)
+ if data.get('invalid_instrumentation'):
+  raise ValueError('Instrumentation failure is not a sensing-policy assessment')
  if data['cards'][:n]!=base['cards'][:n]:raise ValueError('Assigned cards differ')
  delta=[r['score']['learner']-b['score']['learner'] for r,b in zip(rows,base['rows'])]
  result=dict(complete_fixed32=n==32,source=str(path),baseline=str(tt.BASELINE),
              observed=totals(rows),parent=totals(base['rows'][:n]),
              paired_game_deltas=delta,paired_gains=sum(d>0 for d in delta),paired_losses=sum(d<0 for d in delta),
              total_wall_seconds=data.get('wall_seconds'),total_cpu_seconds=data.get('cpu_seconds'))
+ first_changes=[]
+ for i,(row,old) in enumerate(zip(rows,base['rows'])):
+  current,previous=row['placements']['delivered'],old['placements']['delivered']
+  if not current or not previous or current[0]['near_landed']==previous[0]['near_landed']:continue
+  a,b=np.asarray(row['actions']),np.asarray(old['actions']);length=min(len(a),len(b))
+  changed=np.flatnonzero(np.any(a[:length]!=b[:length],axis=1))
+  if not len(changed):continue
+  tick=int(changed[0]);when=tick/60
+  before=[[e for e in tape['events'] if e['time']<=when+1.e-8] for tape in (row,old)]
+  shared=tt.held.school.digest_json(before[0])==tt.held.school.digest_json(before[1])
+  far_contact=previous[0]['far_contact']['time']
+  first_changes.append(dict(index=i,first_different_command=tick,
+      actual_first_offer_rescued=bool(current[0]['near_landed']),
+      shared_exact_physical_event_prefix=shared,
+      first_far_contact_before_control_divergence=far_contact<=when,
+      same_incoming_causal_comparison=bool(shared and far_contact<=when)))
+ result['first_offer_changes']=first_changes
  observed=[r['observer'] for r in rows if 'decisions' in r.get('observer',{})]
  if observed:
   decisions=[d for o in observed for d in o['decisions']]
