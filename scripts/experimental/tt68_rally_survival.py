@@ -10,7 +10,7 @@ from .tt39_opportunity_map import projected_height
 ROOT = Path("artifacts/tt68_rally_survival")
 SOURCES = [
     dose.season.ROOT / "learning.json.gz",
-    Path("artifacts/tt48_transfer/live-exploit.json.gz"),
+    Path("artifacts/tt48_transfer/continued-64.json.gz"),
     dose.ROOT / "live-from-48.json.gz",
     Path("artifacts/tt53_responsive_school/ordinary-transfer.json.gz"),
     Path("artifacts/tt57_atlas_transfer/ablated.json.gz"),

@@ -1,0 +1,5 @@
+# Where rallies end against the original continuously random opponent
+
+Across 320 uninterrupted centered-fixture games with distinct release and seed combinations, the controller made 1,859 legal returns. It reached five on 135 points, 15 on 34, 25 on eight, 40 on three, 60 on one and 100 on zero. The 63-return point had no low-central delivery. Different runs entered with different motor experience.
+
+Across measured opportunities, the arm landed 0/106 low-central deliveries, 78/182 low-wing deliveries and 1,781/1,880 other deliveries. The physical classification uses measured x at the receiving line and an offline height projection to y = −1.53 m. Low means below 1.00 m and central means inside 10 cm of the midline. An intake at a later stage is conditional on having survived earlier balls. These counts alone cannot measure within-point learning. [Repeated stream removal, input hashes, and per-stage outcomes](survival.json) · [Matched update-on and frozen replay of the 63-return point](../tt48_transfer/README.md)
