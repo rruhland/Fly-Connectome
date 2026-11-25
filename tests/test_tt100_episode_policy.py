@@ -54,3 +54,20 @@ def test_first_changed_command_reports_exact_same_incoming_only():
     }
     assert report.first_difference(a, a) is None
     assert not report.first_difference(a, tape(b["actions"], -.78, True))["same_delivery"]
+
+
+def test_archived_full_comparison_uses_frozen_policy_and_exact_first_offer():
+    h = _read(ep.OUT)
+    d = ep.design()
+    c = _read(ep.CHECK)
+    assert h["complete"] and [r["card"] for r in h["rows"]] == [r["card"] for r in d["held"]]
+    for r in h["rows"]:
+        ordinary, episode = (r["arms"][k] for k in ("ordinary", "episode"))
+        assert ordinary["theta"] == [0.0, 0.0] and episode["theta"] == c["theta"]
+        assert ordinary["memory"]["before"] == episode["memory"]["before"]
+        for p in (ordinary, episode):
+            assert p["complete"] and p["events"][-1]["kind"] == "point"
+            assert p["memory"]["before"] == p["memory"]["after"]
+        shift = report.first_difference(ordinary, episode)
+        assert shift["same_delivery"] and shift["leg"] == 0
+        assert shift["baseline_scored"] and shift["candidate_scored"]

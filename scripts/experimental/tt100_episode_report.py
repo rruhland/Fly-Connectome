@@ -52,13 +52,15 @@ def summarize(verify, extension=False):
     if tape.exists():
         h=_read(tape)
         if h["plan"]!=_hash(check) or h["policy"]!=_hash(tt.CHECK):raise ValueError("Wrong frozen weights or schedule")
+        digest=_hash(tape)
         old=_read(out) if out.exists() else {}
-        prior={r["id"]:r.get("replays",{}) for r in (old.get("held") or {}).get("rows",[])}
-        hd=dict(receipt=_hash(tape),complete=h["complete"],rows=[],summary={})
+        previous=old.get("held") or {}
+        prior={r["id"]:r.get("replays",{}) for r in previous.get("rows",[]) if previous.get("receipt")==digest}
+        hd=dict(receipt=digest,complete=h["complete"],rows=[],summary={})
         paired=[]
         indexed=list(r for r in h["rows"] if len(r["arms"])==2)
         longest=max(indexed,key=lambda r:r["arms"]["episode"]["score"]["learner"],default=None)
-        gain=max(indexed,key=lambda r:r["arms"]["episode"]["score"]["learner"]-r["arms"]["ordinary"]["score"]["learner"],default=None)
+        swing=max(indexed,key=lambda r:abs(r["arms"]["episode"]["score"]["learner"]-r["arms"]["ordinary"]["score"]["learner"]),default=None)
         for r in indexed:
             c=r["card"]
             a,b=(r["arms"][k] for k in ("ordinary","episode"))
@@ -75,13 +77,15 @@ def summarize(verify, extension=False):
                          replays=prior.get(c["id"],{}))
             for k,v in r["arms"].items():
                 arr=v["placements"]["delivered"]
+                final=v["events"][-1]
                 current["arms"][k]=dict(legal=v["score"]["learner"],offers=len(arr),
                     touches=sum(o.get("near_contact") is not None for o in arr),
                     complete=v["complete"],cpu_s=v["cpu_s"],ticks=len(v["actions"]),
+                    winner=final.get("winner"),end_reason=final.get("reason"),
                     searches=v["planner"].get("searches",0),
                     native_candidates=v["planner"].get("native_candidates",0),
                     accepted=v["planner"].get("accepted",0))
-                selected=(verify and (r is gain or r is longest or v["score"]["learner"]>=100))
+                selected=(verify and (r is swing or r is longest or v["score"]["learner"]>=100))
                 if selected and k not in current["replays"]:
                     with tt.enabled(cameras=False):
                         current["replays"][k]=replay(d["ready"],c,v)

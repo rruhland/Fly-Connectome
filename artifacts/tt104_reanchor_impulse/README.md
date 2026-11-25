@@ -21,6 +21,10 @@ On 12116 an issued different 23.04 mm interior movement also paid, retaining the
 
 The regular eight-point comparison uses the regime already fixed across the preceding experiment, with the same measured releases, opponent seeds and carried preparation. Its release IDs are disjoint from these matched cases and all TT98 paid donors. Unmodified baseline play is shared with TT98. Each variant independently earns online credit from its own actual returns. [Frozen paired schedule](../tt98_world_waveform/games.protocol.json)
 
+The reanchored controller scored **32** own returns versus **44** without it. Seven points tied. The remaining point, release 10313, ended at 14 instead of 26. Its only issued change came at control tick 688, after six credited own returns. Both arms scored the same physical 1.088 m incoming ball and got a new legal reply. The changed stroke landed at x=.113 m and y=.203 m, versus x=.010 m and y=.414 m for the ordinary stroke. The actual later deliveries then differed. The reanchored game eventually failed on a new, low ball without touching it. A different credited carry also changed a motor command on the next point but did not change its score. All 73,624 solver samples across both arms were CAD clear, and every opponent draw used the original random law.
+
+This limited result does not support promoting the correction. Landing an alternative on the current ball does not validate the future course it creates. [Whole-point scores, paired prefixes and CAD](whole-point-comparison.json) · [Exact local and next-reply effects](issued-effects.json) · [Reanchored full command and event tapes](transport.json.gz)
+
 ```sh
 export PYTHONPATH=.:src MUJOCO_GL=egl PYOPENGL_PLATFORM=egl OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 OMP_THREAD_LIMIT=1 LP_NUM_THREADS=1
 python -m scripts.experimental.tt104_reanchor_impulse held

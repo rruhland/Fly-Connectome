@@ -247,9 +247,40 @@ def games(feeds):
     world.games('transport',feeds,root=ROOT,qualification=OUT,actor_class=Reanchored,archive_class=Anchor)
 
 
+def paired():
+    world.paired(ROOT)
+    paths=(world.ROOT/'normal.json.gz',ROOT/'transport.json.gz')
+    base,treat=(_read(p) for p in paths)
+    effects=[]
+    for c,a,b in zip(treat['cards'],base['rows'],treat['rows'],strict=True):
+        for issue in (u for u in b['corrective_mode'] if u['issued']):
+            t=issue['tick']; out=[]
+            for x in (a,b):
+                offered=x['placements']['delivered']
+                j=max(i for i,o in enumerate(offered) if o.get('near_bounce') and o['near_bounce']['step']<=t)
+                k=offered[j]; own=k.get('near_contact')
+                departure=next((e for e in x['events'] if own is not None and e['kind']=='separation'
+                                and e.get('collider')=='learner_racket' and e['time']>=own['time']),None)
+                next_ball=offered[j+1] if j+1<len(offered) else None
+                far=next_ball['far_contact'] if next_ball else None
+                land=next((e for e in x['events'] if departure and e['kind']=='legal_return' and e['side']==1
+                           and e['time']>=departure['time'] and (not far or e['time']<far['time'])),None)
+                prior=world.play.audit([e for e in x['events'] if e['time']<=MP.DT*t+1e-8],opening_side=1)['learner']
+                last=offered[-1]; crossing=last.get('receive_line')
+                out.append(dict(same_ball_key=digest_json([k['far_contact'],k['near_bounce']]),leg=j,own_before=prior,
+                                outgoing=departure,landing=land,answered=bool(next_ball and next_ball['near_bounce']),
+                                following_offer=next_ball,terminal=x['events'][-1],final_ball_touched=bool(last.get('near_contact')),
+                                final_height=world.body.fixture.projected_height(crossing) if crossing else None,
+                                score=x['score']['learner'],clearance=x['clearance']))
+            effects.append(dict(release=c['id'],tick=t,features=issue,
+                                same_matched_incoming=out[0]['same_ball_key']==out[1]['same_ball_key'],
+                                condition_order=['normal','reanchored'],result=out))
+    _write(ROOT/'issued-effects.json',dict(sources={str(p):_hash(p) for p in paths},effects=effects))
+
+
 if __name__=='__main__':
     a=argparse.ArgumentParser(description=__doc__)
     a.add_argument('command',choices=('plan','held','games','paired'))
     a.add_argument('--feeds',type=Path,default=Path('/tmp/tt25-rallies.json'))
     args=a.parse_args()
-    {'plan':freeze,'held':run,'games':lambda:games(args.feeds),'paired':lambda:world.paired(ROOT)}[args.command]()
+    {'plan':freeze,'held':run,'games':lambda:games(args.feeds),'paired':paired}[args.command]()
