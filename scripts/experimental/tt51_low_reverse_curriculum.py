@@ -96,6 +96,16 @@ def run(args):
     dependencies=[Path(arm.__file__),Path(__file__).with_name('tt50_optical_contact_school.py'),
         Path(__file__).with_name('tt44_paired_credit.py'),Path(__file__).with_name('tt37_optical_clinic.py')]
     doc['dependency_hashes']={str(p):arm._hash(p) for p in dependencies}
+    bridge_mode=getattr(args,'body_bridge',False)
+    if bridge_mode:
+        from .tt51_low_body_bridge import BodyContinuation,earlier_by_body
+        bridge=BodyContinuation(packet,[t['cut'] for t in teachers])
+        bridge_path=Path(__file__).with_name('tt51_low_body_bridge.py')
+        doc['dependency_hashes'][str(bridge_path)]=arm._hash(bridge_path)
+        doc.update(schema='tt51_rgb_low_body_bridge_v1',modes=['cold','rgb-seed','body-bridge'],
+            bridge_source_sha256=arm._hash(bridge_path),
+            bridge_scope='Rewarded observed q/reference indexed prep continuation; low-practice activation scaffold. No source tick or teacher identity supplied to policy.',
+            gate='Four exact incoming tests at >=.5/1.2rad body changes; >=2 bridge returns to advance eight fresh goal perturbations. Frozen templates, no new aggregation.')
     doc['held_reply_streams']=np.random.default_rng(510257).integers(1,2**30,4).tolist()
     clock=monotonic();cpu=process_time();deadline=clock+900;paid=0
     with np.load(arm.mpc.BANK) as z:raw=arm.mpc.DeepField(z,'local')
@@ -161,11 +171,15 @@ def run(args):
                     row=dict(stage=stage,index=index,teacher=ti,goal=goal.tolist(),delta=list(delta),cut=cut,
                         release_ticks_earlier=earlier,starting_q=q0.tolist(),starting_ref=ref0.tolist(),prefix_event_sha256=before,
                         prefix_new_control_ticks=cut-root,random_reply_stream=random_stream,variants={})
-                    for mode in ('cold','rgb-seed','growing'):
+                    teacher_q=np.asarray(min(packet['rows'][ti]['observations'],key=lambda r:abs(r['tick']-t['cut']))['q'])
+                    row['max_joint_distance_from_teacher_handoff']=float(np.max(abs(q0-teacher_q)))
+                    row['max_joint_distance_from_normal_ready']=float(np.max(abs(q0-np.asarray(src['ready']))))
+                    for mode in doc['modes']:
                         if monotonic()>=deadline or paid>=12000:break
                         state.restore(a);guarded(a,clear);actor.begin()
                         actor.policy_mode='stock' if mode=='cold' else 'body-learned'
                         actor.taught=RGBTaught(seed if mode=='rgb-seed' else growing) if mode!='cold' else None
+                        if bridge_mode:bridge.reset()
                         actor.y_out=outgoing;actor.seen_inbound_at=inbound
                         fixed_prior=actor.priors.digest()
                         eye=deepcopy(eye0);mujoco.mj_copyData(e.body_state,e.body_model,body)
@@ -179,6 +193,9 @@ def run(args):
                             q=a.joints.copy();ref=a.data.ctrl[axes].copy();frame=camera.capture() if tick%2==0 else None
                             x=arm.mpc.observed(eye,tick,frame,q)
                             goal_ref=actor.blended(tick,frame,eye.eye,x,q,ref,actor.priors.home)
+                            if mode=='body-bridge' and not actor.committed:
+                                continuation=bridge.command(q,ref)
+                                if continuation is not None:goal_ref=continuation
                             u=np.clip((np.clip(goal_ref,lo,hi)-ref)/stride,-.8,.8)
                             observations.append(dict(tick=tick,x=None if x is None else x.tolist(),q=q.tolist(),
                                 ref=ref.tolist(),next_ref=np.clip(ref+stride*u,lo,hi).tolist()))
@@ -192,6 +209,7 @@ def run(args):
                         outcome=dict(legal=legal,answered=answered,completed=completed,controls=controls,observations=observations,
                             actual_offer=offer,trials=actor.shots,clearance=shape,actual_control_ticks=len(controls),
                             event_sha256=arm.digest_json(a.events),templates_used=len(actor.taught.rows) if actor.taught else 0)
+                        if mode=='body-bridge':outcome['body_continuation']=deepcopy(bridge.records)
                         row['variants'][mode]=outcome
                         if mode=='growing' and stage!='seed' and legal and answered and not shape['penetration_samples']:
                             learned=extract(observations,checker.ik,f'own-reward-{stage}-{index}',cut)
@@ -211,6 +229,20 @@ def run(args):
                     print(stage,index,ti,earlier,[(m,v['legal'],v['answered'],len(v['trials'])) for m,v in row['variants'].items()],flush=True)
                     return row
 
+            if bridge_mode:
+                for ti in range(2):
+                    for radius in (.5,1.2):
+                        earlier=earlier_by_body(packet['rows'][ti],teachers[ti]['cut'],radius)
+                        if attempt(ti,[0,0,0,0],earlier,'body_bridge_exact_incoming',len(doc['rows'])) is None:
+                            finish('bounded_body_bridge_partial');return
+                if sum(r['variants'].get('body-bridge',{}).get('legal',False) for r in doc['rows'])<2:
+                    finish('rejected_encoder_body_bridge');return
+                for ti in range(2):
+                    for delta in ([.03,0,.012,.08],[-.03,0,-.012,-.08],[.018,0,-.012,.04],[-.018,0,.012,-.04]):
+                        earlier=earlier_by_body(packet['rows'][ti],teachers[ti]['cut'],1.2)
+                        if attempt(ti,delta,earlier,'body_bridge_new_goal',len(doc['rows'])) is None:
+                            finish('bounded_body_bridge_goal_partial');return
+                finish('completed_body_bridge_practice_no_official_promotion');return
             for ti in range(2):
                 r=attempt(ti,[0,0,0,0],0,'seed',ti)
                 if r is None:finish('bounded_seed_partial');return
@@ -242,4 +274,4 @@ def run(args):
 
 if __name__=='__main__':
     p=argparse.ArgumentParser(description=__doc__);p.add_argument('--out',type=Path,default=ROOT/'course.json.gz')
-    p.add_argument('--seed-only',action='store_true');run(p.parse_args())
+    p.add_argument('--seed-only',action='store_true');p.add_argument('--body-bridge',action='store_true');run(p.parse_args())

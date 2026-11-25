@@ -47,3 +47,31 @@ PYTHONPATH=.:src MUJOCO_GL=egl OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 OMP_THRE
 contain `p=[x,z,vx,vy,vz]`, RGB-derived `depth`, relative phase and actual next
 reference arrays. Candidate acceptance still requires the normal optical/body
 forward checks; template identity is not a live input.
+
+## Encoder-indexed body bridge pilot
+
+`body-bridge.json.gz` tests a genuinely earlier actual body. Maximum joint
+displacements from the successful handoff are .509/1.215 radians for the first
+teacher and .517/1.241 for the second. A continuation maps own observed q/ref to
+the next reference in an actually rewarded preparation trajectory, then holds its
+final issued reference. It receives no source tick or teacher identity.
+
+| Fixed course | Cold | Late templates only | Body + same templates |
+| --- | ---: | ---: | ---: |
+| Four exact incoming, earlier body | 1 | 2 | 2 |
+| Eight new physical goals, earlier body | 5 | 2 | 3 |
+
+All 12 incoming triples matched. The bridge reached the first source's original
+successful q exactly, but the inherited late actor cleared its strike state
+during preparation and never queried the taught finish. The second source had a
+genuine new gain: case9, deep x=-.204363/z=.950585 m, cold miss and late-only miss,
+bridge legal and answered, zero recorded suffix CAD penetrations. The historical
+actor bank is the inherited after-two bank. Across this whole practice pilot there
+were three bridge gains and four losses against cold. It is not promoted.
+
+The completed pilot charged 7982 control ticks, 375.890 wall seconds and 132.356
+CPU seconds. Source and dependencies remained frozen. An earlier implementation
+was interrupted during its shared prefix when an endpoint reference bug was
+caught; `body-bridge-abort.json` charges another conservative 3999-tick ceiling,
+70 wall seconds and rounded16 CPU seconds. No completed practice comparisons
+were discarded. Frozen executed source snapshots and logs are retained.

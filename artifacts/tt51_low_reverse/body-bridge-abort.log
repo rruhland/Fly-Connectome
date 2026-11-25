@@ -1,0 +1,37 @@
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/workspace/Fly-Connectome-m1b/scripts/experimental/tt51_low_reverse_curriculum.py", line 272, in <module>
+    p.add_argument('--seed-only',action='store_true');p.add_argument('--body-bridge',action='store_true');run(p.parse_args())
+                                                                                                          ^^^^^^^^^^^^^^^^^^^
+  File "/workspace/Fly-Connectome-m1b/scripts/experimental/tt51_low_reverse_curriculum.py", line 126, in run
+    history=arm.prefix(a,case['card'],archive,root,camera,axes,window=32);paid+=root
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/Fly-Connectome-m1b/scripts/experimental/tt44_paired_credit.py", line 172, in prefix
+    a.exchange(u,mpc.FAR_COMMAND)
+  File "/workspace/Fly-Connectome-m1b/scripts/experimental/tt37_opponent.py", line 120, in exchange
+    result = super().exchange(near,far)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/Fly-Connectome-m1b/scripts/experimental/tt29_rally_physics.py", line 158, in exchange
+    return self.step(near, render=False)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/Fly-Connectome-m1b/scripts/experimental/tt4_arena.py", line 440, in step
+    self._aerodynamics()
+  File "/workspace/Fly-Connectome-m1b/scripts/experimental/tt31_curriculum_opponent.py", line 83, in _aerodynamics
+    super()._aerodynamics()
+  File "/workspace/Fly-Connectome-m1b/scripts/experimental/tt29_partner.py", line 554, in _aerodynamics
+    self.partner.advance()
+  File "/workspace/Fly-Connectome-m1b/scripts/experimental/tt37_opponent.py", line 102, in advance
+    super().advance()
+  File "/workspace/Fly-Connectome-m1b/scripts/experimental/tt29_partner_fast.py", line 125, in advance
+    super().advance()
+  File "/workspace/Fly-Connectome-m1b/scripts/experimental/tt29_partner.py", line 529, in advance
+    self.stroke, record = self._plan(self.target, q[:3], v[:3], now)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/Fly-Connectome-m1b/scripts/experimental/tt29_partner.py", line 433, in _plan
+    scores = _flight_approx(out_p, out_v, out_w, target)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/Fly-Connectome-m1b/scripts/experimental/tt29_partner.py", line 214, in _flight_approx
+    cost = np.abs(p - target[:3]) @ [7., 9., 8.] + .60 * np.abs(v[:, 1] + target[3])
+           ^^^^^^^^^^^^^^^^^^^^^^
+KeyboardInterrupt

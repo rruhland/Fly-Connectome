@@ -4,6 +4,7 @@ import numpy as np
 import pytest
 
 from scripts.experimental.tt51_low_reverse_curriculum import seeded_rows,plain
+from scripts.experimental.tt51_low_body_bridge import BodyContinuation
 
 
 class PublicBody:
@@ -35,3 +36,18 @@ def test_no_oracle_fill_when_source_rgb_is_absent():
 def test_unscored_source_is_not_admitted_as_a_rewarded_template():
     data=packet();data['rows'][1]['reward']='miss'
     with pytest.raises(ValueError):seeded_rows(data,PublicBody())
+
+
+def test_body_continuation_follows_observed_state_and_rejects_unsupported_pose():
+    rows=[dict(tick=4030+i,q=[.04*i]*6,ref=[.04*i+.01]*6,
+        next_ref=[.04*i+.05]*6) for i in range(10)]
+    data=dict(rows=[dict(name='rewarded',reward='physical legal and answered',observations=rows)])
+    controller=BodyContinuation(data,[4039])
+    assert np.allclose(controller.command(rows[4]['q'],rows[4]['ref']),rows[4]['next_ref'])
+    assert np.allclose(controller.command(rows[5]['q'],rows[5]['ref']),rows[5]['next_ref'])
+    for r in rows[6:]:controller.command(r['q'],r['ref'])
+    assert controller.finished
+    assert np.allclose(controller.command(rows[-1]['q'],rows[-1]['ref']),rows[-1]['next_ref'])
+    controller.reset()
+    assert controller.command([9.]*6,[9.]*6) is None
+    assert controller.finished

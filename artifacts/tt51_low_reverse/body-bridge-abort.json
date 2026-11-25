@@ -1,0 +1,8 @@
+{
+  "reason": "Caught endpoint reference pullback bug before any practice comparison completed. Interrupted during shared prefix. No practice outcome available or selected.",
+  "wall_seconds": 70,
+  "cpu_seconds_rounded": 16,
+  "actual_control_ticks_upper_bound_charged": 3999,
+  "actual_control_ticks_exact_unknown": true,
+  "protocol_restart_source_correction": "Hold final learned preparation reference until optical strike commits."
+}
