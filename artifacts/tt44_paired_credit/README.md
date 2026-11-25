@@ -25,6 +25,10 @@ The training receipt includes all 36 motions, none censored. Its 1,582 causal ro
 
 The frozen selector estimates local return advantage relative to stock using only the common RGB and encoder context at the moment when the three controllers may begin to differ. Positive and negative contrasts are both eligible. A lone contrast cannot establish a transferable advantage. Agreement by two preparations on one physical rescue is still one offer and permits only a narrow local pilot. Leave-one-release-out recomputation assesses how little evidence this sample provides. [One-sample-per-offer readout](uplift.json)
 
+## Release-disjoint continuous games
+
+The frozen selector was exercised on four separate complete launches from the held direct course, disjoint from all 12 fitted releases and excluded from the current TT44 fresh roster. Scores were **13 vs 16 stock**. It improved 11884 from 4 to 7 and reduced 7901 from 11 to 5. Both variants landed the first changed ball in both games, and the physical far impact and near bounce on that particular ball matched stock. The divergence in scores came later, after the changed returns led the reactive opponent to deliver different paths. Both unchanged-policy games reproduced the stock commands. This is evidence against treating local first-return rescue as sufficient for rally improvement. [Held games](held.json.gz)
+
 ## Reproduce
 
 ```sh
