@@ -1,0 +1,9 @@
+# TT102 · Evaluate a return by the far-table bounce it would cause
+
+The actual pre- and post-bounce arcs forecast the next arrival **height** better than they forecast which branch the arm will return. Across 17 independently matched pairs of actual scored outgoing strokes, the predicted relative height correlated 0.759 with the real mean height from six common future draws per pair. The predicted relative next-return probability correlated 0.481 with actual scoring, but picked only four of the nine directions with a nonzero real score contrast. It was worth about +0.015 next legal returns over uninformed routing, with a release-bootstrap 95% interval from −0.039 to +0.078. That does not qualify an achieved-stroke tactical gain.
+
+The 2,593-transition teacher uses the same two-arc feature geometry as TT94. It adds TT82's calibrated receiving-skill estimate using the historical subsequent arrival's full geometry. It excludes all prospective TT80 releases and all 17 scored held pair releases. The physical paired trial keeps both real initially scored strokes and evaluates their independently drawn ordinary replies. No future goal is known to the live chooser.
+
+The prospective actor extracts both simulated arcs from the ordinary public RGB/encoder-initialized twin and its two standard optical perturbations. It compares them only after the stock candidate and physical legality tests, and accepts no decrement in robustness. It keeps the unchanged TT80 actor with the same carried frozen checkpoint as control. Two independent native camera-logged points are reserved for plan-to-observed-bounce calibration before six fixed paired roles. A trace is not counted as a changed stroke unless the issued actions physically differ.
+
+[Matched achieved strokes](achieved-pairs.json) · [Frozen protocol](protocol.json) · [TT94 optical calibration](../tt94_optical_rebound/README.md) · [TT82 independent future draws](../tt82_partner_model/README.md)
