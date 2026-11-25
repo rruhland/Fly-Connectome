@@ -74,7 +74,8 @@ def corpus():
 class Retrieval:
     def __init__(self, rows):
         self.rows=rows
-        self.x=np.array([r["z"] for r in rows])/SCALE
+        self.z=np.array([r["z"] for r in rows])
+        self.x=self.z/SCALE
         self.u=np.array([r["actions"] for r in rows])
         self.u0=self.u[:,:,:5].reshape(len(rows),-1)/MOTOR
         self.y=np.array([r["good"] for r in rows],dtype=float)
@@ -82,8 +83,14 @@ class Retrieval:
         self.tree=cKDTree(self.x)
 
     def local(self,z):
-        d,j=self.tree.query(np.asarray(z)/SCALE,k=min(64,len(self.rows)))
+        z=np.asarray(z)
+        d,j=self.tree.query(z/SCALE,k=min(80,len(self.rows)))
         d,j=np.atleast_1d(d),np.atleast_1d(j)
+        # A five-tick prefix only has a useful interpretation at a similar
+        # phase of the actual incoming flight and joint reference movement.
+        aligned=(abs(self.z[j,1]-z[1])<.22)&(abs(self.z[j,2]-z[2])<.105)
+        aligned&=np.max(abs(self.z[j,10:15]-z[10:15]),axis=1)<.66
+        d,j=d[aligned],j[aligned]
         _, keep=np.unique(self.g[j],return_index=True)
         take=np.sort(keep)[:30]
         good=d[take]<1.4
