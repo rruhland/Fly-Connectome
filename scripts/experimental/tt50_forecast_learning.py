@@ -99,9 +99,19 @@ def evaluate():
                 )
     cold = CameraCorrection(ref.params)
     score = {}
+    from . import tt46_continuous_season as season
+
+    native = _read(season.ROOT / "learning-24.json.gz")
+    excluded = 0
     for i, path in enumerate(paths):
         local = CameraCorrection(ref.params)
-        for j, leg in enumerate(_read(path)["observed"]):
+        record = _read(path)
+        truth = native["rows"][record["index"]]["placements"]["delivered"]
+        far = np.array(
+            [r["far_contact"]["time"] * 60 for r in truth if r["far_contact"]]
+        )
+        for j, leg in enumerate(record["observed"]):
+            far_ix = np.searchsorted(far, leg["tick"]) - 1
             y = np.asarray(leg["target"])
             for d in leg["decisions"]:
                 g = d["gate"]
@@ -112,9 +122,13 @@ def evaluate():
                     cold.read(g, x),
                     trained.read(g, x),
                 ]
+                precontact = far_ix >= 0 and 0 < far[far_ix] - d["tick"] < 110
+                excluded += int(not precontact)
                 for frame, pred in zip(
                     ("frozen", "point", "carried", "practiced_and_carried"), forecasts
                 ):
+                    if not precontact:
+                        continue
                     for window in ("all", "first_five" if j < 5 else "six_on"):
                         key = f"{frame}/{g}/{window}"
                         score.setdefault(key, []).append(abs(pred - y))
@@ -125,6 +139,7 @@ def evaluate():
         dict(
             practice_games=len(history),
             held_games=len(paths),
+            excluded_from_precontact_scoring=excluded,
             stages={
                 k: dict(n=len(v), mae=np.mean(v, axis=0).tolist())
                 for k, v in score.items()
