@@ -93,6 +93,14 @@ ordinary fallback candidates only after the primary native screen finds
 zero legal paths. There are no extra simulation slots and the signed RGB
 feedback rule is not enabled. [Rate-matched physical probe comparison](geometry-report.json) · [Frozen whole-game protocol](geometry-live.protocol.json)
 
+The live screening completed four fixed whole games with the ordinary wide
+opponent and frozen carry. The stock and learned arms each scored 30 returns.
+Both issued exactly the same commands and produced exactly the same native
+events. The learned basis replaced 60 sample slots across 15 primary-screen
+failures, but no frame selected a learned candidate. Both arms ran 7,392
+logical candidate rows. No live transfer or true same-offer rescue was
+observed, so the method was not extended. [Matched whole-game scores](geometry-live-report.json) · [Native tapes](geometry-live.json.gz)
+
 ## Reproduce
 
 ```sh
@@ -104,5 +112,6 @@ python -m scripts.experimental.tt53_probe_geometry run
 python -m scripts.experimental.tt53_probe_geometry_report
 python -m scripts.experimental.tt53_geometry_live plan
 python -m scripts.experimental.tt53_geometry_live run
+python -m scripts.experimental.tt53_geometry_live_report
 python -m pytest -q tests/test_tt53_signed_practice.py tests/test_tt53_probe_geometry.py tests/test_tt53_geometry_live.py
 ```
