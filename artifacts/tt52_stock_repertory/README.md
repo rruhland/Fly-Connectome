@@ -6,7 +6,7 @@ The field also accepts two previously paid low waveforms. Their extraction uses 
 
 ## Exact physical preservation result
 
-The new installed options controller reproduced every command through tick 157 on 12068 and received that same physical far impact and near bounce. It returned the second ball and the opponent legally answered. Prepared stock and stock with options each made two returns and received three before the deliberate assessment cap. The new mechanism correctly left the stock decision in charge. It did not need to select an extra waveform on this case. [Live actor controls and scoring](exact.json.gz)
+The new installed options controller reproduced every command through tick 157 on 12068 and received that same physical far impact and near bounce. It returned the second ball and the opponent legally answered. Prepared stock and stock with options each made two returns and received three before the deliberate assessment cap. The new mechanism correctly left the stock decision in charge. Even the broader weak-incumbent rule examined one real marginal window without selecting a replacement, and reproduced the prepared stock controls exactly through the end of the test. [Live actor controls and scoring](exact.json.gz) · [Weak-incumbent control](weak-exact.json.gz)
 
 ## Actual low returns after the body is ready
 

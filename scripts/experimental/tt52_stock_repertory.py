@@ -75,11 +75,23 @@ def low_field(path,natural=None):
     if len(rows)!=2:raise ValueError("Expected two initial paid optical low templates")
     rows=list(rows)
     if natural is not None:
-        n=_read(natural)
-        selected=n if isinstance(n,list) else n.get('templates',n.get('rows'))
-        if not selected: raise ValueError('Need physically earned natural waveform rows')
+        selected,_=natural_rows(natural)
         rows.extend(dict(r,name=r.get('name',f'natural-{j}')) for j,r in enumerate(selected))
     return RGBTaught(rows)
+
+
+def natural_rows(path):
+    n=_read(path)
+    selected=n if isinstance(n,list) else n.get('templates',n.get('rows'))
+    if not selected:raise ValueError('Need physically earned natural waveform rows')
+    rows=[];ids=set()
+    for item in selected:
+        t=item.get('template',item)
+        if not {'p','relative','refs','depth'}<=set(t):raise ValueError('Invalid RGB teaching packet')
+        c=item.get('case',item)
+        if 'release' in c:ids.add(int(c['release']))
+        rows.append(t)
+    return rows,ids
 
 
 class Arm(old.Arm):
@@ -216,6 +228,8 @@ def run(kind,out,n,weak=False,natural=None):
         cap=5
     else:
         cards=reg['cards'][:n];cap=240
+    if natural is not None and natural_rows(natural)[1]&{c['id'] for c in cards}:
+        raise ValueError('The natural waveform archive includes a held release')
     doc=dict(schema='tt52-ordinary-search-repertory-native-1',kind=kind,cards=cards,cap=cap,
              plan_sha256=_hash(plan_path),source_sha256=_hash(Path(__file__)),weak_incumbent_comparison=weak,
              natural_waveforms_sha256=None if natural is None else _hash(natural),rows=[])
