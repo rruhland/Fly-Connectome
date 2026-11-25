@@ -36,6 +36,8 @@ in the local optical/encoder neighborhood. It uses a bounded short phase
 alignment and blends only mutually compatible joint paths. At most two
 slots replace the least preferred existing movement seeds. No trial
 budget is added and the original search still authorizes commands.
+The library leaves all standard seeds alone while an existing plan has
+an active lease and both optical uncertainty variants supported it.
 
 The frozen comparison separates the original registered foundation,
 the ordinary FIFO after mounted practice, and the extra body archive

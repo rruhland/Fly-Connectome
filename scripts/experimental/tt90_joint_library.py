@@ -64,6 +64,19 @@ def data(a,ready,practice):
     return fields,evidence
 
 
+def held_release_support(fields):
+    x=fields["keys"];p=fields["releases"]; checked=0;nearest=[]
+    tree=cKDTree(x)
+    for i,state in enumerate(x):
+        distance,idx=tree.query(state,k=min(len(x),42))
+        other=[(d,j) for d,j in zip(np.atleast_1d(distance),np.atleast_1d(idx),strict=True) if p[i]!=p[j]]
+        if not other:continue
+        nearest.append(other[0][0])
+        checked+=int(other[0][0]<=2.20 and len({p[j] for d,j in other if d<=2.70})>=2)
+    return dict(neighbor_supported=checked,windows=len(x),
+                closest_other_release_q1_median_q3=None if not nearest else np.quantile(nearest,[.25,.5,.75]).tolist())
+
+
 class Library:
     def __init__(self,fields,*,sham=False):
         self.fields={k:v.copy() for k,v in fields.items()}

@@ -110,6 +110,13 @@ class ObservedPlayer(mount.Registered):
         def mixture(x,q,ref,limit):
             stock=retrieve(x,q,ref,limit)
             if self.body_memory is None:return stock
+            # Do not replace any proposal while a previously issued plan
+            # still holds its lease with agreement in both optical variants.
+            if self.best is not None and 0<=self.decision_tick-self.tick<self.lease:
+                origin=next((n for n in reversed(self.notes[-3:]) if n["tick"]==self.tick),None)
+                if origin is not None and origin.get("robust",0)>=2:
+                    self.diag["tt90_preserved_robust_lease"]+=1
+                    return stock
             paths=self.body_memory.propose(x,q,ref)[:max(0,len(stock)-3)]
             if paths:
                 self.proposals.append(dict(tick=self.decision_tick,paths=[meta for _,meta in paths]))
@@ -244,9 +251,13 @@ def fit(feeds):
         finally:a.close()
     if set(f["releases"]) & {k["id"] for k in p["assess"]+p["hard_pool"]}:raise ValueError("Held release in local body memory")
     np.savez_compressed(BODIES,**f)
+    support=library.held_release_support(f)
     _write(MODEL,dict(protocol=_hash(PLAN),practice=_hash(path("practice")),carry=d["checkpoint_sha256"],
-                      coached=_hash(coach.OUT),coached_sources=len(earned),library=_hash(BODIES),**e))
-    print("frozen same-body library",e,flush=True)
+                      coached=_hash(coach.OUT),coached_sources=len(earned),library=_hash(BODIES),**e,
+                      hold_one_release_out_support=support,policy_sources={
+                          str(Path(k.__file__).name):_hash(Path(k.__file__)) for k in (library,coach)
+                      }|{Path(__file__).name:_hash(Path(__file__))}))
+    print("frozen same-body library",e,support,flush=True)
 
 
 def validate_game(a,c,shot,r,guard):
@@ -261,6 +272,8 @@ def assess(feeds,n,hard=False):
     if (learned["practice"]!=_hash(path("practice")) or learned["carry"]!=_hash(bank("practice"))
         or learned["protocol"]!=_hash(PLAN) or learned["library"]!=_hash(BODIES) or learned["coached"]!=_hash(coach.OUT)):
         raise ValueError("Changed independent body acquisition")
+    if any(_hash(Path(__file__).with_name(name))!=signature for name,signature in learned["policy_sources"].items()):
+        raise ValueError("Held policy code changed after the practice fit")
     if hard:
         measured=_read(HARD)
         if measured["protocol"]!=_hash(PLAN):raise ValueError("Hard workload changed")
