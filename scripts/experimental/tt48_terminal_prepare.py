@@ -16,15 +16,16 @@ from .tt40_long_low import (Workspace, indexed, late_search, physical_finish, pl
 from .tt40_low_feasibility import replay_prefix
 from .tt44_paired_credit import State
 from .tt48_terminal_repair import ARCHIVE, ROOT, terminal
+from .tt48_terminal_effect import refine
 
 
-def run(output,batch,rounds,ports):
+def run(output,batch,rounds,ports,shape=False):
     archive=_read(ARCHIVE)
     fixed,old=terminal(archive)
     card,offer,leg=(fixed[k] for k in ("card","original_offer","leg"))
     home=np.asarray(archive["ready"])
     doc=dict(role="Privileged earlier-preparation coach on the existing 43rd offer, not a deployable actor",
-             source_sha256=_hash(ARCHIVE),case=fixed,batch=batch,rounds=rounds,ports=ports,rows=[])
+             source_sha256=_hash(ARCHIVE),case=fixed,batch=batch,rounds=rounds,ports=ports,effect_aligned=shape,rows=[])
     started=process_time()
     with mpc.centered(home):
         a=mpc.arena();cad=mpc.arena(detail="cad")
@@ -41,7 +42,8 @@ def run(output,batch,rounds,ports):
             phases=model.windows(table)
             bases,removed=model.support(phases,c0[:5],(late-fork)*dt)
             for q in bases:q["eta"]=float(q["time"]+table["time"]-late*dt)
-            got=select([b for b in bases if b["p"][1]>-1.49],ports)
+            window=[b for b in bases if b["p"][1]>-1.49 and (not shape or b["p"][1]<-1.16)]
+            got=select(window,ports)
             doc.update(fork_tick=fork,search_tick=late,original_prefix_event_sha256=event_sha,
                        preparation_s=(late-fork)*dt,original_q_at_fork=a.joints.tolist(),
                        routed_poses={str(s):sum(b["face"]==s for b in bases) for s in (-1,1)},
@@ -72,7 +74,9 @@ def run(output,batch,rounds,ports):
                     if same:
                         a.clearance_margin=.0006
                         try:
-                            selections,diagnostic=late_search(a,engine,w,bases,batch,rounds,[480922,43,k])
+                            search=refine if shape else late_search
+                            selections,diagnostic=search(a,engine,w,window if shape else bases,
+                                                         batch,rounds,[480922,43,k])
                         finally:
                             a.clearance_margin=0.
                         item["native_attempts"]=diagnostic
@@ -108,5 +112,6 @@ if __name__=="__main__":
     p.add_argument("--batch",type=int,default=96)
     p.add_argument("--rounds",type=int,default=2)
     p.add_argument("--ports",type=int,default=2)
+    p.add_argument("--effect-align",action="store_true")
     a=p.parse_args()
-    run(a.output,a.batch,a.rounds,a.ports)
+    run(a.output,a.batch,a.rounds,a.ports,a.effect_align)

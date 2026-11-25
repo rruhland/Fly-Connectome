@@ -1,6 +1,6 @@
 # An earned early correction can rescue one exact new offer, but depends on the optical history
 
-The 9519 correction returned an unchanged physical ball from a different release, 7398, on the stronger pre-season carried player. The reset stock arm and guarded selector both contacted it and faulted into their own half. The deliberately unguarded nearest of two independently earned motor examples landed. This rescue held only with the common 22-tick optical warmup. On a second branch that observed the complete original launch, neither reset stock nor the borrowed action landed. The shorter-warmup physical witness is reproducible, not robust deployment transfer.
+The 9519 correction returned an unchanged physical ball from a different release, 7398, on the stronger pre-season carried player. The reset stock arm and guarded selector both contacted it and faulted into their own half. The deliberately unguarded nearest of two independently earned motor examples landed. This rescue held only with the common 22-tick optical warmup. Both optical histories picked the same six parameters at the same control tick, with identical estimated position and only a 0.007 m/s difference in initial along-table velocity. The later replanner accepted three robust updates with the short history and one with the full history. On a second branch that observed the complete original launch, neither reset stock nor the borrowed action landed. The shorter-warmup physical witness is reproducible, not robust deployment transfer.
 
 The strong exact-offer comparison replays the original physical prefix, including native referee and opponent state. It clones the solver after the far separation, verifies the archived continuation from the clone, then runs three fresh camera-initialized branches with the same 768 prior fragments and unchanged temporal, direct, and late coverage code. No branch sees the true ball state or the archived event labels. The physical far impact and near bounce are retained on every branch. The reset controller does not in general reproduce the archived controller’s prior solver or planner history. Its score and the original score are reported separately.
 
@@ -21,6 +21,8 @@ The fresh strong stock replay, its guarded local reader, two separately earned o
 
 A separate privileged diagnostic gave a bounded native teacher exact state at the first inbound RGB cue. It screened both signed faces across 13 admitted contact windows. Across 288 private dynamics trials none touched, so no physical stroke was issued. This does not rule out earlier preparation or other contact families. It rules out blaming the optical state alone for the tested post-cue branch. [Exact-state post-cue comparison](terminal-native-coach.json.gz)
 
+A privileged earlier fork began immediately after the previous near stroke, giving 1.25 s before the post-bounce terminal search. Two signed approaches actually moved the physical arm on clear routes and preserved the exact far impact and bounce. Their subsequent private dynamics screen found 296 contacts in 384 proposed commands, but no legal landings. Contrast the same state search beginning at first inbound detection, which found zero contacts. Earlier motion buys contact opportunities in this family. A useful departure still has to be learned and demonstrated. [Causal physical preparation and private contact comparison](terminal-earlier-prepare.json.gz)
+
 ## Reproduce
 
 ```sh
@@ -30,4 +32,5 @@ python -m scripts.experimental.tt48_exact_repair --limit 1 --full-observer --out
 python -m scripts.experimental.tt48_exact_repair_audit
 python -m scripts.experimental.tt48_terminal_repair
 python -m scripts.experimental.tt48_terminal_coach
+python -m scripts.experimental.tt48_terminal_prepare
 ```
