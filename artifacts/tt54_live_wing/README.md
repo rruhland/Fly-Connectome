@@ -18,7 +18,11 @@ The first controller rescued the physically identical .964 m left-wing redraw 51
 
 The fixed first design scored **12 rather than 33** across all four preassigned starts against the same broad opponent. Per-game results were 15→2, 7→7, 11→3 and 0→0. The two ties had identical commands. In both shortened points, both variants returned the same first two physical offers. An early reserve under weak evidence changed the second outgoing stroke and all later play was then reactive to that genuinely different stroke. Neither affected game selected a low template. The low finishing skill is not enough to justify speculative changes to ordinary readiness. [Complete points from release](whole.json.gz) · [Locked starts](whole-plan.json)
 
+## Motion waits for evidence in the checked scout
+
 The checked scout reserves a compatible path without moving its arm. In this separate candidate, only a strong supported far update by outgoing gate 0 can authorize travel. It can rejoin the recorded path faster within the same installed bounds and uses multiple compatible incoming observations before acting on a moderate high or opposite limit. Its calibration is kept separate from the two earlier actors and their reported tests.
+
+On the same physical .952849 m ball, every command agreed with prepared stock until the first high far-paddle vote at tick 4022. This is 12 ticks later than the speculative versions. With no imposed preparation, it still reached the learned blade workspace. The frozen stroke again won the ordinary search on tick 4078, made physical contact at y = −1.271 m, returned legally and was answered. The changed tail had zero penetrations in 1,376 CAD samples. This is a successfully calibrated normal-body intervention, not a complete fresh point. [Fully causal exact intervention](checked-exact.json.gz)
 
 ## Reproduce
 
