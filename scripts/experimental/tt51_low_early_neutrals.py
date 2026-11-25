@@ -25,16 +25,19 @@ def restore_readiness_from_actual_images(player,rig,dt,readings):
         ready.observe(tick,x,q,ref,frames)
 
 
-def run(output,module_name):
+def run(output,module_name,n=5):
     if output.exists():raise ValueError('Use a new result file')
     module=import_module(module_name);factory=module.install
     prior=rp.pf.prior;mpc=rp.mpc;src=rp._read(prior.ARCHIVE);case,original=prior.terminal(src)
     reg=rp._read(prior.PLAN);roster=reg['rows'][1:];root=reg['anchor'];keep=reg['keep_old_commands_through']
     if len(roster)!=5 or any(not r['split'].startswith('disjoint-') for r in roster):
         raise ValueError('Existing five neutral cases changed')
+    if n not in (3,5):raise ValueError('Only the complete cohort or registered first-three diagnostic is supported')
+    roster=roster[:n]
     doc=dict(schema='tt51_earlier_wing_neutrals_v1',source_sha256=rp._hash(Path(__file__)),
         integration_module=module_name,integration_sha256=rp._hash(Path(module.__file__)),
         protocol_sha256=rp._hash(prior.PLAN),carry_sha256=rp._hash(prior.season.CARRY),rows=[],complete=False,
+        roster_count=n,subset_role='Full existing cohort' if n==5 else 'Known-label first-three mechanism diagnostic; not held evidence',
         scope='Existing five TT50 neutral draws, actual source arm at3999 with real last32 camera frames and all past encoders. Original commands through4003. Normal broad far draws and official raw.get base. Earlier controlled fork, not independent full games.',
         seconds=450,max_actual_control_ticks=10000)
     clock=monotonic();cpu=process_time();deadline=clock+450;paid=0
@@ -120,4 +123,5 @@ def run(output,module_name):
 
 if __name__=='__main__':
     p=argparse.ArgumentParser(description=__doc__);p.add_argument('--module',required=True)
-    p.add_argument('--out',type=Path,required=True);args=p.parse_args();run(args.out,args.module)
+    p.add_argument('--out',type=Path,required=True);p.add_argument('--n',type=int,choices=(3,5),default=5)
+    args=p.parse_args();run(args.out,args.module,args.n)

@@ -165,4 +165,25 @@ estimate and native event reproduces exactly. All three far-gate signals
 (4022/-.45,4030/0,4042/.45) exactly match forecasts freshly generated in that
 variant, ruling out stale same-tick predictions. Full prefix/preparation/strike
 CAD has zero penetrations. Verification costs4389 actual ticks,255.653 wall
-seconds and79.324 CPU seconds. A separate frozen V2 comparison is pending.
+seconds and79.324 CPU seconds.
+
+## Frozen V2: adverse partial comparison
+
+The separately frozen V2 retained already-made preparation through ambiguous
+camera updates and recovered its original low training challenge. Its full
+five-case neutral attempt reached the predeclared450-second bound. Four complete
+triples scored stock3/4,cold3/4,warm2/4. The registered first-three mixed subset
+scored2/3,2/3,1/3. It retained the low-wing gain but lost both791162625 and767799421,
+which stock/cold returned. No promotion is justified.
+
+The fifth stock branch completed successfully; its cold branch was censored and
+warm unstarted. Neither missing result is counted as a miss. The source artifact
+retains that partial trajectory, and the report marks the cohort incomplete.
+All completed incoming pairs matched, protected earlier controls remained exact,
+CAD had zero penetrations, and source/evaluator stayed frozen. Cost6103 actual
+control ticks,450.914 wall seconds and123.794 CPU seconds. The executed evaluator
+snapshot is retained before adding the explicit registered first-three switch.
+
+A V3 first-three mechanism diagnostic is now running under the lead agent's
+request. Those labels have been inspected; it is not new held evidence. The lead
+agent owns the separate unopened full-game qualification.

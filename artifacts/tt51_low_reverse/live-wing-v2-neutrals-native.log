@@ -1,0 +1,4 @@
+791162625 [('stock', True, True), ('cold', True, True), ('warm', False, False)]
+515671963 [('stock', False, False), ('cold', False, False), ('warm', True, True)]
+767799421 [('stock', True, True), ('cold', True, True), ('warm', False, False)]
+643968721 [('stock', True, True), ('cold', True, True), ('warm', True, True)]

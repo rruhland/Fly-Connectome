@@ -36,7 +36,11 @@ def report(source,output):
     totals={name:sum(r['variants'][name]['legal'] for r in rows) for name in ('stock','cold','warm')}
     pairs={name:dict(gains=sum(r['variants']['warm']['legal'] and not r['variants'][name]['legal'] for r in rows),
         losses=sum(not r['variants']['warm']['legal'] and r['variants'][name]['legal'] for r in rows)) for name in ('stock','cold')}
-    _write(output,dict(source_sha256=_hash(source),complete=d['complete'],status=d['status'],totals=totals,
+    pending=d.get('in_progress')
+    censored=None if pending is None else dict(stream=pending['random_reply_stream'],
+        variants={name:dict(legal=v['legal'],completed=v['completed'],answered=v['answered']) for name,v in pending['variants'].items()})
+    _write(output,dict(source_sha256=_hash(source),complete=d['complete'] and d['status'].startswith('completed'),
+        status=d['status'],complete_paired_rows=len(rows),requested_cases=d.get('roster_count',5),pending=censored,totals=totals,
         warm_paired=pairs,rows=rows,scope='Posthoc evaluator-only receipt projection and actual joint states. These native receipt summaries are never policy inputs.'))
     print(totals,pairs,flush=True)
 

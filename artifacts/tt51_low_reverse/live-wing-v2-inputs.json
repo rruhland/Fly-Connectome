@@ -1,0 +1,8 @@
+{
+  "scripts/experimental/tt54_live_wing_v2.py": "102a384bdbd95b067918c8aca5fdae908e3570d06a895d672df9cc6728f45e50",
+  "scripts/experimental/tt54_live_wing.py": "10a56db7725497c389c4a652023174104fc07c783a4a6c7a91fb8e075eaaa159",
+  "artifacts/tt51_low_reverse/observed-prep-bank.json.gz": "42c7f6c3066245ab15257424bcacddf4d0319067e3b5c875705e488974a35833",
+  "artifacts/tt50_opponent_vision/risk-model.npz": "4478d3b7622d0b3656a528b7670d6b9844cb9ae07cd22e95a3b761831e685c84",
+  "artifacts/tt42/learning-48.json.gz": "bc7f0d82cd5387a8b7b597a83e101712bdb5ede50f29e55f94430540e1299502",
+  "artifacts/tt42/learning-48.npz": "838b059f054815479c2f2215007f6cfdbbcf5accf19de6ee6a080cdbe26e46f4"
+}
