@@ -57,7 +57,7 @@ def path_options(chart, path, phase=0., *, seed=None, signed_seed=0, quick=False
                 seeds = (q0,) if separate is None else (q0, separate)
                 if seed is not None and face in (signed_seed,) and not quick:
                     seeds = (*seeds, seed)
-                for guess in (seeds[:1] if quick else seeds):
+                for guess in (seeds[:1] if quick is True else seeds):
                     q, (c, axis, *_) = ik.fit(center, face*n, guess)
                     axis = face * axis
                     d = p-c

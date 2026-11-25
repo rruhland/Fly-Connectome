@@ -18,31 +18,49 @@ from .tt40_low_feasibility import SOURCE
 from .tt43_stance import OUT, ROOT
 from .tt43_stance_live import OneHub, load_memories
 from .tt43_stance_native import fork_ticks
-from .tt43_stance_uncertain import LowHub
+from .tt43_stance_uncertain import LowHub, fitted_camera_examples
 
 CASES = ((4322,5),(8302,3),(14843,1))
 
 
-def verify(output, chart_path, witness_path, cases, ensemble=False, teacher=None):
+def verify(output, chart_path, witness_path, cases, ensemble=False, teacher=None, optical_teacher=None, warm=False):
     old=_read(SOURCE)
     chart=_read(chart_path)
     boot=np.asarray(old["ready"])
     hub=np.r_[chart["routes"]["either_far"][1]["q"],boot[-1]]
     w=_read(witness_path)
     memory=load_memories(teacher,{i for i,_ in cases})
+    if optical_teacher is not None:
+        opt=_read(optical_teacher)
+        proof=optical_teacher.with_name("same-offer-diversity.json.gz")
+        verify_source=_read(proof)
+        if (_hash(proof)!=opt["source_sha256"] or verify_source["card"]["id"] in {i for i,_ in cases}
+                or not opt["sensory_native_truth_excluded"] or not verify_source["complete"]):
+            raise ValueError("Use the release-disjoint completed optical proof")
     atlas_path=ROOT/"tt41/shallow-atlas.json.gz"
     with np.load(mpc.BANK) as z:
         raw=mpc.DeepField(z,"local")
     d=dict(schema="tt43-optical-low-matched-forks-1",rows=[],boot=boot.tolist(),hub=hub.tolist(),
            chart_sha256=_hash(chart_path),witness_sha256=_hash(witness_path),source_sha256=_hash(SOURCE),
            atlas_sha256=_hash(atlas_path),optics_sha256=_hash(course.OPTIC),
-           teacher_sha256=None if teacher is None else _hash(teacher),teacher_examples=len(memory),ensemble=ensemble,
+           teacher_sha256=None if teacher is None else _hash(teacher),teacher_examples=len(memory),ensemble=ensemble,warm=warm,
            scope="Scheduled prior-physical action prefix only. Subsequent choices use RGB/encoders. Optional teacher is release disjoint.")
+    if optical_teacher is not None:
+        payload=optical_teacher.with_suffix("").with_suffix(".npz")
+        if _hash(payload)!=opt["motion_sha256"]:
+            raise ValueError("Optical example tape does not match its receipt")
+        d["optical_teacher_sha256"]=_hash(optical_teacher)
     with mpc.centered(boot):
         a=mpc.arena()
         cad=mpc.arena(detail="cad")
         camera,rig,stride,lo,hi=mpc.resources(a)
-        actor=(LowHub if ensemble else OneHub)(mpc.BANK,raw,hub,_read(atlas_path),memory,handoff=True)
+        actor=(LowHub(mpc.BANK,raw,hub,_read(atlas_path),memory,handoff=True,warm=warm) if ensemble else
+               OneHub(mpc.BANK,raw,hub,_read(atlas_path),memory,handoff=True))
+        if optical_teacher is not None:
+            with np.load(payload) as z:
+                exp=fitted_camera_examples(actor.chart,opt["camera_response_rows"],z)
+            actor.earned.extend(exp)
+            d["optical_teacher_examples"]=len(exp)
         guard=CourtClearance(cad.model,articulated=True)
         try:
             for ident,leg in cases:
@@ -121,7 +139,9 @@ if __name__=="__main__":
     p.add_argument("--limit",type=int,default=2)
     p.add_argument("--cases",nargs="+",type=int,help="zero-based fixed development cases")
     p.add_argument("--ensemble",action="store_true")
+    p.add_argument("--warm",action="store_true")
     p.add_argument("--teacher",type=Path)
+    p.add_argument("--optical-teacher",type=Path)
     a=p.parse_args()
     cases=CASES[:a.limit] if a.cases is None else [CASES[i] for i in a.cases]
-    verify(a.output,a.chart,a.witnesses,cases,a.ensemble,a.teacher)
+    verify(a.output,a.chart,a.witnesses,cases,a.ensemble,a.teacher,a.optical_teacher,a.warm)
