@@ -1,0 +1,3 @@
+# Carry direct joint alternatives between images
+
+The arm retains up to six distinct joint command sequences from an optical search. At the next camera update, if ordinary planning produces no robust legal action, it shifts the earlier alternatives by the actual elapsed control ticks and checks them from its newly observed body and flight. It discards stale options from a previous approach. Reusing several candidates between updates is motivated by the trajectory-memory component of iCEM. Both the screening and the final score here use the existing physical table-tennis controller and referee. [Sample-efficient Cross-Entropy Method for Real-time Planning](https://proceedings.mlr.press/v155/pinneri21a.html)

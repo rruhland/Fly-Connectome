@@ -1,0 +1,5 @@
+# Learn whether a movement leads to another actual return
+
+The value model learns from 4,662 distinct optical decision and candidate contexts across 143 earlier releases. It uses the controller's predicted outgoing flight, the currently observed optical position, the robustness votes and the modeled movement quality. Training outcomes record whether the chosen action landed, and whether the far opponent and arm subsequently both landed. A failed receiving opportunity or a far error can end the chain. The fit uses a fixed nonlinear expansion and regularized likelihood, with no backpropagation or opponent draw as input.
+
+On six release-disjoint folds, the Brier score for predicting another actual arm return was 0.105, versus 0.116 using only approach and robustness cues and 0.126 using prevalence. Actual following-return frequencies in the five ordered prediction bands were 60%, 83%, 91%, 96%, and 97%. These are observations under the original behavior. The two gameplay tests ask whether selecting or generating a different joint action actually improves survival. [Fit, provenance and validation](fit.json)
