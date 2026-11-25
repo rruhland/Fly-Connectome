@@ -10,7 +10,8 @@ from .tt31_ready import centered
 from .tt33_joint import FAR_COMMAND
 from .tt37_opponent import arena, draw
 from .tt37_opponent_audit import CourtClearance, contact_observer, guarded, verify_clearance
-from .tt43_stance import OUT, ROOT
+from .tt40_long_low import same_trace
+from .tt43_stance import ROOT
 
 
 def compare(path, stock, output):
@@ -32,7 +33,7 @@ def compare(path, stock, output):
                     raise ValueError("Mismatched releases or opponent draws")
                 first=row["placements"]["delivered"][:1]
                 original=stock_row["placements"]["delivered"][:1]
-                common=all(digest_json(o[key])==digest_json(p[key]) for p,o in zip(first,original)
+                common=all(same_trace(o[key],p[key]) for p,o in zip(first,original)
                            for key in ("far_contact","near_bounce")) and len(first)==len(original)
                 a.launch(row["shot"],card=card)
                 a.partner.reset(seed=card["seed"])
@@ -49,7 +50,7 @@ def compare(path, stock, output):
                 draws=[r["target"] for r in a.point_placements()["requested"]]
                 if any(list(draw(card,i,"random",None)[0]) != x for i,x in enumerate(draws)):
                     raise ValueError("One of the replayed opponent goals was not the assigned draw")
-                r=dict(id=card["id"],stock_own=stock_row["score"]["learner"],own=row["score"]["learner"],
+                r=dict(first_delivery_numeric_epsilon=1e-8,id=card["id"],stock_own=stock_row["score"]["learner"],own=row["score"]["learner"],
                        opponent=row["score"]["opponent"],event_sha256=digest_json(a.events),
                        unchanged_first_delivery=common,contacts=notes,clearance=a.clearance_result(),draws=len(draws))
                 result["rows"].append(r)
