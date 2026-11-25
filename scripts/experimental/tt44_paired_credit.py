@@ -190,6 +190,7 @@ def suffix(a,image,rig,stride,low,high,actor,readings,case,source,boot):
     eye=warm(a,rig,actor,readings)
     leg=case["leg"]; tick=case["tick"]
     axes=a._arm_ids[1][2]
+    target_bounce=source["placements"]["delivered"][leg]["near_bounce"]["time"]
     controls=[]; sensory=[]; landed=False
     for j in range(tick,tick+170):
         q=a.joints
@@ -203,7 +204,8 @@ def suffix(a,image,rig,stride,low,high,actor,readings,case,source,boot):
             sensory.append([j,*x,*q,*ref,*sent,*u])
         controls.append(u.tolist())
         _,_,finished,capped,info=a.exchange(u,mpc.FAR_COMMAND)
-        if any(e["kind"]=="legal_return" and e.get("side")==1 for e in info["events"]):
+        if any(e["kind"]=="legal_return" and e.get("side")==1 and e["time"]>target_bounce
+               for e in info["events"]):
             landed=True
         if landed or finished or capped:
             break
