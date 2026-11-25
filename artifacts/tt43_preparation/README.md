@@ -24,6 +24,8 @@ The original finalists can all predict a bad follow-up. A separate pilot uses th
 
 The generation pilot made 24 real learner returns versus 33 for stock. Its best point made nine versus five on 9550. The first affected own return landed on all four changed assignments, but the immediate next optical risk improvement carried over to a higher actual follow-up on only two. In particular, on 15665 it lowered the next ball from 1.018 m to 0.985 m and the rally ended immediately. The added search did not improve endurance on these six. [Six paired games](outgoing-generation-live.json.gz) · [Physical follow-up comparison](outgoing-generation-report.json)
 
+The extra-search control kept the same hazard trigger, proposal budget, nominal plant and robustness requirement, but generated and ranked candidates only for the current stroke. In the first two starts it made three and six returns, versus nine and six with the next-ball objective and five and twelve for unmodified stock. This is a two-game mechanism check. The ordinary objective did not explain the success on 9550, but both added-search arms underperformed stock across the pair. [Matched-budget ordinary search](outgoing-generation-ordinary.json.gz) · [Outcome comparison](outgoing-generation-ordinary-report.json)
+
 ## Reproduce
 
 ```sh

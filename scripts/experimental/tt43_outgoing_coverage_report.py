@@ -21,7 +21,9 @@ def stats(rows):
     return dict(own=sum(scores), max=max(scores, default=0),
                 opening=sum(bool(r["placements"]["delivered"] and
                                  r["placements"]["delivered"][0]["near_landed"]) for r in rows),
-                low=sum(h < .99 for h in projected), tracked_later=len(projected))
+                low=sum(h < .99 for h in projected), tracked_later=len(projected),
+                actions=sum(len(r["actions"]) for r in rows),
+                measured_cpu_s=sum(r["runtime_cpu_s"] for r in rows))
 
 
 def first_followup(stock, new):
@@ -84,9 +86,13 @@ def report(args):
     rows = doc["rows"]
     stock = control["rows"][:len(rows)]
     changed = [i for i, r in enumerate(rows) if r["first_changed_action"] is not None]
+    paired = [r["score"]["learner"] - s["score"]["learner"] for r, s in zip(rows, stock, strict=True)]
     r = dict(complete=doc["complete"], points=len(rows), assigned=len(doc["cards"]),
              baseline_sha256=_hash(args.control), candidate_sha256=observed_version,
              stock=stats(stock), candidate=stats(rows), changed=len(changed),
+             points_longer=sum(d > 0 for d in paired), points_shorter=sum(d < 0 for d in paired),
+             points_tied=paired.count(0),
+             paired_score_deltas=paired,
              changed_assignments=[
                  dict(index=i, id=doc["cards"][i]["id"],
                       first_changed_action=rows[i]["first_changed_action"],
