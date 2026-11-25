@@ -1,0 +1,513 @@
+{
+  "schema": "tt49-outside-rgb-difference-1",
+  "file_sha256": "72fe1e961e2b5be2a01002d740207295b6569bf2ec3b48b12f0abbad2597105f",
+  "anchored_stock_controls_bitwise_same_until_earliest_far_impact": true,
+  "common_prefar_command_count": 57,
+  "streams": [
+    {
+      "stream": 1062985728,
+      "ticks": [
+        4024,
+        4026,
+        4028,
+        4030,
+        4032,
+        4034,
+        4036,
+        4038,
+        4040,
+        4042,
+        4044,
+        4046,
+        4048,
+        4050,
+        4052,
+        4054,
+        4056,
+        4058,
+        4060,
+        4062
+      ],
+      "last_frame": 4064,
+      "native_far_contact_tick": 4057,
+      "height_at_deep": 1.0147651604446741,
+      "actual_lateral_m": 0.13449726404401494,
+      "native_reached_lane": "right",
+      "actual_legal": true
+    },
+    {
+      "stream": 191026792,
+      "ticks": [
+        4024,
+        4026,
+        4028,
+        4030,
+        4032,
+        4034,
+        4036,
+        4038,
+        4040,
+        4042,
+        4044,
+        4046,
+        4048,
+        4050,
+        4052,
+        4054,
+        4056,
+        4058,
+        4060,
+        4062
+      ],
+      "last_frame": 4064,
+      "native_far_contact_tick": 4057,
+      "height_at_deep": 0.9949593929898773,
+      "actual_lateral_m": -0.14663006442099968,
+      "native_reached_lane": "left",
+      "actual_legal": true
+    }
+  ],
+  "first_captured_tick": 4024,
+  "rows": [
+    {
+      "camera": "left",
+      "tick": 4024,
+      "pixels_gt_3": 26,
+      "bounds_yx_inclusive": [
+        91,
+        152,
+        99,
+        162
+      ]
+    },
+    {
+      "camera": "left",
+      "tick": 4026,
+      "pixels_gt_3": 28,
+      "bounds_yx_inclusive": [
+        91,
+        152,
+        100,
+        162
+      ]
+    },
+    {
+      "camera": "left",
+      "tick": 4028,
+      "pixels_gt_3": 32,
+      "bounds_yx_inclusive": [
+        92,
+        152,
+        101,
+        162
+      ]
+    },
+    {
+      "camera": "left",
+      "tick": 4030,
+      "pixels_gt_3": 33,
+      "bounds_yx_inclusive": [
+        93,
+        152,
+        102,
+        162
+      ]
+    },
+    {
+      "camera": "left",
+      "tick": 4032,
+      "pixels_gt_3": 35,
+      "bounds_yx_inclusive": [
+        93,
+        152,
+        103,
+        162
+      ]
+    },
+    {
+      "camera": "left",
+      "tick": 4034,
+      "pixels_gt_3": 41,
+      "bounds_yx_inclusive": [
+        94,
+        153,
+        104,
+        163
+      ]
+    },
+    {
+      "camera": "left",
+      "tick": 4036,
+      "pixels_gt_3": 40,
+      "bounds_yx_inclusive": [
+        95,
+        153,
+        104,
+        163
+      ]
+    },
+    {
+      "camera": "left",
+      "tick": 4038,
+      "pixels_gt_3": 45,
+      "bounds_yx_inclusive": [
+        95,
+        153,
+        105,
+        163
+      ]
+    },
+    {
+      "camera": "left",
+      "tick": 4040,
+      "pixels_gt_3": 41,
+      "bounds_yx_inclusive": [
+        96,
+        153,
+        105,
+        164
+      ]
+    },
+    {
+      "camera": "left",
+      "tick": 4042,
+      "pixels_gt_3": 39,
+      "bounds_yx_inclusive": [
+        96,
+        154,
+        105,
+        164
+      ]
+    },
+    {
+      "camera": "left",
+      "tick": 4044,
+      "pixels_gt_3": 39,
+      "bounds_yx_inclusive": [
+        96,
+        154,
+        106,
+        165
+      ]
+    },
+    {
+      "camera": "left",
+      "tick": 4046,
+      "pixels_gt_3": 36,
+      "bounds_yx_inclusive": [
+        96,
+        155,
+        106,
+        165
+      ]
+    },
+    {
+      "camera": "left",
+      "tick": 4048,
+      "pixels_gt_3": 38,
+      "bounds_yx_inclusive": [
+        96,
+        155,
+        105,
+        166
+      ]
+    },
+    {
+      "camera": "left",
+      "tick": 4050,
+      "pixels_gt_3": 30,
+      "bounds_yx_inclusive": [
+        95,
+        156,
+        105,
+        166
+      ]
+    },
+    {
+      "camera": "left",
+      "tick": 4052,
+      "pixels_gt_3": 25,
+      "bounds_yx_inclusive": [
+        95,
+        157,
+        105,
+        167
+      ]
+    },
+    {
+      "camera": "left",
+      "tick": 4054,
+      "pixels_gt_3": 17,
+      "bounds_yx_inclusive": [
+        95,
+        158,
+        104,
+        168
+      ]
+    },
+    {
+      "camera": "left",
+      "tick": 4056,
+      "pixels_gt_3": 10,
+      "bounds_yx_inclusive": [
+        94,
+        158,
+        103,
+        168
+      ]
+    },
+    {
+      "camera": "left",
+      "tick": 4058,
+      "pixels_gt_3": 13,
+      "bounds_yx_inclusive": [
+        93,
+        159,
+        103,
+        169
+      ]
+    },
+    {
+      "camera": "left",
+      "tick": 4060,
+      "pixels_gt_3": 20,
+      "bounds_yx_inclusive": [
+        93,
+        160,
+        102,
+        170
+      ]
+    },
+    {
+      "camera": "left",
+      "tick": 4062,
+      "pixels_gt_3": 32,
+      "bounds_yx_inclusive": [
+        92,
+        160,
+        106,
+        174
+      ]
+    },
+    {
+      "camera": "right",
+      "tick": 4024,
+      "pixels_gt_3": 29,
+      "bounds_yx_inclusive": [
+        91,
+        219,
+        99,
+        228
+      ]
+    },
+    {
+      "camera": "right",
+      "tick": 4026,
+      "pixels_gt_3": 31,
+      "bounds_yx_inclusive": [
+        91,
+        219,
+        100,
+        228
+      ]
+    },
+    {
+      "camera": "right",
+      "tick": 4028,
+      "pixels_gt_3": 37,
+      "bounds_yx_inclusive": [
+        92,
+        218,
+        101,
+        228
+      ]
+    },
+    {
+      "camera": "right",
+      "tick": 4030,
+      "pixels_gt_3": 38,
+      "bounds_yx_inclusive": [
+        93,
+        218,
+        102,
+        228
+      ]
+    },
+    {
+      "camera": "right",
+      "tick": 4032,
+      "pixels_gt_3": 43,
+      "bounds_yx_inclusive": [
+        93,
+        217,
+        102,
+        227
+      ]
+    },
+    {
+      "camera": "right",
+      "tick": 4034,
+      "pixels_gt_3": 44,
+      "bounds_yx_inclusive": [
+        94,
+        217,
+        103,
+        227
+      ]
+    },
+    {
+      "camera": "right",
+      "tick": 4036,
+      "pixels_gt_3": 45,
+      "bounds_yx_inclusive": [
+        95,
+        216,
+        104,
+        227
+      ]
+    },
+    {
+      "camera": "right",
+      "tick": 4038,
+      "pixels_gt_3": 44,
+      "bounds_yx_inclusive": [
+        95,
+        216,
+        104,
+        226
+      ]
+    },
+    {
+      "camera": "right",
+      "tick": 4040,
+      "pixels_gt_3": 46,
+      "bounds_yx_inclusive": [
+        95,
+        215,
+        105,
+        226
+      ]
+    },
+    {
+      "camera": "right",
+      "tick": 4042,
+      "pixels_gt_3": 43,
+      "bounds_yx_inclusive": [
+        96,
+        215,
+        105,
+        225
+      ]
+    },
+    {
+      "camera": "right",
+      "tick": 4044,
+      "pixels_gt_3": 43,
+      "bounds_yx_inclusive": [
+        96,
+        214,
+        105,
+        225
+      ]
+    },
+    {
+      "camera": "right",
+      "tick": 4046,
+      "pixels_gt_3": 39,
+      "bounds_yx_inclusive": [
+        96,
+        214,
+        105,
+        224
+      ]
+    },
+    {
+      "camera": "right",
+      "tick": 4048,
+      "pixels_gt_3": 37,
+      "bounds_yx_inclusive": [
+        96,
+        213,
+        105,
+        224
+      ]
+    },
+    {
+      "camera": "right",
+      "tick": 4050,
+      "pixels_gt_3": 34,
+      "bounds_yx_inclusive": [
+        95,
+        213,
+        105,
+        223
+      ]
+    },
+    {
+      "camera": "right",
+      "tick": 4052,
+      "pixels_gt_3": 25,
+      "bounds_yx_inclusive": [
+        95,
+        212,
+        104,
+        222
+      ]
+    },
+    {
+      "camera": "right",
+      "tick": 4054,
+      "pixels_gt_3": 17,
+      "bounds_yx_inclusive": [
+        95,
+        212,
+        104,
+        222
+      ]
+    },
+    {
+      "camera": "right",
+      "tick": 4056,
+      "pixels_gt_3": 13,
+      "bounds_yx_inclusive": [
+        94,
+        211,
+        103,
+        221
+      ]
+    },
+    {
+      "camera": "right",
+      "tick": 4058,
+      "pixels_gt_3": 12,
+      "bounds_yx_inclusive": [
+        94,
+        213,
+        100,
+        219
+      ]
+    },
+    {
+      "camera": "right",
+      "tick": 4060,
+      "pixels_gt_3": 27,
+      "bounds_yx_inclusive": [
+        93,
+        209,
+        102,
+        220
+      ]
+    },
+    {
+      "camera": "right",
+      "tick": 4062,
+      "pixels_gt_3": 31,
+      "bounds_yx_inclusive": [
+        92,
+        206,
+        106,
+        220
+      ]
+    }
+  ]
+}
