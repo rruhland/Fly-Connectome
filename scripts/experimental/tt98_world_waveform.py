@@ -12,6 +12,7 @@ from . import tt63_fixture_qualification as qualify
 from . import tt72_retarget_trajectory as transport
 from . import tt84_installation_system as body
 from . import tt84_installation_play as play
+from .tt84_season_prefix import categories
 from . import tt57_motor_school_transfer as optical
 from .tt4_transfer_trial import _hash, _read, _write
 from .tt19_view_full_game import digest_json
@@ -344,19 +345,20 @@ class WorldPlayer(play.Registered):
         return super().step(tick,eye,x,q,reference,base)
 
 
-def games(mode,feeds):
+def games(mode,feeds,*,root=ROOT,qualification=HELD,actor_class=WorldPlayer,archive_class=Archive):
     p=_read(GAME_PLAN)
     if any(_hash(Path(f))!=h for f,h in p['sources'].items()) or p['feeds']!=_hash(feeds):raise ValueError('Changed whole-point conditions')
     if mode=='transport':
-        held_cases=_read(HELD)
-        if not held_cases['complete'] or held_cases['weights']!=_hash(MODEL):raise ValueError('Finish the release-disjoint whole-waveform assay')
+        held_cases=_read(qualification)
+        if not held_cases['complete'] or held_cases.get('weights',_hash(MODEL))!=_hash(MODEL):
+            raise ValueError('Finish the release-disjoint whole-waveform assay')
     build=_read(body.BUILD); m,ready=registration()
     reg=play.Registration(build['rows'][0]['candidate']['mount']['base'],m['mount']['base'],m['mount']['rotation'])
     ids={c['id'] for c in p['cards']}
     with np.load(MP.BANK) as f:raw=play.LocalField(MP.DeepField(f,'local'),reg)
     rank=play.SEASON.fresh.shot.Coverage(_read(play.SEASON.fresh.RISK)); shots=MP.measured_launches(feeds)
-    out=ROOT/f'{mode}.json.gz'; bank=ROOT/f'{mode}.npz'; carry=_read(play.SEASON.CARRY)
-    result=dict(protocol=_hash(GAME_PLAN),match=_hash(HELD) if mode=='transport' else None,params=_hash(MODEL) if mode=='transport' else None,
+    out=root/f'{mode}.json.gz'; bank=root/f'{mode}.npz'; carry=_read(play.SEASON.CARRY)
+    result=dict(protocol=_hash(GAME_PLAN),match=_hash(qualification) if mode=='transport' else None,params=_hash(MODEL) if mode=='transport' else None,
                 mode=mode,cards=p['cards'],cap=p['cap'],
                 mounting=m,ready=ready,rows=[])
     if out.exists():
@@ -367,11 +369,11 @@ def games(mode,feeds):
         a=MP.arena(); cad=MP.arena(detail='cad'); cam,rig,stride,lo,hi=MP.resources(a)
         clearance=qualify.GripClearance(cad.model,stock=True)
         try:
-            lib=Archive(a) if mode=='transport' else None
+            lib=archive_class(a) if mode=='transport' else None
             if lib is not None and ids&set(lib.layout['ids'].tolist()):raise ValueError('The grounded motion library used an assessment release')
             with patch.object(MP,'Fragments',lambda b,e:Carried(b,e,practice=[play.COURSE.PRACTICE],held=ids)):
                 shared=dict(register=reg,variant='elastic',budget=28,coverage=rank)
-                actor=(WorldPlayer(MP.BANK,raw,library=lib,actuator=(stride,lo,hi),**shared) if mode=='transport'
+                actor=(actor_class(MP.BANK,raw,library=lib,actuator=(stride,lo,hi),**shared) if mode=='transport'
                        else play.Registered(MP.BANK,raw,**shared))
             try:
                 actor.priors.home=np.array(ready); play.COURSE.resume(actor,play.SEASON.CARRY.with_suffix('').with_suffix('.npz'),carry)
@@ -386,7 +388,7 @@ def games(mode,feeds):
                         raise ValueError('Changed standard continuously random reactive opponent')
                     verify_clearance(a);r['clearance']=a.clearance_result()
                     if r['score']['learner']>=100:
-                        witness=play.audit_witness(r,c,a,clearance,mode,len(result['rows']),'tt98-'+mode,ready,m)
+                        witness=play.audit_witness(r,c,a,clearance,mode,len(result['rows']),root.name+'-'+mode,ready,m)
                         r['verified_witness']=dict(path=str(witness),sha256=_hash(witness))
                     r['corrective_mode']=getattr(actor,'wave_log',[])
                     result['rows'].append(r);result['checkpoint_sha256']=play.COURSE.save(actor,bank);_write(out,result)
@@ -395,10 +397,47 @@ def games(mode,feeds):
         finally:cam.close();cad.close();a.close()
 
 
+def paired(root=ROOT):
+    files=[ROOT/'normal.json.gz',root/'transport.json.gz']
+    x,y=docs=[_read(p) for p in files]
+    plan=_read(GAME_PLAN)
+    if any(d['cards']!=plan['cards'] or len(d['rows'])!=len(d['cards'])
+           or d['protocol']!=_hash(GAME_PLAN) for d in docs):
+        raise ValueError('Both exact preassigned whole-point courses must finish before comparison')
+    if x['rows'][0]['memory']['before']!=y['rows'][0]['memory']['before'] or x['mounting']!=y['mounting'] or x['ready']!=y['ready']:
+        raise ValueError('Original body or starting carry changed')
+    for d in docs:
+        for r,c in zip(d['rows'],d['cards'],strict=True):
+            if not r['clearance']['samples'] or r['clearance']['penetration_samples'] or any(
+                    w['draw']!='random' or w['target']!=list(draw(c,j,'random',None)[0])
+                    for j,w in enumerate(r['placements']['requested'])):
+                raise ValueError('Not a CAD-clean standard reactive point')
+    pairs=[]
+    for a,b,c in zip(x['rows'],y['rows'],x['cards'],strict=True):
+        moment=next((j for j,(u,v) in enumerate(zip(a['actions'],b['actions'])) if u!=v),None)
+        if moment is None and a['actions']!=b['actions']:moment=min(len(a['actions']),len(b['actions']))
+        before=lambda r:[e for e in r['events'] if moment is None or e['time']<=moment*MP.DT+1e-8]
+        if digest_json(before(a))!=digest_json(before(b)):raise ValueError('Physical result differed before first motor difference')
+        left,right=a['placements']['delivered'],b['placements']['delivered']
+        same=bool(left and right and all(digest_json(left[0][k])==digest_json(right[0][k])
+                                        for k in ('far_contact','near_bounce')))
+        pairs.append(dict(id=c['id'],normal=a['score']['learner'],transport=b['score']['learner'],first_offer_same=same,
+                          first_motor_change=moment,issued=sum(o['issued'] for o in b['corrective_mode']),
+                          exact_prefix=True))
+    summary=dict(protocol=_hash(GAME_PLAN),arms={})
+    for p,d in zip(files,docs,strict=True):
+        n=[v['score']['learner'] for v in d['rows']]
+        summary['arms'][d['mode']]=dict(total=sum(n),peak=max(n),zero=n.count(0),tape=_hash(p),
+             CAD_samples=sum(r['clearance']['samples'] for r in d['rows']),delivery=categories(d['rows']))
+    summary['pairs']=pairs;_write(root/'whole-point-comparison.json',summary)
+    print(summary,flush=True)
+
+
 if __name__=='__main__':
     a=argparse.ArgumentParser(description=__doc__)
-    a.add_argument('mode',choices=('plan','games-plan','harvest','learn','fit','held','normal','transport'))
+    a.add_argument('mode',choices=('plan','games-plan','harvest','learn','fit','held','normal','transport','paired'))
     a.add_argument('--n',type=int,default=64);a.add_argument('--feeds',type=Path,default=Path('/tmp/tt25-rallies.json'))
     p=a.parse_args()
     if p.mode in ('normal','transport'):games(p.mode,p.feeds)
-    else:{'plan':freeze,'games-plan':lambda:freeze_games(p.feeds),'harvest':harvest,'learn':mounted_lessons,'fit':fit,'held':lambda:held(p.n)}[p.mode]()
+    else:{'plan':freeze,'games-plan':lambda:freeze_games(p.feeds),'harvest':harvest,'learn':mounted_lessons,
+          'fit':fit,'held':lambda:held(p.n),'paired':paired}[p.mode]()
