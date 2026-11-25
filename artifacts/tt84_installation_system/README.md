@@ -16,6 +16,23 @@ Of 192 five-dimensional proposals, 27 fit the original CAD base footprint on the
 
 The combined design is +119.72 mm lateral and 5.61 mm farther inboard, with +17.96° pitch, −7.60° roll and −4.00° yaw in the declared extrinsic XYZ convention. The taper has at most 61.94 mm thickness. Two relieved lower pads bear on the original end plate. CAD measured a base-to-deck gap below 8 nm and 1.00 mm and 4.00 mm clearance from the upper jaws and playing table, respectively. The rig was separately commissioned to the original ready blade center within 2.2 mm. It retains 24 of 25 ordinary routed atlas sites. The screening advantage over lateral-only remains small. [Protocol and source checksums](protocol.json) · [Joint workspace screen](screen.json) · [Compiled support and calibration](build.json)
 
+## Powered tests on independent releases
+
+The same native coach and movement budgets compare stock, lateral-only and the canted work cell on independent measured openings. They keep the actual opening far impact and legal near bounce. On all four reserved low balls, the combined installation scored and drew a legal ordinary answer without sampled CAD penetration. The centered controller returned none and lateral-only returned two. The combined body made three broad-face hits within 58 mm. On 15541 and 7398 it returned previously unreturned low balls on the +12 cm station. These are physical corrections selected by the native mechanism coach, not by the RGB learner.
+
+| Low release | Centered | +12 cm | Combined minimum qualifying radius |
+|---|---|---|---:|
+| 14429 | Miss | Interior return | 22.68 mm |
+| 15541 | Miss | Miss | 62.38 mm |
+| 7398 | Miss | Miss | 51.11 mm |
+| 10762 | Miss | Rim return | 57.75 mm |
+
+[Original and canted actual actions](physical.json.gz) · [Same-offer lateral-only control](lateral-control.json.gz)
+
+All four reserved ordinary controls also landed and drew an ordinary answer on the combined installation. Each had a clean interior hit from the same native-coach budget. The unchanged archived joint-rate tape alone transferred just two of the four routine returns. The other two needed a different movement even though the incoming physical ball did not change. Independent command replay reproduced all 12 actual scoring tapes and checked every reactive draw and 15,664 CAD solver states with no penetration. This is a reason to measure actual online learning on the new body, not to interpret the four native rescues as an ordinary policy result. [Independent replay, referee and CAD receipt](replay.json)
+
+The eight-game preliminary stream and subsequent unfiltered 128-game season use the original archived carry, actual stereo and own encoders. Installation registration changes only action-memory coordinates and the private body's known geometry. The extensive season is the same release and reply-seed roster as the centered TT80 comparator, and starts from the original carry again. Uninterrupted points end at the standard physical loss or existing cap. Any 100 own returns would be saved and audited on the *actual canted body* before being counted. [Preliminary stream](games.protocol.json) · [Full mounted season's frozen roster](season.protocol.json)
+
 ## Reproduce
 
 ```sh
@@ -25,6 +42,8 @@ python -m scripts.experimental.tt84_installation_system screen
 python -m scripts.experimental.tt84_installation_system build
 python -m scripts.experimental.tt84_installation_system physical
 python -m scripts.experimental.tt84_installation_compare
+python -m scripts.experimental.tt84_installation_report
 python -m scripts.experimental.tt84_installation_play plan
+python -m scripts.experimental.tt84_installation_play season-plan
 python -m pytest -q tests/test_tt84_installation_system.py
 ```

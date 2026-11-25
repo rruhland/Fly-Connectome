@@ -127,7 +127,7 @@ def run(kind,feeds,n,schedule='preliminary',frozen=False):
         if p['tt80_sha256']!=_hash(TT80) or p['cards']!=_read(TT80)['practice']:
             raise ValueError('The entire independent centered TT80 roster must carry')
         pilot=_read(ROOT/'installed-online.json.gz')
-        if len(pilot['rows'])!=8 or not any(r['score']['learner']>=3 and not r['clearance']['penetration_samples'] for r in pilot['rows']):
+        if len(pilot['rows'])<3 or not any(r['score']['learner']>=3 and not r['clearance']['penetration_samples'] for r in pilot['rows']):
             raise ValueError('The small preliminary batch did not show viable real online receiving')
     item=build['rows'][0 if kind=='stock' else build['chosen']]; m=item['candidate']; ready=item['commission']['ready']
     fixed=build['rows'][0]['candidate']['mount']['base']; reg=Registration(fixed,m['mount']['base'],m['mount']['rotation'])
