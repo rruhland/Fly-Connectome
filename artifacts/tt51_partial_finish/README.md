@@ -29,6 +29,10 @@ The preregistered four-game pilot used the frozen kernel risk model `4478d3b7…
 
 The action choices produced 35 new scored, observation-derived waveforms. Points 7901 and 11884 later reused a waveform acquired during that same point and physically scored again. The first action difference in 11884 was an opening stroke before any new readiness motion, so the improvement cannot be assigned to the forecast or preparation alone. On 12068 the second physical ball was still identical and the preparation-plus-finish actor scored nothing from it. The selected learned stroke had passed both simulator perturbations. Later exchanges follow the different ball the opponent actually saw, not identical trajectories or matched outcomes.
 
+All eight complete control tapes exactly reproduced their native referee events, placements and assigned opponent draws under independent strict CAD replay. Zero of 70,161 physical samples penetrated the fixture, table, robot or paddle clearance checks. Minimum measured clearance was 15.006 mm. [Independent replay audit](whole-audit.json)
+
+For a post-outcome diagnosis of 12068, repeat with the same risk-guided preparation but disable the extra finishing choice. Every command remains exact through tick 157, and the incoming ball is the same physical impact and bounce. The controllers first diverge at the original learned commitment on tick 158. The ordinary continuation from that same prepared body returns the ball and the unchanged opponent answers. This isolates premature finishing selection as the cause in this loss. It does not establish a fresh game score or a general benefit for the preparation. [The matched physical intervention](isolated-12068.json.gz)
+
 ## Reproduce
 
 ```sh
