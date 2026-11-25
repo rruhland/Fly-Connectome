@@ -6,6 +6,8 @@ from scripts.experimental.tt48_precise_receive import (
     backwards,
     sphere_correct,
 )
+from scripts.experimental.tt48_bounce_window import catchup
+from scripts.experimental.tt48_precise_crop import rectangle
 from scripts.experimental.tt18_view import CameraFit
 from scripts.experimental.tt42_camera_precision import pack
 from scripts.experimental.tt29_vision import Rig
@@ -51,3 +53,21 @@ def test_causal_arc_recovers_noiseless_timed_pose_and_velocity_then_abstains_if_
     assert np.linalg.norm(out["pv"][:3]-pv[:3]) < 8e-5
     assert np.linalg.norm(out["pv"][3:]-pv[3:]) < .0011
     assert model.fit(.05,prior) is None
+
+
+def test_crop_keeps_full_scaled_pixel_origin():
+    camera=_rig().fixed["left"]
+    p=np.array([-.23,-.57,.99])
+    lo,hi=rectangle(camera,p)
+    assert np.all(lo>=0)
+    assert np.all(hi<=[camera.width,camera.height])
+    assert np.array_equal(np.floor(camera.project(p)[:2]).astype(int)-lo,[84,84])
+
+
+def test_late_tracking_preserves_stock_prefix_then_obeys_true_slew_cap():
+    stock=[[-.8],[.8],[0.],[0.],[0.]]
+    earned=[[.8],[.8],[.3],[0.],[0.]]
+    out=np.asarray(catchup(np.zeros(1),np.ones(1),np.array([-2.]),np.array([2.]),stock,earned,2))
+    assert np.array_equal(out[:2],stock[:2])
+    assert np.all(abs(out)<=.8)
+    assert np.allclose(np.ravel(out[2:]),[.8,.8,.3])

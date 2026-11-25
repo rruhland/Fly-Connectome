@@ -72,6 +72,13 @@ per release. The reference is the season-before matched frozen stock actor
 with the same parent-48 memory, scene and rules. A cap of 240 alternating
 returns is unchanged. [Fixed assessment and physically earned deltas](held.protocol.json)
 
+All 24 sealed games completed. The gate considered 23 weak-rim proposals
+and approved none. All issued commands and physical events matched the
+stock archives exactly. The total was 189 returns in each arm and the
+longest game was 26 learner returns. The exact-state interventions did
+not transfer through the original optical acceptance rule.
+[Held controls and referee tapes](held.json.gz) · [Matched result](report.json)
+
 ## Why the camera twin missed the remedies
 
 On the original known command tapes for 9230, 11809 and 9114, the
@@ -201,6 +208,8 @@ python -m scripts.experimental.tt48_precise_receive exact
 python -m scripts.experimental.tt48_bounce_window
 python -m scripts.experimental.tt48_sensor_hold
 python -m scripts.experimental.tt48_optical_bounce
+python -m scripts.experimental.tt48_precise_live plan
+python -m scripts.experimental.tt48_precise_live run
 python -m scripts.experimental.tt48_edge_evidence
 python -m scripts.experimental.tt48_edge_evidence_fit
 python -m scripts.experimental.tt48_edge_override plan
