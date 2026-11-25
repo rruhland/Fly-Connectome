@@ -9,6 +9,7 @@ import numpy as np
 
 from . import tt37_opponent as opponent
 from . import tt46_continuous_season as season
+from . import tt52_practice_dose as dose
 from .tt4_transfer_trial import _hash, _read, _write
 
 course = season.course
@@ -143,7 +144,12 @@ def run(a):
         _write(a.out, d)
     else:
         a.carry = ROOT / f"{a.kind}-live.json.gz"
-        a.deck, a.n = "assessment", 24
+        plan = season.PLAN
+        if a.mode == "transfer":
+            plan = dose.PLAN
+            a.mode, a.deck, a.n = "live", "practice", a.games
+        else:
+            a.deck, a.n = "assessment", 24
         training = _read(a.carry)
         if training["exposure"]["budget"] != a.budget:
             raise ValueError("Practice budget mismatch")
@@ -153,7 +159,7 @@ def run(a):
             restore(actor, path, dict(d, rows=[None] * len(parent["rows"]) + d["rows"]))
 
         with (
-            patch.object(course, "PLAN", season.PLAN),
+            patch.object(course, "PLAN", plan),
             patch.object(course, "resume", full_serial),
             patch.object(course.mpc, "MPC", make),
         ):
@@ -166,7 +172,8 @@ def run(a):
 if __name__ == "__main__":
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("kind", choices=("ordinary", "responsive"))
-    p.add_argument("mode", choices=("live", "frozen"))
+    p.add_argument("mode", choices=("live", "frozen", "transfer"))
+    p.add_argument("--games", type=int, default=64)
     p.add_argument("--budget", type=int, default=192)
     p.add_argument("--feeds", type=Path, default=Path("/tmp/tt25-rallies.json"))
     p.set_defaults(resume=False, cap=240)

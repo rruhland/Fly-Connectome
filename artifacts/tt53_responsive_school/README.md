@@ -1,0 +1,13 @@
+# Does practicing at an attainable difficulty improve the next games?
+
+Starting at the same 48-game motor memory, an adaptive practice opponent sampled more often from regions where the arm was beginning to make mistakes. Against the original fully random opponent afterward, the arm made 228 legal returns in 24 games. Ordinary practice at the same exposure and compute made 153, and the common starting memory made 189. The medians were seven, 4.5 and six. [Matched analysis](assessment.json)
+
+| Practice before the frozen assessment | Eligible incoming balls | Practice CPU seconds | Held returns | Median | Zero-return points | Points reaching 15 |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| Starting memory | 0 | — | 189 | 6 | 4 | 5 |
+| Broad random | 192 | 491.25 | 153 | 4.5 | 4 | 3 |
+| Responsive difficulty | 192 | 491.22 | 228 | 7 | 4 | 6 |
+
+The practice teacher tracks successes and failures in 20 regions of lateral placement, height and speed. It uses the outcomes of completed points, with a smoothing prior from the same earlier practice. It samples 30% uniformly across cells and favors success probabilities around 82% early in practice, declining to 67%. All four goal coordinates remain continuous. The learner sees ordinary images, joint encoders and the same rewards. The teacher alone knows the requested placement. All 24 assessment games use the original broad continuous distribution. Updates stop after the 192nd eligible opponent delivery and the last practice point finishes normally. Responsive practice made 151 returns in 45 points covering 196 deliveries. Ordinary practice made 169 in 23 points covering 192. CPU seconds cover end-to-end game loops including all uncredited final deliveries. [Practice source](../../scripts/experimental/tt53_responsive_school.py) · [Responsive practice](responsive-live.json.gz) · [Ordinary practice](ordinary-live.json.gz)
+
+Eleven held points improved against the ordinary-practice control, seven shortened and six tied. Three streams per opening share one of eight held opening recordings. The release-cluster bootstrap interval for the mean improvement spans −1.67 to +7.33 returns per game. Among 25 physically identical incoming deliveries shared by the two arms, both landed 21 and both missed four. The score difference arose after the arms sent back different strokes and encountered different subsequent balls. Opening conversion was unchanged. The separate continued-learning comparison uses 32 other opening recordings, with two new streams each. [Responsive held games](responsive-frozen.json.gz) · [Ordinary held games](ordinary-frozen.json.gz) · [Starting memory control](../tt46_season/before.json.gz)
