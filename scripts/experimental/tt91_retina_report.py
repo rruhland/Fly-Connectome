@@ -1,4 +1,5 @@
 """Report true RGB timings and unchanged causal detector, estimator, and action bytes."""
+import argparse
 from collections import Counter
 
 import numpy as np
@@ -8,6 +9,7 @@ from . import tt91_retina_action as actor
 from .tt4_transfer_trial import _hash,_read,_write
 
 REPORT=bench.ROOT/"report.json"
+AUDIT=bench.ROOT/"action.audit.json"
 PACK=bench.ROOT/"packing.json.gz"
 PACK_PLAN=bench.ROOT/"packing.protocol.json"
 
@@ -68,7 +70,26 @@ def summarize(archive,protocol):
     return out
 
 
-def run():
+def audit_point(d,p,verify):
+    from .tt48_contact_patch_report import replay
+    a=d["rows"]["original"]
+    signature=bench.school.digest_json(a["actions"])
+    if AUDIT.exists():
+        old=_read(AUDIT)
+        if old["plan"]!=_hash(actor.PLAN) or old["command_sha256"]!=signature:
+            raise ValueError("Previous CAD audit belongs to another tape")
+        return old
+    if not verify:
+        return None
+    with bench.school.enabled(cameras=False):
+        receipt=replay(p["ready"],p["item"]["card"],a)
+    result=dict(plan=_hash(actor.PLAN),reference="original",command_sha256=signature,
+                event_sha256=bench.school.digest_json(a["events"]),receipt=receipt)
+    _write(AUDIT,result)
+    return result
+
+
+def run(verify=False):
     result=dict(paired=summarize(bench.OUT,bench.PLAN))
     if PACK.exists():
         result["packing_development"]=summarize(PACK,PACK_PLAN)
@@ -77,7 +98,8 @@ def run():
         if d["plan"]!=_hash(actor.PLAN):
             raise ValueError("Changed action test assignment")
         p=_read(actor.PLAN)
-        result["action"]=dict(receipt=_hash(actor.OUT),parity=d.get("parity"),id=p["item"]["card"]["id"],rows={})
+        result["action"]=dict(receipt=_hash(actor.OUT),parity=d.get("parity"),id=p["item"]["card"]["id"],
+                              audit=audit_point(d,p,verify),rows={})
         for mode,row in d["rows"].items():
             t=row["observer"]
             result["action"]["rows"][mode]=dict(score=row["score"]["learner"],opponent=row["score"]["opponent"],
@@ -91,4 +113,6 @@ def run():
 
 
 if __name__=="__main__":
-    run()
+    parser=argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--verify-action",action="store_true")
+    run(parser.parse_args().verify_action)

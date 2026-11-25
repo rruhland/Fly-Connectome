@@ -41,3 +41,21 @@ def test_all_six_true_rgb_replays_have_exact_sensor_and_estimator_bytes():
     assert p["parity"]["optical_point_exact"]==1409
     assert p["fits"]["fit_packet_exact"]==p["fits"]["consumed"]==375
     assert p["price"]["ms_per_exposure"]<d["summary"]["original"]["price"]["ms_per_exposure"]
+
+
+def test_actual_scored_full_point_shares_commands_and_native_outcomes():
+    from scripts.experimental import tt91_retina_action as action
+    from scripts.experimental import tt91_retina_report as report
+
+    tested=_read(action.OUT)
+    assert tested["plan"]==_hash(action.PLAN)
+    assert len(tested["rows"])==2 and all(tested["parity"].values())
+    original,mono=(tested["rows"][key] for key in ("original","mono"))
+    assert original["actions"]==mono["actions"] and len(mono["actions"])==1222
+    assert original["score"]["learner"]==mono["score"]["learner"]==12
+    assert mono["observer"]["camera_calls"]==2444
+    audit=_read(report.AUDIT)
+    assert audit["command_sha256"]==trial.school.digest_json(mono["actions"])
+    assert audit["receipt"]["clearance"]["samples"]==9775
+    assert not audit["receipt"]["clearance"]["penetration_samples"]
+    assert mono["cpu_s"]<original["cpu_s"]

@@ -18,6 +18,12 @@ CulledMonoRetina keeps the two original viewport origins and the same actual off
 
 The cull omitted 99,382 of 147,105 geometry submissions over the crop scenes. It did not change timestamps, global reacquisition calls, color moments or fallbacks. Equal-release medians of inbound native-truth error remained .212/.311/.310 mm in x/y/z, .00179/.00286/.01037 m/s in velocity and 5.36/4.99/3.05 rad/s in spin. The estimator cost is reported separately. The accelerated software renderer still uses more than one CPU second per simulated second of active 120 Hz sensing.
 
+## Live action parity
+
+The two renderers independently played the same preassigned measured launch, 14442, against the original continuously randomized opponent. Both TT75 actors made twelve legal arm returns and thirteen opponent returns in a complete 20.36-second point. The two paths shared all 1,222 joint commands, physical referee events, placements, and controller decisions. Each used the dense estimate on 299 decisions and standard fallback on the other 923. Stereo retained 2,352 valid samples out of 2,444 exposures. Whole-point process CPU fell from **107.76 to 88.67 seconds**, with sensor CPU falling from 70.47 to 52.88 seconds. There was no additional broad play course. [Fixed live pair](action.protocol.json) · [Both issued action tapes](action.json.gz)
+
+Independent playback of the shared control tape reproduced the native referee events. All 9,775 CAD samples stayed positive with minimum clearance 15.35 mm. [CAD replay receipt](action.audit.json)
+
 ## Opt in
 
 The alternate class has the same constructor as Retina. In an independent process that uses the TT75 ExposureSession, select it as the constructor's Retina factory. This is not a change to the prescribed TT75 experiment.
@@ -42,6 +48,6 @@ python -m scripts.experimental.tt91_retina_benchmark plan
 python -m scripts.experimental.tt91_retina_benchmark run
 python -m scripts.experimental.tt91_retina_action plan
 python -m scripts.experimental.tt91_retina_action mono
-python -m scripts.experimental.tt91_retina_report
+python -m scripts.experimental.tt91_retina_report --verify-action
 python -m pytest -q tests/test_tt91_retina_budget.py
 ```
