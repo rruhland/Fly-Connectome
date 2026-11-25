@@ -16,9 +16,13 @@ Rerank-negative points are checked for bitwise-identical archived actions and ev
 
 The first three changed physical points illustrate why this measure is worth separating from rally length. In each case the altered own stroke was legal on the same physical incoming offer and the following reply was higher. On release 11884 the stock point ended on the 0.974 m follow-up. The altered shot elicited a 1.025 m follow-up on the identical random placement draw and the arm extended the point from four to seven returns. A command-only replay reproduced this point, including its reactive returns, and checked 6,041 solver steps with zero full-CAD penetrations. The other two points got a higher immediate follow-up but ended sooner on later deliveries. [11884 replay](outgoing-11884-cad.json)
 
+On matched release **7812**, the frozen candidate made **38 own returns** versus 10 for stock. The first of three rerankings began at tick 444. The physical inbound hit and bounce matched stock exactly, the alternative outgoing return still landed, and its next reply projected at 1.055 m versus 1.026 m under stock on the same next placement draw. The longest point is a complete single launch with 39 opponent returns, 77 alternating returns and 61.156 simulated seconds. The independent command-only replay reproduced the physical events, score and placements after all 3,670 issued controls. All 29,355 checked full-CAD states had positive clearance. The first fifteen version-matched points include a second extension, 4 to 18 on 6411, and total 94 returns versus 59 stock. Those two longer points account for the aggregate gain on the partial course. This ties the earlier 38-return continuous record in a separate held point but does not reach 100. [7812 replay receipt](outgoing-7812-cad.json) · [Action tape](outgoing-7812-tape.json.gz)
+
 ## Generating alternatives for coverage
 
 The original finalists can all predict a bad follow-up. A separate pilot uses the same learned objective directly when searching around the stock winner. When enough time and local practice support remain, the controller samples signed changes to early joint displacement and final contact drive, then samples again around the lowest combined current cost and predicted next risk. This search is bounded and uses a separate random stream. The generated choice must be legal under the nominal camera-initialized twin and both original uncertainty settings, lie inside the learned practice support for all three, and improve the next-ball estimate without incurring substantial extra current-return cost. A separate score check is still needed because these are hypothetical screenings. The pilot reuses the first six broad matched starts as a mechanism check, so it is not a fresh release-held confirmation of the earlier comparison. The archived stock arm has no extra proposal budget. This control compares the complete new search against stock and cannot isolate the learned objective from adding native trials.
+
+The generation pilot made 24 real learner returns versus 33 for stock. Its best point made nine versus five on 9550. The first affected own return landed on all four changed assignments, but the immediate next optical risk improvement carried over to a higher actual follow-up on only two. In particular, on 15665 it lowered the next ball from 1.018 m to 0.985 m and the rally ended immediately. The added search did not improve endurance on these six. [Six paired games](outgoing-generation-live.json.gz) · [Physical follow-up comparison](outgoing-generation-report.json)
 
 ## Reproduce
 
@@ -29,5 +33,6 @@ python -m scripts.experimental.tt43_outgoing_coverage run
 python -m scripts.experimental.tt43_outgoing_coverage_report --verify
 python -m scripts.experimental.tt43_terminal_cues
 python -m scripts.experimental.tt43_outgoing_generation
+python -m scripts.experimental.tt43_outgoing_generation_ablation
 python -m pytest -q tests/test_tt43_outgoing_coverage.py tests/test_tt43_outgoing_generation.py
 ```
