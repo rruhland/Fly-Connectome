@@ -74,6 +74,8 @@ Replaying the successful point's camera and encoders gave identical retrieval ke
 
 The prospective coverage variant retains the two-slot limit. Its list considers up to 12 nearby archived candidates and penalizes pairs whose first 15 issued-reference frames are almost redundant. The rule uses context distance and commanded curves, with no privileged ball state or release IDs. The fixed pair deviation target is .22 radians with a .20 maximum sensory-distance allowance above the nearest candidate. Its constants were set from the retrospective 3401 contrast, then frozen before the new disjoint 9965 and 3905 comparison against pooled nearest retrieval.
 
+It did **not** help prospectively. The pooled bank scored 23 and 3 on 9965 and 3905. The same bank with curve-diverse retrieval scored 4 and 3, at the same search budget and live own-credit rules. The first four balls on 9965 were physically identical and both arms returned them. After the changed fourth stroke, the regulation opponent's later physical deliveries differed. All four command tapes replayed exactly with zero penetrations in 27,987 CAD states. A better next candidate should preserve or replace a motor pattern based on its observed signed departure and legal outcome in nearby contexts, not on the distance between requested joint curves alone. [Pooled nearest control](coverage-nearest-control.json.gz) · [Fixed coverage treatment](coverage-diverse.json.gz) · [Exact CAD and referee audit](coverage-audit.json)
+
 ## Reproduce
 
 ```sh
