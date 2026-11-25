@@ -1,0 +1,3 @@
+# Retesting the 16,081-window motor library
+
+The library initially improved 16 whole games from 130 to 159 returns. On a separate set of 16 measured releases and two new streams each, both copies started with the same primary motor memory from those 16 games. The copy with the library and its additionally acquired movements made **183 returns in 32 games**, versus **205** with that subsystem removed. Each median was five. The unaugmented arm reached 27, the library arm 18. Fourteen games improved, ten shortened, eight tied. Both returned the same 35 physically matched arrivals and missed the same three. The original gain did not establish consistent transfer. [Paired metrics](assessment.json) · [With library](acquired.json.gz) · [Ablation](ablated.json.gz)

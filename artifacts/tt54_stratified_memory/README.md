@@ -1,0 +1,3 @@
+# Retaining a diverse motor memory
+
+The trained controller kept its original bank and selected 192 supplementary joint movements across less frequently seen states. On 64 broad games it made 386 returns versus 352 for the ordinary 48-game starting checkpoint. The median was four versus 3.5 and the best point reached 37 versus 23. Seven versus eight points reached 15, and zero-return games grew from 15 to 17. The experiment changed both the preceding practice dose and the storage rule. Its release-cluster interval of −0.97 to +1.97 returns per game includes zero. [Comparison](broad-comparison.json) · [Complete physical games](continuous.json.gz)

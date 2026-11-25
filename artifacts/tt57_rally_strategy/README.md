@@ -1,0 +1,3 @@
+# Learning which shape of return sustains play
+
+The arm sampled among five shapes of previously landed balls and its ordinary action search. Selection adapted during live play using the current and next actual legal arm returns. Each of 24 points had a fresh measured opening and a continuously random physical opponent. The new policy made **159 legal returns** versus **177** for the original. Both medians were 4.5. The best new point reached 34 versus 23, while the number reaching 15 fell from six to three. The complete games do not support adding the new tactical selector to the ordinary arm. [Matched comparison](broad-comparison.json) · [Physical games](games.json.gz) · [Learned preferences](adapted.npz)
