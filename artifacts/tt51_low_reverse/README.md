@@ -75,3 +75,48 @@ was interrupted during its shared prefix when an endpoint reference bug was
 caught; `body-bridge-abort.json` charges another conservative 3999-tick ceiling,
 70 wall seconds and rounded16 CPU seconds. No completed practice comparisons
 were discarded. Frozen executed source snapshots and logs are retained.
+
+## Stock-search phase handoff and wider body bank
+
+`stock-bridge.json.gz` corrects the isolated handoff problem by using the existing
+ordinary stock search and its supported extra-option slot. Before the observed
+body trajectory completes, the actor only observes RGB/encoders and issues the
+learned continuation. It holds the final actual reference until the ordinary
+incoming RGB window opens at y<-.49. It then chooses normal stock and learned
+candidates through the same search. There is no inherited one-off strike gate.
+
+At all four real earlier-body starts, body+two frozen templates returned and was
+answered: **4/4 versus cold0/4 and late-only1/4**. The earlier starts are the same
+.509/1.215/.517/1.241-radian displacements. The strong original `season.CARRY`
+memory is restored unchanged, ordinary credit stays frozen, and growing matches
+the frozen two-template controller. All paired incoming records match.
+
+These are matched practice actors: they retain the existing attained-body helper's
+constant home base supplied to `choose`, whereas official `mpc.play` supplies the
+camera-derived raw base. They also begin after a physically replayed teacher
+prefix. They establish causal body/late-memory transfer, not superiority over a
+normal-start official baseline.
+
+The declared central curriculum changes the actual far target x with requested
+height/pace fixed. The first two resulting deliveries were instead physically
+higher, about1.0477/1.0475 m at the evaluator's deep receiving projection, and all
+four actors missed. The two-miss stop rule fired. This provides **no central-low
+test** and no new reward-admitted templates. Nothing was tuned after those misses.
+The course costs6538 actual control ticks,198.143 wall seconds and89.118 CPU seconds.
+
+`stock-bridge-audit.json` independently replays all three causal body gains
+(cases0,1,3) plus every corresponding control:12 branches with the shared3999-tick
+prefix paid once. Entire native events match exactly; full solver-state CAD
+checks include the previous prefix, preparation and strike, with zero penetrations.
+Replay costs5683 control ticks,99.190 wall seconds and61.099 CPU seconds.
+
+`observed-prep-bank.json.gz` exports the same two actual rewarded preparation
+trajectories, extended backward to the first recorded RGB outbound crossing
+y>-.99. They begin at observed4010 and contain70/53 rows. `EncoderPreparation`
+in `tt51_low_prep_bank.py` offers read-only `preview(q,ref)` and stateful
+`reset()/command(q,ref)`. Live queries read only stored body/reference arrays;
+source clocks remain separate provenance. The extra earlier entries are recorded
+experience and still need a causal activation test from ordinary games. The lead
+deployable wing-control agent has this bank; duplicate full-game qualification is
+intentionally avoided. Five focused tests verify privacy, admission and body-state
+continuation contracts.

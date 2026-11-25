@@ -1,0 +1,6 @@
+earlier_body 0 0.5 0.0 [('cold', False, False, 0), ('late-only', False, False, 0), ('body-seed', True, True, 1), ('body-growing', True, True, 1)]
+earlier_body 0 1.2 0.0 [('cold', False, False, 0), ('late-only', False, False, 0), ('body-seed', True, True, 1), ('body-growing', True, True, 1)]
+earlier_body 1 0.5 0.0 [('cold', False, False, 0), ('late-only', True, True, 1), ('body-seed', True, True, 1), ('body-growing', True, True, 1)]
+earlier_body 1 1.2 0.0 [('cold', False, False, 0), ('late-only', False, False, 0), ('body-seed', True, True, 1), ('body-growing', True, True, 1)]
+center_translation 0 1.2 0.024 [('cold', False, False, 0), ('late-only', False, False, 0), ('body-seed', False, False, 0), ('body-growing', False, False, 0)]
+center_translation 0 1.2 0.04 [('cold', False, False, 0), ('late-only', False, False, 0), ('body-seed', False, False, 0), ('body-growing', False, False, 0)]

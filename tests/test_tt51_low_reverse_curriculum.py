@@ -5,6 +5,7 @@ import pytest
 
 from scripts.experimental.tt51_low_reverse_curriculum import seeded_rows,plain
 from scripts.experimental.tt51_low_body_bridge import BodyContinuation
+from scripts.experimental.tt51_low_prep_bank import EncoderPreparation
 
 
 class PublicBody:
@@ -51,3 +52,16 @@ def test_body_continuation_follows_observed_state_and_rejects_unsupported_pose()
     controller.reset()
     assert controller.command([9.]*6,[9.]*6) is None
     assert controller.finished
+
+
+def test_exported_prep_query_does_not_read_source_clock_or_rgb_provenance():
+    rows=[dict(q=[[.04*i]*6 for i in range(10)],ref=[[.04*i+.01]*6 for i in range(10)],
+        next_ref=[[.04*i+.05]*6 for i in range(10)],name='earned',rgb=['unused']*10,
+        provenance=dict(source_ticks=list(range(100,110))))]
+    packet=dict(trajectories=rows);changed=deepcopy(packet)
+    changed['trajectories'][0]['rgb']=['different']*10
+    changed['trajectories'][0]['provenance']={'source_ticks':[-999]*10}
+    a,b=EncoderPreparation(packet),EncoderPreparation(changed)
+    q,ref=[.16]*6,[.17]*6
+    assert plain(a.preview(q,ref))==plain(b.preview(q,ref))
+    assert np.array_equal(a.command(q,ref),b.command(q,ref))
