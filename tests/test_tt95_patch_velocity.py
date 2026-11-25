@@ -40,3 +40,19 @@ def test_natural_paid_labels_retain_real_patch_motion_and_never_assessment():
     assert len(h)==8
     vz=[lessons.tangent(np.asarray(r['normal']),np.asarray(r['velocity']))[2] for r in h]
     assert min(vz)<-.18 and max(vz)>.40
+
+
+def test_temporal_pressure_can_recover_the_same_stock_hard_ball_without_learned_tangent():
+    a=_read(lessons.ROOT/'attained.json.gz')
+    b=_read(lessons.ROOT/'window-matched.json.gz')
+    assert a['complete'] and b['complete']
+    assert len(a['rows'])==len(b['rows'])==2
+    assert not any(x['landed'] for r in a['rows'] for x in r['paths'])
+    for row in b['rows']:
+        r={x['condition']:x for x in row['variants']}
+        assert r['normal']['answered'] and r['full_refined']['answered']
+        assert not r['full']['landed']
+        for k in ('normal','full_refined'):
+            x=r[k]
+            assert x['same'] and not x['clearance']['penetration_samples']
+            assert x['repeat_sha256']==lessons.digest_json(x['events'])

@@ -13,3 +13,7 @@ Both fitted arms used the same measured pose, position on the blade face, traini
 The fitted arms evaluated 24 candidate roots each in four unprotected public search windows. Full patch motion added two perturbation-only modeled legal roots on 3779, but neither root landed nominally. No candidate met the physical issuance gate. This comparison does not show that deleting tangent has no effect on a matched issued stroke. Nothing new was physically sent.
 
 [Paired openings](direct-matched.json.gz) · [Frozen comparison](public.protocol.json) · [Measured lessons](LESSONS.md)
+
+## Complete ordinary games
+
+The two preassigned unfiltered whole points returned 0 and 5 with every arm. All six games preserved the exact frozen command and event tapes. One assignment ended without a scored receive, so this is mainly one played rally rather than proof of equal population performance. The learned versions issued no extra command. [Paired whole points](whole-matched.json.gz)
