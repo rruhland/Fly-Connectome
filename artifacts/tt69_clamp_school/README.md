@@ -74,6 +74,27 @@ issued no commands. This is neutral by abstention, not evidence of
 improved receiving. [All unaltered scout draws](late.protocol.json)
 [Matched late-only first offers](late-first.json.gz)
 
+The same late reader also tested four real sub-1 m terminal deliveries
+and four already scored ordinary positives from TT68. Each reproduced
+the original motion and events through the ordinary optical search fork,
+after one to thirteen already-earned returns on the four low cases.
+The low attempts received the same ball, rescued none, and did not issue.
+Two of those four cases screened 30 learned candidates each and found no
+nominal legal motion in the already reached normal body. All four routine
+positives were preserved. These TT68 rows do not enter the learning bank.
+[Exact acquired normal bodies](exact-low.protocol.json) · [All physical fork tapes](exact-low.json.gz)
+
+After replaying an already earned **teaching** preparation, the independent
+RGB/encoder model recognized five of six known interior strokes as nominally
+legal, compared with six of six for the exact-state model. On the unmatched
+8831 stroke the real 39 mm contact was modeled at 64 mm, and the modeled
+forward separation was about 0.49 m/s slower. This shows that observation is
+still imperfect, but the earlier stock body's near-universal rejection of
+earned motion does not repeat here. The data favor investigating a small
+early preparation before optically qualified late movement. They do not
+support another open-loop replay or a whole-game promotion now.
+[Known-command optical recognition](known-optical.json)
+
 ```sh
 export PYTHONPATH=.:src MUJOCO_GL=egl PYOPENGL_PLATFORM=egl OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 OMP_THREAD_LIMIT=1 LP_NUM_THREADS=1
 python -m scripts.experimental.tt69_clamp_school plan
