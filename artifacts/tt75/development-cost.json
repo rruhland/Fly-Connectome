@@ -13,5 +13,8 @@
   "invalid_reset_camera_course_cpu_seconds": 41.39330599,
   "lifecycle_diagnostic_ticks": 340,
   "lifecycle_diagnostic_wall_seconds": 97.19380860200181,
-  "lifecycle_diagnostic_cpu_seconds": 23.657902723
+  "lifecycle_diagnostic_cpu_seconds": 23.657902723,
+  "fresh_complete_parent_parity_ticks": 1449,
+  "fresh_complete_parent_parity_wall_seconds": 188.84013155100547,
+  "fresh_complete_parent_parity_cpu_seconds": 41.946483335
 }
