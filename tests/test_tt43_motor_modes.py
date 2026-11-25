@@ -1,9 +1,10 @@
-from collections import deque
+from collections import Counter, deque
 
 import numpy as np
 
 from scripts.experimental import tt38_joint_mpc as mpc
 from scripts.experimental import tt43_motor_modes as modes
+from scripts.experimental.tt43_motor_modes_practice import PracticingMotor
 
 
 def context(x0, y=-1.06):
@@ -58,3 +59,17 @@ def test_one_reward_credit_per_stroke_and_distinct_mode_candidates():
     assert readout.penalty(key, phase, proposals).max() > .3
     assert not readout.penalty(key + 20, phase, proposals).any()
     assert np.all(q == target)
+
+
+def test_post_miss_track_does_not_displace_reachable_negative_action_history():
+    motor = PracticingMotor.__new__(PracticingMotor)
+    motor.diag = Counter()
+    motor.rescue = True
+    motor.readout = modes.Readout.__new__(modes.Readout)
+    motor.readout.misses = deque(maxlen=128)
+    q = np.array([.17, -1.72, -1.48, 1.36, -.67, .6])
+    history = [(i, context(0., -.3 - .06 * i), q, q, q + i * .002) for i in range(38)]
+    assert motor.readout.miss(history) == 0
+    motor.missed(history)
+    assert len(motor.readout.misses) == motor.diag["mode_miss_samples"] > 0
+    assert all(shape.shape == (4, 6) for _, shape in motor.readout.misses)
