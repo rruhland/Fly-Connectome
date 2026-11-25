@@ -1,6 +1,7 @@
 import numpy as np
 
 from scripts.experimental.tt51_partial_finish import Finish, Readiness, body_envelope
+from scripts.experimental.tt51_partial_live import camera_motion
 
 
 def motion(y,v):
@@ -36,3 +37,16 @@ def test_skill_uses_current_encoder_body_even_for_same_observed_ball():
     assert len(shots)==3 and ids==[101]*3
     shots,ids=field.proposals(motion(-.43,-3.74),path,(q+2.,z,z))
     assert not shots and not ids
+
+
+def test_whole_point_waveform_uses_public_velocity_reversal():
+    q=np.array([-.1,-.8,-1.6,.45,-.59,0.]);sent=q+.02
+    tape=[]
+    for tick in range(84):
+        x=motion(-1.30 + (60-tick)*.063 if tick<=60 else -1.30+(tick-60)*.05,
+                 -3.8 if tick<=60 else 2.9)
+        tape.append((tick,x,q,q,sent))
+    earned=camera_motion(tape)
+    assert earned is not None and np.isclose(earned['contact_y'],-1.275)
+    assert all(np.allclose(r,sent) for r in earned['refs'])
+    assert camera_motion(tape[:60]) is None
