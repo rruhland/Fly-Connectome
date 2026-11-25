@@ -37,9 +37,10 @@ def roster(source):
     return entries[:24]
 
 
-def collect(indices):
+def collect(indices, special=None):
     d = _read(SRC)
-    root = ROOT / "observations"
+    root = ROOT / ("observations" if special is None else "difficult")
+    sources = {str(SRC): d}
     root.mkdir(parents=True, exist_ok=True)
     roster_indices = roster(d)
     with mpc.centered(d["ready"]):
@@ -47,24 +48,38 @@ def collect(indices):
         image, rig, *_ = mpc.resources(a)
         try:
             for j in indices:
-                if j >= len(roster_indices):
+                if j >= (len(roster_indices) if special is None else len(special)):
                     continue
                 out = root / f"case-{j:02d}.npz"
                 if out.exists():
                     continue
-                i = roster_indices[j]
-                card, row = d["cards"][i], d["rows"][i]
-                request = row["placements"]["requested"][1]
+                if special is None:
+                    i, leg, source = roster_indices[j], 1, str(SRC)
+                else:
+                    c = special[j]
+                    i, leg, source = c["index"], c["leg"], c["source"]
+                if source not in sources:
+                    sources[source] = _read(Path(source))
+                doc = sources[source]
+                if doc["ready"] != d["ready"]:
+                    raise ValueError("Different native arm initialization")
+                card, row = doc["cards"][i], doc["rows"][i]
+                request = row["placements"]["requested"][leg]
                 anchor = int(np.floor(request["time_s"] / mpc.DT + 1e-7))
                 warm = prefix(a, card, row, anchor, image, a._arm_ids[1][2], window=20)
                 state = State(a)
-                if len(a.partner.requests) != 1:
+                if len(a.partner.requests) != leg:
                     raise ValueError("Fork must precede the fresh reply")
                 observer = mpc.Vision(rig, a.control_dt, raw=True)
                 observer.eye = mpc.LearnedOptics(observer.eye, course.OPTIC)
                 for t, pixels, q, _ in warm[-20:]:
                     mpc.observed(observer, t, pixels, q)
                 seeds = np.random.default_rng([5050, j]).integers(1, 2**30, size=6)
+                if special is not None:
+                    seeds = np.r_[
+                        card["reply_seed"],
+                        np.random.default_rng([51137, j]).integers(1, 2**30, size=5),
+                    ]
                 ticks, streams, pixels, balls, contacts, labels = [], [], [], [], [], []
                 for b, seed in enumerate(seeds):
                     state.restore(a)
@@ -110,6 +125,8 @@ def collect(indices):
                     tmp,
                     id=card["id"],
                     index=i,
+                    leg=leg,
+                    source=source,
                     seeds=seeds,
                     anchor=anchor,
                     tick=ticks,
