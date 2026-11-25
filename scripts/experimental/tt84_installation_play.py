@@ -220,6 +220,27 @@ def summary():
                              zeros=int(np.sum(a==0)),at_least_20=int(np.sum(a>=20)),at_least_100=int(np.sum(a>=100)),
                              low=dict(offered=int(low[0]),landed=int(low[1])),other=dict(offered=int(other[0]),landed=int(other[1])),
                              audited=[r['verified_witness'] for r in d['rows'] if r.get('verified_witness')])
+    equal_body=[]; live_path=ROOT/'installed-online.json.gz'; frozen_path=ROOT/'installed-frozen.json.gz'
+    if live_path.exists() and frozen_path.exists():
+        l,_=snapshot(live_path); f,_=snapshot(frozen_path)
+        if (l['cards']!=f['cards'] or l['rows'][0]['memory']['before']!=f['rows'][0]['memory']['before']):
+            raise ValueError('Fixed-body memory comparison changed starting bank or requested card')
+        for card,a,b in zip(l['cards'],l['rows'],f['rows']):
+            changed=next((i for i,(v,w) in enumerate(zip(a['actions'],b['actions'])) if v!=w),None)
+            if changed is None and a['actions']!=b['actions']:changed=min(len(a['actions']),len(b['actions']))
+            pts=[]
+            for c,d in zip(a['placements']['delivered'],b['placements']['delivered']):
+                if any(digest_json(c[k])!=digest_json(d[k]) for k in ('far_contact','near_bounce')):break
+                pts.append([c['near_landed'],d['near_landed']])
+            t=np.inf if changed is None else changed*MP.DT
+            common=[e for e in a['events'] if e['time']<=t+1e-8]
+            prefix=digest_json(common)==digest_json([e for e in b['events'] if e['time']<=t+1e-8])
+            if not prefix:
+                raise ValueError('Memoization comparison physical prefix diverged before its first changed command')
+            equal_body.append(dict(id=card['id'],online=a['score']['learner'],frozen=b['score']['learner'],
+                                  action_change_tick=changed,exact_initial_offers=pts,exact_event_prefix=prefix,
+                                  online_prior_changed=a['memory']['before']!=b['memory']['before'],
+                                  own_before_first_change=audit(common,opening_side=1)['learner']))
     matched={}; mounted=ROOT/'season-live.json.gz'
     if mounted.exists():
         ml,ml_hash=snapshot(mounted)
@@ -234,7 +255,10 @@ def summary():
                 matched[label]=dict(n=n,mount=int(aa.sum()),stock=int(bb.sum()),mount_peak=int(aa.max()),stock_peak=int(bb.max()),
                                     gains=int(np.sum(aa>bb)),ties=int(np.sum(aa==bb)),losses=int(np.sum(aa<bb)),
                                     mounted_source_sha256=ml_hash,centered_source_sha256=cmp_hash)
-    _write(ROOT/'online-summary.json',dict(groups=readouts,matched_season_prefix=matched))
+    _write(ROOT/'online-summary.json',dict(groups=readouts,matched_season_prefix=matched,paired_fixed_body=equal_body))
+    pilots=('stock-online','installed-online','installed-frozen')
+    if all(k in readouts and readouts[k]['complete'] for k in pilots):
+        _write(ROOT/'pilot-comparison.json',dict(groups={k:readouts[k] for k in pilots},paired_fixed_body=equal_body))
     print(readouts, matched, flush=True)
 
 

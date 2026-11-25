@@ -35,19 +35,21 @@ The eight-game preliminary stream and subsequent unfiltered 128-game season use 
 
 ## Optical pilot versus the ordinary centered actor
 
-| Release | Centered online | Canted online |
-|---|---:|---:|
-| 4888 | 0 | 1 |
-| 6299 | 4 | 5 |
-| 5222 | 2 | 2 |
-| 8883 | 0 | 5 |
-| 5335 | 11 | 8 |
-| 12866 | 1 | 25 |
-| 12144 | 6 | 2 |
-| 3482 | 0 | 0 |
-| **Total** | **24** | **48** |
+| Release | Centered online | Canted online | Canted frozen |
+|---|---:|---:|---:|
+| 4888 | 0 | 1 | 1 |
+| 6299 | 4 | 5 | 5 |
+| 5222 | 2 | 2 | 2 |
+| 8883 | 0 | 5 | 4 |
+| 5335 | 11 | 8 | 4 |
+| 12866 | 1 | 25 | 4 |
+| 12144 | 6 | 2 | 1 |
+| 3482 | 0 | 0 | 0 |
+| **Total** | **24** | **48** | **21** |
 
 All eight points in each arm were played once and all 68,287 CAD samples had no penetration. The entire +24 net gain came from the one distinct 12866 rally. The remaining seven points tie at 23 own returns. Independent playback of 12866 reproduced all events, 25 own and 26 opponent legal returns, 26 unchanged random draws and 20,865 CAD samples without penetration. This confirms a working real RGB/encoder controller and one longer witness on the canted body. It does not show uniform improvement or a 100-return qualifier. [Centered camera-controlled pilot](stock-online.json.gz) · [Mounted camera-controlled pilot](installed-online.json.gz) · [Exact 25-return witness](pilot-installed-witness-005-12866.json.gz)
+
+The physically identical mounted body and same initial bank scored 21 with credit frozen. Keeping newly paid movement memory across games raised the 12866 point from four own returns to 25. At tick 70 the issued joint command differs, before the first actual learner return, after the bank has learned from previous games. Both variants return the same first physical delivery. This supports a contribution from across-game credits on the installed body, but not a same-delivery advantage across the later divergent trajectories. All 22,504 frozen-pilot CAD samples had no penetration. [Same-body credit-frozen pilot](installed-frozen.json.gz) · [Exact paired prefixes and scores](pilot-comparison.json)
 
 ## Reproduce
 
