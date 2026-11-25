@@ -246,7 +246,7 @@ def play(a):
             for i, k in enumerate(("state", "q", "ref", "lag", "token"))
         },
         reliability=np.array([[k, *v] for k, v in p.reliability.items()]),
-        token=p.serial_rel,
+        last_token=p.serial_rel,
     )
     d = _read(a.out)
     d.update(
