@@ -83,6 +83,28 @@ own entire release. This measures coverage, not held play.
 
 [Exact rescue attempts and optical traces](coached.json.gz) · [Library fit receipt](body-library.json) · [Motor library](body-library.npz)
 
+## Fresh hard offers
+
+Every arm saw the same physical incoming on all 12 held offers.
+All 48 trajectories passed the full exact CAD replay. The inherited
+registered policy and its ordinary acquired FIFO each scored and
+drew an answer on 4 of 8 low and all 4 routine offers. The aligned
+library scored and drew an answer on 5 of 8 low and all 4 routine
+offers. The shuffled library scored 4 of 8 low and all 4 routine.
+
+Release 13261 produced the same physical 0.9763 m chance. Both
+registered controls missed it. Both libraries rescued it, so the
+actual rescue is not unique evidence for learned state-to-movement
+association. Aligned preserved the existing 0.9971 m return on 12375
+that shuffled lost. Of 108 aligned paths proposed, 5 were accepted
+unchanged by the optical planner, versus 1 of 103 in shuffled.
+Both successful 13261 strokes hit near the rim, around 75 mm. They
+separated with 3.84 and 3.59 m/s forward velocity, versus 1.96 and
+2.25 m/s for the two failed controls despite the latter having more
+contact margin. Prioritizing the radius alone would miss this effect.
+
+[Exact hard-offer commands and events](hard.json.gz) · [Hard comparison summary](hard-summary.json) · [13261 physical impacts](held-13261-impact-audit.json)
+
 ## Reproduce
 
 ```sh
@@ -95,5 +117,6 @@ python -m scripts.experimental.tt90_installation_learning fit
 python -m scripts.experimental.tt90_installation_learning hard
 python -m scripts.experimental.tt90_installation_learning assess --n 20
 python -m scripts.experimental.tt90_learning_report
+python -m scripts.experimental.tt90_learning_report --audit-case 13261
 python -m pytest -q tests/test_tt90_joint_library.py
 ```

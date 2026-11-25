@@ -84,7 +84,7 @@ def report():
 
 
 def audit_practice(prefix="practice-dose16"):
-    p=tt.contract(tt.FEEDS);m,ready,_=tt.material(); src=tt.path(prefix);d=_read(src)
+    tt.contract(tt.FEEDS);m,ready,_=tt.material(); src=tt.path(prefix);d=_read(src)
     cases=[]
     peak=max(range(len(d["rows"])),key=lambda i:d["rows"][i]["score"]["learner"])
     for i,(c,r) in enumerate(zip(d["cards"],d["rows"])):
@@ -113,8 +113,37 @@ def audit_practice(prefix="practice-dose16"):
     print(result,flush=True)
 
 
+def audit_case(release):
+    tt.contract(tt.FEEDS); m,ready,_=tt.material(); src=tt.path("hard")
+    case=next(r for r in _read(src)["rows"] if r["case"]["card"]["id"]==release)
+    c=case["case"]["card"]; result={}
+    with tt.school.enabled(),tt.system.installed(m["v"],m["mount"]),tt.BASE.centered(ready):
+        a=tt.BASE.arena(width=64,height=48);cad=tt.BASE.arena(width=64,height=48,detail="cad")
+        guard=tt.school.physical.GripClearance(cad.model,stock=True)
+        try:
+            for k,r in case["results"].items():
+                found=[]
+                with tt.school.contact.physical_contacts(a,found):
+                    clear=tt.validate_game(a,c,r["shot"],r,guard)
+                leg=r["placements"]["delivered"][0]; hit=leg["near_contact"]
+                row=None; sep=None
+                if hit is not None:
+                    row=min((x for x in found if x["side"]==1),key=lambda x:abs(x["time_s"]-hit["time"]))
+                    if abs(hit["time"]-row["time_s"])>1e-7:raise ValueError("Held contact geometry replay changed")
+                    dep=next((e for e in r["events"] if e.get("collider")=="learner_racket" and e["time"]>=hit["time"]),None)
+                    sep=None if dep is None else dep["velocity"]
+                scored,answered=first(r)
+                result[k]=dict(contact=row,departure=sep,scored=scored,answered=answered,clearance=clear)
+        finally:cad.close();a.close()
+    _write(tt.ROOT/f"held-{release}-impact-audit.json",
+           dict(source_sha256=_hash(src),id=release,results=result))
+    print(result,flush=True)
+
+
 if __name__=="__main__":
     p=argparse.ArgumentParser(description=__doc__)
-    p.add_argument("--audit-practice")
+    g=p.add_mutually_exclusive_group();g.add_argument("--audit-practice");g.add_argument("--audit-case",type=int)
     a=p.parse_args()
-    audit_practice(a.audit_practice) if a.audit_practice else report()
+    if a.audit_practice:audit_practice(a.audit_practice)
+    elif a.audit_case:audit_case(a.audit_case)
+    else:report()
