@@ -2,6 +2,7 @@
 
 import argparse
 from collections import deque
+from itertools import combinations
 from pathlib import Path
 from unittest.mock import patch
 
@@ -16,7 +17,7 @@ from .tt42_commit_teacher import OUT, PLAN
 from .tt42_commit_teacher_student import FRAGMENTS, WithTeacher
 
 SLOTS = slice(2, 5)
-KINDS = ("stock", "pilot", "all")
+KINDS = ("stock", "pilot", "all", "coverage")
 WINDOW = 9
 
 
@@ -121,6 +122,41 @@ class AdaptiveTeacher(WithTeacher):
         return safe[: len(safe) - len(replacement)] + replacement
 
 
+def diverse_pair(candidates):
+    """Balance sensory context distance with non-redundant archived motion."""
+    start = candidates[0][2]
+    keep = [i for i, c in enumerate(candidates[:12]) if c[2] <= start + 0.20]
+    if len(keep) < 2:
+        return tuple(keep)
+
+    def rank(pair):
+        i, j = pair
+        a, _, da = candidates[i]
+        b, _, db = candidates[j]
+        rms = np.sqrt(np.mean(np.square(a[:15, :5] - b[:15, :5])))
+        return 0.5 * (da + db) + 1.10 * max(0.0, 0.22 - rms)
+
+    return min(combinations(keep, 2), key=rank)
+
+
+class CoverageTeacher(AdaptiveTeacher):
+    def offers(self, x, q, reference, diag=None):
+        rows = list(super().offers(x, q, reference, diag))
+        if not rows:
+            return
+        pair = diverse_pair(rows)
+        if diag is not None:
+            diag.append(
+                [
+                    "coverage pair rank",
+                    [repr(rows[i][1]) for i in pair],
+                    len(rows),
+                ]
+            )
+        for i in (*pair, *(i for i in range(len(rows)) if i not in pair)):
+            yield rows[i]
+
+
 class Learner(mpc.MPC):
     def begin(self):
         super().begin()
@@ -139,8 +175,15 @@ class Learner(mpc.MPC):
         self.diag["physical_miss_updates"] += 1
 
 
-def audited_roster(plan, sources):
-    ids = {c["id"] for c in plan["assessment"][SLOTS]}
+def audited_roster(plan, sources, indices=None):
+    available = plan["assessment"]
+    if indices is not None and (
+        sorted(set(indices)) != indices
+        or not all(0 <= i < len(available) for i in indices)
+    ):
+        raise ValueError("Assessment indices must be distinct and chronological")
+    cards = available[SLOTS] if indices is None else [available[i] for i in indices]
+    ids = {c["id"] for c in cards}
     practice_ids = {c["id"] for c in plan["practice"]}
     if ids & practice_ids:
         raise ValueError("Release lists are not disjoint")
@@ -151,13 +194,15 @@ def audited_roster(plan, sources):
         used = {c["card"]["id"] for c in rec["practice"]}
         if ids & used:
             raise ValueError(f"Assessment releases found in {p}: {sorted(ids & used)}")
-    return plan["assessment"][SLOTS]
+    return cards
 
 
 def run(a):
     pilot = OUT / "earned-camera.npz"
-    selected = OUT / "earned-camera-41.npz" if a.condition == "all" else pilot
-    cards = audited_roster(_read(a.plan), (mpc.BANK, PRACTICE, selected))
+    selected = (
+        OUT / "earned-camera-41.npz" if a.condition in ("all", "coverage") else pilot
+    )
+    cards = audited_roster(_read(a.plan), (mpc.BANK, PRACTICE, selected), a.indices)
     held = {c["id"] for c in cards}
     ready = _read(mpc.BANK.with_suffix(".json"))["ready"]
     hashes = {
@@ -177,12 +222,16 @@ def run(a):
         "budget": 28,
         "rows": [],
     }
+    if a.indices is not None or a.freeze:
+        doc["assessment_selection"] = a.indices
+        doc["own_updates"] = not a.freeze
     with mpc.centered(ready):
         court = mpc.arena(protocol="random")
         res = mpc.resources(court)
 
         def make(bank, engine):
-            return AdaptiveTeacher(
+            klass = CoverageTeacher if a.condition == "coverage" else AdaptiveTeacher
+            return klass(
                 bank,
                 engine,
                 FRAGMENTS(selected, engine),
@@ -204,8 +253,9 @@ def run(a):
                     raw,
                     model,
                     OPTIC,
-                    "live",
+                    "frozen" if a.freeze else "live",
                     a.cap,
+                    progress=5 if a.indices is not None else 0,
                 )
                 requests = game["placements"]["requested"]
                 if any(e["draw"] != "random" for e in requests) or len(
@@ -253,4 +303,6 @@ if __name__ == "__main__":
     p.add_argument("--plan", type=Path, default=PLAN)
     p.add_argument("--feeds", type=Path, default=Path("/tmp/tt25-rallies.json"))
     p.add_argument("--cap", type=int, default=200)
+    p.add_argument("--indices", type=int, nargs="+")
+    p.add_argument("--freeze", action="store_true")
     run(p.parse_args())

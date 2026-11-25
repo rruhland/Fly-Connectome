@@ -51,6 +51,25 @@ The total was 23 to 17, at 69.0 versus 53.5 CPU seconds across both complete poi
 
 The next three fixed assessment releases in the parent course, 11884, 3401 and 14760, are disjoint from the two frozen comparisons, the teacher's three practice starts, and the base direct and carried camera archives. Each arm carries its own physically scored, optically aligned hit history across this sequence. A completed miss to a legal incoming ball may retain a bounded set of its observed incoming situations and actually issued nine-frame motor prefixes. In a later situation it can demote a stock proposal or reject a new teacher proposal only when both the observed ball/joint context and the relative command profile are close. An optically unobserved miss is not a motor label. All treatments get the same new hit and miss update rules. The only factor changed is no teacher, the 16 clips from 4179, or the 41 clips from all three points. The budget stays at 28 with up to two substituted candidates per lookup. [Chronological learner](../../scripts/experimental/tt42_commit_teacher_course.py) · [Expanded optical archive](earned-camera-41.npz) · [Expanded provenance](earned-camera-41.json)
 
+| Assessment release | Stock | Pilot 16 | Full 41 |
+| --- | ---: | ---: | ---: |
+| 11884 | 4 | 5 | 4 |
+| 3401 | 1 | 35 | 1 |
+| 14760 | 0 | 0 | 0 |
+| **Total own** | **5** | **40** | **5** |
+
+The 35-return point was one uninterrupted game over 57.04 physical seconds and 106.91 CPU seconds, against 36 actual opponent landings. The key repair was on the second offer. The stock and pilot arms received exactly the same first two physical far strikes and near bounces, and issued exactly the same commands up to tick 164. Both touched the second incoming ball near 1.016 m. Stock sent it forward at 3.002 m/s and downward at 2.553 m/s, faulting on its own half. The pilot arm sent it forward at 3.608 m/s and upward at 2.775 m/s, landing legally at x = .092 m, y = .418 m. Its first changed search prepared a credited motion and then authorized one on the next search. Cumulative own practice can contribute to the result, so this does not isolate which donor clip or search stage caused the repair.
+
+The pilot logged 40 optical updates from its own earned hits and 19 retained miss fragments. No proposal closely matched a failed prefix in any condition, so the negative-credit filter was exercised as a recording mechanism but cannot explain the gains. The exact 16 pilot clips are a prefix of the full 41. The full arm admitted 39 candidates from the added 25 clips among its 56 admissions, changed real commands on the first two releases, and scored no gain on either. More teacher examples competed for the same two proposal slots and did not add complementary behavior under this retrieval rule. This supports selective actual-effect memory, not enlarging it indiscriminately or a general solution to all low returns. On 14760 the opponent never delivered a legal offer in any arm. The nine referee replays were exact and checked 43,807 CAD states without penetration. [Stock course](course-stock.json.gz) · [Pilot course](course-pilot.json.gz) · [Expanded course](course-all.json.gz) · [Exact same-offer and CAD verification](course-audit.json)
+
+A retrospective replay with the pilot teacher allowed but own updates frozen ended at one return on 3401. Its whole command tape was identical to the stock point, despite 16 admitted teacher candidates. Its first two delivered balls and commands through tick 164 were the same as the successful chronological pilot point. The teacher demonstration archive alone was therefore insufficient at that physical offer. [Frozen 3401 control](3401-frozen-pilot.json.gz)
+
+### Was a different useful movement crowded out?
+
+Replaying the successful point's camera and encoders gave identical retrieval keys at ticks 159, 164 and 169. Passing those same keys to the older and expanded banks reproduced the pilot ranks and showed that the expanded bank displaced the second pilot fragment at both 164 and 169. The two admitted reference curves' RMS distance shrank from .241/.249 radians to .129/.179 radians over their first 15 frames. At 164 the displaced reference requested an incident face normal with vertical component .477, versus −.057 for the new nearest candidate that displaced it. This is a difference in requested motor behavior, not proof that the replaced fragment was the one actually used after native screening and adaptation. [Exact sensor lookup comparison](3401-recall-ranks.json.gz)
+
+The prospective coverage variant retains the two-slot limit. Its list considers up to 12 nearby archived candidates and penalizes pairs whose first 15 issued-reference frames are almost redundant. The rule uses context distance and commanded curves, with no privileged ball state or release IDs. The fixed pair deviation target is .22 radians with a .20 maximum sensory-distance allowance above the nearest candidate. Its constants were set from the retrospective 3401 contrast, then frozen before the new disjoint 9965 and 3905 comparison against pooled nearest retrieval.
+
 ## Reproduce
 
 ```sh

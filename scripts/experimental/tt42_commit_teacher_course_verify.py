@@ -12,19 +12,83 @@ from . import tt38_joint_mpc as mpc
 from .tt4_transfer_trial import _hash, _read, _write
 from .tt19_view_full_game import digest_json
 from .tt42_commit_teacher import OUT
-from .tt42_commit_teacher_course import KINDS
+
+BASE_CONDITIONS = ("stock", "pilot", "all")
 
 
 def draw_list(placements):
     return [(o["draw"], o["target"]) for o in placements["requested"]]
 
 
-def verify(out, arm, *, cad):
+def same_received(a, b):
+    return all(
+        digest_json(a[k]) == digest_json(b[k]) for k in ("far_contact", "near_bounce")
+    )
+
+
+def actual_departure(row, ball):
+    contact = ball.get("near_contact")
+    if contact is None:
+        return None
+    return next(
+        (
+            e["velocity"]
+            for e in row["events"]
+            if e["kind"] == "separation"
+            and e.get("collider") == "learner_racket"
+            and contact["time"] < e["time"] < contact["time"] + 0.07
+        ),
+        None,
+    )
+
+
+def matched_repairs(stock, treatment):
+    shared = []
+    for i, (a, b) in enumerate(
+        zip(stock["placements"]["delivered"], treatment["placements"]["delivered"])
+    ):
+        if not same_received(a, b):
+            break
+        shared.append((i, a, b))
+    repairs = []
+    for i, a, b in shared:
+        if a["near_landed"] or not b["near_landed"]:
+            continue
+        before, after = actual_departure(stock, a), actual_departure(treatment, b)
+        landing = next(
+            (
+                e["location"]
+                for e in treatment["events"]
+                if e["kind"] == "legal_return"
+                and e["side"] == 1
+                and e["time"] > b["near_contact"]["time"]
+            ),
+            None,
+        )
+        repairs.append(
+            {
+                "legal_offer_index": i,
+                "same_far_contact_and_near_bounce": True,
+                "incoming_receive_line": a["receive_line"],
+                "stock_departure_eval_only_mps": before,
+                "student_departure_eval_only_mps": after,
+                "outgoing_effect_eval_only_mps": (np.asarray(after) - before).tolist()
+                if before is not None and after is not None
+                else None,
+                "stock_terminal_fault": stock["events"][-1].get("reason"),
+                "student_legal_landing_eval_only_m": landing,
+            }
+        )
+    return len(shared), repairs
+
+
+def verify(out, arm, *, cad, baseline="stock", conditions=None):
     started = process_time()
     docs = {name: _read(path) for name, path in arm.items()}
-    stock = docs["stock"]
+    stock = docs[baseline]
+    expected = conditions or {name: name for name in arm}
     if any(
-        d["condition"] != name
+        d["condition"] != expected[name]
         or not d.get("complete")
         or len(d["rows"]) != len(d["cards"])
         or d["cards"] != stock["cards"]
@@ -49,6 +113,16 @@ def verify(out, arm, *, cad):
         != 1
     ):
         raise ValueError("Different initial own learned-memory samples")
+    if "frozen" in docs and (
+        docs["frozen"].get("own_updates") is not False
+        or docs["updating"].get("own_updates") is not True
+        or any(
+            r["memory"]["before"] != r["memory"]["after"]
+            or r["miss_memory"]["before"] != r["miss_memory"]["after"]
+            for r in docs["frozen"]["rows"]
+        )
+    ):
+        raise ValueError("Frozen arm changed its own learned history")
     rows = []
     with mpc.centered(stock["ready"]):
         arena = mpc.arena(protocol="random")
@@ -68,12 +142,12 @@ def verify(out, arm, *, cad):
                         raise ValueError(
                             "Changed common sequence of random opponent choices"
                         )
-                    a, b = base["delivered"][0], p["delivered"][0]
-                    for k in ("far_contact", "near_bounce"):
-                        if digest_json(a[k]) != digest_json(b[k]):
-                            raise ValueError(
-                                "Changed first physical far contact/near bounce"
-                            )
+                    aa, bb = base["delivered"], p["delivered"]
+                    if bool(aa) != bool(bb) or (aa and not same_received(aa[0], bb[0])):
+                        raise ValueError(
+                            "Changed first physical far contact/near bounce"
+                        )
+                    common_received, repairs = matched_repairs(r, row)
                     first = next(
                         (
                             t
@@ -136,7 +210,9 @@ def verify(out, arm, *, cad):
                         "recorded_ticks": len(row["actions"]),
                         "first_action_difference": first,
                         "matched_aim_draw_prefix": count,
-                        "same_first_incoming": True,
+                        "same_first_incoming": True if aa else None,
+                        "common_physically_delivered_offers": common_received,
+                        "same_incoming_repairs": repairs,
                         "terminated": arena.terminated,
                         "physical_s": float(arena.data.time),
                         "cpu_s": row["runtime_cpu_s"],
@@ -179,6 +255,7 @@ def verify(out, arm, *, cad):
         out,
         {
             "arms_sha256": {k: _hash(v) for k, v in arm.items()},
+            "control": baseline,
             "expanded_bank_retained_exact_pilot_samples": compare_banks(),
             "rows": rows,
             "time_cpu_s": process_time() - started,
@@ -199,7 +276,32 @@ def compare_banks():
 
 if __name__ == "__main__":
     p = argparse.ArgumentParser(description=__doc__)
-    p.add_argument("--out", type=Path, default=OUT / "course-audit.json")
+    p.add_argument("--out", type=Path)
     p.add_argument("--cad", action="store_true")
+    p.add_argument(
+        "--comparison", choices=("base", "learning", "coverage"), default="base"
+    )
     a = p.parse_args()
-    verify(a.out, {name: OUT / f"course-{name}.json.gz" for name in KINDS}, cad=a.cad)
+    if a.comparison == "learning":
+        names = {"frozen": "fresh-frozen-pilot", "updating": "fresh-live-pilot"}
+        verify(
+            a.out or OUT / "fresh-pilot-audit.json",
+            {k: OUT / f"{v}.json.gz" for k, v in names.items()},
+            cad=a.cad,
+            baseline="frozen",
+            conditions={"frozen": "pilot", "updating": "pilot"},
+        )
+    elif a.comparison == "coverage":
+        names = {"all": "coverage-nearest-control", "coverage": "coverage-diverse"}
+        verify(
+            a.out or OUT / "coverage-audit.json",
+            {k: OUT / f"{v}.json.gz" for k, v in names.items()},
+            cad=a.cad,
+            baseline="all",
+        )
+    else:
+        verify(
+            a.out or OUT / "course-audit.json",
+            {name: OUT / f"course-{name}.json.gz" for name in BASE_CONDITIONS},
+            cad=a.cad,
+        )

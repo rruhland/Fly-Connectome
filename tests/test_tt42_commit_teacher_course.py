@@ -3,7 +3,7 @@
 import numpy as np
 
 from scripts.experimental import tt38_joint_mpc as mpc
-from scripts.experimental.tt42_commit_teacher_course import NegativeCredit
+from scripts.experimental.tt42_commit_teacher_course import NegativeCredit, diverse_pair
 
 
 def test_miss_credit_requires_both_optical_context_and_motor_similarity():
@@ -28,3 +28,10 @@ def test_missing_or_passed_ball_has_no_negative_motor_credit():
     away = np.array([0.0, -1.0, 1.0, 0.0, 3.0, 0.7])
     assert NegativeCredit().keep([(i, None, q, q, q) for i in range(27)]) == 0
     assert NegativeCredit().keep([(i, away, q, q, q) for i in range(27)]) == 0
+
+
+def test_two_slot_coverage_does_not_spend_both_slots_on_the_same_motion():
+    q = np.zeros((mpc.HORIZON, 6))
+    local = [(q, "a", 0.8), (q + 0.02, "b", 0.81), (q + 0.23, "c", 0.93)]
+    weak = (q + 2.0, "outside support", 1.01)
+    assert diverse_pair(local + [weak]) == (0, 2)
