@@ -24,6 +24,14 @@ The shortened mode only holds the first 24 taught reference targets. The partial
 
 On the three fresh training offers, stock and partial each returned three, and short24 returned two. None returned the original source low under normal camera control. The training-only chooser froze partial because it incurred no ordinary loss. [Compromise protocol](compromise-protocol.json) · [Paired training](compromise-training.json.gz) · [Frozen selection](compromise-selection.json)
 
+On the three untouched reply streams, both policies returned only one first ball, namely the ordinary 1.079 m arrival. The two other incoming paths projected to 1.009 and 0.964 m, and both actors missed after touching them. The successful first offer was identical for the two arms. In the ordinary camera-controlled continuation, stock returned both of the two assigned follow-up balls. Partial returned one before a physical fixture fault. The first-ball tie is not a sustained advantage. [Frozen held comparisons](compromise-held.json.gz)
+
+## Outside early cue and motor deadline
+
+Two raw stereo sequences replay an identical outgoing ball and near motor commands, but precede a left or right physical far reply. The outside views already differ at the first captured tick 4024. That difference is confined to a few dozen pixels in the far-paddle region, not the near arm. On the left view the changed pixels span rows 91–99 and columns 152–162. On the right view they span rows 91–99 and columns 219–228. This shows an observable early difference in the two training clips, not a validated disjoint prediction model. [Raw stereo snippets](outside-left-right.npz) · [Exact pixel comparison and labels](outside-difference.json)
+
+An independent retiming test preserves the same original hard 43rd offer. The known preparation and certified contact family still land cleanly from cut ticks 4016, 4030 and 4040. Cuts at 4048, 4056 and the first inbound cue 4062 fail. The latest tested legal cut is tick 4040 at 67.333 s, 281 ms before the actual far impact. The first captured outside difference therefore precedes this tested deadline by 267 ms. These are fixed privileged motor retimings and not an impossibility proof for every possible later action. [Native handoff bracket](handoff.json)
+
 ## Reproduce
 
 ```sh
@@ -35,4 +43,5 @@ python -m scripts.experimental.tt49_terminal_blind_coach --native "$out/training
 python -m scripts.experimental.tt49_terminal_blind run --plan "$out/compromise-protocol.json" --split training --reuse-stock "$out/training-only.json.gz" --output "$out/compromise-training.json.gz"
 python -m scripts.experimental.tt49_terminal_blind_select --held-output "$out/compromise-held.json.gz"
 python -m scripts.experimental.tt49_terminal_handoff
+python -m scripts.experimental.tt49_terminal_finish
 ```
