@@ -47,7 +47,7 @@ The eight-game preliminary stream and subsequent unfiltered 128-game season use 
 | 3482 | 0 | 0 |
 | **Total** | **24** | **48** |
 
-All eight points in each arm were played once and all 68,287 CAD samples had no penetration. The entire +24 net gain came from the one distinct 12866 rally. The remaining seven points tie at 23 own returns. This confirms a working real RGB/encoder controller and one longer witness on the canted body. It does not show uniform improvement or a 100-return qualifier. [Centered camera-controlled pilot](stock-online.json.gz) · [Mounted camera-controlled pilot](installed-online.json.gz)
+All eight points in each arm were played once and all 68,287 CAD samples had no penetration. The entire +24 net gain came from the one distinct 12866 rally. The remaining seven points tie at 23 own returns. Independent playback of 12866 reproduced all events, 25 own and 26 opponent legal returns, 26 unchanged random draws and 20,865 CAD samples without penetration. This confirms a working real RGB/encoder controller and one longer witness on the canted body. It does not show uniform improvement or a 100-return qualifier. [Centered camera-controlled pilot](stock-online.json.gz) · [Mounted camera-controlled pilot](installed-online.json.gz) · [Exact 25-return witness](pilot-installed-witness-005-12866.json.gz)
 
 ## Reproduce
 

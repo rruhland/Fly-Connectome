@@ -1,6 +1,9 @@
 """Continuous RGB/encoder online transfer to a mechanically qualified installation."""
 
 import argparse
+import gzip
+from hashlib import sha256
+import json
 from pathlib import Path
 from unittest.mock import patch
 
@@ -197,11 +200,14 @@ def pilot_witness():
 
 
 def summary():
+    def snapshot(path):
+        copied=path.read_bytes()
+        return json.loads(gzip.decompress(copied)),sha256(copied).hexdigest()
     readouts={}
     for name in ('stock-online','installed-online','installed-frozen','season-live','season-frozen'):
         path=ROOT/(name+'.json.gz')
         if not path.exists():continue
-        d=_read(path); a=np.asarray([r['score']['learner'] for r in d['rows']]); low=np.zeros(2,dtype=int); other=low.copy()
+        d,signature=snapshot(path); a=np.asarray([r['score']['learner'] for r in d['rows']]); low=np.zeros(2,dtype=int); other=low.copy()
         if not len(a):continue
         for row in d['rows']:
             for offer in row['placements']['delivered']:
@@ -209,13 +215,27 @@ def summary():
                 if f is None:continue
                 shelf=low if projected_height(f)<1.01 else other
                 shelf+=np.array([1,bool(offer['near_landed'])])
-        readouts[name]=dict(source_sha256=_hash(path),played=len(a),assigned=len(d['cards']),complete=len(a)==len(d['cards']),
+        readouts[name]=dict(source_sha256=signature,played=len(a),assigned=len(d['cards']),complete=len(a)==len(d['cards']),
                              returns=int(a.sum()),median=float(np.median(a)),peak=int(a.max()),
                              zeros=int(np.sum(a==0)),at_least_20=int(np.sum(a>=20)),at_least_100=int(np.sum(a>=100)),
                              low=dict(offered=int(low[0]),landed=int(low[1])),other=dict(offered=int(other[0]),landed=int(other[1])),
                              audited=[r['verified_witness'] for r in d['rows'] if r.get('verified_witness')])
-    _write(ROOT/'online-summary.json',dict(groups=readouts))
-    print(readouts,flush=True)
+    matched={}; mounted=ROOT/'season-live.json.gz'
+    if mounted.exists():
+        ml,ml_hash=snapshot(mounted)
+        for label in ('live','frozen'):
+            cmp=TT80.with_name(label+'.json.gz')
+            if not cmp.exists():continue
+            old,cmp_hash=snapshot(cmp); n=min(len(ml['rows']),len(old['rows']))
+            if ml['cards'][:n]!=old['cards'][:n]:raise ValueError('Comparison no longer uses the same preassigned draws')
+            aa=np.array([z['score']['learner'] for z in ml['rows'][:n]])
+            bb=np.array([z['score']['learner'] for z in old['rows'][:n]])
+            if n:
+                matched[label]=dict(n=n,mount=int(aa.sum()),stock=int(bb.sum()),mount_peak=int(aa.max()),stock_peak=int(bb.max()),
+                                    gains=int(np.sum(aa>bb)),ties=int(np.sum(aa==bb)),losses=int(np.sum(aa<bb)),
+                                    mounted_source_sha256=ml_hash,centered_source_sha256=cmp_hash)
+    _write(ROOT/'online-summary.json',dict(groups=readouts,matched_season_prefix=matched))
+    print(readouts, matched, flush=True)
 
 
 if __name__=='__main__':
