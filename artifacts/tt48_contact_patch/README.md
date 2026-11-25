@@ -87,6 +87,22 @@ state restored +3.18 m/s, consistent with the +3.19 m/s actually
 measured by RGB. None of these privileged substitutions enters the
 actor. [Field-swap diagnostic](optical-factors.json)
 
+The same three issued command pairs gave no correct stock-fail, edge-score
+ranking under archived flight fits, early-bounce fit, or actual 60 Hz stereo.
+The archived dense estimator did not issue an estimate at these pre-bounce
+samples. Alternate camera states also tend to favor the wrong action.
+
+| Release | Stock legal votes | Earned legal votes | Correct pair of 64 |
+| --- | ---: | ---: | ---: |
+| 9230 | 22 | 9 | 5 |
+| 11809 | 21 | 12 | 6 |
+| 9114 | 13 | 12 | 4 |
+
+The ensemble spans bounded p/v scales from independent earlier optical
+error records and a broad nuisance spin prior. A legal hypothesis alone
+does not identify the correct command when the same bank supports the
+known failed command even more often. [Camera-only alternatives](optical-alternatives.json)
+
 ## Signed RGB evidence override
 
 The two same-delivery sets yield eight scored or failed rim contrasts
@@ -127,6 +143,7 @@ python -m scripts.experimental.tt48_rim_recovery plan
 python -m scripts.experimental.tt48_rim_recovery run
 python -m scripts.experimental.tt48_contact_patch_report --verify
 python -m scripts.experimental.tt48_contact_optical_check artifacts/tt48_contact_patch/optical-factors.json --factors
+python -m scripts.experimental.tt48_optical_alternatives
 python -m scripts.experimental.tt48_edge_evidence
 python -m scripts.experimental.tt48_edge_evidence_fit
 python -m scripts.experimental.tt48_edge_override plan
