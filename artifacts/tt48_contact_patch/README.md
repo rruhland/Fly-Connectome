@@ -130,6 +130,31 @@ windows, not the full playable set or a camera-only rule. In particular,
 waiting for several post-bounce pictures cannot rescue the original strongest
 spin case with this same learned movement. [Exact p/v/spin factors](precise-field-ablation.json) · [Timed physical action tapes](bounce-window.json.gz)
 
+The separate release-disjoint sensor holdout kept eight predetermined
+recorded tapes, scored their first two receiving arcs, and preserved the
+verified native prefixes. On 65 pre-bounce samples, the 4× area/shape arc
+fit reduced mean p error from 2.09 to 0.63 mm and v error from .0354 to
+.0148 m/s (shape). On the 45 low pre-bounce samples, shape error fell
+from 2.24 to 0.56 mm and from .0373 to .0129 m/s. Post-bounce coverage
+was lower and the accuracy gain much smaller. Each of 32 manually
+paired full-frame and camera tile center measurements matched exactly.
+The tile renderer keeps the scaled full-frame intrinsics and draws only
+ordinary RGB pixels in the ball's optically predicted window.
+[Held readouts, scorer records and CPU](precise-held-accuracy.json.gz)
+
+A separate fit used synchronized pre-/post-bounce centers to constrain
+the angular state in a calibrated private ball/table model. It recovered
+one physically viable delayed choice on 11809, already predicted by
+the dense pre-bounce prior without fitting a rebound correction.
+It did not recover 9230 or 9114 before their action deadlines. The fit
+often explained the observed positions much better without estimating
+angular state well enough to improve command ranking. One immediate
+9114 delayed contact was still rejected even with exact p/v/angular
+velocity, while the second and third post-bounce trials ranked correctly
+with those evaluator fields. These are bounds on this private initializer,
+not licenses to see physical state inside the player.
+[Causal rebound readout and evaluator bounds](optical-bounce.json)
+
 ## Signed RGB evidence override
 
 The two same-delivery sets yield eight scored or failed rim contrasts
@@ -174,6 +199,8 @@ python -m scripts.experimental.tt48_optical_alternatives
 python -m scripts.experimental.tt48_precise_receive witness
 python -m scripts.experimental.tt48_precise_receive exact
 python -m scripts.experimental.tt48_bounce_window
+python -m scripts.experimental.tt48_sensor_hold
+python -m scripts.experimental.tt48_optical_bounce
 python -m scripts.experimental.tt48_edge_evidence
 python -m scripts.experimental.tt48_edge_evidence_fit
 python -m scripts.experimental.tt48_edge_override plan
