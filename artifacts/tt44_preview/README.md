@@ -64,6 +64,14 @@ across this capped comparison. Early timing can change how the later
 controller plays an offer, but the mixed effects do not support a general
 improvement. [Late MPC tape](late.json.gz) · [Late comparison](late-summary.json)
 
+The post-hoc cap-only run of 3786 reproduced all 812 issued controls
+and the entire event prefix of the capped test. It ended normally at
+8 learner and 17 alternating returns, with the last learner stroke
+falling on its own half. The result is a two-return gain on that one
+paired point, which exactly balances the two-return loss on 6411.
+The other two comparisons remained unchanged.
+[Longer 3786 tape](3786.json.gz) · [Exact cap prefix](3786-summary.json)
+
 ## Reproduce
 
 ```sh
@@ -74,5 +82,7 @@ python -m scripts.experimental.tt44_preview no-update "$out/control.json.gz"
 python -m scripts.experimental.tt44_preview_report "$out/adapt.json.gz" "$out/control.json.gz" "$out/summary.json" --replay-strongest
 python -m scripts.experimental.tt44_preview transfer "$out/late.json.gz" --checkpoint "$out/adapt.npz"
 python -m scripts.experimental.tt44_preview_report "$out/late.json.gz" artifacts/tt43_motor_modes/held-stock.json.gz "$out/late-summary.json" --archived-late
+python -m scripts.experimental.tt44_preview transfer "$out/3786.json.gz" --checkpoint "$out/adapt.npz" --plan "$out/3786.protocol.json"
+python -m scripts.experimental.tt44_preview_report "$out/3786.json.gz" artifacts/tt43_motor_modes/held-stock.json.gz "$out/3786-summary.json" --archived-late --plan "$out/3786.protocol.json" --capped-prefix "$out/late.json.gz"
 python -m pytest -q tests/test_tt44_preview.py
 ```

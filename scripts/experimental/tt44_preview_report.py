@@ -86,6 +86,21 @@ def report(a):
         "archived_late_control": a.archived_late,
         "records": rows,
     }
+    if a.capped_prefix:
+        capped = _read(a.capped_prefix)
+        if (len(trained["records"]["held"]) != 1
+                or trained["checkpoint_start"] != capped["checkpoint_start"]
+                or trained["late_carry_sha256"] != capped["late_carry_sha256"]):
+            raise ValueError("Cap extension changed frozen policy inputs")
+        row = trained["records"]["held"][0]
+        ref = next(r for r in capped["records"]["held"] if r["card"] == row["card"])
+        ticks = len(ref["actions"])
+        events = len(ref["events"])
+        if row["actions"][:ticks] != ref["actions"] or row["events"][:events] != ref["events"]:
+            raise ValueError("Cap extension did not reproduce its exact earlier command and event prefixes")
+        result["capped_prefix"] = dict(source_sha256=_hash(a.capped_prefix), joint_ticks=ticks,
+                                       event_count=events, learner_at_cap=ref["score"]["learner"],
+                                       alternate_returns_at_cap=ref["score"]["returns"])
     if a.replay_strongest and rows["held"]["pairs"]:
         pairs = rows["held"]["pairs"]
         changed = [i for i, rec in enumerate(pairs) if rec["first_action_diff"] is not None]
@@ -154,4 +169,5 @@ if __name__ == "__main__":
     p.add_argument("--replay-strongest", action="store_true")
     p.add_argument("--archived-late", action="store_true")
     p.add_argument("--plan", type=Path, default=preview.PLAN)
+    p.add_argument("--capped-prefix", type=Path)
     report(p.parse_args())
