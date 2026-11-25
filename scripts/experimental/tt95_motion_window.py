@@ -103,12 +103,16 @@ def setup():
     return candidates
 
 
-def run():
+def run(terminal_control=False):
     anchors=setup()
     m,ready,_=tt90.material()
     q,tape=tt90.system.q,tt90.system.q.tape
-    result=_read(OUT) if OUT.exists() else dict(protocol=_hash(PLAN),rows=[],complete=False)
-    if result['protocol']!=_hash(PLAN):
+    save=ROOT/'same-clock-terminal.json.gz' if terminal_control else OUT
+    contract=dict(protocol=_hash(PLAN))
+    if terminal_control:
+        contract['window_result']=_hash(OUT)
+    result=_read(save) if save.exists() else dict(**contract,rows=[],complete=False)
+    if any(result.get(k)!=v for k,v in contract.items()):
         raise ValueError('Changed native phase-window study')
     if result['complete']:
         return
@@ -149,8 +153,15 @@ def run():
                 for u in normal:
                     u[6:]-=lab.tangent(u[3:6],u[6:])
                 samples=[]
-                for kind,target,native in (('normal',normal,False),('full',full,False),('full_refined',full,True)):
-                    commands,meta=optimize(model,b,state,target,uv,native=native)
+                modes=(('normal',normal,False),('full',full,False))
+                if not terminal_control:
+                    modes=(*modes,('full_refined',full,True))
+                for kind,target,native in modes:
+                    if terminal_control:
+                        commands,unused=model.solve(state,target[-1],uv,N,rounds=4)
+                        meta=dict(single_terminal_at_same_clock=True)
+                    else:
+                        commands,meta=optimize(model,b,state,target,uv,native=native)
                     reached=np.asarray([body_source(b.eval(commands[None,:t])[0],uv) for t in WINDOW])
                     extension=np.c_[commands,np.zeros(len(commands))]
                     extension=np.vstack([extension,extension[-1][None,:]*np.array([.40,.20,.08])[:,None]])
@@ -169,10 +180,13 @@ def run():
                           None if response['contact'] is None else response['contact']['radial_m'],response['depart'],flush=True)
                 result['rows'].append(dict(case=spec,cut=cut,stop=stop,patch=uv.tolist(),variants=samples))
                 result['complete']=len(result['rows'])==len(anchors)
-                _write(OUT,result)
+                _write(save,result)
         finally:
             a.close();cad.close()
 
 
 if __name__=='__main__':
-    run()
+    import argparse
+    cli=argparse.ArgumentParser(description=__doc__)
+    cli.add_argument('--terminal-control',action='store_true')
+    run(terminal_control=cli.parse_args().terminal_control)
