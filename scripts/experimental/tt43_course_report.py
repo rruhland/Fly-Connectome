@@ -1,6 +1,7 @@
 """Report point-level sustain and fixed-collection generalization with actual legal opportunities."""
 
 import argparse
+from collections import Counter
 from pathlib import Path
 
 import numpy as np
@@ -74,13 +75,19 @@ def summarize(d):
 def report(paths, out):
     reference = None
     result = {}
+    names = Counter(path.name.split(".")[0] for path in paths)
     for path in paths:
         d = _read(path)
         if reference is None:
             reference = d["cards"]
         if reference != d["cards"]:
             raise ValueError("Unmatched evaluation cards")
-        result[path.name.split(".")[0]] = dict(source=_hash(path), **summarize(d))
+        key = path.name.split(".")[0]
+        if names[key] > 1:
+            key = f"{path.parent.name}/{key}"
+        if key in result:
+            raise ValueError(f"Cannot distinguish result for {path}")
+        result[key] = dict(source=_hash(path), **summarize(d))
     baseline = np.array(next(iter(result.values()))["scores"])
     idx = np.random.default_rng(43278).integers(
         0, len(baseline), (10000, len(baseline))
