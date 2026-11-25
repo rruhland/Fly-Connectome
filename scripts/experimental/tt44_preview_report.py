@@ -129,11 +129,15 @@ def replay(ready, tape):
             touches = []
             with contact_observer(table, touches):
                 for u in tape["actions"]:
-                    table.exchange(u, mpc.FAR_COMMAND)
+                    table.exchange(np.asarray(u), mpc.FAR_COMMAND)
             h = digest_json(table.events)
-            if (table.launches != 1 or h != digest_json(tape["events"])
-                    or preview.audit(table.events, opening_side=1) != tape["score"]):
-                raise ValueError("Replay changed point, launch count or referee")
+            expected = digest_json(tape["events"])
+            score = preview.audit(table.events, opening_side=1)
+            if table.launches != 1 or h != expected or digest_json(score) != digest_json(tape["score"]):
+                diff = next(((i, a, b) for i, (a, b) in enumerate(zip(table.events, tape["events"])) if a != b), None)
+                raise ValueError(f"Replay {c['id']} changed point or referee: {table.launches=} "
+                                 f"events {len(table.events)} vs {len(tape['events'])}, "
+                                 f"score {score['learner']} vs {tape['score']['learner']}, {diff=}")
             verify_clearance(table)
             return dict(id=c["id"], event_sha256=h, launches=1, native_racket_contacts=len(touches),
                         learner=tape["score"]["learner"], clearance=table.clearance_result())

@@ -11,8 +11,10 @@ Both arms scored 7 total, with a peak of 4 on one rally. On release 6411,
 the learned four-tick preview shifted the first arm contact by 4.46 mm.
 The unchanged reactive opponent then delivered a different path toward the
 same matched target draw. This is real physical control transfer, but
-does not establish better return performance.
-[Adaptive tape](adapt.json.gz) · [No-update and zero-delay tape](control.json.gz)
+does not establish better return performance. The longest changed point,
+8056, replayed exactly with ten native racket contacts, one launch, and
+zero penetrations in 3,819 full-CAD solver samples.
+[Adaptive tape](adapt.json.gz) · [No-update and zero-delay tape](control.json.gz) · [Verification](summary.json)
 
 ## Early readout
 
@@ -63,6 +65,6 @@ export PYTHONPATH=.:src MUJOCO_GL=egl OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 O
 out=artifacts/tt44_preview
 python -m scripts.experimental.tt44_preview adapt "$out/adapt.json.gz"
 python -m scripts.experimental.tt44_preview no-update "$out/control.json.gz"
-python -m scripts.experimental.tt44_preview_report "$out/adapt.json.gz" "$out/control.json.gz" "$out/summary.json"
+python -m scripts.experimental.tt44_preview_report "$out/adapt.json.gz" "$out/control.json.gz" "$out/summary.json" --replay-strongest
 python -m pytest -q tests/test_tt44_preview.py
 ```
