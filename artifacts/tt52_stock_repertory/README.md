@@ -14,6 +14,12 @@ Using two paid preparation prefixes, the stock-window options returned **3/3** o
 
 For a separate prospective whole comparison, the optional `--weak` rule can consider a marginal stock incumbent. It waits deeper into a fresh post-bounce track, runs the rest of the current live references from the same body alongside learned alternatives, and keeps the incumbent if its recheck supports both perturbations. An alternative must improve the perturbed score and clear a larger modeled net margin and forward velocity. The trigger, lease, and frequency of stock search do not change.
 
+## Fresh complete points
+
+The four preassigned releases used the same ordinary actuators and initial state, the same risk-guided partial preparation and 12 independently earned optical examples in addition to the two signed low seeds. Prepared stock and options each scored one return across all four points. Per-release scores were 0, 1, 0 and 0 for both, with bitwise identical controls. Four optional search windows reached the candidate screen. Two faced a marginal incumbent, and one alternative from a marginal window passed the nominal margin screen but did not win the perturbation check. None was selected. Natural low waveforms were evaluated on 7812, without a legal option from its normal body. This small unselected course exercised the integration and its fallback but provides no evidence of a full-game improvement. [Full native games](live.json.gz) · [Locked natural examples](../tt54_earned_low/first12.json)
+
+The four unique complete tapes all reproduced exactly under the independent native and full CAD replay. There were zero penetrations in 2,973 samples. The measured minimum was 15.99 mm. [Strict replay and exact offer comparison](live-audit.json)
+
 ## Reproduce
 
 ```sh
@@ -21,6 +27,8 @@ export PYTHONPATH=.:src MUJOCO_GL=egl OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 O
 python -m scripts.experimental.tt52_stock_repertory plan
 python -m scripts.experimental.tt52_stock_repertory exact
 python -m scripts.experimental.tt52_stock_repertory_low
-python -m scripts.experimental.tt52_stock_repertory live
+python -m scripts.experimental.tt52_stock_repertory exact --weak --out artifacts/tt52_stock_repertory/weak-exact.json.gz
+python -m scripts.experimental.tt52_stock_repertory live --weak --natural artifacts/tt54_earned_low/first12.json
+python -m scripts.experimental.tt52_stock_repertory_audit
 python -m pytest -q tests/test_tt52_stock_repertory.py
 ```
