@@ -48,6 +48,39 @@ seven cases where stock did not have its robust prediction at the fork.
 They distinguish failure to issue a correction from damaging a routinely
 scored delivery. [Ordinary positive controls](routine.protocol.json)
 
+## Physical yield and held qualification
+
+| Comparison | Stock scores | Learned scores |
+| --- | ---: | ---: |
+| 40 exact practice forks, using training-only native search | 0 | 18 |
+| 12 release-disjoint identical terminal offers, RGB and encoders only | 0 | 0 |
+| 8 fixed identical ordinary hits, RGB and encoders only | 8 | 8 |
+
+The native teacher evaluated 14,080 paths and proposed one physical check
+per fork. All 40 checks preserved the exact original arrival. Fifteen safe
+physical practice scores had been marked legal by the batch model. Three
+were native false negatives. The 18 safe scores cover 17 openings, with
+five left, eleven middle, and two right. Sixteen received a legal reply
+after resolving the three censored continuations. The two right scores
+were different ordinary offers on the same release and ended naturally
+without a legal reply. The prior and rescued contact median radii were
+75.0 and 74.5 mm. The search primarily found better strikes near the rim,
+not a motion that worked by centering the blade. Exact launch-to-reply
+replays independently found zero penetrations for the first middle and
+left examples. [Matured exact tapes and public input keys](matured.json.gz)
+[Readout with 16 distinct answered releases](readout.npz)
+
+In the held comparison, five otherwise missed receives retained a
+stock-protected plan. The school issued on one of the other seven, which
+missed. The atlas control did not issue on any held miss and did not rescue
+any. The school issued on none of the eight routine hits, while the atlas
+issued once and still scored. Give the original successful tape back to
+the RGB/encoder model and it recognizes only one of eight as nominally
+legal and none as deployable under the motion uncertainty test. Failure
+is already present before cross-release borrowing. The new school was not
+promoted or tested in full games.
+[Held terminal tapes](held-forks.json.gz) · [Routine hit tapes](routine-forks.json.gz) · [Recognition audit](optical-witnesses.json) · [Full report](report.json)
+
 ## Reproduce
 
 ```sh
@@ -63,7 +96,6 @@ python -m scripts.experimental.tt57_motor_school_transfer fit
 python -m scripts.experimental.tt57_motor_school_transfer held
 python -m scripts.experimental.tt57_motor_school_transfer routine
 python -m scripts.experimental.tt57_motor_school_transfer audit-training --n 8
-python -m scripts.experimental.tt57_motor_school_transfer games
 python -m scripts.experimental.tt57_motor_school_report --verify
 python -m pytest -q tests/test_tt57_motor_school.py
 ```
