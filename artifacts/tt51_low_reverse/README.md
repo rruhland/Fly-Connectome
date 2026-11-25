@@ -126,3 +126,37 @@ factory. It fixes the existing five TT50 neutral draws, preserves source control
 through4003, restores legal camera/readiness history and uses the official raw
 camera base with unchanged original carry. It has not yet run; there is no neutral
 transfer result or duplicate full-game qualification in this artifact.
+
+## Integrated V1 on the complete existing neutral cohort
+
+The lead `tt54_live_wing.install` controller was evaluated from the original
+early native source state with normal camera-guided arm decisions after4003.
+The five cases are the unchanged TT50 neutral roster, not newly selected goals.
+Every requested far reply remains the ordinary broad TT37 draw. Each controller
+gets the same actual prefix, original carry memory and official raw camera base.
+Readiness is rebuilt from the actual camera/encoder history, not native labels.
+
+| Reply stream | Deep projected x/z (evaluator only) | Stock | Cold | Warm |
+| --- | --- | ---: | ---: | ---: |
+| 791162625 | .0171 /1.0089m | 1 | 1 | 1 |
+| 515671963 | -.2146 /.9643m | 0 | 0 | 1 |
+| 767799421 | -.2947 /1.0789m | 1 | 1 | 0 |
+| 643968721 | .1946 /1.0036m | 1 | 1 | 1 |
+| 880742181 | .1998 /1.0467m | 1 | 1 | 1 |
+
+All counted returns were answered. The low gain is offset by a higher wing loss:
+**4/5 total for all three actors**, with one gain and one loss. At the low gain's
+first public stock window4078, warm q is
+[-1.405,-1.676,.515,1.589,1.275,-.1], versus cold
+[.543,-1.628,-1.335,1.085,-1.140,-.1]. The acquired physical workspace was reached
+from the earlier ordinary arm state. Normal search accepted the frozen
+`low/training-new-left-reply` at4078 with support2. This establishes a causal
+transfer, not an aggregate improvement or full-game qualification.
+
+All five actual incoming triples matched. Original controls through4003 were
+exact. All changed-prefix/strike CAD records have zero penetrations, and both
+controller/evaluator hashes stayed frozen. The complete course costs6393 actual
+control ticks,394.611 wall seconds and128.974 CPU seconds. Raw action/observation
+receipts and the evaluator-only posture report are retained. Independent fresh
+controller/risk and full-CAD verification of the low gain is in progress; its
+result is not assumed here. A separate frozen V2 comparison is pending.
