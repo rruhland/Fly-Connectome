@@ -136,15 +136,16 @@ def key(history):
     return np.r_[x,(x[:3]-o[:3]),x[5]-o[5],q[:5],ref[:5]-q[:5],q[:5]-pre[:5]]
 
 
-def capture(output):
+def capture(output, polarity=None):
     p = _read(PLAN)
+    indices={i for i,r in enumerate(p["training"]) if polarity is None or r["success"]==polarity}
     d=_read(output) if output.exists() else dict(plan_sha256=_hash(PLAN),rows=[], complete=False)
-    if d["plan_sha256"]!=_hash(PLAN):
+    if d["plan_sha256"]!=_hash(PLAN) or any(r["index"] not in indices for r in d["rows"]):
         raise ValueError("Capture does not match the original schedule")
     done={r["index"] for r in d["rows"]}
     caches, ready= {}, defaultdict(lambda:defaultdict(list))
     for k,r in enumerate(p["training"]):
-        if k in done:
+        if k in done or k not in indices:
             continue
         path=r["title"]
         if path not in caches:
@@ -195,19 +196,39 @@ def capture(output):
                         for v in records:
                             v["physical_prefix_sha256"]=digest_json(a.events)
                     d["rows"].extend(records)
-                    d["complete"]=len(d["rows"])==len(p["training"])
+                    d["complete"]=len(d["rows"])==len(indices)
+                    if d["complete"]:
+                        d["rows"].sort(key=lambda r:r["index"])
                     _write(output,d)
                     if len(d["rows"])==len(records) or len(d["rows"])%10<=len(records):
-                        print(len(d["rows"]),len(p["training"]),sum("actions" in v for v in d["rows"]),flush=True)
+                        print(len(d["rows"]),len(indices),sum("actions" in v for v in d["rows"]),flush=True)
             finally:
                 res[0].close()
                 a.close()
 
 
+def merge():
+    p = _read(PLAN)
+    trials = [_read(ROOT/f"{name}.json.gz") for name in ("positive","negative")]
+    if any(d["plan_sha256"]!=_hash(PLAN) or not d["complete"] for d in trials):
+        raise ValueError("Both planned replay cohorts must finish")
+    rows=sorted((r for d in trials for r in d["rows"]),key=lambda r:r["index"])
+    if [r["index"] for r in rows]!=list(range(len(p["training"]))):
+        raise ValueError("Duplicated or missing original physical replay")
+    _write(PACKET,dict(plan_sha256=_hash(PLAN),rows=rows, complete=True))
+
+
 if __name__=="__main__":
     p=argparse.ArgumentParser(description=__doc__)
-    p.add_argument("phase", choices=("plan","capture"))
-    p.add_argument("--output",type=Path,default=PACKET)
+    p.add_argument("phase", choices=("plan","capture","positive","negative","merge"))
+    p.add_argument("--output",type=Path)
     a=p.parse_args()
     ROOT.mkdir(parents=True,exist_ok=True)
-    plan() if a.phase=="plan" else capture(a.output)
+    if a.phase=="plan":
+        plan()
+    elif a.phase=="merge":
+        merge()
+    else:
+        polarity={"capture":None,"positive":True,"negative":False}[a.phase]
+        name=PACKET if polarity is None else ROOT/f"{a.phase}.json.gz"
+        capture(a.output or name,polarity)

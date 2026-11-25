@@ -6,7 +6,7 @@ The capture replays the original bounded rates on the original articulated arm a
 
 The actor looks at current RGB flight, four ticks of causal history, current encoder position and issued reference. At a normal replan where the original search is empty, it may recall five original bounded rates from a local scored movement. Both an ordinary control and nearest physically positive state-only recall are compared to action-conditioned recall. The latter needs independent successful supporting movements and a higher local physical reward association for that action than for the state alone. Neither condition borrows based on the measured launch ID or the actual future. The original search still updates while the rates are in force, but does not veto the short supported movement it did not propose.
 
-The held assay uses exact whole openings on the ordinary frozen history/risk controller, with the original season checkpoint and unchanged broad draws. The eight predefined cases use four weak original openings and four ordinary scoring controls, selected before trying a recalled action. The controller follows the original whole native game until the first legal arm return or actual terminal fault. This tests a receiving intervention on the exact physical offer. It does not establish rally-length effects.
+The held assay uses exact whole openings on the ordinary frozen history/risk controller, with the original season checkpoint and unchanged broad draws. The same recorded release ID can have a weak opening on one independent reply stream and a scored opening on another. The separate evaluation roster freezes the specific original failed assignment for each four weak releases and four ordinary scoring controls, before trying any recalled action. Its selection does not change which release IDs are withheld from training. The controller follows the original whole native game until the first legal arm return or actual terminal fault. This tests a receiving intervention on the exact physical offer. It does not establish rally-length effects. [Exact held assignments](held-roster.json)
 
 ## Reproduce
 
@@ -14,6 +14,7 @@ The held assay uses exact whole openings on the ordinary frozen history/risk con
 export PYTHONPATH=.:src MUJOCO_GL=egl OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 OMP_THREAD_LIMIT=1 LP_NUM_THREADS=1
 python -m scripts.experimental.tt50_surprise_data plan
 python -m scripts.experimental.tt50_surprise_data capture
+python -m scripts.experimental.tt50_surprise_actor plan-held
 python -m scripts.experimental.tt50_surprise_actor validate
 python -m scripts.experimental.tt50_surprise_actor run
 python -m pytest -q tests/test_tt50_surprise.py

@@ -17,12 +17,42 @@ from .tt19_view_full_game import digest_json
 from .tt39_carry_joints import Carried
 
 ROOT = data.ROOT
+HELD = ROOT / "held-roster.json"
 SCALE = np.array([.12,.20,.083,.58,.78,.84,.061,.07,.042,.38,
                   .63,.72,.69,.62,.79,.16,.20,.20,.20,.25,.22,.26,.22,.22,.26]) * 5.
 MOTOR = .46*np.sqrt(25.)
 THRESHOLD = .72
 WIDTH = .64
 MODES = ("stock","state-only","action-conditional")
+
+
+def freeze_held():
+    plan=_read(data.PLAN); base=_read(data.BASELINE)
+    if plan["held_source_sha256"]!=_hash(data.BASELINE):
+        raise ValueError("The original frozen season reference changed")
+    picks, used, controls = [], set(), 0
+    for i,(c,r) in enumerate(zip(base["cards"],base["rows"],strict=True)):
+        ident=c["id"]; offers=r["placements"]["delivered"]
+        if ident in used or not offers:
+            continue
+        o=offers[0]
+        opens=bool(o["near_landed"])
+        if ident in data.OPENINGS and not opens and any(
+            data.eligible(n) and n["tick"]>o["far_contact"]["step"] for n in r["searches"]
+        ):
+            role="weak opening"
+        elif ident not in data.OPENINGS and opens and controls<4:
+            role="ordinary control"
+            controls+=1
+        else:
+            continue
+        used.add(ident)
+        picks.append(dict(i=i,id=ident,card=c,role=role))
+    if len(picks)!=8 or len(picks)-controls!=4:
+        raise RuntimeError("Need four actual archived weak and four successful opening assignments")
+    _write(HELD,dict(training_plan_sha256=_hash(data.PLAN),source_sha256=_hash(data.BASELINE),
+                     held=picks, reason="Repeated release IDs have different draw streams. Freeze the actual weak assignment, not the first occurrence of that release. No treated outcomes exist."))
+    print([(r["id"],r["i"],r["role"]) for r in picks],flush=True)
 
 
 def corpus():
@@ -164,9 +194,13 @@ class Player(season.Player):
 
 def run(output):
     plan=_read(data.PLAN); baseline=_read(data.BASELINE)
+    trial=_read(HELD)
     if plan["held_source_sha256"]!=_hash(data.BASELINE) or baseline["carry_sha256"]!=_hash(season.CARRY):
         raise ValueError("Frozen physical baseline or practice changed")
+    if trial["source_sha256"]!=_hash(data.BASELINE) or trial["training_plan_sha256"]!=_hash(data.PLAN):
+        raise ValueError("Different held assignments")
     receipt=dict(plan_sha256=_hash(data.PLAN), memory_sha256=_hash(data.PACKET),
+                 evaluation_sha256=_hash(HELD),
                  actor_sha256=_hash(Path(__file__)), original_carry_sha256=_hash(season.CARRY),
                  rows=[],complete=False)
     if output.exists():
@@ -174,7 +208,7 @@ def run(output):
         if any(old[k]!=v for k,v in receipt.items() if k not in ("rows","complete")):
             raise ValueError("Different evaluation configuration")
         receipt=old
-    held={v["id"] for v in plan["held"]}
+    held={v["id"] for v in trial["held"]}
     bank=Retrieval(corpus())
     risk=combined.shot.Coverage(_read(combined.RISK))
     with np.load(mpc.BANK) as f:
@@ -189,7 +223,7 @@ def run(output):
         try:
             course.resume(player,season.CARRY.with_suffix("").with_suffix(".npz"),archived_bank)
             serial=player.serial
-            for item in plan["held"][len(receipt["rows"]):]:
+            for item in trial["held"][len(receipt["rows"]):]:
                 i=item["i"]
                 c=baseline["cards"][i]; row=baseline["rows"][i]
                 if c!=item["card"] or row["memory"]["before"]!=player.priors.digest():
@@ -221,7 +255,7 @@ def run(output):
                         r["first_change"]=n
                     modes[m]=r
                 receipt["rows"].append(dict(case=item,arms=modes))
-                receipt["complete"]=len(receipt["rows"])==len(plan["held"])
+                receipt["complete"]=len(receipt["rows"])==len(trial["held"])
                 _write(output,receipt)
                 print(c["id"],item["role"],[(m,r["score"]["learner"],len(r["borrowed"])) for m,r in modes.items()],flush=True)
         finally:
@@ -230,7 +264,8 @@ def run(output):
 
 if __name__=="__main__":
     p=argparse.ArgumentParser(description=__doc__)
-    p.add_argument("phase",choices=("validate","run"))
+    p.add_argument("phase",choices=("plan-held","validate","run"))
     p.add_argument("--output",type=Path,default=ROOT/"held.json.gz")
     a=p.parse_args()
-    validate() if a.phase=="validate" else run(a.output)
+    {"plan-held":lambda a:freeze_held(),"validate":lambda a:validate(),
+     "run":lambda a:run(a.output)}[a.phase](a)
