@@ -167,35 +167,35 @@ class Player(season.Player):
     def begin(self):
         super().begin()
         self.camera_history=deque(maxlen=7)
-        self.borrowed=None
-        self.at=-99
-        self.already=False
-        self.calls=[]
-        self.sent=[]
+        self.recall_action=None
+        self.recall_tick=-99
+        self.recall_consumed=False
+        self.recall_calls=[]
+        self.recall_issued=[]
 
     def step(self,t,eye,x,q,ref,base):
         self.camera_history.append((t,x,q,ref))
         original=super().step(t,eye,x,q,ref,base)
         if x is not None and x[4]>.9:
-            self.borrowed=None
-            self.already=False
+            self.recall_action=None
+            self.recall_consumed=False
         if self.mode=="stock":
             return original
-        if self.borrowed is not None and 0<=t-self.at<data.STEPS:
-            v=self.borrowed[t-self.at]
-            self.sent.append(dict(tick=t,rates=v.tolist()))
+        if self.recall_action is not None and 0<=t-self.recall_tick<data.STEPS:
+            v=self.recall_action[t-self.recall_tick]
+            self.recall_issued.append(dict(tick=t,rates=v.tolist()))
             return ref+self.stride*v
-        if self.already or not self.notes or self.notes[-1]["tick"]!=t or not data.eligible(self.notes[-1]):
+        if self.recall_consumed or not self.notes or self.notes[-1]["tick"]!=t or not data.eligible(self.notes[-1]):
             return original
         z=data.key(self.camera_history)
         if z is None:
             return original
         action, meta=self.retrieval.choose(z,self.mode)
-        self.calls.append(dict(tick=t,treatment=action is not None,forecast_legal=0, **meta))
+        self.recall_calls.append(dict(tick=t,treatment=action is not None,forecast_legal=0, **meta))
         if action is None:
             return original
-        self.borrowed,self.at,self.already=action,t,True
-        self.sent.append(dict(tick=t,rates=action[0].tolist()))
+        self.recall_action,self.recall_tick,self.recall_consumed=action,t,True
+        self.recall_issued.append(dict(tick=t,rates=action[0].tolist()))
         return ref+self.stride*action[0]
 
 
@@ -240,7 +240,7 @@ def run(output):
                     player.mode=m
                     player.serial=serial+i
                     r=mpc.play(a,*res,ready,c,row["shot"],raw,player,course.OPTIC,"frozen",2)
-                    r.update(attempt=list(player.calls),borrowed=list(player.sent))
+                    r.update(attempt=list(player.recall_calls),borrowed=list(player.recall_issued))
                     if any(q["target"] != list(course.draw(c,j,"random",None)[0])
                            for j,q in enumerate(r["placements"]["requested"])):
                         raise ValueError("Original continuous draw changed")
