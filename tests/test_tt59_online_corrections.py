@@ -37,3 +37,23 @@ def test_adaptive_increment_does_not_refit_frozen_basis():
     assert start == 23 and len(model.ids) == start+1 and model.ids[-1] == -1
     assert np.array_equal(basis, model.basis)
     assert model.weights.shape == (24, live.base.RANK)
+
+
+def test_sealed_online_stream_finishes_and_does_not_credit_frozen_policy():
+    from scripts.experimental import tt59_online_report as report
+    from scripts.experimental.tt4_transfer_trial import _hash, _read
+
+    receipt = _read(report.REPORT)
+    assert receipt["stream"] == _hash(live.OUT)
+    assert receipt["complete"] and len(receipt["rows"]) == 8
+    result = receipt["scores"]
+    assert [result[m]["returns"] for m in live.MODES] == [62, 53, 53]
+    assert [result[m]["learned"] for m in live.MODES] == [0, 0, 1]
+    tapes = _read(live.OUT)
+    for row, recorded in zip(receipt["rows"], tapes["rows"], strict=True):
+        assert recorded["arms"]["adaptive23"]["actions"] == recorded["arms"]["frozen23"]["actions"]
+        assert row["arms"]["adaptive23"]["first_diff_from_frozen"] is None
+        for arm in row["arms"].values():
+            assert arm["complete_point"]
+            if "replay" in arm:
+                assert arm["audited_safe"]
