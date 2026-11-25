@@ -91,7 +91,7 @@ def actor_class(parent):
             self.observer_decisions.append(dict(tick=tick, source='dense' if dense else 'legacy',
                 x=None if selected is None else selected.tolist(),
                 legacy=None if x is None else np.asarray(x).tolist(),
-                dense_bounced=None if not dense else self.public.latest.bounced))
+                dense_bounced=None if not dense else bool(self.public.latest.bounced)))
             return super().step(tick, self.public, selected, q, reference, base)
 
     return Observed

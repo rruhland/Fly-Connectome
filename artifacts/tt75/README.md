@@ -30,6 +30,8 @@ TT83 independently paired the same exact observer bytes on four paid-motion fork
 
 `ordinary.protocol.json` fixes the first 32 complete TT80 games, the original frozen CARRY checkpoint, budget 28, cap 240 and the complete archived frozen parent. No game or checkpoint is selected by outcome. A disabled first-game check reproduced all 109 commands bitwise and the entire physical event record canonically (`disabled-parity.json.gz`). Initial Python direct equality incorrectly compared live tuple fields with JSON lists; canonical serialization proves equality. Three 109-tick parity/debug replays were paid, total 327 ticks, including the first unrecorded repetition; one intermediate source-hash rejection used zero native control. The final parity uses the same EGL and packed-camera configuration as TT80.
 
+The first dense game completed 0 returns versus the parent's 0, with 29 dense and 80 fallback decisions. Its audit write then rejected a NumPy boolean; only the recorded flag was converted to a Python boolean, with no inference or action change. This additional 109-tick completed game is charged and its failure log is retained. The identical fixed first32 course was restarted after that serialization correction.
+
 The actual dense first32 course is running. Its receipt is `ordinary-dense.json.gz`; all completed assigned games, fallback counts, selected observations, physical actions, true uniform requests and returns are retained. This file is not a result claim before the complete comparison is reported.
 
 Reproduction (from repository root):
