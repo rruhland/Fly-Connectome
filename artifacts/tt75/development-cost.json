@@ -1,0 +1,7 @@
+{
+  "initial_projection_probe_ticks": 20,
+  "initial_interface_abort_tick_ceiling": 106,
+  "interface_abort_exact_ticks_unavailable": true,
+  "reason": "Old ReboundReadout has no rotation callback; baseline spin must be read from the independently RGB-initialized optical clinic, not assumed from a filter method.",
+  "no_completed_sensor_cases_discarded": true
+}

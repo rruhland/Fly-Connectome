@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/workspace/Fly-Connectome-m1b/scripts/experimental/tt75_incoming_state.py", line 138, in <module>
+    args=parser.parse_args();freeze() if args.mode=='plan' else run(args.out,args.n)
+                                                                ^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/Fly-Connectome-m1b/scripts/experimental/tt75_incoming_state.py", line 98, in run
+    older=None if x is None else dict(pv=x.tolist(),spin=eye.eye.filter.rotation(now).tolist())
+                                                         ^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'ReboundReadout' object has no attribute 'rotation'

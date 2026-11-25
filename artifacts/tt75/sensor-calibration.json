@@ -1,0 +1,36 @@
+{
+  "size": 192,
+  "scale": 6,
+  "rate": 120,
+  "pixel_maps": [
+    [
+      [
+        3.0,
+        0.0
+      ],
+      [
+        0.0,
+        6.0
+      ]
+    ],
+    [
+      [
+        3.0,
+        0.0
+      ],
+      [
+        0.0,
+        6.0
+      ]
+    ]
+  ],
+  "method": "Independent optical ROI translation on a fixed startup scene,8 original pixels per axis; measured rendered ball centroid displacement. No dynamic state supplied to the fit.",
+  "actual_angular_magnification": [
+    3,
+    6
+  ],
+  "appearance": "Original unmarked orange ball",
+  "exposure": "Existing native RGB renderer is instantaneous; no motion-blur or shutter change claimed.",
+  "calibration_control_ticks": 0,
+  "development_probe_control_ticks": 20
+}
