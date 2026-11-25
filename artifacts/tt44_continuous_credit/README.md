@@ -21,7 +21,7 @@ Independent replay from the original launches verified both stock and new event 
 
 Beginning after a visible outbound cue before the far strike preserved the matched 14502 ball. The actuator gained earlier motion, but none of the five changed or one control trajectories touched. The no-contact low outcome is not solely an artifact of beginning just after far separation. [Earlier causal test](outbound-14502.json.gz)
 
-On 4239 a second targeted variant held the early correction through the first observed rebound. One of its six physically executed variants contacted the unchanged moderate low ball, but none landed. [Longer correction fork](rebound-4239.json.gz)
+In the initial low screen, 4239 was the only low touched. Its four touches still departed toward the arm at 2.40–3.02 m/s. On 4239 a second targeted variant held the early correction through the first observed rebound. One of its six physically executed variants contacted the unchanged moderate low ball, but none landed. [Longer correction fork](rebound-4239.json.gz)
 
 The local score-driven selector freezes at the first eligible incoming RGB and encoder row, before the corrected action begins. Failed moves dilute nearby support, and each physically distinct training offer votes once. The four ordinary controls were all retained, three by choosing identity and one by a fresh nonidentity physical replay from the same incoming state. [Frozen local model](policy.json) · [Easy controls](easy.json.gz)
 
