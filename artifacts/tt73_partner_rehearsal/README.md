@@ -1,0 +1,5 @@
+# Can a responsive practice partner deliver the challenge the learner needs?
+
+The practice partner makes up to four physical previews of continuously sampled goals, each from the current opponent state. It chooses among them using the student’s recent success rate within receiving regions. On 35% of decisions it keeps the ordinary unaltered random goal. The student receives only the actual RGB, encoders and ordinary legal reward from one point. Frozen evaluation uses the original fully random physical partner on both native fixtures. Extra partner computation is charged to the coach. [Practice protocol](course/course.json)
+
+In the pilot, the coach previewed 110 target offers over 41 decisions and measured 39 delivered crossings in both the hypothetical and actual worlds. Mean absolute differences were 0.21 mm laterally and 4.19 mm in projected height. The largest height error was 82.5 mm. All 39 received offers counted, including those beyond the 32-offer threshold needed to finish the final point. The pilot establishes enough physical fidelity to try practice. It does not establish a change in the learner. [All pilot observations](pilot/accuracy.json)

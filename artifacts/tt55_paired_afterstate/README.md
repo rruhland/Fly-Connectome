@@ -18,6 +18,10 @@ Stroke-dependent changes were large on some receiving states and repeated under 
 
 The central-low geometry appeared twice after the before strokes and four times after the after strokes. The fixed receiver converted **0 of 6** central-low replies. Those six examples support keeping the band as a separate evaluator measure, but are too few to identify a generally reliable avoidance rule. They also do not explain all score differences. On 11133, for example, only one of the six replies after the worse stroke was central-low.
 
+## Can the arm choose the better shot before making it?
+
+The independent training run finished all 32 physical forks. A score preference learned on the first three opponent draws and applied to the other three, then exchanged, gained 4.4 percentage points against choosing at random. This measures repeatability after practicing the same two strokes. Thirty training forks and sixteen held forks recorded a causal estimate for both actions at the decision tick. On these held forks, choosing using only the learned pre-contact estimate gained 2.6 percentage points over the existing risk ranker, with a release-bootstrap interval of −4.7 to +9.9 points. It missed the preset deployment threshold. The ordinary learner retains its previous outgoing policy. [Training physical comparisons](train-report.json) · [Released predictions, comparison and checkpoint](preference.json)
+
 ## Reproduce
 
 ```sh
