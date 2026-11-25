@@ -1,6 +1,6 @@
 # Separate SO-101 fixture and neck-pitch preflight
 
-None of the tested fixture changes qualified for an independent or full-game comparison. The stock body produced the only actual answered rescues, all on one practice release and outside the 58 mm interior threshold. This is a separate mechanical experiment, not a change to the continuous-opponent benchmark.
+None of the neck or drop-shelf changes below qualified for an independent or full-game comparison. The stock body produced the only actual answered rescues, all on one practice release and outside the 58 mm interior threshold. The later lateral re-clamp did open a useful low workspace and is reported separately. These are mechanical experiments, not changes to the continuous-opponent benchmark. [Lateral re-clamp](lateral/README.md) · [Training on another fixture and restoring stock](teacher/README.md)
 
 The first family is a pitched blade neck, distinct from turning the blade around its handle. The cut axis is perpendicular to the handle and the blade normal through a point physically embedded in both original shapes. The seated handle is straight in the existing jaws. The plate retains the original 76 mm radius, thickness and mass. The full rigid paddle retains its 115 g mass and its new COM and inertia are recomputed. Across all four variants the jaw grasp span was at least as long as stock and observed blade-to-wrist separation was above 1 mm. This is CAD fit, not a physical holding-force test.
 
