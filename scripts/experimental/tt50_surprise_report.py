@@ -19,10 +19,11 @@ def report(tape, output, audit):
             first = a["placements"]["delivered"][0] if a["placements"]["delivered"] else {}
             q[m]=dict(landed=bool(first.get("near_landed")),
                       touched=bool(first.get("near_contact")), rates=len(a["borrowed"]),
-                      first_change=a.get("first_change"), attempts=a["attempt"],
+                      first_change=a.get("first_change"), same_offer=a.get("same_offer",m=="stock"),
+                      attempts=a["attempt"],
                       first_after_borrow_predicted_legal=sum(bool(p.get("legal_trials")) for p in a["searches"]
                                                            if a["borrowed"] and p["tick"]>=a["borrowed"][0]["tick"]))
-            if q[m]["landed"] and not bool(r["arms"]["stock"]["score"]["learner"]):
+            if q[m]["landed"] and q[m]["same_offer"] and not bool(r["arms"]["stock"]["score"]["learner"]):
                 wins.append((i,m,a))
         rows.append(dict(r["case"],arms=q))
     totals={}
@@ -31,6 +32,7 @@ def report(tape, output, audit):
         b=[r["arms"][m] for r in rows if r["role"]=="weak opening"]
         totals[m]=dict(landed=sum(w["landed"] for w in a),weak_landed=sum(w["landed"] for w in b),
                        touched=sum(w["touched"] for w in a),fired=sum(w["rates"]>0 for w in a),
+                       retained_offers=sum(w["same_offer"] for w in a),
                        issued=sum(w["rates"] for w in a))
     result=dict(rows=rows, totals=totals, complete=d["complete"], tape_sha256=_hash(tape))
     if audit and wins:

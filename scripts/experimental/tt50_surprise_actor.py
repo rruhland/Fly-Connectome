@@ -255,10 +255,14 @@ def run(output):
                             raise ValueError("Length changed despite identical native commands")
                         if n is not None and (not r["borrowed"] or n<r["borrowed"][0]["tick"]):
                             raise ValueError("Dynamics differed before the first recalled action")
+                        r["same_offer"]=False
                         if base["placements"]["delivered"] and r["placements"]["delivered"]:
                             b0,m0=(w["placements"]["delivered"][0] for w in (base,r))
-                            if any(digest_json(b0[k])!=digest_json(m0[k]) for k in ("far_contact","near_bounce")):
-                                raise ValueError("Treatment changed the legally offered opening")
+                            r["same_offer"]=all(digest_json(b0[k])==digest_json(m0[k])
+                                                for k in ("far_contact","near_bounce"))
+                        # Preserve any collision before the offer, including a
+                        # physically changed delivery, without crediting a
+                        # rescue against an unmatched ball.
                         r["first_change"]=n
                     modes[m]=r
                 receipt["rows"].append(dict(case=item,arms=modes))
