@@ -250,6 +250,11 @@ class Player(prior.season.Player):
         options,faces=self.finish.proposals(x,path,self.ready.feature_body())
         if not len(options):
             return plain
+        # Additional scored branches can run before the ordinary search has
+        # created its outgoing-risk bookkeeping for this point.
+        self.metrics={}
+        self.in_rank=False
+        self.decision_tick=tick
         a0,_,tr,_,_=self.trial(options,traces=True)
         for k in np.argsort(a0)[:2]:
             pos=self.transport(tr[k],face=True)
