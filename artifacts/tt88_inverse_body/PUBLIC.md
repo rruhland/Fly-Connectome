@@ -16,3 +16,7 @@ The two ordinary full points were the first two in the frozen TT83 playable dock
 A reusable TT83 warm-root adapter is exposed in `PublicRoots.roots(engine, reference)`. The method reads only the synchronized public twin, measured encoder history, known issued references and pre-existing learned endpoint bank. Its result is a set of relative joint reference programs. The ordinary point runner used these roots directly under a fixed-size public gate, not as a large new population search.
 
 [Exact low comparisons](public-matched.json.gz) · [Ordinary point tapes](normal-games.json.gz) · [Previously frozen ordinary controls](../tt83_population_search/playable.games.json.gz) · [Body-only result](README.md)
+
+## Check the one uncertainty-only candidate
+
+A separate, precommitted one-fork diagnostic issued the 6487 option that had been legal only under an optical stress offset. On the exact physical incoming, it hit 73.5 mm from center, sent the ball down at 3.81 m/s, and lost to the floor. The ordinary control returned that same incoming. This supports retaining the nominal gate on that case. The diagnostic was not added to the player or counted as a full game. [Exact calibration fork](stress-matched.json.gz)

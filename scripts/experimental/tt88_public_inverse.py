@@ -122,7 +122,7 @@ def freeze():
     return plan
 
 
-def run_case(a,clear,cam,rig,engine,proposer,c,old,anchor,actual_control,mode):
+def run_case(a,clear,cam,rig,engine,proposer,c,old,anchor,actual_control,mode,*,stress_tick=None):
     tape=mechanism.tape
     tape.setup(a,c,old,anchor)
     guarded(a,clear)
@@ -140,7 +140,8 @@ def run_case(a,clear,cam,rig,engine,proposer,c,old,anchor,actual_control,mode):
                 q=a.joints.copy()
                 x=mpc.observed(eye,tick,cam.capture() if tick%2==0 else None,q)
                 engine.observe(tick,eye.eye,q,ref)
-                if (active is None and len(notes)<5 and tick-last>=3 and x is not None
+                window=stress_tick is None or tick==stress_tick
+                if (window and active is None and len(notes)<5 and tick-last>=3 and x is not None
                         and x[4]<-1.1 and -1.12<x[1]<-.36 and engine.sync()):
                     last=tick
                     refs, meta=proposer.roots(engine,ref)
@@ -150,6 +151,8 @@ def run_case(a,clear,cam,rig,engine,proposer,c,old,anchor,actual_control,mode):
                         selected=np.asarray([refs[i] for i in keep])
                         ranked,diag=population.few.rank_paths(engine,selected,ref,[meta[i] for i in keep])
                         allowed=[ans for ans in ranked if ans[1]['legal'] and ans[1]['robust']>=1]
+                        if stress_tick is not None:
+                            allowed=[ans for ans in ranked if ans[1]['robust']>=1]
                         if allowed:
                             active=min(allowed,key=lambda r:r[1]['score'])
                             active=(tick,*active)
@@ -358,7 +361,62 @@ def full_points():
             a.close()
 
 
+def stress_probe():
+    """One physical equivalence check on a publicly predicted minority alternative."""
+    from . import tt83_playable_course as playable
+    prior=_read(GAMES)
+    if not prior['complete']:
+        raise ValueError('Complete whole-point observation first')
+    case, note = next((r,n) for r in prior['rows'] for n in r['learned']['expansion']
+                      if n.get('gate',{}).get('robust') and not n['gate'].get('nominal_legal'))
+    item=next(x for x in _read(playable.OUT)['rows'] if x['card']['id']==case['id'])
+    freeze_note=dict(source=_hash(GAMES),assignment=_hash(playable.PLAN),control=_hash(playable.OUT),
+                     case=case['id'],trigger_tick=note['tick'],
+                     scope='Probe the first normal-play candidate supported by an optical uncertainty offset '
+                           'even though nominal legality vetoed it. Timing chosen using public prior evidence. '
+                           'The candidate again receives only RGB and encoders live. One frozen physical '
+                           'attempt, not a live-policy modification or a held performance estimate.')
+    plan=inverse.ROOT/'stress.protocol.json'
+    dest=inverse.ROOT/'stress-matched.json.gz'
+    if not plan.exists():
+        _write(plan,freeze_note)
+    if _read(plan)!=freeze_note:
+        raise ValueError('Changed the calibration probe')
+    if dest.exists():
+        return
+    ready=_read(playable.PLAN)['ready']
+    c=item['card']
+    control=item['arms']['stock']
+    anchor=dict(offer=control['placements']['delivered'][0],seed=c['seed'])
+    with mechanism.lateral.fixture.school.enabled(),mpc.centered(ready):
+        a,cad=mpc.arena(),mpc.arena(width=64,height=48,detail='cad')
+        cam,rig,*_=mpc.resources(a)
+        clear=mechanism.qual.GripClearance(cad.model,stock=True)
+        engine=OpticalClinic(body=True)
+        try:
+            proposer=PublicRoots(engine.twin,exclude={x['card']['id'] for x in _read(playable.PLAN)['games']})
+            trace=run_case(a,clear,cam,rig,engine,proposer,c,control,anchor,control['actions'],'learned',
+                           stress_tick=note['tick'])
+            if not mechanism.first_ball(trace,anchor['offer']):
+                raise ValueError('The calibration fork changed its exact delivery')
+            if trace['issued'] and trace['commands'][:note['tick']]!=control['actions'][:note['tick']]:
+                raise ValueError('The calibration fork changed preceding ordinary motor control')
+            baseline=anchor['offer']['near_landed']
+            if mechanism.qual.received(trace,True) and not baseline:
+                replay=mechanism.tape.matched_motion(a,c,control,anchor,trace['commands'],clear)
+                if not mechanism.qual.received(replay,True) or digest_json(trace['events'])!=digest_json(replay['events']):
+                    raise ValueError('A new clean center stroke did not repeat')
+                trace['repeat_sha256']=digest_json(replay['events'])
+            _write(dest,dict(protocol=_hash(plan),id=c['id'],baseline_landed=baseline,changed=trace))
+            print('public diagnostic',c['id'],baseline,trace['issued'],trace['landed'],trace['answered'],flush=True)
+        finally:
+            engine.twin.close()
+            cam.close()
+            cad.close()
+            a.close()
+
+
 if __name__=='__main__':
     parser=argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('stage',choices=('freeze','run','normal'))
-    {'freeze':freeze,'run':run,'normal':full_points}[parser.parse_args().stage]()
+    parser.add_argument('stage',choices=('freeze','run','normal','stress'))
+    {'freeze':freeze,'run':run,'normal':full_points,'stress':stress_probe}[parser.parse_args().stage]()
