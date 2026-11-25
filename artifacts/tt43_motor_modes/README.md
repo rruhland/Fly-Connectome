@@ -4,7 +4,10 @@ The added readout did not improve this controller. On all 12 paired
 broad-random games, it issued exactly the same bounded commands as stock,
 reproducing all physical events and all 63 target draws. Both arms scored
 51 learner returns in total and peaked at 19 in one point. None reached
-the target of 100 learner returns in one rally. [Paired physical tapes](held-motor.json.gz)
+the target of 100 learner returns in one rally. An independent native replay
+of the peak reproduced all 39 alternating returns, with exact referee
+events and no penetrations in 15,349 full-CAD solver samples.
+[Paired physical tapes](held-motor.json.gz) · [Verification](held-summary.json)
 
 At 38 replans the branch produced 1,226 additional short-horizon candidate
 trials. The private model detected contact in 393, but none of the
