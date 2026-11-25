@@ -1,0 +1,3 @@
+# What was lost from the limited motor memory?
+
+The original learner retained 768 observed joint movement fragments at a time. Combining its unchanged starting checkpoint with the four chronological practice snapshots reconstructs 2,347 movements after 48 games. Each adjacent pair shares exactly the portion expected from the referee's earned-fragment count, down to all states, joint targets and reward labels. The same comparison can therefore test whether evicting an old movement or interference between new and old retrievals limits performance. The growing learner keeps new scored movements in a single chronological bank and vectorizes distance calculations. [Continuity checks at each practice boundary](history.json)
