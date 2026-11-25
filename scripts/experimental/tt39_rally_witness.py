@@ -13,9 +13,15 @@ from .tt37_joint_report import replay_case
 from .tt37_opponent import draw
 
 
-def witness(source, ident, output, movie):
+def witness(source, ident, output, movie, index=None):
     d = _read(source)
-    ix = next(i for i, c in enumerate(d["cards"]) if c["id"] == ident)
+    ix = (
+        index
+        if index is not None
+        else next(i for i, c in enumerate(d["cards"]) if c["id"] == ident)
+    )
+    if not 0 <= ix < len(d["rows"]) or d["cards"][ix]["id"] != ident:
+        raise ValueError("Requested release and completed game index disagree")
     c, r = d["cards"][ix], d["rows"][ix]
     if c.get("opening", "random") != "random" or c.get("profile", "reach") != "reach":
         raise ValueError(
@@ -47,6 +53,7 @@ def witness(source, ident, output, movie):
         receipt = replay_case(d["ready"], "random", c, r)
     receipt.update(
         course=source.name,
+        source_sha256=_hash(source),
         card=c,
         source_index=ix,
         tape=tape.name,
@@ -71,5 +78,10 @@ if __name__ == "__main__":
     p.add_argument("id", type=int)
     p.add_argument("output", type=Path)
     p.add_argument("--movie", action="store_true")
+    p.add_argument(
+        "--index",
+        type=int,
+        help="Zero-based game index for a repeated measured release",
+    )
     a = p.parse_args()
-    witness(a.source, a.id, a.output, a.movie)
+    witness(a.source, a.id, a.output, a.movie, a.index)

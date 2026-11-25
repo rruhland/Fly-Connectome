@@ -1,0 +1,5 @@
+# Learning from the next public score
+
+We paired each previously issued near-side prediction with whether the learner also earned its next return. This required only the controller's predicted movement effects, the public legal-return events and the final referee outcome. In practice, the riskiest fifth of 793 predictions contained 32 of 88 subsequent misses. Holding out entire release recordings gave a Brier score of 0.0922 versus 0.0987 at constant prevalence. [Source movements and fit](score-practice.json)
+
+In 24 matched games starting from the same 12-game motor checkpoint, the control made 142 legal arm returns and peaked at 21. The learner with delayed-score ranking made 127 and peaked at 26. Each side won six of the paired comparisons, with twelve ties. During play the new estimator made 39 different finalist choices and acquired 127 additional labels, including 18 misses. The observed improvement in prediction error therefore did not translate into a higher total score. [Full comparison](assessment.json) · [Controller and issued commands](live.json.gz)
