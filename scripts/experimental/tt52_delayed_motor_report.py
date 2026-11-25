@@ -33,13 +33,15 @@ def archive_support(protocol):
     g,idx=np.unique(groups,return_inverse=True)
     G=np.eye(len(g))[idx]
     d=np.linalg.norm(x[:,None,:]-x[None,:,:],axis=-1)
-    scope=(d<2.65)&(groups[:,None]!=groups[None,:])
+    disjoint=(groups[:,None]!=groups[None,:])
+    scope=(d<2.65)&disjoint
     # One representative frame per earned action, no same-game links.
     w=np.exp(-.5*(d/1.16)**2)*scope
     w/=np.maximum(1.,(w@G)[:,idx])
     weight=w.sum(axis=1)
-    prior=(w@y+1.5*y.mean())/(weight+1.5)
-    sham_prior=(w@yep+1.5*y.mean())/(weight+1.5)
+    prevalence=(disjoint@y)/disjoint.sum(axis=1)
+    prior=(w@y+1.5*prevalence)/(weight+1.5)
+    sham_prior=(w@yep+1.5*prevalence)/(weight+1.5)
     action=np.exp(-.5*np.mean((u[:,None,:]-u[None,:,:])**2,axis=-1)/.19**2)
     both=w*action
     used=(weight>1.25)&(both.sum(axis=1)>.85)&((both@G>.16).sum(axis=1)>=2)
@@ -51,7 +53,7 @@ def archive_support(protocol):
         if not np.any(h):
             continue
         result[kind]={name:float(np.mean((v[h]-y[h])**2)) for name,v in
-                      (("archived_prevalence",np.full(len(y),y.mean())),("state_only",prior),
+                      (("archived_prevalence",prevalence),("state_only",prior),
                        ("same_state_plus_motor",estimate),("same_state_plus_motor_sham",sham_est))}
     return result
 
@@ -72,7 +74,7 @@ def summarize(run,protocol):
              delta=gains.tolist(),earliest_differences=[r["first_different_action"] for r in rows],
              telemetry=dict(stats),
              opponent_boundary="Same measured opening, independent deterministic broad far target draws reused across paired games. Native replies and attained states can differ after the first changed issued command.")
-    if len(gains)>1:
+    if run["complete"] and len(gains)>=4:
         ix=np.random.default_rng(52034).integers(len(gains),size=(4000,len(gains)))
         res["mean_return_difference_ci95"]=np.quantile(gains[ix].mean(axis=1),[.025,.975]).tolist()
     return res
