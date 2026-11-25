@@ -51,6 +51,10 @@ All eight points in each arm were played once and all 68,287 CAD samples had no 
 
 The physically identical mounted body and same initial bank scored 21 with credit frozen. Keeping newly paid movement memory across games raised the 12866 point from four own returns to 25. At tick 70 the issued joint command differs, before the first actual learner return, after the bank has learned from previous games. Both variants return the same first physical delivery. This supports a contribution from across-game credits on the installed body, but not a same-delivery advantage across the later divergent trajectories. All 22,504 frozen-pilot CAD samples had no penetration. [Same-body credit-frozen pilot](installed-frozen.json.gz) · [Exact paired prefixes and scores](pilot-comparison.json)
 
+## The first complete 32-point season block
+
+The wider distribution reversed the small pilot's total gain. On the same first 32 TT80 cards, the mounted live learner scored 103 own returns versus centered live 135. The longest was 19 versus 15. Both had nine zero-return points and the first actual incoming delivery matched exactly in 30 of the 32 pairs. The mounted variant returned **18 of 35** actual low (<1.01 m) deliveries versus **7 of 34** centered, but it returned **85 of 98** of the other deliveries versus **128 of 131** centered. These after-opening opportunities follow distinct actual outward strokes and are descriptive rather than individually matched effects. The geometry study and early powered superiority therefore identify a useful low-ball receiving region, while the carried optical policy still loses more routine returns than it saves. [Raw mounted first 32 tapes](season-prefix32.json.gz) · [Paired block and physical height counts](season-prefix32-summary.json)
+
 ## Reproduce
 
 ```sh
@@ -68,6 +72,7 @@ python -m scripts.experimental.tt84_installation_play pilot-audit
 python -m scripts.experimental.tt84_installation_play pilot-frozen
 python -m scripts.experimental.tt84_installation_play season-plan
 python -m scripts.experimental.tt84_installation_play season-live
+python -m scripts.experimental.tt84_season_prefix
 python -m scripts.experimental.tt84_installation_play summary
 python -m pytest -q tests/test_tt84_installation_system.py
 ```
