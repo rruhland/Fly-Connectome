@@ -72,13 +72,32 @@ from stock, instead of the .29 rad change of the fixed hub, while retaining
 most of the changed wrist posture. The result does not establish that
 switching frequently between hubs is better. [Actual commands and referee records](held.json.gz)
 
-A separate, very small terminal docket reserves the first two completed
+An independent strict CAD replay of release 10762 reproduced the exact
+referee tape for stock and both treatments. None of its 14,631 clearance
+samples reported penetration. The evidence supports a legal increase from
+five to six actual returns on that one changed path, not a same-ball rescue.
+[Physical audit and comparison figures](report.json)
+
+## Two exact ordinary misses
+
+A separate, very small terminal docket reserved the first two completed
 older same-law ordinary misses with optical projected height above
 1.025 m and one to three preceding learner returns. Their full ordinary
 stock prefixes remain fixed. The treatment becomes admissible only after
 the already completed preceding strike and still needs the same causal
 outgoing cue. No known successful endpoint enters its decision.
 [Sealed ordinary-miss docket](ordinary.protocol.json)
+
+Both postures changed the issued commands before the opponent's shot on
+both trials, with identical actual far impact and near bounce. Neither
+rescued either miss. All six arms made paddle contact, 57–69 mm below the
+reported blade center, but ended on their own side. The fixed hub lifted
+one outgoing ball by 0.46 m/s at separation and reduced the other by
+1.11 m/s. The nominal-height classification did not distinguish these
+from low contact-margin cases. In this check, hitting the ball was not
+the bottleneck, and a general mobility improvement did not reliably
+raise the outgoing ball. Keep stock as default.
+[Actual ordinary-miss tapes](ordinary.json.gz)
 
 ## Reproduce
 

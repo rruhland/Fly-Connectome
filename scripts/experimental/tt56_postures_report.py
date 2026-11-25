@@ -4,7 +4,8 @@ import argparse
 from pathlib import Path
 
 from .tt4_transfer_trial import _hash, _read, _write
-from .tt56_postures import MODEL, OUT, PLAN, ROOT
+from .tt48_contact_patch_report import replay
+from .tt56_postures import MODEL, OUT, PLAN, ROOT, STOCK, baseline_truncated
 
 
 def summary(tape):
@@ -31,10 +32,27 @@ def summary(tape):
     return data
 
 
+def first_gain_audit(tape,protocol):
+    docket=_read(protocol)
+    original=_read(STOCK)
+    for i,row in enumerate(tape["rows"]):
+        modes=[k for k in ("hub","ports") if row["arms"][k]["score"]["learner"]>row["stock_score"]]
+        if modes:
+            c=docket["cards"][i]
+            ready=original["ready"]
+            baseline=baseline_truncated(original["rows"][i],docket["cap"])
+            arms=dict(stock=replay(ready,c,baseline))
+            for mode in modes:
+                arms[mode]=replay(ready,c,row["arms"][mode])
+            return dict(id=c["id"],scope="First increase in aggregate matched game return count, not a same-ball gain.",arms=arms)
+    return None
+
+
 if __name__=="__main__":
     p=argparse.ArgumentParser(description=__doc__)
     p.add_argument("--input",type=Path,default=OUT)
     p.add_argument("--out",type=Path,default=ROOT/"report.json")
+    p.add_argument("--verify",action="store_true")
     a=p.parse_args()
     tape,fit=_read(a.input),_read(MODEL)
     if tape["protocol_sha256"]!=_hash(PLAN):
@@ -42,5 +60,7 @@ if __name__=="__main__":
     result=dict(summary(tape),input_sha256=_hash(a.input),plan_sha256=_hash(PLAN),
                 fit=dict(trained=len(fit["rows"]),lanes=fit["bins"],observed_face=fit["face"],
                          home_cost=fit["home_cost"],waypoints=fit["portfolio"]))
+    if a.verify:
+        result["first_score_gain_cad"]=first_gain_audit(tape,PLAN)
     _write(a.out,result)
     print(result,flush=True)
