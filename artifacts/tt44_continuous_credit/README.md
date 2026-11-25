@@ -17,9 +17,13 @@ Four spread-out initial proposals and at most two local perturbations per ball g
 | 9080 | Missed | Missed |
 | 4283 | Missed | Landed |
 
-Independent replay from the original launch verified the stock and new 9519 event tapes and found zero full-CAD penetrations. [9519 strict replay](audit-9519.json)
+Independent replay from the original launches verified both stock and new event tapes and found zero full-CAD penetrations in 7,013 total solver states. The 9519 and 4283 contact alignments changed from −0.868 to −0.996 and from −0.941 to −0.990, respectively. Both actual legal rescues therefore improved alignment on the ordinary deep negative face, not by finding an alternate stance. [9519 strict replay](audit-9519.json) · [4283 strict replay](audit-4283.json)
 
 Beginning after a visible outbound cue before the far strike preserved the matched 14502 ball. The actuator gained earlier motion, but none of the five changed or one control trajectories touched. The no-contact low outcome is not solely an artifact of beginning just after far separation. [Earlier causal test](outbound-14502.json.gz)
+
+On 4239 a second targeted variant held the early correction through the first observed rebound. One of its six physically executed variants contacted the unchanged moderate low ball, but none landed. [Longer correction fork](rebound-4239.json.gz)
+
+The local score-driven selector freezes at the first eligible incoming RGB and encoder row, before the corrected action begins. Failed moves dilute nearby support, and each physically distinct training offer votes once. The four ordinary controls were all retained, three by choosing identity and one by a fresh nonidentity physical replay from the same incoming state. [Frozen local model](policy.json) · [Easy controls](easy.json.gz)
 
 ## Reproduce
 
