@@ -33,6 +33,8 @@ The cold fixed-hub actor was given the original continuous physical histories un
 
 A narrower low specialist tests whether uncertain early observations can still buy movement. It augments the camera fit with five fixed plausibly different vertical/longitudinal states, generates direct signed shallow strikes using each, and may seed their motor corrections with one physically scored example from a disjoint source. Before rebound, a proposal outside the nominal fit can only issue a temporary approach, not a full stroke. A refreshed fit must produce a nominal legal isolated rollout before a candidate commits. This is a motion-generation change, and preserves the ordinary policy when a viable normal-depth sequence already exists or the easy projected height is above 1.027 m. On release 8302, the added hypotheses changed the first optical search from zero admitted trajectories to seven modeled legal outcomes. None held up as the fit changed, and the external actor did not touch the actual ball. Across the attempt it tested 320 candidates. The same release-disjoint teacher and fixed deployment logic did not admit any timed candidate on 14843. Neither scheduled fork changed the far impact or near bounce, and replay reproduced the physical events in both. This is evidence that uncertain early geometry can buy an approach, not that the current camera model supports the whole strike. [Release-disjoint 4322 teacher transfer](camera-low-transfer.json.gz)
 
+The follow-up added three supported residual fits from the independent 8519 stereo-and-issued-reference teacher and rechecked up to six retained or retimed alternatives per epoch. It continued provisional movement across five epochs on that same 8302 delivery. It still found no nominal legal motion on fresh optical state and did not issue a full stroke or touch the ball. Exact replay retained the stock delivery and found zero penetrations across 3,218 states. The active uncertainty stage is worth keeping as a diagnostic, but it does not provide a scoring remedy to deploy with the stronger stock policy. [Two-source warm continuation](camera-low-warm.json.gz) · [8519 stereo teacher](../tt42_commit_teacher/same-offer-camera.json.gz)
+
 ## Reproduce
 
 ```sh
@@ -50,5 +52,6 @@ python -m scripts.experimental.tt43_stance_audit "$out/handoff.json.gz" "$out/ha
 python -m scripts.experimental.tt43_stance_live --handoff --teacher "$out/native-teacher.json.gz" --mode live --deck practice --start 12 --limit 1 --output "$out/practice.json.gz"
 python -m scripts.experimental.tt43_stance_matched
 python -m scripts.experimental.tt43_stance_matched --ensemble --teacher "$out/native-teacher.json.gz" --cases 1 2 --output "$out/camera-low-transfer.json.gz"
+python -m scripts.experimental.tt43_stance_matched --ensemble --warm --teacher "$out/native-teacher.json.gz" --optical-teacher artifacts/tt42_commit_teacher/same-offer-camera.json.gz --cases 1 --output "$out/camera-low-warm.json.gz"
 python -m pytest -q tests/test_tt43_stance.py
 ```
