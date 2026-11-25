@@ -10,14 +10,23 @@ The ability to predict that effect from available evidence was weaker. On ordina
 
 The additional no-render native assay selects 32 different physical source releases, excluding the entire official season, the optical snapshot releases and separately listed qualification releases. It picks an achieved, legally landed arm stroke without using the old next height. Only the earlier submitted arm commands and snapshot state are restored. The original native reply must reproduce its archived evidence. Six other draws follow the unchanged continuous response law, keeping the old original draw only for verification. This adds a less selective sample and exact native measurement without rebuilding any RGB. [Frozen native roster](native-plan.json)
 
+## Extended result
+
+Across 56 ordinary afterstates and 336 already answered deliveries, the height spread within the same stroke was **33.6 mm**, versus **29.4 mm** between strokes after correcting for finite draw count. The intraclass correlation was .435 for height and .483 for estimated receiving failure. The fractions below .97, .99 and 1.02 m were 4.5%, 9.2% and 28.3%. Every one of the 192 fresh native replies was answered and measured. The original physical departure and pre-request event prefix were identical. Comparison of the original replay's subsequent far contact, bounce and line sample allowed up to `2e-9` for floating-point fields while comparing discrete events exactly. [Physical replay receipt](native-redraws.json.gz)
+
+Repeatability did not imply a useful ordinary predictor. Mean squared error on the per-stroke failure proxy was .0365 for the held-fold prevalence prediction and .0407 using the achieved outgoing shape, versus .0425 with singleton training. With raw outbound physical state and spin it was .0392. On the subset with a matching pre-contact native prediction it was .0203 for prevalence and .0247 for the candidate. Candidate risk was worse than prevalence when transferring ordinary RGB-to-native and native-to-RGB in both directions. This compares the same folds and support within each feature family. The actual optical shape omits spin. The numeric departure and spin are evaluator controls, not a new learner sensor. [Extended grouped analysis](extended-analysis.json)
+
+The 47 selected-low strokes on 25 releases, with 235 fresh deliveries, show a much stronger outbound association, including for the lower tail. Held failure-proxy MSE was .0775 for prevalence, .0494 for achieved shape, .0515 for pre-contact estimate and .0525 for the optical arc. The candidate fit from these selected lows did not give well-calibrated ordinary probabilities. Membership in this set uses an old realized low reply and is unavailable in ordinary live play before the opponent makes its independent draw. The extended failure-proxy calibration used 3,109 independently selected physical deliveries on 100 disjoint releases, with a held Brier score of .046 versus .119 for prevalence.
+
+There is evidence for the **already existing** tactical readout. The TT43 library, trained on a larger bank of single physical outcomes, had .0176 failure-proxy MSE on 24 ordinary afterstates it had never seen, versus .0278 for leave-one-release-out prevalence on the same afterstates. It did not beat local prevalence in the selected-low set. The early TT49 region had 0/24 low replies on four independent inside releases and 16/102 on 17 outside releases. The region contains few ordinary afterstates and earlier real control tests paid an offsetting cost on the current strike. The TT49 learned sustained value has no release-disjoint support in this archive and is not scored here. This is not evidence that the arm can choose the favorable state from the same initial receiving situation. No new live policy or assessment release is promoted. [Prior whole-game control](../tt49_tactical_retrieval/README.md)
+
 ## Reproduce
+
+Use the checked-in snapshots for these results. Archiving new camera packets should target a new path because the physical plan is tied to `snapshot.json`.
 
 ```sh
 export PYTHONPATH=.:src MUJOCO_GL=egl OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 OMP_THREAD_LIMIT=1 LP_NUM_THREADS=1
-python -m scripts.experimental.tt51_afterstate archive
-python -m scripts.experimental.tt51_afterstate analyze
-python -m scripts.experimental.tt51_afterstate_native plan
 python -m scripts.experimental.tt51_afterstate_native run
-python -m scripts.experimental.tt51_afterstate analyze --native artifacts/tt51_afterstate/native-redraws.json.gz --output artifacts/tt51_afterstate/extended-analysis.json
+python -m scripts.experimental.tt51_afterstate analyze --snapshot artifacts/tt51_afterstate/later-snapshot.json --native artifacts/tt51_afterstate/native-redraws.json.gz --output artifacts/tt51_afterstate/extended-analysis.json
 python -m pytest -q tests/test_tt51_afterstate.py
 ```

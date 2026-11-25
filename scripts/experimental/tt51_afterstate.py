@@ -9,7 +9,6 @@ from . import tt46_continuous_season as season
 from . import tt50_opponent_vision as video
 from .tt4_transfer_trial import _hash, _read, _write
 from .tt19_view_full_game import digest_json
-from .tt39_opportunity_map import projected_height
 
 ROOT=Path("artifacts/tt51_afterstate")
 INPUTS=Path("artifacts/tt49_sustain/fit.json")
@@ -190,6 +189,13 @@ def variance(outcomes):
                 cdf_height_cutoffs_m=LIMIT.tolist(),context_weighted_cdf=cdf.tolist())
 
 
+def bootstrap_difference(a,b,ids):
+    ids=np.asarray(ids)
+    rows=np.array([np.mean((a-b)[ids==i],axis=0) for i in np.unique(ids)])
+    grid=np.random.default_rng(510050).integers(0,len(rows),(1000,len(rows)))
+    return np.quantile(rows[grid].mean(axis=1),[.1,.9],axis=0).tolist()
+
+
 def evaluate(original):
     # Each entry excludes the entire held release. Compare feature groups on
     # the same support, not on physically easier cases with complete features.
@@ -208,13 +214,16 @@ def evaluate(original):
         oldh=[r["external_hindsight_height"] for r in all_rows if r["external_hindsight_height"] is not None]
         masks={}
         for family in (("shape","incoming_context"),("native_candidate","incoming_context"),
-                       ("optical_shape","incoming_context"),("physical_dep","incoming_context")):
+                       ("optical_shape","incoming_context"),("physical_dep","incoming_context"),
+                       ("physical_with_spin","incoming_context")):
             rows=[r for r in all_rows if all(r[f] is not None for f in family)]
             groups=np.array(sorted({r["id"] for r in rows}))
             if len(groups)<8:
                 continue
             g=np.array([r["id"] for r in rows])
-            y=np.array([np.mean(r["outcomes"],axis=0) for r in rows])
+            draws=[np.c_[z, z[:,0,None]<LIMIT[None,:]]
+                   for z in (np.asarray(r["outcomes"]) for r in rows)]
+            y=np.array([v.mean(0) for v in draws])
             confidence={}
             for xname in ("prior","incoming","outbound","joint"):
                 ext=np.array([r[family[0]] if xname=="outbound" else r[family[1]] if xname=="incoming"
@@ -226,17 +235,22 @@ def evaluate(original):
                     test=np.isin(g,group)
                     predictions[test]=predict(fit(ext[~test],y[~test],45.),ext[test])
                     for i in range(4):
-                        single=np.array([t["outcomes"][i] for t, held in zip(rows,test,strict=True) if not held])
+                        single=np.array([v[i] for v, held in zip(draws,test,strict=True) if not held])
                         one[i,test]=predict(fit(ext[~test],single,45.),ext[test])
                 predictions[:,1:]=np.clip(predictions[:,1:],0.,1.)
                 one[:,:,1:]=np.clip(one[:,:,1:],0.,1.)
                 errors=(y-predictions)**2
-                dispersion=np.array([np.mean((np.array(t["outcomes"])-p)**2,axis=0)
-                                     for t,p in zip(rows,predictions,strict=True)])
+                if xname=="prior":
+                    baseline=errors
+                dispersion=np.array([np.mean((v-p)**2,axis=0)
+                                     for v,p in zip(draws,predictions,strict=True)])
                 ordinary=np.mean((one-y[None])**2,axis=1)
                 confidence[xname]=dict(context_mse=errors.mean(0).tolist(), draw_mse=dispersion.mean(0).tolist(),
                                       single_draw_context_mse=ordinary.tolist(),
-                                      single_draw_mean_context_mse=ordinary.mean(0).tolist())
+                                      single_draw_mean_context_mse=ordinary.mean(0).tolist(),
+                                      delta_from_prior_release_bootstrap_80pct=bootstrap_difference(errors,baseline,g),
+                                      delta_from_single_release_bootstrap_80pct=bootstrap_difference(errors,
+                                                    ((one-y[None])**2).mean(0),g))
             masks[family[0]]=dict(points=len(rows),releases=len(groups),models=confidence)
         scopes[name]=dict(variance=overall,original_selected_count=len(oldh),
                           original_selected_low=sum(x<.99 for x in oldh),validation=masks)
@@ -247,16 +261,20 @@ def transfer(rows):
     result={}
     for k in ("shape","physical_dep","native_candidate"):
         result[k]={}
-        for train,test in (("observations","native"),("native","observations")):
+        for train,test in (("observations","native"),("native","observations"),
+                           ("difficult","native"),("difficult","observations")):
             a,b=([r for r in rows if r["cohort"]==x and len(r["outcomes"])>=4 and r.get(k) is not None]
                  for x in (train,test))
-            if min(len(a),len(b))<8 or {t["id"] for t in a}&{t["id"] for t in b}:
+            held_ids={r["id"] for r in b}
+            a=[r for r in a if r["id"] not in held_ids]
+            if min(len({r["id"] for r in a}),len(held_ids))<8:
                 continue
             x,z=(np.array([r[k] for r in dataset]) for dataset in (a,b))
             label, truth=(np.array([np.mean(r["outcomes"],axis=0) for r in dataset]) for dataset in (a,b))
             p=predict(fit(x,label,45.),z)
             p[:,1:]=np.clip(p[:,1:],0.,1.)
             result[k][train+"_to_"+test]=dict(n=[len(a),len(b)], prediction_mse=np.mean((p-truth)**2,axis=0).tolist(),
+                  train_test_releases=[len({r["id"] for r in a}),len(held_ids)],
                   training_prior_mse=np.mean((label.mean(0)-truth)**2,axis=0).tolist())
     return result
 
@@ -290,14 +308,19 @@ def earlier(rows):
     past_ids=set(fitted["source_ids"])
     prior={r["id"] for r in old["rows"]}
     cands=[r for r in rows if r["native_candidate"] is not None and len(r["outcomes"])>=4]
-    risk=[r for r in cands if r["id"] not in prior]
-    q=estimate(good.fit,np.array([r["native_candidate"] for r in risk])) if risk else []
-    yt=np.array([np.mean(r["outcomes"],axis=0)[1:] for r in risk])
-    a=dict(contexts=len(risk), release_count=len({r["id"] for r in risk}),
-           mean_squared_error=np.mean((q-yt)**2,axis=0).tolist() if len(risk) else None,
-           old_empirical_prevalence_mse=None)
-    if len(risk):
-        a["old_empirical_prevalence_mse"]=np.mean((np.asarray(good.fit[1])-yt)**2,axis=0).tolist()
+    a={}
+    for name in ("difficult","ordinary_pool","combined"):
+        risk=[r for r in cands if r["id"] not in prior and
+                (name=="combined" or (name=="difficult")== (r["cohort"]=="difficult"))]
+        q=estimate(good.fit,np.array([r["native_candidate"] for r in risk])) if risk else []
+        g=np.array([r["id"] for r in risk])
+        yt=np.array([np.mean(r["outcomes"],axis=0)[1:] for r in risk])
+        a[name]=dict(contexts=len(risk), release_count=len(set(g)))
+        if len(risk) and len(set(g))>1:
+            local=np.array([yt[g!=i].mean(axis=0) for i in g])
+            a[name].update(mean_squared_error=np.mean((q-yt)**2,axis=0).tolist(),
+                           old_empirical_prevalence_mse=np.mean((good.fit[1]-yt)**2,axis=0).tolist(),
+                           local_release_leaveout_prevalence_mse=np.mean((local-yt)**2,axis=0).tolist())
     y,p=[],[]
     sources={}
     for r in cands:
@@ -324,6 +347,44 @@ def earlier(rows):
                 note="All comparisons remove releases present in the corresponding earlier fit.")
 
 
+def request_analysis_only(rows):
+    """How much changing the independent requested values moves a fixed stroke's outcomes."""
+    from .tt37_opponent import draw
+
+    archive={}
+    scopes={}
+    for cohort in ("observations","difficult","native"):
+        u,y,release=[],[],[]
+        for r in rows:
+            if r["cohort"]!=cohort or len(r["outcomes"])<4:
+                continue
+            path=r["source"]
+            if path not in archive:
+                archive[path]=_read(Path(path))
+            card=archive[path]["cards"][r["index"]]
+            x=np.array([draw(dict(card,reply_seed=s),r["leg"],"random",None)[0]
+                        for s,v in zip(r["seeds"],r["replies"],strict=True) if v is not None])
+            x=(x-.5*(tactical.TARGET_LO+tactical.TARGET_HI))/(tactical.TARGET_HI-tactical.TARGET_LO)
+            features=np.c_[x,np.abs(x)]
+            u.extend(features-features.mean(axis=0))
+            p=np.array(r["outcomes"])
+            y.extend(p-p.mean(axis=0))
+            release.extend([r["id"]]*len(p))
+        groups=np.array(sorted(set(release)))
+        if len(groups)<8:
+            continue
+        x,v,g=map(np.asarray,(u,y,release))
+        pred=np.empty_like(v)
+        for block in np.array_split(np.random.default_rng(510913).permutation(groups),5):
+            kept=~np.isin(g,block)
+            pred[~kept]=predict(fit(x[kept],v[kept],65.),x[~kept])
+        raw=np.mean(v*v,axis=0)
+        change=np.mean((pred-v)**2,axis=0)
+        scopes[cohort]=dict(release_count=len(groups),within_draw_mse_zero=raw.tolist(),
+                            within_draw_mse_requests=change.tolist())
+    return scopes
+
+
 def analyze(snapshot=SOURCE, supplemental=None, output=ROOT/"analysis.json"):
     doc=_read(snapshot)
     native = _read(supplemental) if supplemental else None
@@ -331,12 +392,23 @@ def analyze(snapshot=SOURCE, supplemental=None, output=ROOT/"analysis.json"):
         if not native["complete"]:
             raise ValueError("Native extension still incomplete")
         doc["rows"].extend(native["rows"])
+    for r in doc["rows"]:
+        r["physical_with_spin"]=r["physical_dep"]+r["spin"]
     rx=returnability(doc)
+    counts={k:dict(contexts=len(v),distinct_releases=len({r["id"] for r in v}),
+                   assigned=sum(len(r["replies"]) for r in v),
+                   tracked=sum(len(r["outcomes"]) for r in v),
+                   answered_native=sum(b["answered"] for r in v for b in r["branch"]) if k=="native" else None)
+            for k,v in ((k,[r for r in doc["rows"] if r["cohort"]==k])
+                        for k in ("observations","difficult","native"))}
     result=dict(snapshot_sha256=_hash(snapshot),sample=doc["rows"],receiver=rx,
                 native_sha256=None if supplemental is None else _hash(supplemental),
+                observed_counts=counts,
                 modality_transfer=transfer(doc["rows"]),
                 previous_fixed_models=earlier(doc["rows"]),
+                request_evaluator_only=request_analysis_only(doc["rows"]),
                 outputs=["height_m","low_indicator","estimated_receiving_failure"],
+                model_outputs=["height_m","low_indicator","estimated_receiving_failure",*[f"cdf_{i}" for i in LIMIT]],
                 evaluation=evaluate(doc["rows"]),
                 scope="Original difficult result excluded. Receiving failure is a proxy fitted on disjoint prior real scores, not a physically tested next own return for these alternate draws.")
     _write(output,result)

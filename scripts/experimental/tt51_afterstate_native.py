@@ -133,6 +133,17 @@ def physical_reply(a,state,r,old,seed):
                 terminal=bool(terminal), seed=seed)
 
 
+def agrees(a,b):
+    """Native physical equality up to negligible roundoff, with exact discrete events."""
+    if isinstance(a,dict) and isinstance(b,dict):
+        return a.keys()==b.keys() and all(agrees(a[k],b[k]) for k in a)
+    if isinstance(a,(list,tuple)) and isinstance(b,(list,tuple)):
+        return len(a)==len(b) and all(agrees(x,y) for x,y in zip(a,b,strict=True))
+    if isinstance(a,float) and isinstance(b,float):
+        return abs(a-b)<2e-9
+    return a==b
+
+
 def run():
     plan=_read(PLAN)
     if plan["archive_sha256"]!=_hash(model.SOURCE):
@@ -172,14 +183,15 @@ def run():
             orig=old["placements"]["delivered"]
             got=orig[i] if len(orig)>i else None
             if (check["answered"]!=bool(got) or not check["prior_arm_landed"] or
-               (got and any(digest_json(check[k])!=digest_json(got[p])
+               (got and any(not agrees(check[k],got[p])
                     for k,p in (("far_contact","far_contact"),("bounce","near_bounce")))) or
                (got and got["receive_line"] is not None and
-                    digest_json(check["measured"])!=digest_json(got["receive_line"]))):
+                    not agrees(check["measured"],got["receive_line"]))):
                 raise ValueError("Old native target reference no longer matches at this afterstate")
             test=[physical_reply(a,warm,r,old,s) for s in r["seeds"]]
             row=r|dict(cohort="native",replies=[x["h"] for x in test],
                        branch=test,matched_original=check,pre_request_sha256=digest_json(prefix),
+                       original_float_tolerance=2e-9,
                        external_hindsight_height=None)
             receipt["rows"].append(row)
             receipt["complete"]=len(receipt["rows"])==len(plan["cases"])
