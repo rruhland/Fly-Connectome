@@ -1,0 +1,52 @@
+# Real-return learning of early optical preview
+
+This experiment keeps the existing direct stereo-and-encoder joint field and
+changes how far ahead that field looks in the early inbound phase. One delay
+of 0, 2, 4, or 7 control ticks is chosen for a visually confirmed approach,
+using three consecutive nearward optical estimates, velocity and own joint
+displacement. The preview advances the optical position and velocity by a
+short fixed time. It does not choose a table intercept or minimum distance
+to a strike pose. The issued control remains a bounded six-joint reference
+increment. The early preview ends at y = −0.53 m on the measured path.
+
+The learner stores one context, delay and reward per physically delivered
+attempt. The normal referee's actual legal landing counts as one and a
+physical loss after the far side's legal delivery counts as zero.
+Undelivered or capped attempts are censored. An analytical, local,
+Beta-smoothed estimate of the success rate selects a delay with support
+near the current context. The updater has no backpropagation, private
+geometry access, opponent seed, replay, future observation, or hypothetical
+reward. Where support is insufficient the actor uses its zero-delay
+reference behavior.
+
+## Prospective comparison
+
+The first 18 previously registered broad-random practice cards use two
+policies on the same measured initial shots and independent placement seeds.
+Both use the same 55% exploration calendar and the same forced delay
+whenever they share an approach ordinal. In exploitation slots the control
+always uses zero preview and the learner uses its current actual reward
+history. Arms may reach different total numbers of later approaches. The
+trained learner then freezes its parameters for the twelve distinct later
+assessment releases. The held control uses zero preview and both policies
+stop updating or exploring. All arms use the unchanged continuously
+reactive broad-random partner. The caps are eight alternating returns per
+practice point and sixteen per held point, so this is an early-feedback
+transfer experiment, not an assessment against the 100-return goal.
+[Frozen readout and course](course.json)
+
+The primary comparison uses raw direct feedback in both arms, without
+the late private MPC. The separate transfer mode can keep the same frozen
+late MPC in both arms, to test whether that separate policy cancels or
+reinforces changes to early feedback.
+
+## Reproduce
+
+```sh
+export PYTHONPATH=.:src MUJOCO_GL=egl OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 OMP_THREAD_LIMIT=1 LP_NUM_THREADS=1
+out=artifacts/tt44_preview
+python -m scripts.experimental.tt44_preview adapt "$out/adapt.json.gz"
+python -m scripts.experimental.tt44_preview no-update "$out/control.json.gz"
+python -m scripts.experimental.tt44_preview_report "$out/adapt.json.gz" "$out/control.json.gz" "$out/summary.json"
+python -m pytest -q tests/test_tt44_preview.py
+```
