@@ -20,6 +20,8 @@ All 120 redrawn replies were answered and tracked. The lower-predicted-risk stro
 
 The live pilot uses the direct-joint controller with the same physical practice checkpoint and normal motor credit after each actual landing, within points and across them. For a proposed movement with a plausible departure, the ordinary short and long trial losses include the same learned smooth flight penalty. It changes which initial joint sequences become parents of transported and sampled proposals. It is not a post-selection rerank and does not add rollouts or modify the stroke geometry. No extra camera, opponent state or true future coordinates enter the actor. Both arms start from the same practice motor memory and use the same unmodified continuous reply law throughout 12 preassigned measured whole games. Labels from these games do not change the frozen flight envelope.
 
+The goal changed actual shot shape without improving the games. The arm produced 29 in-envelope strikes out of 56 versus 24 out of 82 for the matched baseline. It saw no follow-ups below 0.99 m, versus five under stock. Both landed 10 of 12 openings, but the goal arm scored fewer returns overall, **56 versus 82**, and its best point fell from 21 to 13. It improved individual points, including 2 to 12 on 7812, but lost length on more other points. The low count is measured on each arm's realized paths, which have different lengths. It is not a paired causal estimate for those complete games. This goal is controllable but is not sufficient for sustained returns. [Complete matched games](upstream-live.json.gz) · [Scores and achieved flight shapes](upstream-report.json)
+
 ## Reproduce
 
 ```sh
