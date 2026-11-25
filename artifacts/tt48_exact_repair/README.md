@@ -23,6 +23,8 @@ A separate privileged diagnostic gave a bounded native teacher exact state at th
 
 A privileged earlier fork began immediately after the previous near stroke, giving 1.25 s before the post-bounce terminal search. Two signed approaches actually moved the physical arm on clear routes and preserved the exact far impact and bounce. Their subsequent private dynamics screen found 296 contacts in 384 proposed commands, but no legal landings. Contrast the same state search beginning at first inbound detection, which found zero contacts. Earlier motion buys contact opportunities in this family. A useful departure still has to be learned and demonstrated. [Causal physical preparation and private contact comparison](terminal-earlier-prepare.json.gz)
 
+A second predeclared depth-family check starts from the same earlier fork but uses the negative-face route aimed at y ≈ −1.181 m and deeper candidates. Its first batch found three legal private proposals, before any local contact-effect regression step. The best physically played stroke touched at y = −1.299 m and z = 0.982 m with essentially −1.000 native face alignment. The far impact, near bounce and random requested placement are unchanged. That new return actually landed and the same powered far opponent returned it legally. The native tape now contains 43 own and 44 opponent landings, including this deliberately taught tail. Its 4,004-command prefix and altered continuation reproduced exactly, and all 1,160 altered-tail solver states had positive full CAD clearance, minimum 18.6 mm. This is a clean privileged motor witness, not a causal record. [Physical 43rd return and answer](terminal-effect-aligned.json.gz)
+
 ## Reproduce
 
 ```sh
@@ -33,4 +35,5 @@ python -m scripts.experimental.tt48_exact_repair_audit
 python -m scripts.experimental.tt48_terminal_repair
 python -m scripts.experimental.tt48_terminal_coach
 python -m scripts.experimental.tt48_terminal_prepare
+python -m scripts.experimental.tt48_terminal_prepare --effect-align --rounds 3 --ports 2 --output artifacts/tt48_exact_repair/terminal-effect-aligned.json.gz
 ```
