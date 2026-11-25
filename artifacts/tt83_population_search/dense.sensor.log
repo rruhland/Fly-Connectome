@@ -1,0 +1,8 @@
+dense sensor 3401 185 176 False
+3401 prior-veto [('static', 0, 0, False, False, False), ('iterative', 0, 0, False, False, False)]
+dense sensor 8056 185 176 False
+8056 prior-veto [('static', 0, 0, False, False, False), ('iterative', 0, 0, False, False, False)]
+dense sensor 8544 144 144 True
+8544 independent-miss [('static', 47, 0, False, False, False), ('iterative', 74, 0, False, False, False)]
+dense sensor 11884 185 179 False
+11884 routine [('static', 0, 0, False, True, True), ('iterative', 0, 0, False, True, True)]

@@ -98,6 +98,31 @@ def result(verify):
                     found["replays"][m]=audit(c,a,m)
             value["rows"].append(found)
         receipt[label]=value
+    dense_path=tt.ROOT/"dense.forks.json.gz"
+    if dense_path.exists():
+        calibration=_read(dense_path)
+        dense_protocol=tt.ROOT/"dense.protocol.json"
+        sensor=tt.ROOT/"dense.sensor.log"
+        if calibration["plan"]!=_hash(dense_protocol):
+            raise ValueError("Wrong dense observer branch")
+        observed={}
+        if sensor.exists():
+            for line in sensor.read_text().splitlines():
+                if line.startswith("dense sensor "):
+                    _,_,identity,total,valid,used=line.split()
+                    observed[int(identity)]=dict(exposures=int(total),valid=int(valid),dense_fit=used=="True")
+        prior_forks={x["case"]["id"]:x for x in held["rows"]}
+        paired=[]
+        for row in calibration["rows"]:
+            k=row["case"]["id"]
+            older=prior_forks[k]
+            fitted=row["arms"]["iterative"]
+            old=older["arms"]["iterative"]
+            paired.append(dict(id=k,**observed.get(k,{}),legacy_issued=old["issued"],dense_issued=fitted["issued"],
+                               legacy_unique=old["search"]["unique_legal"],
+                               dense_unique=fitted["search"]["unique_legal"],
+                               legacy_landed=old["physical"]["landed"],dense_landed=fitted["physical"]["landed"]))
+        receipt["dense"]=dict(complete=calibration["complete"],receipt=_hash(dense_path),rows=paired)
     _write(REPORT,receipt)
     print(receipt["fork_complete"],receipt["fork_summary"],flush=True)
     for group in ("games","playable_games"):

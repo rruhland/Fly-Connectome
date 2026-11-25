@@ -72,3 +72,19 @@ def test_sealed_population_comparison_matches_the_first_batch_and_total_budget()
         assert one["audit"]["refinement"]==two["audit"]["refinement"]==18
     assert sum(r["arms"]["iterative"]["search"]["unique_legal"] for r in evidence["rows"])==159
     assert sum(r["arms"]["static"]["search"]["unique_legal"] for r in evidence["rows"])==112
+
+
+def test_completed_whole_points_separate_transport_from_changed_outgoing_rally():
+    from scripts.experimental import tt83_population_report as report
+    from scripts.experimental.tt4_transfer_trial import _read
+
+    r=_read(report.REPORT)
+    assert r["fork_complete"] and r["games"]["complete"] and r["playable_games"]["complete"]
+    assert r["playable_games"]["summary"]["stock"]["legal"]==19
+    assert r["playable_games"]["summary"]["iterative"]["legal"]==25
+    row=next(x for x in r["playable_games"]["rows"] if x["id"]==6487)
+    assert row["first_affected"]["same_incoming"]
+    assert row["first_affected"]["stock_legal"] and row["first_affected"]["new_legal"]
+    assert row["first_affected"]["contact_differs"]
+    assert all(q["clearance_positive"] for q in row["replays"].values())
+    assert r["dense"]["complete"] and sum(x["dense_fit"] for x in r["dense"]["rows"])==1
