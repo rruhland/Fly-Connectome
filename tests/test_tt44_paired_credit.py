@@ -9,6 +9,8 @@ def test_paired_selector_requires_repeated_compared_gain():
     assert Selector(x,np.zeros((4,2))).choose(x[0])=="stock"
     assert Selector(x,[[1,0],[0,0],[0,0],[0,0]]).choose(x[0])=="stock"
     assert Selector(x,[[1,-1],[1,0],[0,0],[0,0]]).choose(x[0])==TEACHERS[1]
+    assert Selector(x,[[1,1],[0,0],[0,0],[0,0]]).choose(x[0])==TEACHERS[1]
+    assert Selector(x,[[1,1],[0,0],[0,0],[0,0]]).choose(np.ones(len(SCALE))*3.)=="stock"
 
 
 def test_context_uses_only_current_images_and_encoder_references():

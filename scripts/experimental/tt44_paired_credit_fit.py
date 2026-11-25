@@ -21,6 +21,7 @@ STOCK=course.ROOT/"no-more-practice.json.gz"
 SCALE=np.r_[[1.]*6,[.8]*6,[.75]*5,[.65]*5]
 MIN_GAIN=.065
 MIN_HELP=1.10
+SHARED_RESCUE=.68
 PRIOR=1.65
 
 
@@ -35,7 +36,12 @@ class Selector:
         score=(w@self.uplift)/(w.sum()+PRIOR)
         support=w@(self.uplift>0)
         j=int(np.argmax(score))
-        if score[j]<MIN_GAIN or support[j]<MIN_HELP:
+        # One independently delivered ball is still one sample. Two
+        # different successful preparations on it justify only a narrow,
+        # explicitly local trial in addition to recurring-advantage evidence.
+        shared=(self.uplift>0).all(axis=1)
+        strong_shared=bool(shared.any() and np.max(w[shared])>=SHARED_RESCUE)
+        if score[j]<MIN_GAIN or (support[j]<MIN_HELP and not strong_shared):
             return "stock"
         return TEACHERS[j+1]
 
@@ -88,7 +94,7 @@ def fit(path,plan,output):
                        losses=dict(zip(TEACHERS[1:],map(int,(variant[:,1:]<variant[:,0:1]).sum(0)))),
                        leave_one_release_out=diagnostic,
                        movements=[dict(id=r["id"],by_teacher={k:movement(r,k) for k in TEACHERS[1:]}) for r in rows],
-                       rule=dict(min_gain=MIN_GAIN,min_help=MIN_HELP,prior=PRIOR,scale=SCALE.tolist())))
+                       rule=dict(min_gain=MIN_GAIN,min_help=MIN_HELP,narrow_two_teacher_similarity=SHARED_RESCUE,prior=PRIOR,scale=SCALE.tolist())))
 
 
 class Deployment(Teacher):
