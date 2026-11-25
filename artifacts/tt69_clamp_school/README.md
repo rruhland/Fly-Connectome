@@ -41,6 +41,39 @@ reward callback to update their own carried bank. The new lesson field
 stays frozen. Whole-game gains and changes in score on identical delivered
 balls are logged separately.
 
+## Physical school and first held results
+
+The physical coach earned 13 of 22 broad opening offers and six of ten
+offers after a previously scored stroke. Sixteen of those 19 contacts
+had a measured radius at most 58 mm. The tightest returned at 4.13 mm.
+All 24 paid examples, including the five TT63 development sources,
+reproduced their full tape and yielded usable RGB and encoder lessons.
+The lessons cover 18 release IDs. [Learned field and public cues](motor-field.json.gz)
+
+The twelve previously unseen measured openings produced nine matched
+actual first deliveries, all stock successes. The three far-side
+failures did not create an ordinary receive and are not counted as arm
+failures. None of the actual first deliveries projected below 1 m.
+The registered baseline scored and was answered on nine. The direct
+phase learner took that to six, and phase plus pose transport to five.
+Each learner intervened in seven games. Three and four standard hits,
+respectively, were lost on identical physical arrivals, without any
+CAD penetration. The evidence rejects early direct borrowing on this
+cohort. It does not assess the performance of that actor on genuine
+sub-1 m arrivals. No whole-game run was authorized by this result.
+[All first-offer tapes](first-receives.json.gz) · [Comparison](report.json)
+
+A different late-only reader preserves every stock preparation and keeps
+any already robust stock selection. It indexes the same learned routes
+only after the normal observed bounce and scores up to 30 alternatives
+in the independent RGB/encoder model. A twelve-offer independent cohort
+contained six natural lower-shoulder arrivals at 1.007–1.024 m and six
+routines. Both modes scored nine and answered nine. The late readout
+screened three vulnerable looks, found no nominal legal route, and
+issued no commands. This is neutral by abstention, not evidence of
+improved receiving. [All unaltered scout draws](late.protocol.json)
+[Matched late-only first offers](late-first.json.gz)
+
 ```sh
 export PYTHONPATH=.:src MUJOCO_GL=egl PYOPENGL_PLATFORM=egl OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 OMP_THREAD_LIMIT=1 LP_NUM_THREADS=1
 python -m scripts.experimental.tt69_clamp_school plan
@@ -50,4 +83,10 @@ python -m scripts.experimental.tt69_clamp_school run --n 22 --next
 python -m scripts.experimental.tt69_clamp_policy fit
 python -m scripts.experimental.tt69_clamp_policy first --n 12
 python -m scripts.experimental.tt69_clamp_policy games --n 6
+python -m scripts.experimental.tt69_clamp_repair plan
+python -m scripts.experimental.tt69_clamp_repair run
+python -m scripts.experimental.tt69_clamp_exact_lows plan
+python -m scripts.experimental.tt69_clamp_exact_lows run
+python -m scripts.experimental.tt69_clamp_exact_lows known
+python -m scripts.experimental.tt69_clamp_report
 ```

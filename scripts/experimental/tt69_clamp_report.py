@@ -2,6 +2,8 @@
 
 from . import tt69_clamp_policy as policy
 from . import tt69_clamp_school as school
+from . import tt69_clamp_repair as late
+from . import tt69_clamp_exact_lows as exact
 from .tt4_transfer_trial import _hash, _read, _write
 
 
@@ -36,6 +38,24 @@ def main():
         games=_read(policy.GAMES); report['whole_sha256']=_hash(policy.GAMES)
         report['whole']=dict(results={k:[r['arms'][k]['score']['learner'] for r in games['rows']] for k in ('registered',games['chosen'])},
                              exact_offers=[dict(c,id=r['card']['id']) for r in games['rows'] for c in r['exact_offers'] if c['old']!=c['new']])
+    if late.OUT.exists():
+        d=_read(late.OUT); rows=d['rows']; notes=[v for r in rows for v in r['arms']['learned']['late']]
+        report['late_fresh']=dict(tape=_hash(late.OUT),cases=len(rows),complete=d['complete'],matched=sum(r['matched'] for r in rows),
+              scores={mode:sum(reward(r['arms'][mode])[0] for r in rows) for mode in ('registered','learned')},
+              candidate_trials=sum(v['paths'] for v in notes),legal_shadow=sum(v['legal'] for v in notes),issued=sum(v['issued'] for v in notes))
+    if exact.OUT.exists():
+        d=_read(exact.OUT); rows=d['rows']; notes=[v for r in rows for v in r['camera_model']]
+        report['later_sub1']=dict(tape=_hash(exact.OUT),cases=len(rows),complete=d['complete'],matched=sum(r['same_offer'] for r in rows),
+              stock_scored=sum(r['stock']['landed'] for r in rows),new_scored=sum(r['learned']['landed'] for r in rows),
+              naturally_low=sum(not r['case']['stock'] for r in rows),candidate_trials=sum(v['paths'] for v in notes),
+              legal_shadow=sum(v['legal'] for v in notes),issued=sum(r['issued'] for r in rows),
+              same_offer_gains=[r['case']['id'] for r in rows if r['same_offer'] and r['learned']['landed'] and not r['case']['stock']],
+              same_offer_losses=[r['case']['id'] for r in rows if r['same_offer'] and not r['learned']['landed'] and r['case']['stock']])
+    if exact.KNOWN.exists():
+        tryout=_read(exact.KNOWN); rows=tryout['rows']
+        report['known_optic_check']=dict(path=_hash(exact.KNOWN),cases=len(rows),available=sum(r['available'] for r in rows),
+             physics_supported=sum(r.get('recognition',{}).get('exact',{}).get('legal',False) for r in rows),
+             rgb_supported=sum(r.get('recognition',{}).get('rgb',{}).get('legal',False) for r in rows))
     _write(school.ROOT/'report.json',report); print(report,flush=True)
 
 
