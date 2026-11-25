@@ -46,11 +46,21 @@ def replay_memory(arena, tools, priors, card, r, home, optic, index):
 def run(a):
     d = _read(a.source)
     optic = mpc.ROOT / "tt37/rebound.npz"
+    start = 0
+    before = None
+    if getattr(a, "boundary", None) is not None:
+        before = _read(a.boundary)
+        start = len(before["rows"])
+        if before["cards"] != d["cards"] or not 0 < start < len(d["rows"]) <= len(d["cards"]):
+            raise ValueError("Expected two consecutive snapshots of the same course")
+        if before["rows"][-1]["memory"]["after"] != d["rows"][start]["memory"]["before"]:
+            raise ValueError("Course snapshots have different boundary memories")
+    cards = d["cards"][start : len(d["rows"])]
     if (
         d["mode"] != "live"
         or d["source_sha256"] != _hash(mpc.BANK)
         or d["optical_sha256"] != _hash(optic)
-        or len(d["cards"]) != len(d["rows"])
+        or (before is None and len(d["cards"]) != len(d["rows"]))
     ):
         raise ValueError("Expected a complete compatible live course")
     if d["previous_practice"] != {p.name: _hash(p) for p in a.practice}:
@@ -58,7 +68,7 @@ def run(a):
     with np.load(mpc.BANK) as z:
         raw = mpc.DeepField(z, "local")
     doc = {
-        "cards": d["cards"],
+        "cards": cards,
         "ready": d["ready"],
         "source_sha256": _hash(a.source),
         "rows": [],
@@ -79,7 +89,10 @@ def run(a):
                 practice=a.practice,
                 held={c["id"] for c in d["cards"]},
             )
-            for i, (c, live) in enumerate(zip(d["cards"], d["rows"], strict=True)):
+            if before is not None:
+                from .tt41_early_optics_carry import resume
+                resume(model, a.boundary.with_suffix("").with_suffix(".npz"), before)
+            for i, (c, live) in enumerate(zip(cards, d["rows"][start:], strict=True)):
                 if model.priors.digest() != live["memory"]["before"]:
                     raise ValueError(
                         "Live and frozen branches differ before first exposure"
@@ -101,7 +114,7 @@ def run(a):
                         d["cap"],
                     )
                 first = replay_memory(
-                    arena, res, model.priors, c, live, d["ready"], optic, i + 1
+                    arena, res, model.priors, c, live, d["ready"], optic, start + i + 1
                 )
                 same_until = next(
                     (
@@ -147,6 +160,7 @@ if __name__ == "__main__":
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("source", type=Path)
     p.add_argument("out", type=Path)
+    p.add_argument("--boundary", type=Path)
     p.add_argument(
         "--practice",
         nargs="+",

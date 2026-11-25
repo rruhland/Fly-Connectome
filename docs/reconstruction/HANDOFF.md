@@ -4,6 +4,8 @@
 
 The new prospective direct-joint course produced 38 legal arm returns and 39 opponent returns in one 61.96-second rally. Replaying the 3,718 issued joint commands reproduced every score and all 39 continuous opponent draws. All 29,739 sampled CAD clearances were positive. [Physical replay receipt](../../artifacts/tt42/random-38.json) · [Joint command tape](../../artifacts/tt42/random-38-tape.json.gz)
 
+On the record point, freezing within-point learning reduced 38 to six. Across twelve boundary-matched pairs it reduced 69 returns to 37. On 24 different releases, the arm made 102 returns before new practice, 135 after twelve games and 87 after 24. [Paired learning and transfer](../../artifacts/tt42/continuous-course.md)
+
 The preceding course reached 35 legal arm returns. On 24 independent assignments, the geometric controller produced 76 arm returns before practice, 97 after 96 games, and 72 after 192. Newer motor memories helped on one half of the course and interfered strongly on the other. Protecting the earlier lookup recovered part of the loss. For direct joints, repeated replanning produced 223 arm returns on 24 assignments versus 117 when limited to one commitment per incoming shot. Tests of the conditional motor choices, camera timing, and continued teaching are recorded with their matched controls. [Retention across checkpoints](../../artifacts/tt40/continual.md) · [Direct hits and misses](../../artifacts/tt41/joint-learning.md) · [Preassigned new games](../../artifacts/tt42/direct-course.json)
 
 ## What carried experience changes

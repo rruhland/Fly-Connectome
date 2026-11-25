@@ -58,7 +58,7 @@ def run(a):
         "mode": a.mode,
         "deck": a.deck,
         "ready": ready,
-        "cap": 240,
+        "cap": getattr(a, "cap", 240),
         "variant": "elastic",
         "budget": 28,
         "source_sha256": _hash(mpc.BANK),
@@ -115,7 +115,7 @@ def run(a):
                     model,
                     OPTIC,
                     a.mode,
-                    240,
+                    receipt["cap"],
                     20,
                 )
                 for leg, entry in enumerate(r["placements"]["requested"]):
@@ -154,6 +154,7 @@ if __name__ == "__main__":
     p.add_argument("out", type=Path, nargs="?")
     p.add_argument("--deck", choices=("practice", "assessment"), default="practice")
     p.add_argument("--n", default=48, type=int)
+    p.add_argument("--cap", default=240, type=int)
     p.add_argument("--carry", type=Path)
     p.add_argument("--resume", action="store_true")
     p.add_argument("--feeds", type=Path, default=Path("/tmp/tt25-rallies.json"))
