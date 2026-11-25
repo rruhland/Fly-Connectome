@@ -204,3 +204,15 @@ Cost5407 actual control ticks,229.809 wall seconds and81.720 CPU seconds. The
 receipts, complete posture/action-difference report, source snapshot and input
 hashes are retained. The lead agent owns separate unopened full-game qualification;
 these three cases do not establish broader robustness. No native worker remains.
+
+## True stock-parent adapter: requested two-case check
+
+`stock-parent-two-diagnostic.json.gz` checks the lead's adapter after removing the
+shared generic partial-body change. On both existing cases, disabled-adapter and
+original stock commands and full native event hashes match exactly. On ordinary
+791162625, all three actors including enabled-abstaining have identical complete
+commands and return/answer the ball. On low515671963, stock and disabled miss while
+enabled returns and is answered. Actual incoming matches, protected commands are
+exact, CAD has zero penetrations, and controller/evaluator hashes stayed frozen.
+This is a known diagnostic, not a new held course. Cost4870 actual ticks,150.176
+wall seconds and57.292 CPU seconds. The lead owns independent full-game testing.
