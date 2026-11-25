@@ -1,0 +1,2 @@
+
+The live controller scored 133 returns over the 24 assigned games against 177 for stock. The learned direction altered the early joint references for 5,822 control ticks. The positive prediction scores for individual joints did not translate into better sustained play. [Full live training games](live.json.gz) · [Continued visual and motor state](learned-preparation.npz) · [Paired stock games](../tt52_practice_dose/live-from-48-24.json.gz)
