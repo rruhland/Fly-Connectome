@@ -54,9 +54,15 @@ transfer experiment, not an assessment against the 100-return goal.
 [Frozen readout and course](course.json)
 
 The primary comparison uses raw direct feedback in both arms, without
-the late private MPC. The separate transfer mode can keep the same frozen
-late MPC in both arms, to test whether that separate policy cancels or
-reinforces changes to early feedback.
+the late private MPC. A separate four-card transfer kept the same frozen
+late MPC and carried motor checkpoint. The established stock tapes for
+all four ended before the transfer cap, so they are directly comparable.
+Two games were unchanged at zero. The other two moved from 3 to 1
+learner returns on 6411 and from 6 to at least 8 on 3786, which reached
+the 16-alternating-return cap. Both arms had 9 observed learner returns
+across this capped comparison. Early timing can change how the later
+controller plays an offer, but the mixed effects do not support a general
+improvement. [Late MPC tape](late.json.gz) · [Late comparison](late-summary.json)
 
 ## Reproduce
 
@@ -66,5 +72,7 @@ out=artifacts/tt44_preview
 python -m scripts.experimental.tt44_preview adapt "$out/adapt.json.gz"
 python -m scripts.experimental.tt44_preview no-update "$out/control.json.gz"
 python -m scripts.experimental.tt44_preview_report "$out/adapt.json.gz" "$out/control.json.gz" "$out/summary.json" --replay-strongest
+python -m scripts.experimental.tt44_preview transfer "$out/late.json.gz" --checkpoint "$out/adapt.npz"
+python -m scripts.experimental.tt44_preview_report "$out/late.json.gz" artifacts/tt43_motor_modes/held-stock.json.gz "$out/late-summary.json" --archived-late
 python -m pytest -q tests/test_tt44_preview.py
 ```
