@@ -157,6 +157,12 @@ All five actual incoming triples matched. Original controls through4003 were
 exact. All changed-prefix/strike CAD records have zero penetrations, and both
 controller/evaluator hashes stayed frozen. The complete course costs6393 actual
 control ticks,394.611 wall seconds and128.974 CPU seconds. Raw action/observation
-receipts and the evaluator-only posture report are retained. Independent fresh
-controller/risk and full-CAD verification of the low gain is in progress; its
-result is not assumed here. A separate frozen V2 comparison is pending.
+receipts and the evaluator-only posture report are retained.
+
+`live-wing-positive-replay.json` verifies the low gain and both controls with
+newly constructed controllers and risk predictors. Every policy action, RGB
+estimate and native event reproduces exactly. All three far-gate signals
+(4022/-.45,4030/0,4042/.45) exactly match forecasts freshly generated in that
+variant, ruling out stale same-tick predictions. Full prefix/preparation/strike
+CAD has zero penetrations. Verification costs4389 actual ticks,255.653 wall
+seconds and79.324 CPU seconds. A separate frozen V2 comparison is pending.
